@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Dashboard — AI Tools Aura</title>
+  <link rel="icon" type="image/png" href="assets/brand-logo-light.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="admin-light.css">
+</head>
+<body>
+  <aside>
+    <a class="logo" href="index.html">
+      <img src="assets/brand-logo-light.png" alt="Aura Logo" class="admin-brand-icon">
+      <span>AI TOOLS <b>AURA</b></span>
+    </a>
+    <nav>
+      <button class="active">◫ <span>Overview</span></button>
+      <button>◇ <span>Products</span></button>
+      <button>▣ <span>Orders</span></button>
+      <button>☆ <span>Reviews</span></button>
+      <button>⌁ <span>Analytics</span></button>
+      <button>⚙ <span>Settings</span></button>
+    </nav>
+    <a class="store-link" href="index.html">← View 3D storefront</a>
+  </aside>
+  <main>
+    <header>
+      <div>
+        <small>STORE OPERATIONS</small>
+        <h1>Welcome back, Admin.</h1>
+      </div>
+      <div class="admin-user">
+        <img src="assets/brand-logo-light.png" alt="Admin" style="width:24px;height:24px;object-fit:contain;">
+      </div>
+    </header>
+    <section class="metric-grid">
+      <article>
+        <span>Today’s sales</span>
+        <b>Rs. 0</b>
+        <small>Direct WhatsApp conversion active</small>
+      </article>
+      <article>
+        <span>Total verified tools</span>
+        <b>20</b>
+        <small class="up">↑ Catalog 3D ready</small>
+      </article>
+      <article>
+        <span>WhatsApp clicks</span>
+        <b>Active</b>
+        <small class="up">Instant order link ready</small>
+      </article>
+      <article>
+        <span>Verification status</span>
+        <b>100%</b>
+        <small class="up">Warranties &amp; delivery clear</small>
+      </article>
+    </section>
+    <section class="content-grid">
+      <article class="panel products-panel">
+        <div class="panel-head">
+          <div>
+            <small>CATALOG MANAGEMENT</small>
+            <h2>Active 3D products</h2>
+          </div>
+          <button id="addProduct">+ Add product</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="adminProducts"></tbody>
+          </table>
+        </div>
+      </article>
+      <aside class="side-column">
+        <article class="panel settings">
+          <div class="panel-head">
+            <div>
+              <small>ORDER ROUTING</small>
+              <h2>WhatsApp settings</h2>
+            </div>
+          </div>
+          <label>Business number <span>Include country code (e.g. 92...)</span>
+            <input id="waNumber" value="923476242709">
+          </label>
+          <label>Business status
+            <select>
+              <option>Online now (Instant response)</option>
+              <option>Away — reply within 30 mins</option>
+            </select>
+          </label>
+          <button id="saveSettings">Save settings</button>
+          <p id="saveNote"></p>
+        </article>
+        <article class="panel checklist">
+          <small>PLATFORM READINESS</small>
+          <h2>Launch verification</h2>
+          <ul>
+            <li><i class="done"></i> 3D Logo Integration</li>
+            <li><i class="done"></i> Cyber-Crystal Design System</li>
+            <li><i class="done"></i> WhatsApp Checkout Engine</li>
+            <li><i class="done"></i> Upfront Pricing &amp; Durations</li>
+            <li><i class="done"></i> Mobile Responsive Physics</li>
+          </ul>
+        </article>
+      </aside>
+    </section>
+  </main>
+  <dialog id="productDialog">
+    <form method="dialog">
+      <button class="close">×</button>
+      <small>PRODUCT EDITOR</small>
+      <h2>Add a new subscription</h2>
+      <label>Product name
+        <input required placeholder="e.g. Claude 3.5 Sonnet">
+      </label>
+      <div>
+        <label>Category
+          <select>
+            <option>AI Assistants</option>
+            <option>AI Video</option>
+            <option>Design</option>
+            <option>Development</option>
+            <option>Productivity</option>
+          </select>
+        </label>
+        <label>Price (PKR)
+          <input type="number" placeholder="2500">
+        </label>
+      </div>
+      <label>Short description
+        <textarea placeholder="What makes this subscription valuable?"></textarea>
+      </label>
+      <menu>
+        <button value="cancel">Cancel</button>
+        <button value="default" id="demoSave">Save product</button>
+      </menu>
+    </form>
+  </dialog>
+  <script src="admin.js"></script>
+</body>
+</html>

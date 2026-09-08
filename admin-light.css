@@ -1,0 +1,30 @@
+:root {
+  --bg-void: #f5f8f4;
+  --bg-space: #edf3ee;
+  --bg-card: #ffffff;
+  --border-glass: rgba(36, 83, 68, .13);
+  --border-glass-hover: rgba(47, 159, 136, .36);
+  --neon-cyan: #2f9f88;
+  --neon-blue: #5d8fe8;
+  --neon-purple: #8d70d8;
+  --text-primary: #173c35;
+  --text-muted: #71847b;
+  --accent-green: #25b966;
+}
+body { background: radial-gradient(circle at 85% 0%, #e6f0ff, transparent 30%), #f5f8f4; color: #173c35; }
+body > aside { background: #fff; color: #173c35; border-right-color: #dbe5df; box-shadow: 8px 0 28px rgba(42,74,61,.06); }
+.logo { color: #173c35; }.logo b { color: #4f953d; }
+nav button { color: #63776e; } nav button.active { background: #e9f6e3; color: #245347; border-color: #d1e6c5; }
+.store-link { color: #557168; }
+header small, .panel-head small, .checklist > small { color: #71847b; }
+.admin-user { background: #e8f6dc; color: #3f7834; border-color: #cfe3bf; }
+.metric-grid article, .panel { background: #fff; color: #173c35; border-color: #dbe5df; box-shadow: 0 9px 26px rgba(42,74,61,.06); }
+.metric-grid span, .metric-grid small { color: #71847b; }.metric-grid .up { color: #36805a; }
+.panel-head { border-color: #e1e9e3; }.panel-head button, .settings > button { background: #245347; color: #fff; }
+th, td { border-color: #e8ede9; } th { color: #7b8c84; }.product-cell small { color: #71847b; }
+.status { background: #e5f5de; color: #3f7435; }.edit { color: #65776f; }
+.side-column { background: transparent; color: #173c35; }
+.settings input, .settings select, dialog input, dialog select, dialog textarea { background: #f6f9f5; color: #173c35; border-color: #d8e2dc; }
+.checklist li { border-color: #e3eae5; }.checklist i.done { background: #b7ef59; border-color: #9dce4a; }
+dialog { background: #fff; color: #173c35; } dialog::backdrop { background: rgba(21,52,42,.48); } dialog menu button { background: #fff; color: #244b40; border-color: #d7e1da; } dialog menu button:last-child { background: #245347; color: #fff; }
+@media (max-width:620px) { body > aside { background:#fff; border-bottom:1px solid #dbe5df; } }
