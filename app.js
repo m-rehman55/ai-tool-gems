@@ -216,7 +216,7 @@ function updateCart() {
       </div>
     `).join('') : `
       <div class="cart-empty">
-        <img src="assets/logo-transparent.png" class="empty-state-logo" alt="Aura Diamond">
+        <img src="assets/logo-transparent.png" class="empty-state-logo" alt="AI Tool Gems Diamond">
         <h3>Your cart is empty</h3>
         <p>Explore the 3D marketplace and add tools here.</p>
       </div>
@@ -327,7 +327,7 @@ function waLink(message) {
 function orderProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
-  window.open(waLink(`Hello AI Tools Aura 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`), '_blank');
+  window.open(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`), '_blank');
 }
 
 function checkout() {
@@ -335,7 +335,7 @@ function checkout() {
   if (!selected.length) return;
   const total = selected.reduce((s, p) => s + p.price, 0);
   const lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — ${money(p.price)}`).join('\n');
-  window.open(waLink(`Hello AI Tools Aura 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability and payment methods (JazzCash/EasyPaisa/Bank).`), '_blank');
+  window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability and payment methods (JazzCash/EasyPaisa/Bank).`), '_blank');
 }
 
 function showSuggestions(q) {
@@ -663,7 +663,7 @@ document.addEventListener('click', e => {
   const wa = e.target.closest('[data-whatsapp]');
   if (wa) {
     e.preventDefault();
-    window.open(waLink('Hello AI Tools Aura, I need assistance choosing a premium AI tool.'), '_blank');
+    window.open(waLink('Hello AI Tool Gems, I need assistance choosing a premium AI tool.'), '_blank');
     return;
   }
   if (e.target.closest('[data-open-finder]')) {

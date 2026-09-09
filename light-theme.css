@@ -149,7 +149,7 @@ body {
   border: 0;
   box-shadow: none;
 }
-.gem-aura-bloom {
+.gem-halo-bloom {
   width: 260px;
   height: 260px;
   background: radial-gradient(circle, rgba(183, 239, 89, 0.34) 0%, rgba(47, 159, 136, 0.24) 40%, rgba(141, 112, 216, 0.16) 59%, transparent 74%);
@@ -351,5 +351,5 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
   .hero-orbit-system { width: 330px; height: 330px; }
   .gem-badge-3d { width: 145px; height: 145px; }
   .gem-logo-img { width: 112px; height: 112px; }
-  .gem-aura-bloom { width: 210px; height: 210px; }
+  .gem-halo-bloom { width: 210px; height: 210px; }
 }
