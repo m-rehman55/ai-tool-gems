@@ -65,13 +65,62 @@ products.forEach(p => {
   }
 });
 
+const safeCatalogText = value => String(value || '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
+
+try {
+  const managedCatalog = JSON.parse(localStorage.getItem('atg-admin-products') || '[]');
+  if (Array.isArray(managedCatalog)) {
+    managedCatalog.forEach(saved => {
+      const existing = products.find(product => product.id === saved.id);
+      if (existing) {
+        if (saved.name) existing.name = safeCatalogText(saved.name);
+        if (saved.category) existing.category = safeCatalogText(saved.category);
+        if (Number(saved.price) > 0) existing.price = Number(saved.price);
+        if (saved.description) existing.description = safeCatalogText(saved.description);
+        if (saved.logo && /^(https:\/\/|assets\/)/.test(saved.logo)) existing.logo = saved.logo;
+      } else if (saved.id && saved.name && saved.category && Number(saved.price) > 0) {
+        products.push({
+          id: saved.id,
+          name: safeCatalogText(saved.name),
+          category: safeCatalogText(saved.category),
+          description: saved.description ? safeCatalogText(saved.description) : 'A newly added subscription. Contact our team for complete plan details.',
+          price: Number(saved.price),
+          oldPrice: Math.ceil(Number(saved.price) * 1.2),
+          duration: '1 Month',
+          access: 'Private',
+          delivery: '30–60 min',
+          warranty: '7 Days',
+          rating: 4.5,
+          badge: 'New',
+          bestFor: [safeCatalogText(saved.category)],
+          logo: saved.logo && /^(https:\/\/|assets\/)/.test(saved.logo) ? saved.logo : 'assets/brand-logo-light.png',
+          features: ['Plan details confirmed before payment', 'Direct WhatsApp activation'],
+          intent: [String(saved.category).toLowerCase(), String(saved.name).toLowerCase()]
+        });
+      }
+    });
+  }
+} catch {
+  localStorage.removeItem('atg-admin-products');
+}
+
+function loadStoredCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('atg-cart') || '[]');
+    return Array.isArray(saved) ? saved.filter(id => products.some(p => p.id === id)) : [];
+  } catch {
+    localStorage.removeItem('atg-cart');
+    return [];
+  }
+}
+
 let state = {
   category: 'All',
   query: '',
   limit: 20,
-  cart: JSON.parse(localStorage.getItem('atg-cart') || '[]'),
+  cart: loadStoredCart(),
   compare: [],
-  finder: { intent: '', budget: Infinity }
+  finder: { intent: '', minBudget: 0, maxBudget: Infinity }
 };
 
 const $ = s => document.querySelector(s);
@@ -79,6 +128,12 @@ const $$ = s => [...document.querySelectorAll(s)];
 const money = n => 'Rs. ' + n.toLocaleString('en-PK');
 const discount = p => Math.round((1 - p.price / p.oldPrice) * 100);
 const svg = id => `<svg><use href="#${id}"></use></svg>`;
+const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
+
+function clearSearchField() {
+  const input = $('#heroSearch');
+  if (input) input.value = '';
+}
 
 /* --------------------------------------------------------------------------
    RENDERING FUNCTIONS
@@ -86,10 +141,12 @@ const svg = id => `<svg><use href="#${id}"></use></svg>`;
 function renderCategories() {
   const container = $('#categoryGrid');
   if (!container) return;
-  container.innerHTML = categoryData.map((c, index) => `
+  container.innerHTML = categoryData.map((c, index) => {
+    const count = products.filter(product => product.category === c[0]).length;
+    return `
     <button class="category-card" data-category="${c[0]}" aria-label="Explore ${c[0]}">
-      <span class="category-visual" style="--category-x:${(index % 5) * 25}%;--category-y:${index < 5 ? 18 : 82}%">
-        <span class="category-count">${c[2]}</span>
+      <span class="category-visual" style="--category-x:${(index % 5) * 25}%;--category-y:${index < 5 ? 0 : 100}%">
+        <span class="category-count">${count} ${count === 1 ? 'tool' : 'tools'}</span>
       </span>
       <span class="category-content">
         <span>
@@ -98,8 +155,8 @@ function renderCategories() {
         </span>
         <i aria-hidden="true">${svg('i-arrow')}</i>
       </span>
-    </button>
-  `).join('');
+    </button>`;
+  }).join('');
 }
 
 function renderFilters() {
@@ -107,7 +164,7 @@ function renderFilters() {
   const row = $('#filterRow');
   if (!row) return;
   row.innerHTML = cats.map(c => `
-    <button class="filter-chip ${state.category === c ? 'active' : ''}" data-filter="${c}">${c}</button>
+    <button class="filter-chip ${state.category === c ? 'active' : ''}" data-filter="${c}" aria-pressed="${state.category === c}">${c}</button>
   `).join('');
 }
 
@@ -136,7 +193,7 @@ function card(p) {
       <button class="compare-toggle ${comparing ? 'active' : ''}" data-compare="${p.id}" aria-label="Compare ${p.name}">
         ${svg(comparing ? 'i-check' : 'i-plus')}
       </button>
-      <img class="brand-logo" src="${p.logo}" alt="Official ${p.name} logo" loading="lazy">
+      <img class="brand-logo" src="${p.logo}" alt="Official ${p.name} logo" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="product-body">
       <div class="product-meta">
@@ -162,7 +219,7 @@ function card(p) {
       <div class="card-actions">
         <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} Buy now</button>
         <button class="detail-button" data-detail="${p.id}">View details</button>
-        <button class="add-button ${inCart ? 'added' : ''}" data-add="${p.id}" aria-label="Add ${p.name} to cart">
+        <button class="add-button ${inCart ? 'added' : ''}" data-add="${p.id}" aria-label="${inCart ? 'Remove' : 'Add'} ${p.name} ${inCart ? 'from' : 'to'} cart" aria-pressed="${inCart}">
           ${svg(inCart ? 'i-check' : 'i-plus')}
         </button>
       </div>
@@ -179,13 +236,10 @@ function renderProducts() {
   const empty = $('#emptyState');
   if (empty) empty.classList.toggle('show', !all.length);
   
-  const showAllBtn = $('#showAll');
-  if (showAllBtn) showAllBtn.style.display = 'none';
-  
   const aq = $('#activeQuery');
   if (aq) {
     aq.classList.toggle('show', !!state.query);
-    aq.innerHTML = state.query ? `Showing verified results for “${state.query}” · <button id="clearQuery">Clear search</button>` : '';
+    aq.innerHTML = state.query ? `Showing verified results for “${escapeHTML(state.query)}” · <button id="clearQuery">Clear search</button>` : '';
   }
   
   renderFilters();
@@ -228,6 +282,17 @@ function updateCart() {
   
   const footer = $('#cartFooter');
   if (footer) footer.style.display = selected.length ? 'block' : 'none';
+  updateBundleButton();
+}
+
+function updateBundleButton() {
+  const button = $('#addBundle');
+  if (!button) return;
+  const bundleIds = ['chatgpt', 'canva', 'capcut', 'elevenlabs'];
+  const isComplete = bundleIds.every(id => state.cart.includes(id));
+  button.classList.toggle('added', isComplete);
+  button.setAttribute('aria-pressed', String(isComplete));
+  button.innerHTML = isComplete ? `Stack in cart ${svg('i-check')}` : `Add creator stack ${svg('i-plus')}`;
 }
 
 function toggleCart(id) {
@@ -243,6 +308,7 @@ function updateCompare() {
   const compMini = $('#compareMini');
   if (compCount) compCount.textContent = state.compare.length;
   if (compBar) compBar.classList.toggle('show', state.compare.length > 0);
+  document.body.classList.toggle('compare-mode', state.compare.length > 0);
   if (compMini) {
     compMini.innerHTML = state.compare.map(id => {
       const p = products.find(x => x.id === id);
@@ -263,13 +329,20 @@ function toggleCompare(id) {
   renderProducts();
 }
 
+let focusBeforeLayer = null;
+
 function openLayer(el) {
   if (!el) return;
+  focusBeforeLayer = document.activeElement;
   const backdrop = $('#backdrop');
   if (backdrop) backdrop.classList.add('show');
   el.classList.add('open');
   el.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    const first = el.querySelector('[data-close], button, a, input, select, [tabindex="0"]');
+    if (first) first.focus();
+  });
 }
 
 function closeLayers() {
@@ -280,6 +353,8 @@ function closeLayers() {
   const backdrop = $('#backdrop');
   if (backdrop) backdrop.classList.remove('show');
   document.body.style.overflow = '';
+  if (focusBeforeLayer && document.contains(focusBeforeLayer)) focusBeforeLayer.focus();
+  focusBeforeLayer = null;
 }
 
 function openProduct(id) {
@@ -294,7 +369,7 @@ function openProduct(id) {
         </div>
         <div class="detail-copy">
           <span class="detail-category">${p.category} · ${p.badge}</span>
-          <h2>${p.name}</h2>
+          <h2 id="productDetailTitle">${p.name}</h2>
           <div class="detail-rating">★★★★★ &nbsp; ${p.rating}/5 Verified Rating</div>
           <p>${p.description} Guaranteed authentic subscription activated quickly via WhatsApp.</p>
           <div class="detail-price">${money(p.price)} <del>${money(p.oldPrice)}</del></div>
@@ -320,7 +395,8 @@ function openProduct(id) {
 
 function waLink(message) {
   const saved = localStorage.getItem('atg-whatsapp');
-  const number = (!saved || saved === '923001234567') ? DEFAULT_WA_NUMBER : saved;
+  const cleanSaved = (saved || '').replace(/\D/g, '');
+  const number = /^\d{10,15}$/.test(cleanSaved) && cleanSaved !== '923001234567' ? cleanSaved : DEFAULT_WA_NUMBER;
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
@@ -347,11 +423,11 @@ function showSuggestions(q) {
   }
   const hits = products.filter(p => [p.name, p.category, ...p.intent].join(' ').toLowerCase().includes(q.toLowerCase())).slice(0, 5);
   box.innerHTML = hits.length ? hits.map(p => `
-    <div class="suggestion" data-suggest="${p.id}">
+    <button type="button" class="suggestion" data-suggest="${p.id}">
       <img src="${p.logo}" alt="${p.name}">
       <span>${p.name}</span>
       <small>${money(p.price)}</small>
-    </div>
+    </button>
   `).join('') : `
     <div class="suggestion"><span>No matching tools found</span></div>
   `;
@@ -419,8 +495,8 @@ function finderStep(step = 1) {
     root.innerHTML = `
       <div class="finder-step">
         <div class="progress"><span style="width:33%"></span></div>
-        <div class="eyebrow dark"><span></span> Step 1 of 2</div>
-        <h2>What outcome are you pursuing?</h2>
+        <div class="eyebrow dark"><span></span> Step 1 of 3</div>
+        <h2 id="finderTitle">What outcome are you pursuing?</h2>
         <p>Choose your primary ambition to get tailored tool matches.</p>
         <div class="finder-choices">
           ${[
@@ -447,35 +523,38 @@ function finderStep(step = 1) {
     root.innerHTML = `
       <div class="finder-step">
         <div class="progress"><span style="width:66%"></span></div>
-        <div class="eyebrow dark"><span></span> Step 2 of 2</div>
-        <h2>What is your budget target?</h2>
+        <div class="eyebrow dark"><span></span> Step 2 of 3</div>
+        <h2 id="finderTitle">What is your budget target?</h2>
         <p>We’ll prioritize tools with the highest verified ROI in your range.</p>
         <div class="finder-choices">
-          <button class="finder-choice" data-budget="1000">Under Rs. 1,000<small>Budget friendly</small></button>
-          <button class="finder-choice" data-budget="2500">Rs. 1,000 – 2,500<small>Most popular tier</small></button>
-          <button class="finder-choice" data-budget="5000">Rs. 2,500 – 5,000<small>Power creator</small></button>
-          <button class="finder-choice" data-budget="999999">Rs. 5,000+<small>Annual & teams</small></button>
+          <button class="finder-choice" data-budget-min="0" data-budget-max="999">Under Rs. 1,000<small>Budget friendly</small></button>
+          <button class="finder-choice" data-budget-min="1000" data-budget-max="2500">Rs. 1,000 – 2,500<small>Most popular tier</small></button>
+          <button class="finder-choice" data-budget-min="2501" data-budget-max="5000">Rs. 2,500 – 5,000<small>Power creator</small></button>
+          <button class="finder-choice" data-budget-min="5001" data-budget-max="999999">Rs. 5,000+<small>Annual &amp; teams</small></button>
         </div>
+        <button class="finder-back" type="button" data-finder-back="1">← Change your goal</button>
       </div>
     `;
   }
   if (step === 3) {
-    let matches = products.filter(p => p.intent.includes(state.finder.intent) && p.price <= state.finder.budget).sort((a, b) => b.rating - a.rating).slice(0, 3);
+    let matches = products.filter(p => p.intent.includes(state.finder.intent) && p.price >= state.finder.minBudget && p.price <= state.finder.maxBudget).sort((a, b) => b.rating - a.rating).slice(0, 3);
+    let outsideBudget = false;
     if (!matches.length) {
       matches = products.filter(p => p.intent.includes(state.finder.intent)).sort((a, b) => a.price - b.price).slice(0, 3);
+      outsideBudget = true;
     }
     root.innerHTML = `
       <div class="finder-step">
         <div class="progress"><span style="width:100%"></span></div>
-        <div class="eyebrow dark"><span></span> Recommendation Ready</div>
-        <h2>Your Best 3D Tool Matches</h2>
-        <p>Matched for your objective, budget tier, and user satisfaction rating.</p>
+        <div class="eyebrow dark"><span></span> Step 3 of 3 · Recommendation ready</div>
+        <h2 id="finderTitle">${outsideBudget ? 'Closest available matches' : 'Your best tool matches'}</h2>
+        <p>${outsideBudget ? 'No exact tool is available in that budget. These are the lowest-priced relevant options, shown transparently.' : 'Matched for your objective, exact budget range, and verified user rating.'}</p>
         <div class="finder-results">
           ${matches.map((p, i) => `
             <button class="finder-result" data-detail="${p.id}">
               <img src="${p.logo}" alt="${p.name}">
               <div>
-                <small>${i === 0 ? '★ TOP VERIFIED MATCH' : 'EXCELLENT COMPANION'}</small>
+                <small>${outsideBudget ? 'CLOSEST OPTION · ABOVE BUDGET' : (i === 0 ? '★ TOP VERIFIED MATCH' : 'EXCELLENT COMPANION')}</small>
                 <b>${p.name}</b>
                 <span>${p.bestFor.join(' · ')} · ${p.duration}</span>
               </div>
@@ -483,13 +562,85 @@ function finderStep(step = 1) {
             </button>
           `).join('')}
         </div>
+        <button class="finder-back" type="button" data-finder-back="2">← Change your budget</button>
       </div>
     `;
   }
 }
 
+const finderPreviewPresets = {
+  video: {
+    counter: '01 / 04',
+    badge: 'Top match · 96% fit',
+    id: 'veo',
+    name: 'Veo 3 Ultra',
+    desc: 'Unlimited cinematic video generation with photorealistic physics',
+    price: 2100,
+    logo: 'https://www.google.com/s2/favicons?domain=deepmind.google&sz=128'
+  },
+  image: {
+    counter: '02 / 04',
+    badge: 'Top match · 98% fit',
+    id: 'leonardo',
+    name: 'Leonardo AI Essential',
+    desc: 'Production-ready digital art, photorealistic assets & visuals',
+    price: 1900,
+    logo: 'https://www.google.com/s2/favicons?domain=leonardo.ai&sz=128'
+  },
+  writing: {
+    counter: '03 / 04',
+    badge: 'Top match · 99% fit',
+    id: 'chatgpt',
+    name: 'ChatGPT Plus',
+    desc: 'GPT-4o reasoning, deep research, coding & writing assistant',
+    price: 2300,
+    logo: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128'
+  },
+  code: {
+    counter: '04 / 04',
+    badge: 'Top match · 95% fit',
+    id: 'lovable',
+    name: 'Lovable Pro',
+    desc: 'Build, design and ship full-stack web applications and MVPs',
+    price: 1600,
+    logo: 'https://www.google.com/s2/favicons?domain=lovable.dev&sz=128'
+  }
+};
+
+function updateFinderPreview(intent) {
+  const data = finderPreviewPresets[intent] || finderPreviewPresets.video;
+  $$('.preview-option').forEach(btn => {
+    const selected = btn.dataset.previewIntent === intent;
+    btn.classList.toggle('selected', selected);
+    btn.setAttribute('aria-pressed', String(selected));
+  });
+  const counter = $('#previewCounter');
+  if (counter) counter.textContent = data.counter;
+  const badge = $('#finderMatchBadge');
+  if (badge) badge.textContent = data.badge;
+  const name = $('#finderMatchName');
+  if (name) name.textContent = data.name;
+  const desc = $('#finderMatchDesc');
+  if (desc) desc.textContent = data.desc;
+  const price = $('#finderMatchPrice');
+  if (price) price.textContent = money(data.price);
+  const logo = $('#finderMatchLogo');
+  if (logo) {
+    logo.src = data.logo;
+    logo.alt = data.name;
+  }
+  const card = $('#finderMatchCard');
+  if (card) {
+    card.dataset.detail = data.id;
+    card.setAttribute('aria-label', `View recommended ${data.name} details`);
+    card.classList.remove('pulse-update');
+    void card.offsetWidth;
+    card.classList.add('pulse-update');
+  }
+}
+
 function openFinder() {
-  state.finder = { intent: '', budget: Infinity };
+  state.finder = { intent: '', minBudget: 0, maxBudget: Infinity };
   finderStep(1);
   openLayer($('#finderModal'));
 }
@@ -516,6 +667,8 @@ function init3dHero() {
 
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
+  let animationFrame = 0;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function onMouseMove(e) {
     const rect = stage.getBoundingClientRect();
@@ -545,12 +698,32 @@ function init3dHero() {
       c.style.transform = `translate(${currentX * 0.35}px, ${-currentY * 0.35}px) translateZ(${depth}px) rotateY(${currentX * 0.5}deg) rotateX(${currentY * 0.5}deg)`;
     });
 
-    requestAnimationFrame(renderHero3d);
+    animationFrame = requestAnimationFrame(renderHero3d);
   }
 
   stage.addEventListener('mousemove', onMouseMove);
   stage.addEventListener('mouseleave', onMouseLeave);
-  renderHero3d();
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries[0]?.isIntersecting && !document.hidden;
+      if (visible && !animationFrame) renderHero3d();
+      if (!visible && animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      }
+    }, { threshold: 0.05 });
+    observer.observe(stage);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      } else if (!document.hidden && stage.getBoundingClientRect().bottom > 0 && stage.getBoundingClientRect().top < innerHeight && !animationFrame) {
+        renderHero3d();
+      }
+    });
+  } else if (!reducedMotion) {
+    renderHero3d();
+  }
 }
 
 function init3dCards() {
@@ -620,6 +793,7 @@ document.addEventListener('click', e => {
   if (cat) {
     state.category = cat.dataset.category;
     state.query = '';
+    clearSearchField();
     state.limit = 20;
     renderProducts();
     $('#products').scrollIntoView({ behavior: 'smooth' });
@@ -629,6 +803,7 @@ document.addEventListener('click', e => {
   if (catLink) {
     state.category = catLink.dataset.categoryLink;
     state.query = '';
+    clearSearchField();
     renderProducts();
     return;
   }
@@ -649,15 +824,49 @@ document.addEventListener('click', e => {
     finderStep(2);
     return;
   }
-  const budget = e.target.closest('[data-budget]');
+  const budget = e.target.closest('[data-budget-min]');
   if (budget) {
-    state.finder.budget = Number(budget.dataset.budget);
+    state.finder.minBudget = Number(budget.dataset.budgetMin);
+    state.finder.maxBudget = Number(budget.dataset.budgetMax);
     finderStep(3);
+    return;
+  }
+  const finderBack = e.target.closest('[data-finder-back]');
+  if (finderBack) {
+    finderStep(Number(finderBack.dataset.finderBack));
     return;
   }
   const order = e.target.closest('[data-order]');
   if (order) {
     orderProduct(order.dataset.order);
+    return;
+  }
+  const previewOpt = e.target.closest('[data-preview-intent]');
+  if (previewOpt) {
+    updateFinderPreview(previewOpt.dataset.previewIntent);
+    return;
+  }
+  const stepAction = e.target.closest('[data-step-action]');
+  if (stepAction) {
+    const action = stepAction.dataset.stepAction;
+    if (action === 'search') {
+      const ps = $('#products');
+      if (ps) ps.scrollIntoView({ behavior: 'smooth' });
+      if (heroSearch) heroSearch.focus();
+    } else if (action === 'cart') {
+      openLayer($('#cartDrawer'));
+    } else if (action === 'whatsapp') {
+      window.open(waLink('Hello AI Tool Gems 👋\n\nI would like to order an AI tool and have a quick question.'), '_blank');
+    } else if (action === 'warranty') {
+      toast('✓ Exact delivery time and replacement warranty are shown on every tool');
+      const faq = $('#faqList');
+      if (faq) faq.scrollIntoView({ behavior: 'smooth' });
+    }
+    return;
+  }
+  const orderBundle = e.target.closest('#orderBundleWa');
+  if (orderBundle) {
+    window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to order the Creator Stack Power Bundle (4 Tools):\n1. ChatGPT Plus (1 Month, Private) — Rs. 2,300\n2. Canva Pro Edu (1 Year, Invitation) — Rs. 900\n3. CapCut Pro (1 Month, Private) — Rs. 900\n4. ElevenLabs (1 Month, Private) — Rs. 3,300\n\n💎 Bundle Total: Rs. 7,400\n\nPlease confirm payment methods and activation time.`), '_blank');
     return;
   }
   const wa = e.target.closest('[data-whatsapp]');
@@ -677,8 +886,13 @@ document.addEventListener('click', e => {
   }
   if (e.target.id === 'clearQuery') {
     state.query = '';
-    if ($('#heroSearch')) $('#heroSearch').value = '';
+    clearSearchField();
     renderProducts();
+    return;
+  }
+  if (!e.target.closest('.search-wrap')) {
+    const suggestions = $('#suggestions');
+    if (suggestions) suggestions.classList.remove('show');
   }
 });
 
@@ -708,7 +922,32 @@ document.addEventListener('keydown', e => {
       heroSearch.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
-  if (e.key === 'Escape') closeLayers();
+  if (e.key === 'Escape') {
+    closeLayers();
+    const mobNav = $('#mobileNav');
+    if (mobNav) mobNav.classList.remove('show');
+    const menuBtn = $('#menuButton');
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[role="button"][tabindex="0"]')) {
+    e.preventDefault();
+    e.target.click();
+  }
+
+  const openLayerEl = $('.drawer.open, .modal.open');
+  if (e.key === 'Tab' && openLayerEl) {
+    const focusable = [...openLayerEl.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), [tabindex="0"]')];
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
 });
 
 const openCart = $('#openCart');
@@ -724,14 +963,6 @@ if (openComp) openComp.onclick = renderCompare;
 
 const sortSel = $('#sortSelect');
 if (sortSel) sortSel.onchange = renderProducts;
-
-const showAllBtn = $('#showAll');
-if (showAllBtn) {
-  showAllBtn.onclick = () => {
-    state.limit = 20;
-    renderProducts();
-  };
-}
 
 const filterTog = $('#filterToggle');
 if (filterTog) {
@@ -749,27 +980,60 @@ if (clearFilt) {
   clearFilt.onclick = () => {
     state.category = 'All';
     state.query = '';
+    clearSearchField();
     renderProducts();
   };
 }
 
 const menuBtn = $('#menuButton');
 if (menuBtn) {
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.setAttribute('aria-controls', 'mobileNav');
   menuBtn.onclick = () => {
     const mobNav = $('#mobileNav');
-    if (mobNav) mobNav.classList.toggle('show');
+    if (mobNav) {
+      const isOpen = mobNav.classList.toggle('show');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+    }
   };
+}
+
+const mobileNav = $('#mobileNav');
+if (mobileNav) {
+  mobileNav.addEventListener('click', e => {
+    if (!e.target.closest('a')) return;
+    mobileNav.classList.remove('show');
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+  });
+}
+
+const footerCompare = $('#footerCompare');
+if (footerCompare) {
+  footerCompare.addEventListener('click', e => {
+    e.preventDefault();
+    if (state.compare.length >= 2) {
+      renderCompare();
+    } else {
+      $('#products')?.scrollIntoView({ behavior: 'smooth' });
+      toast('Select 2 or 3 + buttons on product cards to compare');
+    }
+  });
 }
 
 const addBundleBtn = $('#addBundle');
 if (addBundleBtn) {
   addBundleBtn.onclick = () => {
-    ['chatgpt', 'canva', 'capcut', 'elevenlabs'].forEach(id => {
+    const bundleIds = ['chatgpt', 'canva', 'capcut', 'elevenlabs'];
+    if (bundleIds.every(id => state.cart.includes(id))) {
+      openLayer($('#cartDrawer'));
+      return;
+    }
+    bundleIds.forEach(id => {
       if (!state.cart.includes(id)) state.cart.push(id);
     });
     updateCart();
     renderProducts();
-    toast('Creator stack added to your cart');
+    toast('4 Creator stack tools added to your cart');
   };
 }
 
