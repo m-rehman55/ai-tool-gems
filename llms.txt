@@ -1,21 +1,45 @@
 # AI Tool Gems Pakistan
 
-AI Tool Gems is an independent Pakistan-based digital marketplace for comparing and ordering AI tools and software subscriptions with PKR pricing and WhatsApp support.
+> AI Tool Gems is a Pakistan-based independent marketplace for comparing and ordering AI tools and digital subscriptions with PKR pricing and direct WhatsApp support.
 
-## Primary page
+Last reviewed: 2026-09-11
 
-- https://aitoolgems.tech/ — product catalog, categories, guided finder, ordering process, warranties, and FAQs
+## Core pages
 
-## Important sections
+- https://aitoolgems.tech/ — complete marketplace, categories, finder, ordering process, and FAQs
+- https://aitoolgems.tech/about.html — marketplace identity, listing process, and independence disclosure
+- https://aitoolgems.tech/contact.html — verified WhatsApp contact route
+- https://aitoolgems.tech/policies.html — access, delivery, warranty, refund, privacy, and trademark policies
 
-- https://aitoolgems.tech/#categories — browse tools by ambition
-- https://aitoolgems.tech/#products — compare available products and prices
-- https://aitoolgems.tech/#finder — guided recommendation flow
-- https://aitoolgems.tech/#how — ordering and delivery process
-- https://aitoolgems.tech/#faqList — policies and common questions
+## Product catalog
 
-## Contact
+- https://aitoolgems.tech/tools/chatgpt/ — ChatGPT Plus price and plan details in Pakistan
+- https://aitoolgems.tech/tools/gemini/ — Gemini Pro price and plan details in Pakistan
+- https://aitoolgems.tech/tools/veo/ — Veo 3 Ultra price and plan details in Pakistan
+- https://aitoolgems.tech/tools/leonardo/ — Leonardo AI Essential price and plan details in Pakistan
+- https://aitoolgems.tech/tools/elevenlabs/ — ElevenLabs price and plan details in Pakistan
+- https://aitoolgems.tech/tools/canva/ — Canva Pro Edu price and plan details in Pakistan
+- https://aitoolgems.tech/tools/figma/ — Figma Pro Private price and plan details in Pakistan
+- https://aitoolgems.tech/tools/capcut/ — CapCut Pro price and plan details in Pakistan
+- https://aitoolgems.tech/tools/adobe/ — Adobe Creative Cloud price and plan details in Pakistan
+- https://aitoolgems.tech/tools/lovable/ — Lovable Pro price and plan details in Pakistan
+- https://aitoolgems.tech/tools/gamma/ — Gamma Pro price and plan details in Pakistan
+- https://aitoolgems.tech/tools/replit/ — Replit Core price and plan details in Pakistan
+- https://aitoolgems.tech/tools/n8n/ — n8n Starter price and plan details in Pakistan
+- https://aitoolgems.tech/tools/notion/ — Notion Business price and plan details in Pakistan
+- https://aitoolgems.tech/tools/nordvpn/ — NordVPN price and plan details in Pakistan
+- https://aitoolgems.tech/tools/surfshark/ — Surfshark VPN price and plan details in Pakistan
+- https://aitoolgems.tech/tools/youtube/ — YouTube Premium price and plan details in Pakistan
+- https://aitoolgems.tech/tools/netflix/ — Netflix Premium 4K price and plan details in Pakistan
+- https://aitoolgems.tech/tools/linkedin/ — LinkedIn Premium price and plan details in Pakistan
+- https://aitoolgems.tech/tools/windows/ — Windows 11 Pro Key price and plan details in Pakistan
 
-- WhatsApp: +92 347 6242709
+## Ordering facts
 
-AI Tool Gems is independent and is not affiliated with third-party product brands unless explicitly stated.
+- Prices are displayed in Pakistani rupees (PKR).
+- Each listing states its duration, access type, estimated delivery, and replacement-warranty period.
+- Availability and exact terms are confirmed through WhatsApp before payment.
+- WhatsApp support: +92 347 6242709.
+- AI Tool Gems is independent and is not affiliated with listed third-party brands unless explicitly stated.
+
+Sitemap: https://aitoolgems.tech/sitemap.xml
