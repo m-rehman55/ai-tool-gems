@@ -1,0 +1,21 @@
+# AI Tool Gems Pakistan
+
+AI Tool Gems is an independent Pakistan-based digital marketplace for comparing and ordering AI tools and software subscriptions with PKR pricing and WhatsApp support.
+
+## Primary page
+
+- https://aitoolgems.tech/ — product catalog, categories, guided finder, ordering process, warranties, and FAQs
+
+## Important sections
+
+- https://aitoolgems.tech/#categories — browse tools by ambition
+- https://aitoolgems.tech/#products — compare available products and prices
+- https://aitoolgems.tech/#finder — guided recommendation flow
+- https://aitoolgems.tech/#how — ordering and delivery process
+- https://aitoolgems.tech/#faqList — policies and common questions
+
+## Contact
+
+- WhatsApp: +92 347 6242709
+
+AI Tool Gems is independent and is not affiliated with third-party product brands unless explicitly stated.

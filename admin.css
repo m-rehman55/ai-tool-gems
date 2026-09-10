@@ -35,6 +35,8 @@ button {
   cursor: pointer;
 }
 
+[hidden] { display: none !important; }
+
 aside {
   background: rgba(7, 12, 26, 0.95);
   border-right: 1px solid var(--border-glass);
@@ -176,6 +178,23 @@ h1 {
   padding: 22px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(14px);
+}
+
+.admin-view-panel {
+  max-width: 760px;
+  margin-bottom: 24px;
+}
+
+.admin-view-panel h2 { margin: 8px 0 10px; }
+.admin-view-panel p { color: var(--text-muted); line-height: 1.65; }
+.admin-view-panel a {
+  display: inline-flex;
+  padding: 10px 15px;
+  border-radius: 9px;
+  background: var(--accent-green);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .metric-grid span {
@@ -521,8 +540,9 @@ dialog menu button:last-child {
   }
   aside {
     position: static;
-    height: 65px;
+    height: auto;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     padding: 0 15px;
   }
@@ -530,8 +550,15 @@ dialog menu button:last-child {
     display: inline;
   }
   nav {
-    display: none;
+    display: flex;
+    width: 100%;
+    margin: 8px 0 10px;
+    overflow-x: auto;
+    gap: 5px;
+    padding-bottom: 4px;
   }
+  nav button { width: auto; flex: 0 0 auto; padding: 9px 11px; }
+  nav button span { display: inline; margin-left: 3px; }
   .store-link {
     display: block;
     margin: 0 0 0 auto;
