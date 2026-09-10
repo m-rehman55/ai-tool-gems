@@ -3,12 +3,11 @@ Allow: /
 Disallow: /admin.html
 
 User-agent: GPTBot
-Allow: /
-
 User-agent: ChatGPT-User
-Allow: /
-
 User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: PerplexityBot
 Allow: /
+Disallow: /admin.html
 
 Sitemap: https://aitoolgems.tech/sitemap.xml

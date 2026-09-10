@@ -130,6 +130,11 @@ const discount = p => Math.round((1 - p.price / p.oldPrice) * 100);
 const svg = id => `<svg><use href="#${id}"></use></svg>`;
 const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
 
+window.dataLayer = window.dataLayer || [];
+function trackEvent(event, details = {}) {
+  window.dataLayer.push({ event, ...details });
+}
+
 function clearSearchField() {
   const input = $('#heroSearch');
   if (input) input.value = '';
@@ -198,9 +203,9 @@ function card(p) {
     <div class="product-body">
       <div class="product-meta">
         <span>${p.category}</span>
-        <span class="rating">★ ${p.rating}</span>
+        <span class="rating">PKR pricing</span>
       </div>
-      <h3>${p.name}</h3>
+      <h3><a class="product-page-link" href="tools/${p.id}/">${p.name}</a></h3>
       <p class="product-desc">${p.description}</p>
       <div class="tags">
         ${p.bestFor.map(t => `<span>${t}</span>`).join('')}
@@ -296,7 +301,10 @@ function updateBundleButton() {
 }
 
 function toggleCart(id) {
+  const wasInCart = state.cart.includes(id);
   state.cart = state.cart.includes(id) ? state.cart.filter(x => x !== id) : [...state.cart, id];
+  const product = products.find(p => p.id === id);
+  if (product) trackEvent(wasInCart ? 'remove_from_cart' : 'add_to_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
   updateCart();
   renderProducts();
   toast(state.cart.includes(id) ? 'Added to your cart' : 'Removed from cart');
@@ -360,6 +368,7 @@ function closeLayers() {
 function openProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
+  trackEvent('view_item', { item_id: p.id, item_name: p.name, item_category: p.category, value: p.price, currency: 'PKR' });
   const detail = $('#productDetail');
   if (detail) {
     detail.innerHTML = `
@@ -370,8 +379,8 @@ function openProduct(id) {
         <div class="detail-copy">
           <span class="detail-category">${p.category} · ${p.badge}</span>
           <h2 id="productDetailTitle">${p.name}</h2>
-          <div class="detail-rating">★★★★★ &nbsp; ${p.rating}/5 Verified Rating</div>
-          <p>${p.description} Guaranteed authentic subscription activated quickly via WhatsApp.</p>
+          <div class="detail-rating">Plan details confirmed before payment</div>
+          <p>${p.description} Availability, access type, and delivery timing are confirmed directly on WhatsApp before payment.</p>
           <div class="detail-price">${money(p.price)} <del>${money(p.oldPrice)}</del></div>
           <div class="detail-grid">
             <div class="detail-spec"><small>Plan duration</small><b>${p.duration}</b></div>
@@ -386,6 +395,7 @@ function openProduct(id) {
             <button class="add-detail" data-add="${p.id}">${state.cart.includes(p.id) ? 'Added to cart' : 'Add to cart'}</button>
             <button class="order-now" data-order="${p.id}">${svg('i-whatsapp')} Order on WhatsApp</button>
           </div>
+          <a class="full-details-link" href="tools/${p.id}/">Open full product page ${svg('i-arrow')}</a>
         </div>
       </div>
     `;
@@ -403,6 +413,7 @@ function waLink(message) {
 function orderProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
+  trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: p.price, currency: 'PKR' });
   window.open(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`), '_blank');
 }
 
@@ -410,6 +421,7 @@ function checkout() {
   const selected = state.cart.map(id => products.find(p => p.id === id)).filter(Boolean);
   if (!selected.length) return;
   const total = selected.reduce((s, p) => s + p.price, 0);
+  trackEvent('begin_checkout', { item_ids: selected.map(p => p.id), item_count: selected.length, value: total, currency: 'PKR', destination: 'whatsapp' });
   const lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — ${money(p.price)}`).join('\n');
   window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability and payment methods (JazzCash/EasyPaisa/Bank).`), '_blank');
 }
@@ -471,7 +483,6 @@ function renderCompare() {
           ['Access Type', p => p.access],
           ['Delivery', p => p.delivery],
           ['Warranty', p => p.warranty],
-          ['User Rating', p => '★ ' + p.rating + ' / 5'],
           ['Best For', p => p.bestFor.join(', ')]
         ].map(r => `
           <tr>
@@ -537,7 +548,7 @@ function finderStep(step = 1) {
     `;
   }
   if (step === 3) {
-    let matches = products.filter(p => p.intent.includes(state.finder.intent) && p.price >= state.finder.minBudget && p.price <= state.finder.maxBudget).sort((a, b) => b.rating - a.rating).slice(0, 3);
+    let matches = products.filter(p => p.intent.includes(state.finder.intent) && p.price >= state.finder.minBudget && p.price <= state.finder.maxBudget).sort((a, b) => a.price - b.price).slice(0, 3);
     let outsideBudget = false;
     if (!matches.length) {
       matches = products.filter(p => p.intent.includes(state.finder.intent)).sort((a, b) => a.price - b.price).slice(0, 3);
@@ -548,13 +559,13 @@ function finderStep(step = 1) {
         <div class="progress"><span style="width:100%"></span></div>
         <div class="eyebrow dark"><span></span> Step 3 of 3 · Recommendation ready</div>
         <h2 id="finderTitle">${outsideBudget ? 'Closest available matches' : 'Your best tool matches'}</h2>
-        <p>${outsideBudget ? 'No exact tool is available in that budget. These are the lowest-priced relevant options, shown transparently.' : 'Matched for your objective, exact budget range, and verified user rating.'}</p>
+        <p>${outsideBudget ? 'No exact tool is available in that budget. These are the lowest-priced relevant options, shown transparently.' : 'Matched for your objective and exact budget range using the catalog details shown.'}</p>
         <div class="finder-results">
           ${matches.map((p, i) => `
             <button class="finder-result" data-detail="${p.id}">
               <img src="${p.logo}" alt="${p.name}">
               <div>
-                <small>${outsideBudget ? 'CLOSEST OPTION · ABOVE BUDGET' : (i === 0 ? '★ TOP VERIFIED MATCH' : 'EXCELLENT COMPANION')}</small>
+                <small>${outsideBudget ? 'CLOSEST OPTION · ABOVE BUDGET' : (i === 0 ? 'TOP BUDGET MATCH' : 'RECOMMENDED OPTION')}</small>
                 <b>${p.name}</b>
                 <span>${p.bestFor.join(' · ')} · ${p.duration}</span>
               </div>
@@ -641,6 +652,7 @@ function updateFinderPreview(intent) {
 
 function openFinder() {
   state.finder = { intent: '', minBudget: 0, maxBudget: Infinity };
+  trackEvent('finder_start');
   finderStep(1);
   openLayer($('#finderModal'));
 }
