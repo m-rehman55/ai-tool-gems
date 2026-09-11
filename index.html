@@ -90,7 +90,7 @@
       <div class="hero-copy">
         <div class="eyebrow"><span></span> 20+ AI &amp; Digital Subscriptions</div>
         <h1>Premium AI tools<br><em>in Pakistan.</em></h1>
-        <p>Explore AI models, creative suites, and automation tools—clearly priced in PKR, described by access type, and ordered directly via WhatsApp.</p>
+        <p>Compare 20 AI and digital subscriptions in PKR, then order with 1-on-1 support on WhatsApp.</p>
         <div class="hero-actions">
           <a class="primary-button" href="#products">Explore marketplace <svg><use href="#i-arrow"></use></svg></a>
           <button class="text-button" data-open-finder><svg><use href="#i-spark"></use></svg> Guided tool finder</button>
@@ -140,37 +140,21 @@
       </div>
     </section>
 
-    <section class="search-deck shell" aria-label="Marketplace search">
-      <div class="search-wrap">
-        <svg><use href="#i-search"></use></svg>
-        <input id="heroSearch" type="search" autocomplete="off" placeholder="What AI tool or software do you need? (e.g. ChatGPT, Canva, video...)" aria-label="Search products">
-        <kbd>⌘ K</kbd>
-        <div class="suggestions" id="suggestions"></div>
-      </div>
-      <div class="quick-search"><span>Trending:</span><button data-query="video">AI video</button><button data-query="design">Design &amp; UI</button><button data-query="coding">Coding &amp; Agents</button><button data-query="under 1000">Under Rs. 1,000</button></div>
-    </section>
-
-    <section class="stats-strip">
-      <div class="shell stats-inner">
-        <div><b>20+</b><span>Premium AI tools</span></div>
-        <div><b>PKR</b><span>Local transparent pricing</span></div>
-        <div><b>1:1</b><span>Direct WhatsApp support</span></div>
-        <div><b>Clear</b><span>Plan warranty details</span></div>
-      </div>
-    </section>
-
     <section class="section products-section" id="products">
       <div class="shell">
-        <div class="catalog-intro">
-          <h2>Which AI tools can I order in Pakistan?</h2>
-          <p>AI Tool Gems is a Pakistan-based marketplace where customers can compare 20 AI tools and digital subscriptions in Pakistani rupees. Every listing shows its current marketplace price, plan duration, access type, delivery estimate, and replacement-warranty period before an order is placed. The catalog covers AI assistants, video and voice tools, design software, developer platforms, productivity services, VPNs, entertainment subscriptions, business tools, and software licenses. Add a product to the cart or open its dedicated page, then send the prepared request through WhatsApp. The team confirms availability, payment details, exact access conditions, and expected delivery before payment. Product features are reviewed against official vendor information, including <a href="https://openai.com/chatgpt/pricing/" rel="noopener">OpenAI</a>, <a href="https://one.google.com/about/google-ai-plans/" rel="noopener">Google</a>, <a href="https://www.canva.com/pricing/" rel="noopener">Canva</a>, and <a href="https://www.adobe.com/creativecloud/plans.html" rel="noopener">Adobe</a>. AI Tool Gems is independent and is not affiliated with or endorsed by listed brands unless explicitly stated. Customers can request clarification through WhatsApp.</p>
-          <div class="catalog-review"><strong>Reviewed by AI Tool Gems:</strong> 11 September 2026 <span aria-hidden="true">·</span> <a href="how-we-review.html">See our listing review method</a></div>
-        </div>
         <div class="section-head products-head">
           <div><div class="eyebrow dark"><span></span> Handpicked subscriptions</div><h2>Trending 3D gems.</h2></div>
-          <div class="filter-actions">
-            <button class="filter-toggle" id="filterToggle" aria-expanded="true" aria-controls="filterRow"><svg><use href="#i-sliders"></use></svg> Filters</button>
-            <select id="sortSelect" aria-label="Sort products"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="discount">Biggest saving</option></select>
+          <div class="marketplace-tools">
+            <div class="search-wrap compact-search">
+              <svg><use href="#i-search"></use></svg>
+              <input id="heroSearch" type="search" autocomplete="off" placeholder="Search tools..." aria-label="Search products">
+              <kbd>⌘ K</kbd>
+              <div class="suggestions" id="suggestions"></div>
+            </div>
+            <div class="filter-actions">
+              <button class="filter-toggle" id="filterToggle" aria-expanded="true" aria-controls="filterRow"><svg><use href="#i-sliders"></use></svg> Filters</button>
+              <select id="sortSelect" aria-label="Sort products"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="discount">Biggest saving</option></select>
+            </div>
           </div>
         </div>
         <div class="filter-row" id="filterRow"><button class="filter-chip active" data-filter="All" aria-pressed="true">All</button><button class="filter-chip" data-filter="AI Assistants" aria-pressed="false">AI Assistants</button><button class="filter-chip" data-filter="AI Video" aria-pressed="false">AI Video</button><button class="filter-chip" data-filter="Design" aria-pressed="false">Design</button><button class="filter-chip" data-filter="Development" aria-pressed="false">Development</button><button class="filter-chip" data-filter="Productivity" aria-pressed="false">Productivity</button><button class="filter-chip" data-filter="VPN &amp; Security" aria-pressed="false">VPN &amp; Security</button><button class="filter-chip" data-filter="Entertainment" aria-pressed="false">Entertainment</button></div>
@@ -479,6 +463,7 @@
   }
   </script>
   <script>window.addEventListener('error',function(e){document.documentElement.setAttribute('data-js-error',(e.message||'Script error')+':'+(e.lineno||0))})</script>
+  <script src="attribution.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

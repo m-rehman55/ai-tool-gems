@@ -939,6 +939,34 @@ button.suggestion {
   background: rgba(0, 229, 255, 0.08);
 }
 
+.marketplace-tools {
+  width: min(100%, 470px);
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+}
+
+.compact-search {
+  width: min(100%, 360px);
+  height: 44px;
+  padding: 0 13px;
+  border-radius: 12px;
+}
+
+.compact-search > svg {
+  width: 18px;
+  height: 18px;
+}
+
+.compact-search input {
+  padding-inline: 11px;
+  font-size: 13px;
+}
+
+.compact-search .suggestions {
+  top: 52px;
+}
+
 /* --------------------------------------------------------------------------
    STATS STRIP
    -------------------------------------------------------------------------- */

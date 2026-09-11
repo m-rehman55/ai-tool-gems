@@ -1,0 +1,22 @@
+[
+  {"id":"chatgpt","name":"ChatGPT Plus","category":"AI Assistants","price":2300,"old_price":3000,"duration":"1 Month","access":"Private","delivery":"15–30 min","warranty":"7 Days","best_for":["writing","coding","study"]},
+  {"id":"gemini","name":"Gemini Pro","category":"AI Assistants","price":800,"old_price":1500,"duration":"18 Months","access":"Invitation","delivery":"30–60 min","warranty":"30 Days","best_for":["research","study","Google workflows"]},
+  {"id":"veo","name":"Veo 3 Ultra","category":"AI Video","price":2100,"old_price":3000,"duration":"Unlimited plan listing","access":"Shared","delivery":"15–30 min","warranty":"7 Days","best_for":["AI video","ads","creators"]},
+  {"id":"leonardo","name":"Leonardo AI Essential","category":"Design","price":1900,"old_price":2600,"duration":"8,500 Credits","access":"Private","delivery":"30–60 min","warranty":"7 Days","best_for":["images","assets","concept art"]},
+  {"id":"elevenlabs","name":"ElevenLabs","category":"AI Voice","price":3300,"old_price":4200,"duration":"1 Month","access":"Private","delivery":"30–60 min","warranty":"7 Days","best_for":["voice","dubbing","audio"]},
+  {"id":"canva","name":"Canva Pro Edu","category":"Design","price":900,"old_price":1800,"duration":"1 Year","access":"Invitation","delivery":"15–30 min","warranty":"30 Days","best_for":["design","social media","students"]},
+  {"id":"figma","name":"Figma Pro Private","category":"Design","price":3000,"old_price":4800,"duration":"2 Years","access":"Private","delivery":"1–2 hours","warranty":"30 Days","best_for":["UI/UX","teams","web design"]},
+  {"id":"capcut","name":"CapCut Pro","category":"AI Video","price":900,"old_price":1400,"duration":"1 Month","access":"Private","delivery":"15–30 min","warranty":"7 Days","best_for":["reels","shorts","editing"]},
+  {"id":"adobe","name":"Adobe Creative Cloud","category":"Design","price":1700,"old_price":2600,"duration":"2 Months","access":"Private","delivery":"1–2 hours","warranty":"7 Days","best_for":["creative work","photo","video"]},
+  {"id":"lovable","name":"Lovable Pro","category":"Development","price":1600,"old_price":2200,"duration":"1 Month","access":"Private","delivery":"30–60 min","warranty":"7 Days","best_for":["apps","web","MVPs"]},
+  {"id":"gamma","name":"Gamma Pro","category":"Productivity","price":23000,"old_price":28000,"duration":"1 Year","access":"Private","delivery":"1–2 hours","warranty":"30 Days","best_for":["slides","pitching","documents"]},
+  {"id":"replit","name":"Replit Core","category":"Development","price":3200,"old_price":4200,"duration":"$40 Credits","access":"Private","delivery":"30–60 min","warranty":"7 Days","best_for":["coding","apps","deployment"]},
+  {"id":"n8n","name":"n8n Starter","category":"Development","price":7000,"old_price":9000,"duration":"1 Year","access":"Private","delivery":"1–2 hours","warranty":"30 Days","best_for":["workflows","agents","teams"]},
+  {"id":"notion","name":"Notion Business","category":"Productivity","price":2200,"old_price":3000,"duration":"3 Months","access":"Invitation","delivery":"30–60 min","warranty":"30 Days","best_for":["docs","projects","teams"]},
+  {"id":"nordvpn","name":"NordVPN","category":"VPN & Security","price":1800,"old_price":2400,"duration":"3 Months","access":"Private","delivery":"15–30 min","warranty":"7 Days","best_for":["privacy","travel","streaming"]},
+  {"id":"surfshark","name":"Surfshark VPN","category":"VPN & Security","price":800,"old_price":1200,"duration":"2 Months","access":"Shared","delivery":"15–30 min","warranty":"7 Days","best_for":["privacy","multiple devices","travel"]},
+  {"id":"youtube","name":"YouTube Premium","category":"Entertainment","price":1200,"old_price":1700,"duration":"3 Months","access":"Invitation","delivery":"15–30 min","warranty":"30 Days","best_for":["music","video","mobile"]},
+  {"id":"netflix","name":"Netflix Premium 4K","category":"Entertainment","price":400,"old_price":650,"duration":"1 Month","access":"Shared","delivery":"15–30 min","warranty":"7 Days","best_for":["movies","series","4K streaming"]},
+  {"id":"linkedin","name":"LinkedIn Premium","category":"Business","price":1500,"old_price":2400,"duration":"2 Months","access":"Invitation","delivery":"30–60 min","warranty":"7 Days","best_for":["jobs","learning","sales"]},
+  {"id":"windows","name":"Windows 11 Pro Key","category":"Software","price":1900,"old_price":2800,"duration":"Lifetime license listing","access":"License Key","delivery":"15–30 min","warranty":"7 Days","best_for":["PC","work","security"]}
+]
