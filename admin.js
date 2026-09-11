@@ -46,7 +46,7 @@ const escapeHTML = value => String(value || '').replace(/[&<>'"]/g, char => ({ '
 function renderAdminProducts() {
   $('#adminProducts').innerHTML = adminProducts.map(product => `
     <tr>
-      <td><div class="product-cell"><img src="${product.logo || 'assets/brand-logo-light.png'}" alt="${escapeHTML(product.name)} logo"><span><b>${escapeHTML(product.name)}</b><small>Saved in this browser</small></span></div></td>
+      <td><div class="product-cell"><img src="${product.logo || 'assets/brand-logo-light.webp'}" width="128" height="128" loading="lazy" alt="${escapeHTML(product.name)} logo"><span><b>${escapeHTML(product.name)}</b><small>Saved in this browser</small></span></div></td>
       <td>${escapeHTML(product.category)}</td>
       <td><b>${money(product.price)}</b></td>
       <td><span class="status">In stock</span></td>
@@ -92,7 +92,7 @@ form.addEventListener('submit', event => {
     price,
     description: $('#productDescription').value.trim(),
     domain: current?.domain || '',
-    logo: current?.logo || 'assets/brand-logo-light.png'
+    logo: current?.logo || 'assets/brand-logo-light.webp'
   };
   if (current) adminProducts = adminProducts.map(product => product.id === editingId ? next : product);
   else adminProducts.push(next);
