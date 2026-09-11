@@ -39,8 +39,8 @@
   --radius-pill: 9999px;
   
   /* Typography */
-  --font-display: "Outfit", sans-serif;
-  --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", Arial, sans-serif;
+  --font-body: "Segoe UI Variable Text", "Segoe UI", Arial, sans-serif;
 }
 
 /* --------------------------------------------------------------------------
@@ -2395,13 +2395,16 @@ body.compare-mode .floating-whatsapp { bottom: 106px; }
   -webkit-backdrop-filter: blur(8px);
   z-index: 60;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
 }
 
 .backdrop.show {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+  transition-delay: 0s;
 }
 
 .drawer {
@@ -3131,6 +3134,7 @@ body.compare-mode .floating-whatsapp { bottom: 106px; }
   }
   .brand {
     min-width: 0;
+    min-height: 44px;
     gap: 8px;
   }
   .brand-mark-3d {
