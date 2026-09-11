@@ -50,6 +50,18 @@ class TelegramClient:
     def member_count(self, chat_id: str) -> int:
         return int(self.call("getChatMemberCount", {"chat_id": chat_id}))
 
+    def updates(self) -> list[dict[str, Any]]:
+        result = self.call("getUpdates", {"allowed_updates": ["message"]})
+        return list(result or [])
+
+    def latest_private_chat(self) -> dict[str, Any] | None:
+        for update in reversed(self.updates()):
+            message = update.get("message") or {}
+            chat = message.get("chat") or {}
+            if chat.get("type") == "private":
+                return chat
+        return None
+
     def send_message(self, chat_id: str, text: str, button_url: str | None = None) -> dict[str, Any]:
         payload: dict[str, Any] = {
             "chat_id": chat_id,
