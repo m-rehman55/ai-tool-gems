@@ -24,7 +24,7 @@ def build_report(settings: Settings, report_date: date) -> str:
               COALESCE(SUM(m.revenue),0) revenue, COALESCE(SUM(m.reactions),0) reactions,
               COALESCE(SUM(m.forwards),0) forwards
             FROM metrics m LEFT JOIN posts p ON p.id=m.post_id
-            WHERE substr(m.captured_at,1,10)=?
+            WHERE m.post_id IS NOT NULL AND substr(p.scheduled_at,1,10)=?
             """, (day,)
         ).fetchone()
         top = connection.execute(
