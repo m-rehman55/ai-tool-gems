@@ -2,13 +2,18 @@
 
 from __future__ import annotations
 
-from datetime import date
+import json
+from datetime import date, datetime
+from pathlib import Path
 
 from .catalog import Product
 from .config import Settings
 from .telegram import TelegramClient
 from .tracking import product_url, tracking_code
 from .trial import build_slot
+
+
+STATE_PATH = Path(__file__).resolve().parent / "data" / "social-state.json"
 
 
 def _instagram(product: Product, url: str) -> str:
@@ -76,11 +81,25 @@ def daily_pack(settings: Settings, day: date) -> list[str]:
     return messages
 
 
-def send_daily_pack(settings: Settings, day: date) -> int:
+def send_daily_pack(settings: Settings, day: date, state_path: Path = STATE_PATH) -> int:
+    state = {"sent_dates": {}}
+    if state_path.exists():
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+    sent_dates = state.setdefault("sent_dates", {})
+    if day.isoformat() in sent_dates:
+        return 0
     if not settings.owner_reports_ready:
         raise RuntimeError("Owner Telegram credentials are missing")
     client = TelegramClient(settings.telegram_bot_token)
     messages = daily_pack(settings, day)
     for message in messages:
         client.send_with_retry(settings.telegram_owner_chat_id, message)
+    sent_dates[day.isoformat()] = {
+        "sent_at": datetime.now(settings.timezone).isoformat(timespec="seconds"),
+        "messages": len(messages),
+    }
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    temp = state_path.with_suffix(".tmp")
+    temp.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+    temp.replace(state_path)
     return len(messages)
