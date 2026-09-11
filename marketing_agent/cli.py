@@ -16,6 +16,7 @@ from .learning import learn, recommendations
 from .metrics import capture_telegram_subscribers, record_metrics
 from .posting import approve_posts, list_posts, publish_due
 from .reporting import build_report, report_already_sent, save_report, send_report
+from .seo_monitor import format_report as format_seo_report, run_monitor
 from .social import daily_pack, send_daily_pack
 from .telegram import TelegramClient
 from .trial import claim_slot, publish_payload, send_trial_report, trial_plan
@@ -79,6 +80,9 @@ def parser() -> argparse.ArgumentParser:
     trial_publish.add_argument("--payload", required=True)
     trial_report = commands.add_parser("trial-report", help="Send the honest hosted-trial daily report")
     trial_report.add_argument("--date", required=True)
+    seo_monitor = commands.add_parser("seo-monitor", help="Audit live SEO/GEO integrity and optionally alert the owner")
+    seo_monitor.add_argument("--send", action="store_true")
+    seo_monitor.add_argument("--json", action="store_true")
     tick = commands.add_parser("tick", help="Idempotent scheduler tick: generate, publish due, report after 21:00")
     tick.add_argument("--dry-run", action="store_true")
     return root
@@ -177,6 +181,9 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "trial-report":
         sent = send_trial_report(settings, date.fromisoformat(args.date))
         print("report-sent" if sent else "report-already-sent")
+    elif args.command == "seo-monitor":
+        result = run_monitor(settings, send=args.send)
+        print(json.dumps(result, indent=2) if args.json else format_seo_report(result))
     elif args.command == "tick":
         today = datetime.now(settings.timezone).date()
         inserted, duplicates = generate_days(settings, today, 1, settings.auto_approve)

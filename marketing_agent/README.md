@@ -19,6 +19,7 @@ It does **not** scrape audiences, auto-DM people, post to groups without permiss
 - duplicate-safe GitHub-hosted trial posts at 09:15, 13:30 and 18:45 Pakistan time
 - Telegram command menu for catalog, deals, WhatsApp contact and help
 - private daily Instagram, Facebook, WhatsApp Status and Reel/TikTok content pack
+- daily live SEO/GEO integrity monitoring across every sitemap URL, robots.txt, llms.txt and homepage schema
 
 Telegram's Bot API supports channel posting and `getChatMemberCount`, but it does not expose the user-only channel view-counter method. See the official [Bot API](https://core.telegram.org/bots/api) and [view-counter API limitation](https://core.telegram.org/method/messages.getMessagesViews). For that reason, view and forward figures are manual imports unless a separately authorized, compliant analytics source is added later.
 
@@ -45,7 +46,10 @@ python -m marketing_agent trial-plan
 python -m marketing_agent social-pack --date 2026-09-12
 python -m marketing_agent setup-bot
 python -m marketing_agent process-commands
+python -m marketing_agent seo-monitor --json
 ```
+
+The hosted SEO/GEO monitor runs at 07:15 Pakistan time and sends a factual Telegram result. It detects regressions; it does not manufacture daily page edits or promise rankings. See [SOCIAL-LAUNCH-KIT.md](SOCIAL-LAUNCH-KIT.md) for the owner-verified Facebook, Instagram and TikTok setup gate.
 
 ## Local draft validation
 
