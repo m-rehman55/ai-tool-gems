@@ -7,3 +7,9 @@
 /ACTION-PLAN.md
 .DS_Store
 Thumbs.db
+.env
+marketing_agent/data/*.db
+marketing_agent/data/*.db-*
+marketing_agent/exports/
+__pycache__/
+*.py[cod]

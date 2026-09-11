@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /marketing_agent/
+Disallow: /.env.example
 
 User-agent: GPTBot
 User-agent: ChatGPT-User
@@ -9,6 +11,8 @@ User-agent: ClaudeBot
 User-agent: PerplexityBot
 Allow: /
 Disallow: /admin.html
+Disallow: /marketing_agent/
+Disallow: /.env.example
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
 

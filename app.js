@@ -407,7 +407,8 @@ function waLink(message) {
   const saved = localStorage.getItem('atg-whatsapp');
   const cleanSaved = (saved || '').replace(/\D/g, '');
   const number = /^\d{10,15}$/.test(cleanSaved) && cleanSaved !== '923001234567' ? cleanSaved : DEFAULT_WA_NUMBER;
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  const attributedMessage = window.ATGAttribution ? window.ATGAttribution.appendToMessage(message) : message;
+  return `https://wa.me/${number}?text=${encodeURIComponent(attributedMessage)}`;
 }
 
 function orderProduct(id) {
