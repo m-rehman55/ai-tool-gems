@@ -1,12 +1,12 @@
 const DEFAULT_WA_NUMBER = '923476242709';
 
 const products = [
-  {id:'chatgpt',name:'ChatGPT Plus',category:'AI Assistants',description:'Advanced writing, research, coding and creative assistance with GPT-4o & reasoning.',price:2300,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Writing','Coding','Study'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Advanced AI models','Image generation','File analysis','Voice conversations'],intent:['writing','research','study','code','coding','content']},
-  {id:'gemini',name:'Gemini Pro',category:'AI Assistants',description:'Google’s multimodal AI for deep research, documents, code and everyday workflow.',price:800,oldPrice:1500,duration:'18 Months',access:'Invitation',delivery:'30–60 min',warranty:'30 Days',rating:4.8,badge:'Best Value',bestFor:['Research','Study','Google'],logo:'https://cdn.simpleicons.org/googlegemini/FFFFFF',features:['2M token context window','Google Workspace integration','Multimodal reasoning','Deep research mode'],intent:['writing','research','study','content']},
-  {id:'veo',name:'Veo 3 Ultra',category:'AI Video',description:'Generate cinematic AI video with photorealistic motion, physics, and native audio.',price:2100,oldPrice:3000,duration:'Unlimited',access:'Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Video','Ads','Creators'],logo:'https://cdn.simpleicons.org/google/FFFFFF',features:['Text to 1080p video','Native synchronized audio','Consistent motion','Unlimited generations'],intent:['video','videos','creator']},
+  {id:'chatgpt',name:'ChatGPT Plus',category:'AI Assistants',description:'Advanced writing, research, coding, image and creative assistance in one workspace.',price:2300,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Writing','Coding','Study'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Advanced AI models','Image generation','File analysis','Voice conversations'],intent:['writing','research','study','code','coding','content']},
+  {id:'gemini',name:'Gemini Pro',category:'AI Assistants',description:'Google’s multimodal AI for research, documents, code and everyday workflows.',price:800,oldPrice:1500,duration:'18 Months',access:'Invitation',delivery:'30–60 min',warranty:'30 Days',rating:4.8,badge:'Best Value',bestFor:['Research','Study','Google'],logo:'https://cdn.simpleicons.org/googlegemini/FFFFFF',features:['Long-context document analysis','Google service integrations','Multimodal reasoning','Research assistance'],intent:['writing','research','study','content']},
+  {id:'veo',name:'Veo 3 Ultra',category:'AI Video',description:'Generate cinematic AI video with realistic motion and audio-capable workflows.',price:2100,oldPrice:3000,duration:'Unlimited',access:'Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Video','Ads','Creators'],logo:'https://cdn.simpleicons.org/google/FFFFFF',features:['Text-to-video workflow','Audio-capable generation','Consistent motion tools','Plan allowance confirmed before payment'],intent:['video','videos','creator']},
   {id:'leonardo',name:'Leonardo AI Essential',category:'Design',description:'Create production-ready digital art, marketing visuals, assets and concepts.',price:1900,oldPrice:2600,duration:'8,500 Credits',access:'Private',delivery:'30–60 min',warranty:'7 Days',rating:4.7,badge:'For Creators',bestFor:['Images','Assets','Concepts'],logo:'https://cdn.simpleicons.org/leonardoai/FFFFFF',features:['PhotoReal & Alchemy pipeline','Realtime canvas','Prompt enhancer','Commercial license'],intent:['image','images','design','creator']},
-  {id:'elevenlabs',name:'ElevenLabs',category:'AI Voice',description:'Hyper-realistic AI voice synthesis & voice cloning for reels, ads, and podcasts.',price:3300,oldPrice:4200,duration:'1 Month',access:'Private',delivery:'30–60 min',warranty:'7 Days',rating:4.8,badge:'Premium',bestFor:['Voice','Dubbing','Audio'],logo:'https://cdn.simpleicons.org/elevenlabs/FFFFFF',features:['130,000 credits/mo','Voice cloning library','Multilingual speech','Low latency API'],intent:['voice','audio','video','creator']},
-  {id:'canva',name:'Canva Pro Edu',category:'Design',description:'Design social media posts, pitch decks, presentations and branded assets.',price:900,oldPrice:1800,duration:'1 Year',access:'Invitation',delivery:'15–30 min',warranty:'30 Days',rating:4.9,badge:'Best Seller',bestFor:['Design','Social','Students'],logo:'https://cdn.simpleicons.org/canva/FFFFFF',features:['100M+ premium assets','1-click background remover','Magic Studio AI tools','Cloud brand kit'],intent:['image','images','design','presentation','study','creator','social']},
+  {id:'elevenlabs',name:'ElevenLabs',category:'AI Voice',description:'Realistic AI speech, dubbing and permitted voice-cloning workflows for media.',price:3300,oldPrice:4200,duration:'1 Month',access:'Private',delivery:'30–60 min',warranty:'7 Days',rating:4.8,badge:'Premium',bestFor:['Voice','Dubbing','Audio'],logo:'https://cdn.simpleicons.org/elevenlabs/FFFFFF',features:['Monthly voice credit allowance','Voice library tools','Multilingual speech','API access subject to plan'],intent:['voice','audio','video','creator']},
+  {id:'canva',name:'Canva Pro Edu',category:'Design',description:'Design social media posts, pitch decks, presentations and branded assets.',price:900,oldPrice:1800,duration:'1 Year',access:'Invitation',delivery:'15–30 min',warranty:'30 Days',rating:4.9,badge:'Best Seller',bestFor:['Design','Social','Students'],logo:'https://cdn.simpleicons.org/canva/FFFFFF',features:['Premium templates and assets','Background-removal tools','Magic Studio AI tools','Brand management features'],intent:['image','images','design','presentation','study','creator','social']},
   {id:'figma',name:'Figma Pro Private',category:'Design',description:'Professional interface design, prototyping and design system workspace.',price:3000,oldPrice:4800,duration:'2 Years',access:'Private',delivery:'1–2 hours',warranty:'30 Days',rating:4.8,badge:'Long Term',bestFor:['UI/UX','Teams','Web'],logo:'https://cdn.simpleicons.org/figma/FFFFFF',features:['Unlimited files & version history','Dev Mode inspection','Shared design libraries','Full prototype viewer'],intent:['design','code','coding','business']},
   {id:'capcut',name:'CapCut Pro',category:'AI Video',description:'Fast, intuitive editing suite for viral TikToks, Instagram Reels, and YouTube Shorts.',price:900,oldPrice:1400,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.7,badge:'Popular',bestFor:['Reels','Shorts','Editing'],logo:'https://cdn.simpleicons.org/capcut/FFFFFF',features:['Pro video transitions & filters','Auto captions generator','AI background remover','Cloud draft sync'],intent:['video','videos','creator','social']},
   {id:'adobe',name:'Adobe Creative Cloud',category:'Design',description:'Complete suite of Photoshop, Illustrator, Premiere Pro, After Effects and Firefly.',price:1700,oldPrice:2600,duration:'2 Months',access:'Private',delivery:'1–2 hours',warranty:'7 Days',rating:4.8,badge:'Pro Choice',bestFor:['Creative','Photo','Video'],logo:'https://cdn.simpleicons.org/adobecreativecloud/FFFFFF',features:['20+ desktop & web apps','Firefly generative credits','100GB Adobe Cloud storage','Adobe Fonts access'],intent:['image','images','design','video','creator']},
@@ -19,8 +19,8 @@ const products = [
   {id:'surfshark',name:'Surfshark VPN',category:'VPN & Security',description:'Reliable everyday privacy, geo-unblocking, and unlimited device connections.',price:800,oldPrice:1200,duration:'2 Months',access:'Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.6,badge:'Best Value',bestFor:['Privacy','Devices','Travel'],logo:'https://cdn.simpleicons.org/surfshark/FFFFFF',features:['Unlimited device support','CleanWeb ad & tracker blocker','Global server locations','Bypasser split tunneling'],intent:['vpn','security','privacy']},
   {id:'youtube',name:'YouTube Premium',category:'Entertainment',description:'Ad-free videos, background play on mobile, offline downloads, and YouTube Music.',price:1200,oldPrice:1700,duration:'3 Months',access:'Invitation',delivery:'15–30 min',warranty:'30 Days',rating:4.8,badge:'Popular',bestFor:['Music','Video','Mobile'],logo:'https://cdn.simpleicons.org/youtube/FFFFFF',features:['Zero video ads','Background & picture-in-picture','Offline smart downloads','Full YouTube Music access'],intent:['entertainment','video','music']},
   {id:'netflix',name:'Netflix Premium 4K',category:'Entertainment',description:'Stream global movies and series in crisp 4K Ultra HD with spatial audio.',price:400,oldPrice:650,duration:'1 Month',access:'Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.5,badge:'Quick Delivery',bestFor:['Movies','Series','4K'],logo:'https://cdn.simpleicons.org/netflix/FFFFFF',features:['4K Ultra HD & HDR resolution','Spatial audio support','Smart TV & laptop compatibility','Dedicated profile access'],intent:['entertainment','video','movies']},
-  {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'Career growth insights, competitive applicant analysis, and LinkedIn Learning.',price:1500,oldPrice:2400,duration:'2 Months',access:'Invitation',delivery:'30–60 min',warranty:'7 Days',rating:4.6,badge:'Career',bestFor:['Jobs','Learning','Sales'],logo:'https://cdn.simpleicons.org/linkedin/FFFFFF',features:['5 InMail credits per month','See who viewed your profile','Competitive job applicant insights','16,000+ LinkedIn Learning courses'],intent:['business','jobs','study']},
-  {id:'windows',name:'Windows 11 Pro Key',category:'Software',description:'Official retail digital license key for permanent Windows 11 Pro activation.',price:1900,oldPrice:2800,duration:'Lifetime',access:'License Key',delivery:'15–30 min',warranty:'7 Days',rating:4.7,badge:'License Key',bestFor:['PC','Work','Security'],logo:'https://cdn.simpleicons.org/windows11/FFFFFF',features:['100% genuine retail key','BitLocker drive encryption','Remote Desktop Host','Direct Microsoft online activation'],intent:['software','windows','business']}
+  {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'Career insights, applicant tools and professional learning features.',price:1500,oldPrice:2400,duration:'2 Months',access:'Invitation',delivery:'30–60 min',warranty:'7 Days',rating:4.6,badge:'Career',bestFor:['Jobs','Learning','Sales'],logo:'https://cdn.simpleicons.org/linkedin/FFFFFF',features:['InMail allowance subject to tier','Profile-viewer insights','Applicant comparison tools','LinkedIn Learning access'],intent:['business','jobs','study']},
+  {id:'windows',name:'Windows 11 Pro Key',category:'Software',description:'Digital license key for Windows 11 Pro activation, subject to confirmed terms.',price:1900,oldPrice:2800,duration:'Lifetime',access:'License Key',delivery:'15–30 min',warranty:'7 Days',rating:4.7,badge:'License Key',bestFor:['PC','Work','Security'],logo:'https://cdn.simpleicons.org/windows11/FFFFFF',features:['Digital retail activation key','BitLocker drive encryption','Remote Desktop Host','Online activation instructions'],intent:['software','windows','business']}
 ];
 
 const categoryData = [
@@ -93,7 +93,7 @@ try {
           rating: 4.5,
           badge: 'New',
           bestFor: [safeCatalogText(saved.category)],
-          logo: saved.logo && /^(https:\/\/|assets\/)/.test(saved.logo) ? saved.logo : 'assets/brand-logo-light.png',
+          logo: saved.logo && /^(https:\/\/|assets\/)/.test(saved.logo) ? saved.logo : 'assets/brand-logo-light.webp',
           features: ['Plan details confirmed before payment', 'Direct WhatsApp activation'],
           intent: [String(saved.category).toLowerCase(), String(saved.name).toLowerCase()]
         });
@@ -198,7 +198,7 @@ function card(p) {
       <button class="compare-toggle ${comparing ? 'active' : ''}" data-compare="${p.id}" aria-label="Compare ${p.name}">
         ${svg(comparing ? 'i-check' : 'i-plus')}
       </button>
-      <img class="brand-logo" src="${p.logo}" alt="Official ${p.name} logo" decoding="async" referrerpolicy="no-referrer">
+      <img class="brand-logo" src="${p.logo}" width="128" height="128" loading="lazy" alt="Official ${p.name} logo" decoding="async" referrerpolicy="no-referrer">
     </div>
     <div class="product-body">
       <div class="product-meta">
@@ -265,7 +265,7 @@ function updateCart() {
   if (cartItems) {
     cartItems.innerHTML = selected.length ? selected.map(p => `
       <div class="cart-item">
-        <img src="${p.logo}" alt="${p.name}">
+        <img src="${p.logo}" width="128" height="128" loading="lazy" alt="${p.name}">
         <span>
           <b>${p.name}</b>
           <small>${p.duration} · ${p.access} Plan</small>
@@ -275,7 +275,7 @@ function updateCart() {
       </div>
     `).join('') : `
       <div class="cart-empty">
-        <img src="assets/logo-transparent.png" class="empty-state-logo" alt="AI Tool Gems Diamond">
+        <img src="assets/logo-transparent.webp" width="1024" height="1024" loading="lazy" class="empty-state-logo" alt="AI Tool Gems Diamond">
         <h3>Your cart is empty</h3>
         <p>Explore the 3D marketplace and add tools here.</p>
       </div>
@@ -320,7 +320,7 @@ function updateCompare() {
   if (compMini) {
     compMini.innerHTML = state.compare.map(id => {
       const p = products.find(x => x.id === id);
-      return `<img src="${p.logo}" alt="${p.name}">`;
+      return `<img src="${p.logo}" width="128" height="128" alt="${p.name}">`;
     }).join('');
   }
 }
@@ -374,7 +374,7 @@ function openProduct(id) {
     detail.innerHTML = `
       <div class="product-detail">
         <div class="detail-media">
-          <img class="brand-logo" src="${p.logo}" alt="Official ${p.name} logo">
+          <img class="brand-logo" src="${p.logo}" width="128" height="128" alt="Official ${p.name} logo">
         </div>
         <div class="detail-copy">
           <span class="detail-category">${p.category} · ${p.badge}</span>
@@ -436,7 +436,7 @@ function showSuggestions(q) {
   const hits = products.filter(p => [p.name, p.category, ...p.intent].join(' ').toLowerCase().includes(q.toLowerCase())).slice(0, 5);
   box.innerHTML = hits.length ? hits.map(p => `
     <button type="button" class="suggestion" data-suggest="${p.id}">
-      <img src="${p.logo}" alt="${p.name}">
+      <img src="${p.logo}" width="128" height="128" loading="lazy" alt="${p.name}">
       <span>${p.name}</span>
       <small>${money(p.price)}</small>
     </button>
@@ -464,7 +464,7 @@ function renderCompare() {
   if (!content) return;
   content.innerHTML = ps.length < 2 ? `
     <div class="cart-empty">
-      <img src="assets/logo-transparent.png" class="empty-state-logo" alt="">
+      <img src="assets/logo-transparent.webp" width="1024" height="1024" loading="lazy" class="empty-state-logo" alt="">
       <h3>Select one more tool</h3>
       <p>Select 2 or 3 products to compare features and prices side by side.</p>
     </div>
@@ -473,7 +473,7 @@ function renderCompare() {
       <thead>
         <tr>
           <th></th>
-          ${ps.map(p => `<th><img src="${p.logo}" alt="">${p.name}</th>`).join('')}
+          ${ps.map(p => `<th><img src="${p.logo}" width="128" height="128" alt="">${p.name}</th>`).join('')}
         </tr>
       </thead>
       <tbody>
@@ -563,7 +563,7 @@ function finderStep(step = 1) {
         <div class="finder-results">
           ${matches.map((p, i) => `
             <button class="finder-result" data-detail="${p.id}">
-              <img src="${p.logo}" alt="${p.name}">
+              <img src="${p.logo}" width="128" height="128" loading="lazy" alt="${p.name}">
               <div>
                 <small>${outsideBudget ? 'CLOSEST OPTION · ABOVE BUDGET' : (i === 0 ? 'TOP BUDGET MATCH' : 'RECOMMENDED OPTION')}</small>
                 <b>${p.name}</b>
@@ -603,7 +603,7 @@ const finderPreviewPresets = {
     badge: 'Top match · 99% fit',
     id: 'chatgpt',
     name: 'ChatGPT Plus',
-    desc: 'GPT-4o reasoning, deep research, coding & writing assistant',
+    desc: 'Advanced research, coding, writing and creative assistance',
     price: 2300,
     logo: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128'
   },
