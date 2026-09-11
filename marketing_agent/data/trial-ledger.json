@@ -1,5 +1,12 @@
 {
   "trial_start": "2026-09-12",
   "trial_days": 3,
-  "claims": {}
+  "claims": {
+    "2026-09-12-slot-1": {
+      "status": "claimed",
+      "claimed_at": "2026-09-12T01:03:53+05:00",
+      "product_id": "chatgpt",
+      "tracking_code": "te-chatgpt-20260912-t1b"
+    }
+  }
 }
