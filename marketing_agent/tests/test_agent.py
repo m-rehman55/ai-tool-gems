@@ -12,6 +12,7 @@ from marketing_agent.db import connect, database_status, initialize
 from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
+from marketing_agent.seo_monitor import inspect_homepage
 from marketing_agent.social import daily_pack, send_daily_pack
 from marketing_agent.tracking import product_url
 from marketing_agent.trial import claim_slot, trial_plan
@@ -82,6 +83,15 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(len({row["key"] for row in plan}), 9)
         self.assertEqual(len({row["product_id"] for row in plan}), 9)
         self.assertTrue(all("utm_source=telegram" in row["target_url"] for row in plan))
+
+    def test_seo_monitor_accepts_complete_homepage_signals(self):
+        html = '''<!doctype html><html><head>
+        <title>AI Tool Gems Pakistan Marketplace</title>
+        <meta name="description" content="Compare AI tools and digital subscriptions in Pakistan with clear PKR prices, access terms, delivery details and direct support before ordering.">
+        <link rel="canonical" href="https://aitoolgems.tech/">
+        <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization"},{"@type":"WebSite"},{"@type":"ItemList"}]}</script>
+        </head><body><h1>AI tools in Pakistan</h1></body></html>'''
+        self.assertEqual(inspect_homepage(html, "https://aitoolgems.tech/"), [])
 
     def test_trial_claim_is_duplicate_safe(self):
         ledger = Path(self.temp.name) / "ledger.json"

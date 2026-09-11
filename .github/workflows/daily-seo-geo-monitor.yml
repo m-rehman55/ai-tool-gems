@@ -1,0 +1,31 @@
+name: Daily SEO and GEO integrity monitor
+
+on:
+  schedule:
+    - cron: "15 7 * * *"
+      timezone: "Asia/Karachi"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seo-geo-monitor
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      ATG_TIMEZONE: Asia/Karachi
+      ATG_SITE_URL: https://aitoolgems.tech
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check live sitemap, pages, structured data and AI crawler access
+        run: python -m marketing_agent seo-monitor --json --send
