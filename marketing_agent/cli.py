@@ -57,6 +57,7 @@ def parser() -> argparse.ArgumentParser:
     report.add_argument("--send", action="store_true")
 
     commands.add_parser("test-telegram", help="Verify the configured bot and channel")
+    commands.add_parser("test-owner", help="Send a private owner-connection confirmation")
     commands.add_parser("discover-owner", help="Find the latest private chat that started the bot")
     tick = commands.add_parser("tick", help="Idempotent scheduler tick: generate, publish due, report after 21:00")
     tick.add_argument("--dry-run", action="store_true")
@@ -116,6 +117,15 @@ def main(argv: list[str] | None = None) -> int:
         bot = TelegramClient(settings.telegram_bot_token).verify()
         count = TelegramClient(settings.telegram_bot_token).member_count(settings.telegram_channel_id)
         print(f"Connected as @{bot.get('username', bot.get('first_name'))}; channel members: {count}")
+    elif args.command == "test-owner":
+        if not settings.owner_reports_ready:
+            raise RuntimeError("Add TELEGRAM_BOT_TOKEN and TELEGRAM_OWNER_CHAT_ID first")
+        TelegramClient(settings.telegram_bot_token).send_with_retry(
+            settings.telegram_owner_chat_id,
+            "✅ AI Tool Gems marketing agent connected successfully.\n\n"
+            "Your private owner reports are now configured. No reply is required.",
+        )
+        print("Owner confirmation delivered.")
     elif args.command == "discover-owner":
         if not settings.telegram_bot_token:
             raise RuntimeError("Add TELEGRAM_BOT_TOKEN first")
