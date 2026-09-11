@@ -13,6 +13,7 @@ jobs:
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
       ATG_TIMEZONE: Asia/Karachi
     steps:
       - name: Checkout
@@ -23,3 +24,5 @@ jobs:
           python-version: "3.12"
       - name: Verify bot token and channel access
         run: python -m marketing_agent test-telegram
+      - name: Send private owner confirmation
+        run: python -m marketing_agent test-owner
