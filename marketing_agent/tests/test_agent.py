@@ -12,7 +12,7 @@ from marketing_agent.db import connect, database_status, initialize
 from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
-from marketing_agent.social import daily_pack
+from marketing_agent.social import daily_pack, send_daily_pack
 from marketing_agent.tracking import product_url
 from marketing_agent.trial import claim_slot, trial_plan
 
@@ -97,6 +97,11 @@ class AgentTests(unittest.TestCase):
             self.assertIn(platform, pack)
         for source in ("instagram", "facebook", "whatsapp", "tiktok"):
             self.assertIn(f"utm_source={source}", pack)
+
+    def test_already_sent_social_pack_is_skipped_without_api_call(self):
+        state = Path(self.temp.name) / "social-state.json"
+        state.write_text('{"sent_dates":{"2026-09-12":{"messages":5}}}', encoding="utf-8")
+        self.assertEqual(send_daily_pack(self.settings, date(2026, 9, 12), state), 0)
 
 
 if __name__ == "__main__":
