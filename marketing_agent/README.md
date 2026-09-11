@@ -1,6 +1,6 @@
 # AI Tool Gems Organic Marketing Agent
 
-This is the safe, free-first implementation of the marketing specification. Phase 1 creates and schedules transparent product posts for an owned Telegram channel, tracks campaign attribution into the website's WhatsApp order message, stores real metrics in SQLite, learns only after enough evidence, and sends an owner report.
+This is the safe, free-first implementation of the marketing specification. Phase 1 creates and schedules transparent product posts for an owned Telegram channel, tracks campaign attribution into the website's WhatsApp order message, stores real metrics in SQLite, learns only after enough evidence, and sends an owner report. The hosted three-day trial also delivers owner-ready social copy without exposing social-account credentials.
 
 It does **not** scrape audiences, auto-DM people, post to groups without permission, invent reach, or use unofficial social APIs. Instagram/Facebook publishing and WhatsApp Cloud reporting are intentionally gated until Telegram has passed the requested three-day test.
 
@@ -16,6 +16,9 @@ It does **not** scrape audiences, auto-DM people, post to groups without permiss
 - manual real-metric input for clicks, orders, revenue, reactions, forwards, and views/impressions
 - evidence threshold before declaring a winning angle
 - honest daily reports: unknown values stay zero/not captured
+- duplicate-safe GitHub-hosted trial posts at 09:15, 13:30 and 18:45 Pakistan time
+- Telegram command menu for catalog, deals, WhatsApp contact and help
+- private daily Instagram, Facebook, WhatsApp Status and Reel/TikTok content pack
 
 Telegram's Bot API supports channel posting and `getChatMemberCount`, but it does not expose the user-only channel view-counter method. See the official [Bot API](https://core.telegram.org/bots/api) and [view-counter API limitation](https://core.telegram.org/method/messages.getMessagesViews). For that reason, view and forward figures are manual imports unless a separately authorized, compliant analytics source is added later.
 
@@ -31,7 +34,20 @@ python -m marketing_agent init
 python -m marketing_agent test-telegram
 ```
 
-## Three-day validation
+## Hosted three-day trial
+
+The GitHub workflows run the 12–14 September 2026 trial. They publish only to the connected owned Telegram channel and privately deliver the manual social pack to the configured owner. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the exact rotation and daily owner actions.
+
+Useful control commands:
+
+```powershell
+python -m marketing_agent trial-plan
+python -m marketing_agent social-pack --date 2026-09-12
+python -m marketing_agent setup-bot
+python -m marketing_agent process-commands
+```
+
+## Local draft validation
 
 Generate drafts without auto-posting:
 

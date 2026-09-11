@@ -1,0 +1,102 @@
+name: Three-day organic marketing trial
+
+on:
+  schedule:
+    - cron: "15 9 12-14 9 *"
+      timezone: "Asia/Karachi"
+    - cron: "30 13 12-14 9 *"
+      timezone: "Asia/Karachi"
+    - cron: "45 18 12-14 9 *"
+      timezone: "Asia/Karachi"
+  workflow_dispatch:
+    inputs:
+      trial_date:
+        description: "Trial date (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-12"
+      slot:
+        description: "0 = morning, 1 = afternoon, 2 = evening"
+        required: true
+        type: choice
+        options: ["0", "1", "2"]
+      publish:
+        description: "Publish publicly (false only previews the plan)"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram-marketing-state
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      ATG_TIMEZONE: Asia/Karachi
+      ATG_TRIAL_START: "2026-09-12"
+    steps:
+      - name: Checkout latest campaign state
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Preview full plan
+        if: github.event_name == 'workflow_dispatch' && inputs.publish == false
+        run: python -m marketing_agent trial-plan
+      - name: Select scheduled slot
+        if: github.event_name == 'schedule' || inputs.publish == true
+        id: select
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            trial_date="${{ inputs.trial_date }}"
+            slot="${{ inputs.slot }}"
+          else
+            trial_date="$(TZ=Asia/Karachi date +%F)"
+            case "${{ github.event.schedule }}" in
+              "15 9 12-14 9 *") slot="0" ;;
+              "30 13 12-14 9 *") slot="1" ;;
+              "45 18 12-14 9 *") slot="2" ;;
+              *) echo "Unknown schedule"; exit 1 ;;
+            esac
+          fi
+          echo "trial_date=$trial_date" >> "$GITHUB_OUTPUT"
+          echo "slot=$slot" >> "$GITHUB_OUTPUT"
+      - name: Claim post exactly once
+        if: steps.select.outputs.trial_date != ''
+        id: claim
+        shell: bash
+        run: |
+          python -m marketing_agent trial-claim --date "${{ steps.select.outputs.trial_date }}" --slot "${{ steps.select.outputs.slot }}" --payload "$RUNNER_TEMP/trial-payload.json"
+          if [ -f "$RUNNER_TEMP/trial-payload.json" ]; then echo "created=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Save claim before publishing
+        if: steps.claim.outputs.created == 'true'
+        shell: bash
+        run: |
+          git config user.name "AI Tool Gems Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add marketing_agent/data/trial-ledger.json
+          git commit -m "Claim Telegram trial post ${{ steps.select.outputs.trial_date }} slot ${{ steps.select.outputs.slot }}"
+          git push
+      - name: Publish official Telegram post
+        if: steps.claim.outputs.created == 'true'
+        run: python -m marketing_agent trial-publish --payload "$RUNNER_TEMP/trial-payload.json"
+      - name: Save Telegram message ID
+        if: steps.claim.outputs.created == 'true'
+        shell: bash
+        run: |
+          git add marketing_agent/data/trial-ledger.json
+          git commit -m "Record published Telegram trial post"
+          git push

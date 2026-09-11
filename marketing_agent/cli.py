@@ -6,7 +6,9 @@ import argparse
 import json
 import sys
 from datetime import date, datetime
+from pathlib import Path
 
+from .commands import process_updates, setup_bot
 from .config import get_settings
 from .content import generate_days
 from .db import database_status, initialize
@@ -14,7 +16,9 @@ from .learning import learn, recommendations
 from .metrics import capture_telegram_subscribers, record_metrics
 from .posting import approve_posts, list_posts, publish_due
 from .reporting import build_report, report_already_sent, save_report, send_report
+from .social import daily_pack, send_daily_pack
 from .telegram import TelegramClient
+from .trial import claim_slot, publish_payload, send_trial_report, trial_plan
 
 
 def parser() -> argparse.ArgumentParser:
@@ -59,6 +63,22 @@ def parser() -> argparse.ArgumentParser:
     commands.add_parser("test-telegram", help="Verify the configured bot and channel")
     commands.add_parser("test-owner", help="Send a private owner-connection confirmation")
     commands.add_parser("discover-owner", help="Find the latest private chat that started the bot")
+    commands.add_parser("setup-bot", help="Install the Telegram bot command menu and descriptions")
+    commands.add_parser("process-commands", help="Reply to new private Telegram bot commands")
+
+    social = commands.add_parser("social-pack", help="Build or privately send the daily organic social pack")
+    social.add_argument("--date", default=date.today().isoformat())
+    social.add_argument("--send", action="store_true")
+
+    commands.add_parser("trial-plan", help="Print the duplicate-safe three-day campaign plan")
+    trial_claim = commands.add_parser("trial-claim", help="Claim one trial slot before publishing")
+    trial_claim.add_argument("--date", required=True)
+    trial_claim.add_argument("--slot", required=True, type=int, choices=[0, 1, 2])
+    trial_claim.add_argument("--payload", required=True)
+    trial_publish = commands.add_parser("trial-publish", help="Publish a previously claimed trial payload")
+    trial_publish.add_argument("--payload", required=True)
+    trial_report = commands.add_parser("trial-report", help="Send the honest hosted-trial daily report")
+    trial_report.add_argument("--date", required=True)
     tick = commands.add_parser("tick", help="Idempotent scheduler tick: generate, publish due, report after 21:00")
     tick.add_argument("--dry-run", action="store_true")
     return root
@@ -135,6 +155,28 @@ def main(argv: list[str] | None = None) -> int:
         public_name = chat.get("username") or chat.get("first_name") or "owner"
         print(f"OWNER_CHAT_ID={chat['id']}")
         print(f"OWNER_PUBLIC_NAME={public_name}")
+    elif args.command == "setup-bot":
+        setup_bot(settings)
+        print("Telegram bot commands and descriptions configured.")
+    elif args.command == "process-commands":
+        print(f"Handled {process_updates(settings)} new private command(s).")
+    elif args.command == "social-pack":
+        pack_date = date.fromisoformat(args.date)
+        if args.send:
+            print(f"Sent {send_daily_pack(settings, pack_date)} private content-pack message(s).")
+        else:
+            print("\n\n---\n\n".join(daily_pack(settings, pack_date)))
+    elif args.command == "trial-plan":
+        print(json.dumps(trial_plan(settings), indent=2, ensure_ascii=False))
+    elif args.command == "trial-claim":
+        payload = claim_slot(settings, date.fromisoformat(args.date), args.slot, Path(args.payload))
+        print("already-claimed" if payload is None else f"claimed:{payload['key']}")
+    elif args.command == "trial-publish":
+        payload = publish_payload(settings, Path(args.payload))
+        print(f"published:{payload['key']}:{payload['product_name']}")
+    elif args.command == "trial-report":
+        sent = send_trial_report(settings, date.fromisoformat(args.date))
+        print("report-sent" if sent else "report-already-sent")
     elif args.command == "tick":
         today = datetime.now(settings.timezone).date()
         inserted, duplicates = generate_days(settings, today, 1, settings.auto_approve)

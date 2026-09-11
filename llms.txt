@@ -2,11 +2,12 @@
 
 > AI Tool Gems is a Pakistan-based independent marketplace for comparing and ordering AI tools and digital subscriptions with PKR pricing and direct WhatsApp support.
 
-Last reviewed: 2026-09-11
+Last reviewed: 2026-09-12
 
 ## Core pages
 
 - https://aitoolgems.tech/ — complete marketplace, categories, finder, ordering process, and FAQs
+- https://aitoolgems.tech/deals/ — current 20-item PKR marketplace directory with duration and access comparisons
 - https://aitoolgems.tech/about.html — marketplace identity, listing process, and independence disclosure
 - https://aitoolgems.tech/how-we-review.html — listing review method, source policy, access definitions, and corrections process
 - https://aitoolgems.tech/contact.html — verified WhatsApp contact route

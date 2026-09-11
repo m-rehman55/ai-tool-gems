@@ -12,7 +12,9 @@ from marketing_agent.db import connect, database_status, initialize
 from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
+from marketing_agent.social import daily_pack
 from marketing_agent.tracking import product_url
+from marketing_agent.trial import claim_slot, trial_plan
 
 
 class AgentTests(unittest.TestCase):
@@ -73,6 +75,28 @@ class AgentTests(unittest.TestCase):
         draft = build_drafts(self.settings, date(2026, 9, 12), 1)[0]
         self.assertIn("Independent reseller", draft.caption)
         self.assertIn("Rs.", draft.caption)
+
+    def test_trial_plan_has_nine_unique_tracked_posts(self):
+        plan = trial_plan(self.settings)
+        self.assertEqual(len(plan), 9)
+        self.assertEqual(len({row["key"] for row in plan}), 9)
+        self.assertEqual(len({row["product_id"] for row in plan}), 9)
+        self.assertTrue(all("utm_source=telegram" in row["target_url"] for row in plan))
+
+    def test_trial_claim_is_duplicate_safe(self):
+        ledger = Path(self.temp.name) / "ledger.json"
+        payload = Path(self.temp.name) / "payload.json"
+        first = claim_slot(self.settings, date(2026, 9, 12), 0, payload, ledger)
+        second = claim_slot(self.settings, date(2026, 9, 12), 0, payload, ledger)
+        self.assertIsNotNone(first)
+        self.assertIsNone(second)
+
+    def test_social_pack_covers_owned_platforms(self):
+        pack = "\n".join(daily_pack(self.settings, date(2026, 9, 12)))
+        for platform in ("INSTAGRAM", "FACEBOOK", "WHATSAPP STATUS", "REEL/TIKTOK"):
+            self.assertIn(platform, pack)
+        for source in ("instagram", "facebook", "whatsapp", "tiktok"):
+            self.assertIn(f"utm_source={source}", pack)
 
 
 if __name__ == "__main__":

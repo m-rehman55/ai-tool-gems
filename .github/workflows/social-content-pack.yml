@@ -1,0 +1,40 @@
+name: Daily free social content pack
+
+on:
+  schedule:
+    - cron: "30 8 12-14 9 *"
+      timezone: "Asia/Karachi"
+  workflow_dispatch:
+    inputs:
+      pack_date:
+        description: "Pack date (YYYY-MM-DD)"
+        required: true
+        default: "2026-09-12"
+
+permissions:
+  contents: read
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      ATG_TIMEZONE: Asia/Karachi
+      ATG_TRIAL_START: "2026-09-12"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Deliver owner-ready captions and short-video script
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            pack_date="${{ inputs.pack_date }}"
+          else
+            pack_date="$(TZ=Asia/Karachi date +%F)"
+          fi
+          python -m marketing_agent social-pack --date "$pack_date" --send

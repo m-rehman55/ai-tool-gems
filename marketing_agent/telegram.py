@@ -50,8 +50,11 @@ class TelegramClient:
     def member_count(self, chat_id: str) -> int:
         return int(self.call("getChatMemberCount", {"chat_id": chat_id}))
 
-    def updates(self) -> list[dict[str, Any]]:
-        result = self.call("getUpdates", {"allowed_updates": ["message"]})
+    def updates(self, offset: int | None = None) -> list[dict[str, Any]]:
+        payload: dict[str, Any] = {"allowed_updates": ["message"]}
+        if offset is not None:
+            payload["offset"] = offset
+        result = self.call("getUpdates", payload)
         return list(result or [])
 
     def latest_private_chat(self) -> dict[str, Any] | None:
