@@ -12,6 +12,13 @@ Last reviewed: 2026-09-11
 - https://aitoolgems.tech/contact.html — verified WhatsApp contact route
 - https://aitoolgems.tech/policies.html — access, delivery, warranty, refund, privacy, and trademark policies
 
+## Editorial guides
+
+- https://aitoolgems.tech/guides/ — Pakistan-focused AI tools guide hub
+- https://aitoolgems.tech/guides/ai-tools-price-pakistan/ — all 20 current listings compared by PKR price, duration, and access type
+- https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/ — task-based ChatGPT Plus and Gemini Pro comparison
+- https://aitoolgems.tech/guides/canva-vs-figma-pakistan/ — workflow-based Canva Pro and Figma Pro comparison
+
 ## Product catalog
 
 - https://aitoolgems.tech/tools/chatgpt/ — ChatGPT Plus price and plan details in Pakistan

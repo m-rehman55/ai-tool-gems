@@ -423,7 +423,7 @@ function checkout() {
   const total = selected.reduce((s, p) => s + p.price, 0);
   trackEvent('begin_checkout', { item_ids: selected.map(p => p.id), item_count: selected.length, value: total, currency: 'PKR', destination: 'whatsapp' });
   const lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — ${money(p.price)}`).join('\n');
-  window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability and payment methods (JazzCash/EasyPaisa/Bank).`), '_blank');
+  window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability, the accepted payment route, and delivery time.`), '_blank');
 }
 
 function showSuggestions(q) {
@@ -688,11 +688,13 @@ function init3dHero() {
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     targetX = x * 24; // tilt degrees
     targetY = -y * 24;
+    if (!reducedMotion && !animationFrame) animationFrame = requestAnimationFrame(renderHero3d);
   }
 
   function onMouseLeave() {
     targetX = 0;
     targetY = 0;
+    if (!reducedMotion && !animationFrame) animationFrame = requestAnimationFrame(renderHero3d);
   }
 
   function renderHero3d() {
@@ -710,7 +712,8 @@ function init3dHero() {
       c.style.transform = `translate(${currentX * 0.35}px, ${-currentY * 0.35}px) translateZ(${depth}px) rotateY(${currentX * 0.5}deg) rotateX(${currentY * 0.5}deg)`;
     });
 
-    animationFrame = requestAnimationFrame(renderHero3d);
+    const stillMoving = Math.abs(targetX - currentX) > 0.02 || Math.abs(targetY - currentY) > 0.02;
+    animationFrame = stillMoving ? requestAnimationFrame(renderHero3d) : 0;
   }
 
   stage.addEventListener('mousemove', onMouseMove);
@@ -718,7 +721,6 @@ function init3dHero() {
   if (!reducedMotion && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
       const visible = entries[0]?.isIntersecting && !document.hidden;
-      if (visible && !animationFrame) renderHero3d();
       if (!visible && animationFrame) {
         cancelAnimationFrame(animationFrame);
         animationFrame = 0;
@@ -729,12 +731,8 @@ function init3dHero() {
       if (document.hidden && animationFrame) {
         cancelAnimationFrame(animationFrame);
         animationFrame = 0;
-      } else if (!document.hidden && stage.getBoundingClientRect().bottom > 0 && stage.getBoundingClientRect().top < innerHeight && !animationFrame) {
-        renderHero3d();
       }
     });
-  } else if (!reducedMotion) {
-    renderHero3d();
   }
 }
 
@@ -878,7 +876,7 @@ document.addEventListener('click', e => {
   }
   const orderBundle = e.target.closest('#orderBundleWa');
   if (orderBundle) {
-    window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to order the Creator Stack Power Bundle (4 Tools):\n1. ChatGPT Plus (1 Month, Private) — Rs. 2,300\n2. Canva Pro Edu (1 Year, Invitation) — Rs. 900\n3. CapCut Pro (1 Month, Private) — Rs. 900\n4. ElevenLabs (1 Month, Private) — Rs. 3,300\n\n💎 Bundle Total: Rs. 7,400\n\nPlease confirm payment methods and activation time.`), '_blank');
+    window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to order the Creator Stack Power Bundle (4 Tools):\n1. ChatGPT Plus (1 Month, Private) — Rs. 2,300\n2. Canva Pro Edu (1 Year, Invitation) — Rs. 900\n3. CapCut Pro (1 Month, Private) — Rs. 900\n4. ElevenLabs (1 Month, Private) — Rs. 3,300\n\n💎 Bundle Total: Rs. 7,400\n\nPlease confirm availability, the accepted payment route, and activation time.`), '_blank');
     return;
   }
   const wa = e.target.closest('[data-whatsapp]');

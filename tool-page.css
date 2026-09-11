@@ -21,6 +21,7 @@ main { width:min(1160px,calc(100% - 32px)); margin:auto; padding:28px 0 72px; }
 h1 { max-width:100%; margin:8px 0 14px; overflow-wrap:anywhere; font-size:clamp(38px,5vw,64px); line-height:1.03; letter-spacing:-.04em; }
 h2 { line-height:1.2; }
 .lead { color:var(--muted); font-size:18px; max-width:700px; }
+.quick-answer { margin:18px 0 0; padding:15px 17px; border-left:4px solid var(--green); border-radius:10px; background:#edf8f2; color:#365f55; }
 .price { display:flex; flex-wrap:wrap; align-items:baseline; gap:12px; margin:25px 0; }
 .price span { width:100%; color:var(--muted); font-size:12px; }
 .price strong { font-size:34px; }
@@ -36,6 +37,7 @@ dd { margin:2px 0 0; font-weight:800; }
 .content-grid>div,.answer,.policy-note { padding:30px; border:1px solid var(--line); border-radius:22px; background:rgba(255,255,255,.85); }
 .content-grid li { margin:8px 0; }
 .answer,.policy-note { margin-top:18px; }
+.related-tools a { font-weight:800; }
 .policy-note { background:#eff9f1; }
 footer { padding:24px max(24px,calc((100vw - 1160px)/2)); display:flex; justify-content:space-between; gap:18px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; background:#fff; }
 .page-header,.page-section { padding:36px; border:1px solid var(--line); border-radius:24px; background:rgba(255,255,255,.9); margin-bottom:18px; }
