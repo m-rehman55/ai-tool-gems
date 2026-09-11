@@ -11,3 +11,5 @@ Allow: /
 Disallow: /admin.html
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
+
+# IndexNow key: https://aitoolgems.tech/e1a8c47f9d2b4f30a6c8116de5b97042.txt
