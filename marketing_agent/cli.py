@@ -23,7 +23,7 @@ from .metrics import capture_telegram_subscribers, record_metrics
 from .posting import approve_posts, list_posts, publish_due
 from .reporting import build_report, report_already_sent, save_report, send_report
 from .seo_monitor import format_report as format_seo_report, run_monitor
-from .social import daily_pack, send_daily_pack
+from .social import daily_pack, send_automation_failure_alert, send_daily_pack
 from .telegram import TelegramClient
 from .trial import claim_slot, publish_payload, send_trial_report, trial_plan
 
@@ -76,6 +76,7 @@ def parser() -> argparse.ArgumentParser:
     social = commands.add_parser("social-pack", help="Build or privately send the daily organic social pack")
     social.add_argument("--date", default=date.today().isoformat())
     social.add_argument("--send", action="store_true")
+    commands.add_parser("social-alert", help="Send the owner a generic hosted-campaign failure alert")
 
     commands.add_parser("buffer-status", help="Verify Buffer access and list the three owned social channels")
     buffer_prepare = commands.add_parser("buffer-prepare", help="Create today's branded social image and scheduled video")
@@ -183,6 +184,9 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Sent {send_daily_pack(settings, pack_date)} private content-pack message(s).")
         else:
             print("\n\n---\n\n".join(daily_pack(settings, pack_date)))
+    elif args.command == "social-alert":
+        send_automation_failure_alert(settings)
+        print("Owner failure alert delivered.")
     elif args.command == "buffer-status":
         print(json.dumps(buffer_connection_status(settings), indent=2, ensure_ascii=False))
     elif args.command == "buffer-prepare":
