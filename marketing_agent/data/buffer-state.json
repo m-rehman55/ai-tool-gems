@@ -1,3 +1,12 @@
 {
-  "published_dates": {}
+  "published_dates": {
+    "2026-09-12": {
+      "tiktok": {
+        "post_id": "6aa543fb9be802d044ee6b18",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-09-12T12:32:18.000Z",
+        "recorded_at": "2026-09-12T12:22:19+00:00"
+      }
+    }
+  }
 }
