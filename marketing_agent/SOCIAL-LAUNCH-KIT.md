@@ -54,6 +54,8 @@ Verified public Facebook Page: `https://www.facebook.com/people/AI-Tool-Gems-Pak
 
 Verified public Instagram profile: `https://www.instagram.com/aitoolgemspak/`
 
+Verified public TikTok profile: `https://www.tiktok.com/@aitoolgems`
+
 ## First pinned introduction post
 
 > Welcome to AI Tool Gems Pakistan 💎
