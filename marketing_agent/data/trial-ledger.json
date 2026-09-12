@@ -9,6 +9,12 @@
       "tracking_code": "te-chatgpt-20260912-t1b",
       "published_at": "2026-09-12T01:03:55+05:00",
       "message_id": 5
+    },
+    "2026-09-12-slot-2": {
+      "status": "claimed",
+      "claimed_at": "2026-09-12T17:15:54+05:00",
+      "product_id": "gemini",
+      "tracking_code": "te-gemini-20260912-t2a"
     }
   }
 }
