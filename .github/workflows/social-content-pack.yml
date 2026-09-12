@@ -2,7 +2,7 @@ name: Daily free social content pack
 
 on:
   schedule:
-    - cron: "30 8 12-14 9 *"
+    - cron: "30 8 * * *"
       timezone: "Asia/Karachi"
   workflow_dispatch:
     inputs:
@@ -27,7 +27,6 @@ jobs:
       TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
       TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
       ATG_TIMEZONE: Asia/Karachi
-      ATG_TRIAL_START: "2026-09-12"
     steps:
       - uses: actions/checkout@v4
         with:

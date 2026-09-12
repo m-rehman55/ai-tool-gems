@@ -13,7 +13,7 @@ from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
 from marketing_agent.seo_monitor import inspect_homepage
-from marketing_agent.social import daily_pack, send_daily_pack
+from marketing_agent.social import daily_pack, deal_of_the_day, send_daily_pack
 from marketing_agent.tracking import product_url
 from marketing_agent.trial import claim_slot, trial_plan
 
@@ -103,10 +103,17 @@ class AgentTests(unittest.TestCase):
 
     def test_social_pack_covers_owned_platforms(self):
         pack = "\n".join(daily_pack(self.settings, date(2026, 9, 12)))
-        for platform in ("INSTAGRAM", "FACEBOOK", "WHATSAPP STATUS", "REEL/TIKTOK"):
+        for platform in ("INSTAGRAM", "FACEBOOK", "WHATSAPP STATUS", "TIKTOK/REEL"):
             self.assertIn(platform, pack)
         for source in ("instagram", "facebook", "whatsapp", "tiktok"):
             self.assertIn(f"utm_source={source}", pack)
+
+    def test_social_pack_continues_after_trial_and_uses_one_daily_deal(self):
+        day = date(2026, 10, 20)
+        product = deal_of_the_day(day)
+        pack = daily_pack(self.settings, day)
+        self.assertEqual(len(pack), 5)
+        self.assertTrue(all(product.name in message for message in pack))
 
     def test_already_sent_social_pack_is_skipped_without_api_call(self):
         state = Path(self.temp.name) / "social-state.json"
