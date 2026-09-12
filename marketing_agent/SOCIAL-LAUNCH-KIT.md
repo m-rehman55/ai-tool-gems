@@ -52,6 +52,8 @@ After signup, enable two-step verification, add the website/contact fields avail
 
 Verified public Facebook Page: `https://www.facebook.com/people/AI-Tool-Gems-Pakistan/61594432675562/`
 
+Verified public Instagram profile: `https://www.instagram.com/aitoolgemspak/`
+
 ## First pinned introduction post
 
 > Welcome to AI Tool Gems Pakistan 💎
