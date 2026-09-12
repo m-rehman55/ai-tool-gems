@@ -95,7 +95,18 @@ jobs:
           media_url="https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/main/assets/social-deals/${{ steps.campaign.outputs.date }}-${product_id}.jpg"
           curl --fail --silent --show-error --location --retry 5 --retry-delay 2 --output /dev/null "$media_url"
       - name: Schedule on Instagram, Facebook and TikTok
-        run: python -m marketing_agent buffer-publish --date "${{ steps.campaign.outputs.date }}"
+        shell: bash
+        run: |
+          set +e
+          output="$(python -m marketing_agent buffer-publish --date "${{ steps.campaign.outputs.date }}" 2>&1)"
+          status=$?
+          set -e
+          echo "$output"
+          if [ "$status" -ne 0 ]; then
+            one_line="${output//$'\n'/ | }"
+            echo "::error title=Buffer scheduling failed::$one_line"
+            exit "$status"
+          fi
       - name: Deliver private owner copy and short-video script
         run: python -m marketing_agent social-pack --date "${{ steps.campaign.outputs.date }}" --send
       - name: Save duplicate-protection state
