@@ -7,7 +7,7 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 from marketing_agent.catalog import load_products
-from marketing_agent.buffer import BufferClient, connection_status, publish_daily_deal, scheduled_time
+from marketing_agent.buffer import BufferClient, connection_status, publish_daily_deal, refresh_performance, scheduled_time
 from marketing_agent.config import Settings, resolve_timezone
 from marketing_agent.content import build_drafts, generate_days
 from marketing_agent.db import connect, database_status, initialize
@@ -15,7 +15,7 @@ from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
 from marketing_agent.seo_monitor import inspect_homepage
-from marketing_agent.social import caption_for_platform, daily_pack, deal_of_the_day, send_daily_pack
+from marketing_agent.social import audience_for, caption_for_platform, daily_pack, deal_of_the_day, send_daily_pack
 from marketing_agent.tracking import product_url
 from marketing_agent.trial import claim_slot, trial_plan
 
@@ -146,7 +146,11 @@ class AgentTests(unittest.TestCase):
                 return {service: {"id": service + "-id"} for service in ("instagram", "facebook", "tiktok")}
 
             def create_image_post(self, channel_id, service, text, image_url, due_at, title):
-                self.calls.append((service, text, image_url, due_at, title))
+                self.calls.append((service, "image", text, image_url, due_at, title))
+                return {"id": service + "-post", "dueAt": due_at.isoformat()}
+
+            def create_video_post(self, channel_id, service, text, video_url, due_at, title):
+                self.calls.append((service, "video", text, video_url, due_at, title))
                 return {"id": service + "-post", "dueAt": due_at.isoformat()}
 
         state = Path(self.temp.name) / "buffer-state.json"
@@ -157,7 +161,7 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(set(first["scheduled"]), {"instagram", "facebook", "tiktok"})
         self.assertEqual(set(second["skipped"]), {"instagram", "facebook", "tiktok"})
         self.assertEqual(len(client.calls), 3)
-        self.assertTrue(all("Independent reseller" in call[1] for call in client.calls))
+        self.assertTrue(all("Independent reseller" in call[2] for call in client.calls))
 
     def test_buffer_post_types_are_explicit_for_meta_channels(self):
         queries = []
@@ -170,19 +174,72 @@ class AgentTests(unittest.TestCase):
         due_at = datetime(2026, 9, 12, 4, 0, tzinfo=timezone.utc)
         client.create_image_post("ig1", "instagram", "caption", "https://example.com/card.jpg", due_at, "Deal")
         client.create_image_post("fb1", "facebook", "caption", "https://example.com/card.jpg", due_at, "Deal")
+        client.create_video_post("ig1", "instagram", "caption", "https://example.com/reel.mp4", due_at, "Deal")
+        client.create_video_post("tt1", "tiktok", "caption", "https://example.com/video.mp4", due_at, "Deal")
         self.assertIn("instagram: { type: post, shouldShareToFeed: true }", queries[0])
         self.assertIn("facebook: { type: post }", queries[1])
+        self.assertIn("instagram: { type: reel, shouldShareToFeed: true }", queries[2])
+        self.assertIn("assets: [{ video:", queries[2])
+        self.assertIn("tiktok: { isAiGenerated: false }", queries[3])
 
-    def test_buffer_schedules_0900_pakistan_or_safely_in_future(self):
+    def test_buffer_schedules_audience_windows_or_safely_in_future(self):
         early = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
-        late = datetime(2026, 9, 12, 6, 0, tzinfo=timezone.utc)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early).hour, 4)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late), late.replace(minute=10))
+        late = datetime(2026, 9, 12, 17, 0, tzinfo=timezone.utc)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "facebook").hour, 14)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram").hour, 14)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram").minute, 30)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "tiktok").hour, 15)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "facebook"), late.replace(minute=10))
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "tiktok"), late.replace(minute=18))
 
     def test_automatic_captions_have_platform_tracking(self):
         for service in ("instagram", "facebook", "tiktok"):
             caption = caption_for_platform(self.settings, date(2026, 9, 12), service)
             self.assertIn(f"utm_source={service}", caption)
+
+    def test_captions_target_relevant_pakistan_audience_without_spam_tags(self):
+        day = date(2026, 9, 12)
+        audience = audience_for(deal_of_the_day(day), day)
+        self.assertEqual(audience.id, "students")
+        for service in ("instagram", "facebook", "tiktok"):
+            caption = caption_for_platform(self.settings, day, service)
+            self.assertIn("Pakistan", caption)
+            self.assertIn("PRICE: Rs.", caption)
+            self.assertNotIn("#fyp", caption.lower())
+            self.assertNotIn("#viral", caption.lower())
+
+    def test_buffer_performance_refresh_records_real_metrics_without_rescheduling(self):
+        class MetricsClient:
+            def post_metrics(self, post_id):
+                return {
+                    "id": post_id,
+                    "status": "sent",
+                    "metrics": [
+                        {"type": "reactions", "name": "Reactions", "value": 7, "unit": "count"},
+                        {"type": "comments", "name": "Comments", "value": 2, "unit": "count"},
+                    ],
+                    "metricsUpdatedAt": "2026-09-13T00:00:00Z",
+                }
+
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text(json.dumps({"published_dates": {"2026-09-12": {
+            "instagram": {
+                "post_id": "ig-post",
+                "scheduled_for": "2026-09-12T14:30:00+00:00",
+                "audience": "students",
+            }
+        }}}), encoding="utf-8")
+        result = refresh_performance(
+            self.settings,
+            state,
+            MetricsClient(),
+            datetime(2026, 9, 13, 2, 0, tzinfo=timezone.utc),
+        )
+        stored = json.loads(state.read_text(encoding="utf-8"))
+        record = stored["published_dates"]["2026-09-12"]["instagram"]
+        self.assertEqual(result["updated"], 1)
+        self.assertEqual(record["delivery_status"], "sent")
+        self.assertEqual(record["metrics"]["reactions"], 7)
 
 
 if __name__ == "__main__":

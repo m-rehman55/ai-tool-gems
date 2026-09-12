@@ -11,16 +11,16 @@ This trial is designed to earn relevant visits without paid ads, fake engagement
 - Owner pack: one private Telegram delivery at 08:30 PKT with Instagram, Facebook, WhatsApp Status, and Reel/TikTok copy.
 - Tracking: every promotional link carries a unique campaign code into the website and WhatsApp order message.
 - Duplicate safety: a repository ledger claims a slot before a Telegram message can be published.
+- Facebook, Instagram and TikTok: one audience-matched deal per day through Buffer, with network-specific tracked links.
+- Short video: an 8-second 9:16 creative with original audio on Tuesday, Thursday and Saturday; a static card is the safe fallback.
+- Learning: sent-post status and available engagement metrics are refreshed daily and stored against audience/media/time metadata.
 
-## What the owner does each morning
+## What the owner can review (no daily posting required)
 
-1. Open the private content pack sent by the bot.
-2. Post the Instagram caption to the AI Tool Gems account with a product visual.
-3. Post the Facebook caption to the owned business page.
-4. Add the short WhatsApp Status copy and tracked link.
-5. Record the 15-second script as a screen recording or simple product-card video for Reels/TikTok.
-
-No Instagram/Facebook credentials have been supplied, so the system does not claim to publish there automatically. Manual posting to owned accounts is free and keeps account control with the owner.
+1. Open the private Telegram content pack when convenient.
+2. Check any Buffer or Telegram failure alert and reconnect only the affected channel if required.
+3. Confirm current price, stock/access terms and warranty before taking payment.
+4. Optionally add a licensed native trend sound in the Instagram/TikTok app; this is intentionally not automated.
 
 ## Community sharing rule
 
@@ -53,4 +53,3 @@ After day 3, keep the best product/angle combinations and rewrite weak ones. Do 
 - Link social posts to the most relevant product or guide—not always the homepage.
 - Ask real buyers for an honest review after delivery; never pre-write or incentivize a positive rating.
 - Recheck displayed prices, access terms, and availability every week.
-

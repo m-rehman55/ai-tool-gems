@@ -1,9 +1,11 @@
-"""Ready-to-share organic content for platforms without connected publishing access."""
+"""Audience-led organic content for AI Tool Gems' owned social channels."""
 
 from __future__ import annotations
 
 import json
-from datetime import date, datetime
+import re
+from dataclasses import dataclass
+from datetime import date, datetime, time
 from pathlib import Path
 
 from .catalog import Product, load_products
@@ -16,67 +18,206 @@ STATE_PATH = Path(__file__).resolve().parent / "data" / "social-state.json"
 CAMPAIGN_EPOCH = date(2026, 9, 12)
 
 
+@dataclass(frozen=True)
+class AudienceAngle:
+    id: str
+    label: str
+    hook: str
+    hashtags: tuple[str, ...]
+    pakistan_time: time
+
+
+AUDIENCES = {
+    "students": AudienceAngle(
+        "students",
+        "university students and learners",
+        "Assignments, research aur presentations ko smarter banana hai?",
+        ("PakistanStudents", "UniversityLifePakistan", "StudySmart"),
+        time(19, 30),
+    ),
+    "creators": AudienceAngle(
+        "creators",
+        "content creators and young professionals",
+        "Content ko faster create aur polish karna hai?",
+        ("PakistanCreators", "ContentCreatorsPakistan", "CreatorTools"),
+        time(20, 30),
+    ),
+    "developers": AudienceAngle(
+        "developers",
+        "developers, freelancers and startup builders",
+        "Coding, client work ya next MVP ko speed up karna hai?",
+        ("DevelopersPakistan", "FreelancersPakistan", "BuildInPublicPakistan"),
+        time(21, 0),
+    ),
+    "office": AudienceAngle(
+        "office",
+        "office teams and business professionals",
+        "Office workload, documents aur team tasks ko simplify karna hai?",
+        ("PakistanProfessionals", "OfficeProductivity", "WorkSmarter"),
+        time(18, 30),
+    ),
+    "career": AudienceAngle(
+        "career",
+        "job seekers, sales teams and professionals",
+        "Career, learning aur professional growth ko boost karna hai?",
+        ("PakistanJobs", "CareerGrowthPakistan", "YoungProfessionals"),
+        time(19, 0),
+    ),
+    "privacy": AudienceAngle(
+        "privacy",
+        "remote workers, travellers and privacy-conscious users",
+        "Online privacy aur secure access ko simple rakhna hai?",
+        ("DigitalPakistan", "OnlinePrivacy", "RemoteWorkPakistan"),
+        time(20, 0),
+    ),
+    "entertainment": AudienceAngle(
+        "entertainment",
+        "students, families and entertainment fans",
+        "Study ya work ke baad entertainment setup upgrade karna hai?",
+        ("PakistanEntertainment", "StreamingPakistan", "DigitalLifestyle"),
+        time(21, 30),
+    ),
+}
+
+PRODUCT_AUDIENCES = {
+    "chatgpt": ("students", "developers", "office"),
+    "gemini": ("students", "office"),
+    "veo": ("creators",),
+    "leonardo": ("creators",),
+    "elevenlabs": ("creators",),
+    "canva": ("students", "creators"),
+    "figma": ("developers", "creators"),
+    "capcut": ("creators",),
+    "adobe": ("creators",),
+    "lovable": ("developers",),
+    "gamma": ("students", "office"),
+    "replit": ("developers", "students"),
+    "n8n": ("developers", "office"),
+    "notion": ("students", "office"),
+    "nordvpn": ("privacy",),
+    "surfshark": ("privacy",),
+    "youtube": ("entertainment", "students"),
+    "netflix": ("entertainment",),
+    "linkedin": ("career",),
+    "windows": ("office", "students"),
+}
+
+CATEGORY_TAGS = {
+    "AI Assistants": ("AITools", "ArtificialIntelligence"),
+    "AI Video": ("AIVideo", "VideoCreators"),
+    "AI Voice": ("AIVoice", "VoiceOver"),
+    "Design": ("DesignTools", "CreativePakistan"),
+    "Development": ("CodingTools", "PakistanTech"),
+    "Productivity": ("ProductivityTools", "DigitalProductivity"),
+    "VPN & Security": ("CyberSafety", "PrivacyTools"),
+    "Entertainment": ("DigitalEntertainment", "PakistanStreaming"),
+    "Business": ("BusinessTools", "PakistanBusiness"),
+    "Software": ("SoftwarePakistan", "PCPakistan"),
+}
+
+
 def deal_of_the_day(day: date) -> Product:
     """Rotate the full catalog indefinitely with one consistent cross-platform deal."""
     products = load_products()
     return products[(day - CAMPAIGN_EPOCH).days % len(products)]
 
 
-def _instagram(product: Product, url: str) -> str:
-    tags = "#AIToolsPakistan #DigitalTools #PakistanCreators #ProductivityTools"
+def audience_for(product: Product, day: date) -> AudienceAngle:
+    """Pick a relevant audience deterministically so repeated product cycles test new angles."""
+    choices = PRODUCT_AUDIENCES.get(product.id, ("creators", "students", "office"))
+    cycle = max(0, (day - CAMPAIGN_EPOCH).days) // max(1, len(load_products()))
+    return AUDIENCES[choices[cycle % len(choices)]]
+
+
+def _product_tag(product: Product) -> str:
+    cleaned = re.sub(r"[^A-Za-z0-9]", "", product.name)
+    return f"{cleaned}Pakistan"[:38]
+
+
+def hashtags_for(product: Product, audience: AudienceAngle, platform: str) -> str:
+    """Use a compact relevance bank; avoid spammy #fyp/#viral tags that do not target buyers."""
+    tags = ["AIToolGems", "AIToolsPakistan", _product_tag(product)]
+    tags.extend(audience.hashtags[:2])
+    tags.extend(CATEGORY_TAGS.get(product.category, ("DigitalTools",))[:1])
+    limits = {"facebook": 3, "instagram": 6, "tiktok": 6}
+    return " ".join(f"#{tag}" for tag in tags[: limits.get(platform, 5)])
+
+
+def _deal_body(product: Product, audience: AudienceAngle) -> str:
     return (
-        f"{product.name} — current AI Tool Gems listing 💎\n\n"
+        f"{audience.hook}\n\n"
+        f"💎 {product.name.upper()}\n"
+        f"PRICE: Rs. {product.price:,}\n"
+        f"PLAN: {product.duration}\n"
+        f"ACCESS: {product.access}\n"
+        f"DELIVERY: {product.delivery}\n"
+        f"BEST FOR: {', '.join(product.best_for)}"
+    )
+
+
+def _instagram(product: Product, audience: AudienceAngle, url: str) -> str:
+    return (
+        "PAKISTAN AI TOOL DEAL 🇵🇰\n\n"
+        f"{_deal_body(product, audience)}\n\n"
+        "✅ Current availability and exact terms are confirmed before payment.\n"
+        f"📲 View details and order: {url}\n\n"
+        f"{hashtags_for(product, audience, 'instagram')}\n\n"
+        "Promotional listing by AI Tool Gems Pakistan. Independent reseller; brand names belong to their owners."
+    )
+
+
+def _facebook(product: Product, audience: AudienceAngle, url: str) -> str:
+    return (
+        "TODAY'S DIGITAL TOOL DEAL\n\n"
+        f"{_deal_body(product, audience)}\n"
+        f"WARRANTY LISTING: {product.warranty}\n\n"
+        "Availability, eligibility and exact access terms are checked before payment.\n"
+        f"Details + WhatsApp order: {url}\n\n"
+        f"{hashtags_for(product, audience, 'facebook')}\n\n"
+        "Promotional listing by AI Tool Gems Pakistan. Independent reseller."
+    )
+
+
+def _whatsapp(product: Product, audience: AudienceAngle, url: str) -> str:
+    return (
+        f"💎 {product.name}\n"
+        f"PRICE: Rs. {product.price:,}\n"
+        f"{product.duration} • {product.access} access\n"
+        f"Delivery: {product.delivery}\n"
         f"Best for: {', '.join(product.best_for)}\n"
-        f"Rs. {product.price:,} | {product.duration} | {product.access} access\n"
-        f"Estimated delivery: {product.delivery} | Listed warranty: {product.warranty}\n\n"
-        f"Check current availability before payment: {url}\n\n{tags}\n\n"
-        "Independent reseller. Brand names belong to their respective owners."
-    )
-
-
-def _facebook(product: Product, url: str) -> str:
-    return (
-        f"Need {', '.join(product.best_for[:2])}? Compare the current {product.name} listing in PKR.\n\n"
-        f"Price: Rs. {product.price:,}\nDuration: {product.duration}\nAccess: {product.access}\n"
-        f"Delivery estimate: {product.delivery}\nReplacement-warranty listing: {product.warranty}\n\n"
-        f"Full details and WhatsApp order: {url}\n\n"
-        "Availability and exact terms are confirmed before payment. Independent reseller."
-    )
-
-
-def _whatsapp(product: Product, url: str) -> str:
-    return (
-        f"💎 {product.name}\nRs. {product.price:,} • {product.duration}\n"
-        f"{product.access} access • {product.delivery} delivery\n"
         f"Details & order: {url}"
     )
 
 
-def _tiktok(product: Product, url: str) -> str:
+def _tiktok(product: Product, audience: AudienceAngle, url: str) -> str:
     return (
-        f"{product.name} in Pakistan — current listing 💎\n"
-        f"Rs. {product.price:,} | {product.duration} | {product.access} access\n"
-        f"Check availability and exact terms before payment: {url}\n\n"
-        "#AIToolsPakistan #PakistanCreators #DigitalTools #AIToolGems\n\n"
-        "Independent reseller. Brand names belong to their respective owners."
+        f"{audience.hook}\n\n"
+        f"💎 {product.name}\n"
+        f"PRICE: Rs. {product.price:,} | {product.duration}\n"
+        f"Best for: {', '.join(product.best_for)}\n"
+        f"Details/order: {url}\n\n"
+        f"{hashtags_for(product, audience, 'tiktok')}\n\n"
+        "Promotional listing by AI Tool Gems Pakistan. Independent reseller. Check terms before payment."
     )
 
 
-def _reel_script(product: Product, url: str) -> str:
+def _reel_script(product: Product, audience: AudienceAngle, url: str) -> str:
     return (
-        f"15-second Reel/TikTok script\n"
-        f"0–3s hook: Need {product.best_for[0]} without confusing dollar prices?\n"
-        f"3–8s screen: Show {product.name}, Rs. {product.price:,}, {product.duration}.\n"
-        f"8–12s proof: Show {product.access} access and {product.delivery} delivery estimate.\n"
-        f"12–15s CTA: Check exact terms and order from the link.\n"
+        "8-second Reel/TikTok plan\n"
+        f"0–2s: {audience.hook}\n"
+        f"2–5s: {product.name} + PRICE Rs. {product.price:,}\n"
+        f"5–7s: {product.duration} + {product.access} access\n"
+        "7–8s: View details / order on WhatsApp\n"
+        f"Target audience: {audience.label}\n"
         f"Caption link: {url}\n"
-        "Do not claim official partnership or guaranteed results."
+        "Audio: original copyright-safe brand sound; no unlicensed music or guaranteed-result claims."
     )
 
 
 def caption_for_platform(settings: Settings, day: date, platform: str) -> str:
-    """Build one tracked, platform-specific caption for the daily catalog product."""
+    """Build one tracked, audience-specific caption for the daily catalog product."""
     product = deal_of_the_day(day)
+    audience = audience_for(product, day)
     builders = {
         "instagram": _instagram,
         "facebook": _facebook,
@@ -85,30 +226,35 @@ def caption_for_platform(settings: Settings, day: date, platform: str) -> str:
     }
     if platform not in builders:
         raise ValueError(f"Unsupported social platform: {platform}")
-    code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), "auto")
+    code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), audience.id)
     target = product_url(settings.site_url, product.id, code, platform)
-    return builders[platform](product, target)
+    return builders[platform](product, audience, target)
 
 
 def daily_pack(settings: Settings, day: date) -> list[str]:
     product = deal_of_the_day(day)
+    audience = audience_for(product, day)
     messages = [
-        f"📣 AI Tool Gems Deal of the Day — {day.isoformat()}\n"
+        f"📣 AI Tool Gems campaign — {day.isoformat()}\n"
         f"Featured product: {product.name}\n"
-        "Use only on pages/accounts you own. Confirm availability before publishing."
+        f"Audience: {audience.label}\n"
+        f"Primary Pakistan posting window: {audience.pakistan_time.strftime('%H:%M')} PKT\n"
+        "Automatic posts use original copyright-safe audio where video is scheduled."
     ]
     platform_builders = (
-        ("INSTAGRAM", "instagram", _instagram), ("FACEBOOK", "facebook", _facebook),
+        ("INSTAGRAM", "instagram", _instagram),
+        ("FACEBOOK", "facebook", _facebook),
         ("WHATSAPP STATUS", "whatsapp", _whatsapp),
     )
-    for slot, (label, platform, builder) in enumerate(platform_builders):
-        code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), f"s{slot + 1}")
+    for label, platform, builder in platform_builders:
+        code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), audience.id)
         target = product_url(settings.site_url, product.id, code, platform)
-        messages.append(f"{label} — {product.name}\n\n{builder(product, target)}")
-    code = tracking_code("tiktok", product.id, day.strftime("%Y%m%d"), "reel")
+        messages.append(f"{label} — {product.name}\n\n{builder(product, audience, target)}")
+    code = tracking_code("tiktok", product.id, day.strftime("%Y%m%d"), audience.id)
     target = product_url(settings.site_url, product.id, code, "tiktok")
     messages.append(
-        f"TIKTOK/REEL — {product.name}\n\n{_tiktok(product, target)}\n\n{_reel_script(product, target)}"
+        f"TIKTOK/REEL — {product.name}\n\n{_tiktok(product, audience, target)}\n\n"
+        f"{_reel_script(product, audience, target)}"
     )
     return messages
 
@@ -131,7 +277,7 @@ def send_daily_pack(settings: Settings, day: date, state_path: Path = STATE_PATH
         "messages": len(messages),
     }
     state_path.parent.mkdir(parents=True, exist_ok=True)
-    temp = state_path.with_suffix(".tmp")
-    temp.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
-    temp.replace(state_path)
+    temporary = state_path.with_suffix(".tmp")
+    temporary.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(state_path)
     return len(messages)

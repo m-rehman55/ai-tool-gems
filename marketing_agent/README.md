@@ -1,8 +1,8 @@
 # AI Tool Gems Organic Marketing Agent
 
-This is the safe, free-first implementation of the marketing specification. Phase 1 creates and schedules transparent product posts for an owned Telegram channel, tracks campaign attribution into the website's WhatsApp order message, stores real metrics in SQLite, learns only after enough evidence, and sends an owner report. The hosted three-day trial also delivers owner-ready social copy without exposing social-account credentials.
+This is the safe, free-first implementation of the marketing specification. It schedules transparent product campaigns on the owned Facebook Page, Instagram, TikTok and Telegram channels, tracks campaign attribution into the website's WhatsApp order message, stores real metrics, learns only after enough evidence, and sends owner reports. Social-account passwords and API keys are never stored in the public repository.
 
-It does **not** scrape audiences, auto-DM people, post to groups without permission, invent reach, or use unofficial social APIs. Instagram/Facebook publishing and WhatsApp Cloud reporting are intentionally gated until Telegram has passed the requested three-day test.
+It does **not** scrape audiences, auto-DM people, post to groups without permission, invent reach, use unofficial social APIs, or attach unlicensed music. Those shortcuts risk restrictions and do not build durable buyer trust.
 
 ## What is implemented
 
@@ -21,6 +21,12 @@ It does **not** scrape audiences, auto-DM people, post to groups without permiss
 - private daily Instagram, Facebook, WhatsApp Status and Reel/TikTok content pack
 - ongoing Deal of the Day rotation across all 20 products after the three-day public trial
 - daily live SEO/GEO integrity monitoring across every sitemap URL, robots.txt, llms.txt and homepage schema
+- Pakistan audience matching for students, creators, developers/freelancers, office teams, career users, privacy users and entertainment buyers
+- readable platform-specific copy with a clear PKR price, plan, access, delivery and tracked order CTA
+- restrained local/category hashtags instead of generic `#fyp`, `#viral` or hashtag stuffing
+- staggered Pakistan-time posting windows based on audience intent
+- 8-second 9:16 Reel/TikTok creatives with an original copyright-safe jingle on Tuesday, Thursday and Saturday; static fallback on encoder/media errors
+- daily Buffer delivery/engagement refresh when the personal API key permits insights access
 
 Telegram's Bot API supports channel posting and `getChatMemberCount`, but it does not expose the user-only channel view-counter method. See the official [Bot API](https://core.telegram.org/bots/api) and [view-counter API limitation](https://core.telegram.org/method/messages.getMessagesViews). For that reason, view and forward figures are manual imports unless a separately authorized, compliant analytics source is added later.
 
@@ -38,7 +44,7 @@ python -m marketing_agent test-telegram
 
 ## Hosted three-day trial
 
-The GitHub workflows run the 12–14 September 2026 public Telegram trial. The social workflow continues every day at 08:30 Pakistan time, rotates all 20 products, generates a branded 4:5 deal card, and schedules one consistent daily deal through Buffer for the connected Facebook Page, Instagram account and TikTok account. It retains a private Telegram copy for the owner and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
+The GitHub workflows run the 12–14 September 2026 public Telegram trial. The social workflow continues every day at 08:30 Pakistan time, rotates all 20 products, creates branded media, and schedules one relevant daily deal through Buffer for the connected Facebook Page, Instagram account and TikTok account. Actual publishing times vary by audience between 18:00 and 22:00 PKT and are staggered by network. It retains a private Telegram copy for the owner and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
 
 Useful control commands:
 
@@ -49,15 +55,16 @@ python -m marketing_agent social-pack --date 2026-09-12
 # Verify the three connected Buffer channels without publishing
 python -m marketing_agent buffer-status
 
-# Generate the daily card, then schedule it on all connected channels
+# Generate daily media, schedule it, and refresh real results
 python -m marketing_agent buffer-prepare --date 2026-09-12
 python -m marketing_agent buffer-publish --date 2026-09-12
+python -m marketing_agent buffer-learn
 python -m marketing_agent setup-bot
 python -m marketing_agent process-commands
 python -m marketing_agent seo-monitor --json
 ```
 
-The hosted SEO/GEO monitor runs at 07:15 Pakistan time and sends a factual Telegram result. It detects regressions; it does not manufacture daily page edits or promise rankings. See [SOCIAL-LAUNCH-KIT.md](SOCIAL-LAUNCH-KIT.md) for the owner-verified Facebook, Instagram and TikTok setup gate.
+The hosted SEO/GEO monitor runs at 07:15 Pakistan time and sends a factual Telegram result. It detects regressions; it does not manufacture daily page edits or promise rankings. Search rankings and social virality cannot be guaranteed. Native trending audio also cannot be safely attached to fully automatic TikTok/Instagram posts, so automated videos use original audio; native licensed music remains a manual in-app option.
 
 ## Local draft validation
 

@@ -3,7 +3,13 @@
 from __future__ import annotations
 
 import json
+import math
 import os
+import shutil
+import subprocess
+import tempfile
+import wave
+from array import array
 from io import BytesIO
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
@@ -13,7 +19,7 @@ from urllib.request import Request, urlopen
 
 from .catalog import Product
 from .config import PROJECT_DIR, Settings
-from .social import caption_for_platform, deal_of_the_day
+from .social import audience_for, caption_for_platform, deal_of_the_day
 
 
 API_URL = "https://api.buffer.com"
@@ -21,6 +27,8 @@ STATE_PATH = PROJECT_DIR / "marketing_agent" / "data" / "buffer-state.json"
 CARD_DIR = PROJECT_DIR / "assets" / "social-deals"
 RAW_MEDIA_ROOT = "https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/main/assets/social-deals"
 TARGET_SERVICES = ("instagram", "facebook", "tiktok")
+VIDEO_SERVICES = ("instagram", "tiktok")
+VIDEO_WEEKDAYS = (1, 3, 5)  # Tue, Thu, Sat: sustainable mix of Reels and static posts.
 PRODUCT_DOMAINS = {
     "chatgpt": "chatgpt.com", "gemini": "gemini.google.com", "veo": "deepmind.google",
     "leonardo": "leonardo.ai", "elevenlabs": "elevenlabs.io", "canva": "canva.com",
@@ -107,15 +115,61 @@ class BufferClient:
             selected[service] = choices[0]
         return selected
 
+    def post_metrics(self, post_id: str) -> dict:
+        """Read delivery status and normalized metrics for one owned post."""
+        query = f"""
+        query DailyPostMetrics {{
+          post(input: {{ id: {json.dumps(post_id)} }}) {{
+            id
+            status
+            metrics {{ type name value unit }}
+            metricsUpdatedAt
+          }}
+        }}
+        """
+        return self.graphql(query).get("post", {})
+
     def create_image_post(
         self, channel_id: str, service: str, text: str, image_url: str, due_at: datetime, title: str
     ) -> dict:
+        return self.create_media_post(channel_id, service, text, image_url, due_at, title, "image")
+
+    def create_video_post(
+        self, channel_id: str, service: str, text: str, video_url: str, due_at: datetime, title: str
+    ) -> dict:
+        return self.create_media_post(channel_id, service, text, video_url, due_at, title, "video")
+
+    def create_media_post(
+        self,
+        channel_id: str,
+        service: str,
+        text: str,
+        media_url: str,
+        due_at: datetime,
+        title: str,
+        media_type: str,
+    ) -> dict:
+        if media_type not in {"image", "video"}:
+            raise BufferError(f"Unsupported media type: {media_type}")
         metadata_by_service = {
-            "instagram": "metadata: { instagram: { type: post, shouldShareToFeed: true } }",
-            "facebook": "metadata: { facebook: { type: post } }",
-            "tiktok": f"metadata: {{ tiktok: {{ title: {json.dumps(title)} }} }}",
+            "instagram": (
+                "metadata: { instagram: { type: reel, shouldShareToFeed: true } }"
+                if media_type == "video"
+                else "metadata: { instagram: { type: post, shouldShareToFeed: true } }"
+            ),
+            "facebook": (
+                "metadata: { facebook: { type: reel } }"
+                if media_type == "video"
+                else "metadata: { facebook: { type: post } }"
+            ),
+            "tiktok": (
+                "metadata: { tiktok: { isAiGenerated: false } }"
+                if media_type == "video"
+                else f"metadata: {{ tiktok: {{ title: {json.dumps(title)} }} }}"
+            ),
         }
         metadata = metadata_by_service.get(service, "")
+        asset = f"{{ {media_type}: {{ url: {json.dumps(media_url)} }} }}"
         query = f"""
         mutation CreateDailyDeal {{
           createPost(input: {{
@@ -124,7 +178,7 @@ class BufferClient:
             schedulingType: automatic
             mode: customScheduled
             dueAt: {json.dumps(due_at.isoformat().replace('+00:00', 'Z'))}
-            assets: [{{ image: {{ url: {json.dumps(image_url)} }} }}]
+            assets: [{asset}]
             {metadata}
           }}) {{
             ... on PostActionSuccess {{ post {{ id text dueAt channelId }} }}
@@ -175,6 +229,15 @@ def _wrapped_lines(draw, text: str, font, max_width: int) -> list[str]:
 def deal_card_path(day: date, product: Product | None = None) -> Path:
     product = product or deal_of_the_day(day)
     return CARD_DIR / f"{day.isoformat()}-{product.id}.jpg"
+
+
+def deal_video_path(day: date, product: Product | None = None) -> Path:
+    product = product or deal_of_the_day(day)
+    return CARD_DIR / f"{day.isoformat()}-{product.id}.mp4"
+
+
+def is_video_day(day: date) -> bool:
+    return day.weekday() in VIDEO_WEEKDAYS
 
 
 def render_deal_card(day: date, output: Path | None = None) -> Path:
@@ -264,15 +327,141 @@ def render_deal_card(day: date, output: Path | None = None) -> Path:
     return output
 
 
-def media_url_for(day: date) -> str:
-    return f"{RAW_MEDIA_ROOT}/{deal_card_path(day).name}"
+def _ffmpeg_executable() -> str | None:
+    executable = shutil.which("ffmpeg")
+    if executable:
+        return executable
+    try:
+        import imageio_ffmpeg
+
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except (ImportError, RuntimeError):
+        return None
 
 
-def scheduled_time(settings: Settings, day: date, now: datetime | None = None) -> datetime:
-    target = datetime.combine(day, time(9, 0), settings.timezone).astimezone(timezone.utc)
+def _write_original_audio(path: Path, seconds: int = 8, sample_rate: int = 44_100) -> None:
+    """Create a short original brand jingle without copyrighted or platform-library audio."""
+    notes = (261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 392.00)
+    samples = array("h")
+    total = seconds * sample_rate
+    for index in range(total):
+        elapsed = index / sample_rate
+        note = notes[min(int(elapsed), len(notes) - 1)]
+        within_beat = elapsed % 1.0
+        envelope = min(1.0, within_beat / 0.04) * max(0.0, 1.0 - within_beat * 0.72)
+        chord = math.sin(2 * math.pi * note * elapsed)
+        harmony = 0.42 * math.sin(2 * math.pi * note * 1.5 * elapsed)
+        pulse = 0.24 * math.sin(2 * math.pi * 92 * elapsed) * max(0.0, 1 - within_beat * 5)
+        value = int(32767 * 0.13 * envelope * (chord + harmony + pulse))
+        samples.append(max(-32768, min(32767, value)))
+    with wave.open(str(path), "wb") as audio:
+        audio.setnchannels(1)
+        audio.setsampwidth(2)
+        audio.setframerate(sample_rate)
+        audio.writeframes(samples.tobytes())
+
+
+def render_deal_video(day: date, output: Path | None = None) -> Path | None:
+    """Render an 8-second 9:16 Reel/TikTok creative with original audio."""
+    from PIL import Image, ImageDraw
+
+    executable = _ffmpeg_executable()
+    if not executable:
+        return None
+    product = deal_of_the_day(day)
+    audience = audience_for(product, day)
+    output = output or deal_video_path(day, product)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    card = Image.open(render_deal_card(day)).convert("RGB")
+
+    width, height = 720, 1280
+    frame = Image.new("RGB", (width, height))
+    pixels = frame.load()
+    for y in range(height):
+        mix = y / (height - 1)
+        start, end = (239, 255, 246), (232, 244, 255)
+        colour = tuple(round(start[i] * (1 - mix) + end[i] * mix) for i in range(3))
+        for x in range(width):
+            pixels[x, y] = colour
+    draw = ImageDraw.Draw(frame)
+    ink, muted, green, lime = (18, 64, 57), (78, 112, 106), (73, 196, 121), (166, 232, 84)
+    draw.text((38, 35), "PAKISTAN'S AI TOOL DEAL", font=_font(34, True), fill=ink)
+    audience_label = audience.label.upper()
+    draw.text((40, 84), audience_label[:48], font=_font(18, True), fill=green)
+    card.thumbnail((660, 825))
+    frame.paste(card, ((width - card.width) // 2, 130))
+    draw.rounded_rectangle((36, 990, 684, 1128), radius=42, fill=lime)
+    price = f"PRICE  Rs. {product.price:,}"
+    price_box = draw.textbbox((0, 0), price, font=_font(49, True))
+    draw.text(((width - price_box[2]) / 2, 1012), price, font=_font(49, True), fill=ink)
+    draw.text((130, 1074), "VIEW DETAILS • ORDER ON WHATSAPP", font=_font(22, True), fill=ink)
+    draw.text((189, 1160), "aitoolgems.tech", font=_font(32, True), fill=ink)
+    draw.text((74, 1218), "Promotional listing • Independent reseller", font=_font(18), fill=muted)
+
+    with tempfile.TemporaryDirectory(prefix="atg-video-") as temporary:
+        temporary_dir = Path(temporary)
+        frame_path = temporary_dir / "frame.png"
+        audio_path = temporary_dir / "original-brand-audio.wav"
+        frame.save(frame_path, format="PNG", optimize=True)
+        _write_original_audio(audio_path)
+        command = [
+            executable,
+            "-y",
+            "-loop", "1",
+            "-i", str(frame_path),
+            "-i", str(audio_path),
+            "-t", "8",
+            "-vf", "zoompan=z='min(zoom+0.00015,1.03)':d=200:s=720x1280:fps=25,fade=t=in:st=0:d=0.25,fade=t=out:st=7.5:d=0.5",
+            "-c:v", "libx264",
+            "-preset", "medium",
+            "-crf", "29",
+            "-pix_fmt", "yuv420p",
+            "-c:a", "aac",
+            "-b:a", "96k",
+            "-movflags", "+faststart",
+            "-shortest",
+            str(output),
+        ]
+        completed = subprocess.run(command, capture_output=True, text=True, timeout=120)
+        if completed.returncode != 0:
+            output.unlink(missing_ok=True)
+            raise BufferError(f"Video render failed: {completed.stderr[-500:]}")
+    return output
+
+
+def render_daily_media(day: date) -> list[Path]:
+    assets = [render_deal_card(day)]
+    if is_video_day(day):
+        video = render_deal_video(day)
+        if video:
+            assets.append(video)
+    return assets
+
+
+def media_url_for(day: date, service: str = "facebook") -> tuple[str, str]:
+    video = deal_video_path(day)
+    if service in VIDEO_SERVICES and is_video_day(day) and video.exists():
+        return f"{RAW_MEDIA_ROOT}/{video.name}", "video"
+    card = deal_card_path(day)
+    return f"{RAW_MEDIA_ROOT}/{card.name}", "image"
+
+
+def scheduled_time(
+    settings: Settings,
+    day: date,
+    now: datetime | None = None,
+    service: str = "instagram",
+) -> datetime:
+    """Schedule in a relevant Pakistan window and stagger networks to avoid burst-like behavior."""
+    product = deal_of_the_day(day)
+    audience = audience_for(product, day)
+    offsets = {"facebook": -30, "instagram": 0, "tiktok": 30}
+    local_target = datetime.combine(day, audience.pakistan_time, settings.timezone)
+    target = (local_target + timedelta(minutes=offsets.get(service, 0))).astimezone(timezone.utc)
     current = now or datetime.now(timezone.utc)
     if target <= current + timedelta(minutes=5):
-        target = current + timedelta(minutes=10)
+        fallback_offsets = {"facebook": 10, "instagram": 14, "tiktok": 18}
+        target = current + timedelta(minutes=fallback_offsets.get(service, 10))
     return target.replace(microsecond=0)
 
 
@@ -317,8 +506,6 @@ def publish_daily_deal(
     state = _read_state(state_path)
     day_state = state.setdefault("published_dates", {}).setdefault(day.isoformat(), {})
     product = deal_of_the_day(day)
-    due_at = scheduled_time(settings, day, now)
-    image_url = media_url_for(day)
     results = {"scheduled": {}, "skipped": [], "errors": {}}
     for service in TARGET_SERVICES:
         if service in day_state:
@@ -326,12 +513,23 @@ def publish_daily_deal(
             continue
         channel = channels[service]
         caption = caption_for_platform(settings, day, service)
+        due_at = scheduled_time(settings, day, now, service)
+        media_url, media_type = media_url_for(day, service)
         try:
-            post = client.create_image_post(channel["id"], service, caption, image_url, due_at, product.name)
+            if media_type == "video":
+                post = client.create_video_post(
+                    channel["id"], service, caption, media_url, due_at, product.name
+                )
+            else:
+                post = client.create_image_post(
+                    channel["id"], service, caption, media_url, due_at, product.name
+                )
             day_state[service] = {
                 "post_id": post["id"],
                 "channel_id": channel["id"],
                 "scheduled_for": post.get("dueAt") or due_at.isoformat(),
+                "audience": audience_for(product, day).id,
+                "media_type": media_type,
                 "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             }
             results["scheduled"][service] = post["id"]
@@ -341,3 +539,48 @@ def publish_daily_deal(
     if results["errors"]:
         raise BufferError(json.dumps(results, ensure_ascii=False))
     return results
+
+
+def refresh_performance(
+    settings: Settings,
+    state_path: Path = STATE_PATH,
+    client: BufferClient | None = None,
+    now: datetime | None = None,
+) -> dict:
+    """Refresh real post results without allowing analytics failures to stop future posts."""
+    client = client or BufferClient(settings.buffer_api_key)
+    state = _read_state(state_path)
+    current = now or datetime.now(timezone.utc)
+    checked, updated, errors = 0, 0, {}
+    for day_key, services in state.get("published_dates", {}).items():
+        for service, record in services.items():
+            scheduled = record.get("scheduled_for", "")
+            try:
+                due_at = datetime.fromisoformat(scheduled.replace("Z", "+00:00"))
+            except (TypeError, ValueError):
+                continue
+            if due_at > current - timedelta(hours=6):
+                continue
+            if record.get("metrics_checked_on") == current.date().isoformat():
+                continue
+            checked += 1
+            try:
+                snapshot = client.post_metrics(record["post_id"])
+                metrics = {
+                    metric.get("type", metric.get("name", "unknown")): metric.get("value", 0)
+                    for metric in snapshot.get("metrics", [])
+                }
+                record.update({
+                    "delivery_status": snapshot.get("status", "unknown"),
+                    "metrics": metrics,
+                    "metrics_updated_at": snapshot.get("metricsUpdatedAt"),
+                    "metrics_checked_on": current.date().isoformat(),
+                })
+                record.pop("metrics_error", None)
+                updated += 1
+            except BufferError as exc:
+                record["metrics_error"] = str(exc)[:300]
+                record["metrics_checked_on"] = current.date().isoformat()
+                errors[f"{day_key}:{service}"] = str(exc)
+    _write_state(state_path, state)
+    return {"checked": checked, "updated": updated, "errors": errors}
