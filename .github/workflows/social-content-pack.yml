@@ -105,7 +105,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          output="$(python -m marketing_agent buffer-publish --date "${{ steps.campaign.outputs.date }}" 2>&1)"
+          output="$(python -m marketing_agent buffer-publish --date "${{ steps.campaign.outputs.date }}" --send 2>&1)"
           status=$?
           set -e
           echo "$output"

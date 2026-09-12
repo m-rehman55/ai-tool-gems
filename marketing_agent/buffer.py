@@ -577,7 +577,15 @@ def publish_daily_deal(
     day_state = state.setdefault("published_dates", {}).setdefault(day.isoformat(), {})
     product = deal_of_the_day(day)
     audience, learning_mode = learned_audience_for(product, day, state)
-    results = {"scheduled": {}, "skipped": [], "errors": {}}
+    results = {
+        "date": day.isoformat(),
+        "product": product.name,
+        "audience": audience.label,
+        "learning_mode": learning_mode,
+        "scheduled": {},
+        "skipped": [],
+        "errors": {},
+    }
     for service in TARGET_SERVICES:
         if service in day_state:
             results["skipped"].append(service)
@@ -612,6 +620,47 @@ def publish_daily_deal(
     if results["errors"]:
         raise BufferError(json.dumps(results, ensure_ascii=False))
     return results
+
+
+def format_publish_confirmation(
+    settings: Settings,
+    day: date,
+    result: dict,
+    state_path: Path = STATE_PATH,
+) -> str:
+    """Create a concise owner-safe Telegram receipt only when new posts were scheduled."""
+    if not result.get("scheduled"):
+        return ""
+    day_state = _read_state(state_path).get("published_dates", {}).get(day.isoformat(), {})
+    lines = [
+        "✅ Daily social campaign scheduled",
+        "",
+        f"Product: {result.get('product', deal_of_the_day(day).name)}",
+        f"Audience: {result.get('audience', 'relevant Pakistan buyers')}",
+        f"Learning: {result.get('learning_mode', 'exploration')}",
+        "",
+    ]
+    labels = {"facebook": "Facebook", "instagram": "Instagram", "tiktok": "TikTok"}
+    for service in TARGET_SERVICES:
+        if service not in result["scheduled"]:
+            continue
+        record = day_state.get(service, {})
+        scheduled = record.get("scheduled_for", "")
+        try:
+            local_time = datetime.fromisoformat(scheduled.replace("Z", "+00:00")).astimezone(settings.timezone)
+            time_label = local_time.strftime("%I:%M %p PKT")
+        except (TypeError, ValueError):
+            time_label = "scheduled"
+        media = str(record.get("media_type", "post")).title()
+        audio = record.get("audio_theme")
+        extra = f" • audio: {audio}" if audio else ""
+        lines.append(f"• {labels[service]}: {media} • {time_label}{extra}")
+    lines.extend([
+        "",
+        "Tracked product links and duplicate protection are active.",
+        "You do not need to post manually.",
+    ])
+    return "\n".join(lines)
 
 
 def refresh_performance(
