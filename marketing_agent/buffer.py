@@ -110,9 +110,12 @@ class BufferClient:
     def create_image_post(
         self, channel_id: str, service: str, text: str, image_url: str, due_at: datetime, title: str
     ) -> dict:
-        metadata = ""
-        if service == "tiktok":
-            metadata = f", metadata: {{ tiktok: {{ title: {json.dumps(title)} }} }}"
+        metadata_by_service = {
+            "instagram": "metadata: { instagram: { type: post, shouldShareToFeed: true } }",
+            "facebook": "metadata: { facebook: { type: post } }",
+            "tiktok": f"metadata: {{ tiktok: {{ title: {json.dumps(title)} }} }}",
+        }
+        metadata = metadata_by_service.get(service, "")
         query = f"""
         mutation CreateDailyDeal {{
           createPost(input: {{
@@ -122,7 +125,7 @@ class BufferClient:
             mode: customScheduled
             dueAt: {json.dumps(due_at.isoformat().replace('+00:00', 'Z'))}
             assets: [{{ image: {{ url: {json.dumps(image_url)} }} }}]
-            {metadata.lstrip(', ')}
+            {metadata}
           }}) {{
             ... on PostActionSuccess {{ post {{ id text dueAt channelId }} }}
             ... on MutationError {{ message }}

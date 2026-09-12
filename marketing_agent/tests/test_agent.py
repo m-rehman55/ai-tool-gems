@@ -159,6 +159,20 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(len(client.calls), 3)
         self.assertTrue(all("Independent reseller" in call[1] for call in client.calls))
 
+    def test_buffer_post_types_are_explicit_for_meta_channels(self):
+        queries = []
+
+        def transport(query: str) -> dict:
+            queries.append(query)
+            return {"data": {"createPost": {"post": {"id": "post1", "dueAt": "2026-09-12T04:00:00Z"}}}}
+
+        client = BufferClient("private-key", transport)
+        due_at = datetime(2026, 9, 12, 4, 0, tzinfo=timezone.utc)
+        client.create_image_post("ig1", "instagram", "caption", "https://example.com/card.jpg", due_at, "Deal")
+        client.create_image_post("fb1", "facebook", "caption", "https://example.com/card.jpg", due_at, "Deal")
+        self.assertIn("instagram: { type: post, shouldShareToFeed: true }", queries[0])
+        self.assertIn("facebook: { type: post }", queries[1])
+
     def test_buffer_schedules_0900_pakistan_or_safely_in_future(self):
         early = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
         late = datetime(2026, 9, 12, 6, 0, tzinfo=timezone.utc)
