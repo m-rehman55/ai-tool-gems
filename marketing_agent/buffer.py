@@ -21,11 +21,12 @@ from .catalog import Product
 from .config import PROJECT_DIR, Settings
 from .social import (
     AudienceAngle,
+    SOCIAL_SLOTS,
     audience_candidates,
     audience_for,
     caption_for_platform,
     deal_of_the_day,
-    deals_of_the_day,
+    deals_for_slot,
 )
 
 
@@ -34,8 +35,7 @@ STATE_PATH = PROJECT_DIR / "marketing_agent" / "data" / "buffer-state.json"
 CARD_DIR = PROJECT_DIR / "assets" / "social-deals"
 RAW_MEDIA_ROOT = "https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/main/assets/social-deals"
 TARGET_SERVICES = ("instagram", "facebook", "tiktok")
-VIDEO_SERVICES = ("instagram", "tiktok")
-VIDEO_WEEKDAYS = (1, 3, 5)  # Tue, Thu, Sat: sustainable mix of Reels and static posts.
+VIDEO_SERVICES = TARGET_SERVICES
 PRODUCT_DOMAINS = {
     "chatgpt": "chatgpt.com", "gemini": "gemini.google.com", "veo": "deepmind.google",
     "leonardo": "leonardo.ai", "elevenlabs": "elevenlabs.io", "canva": "canva.com",
@@ -45,6 +45,41 @@ PRODUCT_DOMAINS = {
     "surfshark": "surfshark.com", "youtube": "youtube.com", "netflix": "netflix.com",
     "linkedin": "linkedin.com", "windows": "microsoft.com",
 }
+
+CREATIVE_PALETTES = (
+    {
+        "gradient": ((247, 252, 255), (239, 247, 255)),
+        "ink": (17, 50, 91), "muted": (76, 102, 132),
+        "primary": (21, 93, 222), "cta": (255, 213, 48),
+        "rows": ((241, 248, 255), (241, 255, 248), (255, 246, 248)),
+        "accents": ((21, 93, 222), (20, 176, 105), (238, 66, 84)),
+    },
+    {
+        "gradient": ((246, 255, 250), (255, 247, 241)),
+        "ink": (17, 69, 57), "muted": (76, 111, 101),
+        "primary": (16, 164, 115), "cta": (255, 190, 92),
+        "rows": ((239, 255, 247), (244, 249, 255), (255, 244, 238)),
+        "accents": ((16, 164, 115), (64, 133, 231), (239, 111, 73)),
+    },
+    {
+        "gradient": ((252, 248, 255), (244, 250, 255)),
+        "ink": (54, 37, 91), "muted": (100, 84, 126),
+        "primary": (124, 79, 214), "cta": (255, 205, 78),
+        "rows": ((249, 243, 255), (240, 250, 255), (255, 247, 236)),
+        "accents": ((124, 79, 214), (30, 154, 205), (236, 139, 42)),
+    },
+    {
+        "gradient": ((242, 255, 255), (246, 250, 255)),
+        "ink": (12, 64, 74), "muted": (70, 108, 115),
+        "primary": (0, 160, 189), "cta": (174, 235, 78),
+        "rows": ((236, 253, 255), (243, 248, 255), (249, 243, 255)),
+        "accents": ((0, 160, 189), (61, 112, 226), (148, 91, 208)),
+    },
+)
+
+
+def _creative_palette(day: date, slot: str) -> dict:
+    return CREATIVE_PALETTES[(day.toordinal() * 2 + SOCIAL_SLOTS.index(slot)) % len(CREATIVE_PALETTES)]
 
 
 class BufferError(RuntimeError):
@@ -233,18 +268,19 @@ def _wrapped_lines(draw, text: str, font, max_width: int) -> list[str]:
     return lines
 
 
-def deal_card_path(day: date, product: Product | None = None) -> Path:
+def deal_card_path(day: date, product: Product | None = None, slot: str = "morning") -> Path:
     product = product or deal_of_the_day(day)
-    return CARD_DIR / f"{day.isoformat()}-{product.id}.jpg"
+    return CARD_DIR / f"{day.isoformat()}-{slot}-{product.id}.jpg"
 
 
-def deal_video_path(day: date, product: Product | None = None) -> Path:
+def deal_video_path(day: date, product: Product | None = None, slot: str = "morning") -> Path:
     product = product or deal_of_the_day(day)
-    return CARD_DIR / f"{day.isoformat()}-{product.id}.mp4"
+    return CARD_DIR / f"{day.isoformat()}-{slot}-{product.id}.mp4"
 
 
 def is_video_day(day: date) -> bool:
-    return day.weekday() in VIDEO_WEEKDAYS
+    """All twice-daily campaigns use video so Meta receives Reels, not static deal posts."""
+    return True
 
 
 def _render_single_deal_card_legacy(day: date, output: Path | None = None) -> Path:
@@ -342,28 +378,29 @@ def _render_single_deal_card_legacy(day: date, output: Path | None = None) -> Pa
     return output
 
 
-def render_deal_card(day: date, output: Path | None = None) -> Path:
+def render_deal_card(day: date, output: Path | None = None, slot: str = "morning") -> Path:
     """Create a clean 4:5 card with Gemini plus two rotating catalog deals."""
     from PIL import Image, ImageDraw, ImageOps
 
-    products = deals_of_the_day(day)
+    products = deals_for_slot(day, slot)
     focus = products[1]
-    output = output or deal_card_path(day, focus)
+    output = output or deal_card_path(day, focus, slot)
     output.parent.mkdir(parents=True, exist_ok=True)
     width, height = 1080, 1350
+    palette = _creative_palette(day, slot)
     image = Image.new("RGB", (width, height))
     pixels = image.load()
     for y in range(height):
         mix = y / (height - 1)
-        start, end = (246, 255, 249), (236, 246, 255)
+        start, end = palette["gradient"]
         colour = tuple(round(start[i] * (1 - mix) + end[i] * mix) for i in range(3))
         for x in range(width):
             pixels[x, y] = colour
     draw = ImageDraw.Draw(image)
-    ink = (18, 64, 57)
-    muted = (78, 112, 106)
-    green = (73, 196, 121)
-    lime = (166, 232, 84)
+    ink = palette["ink"]
+    muted = palette["muted"]
+    green = palette["primary"]
+    lime = palette["cta"]
     white = (255, 255, 255)
 
     draw.rounded_rectangle((60, 48, 1020, 205), radius=42, fill=white, outline=(206, 230, 220), width=3)
@@ -375,16 +412,18 @@ def render_deal_card(day: date, output: Path | None = None) -> Path:
     image.paste(logo_box, (80, 64), logo_box)
     draw.text((225, 80), "AI TOOL GEMS", font=_font(40, True), fill=ink)
     draw.text((227, 134), "PAKISTAN", font=_font(21, True), fill=green)
-    draw.rounded_rectangle((762, 91, 976, 157), radius=33, fill=(229, 255, 207))
+    draw.rounded_rectangle((762, 91, 976, 157), radius=33, fill=lime)
     draw.text((812, 110), "3 DEALS", font=_font(25, True), fill=ink)
 
-    draw.text((70, 242), "3 HANDPICKED DEALS", font=_font(51, True), fill=ink)
-    draw.text((72, 306), "Gemini every day + two fresh picks for Pakistan", font=_font(25), fill=muted)
+    draw.rounded_rectangle((70, 232, 286, 272), radius=20, fill=green)
+    draw.text((102, 240), "GOOD NEWS", font=_font(19, True), fill=white)
+    draw.text((70, 283), f"{slot.upper()} — 3 DEALS", font=_font(46, True), fill=ink)
+    draw.text((72, 338), "Gemini every time + two fresh picks for Pakistan", font=_font(24), fill=muted)
 
-    row_colours = ((244, 255, 248), (244, 250, 255), (253, 248, 255))
-    accent_colours = (green, (75, 155, 231), (151, 108, 219))
+    row_colours = palette["rows"]
+    accent_colours = palette["accents"]
     for index, product in enumerate(products):
-        top = 360 + index * 218
+        top = 378 + index * 210
         bottom = top + 192
         accent = accent_colours[index]
         draw.rounded_rectangle((68, top, 1012, bottom), radius=38, fill=row_colours[index], outline=(208, 228, 220), width=2)
@@ -555,32 +594,33 @@ def _render_single_deal_video_legacy(day: date, output: Path | None = None) -> P
     return output
 
 
-def render_deal_video(day: date, output: Path | None = None) -> Path | None:
+def render_deal_video(day: date, output: Path | None = None, slot: str = "morning") -> Path | None:
     """Render an 8-second 9:16 creative showing all three deals and prices."""
     from PIL import Image, ImageDraw
 
     executable = _ffmpeg_executable()
     if not executable:
         return None
-    products = deals_of_the_day(day)
+    products = deals_for_slot(day, slot)
     focus = products[1]
     audience = audience_for(focus, day)
-    output = output or deal_video_path(day, focus)
+    output = output or deal_video_path(day, focus, slot)
     output.parent.mkdir(parents=True, exist_ok=True)
-    card = Image.open(render_deal_card(day)).convert("RGB")
+    card = Image.open(render_deal_card(day, slot=slot)).convert("RGB")
+    palette = _creative_palette(day, slot)
 
     width, height = 720, 1280
     frame = Image.new("RGB", (width, height))
     pixels = frame.load()
     for y in range(height):
         mix = y / (height - 1)
-        start, end = (239, 255, 246), (232, 244, 255)
+        start, end = palette["gradient"]
         colour = tuple(round(start[i] * (1 - mix) + end[i] * mix) for i in range(3))
         for x in range(width):
             pixels[x, y] = colour
     draw = ImageDraw.Draw(frame)
-    ink, muted, green, lime = (18, 64, 57), (78, 112, 106), (73, 196, 121), (166, 232, 84)
-    draw.text((38, 35), "3 TOOLS. CLEAR PRICES.", font=_font(34, True), fill=ink)
+    ink, muted, green, lime = palette["ink"], palette["muted"], palette["primary"], palette["cta"]
+    draw.text((38, 35), f"{slot.upper()} — 3 CLEAR DEALS", font=_font(34, True), fill=ink)
     draw.text((40, 84), audience.label.upper()[:48], font=_font(18, True), fill=green)
     card.thumbnail((660, 825))
     frame.paste(card, ((width - card.width) // 2, 130))
@@ -624,19 +664,21 @@ def render_deal_video(day: date, output: Path | None = None) -> Path | None:
 
 
 def render_daily_media(day: date) -> list[Path]:
-    assets = [render_deal_card(day)]
-    if is_video_day(day):
-        video = render_deal_video(day)
+    assets: list[Path] = []
+    for slot in SOCIAL_SLOTS:
+        assets.append(render_deal_card(day, slot=slot))
+        video = render_deal_video(day, slot=slot)
         if video:
             assets.append(video)
     return assets
 
 
-def media_url_for(day: date, service: str = "facebook") -> tuple[str, str]:
-    video = deal_video_path(day)
-    if service in VIDEO_SERVICES and is_video_day(day) and video.exists():
+def media_url_for(day: date, service: str = "facebook", slot: str = "morning") -> tuple[str, str]:
+    products = deals_for_slot(day, slot)
+    video = deal_video_path(day, products[1], slot)
+    if service in VIDEO_SERVICES and video.exists():
         return f"{RAW_MEDIA_ROOT}/{video.name}", "video"
-    card = deal_card_path(day)
+    card = deal_card_path(day, products[1], slot)
     return f"{RAW_MEDIA_ROOT}/{card.name}", "image"
 
 
@@ -646,17 +688,39 @@ def scheduled_time(
     now: datetime | None = None,
     service: str = "instagram",
     audience: AudienceAngle | None = None,
+    slot: str = "morning",
 ) -> datetime:
-    """Schedule in a relevant Pakistan window and stagger networks to avoid burst-like behavior."""
-    product = deal_of_the_day(day)
-    audience = audience or audience_for(product, day)
-    offsets = {"facebook": -30, "instagram": 0, "tiktok": 30}
-    local_target = datetime.combine(day, audience.pakistan_time, settings.timezone)
-    target = (local_target + timedelta(minutes=offsets.get(service, 0))).astimezone(timezone.utc)
+    """Use researched, platform-specific morning/evening windows in Pakistan local time."""
+    if service not in TARGET_SERVICES:
+        raise ValueError(f"Unsupported social service: {service}")
+    if slot not in SOCIAL_SLOTS:
+        raise ValueError(f"Unsupported social slot: {slot}")
+    # Monday=0. Initial benchmarks come from Buffer's 2026 analyses of
+    # 14M Facebook, 9.6M Instagram and 7.1M TikTok posts. Real account
+    # metrics are still collected so these can be tuned as the audience grows.
+    pakistan_windows = {
+        "facebook": {
+            "morning": ((9, 0), (8, 0), (8, 0), (9, 0), (8, 0), (10, 0), (10, 0)),
+            "evening": ((21, 0), (19, 0), (18, 0), (19, 0), (20, 0), (22, 0), (20, 0)),
+        },
+        "instagram": {
+            "morning": ((10, 0), (10, 0), (8, 0), (9, 0), (9, 0), (10, 0), (10, 0)),
+            "evening": ((19, 0), (19, 0), (18, 0), (19, 0), (22, 0), (21, 0), (21, 0)),
+        },
+        "tiktok": {
+            "morning": ((11, 0), (7, 0), (6, 0), (6, 0), (10, 0), (10, 0), (9, 0)),
+            "evening": ((20, 0), (22, 0), (22, 0), (22, 0), (18, 0), (17, 0), (20, 0)),
+        },
+    }
+    hour, minute = pakistan_windows[service][slot][day.weekday()]
+    local_target = datetime.combine(day, time(hour, minute), settings.timezone)
+    target = local_target.astimezone(timezone.utc)
     current = now or datetime.now(timezone.utc)
     if target <= current + timedelta(minutes=5):
-        fallback_offsets = {"facebook": 10, "instagram": 14, "tiktok": 18}
-        target = current + timedelta(minutes=fallback_offsets.get(service, 10))
+        # A late hosted run must never burst multiple networks together.
+        service_delay = {"facebook": 15, "instagram": 30, "tiktok": 45}[service]
+        slot_delay = 0 if slot == "morning" else 75
+        target = current + timedelta(minutes=service_delay + slot_delay)
     return target.replace(microsecond=0)
 
 
@@ -742,52 +806,54 @@ def publish_daily_deal(
     channels = client.owned_channels()
     state = _read_state(state_path)
     day_state = state.setdefault("published_dates", {}).setdefault(day.isoformat(), {})
-    products = deals_of_the_day(day)
-    focus = products[1]
-    audience, learning_mode = learned_audience_for(focus, day, state)
-    product_names = [product.name for product in products]
     results = {
         "date": day.isoformat(),
-        "product": " + ".join(product_names),
-        "products": product_names,
-        "audience": audience.label,
-        "learning_mode": learning_mode,
+        "campaigns": {},
         "scheduled": {},
         "skipped": [],
         "errors": {},
     }
-    for service in TARGET_SERVICES:
-        if service in day_state:
-            results["skipped"].append(service)
-            continue
-        channel = channels[service]
-        caption = caption_for_platform(settings, day, service, audience)
-        due_at = scheduled_time(settings, day, now, service, audience)
-        media_url, media_type = media_url_for(day, service)
-        try:
-            if media_type == "video":
+    for slot in SOCIAL_SLOTS:
+        products = deals_for_slot(day, slot)
+        focus = products[1]
+        audience, learning_mode = learned_audience_for(focus, day, state)
+        results["campaigns"][slot] = {
+            "products": [product.name for product in products],
+            "audience": audience.label,
+            "learning_mode": learning_mode,
+        }
+        for service in TARGET_SERVICES:
+            state_key = f"{slot}:{service}"
+            if state_key in day_state:
+                results["skipped"].append(state_key)
+                continue
+            channel = channels[service]
+            caption = caption_for_platform(settings, day, service, audience, slot)
+            due_at = scheduled_time(settings, day, now, service, audience, slot)
+            media_url, media_type = media_url_for(day, service, slot)
+            try:
+                if media_type != "video":
+                    raise BufferError(f"{state_key}: required Reel/video asset is not ready")
                 post = client.create_video_post(
-                    channel["id"], service, caption, media_url, due_at, "3 AI Tool Deals"
+                    channel["id"], service, caption, media_url, due_at, f"{slot.title()} — 3 AI Tool Deals"
                 )
-            else:
-                post = client.create_image_post(
-                    channel["id"], service, caption, media_url, due_at, "3 AI Tool Deals"
-                )
-            day_state[service] = {
-                "post_id": post["id"],
-                "channel_id": channel["id"],
-                "scheduled_for": post.get("dueAt") or due_at.isoformat(),
-                "audience": audience.id,
-                "learning_mode": learning_mode,
-                "deal_ids": [product.id for product in products],
-                "media_type": media_type,
-                "audio_theme": audio_theme_for(audience) if media_type == "video" else None,
-                "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            }
-            results["scheduled"][service] = post["id"]
-            _write_state(state_path, state)
-        except BufferError as exc:
-            results["errors"][service] = str(exc)
+                day_state[state_key] = {
+                    "post_id": post["id"],
+                    "channel_id": channel["id"],
+                    "scheduled_for": post.get("dueAt") or due_at.isoformat(),
+                    "slot": slot,
+                    "service": service,
+                    "audience": audience.id,
+                    "learning_mode": learning_mode,
+                    "deal_ids": [product.id for product in products],
+                    "media_type": media_type,
+                    "audio_theme": audio_theme_for(audience),
+                    "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                }
+                results["scheduled"][state_key] = post["id"]
+                _write_state(state_path, state)
+            except BufferError as exc:
+                results["errors"][state_key] = str(exc)
     if results["errors"]:
         raise BufferError(json.dumps(results, ensure_ascii=False))
     return results
@@ -804,28 +870,34 @@ def format_publish_confirmation(
         return ""
     day_state = _read_state(state_path).get("published_dates", {}).get(day.isoformat(), {})
     lines = [
-        "✅ Daily social campaign scheduled",
-        "",
-        f"Deals: {result.get('product', ' + '.join(product.name for product in deals_of_the_day(day)))}",
-        f"Audience: {result.get('audience', 'relevant Pakistan buyers')}",
-        f"Learning: {result.get('learning_mode', 'exploration')}",
+        "✅ Morning + evening social campaigns scheduled",
         "",
     ]
     labels = {"facebook": "Facebook", "instagram": "Instagram", "tiktok": "TikTok"}
-    for service in TARGET_SERVICES:
-        if service not in result["scheduled"]:
-            continue
-        record = day_state.get(service, {})
+    current_slot = ""
+    for state_key in result["scheduled"]:
+        slot, service = state_key.split(":", 1)
+        if slot != current_slot:
+            campaign = result.get("campaigns", {}).get(slot, {})
+            products = campaign.get("products", [product.name for product in deals_for_slot(day, slot)])
+            lines.extend([
+                f"{slot.upper()}: {' + '.join(products)}",
+                f"Audience: {campaign.get('audience', 'relevant Pakistan buyers')}",
+            ])
+            current_slot = slot
+        record = day_state.get(state_key, {})
         scheduled = record.get("scheduled_for", "")
         try:
             local_time = datetime.fromisoformat(scheduled.replace("Z", "+00:00")).astimezone(settings.timezone)
             time_label = local_time.strftime("%I:%M %p PKT")
         except (TypeError, ValueError):
             time_label = "scheduled"
-        media = str(record.get("media_type", "post")).title()
+        media = "Reel/video"
         audio = record.get("audio_theme")
         extra = f" • audio: {audio}" if audio else ""
         lines.append(f"• {labels[service]}: {media} • {time_label}{extra}")
+        if service == TARGET_SERVICES[-1]:
+            lines.append("")
     lines.extend([
         "",
         "Tracked product links and duplicate protection are active.",

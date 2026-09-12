@@ -44,7 +44,7 @@ python -m marketing_agent test-telegram
 
 ## Hosted three-day trial
 
-The GitHub workflows run the 12–14 September 2026 public Telegram trial. The social workflow continues every day at 08:30 Pakistan time, creates branded media, and schedules three clearly priced deals through Buffer for the connected Facebook Page, Instagram account and TikTok account. Gemini is always included; the other two products rotate through the remaining catalog. Actual publishing times vary by the focus audience between 18:00 and 22:00 PKT and are staggered by network. Every caption links to the tracked `/deals/` landing page, retains a private Telegram copy for the owner, and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
+The GitHub workflows run the 12–14 September 2026 public Telegram trial. The continuing social workflow starts at 04:45 Pakistan time and schedules two campaigns per day—morning and evening—for the connected Facebook Page, Instagram account and TikTok account. Each campaign contains Gemini plus two different rotating products, uses a changing professional colour theme, and publishes an 8-second vertical video with original copyright-safe audio. Facebook and Instagram receive Reels; TikTok receives video. Platform/day-specific local posting windows are staggered, tracked, and refined from real account results. Every caption links to the tracked `/deals/` landing page, retains a private Telegram copy for the owner, and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
 
 Useful control commands:
 
@@ -64,7 +64,7 @@ python -m marketing_agent process-commands
 python -m marketing_agent seo-monitor --json
 ```
 
-The hosted SEO/GEO monitor runs at 07:15 Pakistan time and sends a factual Telegram result. It detects regressions; it does not manufacture daily page edits or promise rankings. Search rankings and social virality cannot be guaranteed. Native trending audio also cannot be safely attached to fully automatic TikTok/Instagram posts, so automated videos use original audio; native licensed music remains a manual in-app option.
+The hosted SEO/GEO monitor runs at 07:15 Pakistan time and sends a factual Telegram result. It detects regressions; it does not manufacture daily page edits or promise rankings. Search rankings and social virality cannot be guaranteed. Native trending audio cannot be safely or reliably attached to fully automatic TikTok/Instagram posts, so every automated video uses an original brand audio track; native licensed music remains a manual in-app option.
 
 ## Local draft validation
 
