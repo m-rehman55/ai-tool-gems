@@ -9,7 +9,12 @@ from datetime import date, datetime
 from pathlib import Path
 
 from .commands import process_updates, setup_bot
-from .buffer import connection_status as buffer_connection_status, publish_daily_deal, render_deal_card
+from .buffer import (
+    connection_status as buffer_connection_status,
+    publish_daily_deal,
+    refresh_performance,
+    render_daily_media,
+)
 from .config import get_settings
 from .content import generate_days
 from .db import database_status, initialize
@@ -73,10 +78,11 @@ def parser() -> argparse.ArgumentParser:
     social.add_argument("--send", action="store_true")
 
     commands.add_parser("buffer-status", help="Verify Buffer access and list the three owned social channels")
-    buffer_prepare = commands.add_parser("buffer-prepare", help="Create today's branded 4:5 social deal card")
+    buffer_prepare = commands.add_parser("buffer-prepare", help="Create today's branded social image and scheduled video")
     buffer_prepare.add_argument("--date", default=date.today().isoformat())
     buffer_publish = commands.add_parser("buffer-publish", help="Schedule today's deal on Instagram, Facebook and TikTok")
     buffer_publish.add_argument("--date", default=date.today().isoformat())
+    commands.add_parser("buffer-learn", help="Refresh real delivery and engagement results from Buffer")
 
     commands.add_parser("trial-plan", help="Print the duplicate-safe three-day campaign plan")
     trial_claim = commands.add_parser("trial-claim", help="Claim one trial slot before publishing")
@@ -180,9 +186,12 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "buffer-status":
         print(json.dumps(buffer_connection_status(settings), indent=2, ensure_ascii=False))
     elif args.command == "buffer-prepare":
-        print(render_deal_card(date.fromisoformat(args.date)).relative_to(Path.cwd()))
+        for asset in render_daily_media(date.fromisoformat(args.date)):
+            print(asset.relative_to(Path.cwd()))
     elif args.command == "buffer-publish":
         print(json.dumps(publish_daily_deal(settings, date.fromisoformat(args.date)), indent=2, ensure_ascii=False))
+    elif args.command == "buffer-learn":
+        print(json.dumps(refresh_performance(settings), indent=2, ensure_ascii=False))
     elif args.command == "trial-plan":
         print(json.dumps(trial_plan(settings), indent=2, ensure_ascii=False))
     elif args.command == "trial-claim":
