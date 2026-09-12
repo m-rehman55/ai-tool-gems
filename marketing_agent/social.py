@@ -74,6 +74,22 @@ def _reel_script(product: Product, url: str) -> str:
     )
 
 
+def caption_for_platform(settings: Settings, day: date, platform: str) -> str:
+    """Build one tracked, platform-specific caption for the daily catalog product."""
+    product = deal_of_the_day(day)
+    builders = {
+        "instagram": _instagram,
+        "facebook": _facebook,
+        "whatsapp": _whatsapp,
+        "tiktok": _tiktok,
+    }
+    if platform not in builders:
+        raise ValueError(f"Unsupported social platform: {platform}")
+    code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), "auto")
+    target = product_url(settings.site_url, product.id, code, platform)
+    return builders[platform](product, target)
+
+
 def daily_pack(settings: Settings, day: date) -> list[str]:
     product = deal_of_the_day(day)
     messages = [
