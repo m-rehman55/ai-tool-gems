@@ -38,13 +38,20 @@ python -m marketing_agent test-telegram
 
 ## Hosted three-day trial
 
-The GitHub workflows run the 12–14 September 2026 public Telegram trial. The private social pack continues every day at 08:30 Pakistan time after the trial, rotating all 20 products and preparing one consistent daily deal for Facebook, Instagram, WhatsApp Status and TikTok/Reels. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the exact rotation and daily owner actions.
+The GitHub workflows run the 12–14 September 2026 public Telegram trial. The social workflow continues every day at 08:30 Pakistan time, rotates all 20 products, generates a branded 4:5 deal card, and schedules one consistent daily deal through Buffer for the connected Facebook Page, Instagram account and TikTok account. It retains a private Telegram copy for the owner and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
 
 Useful control commands:
 
 ```powershell
 python -m marketing_agent trial-plan
 python -m marketing_agent social-pack --date 2026-09-12
+
+# Verify the three connected Buffer channels without publishing
+python -m marketing_agent buffer-status
+
+# Generate the daily card, then schedule it on all connected channels
+python -m marketing_agent buffer-prepare --date 2026-09-12
+python -m marketing_agent buffer-publish --date 2026-09-12
 python -m marketing_agent setup-bot
 python -m marketing_agent process-commands
 python -m marketing_agent seo-monitor --json

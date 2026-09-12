@@ -1,21 +1,29 @@
 name: Daily free social content pack
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/social-content-pack.yml"
+      - "marketing_agent/buffer.py"
+      - "marketing_agent/config.py"
+      - "marketing_agent/cli.py"
+      - "marketing_agent/social.py"
+      - "marketing_agent/tests/test_agent.py"
   schedule:
     - cron: "30 8 * * *"
       timezone: "Asia/Karachi"
   workflow_dispatch:
     inputs:
       pack_date:
-        description: "Pack date (YYYY-MM-DD)"
-        required: true
-        default: "2026-09-12"
+        description: "Optional pack date (YYYY-MM-DD); blank uses today in Pakistan"
+        required: false
 
 permissions:
   contents: write
 
 concurrency:
-  group: telegram-marketing-state
+  group: daily-social-marketing-state
   cancel-in-progress: false
 
 jobs:
@@ -26,6 +34,7 @@ jobs:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
       TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       ATG_TIMEZONE: Asia/Karachi
     steps:
       - uses: actions/checkout@v4
@@ -35,21 +44,55 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Deliver owner-ready captions and short-video script
+      - name: Install social image dependency
+        run: python -m pip install --disable-pip-version-check pillow==11.3.0
+      - name: Resolve Pakistan campaign date
+        id: campaign
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.pack_date }}" ]; then
             pack_date="${{ inputs.pack_date }}"
           else
             pack_date="$(TZ=Asia/Karachi date +%F)"
           fi
-          python -m marketing_agent social-pack --date "$pack_date" --send
-      - name: Save pack delivery state
+          echo "date=$pack_date" >> "$GITHUB_OUTPUT"
+      - name: Run marketing-agent tests
+        run: python -m unittest discover -s marketing_agent/tests -v
+      - name: Verify Buffer connection and owned channels
+        run: python -m marketing_agent buffer-status
+      - name: Build today's branded deal card
+        run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
+      - name: Publish deal card as public media
         shell: bash
         run: |
-          if git diff --quiet -- marketing_agent/data/social-state.json; then exit 0; fi
           git config user.name "AI Tool Gems Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add marketing_agent/data/social-state.json
-          git commit -m "Record owner social content pack delivery"
+          git add assets/social-deals/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Create daily social deal card for ${{ steps.campaign.outputs.date }}"
+          git push
+      - name: Confirm public media is ready
+        shell: bash
+        run: |
+          product_id="$(python - <<'PY'
+          from datetime import date
+          from marketing_agent.social import deal_of_the_day
+          print(deal_of_the_day(date.fromisoformat('${{ steps.campaign.outputs.date }}')).id)
+          PY
+          )"
+          media_url="https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/main/assets/social-deals/${{ steps.campaign.outputs.date }}-${product_id}.jpg"
+          curl --fail --silent --show-error --location --retry 5 --retry-delay 2 --output /dev/null "$media_url"
+      - name: Schedule on Instagram, Facebook and TikTok
+        run: python -m marketing_agent buffer-publish --date "${{ steps.campaign.outputs.date }}"
+      - name: Deliver private owner copy and short-video script
+        run: python -m marketing_agent social-pack --date "${{ steps.campaign.outputs.date }}" --send
+      - name: Save duplicate-protection state
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "AI Tool Gems Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add marketing_agent/data/buffer-state.json marketing_agent/data/social-state.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record social delivery for ${{ steps.campaign.outputs.date }}"
           git push

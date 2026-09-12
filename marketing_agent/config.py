@@ -46,6 +46,7 @@ class Settings:
     telegram_bot_token: str
     telegram_channel_id: str
     telegram_owner_chat_id: str
+    buffer_api_key: str
     posts_per_day: int
     auto_approve: bool
 
@@ -56,6 +57,10 @@ class Settings:
     @property
     def owner_reports_ready(self) -> bool:
         return bool(self.telegram_bot_token and self.telegram_owner_chat_id)
+
+    @property
+    def buffer_ready(self) -> bool:
+        return bool(self.buffer_api_key)
 
 
 def get_settings() -> Settings:
@@ -70,6 +75,7 @@ def get_settings() -> Settings:
         telegram_bot_token=os.getenv("TELEGRAM_BOT_TOKEN", "").strip(),
         telegram_channel_id=os.getenv("TELEGRAM_CHANNEL_ID", "").strip(),
         telegram_owner_chat_id=os.getenv("TELEGRAM_OWNER_CHAT_ID", "").strip(),
+        buffer_api_key=os.getenv("BUFFER_API_KEY", "").strip(),
         posts_per_day=posts,
         auto_approve=os.getenv("ATG_AUTO_APPROVE", "false").lower() in {"1", "true", "yes"},
     )

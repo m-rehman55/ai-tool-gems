@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from marketing_agent.catalog import load_products
+from marketing_agent.buffer import BufferClient, connection_status, publish_daily_deal, scheduled_time
 from marketing_agent.config import Settings, resolve_timezone
 from marketing_agent.content import build_drafts, generate_days
 from marketing_agent.db import connect, database_status, initialize
@@ -13,7 +15,7 @@ from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
 from marketing_agent.seo_monitor import inspect_homepage
-from marketing_agent.social import daily_pack, deal_of_the_day, send_daily_pack
+from marketing_agent.social import caption_for_platform, daily_pack, deal_of_the_day, send_daily_pack
 from marketing_agent.tracking import product_url
 from marketing_agent.trial import claim_slot, trial_plan
 
@@ -29,6 +31,7 @@ class AgentTests(unittest.TestCase):
             telegram_bot_token="",
             telegram_channel_id="",
             telegram_owner_chat_id="",
+            buffer_api_key="",
             posts_per_day=3,
             auto_approve=False,
         )
@@ -119,6 +122,53 @@ class AgentTests(unittest.TestCase):
         state = Path(self.temp.name) / "social-state.json"
         state.write_text('{"sent_dates":{"2026-09-12":{"messages":5}}}', encoding="utf-8")
         self.assertEqual(send_daily_pack(self.settings, date(2026, 9, 12), state), 0)
+
+    def test_buffer_discovers_exact_owned_channels_without_exposing_key(self):
+        def transport(query: str) -> dict:
+            if "AccountOrganizations" in query:
+                return {"data": {"account": {"organizations": [{"id": "org1", "name": "My organization"}]}}}
+            return {"data": {"channels": [
+                {"id": "ig1", "name": "aitoolgemspak", "displayName": "aitoolgemspak", "service": "instagram", "isQueuePaused": False},
+                {"id": "fb1", "name": "AI Tool Gems Pakistan", "displayName": "AI Tool Gems Pakistan", "service": "facebook", "isQueuePaused": False},
+                {"id": "tt1", "name": "aitoolgems", "displayName": "aitoolgems", "service": "tiktok", "isQueuePaused": False},
+            ]}}
+
+        result = connection_status(self.settings, BufferClient("private-key", transport))
+        self.assertEqual(set(result["channels"]), {"instagram", "facebook", "tiktok"})
+        self.assertNotIn("private-key", json.dumps(result))
+
+    def test_buffer_publish_is_duplicate_safe_across_all_three_channels(self):
+        class FakeClient:
+            def __init__(self):
+                self.calls = []
+
+            def owned_channels(self):
+                return {service: {"id": service + "-id"} for service in ("instagram", "facebook", "tiktok")}
+
+            def create_image_post(self, channel_id, service, text, image_url, due_at, title):
+                self.calls.append((service, text, image_url, due_at, title))
+                return {"id": service + "-post", "dueAt": due_at.isoformat()}
+
+        state = Path(self.temp.name) / "buffer-state.json"
+        client = FakeClient()
+        now = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
+        first = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
+        second = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
+        self.assertEqual(set(first["scheduled"]), {"instagram", "facebook", "tiktok"})
+        self.assertEqual(set(second["skipped"]), {"instagram", "facebook", "tiktok"})
+        self.assertEqual(len(client.calls), 3)
+        self.assertTrue(all("Independent reseller" in call[1] for call in client.calls))
+
+    def test_buffer_schedules_0900_pakistan_or_safely_in_future(self):
+        early = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
+        late = datetime(2026, 9, 12, 6, 0, tzinfo=timezone.utc)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early).hour, 4)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late), late.replace(minute=10))
+
+    def test_automatic_captions_have_platform_tracking(self):
+        for service in ("instagram", "facebook", "tiktok"):
+            caption = caption_for_platform(self.settings, date(2026, 9, 12), service)
+            self.assertIn(f"utm_source={service}", caption)
 
 
 if __name__ == "__main__":
