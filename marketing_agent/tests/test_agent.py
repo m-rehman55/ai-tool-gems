@@ -7,7 +7,14 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 from marketing_agent.catalog import load_products
-from marketing_agent.buffer import BufferClient, connection_status, publish_daily_deal, refresh_performance, scheduled_time
+from marketing_agent.buffer import (
+    BufferClient,
+    connection_status,
+    learned_audience_for,
+    publish_daily_deal,
+    refresh_performance,
+    scheduled_time,
+)
 from marketing_agent.config import Settings, resolve_timezone
 from marketing_agent.content import build_drafts, generate_days
 from marketing_agent.db import connect, database_status, initialize
@@ -205,8 +212,25 @@ class AgentTests(unittest.TestCase):
             caption = caption_for_platform(self.settings, day, service)
             self.assertIn("Pakistan", caption)
             self.assertIn("PRICE: Rs.", caption)
+            self.assertIn("LISTED SAVING:", caption)
             self.assertNotIn("#fyp", caption.lower())
             self.assertNotIn("#viral", caption.lower())
+
+    def test_social_learning_waits_for_evidence_then_uses_relevant_winner(self):
+        product = deal_of_the_day(date(2026, 9, 12))
+        state = {"published_dates": {}}
+        for index, (audience, reactions, clicks) in enumerate((
+            ("students", 2, 0), ("students", 3, 0),
+            ("developers", 5, 4), ("developers", 6, 5),
+            ("office", 1, 0), ("office", 2, 0),
+        )):
+            state["published_dates"][f"2026-10-{index + 1:02d}"] = {"instagram": {
+                "audience": audience,
+                "metrics": {"impressions": 100, "reactions": reactions, "clicks": clicks},
+            }}
+        winner, mode = learned_audience_for(product, date(2026, 9, 12), state)
+        self.assertEqual(winner.id, "developers")
+        self.assertEqual(mode, "metrics-winner")
 
     def test_buffer_performance_refresh_records_real_metrics_without_rescheduling(self):
         class MetricsClient:
