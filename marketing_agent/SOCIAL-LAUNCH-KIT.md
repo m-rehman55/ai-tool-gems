@@ -9,7 +9,7 @@ Use this pack when creating the official accounts. Account signup must be comple
 - Alternatives: `aitoolgems.pk`, `aitoolgemspakistan`
 - Website: `https://aitoolgems.tech/`
 - WhatsApp: `+92 347 6242709`
-- Profile image: `assets/brand-logo-light.png`
+- Profile image for all three platforms: `assets/social-profile-ai-tool-gems.png`
 - Category: Product/service or Shopping & retail
 
 ## Bio
@@ -17,6 +17,29 @@ Use this pack when creating the official accounts. Account signup must be comple
 > AI tools & digital subscriptions in PKR 💎 Clear access terms and WhatsApp ordering. Independent Pakistan marketplace.
 
 Do not write “official partner”, “authorized reseller” or any brand endorsement unless documentary authorization exists.
+
+## TikTok profile — ready to copy
+
+- Display name: **AI Tool Gems Pakistan**
+- Preferred username: `@aitoolgemspak`
+- Username alternatives: `@aitoolgems.pk`, `@aitoolgemspakistan`
+- Short bio: `AI tools in PKR 💎 Clear access terms. Order on WhatsApp ↓`
+- Website: `https://aitoolgems.tech/` (add it when TikTok shows the website field)
+- Contact: use the dedicated business email; keep passwords and OTPs private
+- Account type: start with Creator, or select Business only after reviewing its music and commercial-content options
+- Profile photo: use the same `social-profile-ai-tool-gems.png` file as Facebook and Instagram
+
+After signup, enable two-step verification, add the website/contact fields available to the account, and post the introduction video before publishing product offers.
+
+### First TikTok video
+
+- Length: 12–15 seconds
+- 0–3s screen text: `AI tools ki dollar pricing se confused?`
+- 3–7s: show the AI Tool Gems website and PKR product cards
+- 7–11s: show access type, delivery estimate and warranty details
+- 11–15s: `Exact availability WhatsApp par confirm karein`
+- Caption: `Pakistan mein AI tools compare karein—PKR price aur clear access terms ke saath. Link profile mein. Independent marketplace. #AIToolsPakistan #PakistanCreators #DigitalTools`
+- Pin this only after the introduction/profile identity post is live
 
 ## Account setup order
 
