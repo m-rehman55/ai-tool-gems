@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from datetime import date, datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 from marketing_agent.catalog import get_product, load_products
 from marketing_agent.buffer import (
@@ -28,6 +29,7 @@ from marketing_agent.social import (
     caption_for_platform,
     daily_pack,
     deal_of_the_day,
+    deals_for_slot,
     deals_of_the_day,
     send_daily_pack,
 )
@@ -99,7 +101,8 @@ class AgentTests(unittest.TestCase):
         )
         self.assertIn("/deals/?", url)
         self.assertIn("utm_source=instagram", url)
-        self.assertIn("utm_campaign=daily_3_deals", url)
+        self.assertIn("utm_campaign=twice_daily_3_deals", url)
+        self.assertIn("utm_term=morning", url)
         self.assertIn("deals=gemini%2Ccapcut%2Ccanva", url)
 
     def test_captions_disclose_independence(self):
@@ -140,24 +143,26 @@ class AgentTests(unittest.TestCase):
 
     def test_social_pack_continues_and_uses_three_daily_deals_with_gemini(self):
         day = date(2026, 10, 20)
-        products = deals_of_the_day(day)
+        morning = deals_for_slot(day, "morning")
+        evening = deals_for_slot(day, "evening")
         pack = daily_pack(self.settings, day)
-        self.assertEqual(len(pack), 5)
-        self.assertEqual(len(products), 3)
-        self.assertEqual(products[0].id, "gemini")
-        self.assertEqual(len({product.id for product in products}), 3)
-        self.assertTrue(all(product.name in pack[0] for product in products))
-        self.assertTrue(all(
-            all(product.name.upper() in message for product in products)
-            for message in pack[1:]
-        ))
+        self.assertEqual(len(pack), 9)
+        for products in (morning, evening):
+            self.assertEqual(len(products), 3)
+            self.assertEqual(products[0].id, "gemini")
+            self.assertEqual(len({product.id for product in products}), 3)
+        self.assertEqual({product.id for product in morning[1:]} & {product.id for product in evening[1:]}, set())
+        self.assertTrue(all(all(product.name.upper() in message for product in morning) for message in pack[1:5]))
+        self.assertTrue(all(all(product.name.upper() in message for product in evening) for message in pack[5:9]))
 
     def test_companion_rotation_eventually_covers_the_non_gemini_catalog(self):
         seen = set()
-        for offset in range(10):
-            products = deals_of_the_day(date.fromordinal(date(2026, 9, 12).toordinal() + offset))
-            self.assertEqual(products[0].id, "gemini")
-            seen.update(product.id for product in products[1:])
+        for offset in range(5):
+            day = date.fromordinal(date(2026, 9, 12).toordinal() + offset)
+            for slot in ("morning", "evening"):
+                products = deals_for_slot(day, slot)
+                self.assertEqual(products[0].id, "gemini")
+                seen.update(product.id for product in products[1:])
         self.assertEqual(seen, {product.id for product in load_products() if product.id != "gemini"})
 
     def test_already_sent_social_pack_is_skipped_without_api_call(self):
@@ -198,11 +203,18 @@ class AgentTests(unittest.TestCase):
         state = Path(self.temp.name) / "buffer-state.json"
         client = FakeClient()
         now = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
-        first = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
-        second = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
-        self.assertEqual(set(first["scheduled"]), {"instagram", "facebook", "tiktok"})
-        self.assertEqual(set(second["skipped"]), {"instagram", "facebook", "tiktok"})
-        self.assertEqual(len(client.calls), 3)
+        expected = {
+            f"{slot}:{service}"
+            for slot in ("morning", "evening")
+            for service in ("instagram", "facebook", "tiktok")
+        }
+        with patch("marketing_agent.buffer.media_url_for", return_value=("https://example.com/reel.mp4", "video")):
+            first = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
+            second = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
+        self.assertEqual(set(first["scheduled"]), expected)
+        self.assertEqual(set(second["skipped"]), expected)
+        self.assertEqual(len(client.calls), 6)
+        self.assertTrue(all(call[1] == "video" for call in client.calls))
         self.assertTrue(all("Independent reseller" in call[2] for call in client.calls))
 
     def test_buffer_post_types_are_explicit_for_meta_channels(self):
@@ -217,44 +229,47 @@ class AgentTests(unittest.TestCase):
         client.create_image_post("ig1", "instagram", "caption", "https://example.com/card.jpg", due_at, "Deal")
         client.create_image_post("fb1", "facebook", "caption", "https://example.com/card.jpg", due_at, "Deal")
         client.create_video_post("ig1", "instagram", "caption", "https://example.com/reel.mp4", due_at, "Deal")
+        client.create_video_post("fb1", "facebook", "caption", "https://example.com/reel.mp4", due_at, "Deal")
         client.create_video_post("tt1", "tiktok", "caption", "https://example.com/video.mp4", due_at, "Deal")
         self.assertIn("instagram: { type: post, shouldShareToFeed: true }", queries[0])
         self.assertIn("facebook: { type: post }", queries[1])
         self.assertIn("instagram: { type: reel, shouldShareToFeed: true }", queries[2])
         self.assertIn("assets: [{ video:", queries[2])
-        self.assertIn("tiktok: { isAiGenerated: false }", queries[3])
+        self.assertIn("facebook: { type: reel }", queries[3])
+        self.assertIn("tiktok: { isAiGenerated: false }", queries[4])
 
     def test_buffer_schedules_audience_windows_or_safely_in_future(self):
         early = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
         late = datetime(2026, 9, 12, 17, 0, tzinfo=timezone.utc)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "facebook").hour, 15)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram").hour, 15)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram").minute, 30)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "tiktok").hour, 16)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "facebook"), late.replace(minute=10))
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "tiktok"), late.replace(minute=18))
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "facebook", slot="morning").hour, 5)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram", slot="evening").hour, 16)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "tiktok", slot="evening").hour, 12)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "facebook", slot="morning"), late.replace(minute=15))
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "tiktok", slot="evening"), late.replace(hour=19, minute=0))
 
     def test_automatic_captions_have_platform_tracking(self):
-        for service in ("instagram", "facebook", "tiktok"):
-            caption = caption_for_platform(self.settings, date(2026, 9, 12), service)
-            self.assertIn(f"utm_source={service}", caption)
-            self.assertIn("utm_campaign=daily_3_deals", caption)
+        for slot in ("morning", "evening"):
+            for service in ("instagram", "facebook", "tiktok"):
+                caption = caption_for_platform(self.settings, date(2026, 9, 12), service, slot=slot)
+                self.assertIn(f"utm_source={service}", caption)
+                self.assertIn("utm_campaign=twice_daily_3_deals", caption)
+                self.assertIn(f"utm_term={slot}", caption)
 
     def test_captions_target_relevant_pakistan_audience_without_spam_tags(self):
         day = date(2026, 9, 12)
         audience = audience_for(deal_of_the_day(day), day)
         self.assertEqual(audience.id, "creators")
-        for service in ("instagram", "facebook", "tiktok"):
-            caption = caption_for_platform(self.settings, day, service)
-            self.assertIn("Pakistan", caption)
-            self.assertIn("PRICE: Rs.", caption)
-            self.assertEqual(caption.count("PRICE: Rs."), 3)
-            self.assertIn("GEMINI PRO", caption)
-            self.assertIn("CAPCUT PRO", caption)
-            self.assertIn("CANVA PRO EDU", caption)
-            self.assertIn("+92 347 6242709", caption)
-            self.assertNotIn("#fyp", caption.lower())
-            self.assertNotIn("#viral", caption.lower())
+        for slot in ("morning", "evening"):
+            products = deals_for_slot(day, slot)
+            for service in ("instagram", "facebook", "tiktok"):
+                caption = caption_for_platform(self.settings, day, service, slot=slot)
+                self.assertIn("Pakistan", caption)
+                self.assertEqual(caption.count("PRICE: Rs."), 3)
+                for product in products:
+                    self.assertIn(product.name.upper(), caption)
+                self.assertIn("+92 347 6242709", caption)
+                self.assertNotIn("#fyp", caption.lower())
+                self.assertNotIn("#viral", caption.lower())
 
     def test_social_learning_waits_for_evidence_then_uses_relevant_winner(self):
         product = get_product("chatgpt")
@@ -308,20 +323,22 @@ class AgentTests(unittest.TestCase):
     def test_publish_confirmation_reports_platform_time_and_media_without_secrets(self):
         state = Path(self.temp.name) / "buffer-state.json"
         state.write_text(json.dumps({"published_dates": {"2026-09-13": {
-            "instagram": {
+            "morning:instagram": {
                 "post_id": "safe-id",
                 "scheduled_for": "2026-09-13T14:30:00+00:00",
-                "media_type": "image",
-                "audio_theme": None,
+                "media_type": "video",
+                "audio_theme": "focus-tech",
             }
         }}}), encoding="utf-8")
         report = format_publish_confirmation(self.settings, date(2026, 9, 13), {
-            "product": "Gemini Pro",
-            "audience": "university students and learners",
-            "learning_mode": "exploration",
-            "scheduled": {"instagram": "safe-id"},
+            "campaigns": {"morning": {
+                "products": ["Gemini Pro", "CapCut Pro", "Canva Pro Edu"],
+                "audience": "university students and learners",
+            }},
+            "scheduled": {"morning:instagram": "safe-id"},
         }, state)
-        self.assertIn("Instagram: Image", report)
+        self.assertIn("Instagram: Reel/video", report)
+        self.assertIn("MORNING: Gemini Pro + CapCut Pro + Canva Pro Edu", report)
         self.assertIn("07:30 PM PKT", report)
         self.assertIn("You do not need to post manually", report)
         self.assertNotIn("BUFFER", report)

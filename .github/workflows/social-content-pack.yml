@@ -13,7 +13,7 @@ on:
       - "marketing_agent/social.py"
       - "marketing_agent/tests/test_agent.py"
   schedule:
-    - cron: "30 8 * * *"
+    - cron: "45 4 * * *"
       timezone: "Asia/Karachi"
   workflow_dispatch:
     inputs:
@@ -64,6 +64,7 @@ jobs:
       - name: Run marketing-agent tests
         run: python -m unittest discover -s marketing_agent/tests -v
       - name: Verify Buffer connection and owned channels
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set +e
@@ -77,10 +78,13 @@ jobs:
             exit "$status"
           fi
       - name: Refresh real delivery and engagement results
+        if: github.event_name != 'push'
         run: python -m marketing_agent buffer-learn
       - name: Build today's branded image and scheduled short video
+        if: github.event_name != 'push'
         run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
       - name: Publish deal card as public media
+        if: github.event_name != 'push'
         shell: bash
         run: |
           git config user.name "AI Tool Gems Bot"
@@ -90,19 +94,23 @@ jobs:
           git commit -m "Create daily social deal card for ${{ steps.campaign.outputs.date }}"
           git push
       - name: Confirm public media is ready
+        if: github.event_name != 'push'
         shell: bash
         run: |
           python - <<'PY' > /tmp/media-urls.txt
           from datetime import date
           from marketing_agent.buffer import media_url_for
+          from marketing_agent.social import SOCIAL_SLOTS
           day = date.fromisoformat('${{ steps.campaign.outputs.date }}')
-          for service in ('facebook', 'instagram', 'tiktok'):
-              print(media_url_for(day, service)[0])
+          for slot in SOCIAL_SLOTS:
+              for service in ('facebook', 'instagram', 'tiktok'):
+                  print(media_url_for(day, service, slot)[0])
           PY
           while IFS= read -r media_url; do
             curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --output /dev/null "$media_url"
           done < /tmp/media-urls.txt
       - name: Schedule on Instagram, Facebook and TikTok
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set +e
@@ -116,9 +124,10 @@ jobs:
             exit "$status"
           fi
       - name: Deliver private owner copy and short-video script
+        if: github.event_name != 'push'
         run: python -m marketing_agent social-pack --date "${{ steps.campaign.outputs.date }}" --send
       - name: Save duplicate-protection state
-        if: always()
+        if: always() && github.event_name != 'push'
         shell: bash
         run: |
           git config user.name "AI Tool Gems Bot"

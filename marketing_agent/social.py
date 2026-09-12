@@ -16,6 +16,7 @@ from .tracking import deals_url, tracking_code
 
 STATE_PATH = Path(__file__).resolve().parent / "data" / "social-state.json"
 CAMPAIGN_EPOCH = date(2026, 9, 12)
+SOCIAL_SLOTS = ("morning", "evening")
 
 
 @dataclass(frozen=True)
@@ -129,8 +130,10 @@ COMPANION_ROTATION = (
 )
 
 
-def deals_of_the_day(day: date) -> tuple[Product, Product, Product]:
-    """Return Gemini plus two non-repeating companions on a deterministic rotation."""
+def deals_for_slot(day: date, slot: str) -> tuple[Product, Product, Product]:
+    """Return Gemini plus two unique companions for one of the day's two campaigns."""
+    if slot not in SOCIAL_SLOTS:
+        raise ValueError(f"Unsupported social slot: {slot}")
     products = {product.id: product for product in load_products()}
     gemini = products.get("gemini") or get_product("gemini")
     ordered = [products[product_id] for product_id in COMPANION_ROTATION if product_id in products]
@@ -140,8 +143,14 @@ def deals_of_the_day(day: date) -> tuple[Product, Product, Product]:
     )
     if len(ordered) < 2:
         raise RuntimeError("The social catalog needs at least two products in addition to Gemini")
-    offset = ((day - CAMPAIGN_EPOCH).days * 2) % len(ordered)
+    slot_offset = SOCIAL_SLOTS.index(slot) * 2
+    offset = ((day - CAMPAIGN_EPOCH).days * 4 + slot_offset) % len(ordered)
     return gemini, ordered[offset], ordered[(offset + 1) % len(ordered)]
+
+
+def deals_of_the_day(day: date) -> tuple[Product, Product, Product]:
+    """Backwards-compatible alias for the morning selection."""
+    return deals_for_slot(day, "morning")
 
 
 def deal_of_the_day(day: date) -> Product:
@@ -190,15 +199,20 @@ def _deal_line(index: int, product: Product, detailed: bool = False) -> str:
     return line
 
 
-def _deal_body(products: tuple[Product, ...], audience: AudienceAngle, detailed: bool = False) -> str:
+def _deal_body(
+    products: tuple[Product, ...],
+    audience: AudienceAngle,
+    slot: str,
+    detailed: bool = False,
+) -> str:
     rows = "\n\n".join(_deal_line(index, product, detailed) for index, product in enumerate(products, 1))
-    return f"{audience.hook}\n\nTODAY'S 3 HANDPICKED DEALS\n\n{rows}"
+    return f"{audience.hook}\n\n{slot.upper()} PICKS — 3 HANDPICKED DEALS\n\n{rows}"
 
 
-def _instagram(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date) -> str:
+def _instagram(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date, slot: str) -> str:
     return (
-        "3 AI TOOL DEALS FOR PAKISTAN 🇵🇰\n\n"
-        f"{_deal_body(products, audience)}\n\n"
+        f"{slot.upper()} AI TOOL DEALS FOR PAKISTAN 🇵🇰\n\n"
+        f"{_deal_body(products, audience, slot)}\n\n"
         "Gemini is included in every daily selection. Prices are listed clearly so you can compare first.\n\n"
         "📲 WHATSAPP: +92 347 6242709\n"
         f"View all 3 deals and order: {url}\n\n"
@@ -207,10 +221,10 @@ def _instagram(products: tuple[Product, ...], audience: AudienceAngle, url: str,
     )
 
 
-def _facebook(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date) -> str:
+def _facebook(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date, slot: str) -> str:
     return (
-        "TODAY'S 3 DIGITAL TOOL DEALS\n\n"
-        f"{_deal_body(products, audience, detailed=True)}\n\n"
+        f"{slot.upper()} — 3 DIGITAL TOOL DEALS\n\n"
+        f"{_deal_body(products, audience, slot, detailed=True)}\n\n"
         "Compare the plan, access type, delivery estimate and warranty before ordering. "
         "Current availability and exact terms are confirmed before payment.\n\n"
         "WHATSAPP: +92 347 6242709\n"
@@ -220,19 +234,19 @@ def _facebook(products: tuple[Product, ...], audience: AudienceAngle, url: str, 
     )
 
 
-def _whatsapp(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date) -> str:
+def _whatsapp(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date, slot: str) -> str:
     return (
-        "💎 TODAY'S 3 AI TOOL DEALS\n\n"
-        f"{_deal_body(products, audience)}\n\n"
+        f"💎 {slot.upper()} — 3 AI TOOL DEALS\n\n"
+        f"{_deal_body(products, audience, slot)}\n\n"
         "Order: +92 347 6242709\n"
         f"Details: {url}"
     )
 
 
-def _tiktok(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date) -> str:
+def _tiktok(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date, slot: str) -> str:
     return (
-        "3 AI TOOL DEALS — PAKISTAN 🇵🇰\n\n"
-        f"{_deal_body(products, audience)}\n\n"
+        f"{slot.upper()} — 3 AI TOOL DEALS 🇵🇰\n\n"
+        f"{_deal_body(products, audience, slot)}\n\n"
         "WhatsApp: +92 347 6242709\n"
         f"Details/order: {url}\n\n"
         f"{hashtags_for(products, audience, 'tiktok', day)}\n\n"
@@ -240,9 +254,9 @@ def _tiktok(products: tuple[Product, ...], audience: AudienceAngle, url: str, da
     )
 
 
-def _reel_script(products: tuple[Product, ...], audience: AudienceAngle, url: str) -> str:
+def _reel_script(products: tuple[Product, ...], audience: AudienceAngle, url: str, slot: str) -> str:
     return (
-        "8-second Reel/TikTok plan\n"
+        f"8-second {slot} Reel/TikTok plan\n"
         f"0–1s: {audience.hook}\n"
         f"1–3s: {products[0].name} — Rs. {products[0].price:,}\n"
         f"3–5s: {products[1].name} — Rs. {products[1].price:,}\n"
@@ -259,9 +273,10 @@ def caption_for_platform(
     day: date,
     platform: str,
     audience: AudienceAngle | None = None,
+    slot: str = "morning",
 ) -> str:
     """Build one tracked caption containing Gemini and two rotating offers."""
-    products = deals_of_the_day(day)
+    products = deals_for_slot(day, slot)
     focus = products[1]
     audience = audience or audience_for(focus, day)
     builders = {
@@ -273,40 +288,42 @@ def caption_for_platform(
     if platform not in builders:
         raise ValueError(f"Unsupported social platform: {platform}")
     campaign_id = "-".join(product.id for product in products)
-    code = tracking_code(platform, campaign_id, day.strftime("%Y%m%d"), audience.id)
-    target = deals_url(settings.site_url, tuple(product.id for product in products), code, platform)
-    return builders[platform](products, audience, target, day)
+    code = tracking_code(platform, campaign_id, day.strftime("%Y%m%d"), f"{slot}-{audience.id}")
+    target = deals_url(settings.site_url, tuple(product.id for product in products), code, platform, slot)
+    return builders[platform](products, audience, target, day, slot)
 
 
 def daily_pack(settings: Settings, day: date) -> list[str]:
-    products = deals_of_the_day(day)
-    focus = products[1]
-    audience = audience_for(focus, day)
-    names = ", ".join(product.name for product in products)
     messages = [
         f"📣 AI Tool Gems campaign — {day.isoformat()}\n"
-        f"Featured deals: {names}\n"
-        f"Audience: {audience.label}\n"
-        f"Primary Pakistan posting window: {audience.pakistan_time.strftime('%H:%M')} PKT\n"
-        "Automatic posts use original copyright-safe audio where video is scheduled."
+        "Two campaigns: MORNING + EVENING\n"
+        "Each campaign: Gemini Pro + two rotating deals\n"
+        "Facebook, Instagram and TikTok: vertical video with original copyright-safe audio."
     ]
     platform_builders = (
         ("INSTAGRAM", "instagram", _instagram),
         ("FACEBOOK", "facebook", _facebook),
         ("WHATSAPP STATUS", "whatsapp", _whatsapp),
     )
-    for label, platform, builder in platform_builders:
+    for slot in SOCIAL_SLOTS:
+        products = deals_for_slot(day, slot)
+        audience = audience_for(products[1], day)
+        for label, platform, builder in platform_builders:
+            campaign_id = "-".join(product.id for product in products)
+            code = tracking_code(platform, campaign_id, day.strftime("%Y%m%d"), f"{slot}-{audience.id}")
+            target = deals_url(settings.site_url, tuple(product.id for product in products), code, platform, slot)
+            messages.append(
+                f"{slot.upper()} {label} — 3 DEALS\n\n"
+                f"{builder(products, audience, target, day, slot)}"
+            )
         campaign_id = "-".join(product.id for product in products)
-        code = tracking_code(platform, campaign_id, day.strftime("%Y%m%d"), audience.id)
-        target = deals_url(settings.site_url, tuple(product.id for product in products), code, platform)
-        messages.append(f"{label} — 3 DEALS\n\n{builder(products, audience, target, day)}")
-    campaign_id = "-".join(product.id for product in products)
-    code = tracking_code("tiktok", campaign_id, day.strftime("%Y%m%d"), audience.id)
-    target = deals_url(settings.site_url, tuple(product.id for product in products), code, "tiktok")
-    messages.append(
-        f"TIKTOK/REEL — 3 DEALS\n\n{_tiktok(products, audience, target, day)}\n\n"
-        f"{_reel_script(products, audience, target)}"
-    )
+        code = tracking_code("tiktok", campaign_id, day.strftime("%Y%m%d"), f"{slot}-{audience.id}")
+        target = deals_url(settings.site_url, tuple(product.id for product in products), code, "tiktok", slot)
+        messages.append(
+            f"{slot.upper()} TIKTOK/REEL — 3 DEALS\n\n"
+            f"{_tiktok(products, audience, target, day, slot)}\n\n"
+            f"{_reel_script(products, audience, target, slot)}"
+        )
     return messages
 
 
