@@ -50,6 +50,8 @@ After signup, enable two-step verification, add the website/contact fields avail
 5. Add the website and WhatsApp contact.
 6. Send the final public profile URLs to the website maintainer. Only then add them to Organization `sameAs` schema.
 
+Verified public Facebook Page: `https://www.facebook.com/people/AI-Tool-Gems-Pakistan/61594432675562/`
+
 ## First pinned introduction post
 
 > Welcome to AI Tool Gems Pakistan 💎
