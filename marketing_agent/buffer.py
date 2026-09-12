@@ -19,7 +19,7 @@ from urllib.request import Request, urlopen
 
 from .catalog import Product
 from .config import PROJECT_DIR, Settings
-from .social import audience_for, caption_for_platform, deal_of_the_day
+from .social import AudienceAngle, audience_candidates, audience_for, caption_for_platform, deal_of_the_day
 
 
 API_URL = "https://api.buffer.com"
@@ -305,6 +305,14 @@ def render_deal_card(day: date, output: Path | None = None) -> Path:
     draw.text((100, y + 42), f"Rs. {product.price:,}", font=_font(92, True), fill=ink)
     draw.text((640, y + 82), f"was Rs. {product.old_price:,}", font=_font(28), fill=muted)
     draw.line((637, y + 102, 895, y + 102), fill=(216, 91, 91), width=5)
+    if product.saving:
+        draw.rounded_rectangle((635, y + 122, 915, y + 168), radius=23, fill=(229, 255, 207))
+        draw.text(
+            (665, y + 131),
+            f"SAVE Rs. {product.saving:,} • {product.discount_percent}%",
+            font=_font(21, True),
+            fill=ink,
+        )
 
     pills = [product.duration, f"{product.access} access", f"Delivery {product.delivery}"]
     pill_y = y + 190
@@ -339,9 +347,27 @@ def _ffmpeg_executable() -> str | None:
         return None
 
 
-def _write_original_audio(path: Path, seconds: int = 8, sample_rate: int = 44_100) -> None:
+def audio_theme_for(audience: AudienceAngle) -> str:
+    if audience.id in {"creators", "entertainment"}:
+        return "creator-pulse"
+    if audience.id in {"students", "developers"}:
+        return "focus-tech"
+    return "clean-business"
+
+
+def _write_original_audio(
+    path: Path,
+    theme: str = "focus-tech",
+    seconds: int = 8,
+    sample_rate: int = 44_100,
+) -> None:
     """Create a short original brand jingle without copyrighted or platform-library audio."""
-    notes = (261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 392.00)
+    themes = {
+        "focus-tech": ((261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 392.00), 0.13, 92),
+        "creator-pulse": ((329.63, 392.00, 493.88, 659.25, 493.88, 587.33, 523.25, 659.25), 0.15, 110),
+        "clean-business": ((220.00, 277.18, 329.63, 440.00, 329.63, 369.99, 277.18, 329.63), 0.11, 78),
+    }
+    notes, volume, bass_note = themes.get(theme, themes["focus-tech"])
     samples = array("h")
     total = seconds * sample_rate
     for index in range(total):
@@ -351,8 +377,9 @@ def _write_original_audio(path: Path, seconds: int = 8, sample_rate: int = 44_10
         envelope = min(1.0, within_beat / 0.04) * max(0.0, 1.0 - within_beat * 0.72)
         chord = math.sin(2 * math.pi * note * elapsed)
         harmony = 0.42 * math.sin(2 * math.pi * note * 1.5 * elapsed)
-        pulse = 0.24 * math.sin(2 * math.pi * 92 * elapsed) * max(0.0, 1 - within_beat * 5)
-        value = int(32767 * 0.13 * envelope * (chord + harmony + pulse))
+        pulse = 0.24 * math.sin(2 * math.pi * bass_note * elapsed) * max(0.0, 1 - within_beat * 5)
+        sparkle = 0.10 * math.sin(2 * math.pi * note * 2 * elapsed) * max(0.0, 1 - within_beat * 3)
+        value = int(32767 * volume * envelope * (chord + harmony + pulse + sparkle))
         samples.append(max(-32768, min(32767, value)))
     with wave.open(str(path), "wb") as audio:
         audio.setnchannels(1)
@@ -403,7 +430,7 @@ def render_deal_video(day: date, output: Path | None = None) -> Path | None:
         frame_path = temporary_dir / "frame.png"
         audio_path = temporary_dir / "original-brand-audio.wav"
         frame.save(frame_path, format="PNG", optimize=True)
-        _write_original_audio(audio_path)
+        _write_original_audio(audio_path, audio_theme_for(audience))
         command = [
             executable,
             "-y",
@@ -451,10 +478,11 @@ def scheduled_time(
     day: date,
     now: datetime | None = None,
     service: str = "instagram",
+    audience: AudienceAngle | None = None,
 ) -> datetime:
     """Schedule in a relevant Pakistan window and stagger networks to avoid burst-like behavior."""
     product = deal_of_the_day(day)
-    audience = audience_for(product, day)
+    audience = audience or audience_for(product, day)
     offsets = {"facebook": -30, "instagram": 0, "tiktok": 30}
     local_target = datetime.combine(day, audience.pakistan_time, settings.timezone)
     target = (local_target + timedelta(minutes=offsets.get(service, 0))).astimezone(timezone.utc)
@@ -494,6 +522,48 @@ def connection_status(settings: Settings, client: BufferClient | None = None) ->
     }
 
 
+def _metric_value(metrics: dict, *names: str) -> float:
+    normalized = {str(key).lower(): value for key, value in metrics.items()}
+    for name in names:
+        try:
+            return float(normalized.get(name.lower(), 0) or 0)
+        except (TypeError, ValueError):
+            continue
+    return 0.0
+
+
+def _engagement_score(metrics: dict) -> float:
+    """Normalize meaningful interactions while giving buying signals extra weight."""
+    reactions = _metric_value(metrics, "reactions", "likes")
+    comments = _metric_value(metrics, "comments")
+    shares = _metric_value(metrics, "shares", "reposts")
+    saves = _metric_value(metrics, "saves")
+    clicks = _metric_value(metrics, "clicks", "linkClicks")
+    views = _metric_value(metrics, "impressions", "reach", "views", "videoViews")
+    weighted = reactions + comments * 4 + shares * 5 + saves * 4 + clicks * 6
+    return round((weighted / views * 1000) if views > 0 else weighted, 4)
+
+
+def learned_audience_for(product: Product, day: date, state: dict) -> tuple[AudienceAngle, str]:
+    """Apply a winner only after every eligible angle has enough real observations."""
+    default = audience_for(product, day)
+    candidates = audience_candidates(product)
+    if len(candidates) == 1:
+        return default, "single-relevant-audience"
+    scores: dict[str, list[float]] = {candidate.id: [] for candidate in candidates}
+    for services in state.get("published_dates", {}).values():
+        for record in services.values():
+            audience_id = record.get("audience")
+            metrics = record.get("metrics")
+            if audience_id in scores and isinstance(metrics, dict) and metrics:
+                scores[audience_id].append(_engagement_score(metrics))
+    if not scores or any(len(values) < 2 for values in scores.values()):
+        return default, "exploration"
+    averages = {key: sum(values) / len(values) for key, values in scores.items()}
+    winner = max(candidates, key=lambda candidate: averages[candidate.id])
+    return winner, "metrics-winner"
+
+
 def publish_daily_deal(
     settings: Settings,
     day: date,
@@ -506,14 +576,15 @@ def publish_daily_deal(
     state = _read_state(state_path)
     day_state = state.setdefault("published_dates", {}).setdefault(day.isoformat(), {})
     product = deal_of_the_day(day)
+    audience, learning_mode = learned_audience_for(product, day, state)
     results = {"scheduled": {}, "skipped": [], "errors": {}}
     for service in TARGET_SERVICES:
         if service in day_state:
             results["skipped"].append(service)
             continue
         channel = channels[service]
-        caption = caption_for_platform(settings, day, service)
-        due_at = scheduled_time(settings, day, now, service)
+        caption = caption_for_platform(settings, day, service, audience)
+        due_at = scheduled_time(settings, day, now, service, audience)
         media_url, media_type = media_url_for(day, service)
         try:
             if media_type == "video":
@@ -528,8 +599,10 @@ def publish_daily_deal(
                 "post_id": post["id"],
                 "channel_id": channel["id"],
                 "scheduled_for": post.get("dueAt") or due_at.isoformat(),
-                "audience": audience_for(product, day).id,
+                "audience": audience.id,
+                "learning_mode": learning_mode,
                 "media_type": media_type,
+                "audio_theme": audio_theme_for(audience) if media_type == "video" else None,
                 "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             }
             results["scheduled"][service] = post["id"]

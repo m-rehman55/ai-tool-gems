@@ -16,6 +16,11 @@ from .telegram import TelegramClient
 
 AI_CRAWLERS = ("GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "PerplexityBot")
 REQUIRED_SCHEMA = {"Organization", "WebSite", "ItemList"}
+REQUIRED_SOCIAL_PROFILES = (
+    "https://www.tiktok.com/@aitoolgems",
+    "https://www.instagram.com/aitoolgemspak/",
+    "https://www.facebook.com/people/AI-Tool-Gems-Pakistan/61594432675562/",
+)
 
 
 @dataclass(frozen=True)
@@ -143,9 +148,16 @@ def audit_site(settings: Settings, fetch: Callable[[str], FetchResult] = _fetch)
                 checked[url] = 0
                 issues.append(f"Unreachable sitemap URL: {url} ({type(exc).__name__})")
 
+    aeo_answer_blocks = 0
     try:
         homepage = fetch(site + "/")
         issues.extend(inspect_homepage(homepage.body, site + "/"))
+        aeo_answer_blocks = homepage.body.lower().count("<details")
+        if aeo_answer_blocks < 3:
+            issues.append("Homepage has fewer than three server-rendered answer blocks")
+        for profile in REQUIRED_SOCIAL_PROFILES:
+            if profile not in homepage.body:
+                issues.append(f"Organization/social entity link missing: {profile}")
     except Exception as exc:
         issues.append(f"Homepage SEO inspection failed: {type(exc).__name__}")
 
@@ -171,7 +183,10 @@ def audit_site(settings: Settings, fetch: Callable[[str], FetchResult] = _fetch)
     score = max(0, round(100 - (len(issues) * 7)))
     return {
         "ok": not issues, "score": score, "urls_total": len(urls), "urls_ok": urls_ok,
-        "ai_crawlers_checked": list(AI_CRAWLERS), "issues": issues,
+        "ai_crawlers_checked": list(AI_CRAWLERS),
+        "aeo_answer_blocks": aeo_answer_blocks,
+        "social_profiles_checked": len(REQUIRED_SOCIAL_PROFILES),
+        "issues": issues,
     }
 
 
@@ -183,6 +198,8 @@ def format_report(result: dict) -> str:
         f"Integrity score: {result['score']}/100\n"
         f"Sitemap pages reachable: {result['urls_ok']}/{result['urls_total']}\n"
         f"AI crawler policies checked: {len(result.get('ai_crawlers_checked', []))}\n\n"
+        f"AEO answer blocks: {result.get('aeo_answer_blocks', 0)}\n"
+        f"Social entity profiles checked: {result.get('social_profiles_checked', 0)}\n\n"
         f"{issue_lines}\n\n"
         "This checks technical integrity; rankings are measured separately in Google Search Console."
     )

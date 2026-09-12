@@ -115,6 +115,13 @@ CATEGORY_TAGS = {
     "Software": ("SoftwarePakistan", "PCPakistan"),
 }
 
+DISCOVERY_TAGS = (
+    "DigitalPakistan",
+    "TechPakistan",
+    "AIPakistan",
+    "FutureOfWorkPK",
+)
+
 
 def deal_of_the_day(day: date) -> Product:
     """Rotate the full catalog indefinitely with one consistent cross-platform deal."""
@@ -129,21 +136,33 @@ def audience_for(product: Product, day: date) -> AudienceAngle:
     return AUDIENCES[choices[cycle % len(choices)]]
 
 
+def audience_candidates(product: Product) -> tuple[AudienceAngle, ...]:
+    choices = PRODUCT_AUDIENCES.get(product.id, ("creators", "students", "office"))
+    return tuple(AUDIENCES[choice] for choice in choices)
+
+
 def _product_tag(product: Product) -> str:
     cleaned = re.sub(r"[^A-Za-z0-9]", "", product.name)
     return f"{cleaned}Pakistan"[:38]
 
 
-def hashtags_for(product: Product, audience: AudienceAngle, platform: str) -> str:
-    """Use a compact relevance bank; avoid spammy #fyp/#viral tags that do not target buyers."""
+def hashtags_for(product: Product, audience: AudienceAngle, platform: str, day: date) -> str:
+    """Rotate a compact relevance bank; avoid spammy tags that do not target buyers."""
+    index = max(0, (day - CAMPAIGN_EPOCH).days)
     tags = ["AIToolGems", "AIToolsPakistan", _product_tag(product)]
-    tags.extend(audience.hashtags[:2])
-    tags.extend(CATEGORY_TAGS.get(product.category, ("DigitalTools",))[:1])
+    tags.append(audience.hashtags[index % len(audience.hashtags)])
+    category_tags = CATEGORY_TAGS.get(product.category, ("DigitalTools",))
+    tags.append(category_tags[index % len(category_tags)])
+    tags.append(DISCOVERY_TAGS[index % len(DISCOVERY_TAGS)])
     limits = {"facebook": 3, "instagram": 6, "tiktok": 6}
     return " ".join(f"#{tag}" for tag in tags[: limits.get(platform, 5)])
 
 
 def _deal_body(product: Product, audience: AudienceAngle) -> str:
+    saving = (
+        f"\nLISTED SAVING: Rs. {product.saving:,} ({product.discount_percent}% vs old listed price)"
+        if product.saving else ""
+    )
     return (
         f"{audience.hook}\n\n"
         f"💎 {product.name.upper()}\n"
@@ -152,36 +171,39 @@ def _deal_body(product: Product, audience: AudienceAngle) -> str:
         f"ACCESS: {product.access}\n"
         f"DELIVERY: {product.delivery}\n"
         f"BEST FOR: {', '.join(product.best_for)}"
+        f"{saving}"
     )
 
 
-def _instagram(product: Product, audience: AudienceAngle, url: str) -> str:
+def _instagram(product: Product, audience: AudienceAngle, url: str, day: date) -> str:
     return (
         "PAKISTAN AI TOOL DEAL 🇵🇰\n\n"
         f"{_deal_body(product, audience)}\n\n"
         "✅ Current availability and exact terms are confirmed before payment.\n"
         f"📲 View details and order: {url}\n\n"
-        f"{hashtags_for(product, audience, 'instagram')}\n\n"
+        f"{hashtags_for(product, audience, 'instagram', day)}\n\n"
         "Promotional listing by AI Tool Gems Pakistan. Independent reseller; brand names belong to their owners."
     )
 
 
-def _facebook(product: Product, audience: AudienceAngle, url: str) -> str:
+def _facebook(product: Product, audience: AudienceAngle, url: str, day: date) -> str:
     return (
         "TODAY'S DIGITAL TOOL DEAL\n\n"
         f"{_deal_body(product, audience)}\n"
         f"WARRANTY LISTING: {product.warranty}\n\n"
         "Availability, eligibility and exact access terms are checked before payment.\n"
         f"Details + WhatsApp order: {url}\n\n"
-        f"{hashtags_for(product, audience, 'facebook')}\n\n"
+        f"{hashtags_for(product, audience, 'facebook', day)}\n\n"
         "Promotional listing by AI Tool Gems Pakistan. Independent reseller."
     )
 
 
-def _whatsapp(product: Product, audience: AudienceAngle, url: str) -> str:
+def _whatsapp(product: Product, audience: AudienceAngle, url: str, day: date) -> str:
+    saving = f"\nSAVE: Rs. {product.saving:,} ({product.discount_percent}%)" if product.saving else ""
     return (
         f"💎 {product.name}\n"
         f"PRICE: Rs. {product.price:,}\n"
+        f"{saving.lstrip()}\n"
         f"{product.duration} • {product.access} access\n"
         f"Delivery: {product.delivery}\n"
         f"Best for: {', '.join(product.best_for)}\n"
@@ -189,14 +211,15 @@ def _whatsapp(product: Product, audience: AudienceAngle, url: str) -> str:
     )
 
 
-def _tiktok(product: Product, audience: AudienceAngle, url: str) -> str:
+def _tiktok(product: Product, audience: AudienceAngle, url: str, day: date) -> str:
+    saving = f"\nLISTED SAVING: Rs. {product.saving:,} ({product.discount_percent}%)" if product.saving else ""
     return (
         f"{audience.hook}\n\n"
         f"💎 {product.name}\n"
-        f"PRICE: Rs. {product.price:,} | {product.duration}\n"
+        f"PRICE: Rs. {product.price:,} | {product.duration}{saving}\n"
         f"Best for: {', '.join(product.best_for)}\n"
         f"Details/order: {url}\n\n"
-        f"{hashtags_for(product, audience, 'tiktok')}\n\n"
+        f"{hashtags_for(product, audience, 'tiktok', day)}\n\n"
         "Promotional listing by AI Tool Gems Pakistan. Independent reseller. Check terms before payment."
     )
 
@@ -214,10 +237,15 @@ def _reel_script(product: Product, audience: AudienceAngle, url: str) -> str:
     )
 
 
-def caption_for_platform(settings: Settings, day: date, platform: str) -> str:
+def caption_for_platform(
+    settings: Settings,
+    day: date,
+    platform: str,
+    audience: AudienceAngle | None = None,
+) -> str:
     """Build one tracked, audience-specific caption for the daily catalog product."""
     product = deal_of_the_day(day)
-    audience = audience_for(product, day)
+    audience = audience or audience_for(product, day)
     builders = {
         "instagram": _instagram,
         "facebook": _facebook,
@@ -228,7 +256,7 @@ def caption_for_platform(settings: Settings, day: date, platform: str) -> str:
         raise ValueError(f"Unsupported social platform: {platform}")
     code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), audience.id)
     target = product_url(settings.site_url, product.id, code, platform)
-    return builders[platform](product, audience, target)
+    return builders[platform](product, audience, target, day)
 
 
 def daily_pack(settings: Settings, day: date) -> list[str]:
@@ -249,11 +277,11 @@ def daily_pack(settings: Settings, day: date) -> list[str]:
     for label, platform, builder in platform_builders:
         code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), audience.id)
         target = product_url(settings.site_url, product.id, code, platform)
-        messages.append(f"{label} — {product.name}\n\n{builder(product, audience, target)}")
+        messages.append(f"{label} — {product.name}\n\n{builder(product, audience, target, day)}")
     code = tracking_code("tiktok", product.id, day.strftime("%Y%m%d"), audience.id)
     target = product_url(settings.site_url, product.id, code, "tiktok")
     messages.append(
-        f"TIKTOK/REEL — {product.name}\n\n{_tiktok(product, audience, target)}\n\n"
+        f"TIKTOK/REEL — {product.name}\n\n{_tiktok(product, audience, target, day)}\n\n"
         f"{_reel_script(product, audience, target)}"
     )
     return messages

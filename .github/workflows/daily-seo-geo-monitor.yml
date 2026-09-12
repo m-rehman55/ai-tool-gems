@@ -1,4 +1,4 @@
-name: Daily SEO and GEO integrity monitor
+name: Daily SEO, GEO and AEO integrity monitor
 
 on:
   schedule:
@@ -27,5 +27,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Check live sitemap, pages, structured data and AI crawler access
+      - name: Check live sitemap, answer blocks, entity signals, structured data and AI crawler access
         run: python -m marketing_agent seo-monitor --json --send
