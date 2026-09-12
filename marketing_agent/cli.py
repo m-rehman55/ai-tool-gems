@@ -11,6 +11,7 @@ from pathlib import Path
 from .commands import process_updates, setup_bot
 from .buffer import (
     connection_status as buffer_connection_status,
+    format_publish_confirmation,
     publish_daily_deal,
     refresh_performance,
     render_daily_media,
@@ -83,6 +84,7 @@ def parser() -> argparse.ArgumentParser:
     buffer_prepare.add_argument("--date", default=date.today().isoformat())
     buffer_publish = commands.add_parser("buffer-publish", help="Schedule today's deal on Instagram, Facebook and TikTok")
     buffer_publish.add_argument("--date", default=date.today().isoformat())
+    buffer_publish.add_argument("--send", action="store_true", help="Send a Telegram owner confirmation when new posts schedule")
     commands.add_parser("buffer-learn", help="Refresh real delivery and engagement results from Buffer")
 
     commands.add_parser("trial-plan", help="Print the duplicate-safe three-day campaign plan")
@@ -193,7 +195,17 @@ def main(argv: list[str] | None = None) -> int:
         for asset in render_daily_media(date.fromisoformat(args.date)):
             print(asset.relative_to(Path.cwd()))
     elif args.command == "buffer-publish":
-        print(json.dumps(publish_daily_deal(settings, date.fromisoformat(args.date)), indent=2, ensure_ascii=False))
+        publish_date = date.fromisoformat(args.date)
+        result = publish_daily_deal(settings, publish_date)
+        if args.send:
+            confirmation = format_publish_confirmation(settings, publish_date, result)
+            if confirmation:
+                if not settings.owner_reports_ready:
+                    raise RuntimeError("Owner Telegram credentials are missing")
+                TelegramClient(settings.telegram_bot_token).send_with_retry(
+                    settings.telegram_owner_chat_id, confirmation
+                )
+        print(json.dumps(result, indent=2, ensure_ascii=False))
     elif args.command == "buffer-learn":
         print(json.dumps(refresh_performance(settings), indent=2, ensure_ascii=False))
     elif args.command == "trial-plan":

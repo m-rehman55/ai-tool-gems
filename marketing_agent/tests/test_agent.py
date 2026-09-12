@@ -10,6 +10,7 @@ from marketing_agent.catalog import load_products
 from marketing_agent.buffer import (
     BufferClient,
     connection_status,
+    format_publish_confirmation,
     learned_audience_for,
     publish_daily_deal,
     refresh_performance,
@@ -264,6 +265,27 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(result["updated"], 1)
         self.assertEqual(record["delivery_status"], "sent")
         self.assertEqual(record["metrics"]["reactions"], 7)
+
+    def test_publish_confirmation_reports_platform_time_and_media_without_secrets(self):
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text(json.dumps({"published_dates": {"2026-09-13": {
+            "instagram": {
+                "post_id": "safe-id",
+                "scheduled_for": "2026-09-13T14:30:00+00:00",
+                "media_type": "image",
+                "audio_theme": None,
+            }
+        }}}), encoding="utf-8")
+        report = format_publish_confirmation(self.settings, date(2026, 9, 13), {
+            "product": "Gemini Pro",
+            "audience": "university students and learners",
+            "learning_mode": "exploration",
+            "scheduled": {"instagram": "safe-id"},
+        }, state)
+        self.assertIn("Instagram: Image", report)
+        self.assertIn("07:30 PM PKT", report)
+        self.assertIn("You do not need to post manually", report)
+        self.assertNotIn("BUFFER", report)
 
 
 if __name__ == "__main__":
