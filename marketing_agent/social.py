@@ -309,3 +309,15 @@ def send_daily_pack(settings: Settings, day: date, state_path: Path = STATE_PATH
     temporary.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
     temporary.replace(state_path)
     return len(messages)
+
+
+def send_automation_failure_alert(settings: Settings) -> None:
+    if not settings.owner_reports_ready:
+        raise RuntimeError("Owner Telegram credentials are missing")
+    TelegramClient(settings.telegram_bot_token).send_with_retry(
+        settings.telegram_owner_chat_id,
+        "⚠️ AI Tool Gems social campaign needs attention.\n\n"
+        "A daily check, media build, or Buffer publishing step failed. No automatic retry will create a duplicate. "
+        "Open the latest GitHub Actions run, read the failed step, and reconnect only the affected channel if requested.\n\n"
+        "Actions: https://github.com/m-rehman55/ai-tool-gems/actions",
+    )

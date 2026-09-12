@@ -126,3 +126,7 @@ jobs:
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Record social delivery for ${{ steps.campaign.outputs.date }}"
           git push
+      - name: Alert owner if the hosted campaign needs attention
+        if: failure()
+        continue-on-error: true
+        run: python -m marketing_agent social-alert
