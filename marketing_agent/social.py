@@ -6,14 +6,20 @@ import json
 from datetime import date, datetime
 from pathlib import Path
 
-from .catalog import Product
+from .catalog import Product, load_products
 from .config import Settings
 from .telegram import TelegramClient
 from .tracking import product_url, tracking_code
-from .trial import build_slot
 
 
 STATE_PATH = Path(__file__).resolve().parent / "data" / "social-state.json"
+CAMPAIGN_EPOCH = date(2026, 9, 12)
+
+
+def deal_of_the_day(day: date) -> Product:
+    """Rotate the full catalog indefinitely with one consistent cross-platform deal."""
+    products = load_products()
+    return products[(day - CAMPAIGN_EPOCH).days % len(products)]
 
 
 def _instagram(product: Product, url: str) -> str:
@@ -46,6 +52,16 @@ def _whatsapp(product: Product, url: str) -> str:
     )
 
 
+def _tiktok(product: Product, url: str) -> str:
+    return (
+        f"{product.name} in Pakistan — current listing 💎\n"
+        f"Rs. {product.price:,} | {product.duration} | {product.access} access\n"
+        f"Check availability and exact terms before payment: {url}\n\n"
+        "#AIToolsPakistan #PakistanCreators #DigitalTools #AIToolGems\n\n"
+        "Independent reseller. Brand names belong to their respective owners."
+    )
+
+
 def _reel_script(product: Product, url: str) -> str:
     return (
         f"15-second Reel/TikTok script\n"
@@ -59,25 +75,25 @@ def _reel_script(product: Product, url: str) -> str:
 
 
 def daily_pack(settings: Settings, day: date) -> list[str]:
-    from .catalog import get_product
-
-    messages = [f"📣 AI Tool Gems organic content pack — {day.isoformat()}\nCopy only to pages/accounts you own."]
+    product = deal_of_the_day(day)
+    messages = [
+        f"📣 AI Tool Gems Deal of the Day — {day.isoformat()}\n"
+        f"Featured product: {product.name}\n"
+        "Use only on pages/accounts you own. Confirm availability before publishing."
+    ]
     platform_builders = (
         ("INSTAGRAM", "instagram", _instagram), ("FACEBOOK", "facebook", _facebook),
         ("WHATSAPP STATUS", "whatsapp", _whatsapp),
     )
     for slot, (label, platform, builder) in enumerate(platform_builders):
-        campaign = build_slot(settings, day, slot)
-        product = get_product(campaign["product_id"])
         code = tracking_code(platform, product.id, day.strftime("%Y%m%d"), f"s{slot + 1}")
         target = product_url(settings.site_url, product.id, code, platform)
-        messages.append(f"{label} — {campaign['product_name']}\n\n{builder(product, target)}")
-    # A short-video script rounds out the pack without needing account credentials.
-    final_campaign = build_slot(settings, day, 0)
-    final_product = get_product(final_campaign["product_id"])
-    code = tracking_code("tiktok", final_product.id, day.strftime("%Y%m%d"), "reel")
-    target = product_url(settings.site_url, final_product.id, code, "tiktok")
-    messages.append(f"REEL/TIKTOK — {final_campaign['product_name']}\n\n{_reel_script(final_product, target)}")
+        messages.append(f"{label} — {product.name}\n\n{builder(product, target)}")
+    code = tracking_code("tiktok", product.id, day.strftime("%Y%m%d"), "reel")
+    target = product_url(settings.site_url, product.id, code, "tiktok")
+    messages.append(
+        f"TIKTOK/REEL — {product.name}\n\n{_tiktok(product, target)}\n\n{_reel_script(product, target)}"
+    )
     return messages
 
 
