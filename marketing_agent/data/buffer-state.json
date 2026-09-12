@@ -6,6 +6,18 @@
         "channel_id": "6aa53e99cd8b9c702c56ef62",
         "scheduled_for": "2026-09-12T12:32:18.000Z",
         "recorded_at": "2026-09-12T12:22:19+00:00"
+      },
+      "instagram": {
+        "post_id": "6aa54498c637430b6b561298",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-09-12T12:34:56.000Z",
+        "recorded_at": "2026-09-12T12:24:56+00:00"
+      },
+      "facebook": {
+        "post_id": "6aa544996b734df0253a0dd0",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-09-12T12:34:56.000Z",
+        "recorded_at": "2026-09-12T12:24:57+00:00"
       }
     }
   }
