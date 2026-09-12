@@ -1,4 +1,5 @@
 name: Daily free social content pack
+# BUFFER_API_KEY is supplied only through GitHub Actions repository secrets.
 
 on:
   push:
