@@ -59,7 +59,18 @@ jobs:
       - name: Run marketing-agent tests
         run: python -m unittest discover -s marketing_agent/tests -v
       - name: Verify Buffer connection and owned channels
-        run: python -m marketing_agent buffer-status
+        shell: bash
+        run: |
+          set +e
+          output="$(python -m marketing_agent buffer-status 2>&1)"
+          status=$?
+          set -e
+          echo "$output"
+          if [ "$status" -ne 0 ]; then
+            one_line="${output//$'\n'/ | }"
+            echo "::error title=Buffer connection failed::$one_line"
+            exit "$status"
+          fi
       - name: Build today's branded deal card
         run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
       - name: Publish deal card as public media
