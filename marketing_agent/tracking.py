@@ -18,3 +18,16 @@ def product_url(site_url: str, product_id: str, code: str, platform: str = "tele
         "src": code,
     })
     return f"{site_url}/tools/{product_id}/?{params}"
+
+
+def deals_url(site_url: str, product_ids: tuple[str, ...], code: str, platform: str) -> str:
+    """Build one measurable landing URL for a multi-product social campaign."""
+    params = urlencode({
+        "utm_source": platform,
+        "utm_medium": "organic_social",
+        "utm_campaign": "daily_3_deals",
+        "utm_content": code,
+        "deals": ",".join(product_ids),
+        "src": code,
+    })
+    return f"{site_url}/deals/?{params}"

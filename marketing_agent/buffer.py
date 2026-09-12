@@ -19,7 +19,14 @@ from urllib.request import Request, urlopen
 
 from .catalog import Product
 from .config import PROJECT_DIR, Settings
-from .social import AudienceAngle, audience_candidates, audience_for, caption_for_platform, deal_of_the_day
+from .social import (
+    AudienceAngle,
+    audience_candidates,
+    audience_for,
+    caption_for_platform,
+    deal_of_the_day,
+    deals_of_the_day,
+)
 
 
 API_URL = "https://api.buffer.com"
@@ -240,7 +247,7 @@ def is_video_day(day: date) -> bool:
     return day.weekday() in VIDEO_WEEKDAYS
 
 
-def render_deal_card(day: date, output: Path | None = None) -> Path:
+def _render_single_deal_card_legacy(day: date, output: Path | None = None) -> Path:
     """Create a platform-safe 4:5 deal card from verified catalog data."""
     from PIL import Image, ImageDraw, ImageOps
 
@@ -335,6 +342,98 @@ def render_deal_card(day: date, output: Path | None = None) -> Path:
     return output
 
 
+def render_deal_card(day: date, output: Path | None = None) -> Path:
+    """Create a clean 4:5 card with Gemini plus two rotating catalog deals."""
+    from PIL import Image, ImageDraw, ImageOps
+
+    products = deals_of_the_day(day)
+    focus = products[1]
+    output = output or deal_card_path(day, focus)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    width, height = 1080, 1350
+    image = Image.new("RGB", (width, height))
+    pixels = image.load()
+    for y in range(height):
+        mix = y / (height - 1)
+        start, end = (246, 255, 249), (236, 246, 255)
+        colour = tuple(round(start[i] * (1 - mix) + end[i] * mix) for i in range(3))
+        for x in range(width):
+            pixels[x, y] = colour
+    draw = ImageDraw.Draw(image)
+    ink = (18, 64, 57)
+    muted = (78, 112, 106)
+    green = (73, 196, 121)
+    lime = (166, 232, 84)
+    white = (255, 255, 255)
+
+    draw.rounded_rectangle((60, 48, 1020, 205), radius=42, fill=white, outline=(206, 230, 220), width=3)
+    logo_path = PROJECT_DIR / "assets" / "brand-logo-light.png"
+    logo = Image.open(logo_path).convert("RGBA")
+    logo.thumbnail((118, 118))
+    logo_box = Image.new("RGBA", (124, 124), (255, 255, 255, 0))
+    logo_box.alpha_composite(logo, ((124 - logo.width) // 2, (124 - logo.height) // 2))
+    image.paste(logo_box, (80, 64), logo_box)
+    draw.text((225, 80), "AI TOOL GEMS", font=_font(40, True), fill=ink)
+    draw.text((227, 134), "PAKISTAN", font=_font(21, True), fill=green)
+    draw.rounded_rectangle((762, 91, 976, 157), radius=33, fill=(229, 255, 207))
+    draw.text((812, 110), "3 DEALS", font=_font(25, True), fill=ink)
+
+    draw.text((70, 242), "3 HANDPICKED DEALS", font=_font(51, True), fill=ink)
+    draw.text((72, 306), "Gemini every day + two fresh picks for Pakistan", font=_font(25), fill=muted)
+
+    row_colours = ((244, 255, 248), (244, 250, 255), (253, 248, 255))
+    accent_colours = (green, (75, 155, 231), (151, 108, 219))
+    for index, product in enumerate(products):
+        top = 360 + index * 218
+        bottom = top + 192
+        accent = accent_colours[index]
+        draw.rounded_rectangle((68, top, 1012, bottom), radius=38, fill=row_colours[index], outline=(208, 228, 220), width=2)
+        draw.rounded_rectangle((68, top, 82, bottom), radius=7, fill=accent)
+        draw.rounded_rectangle((105, top + 35, 227, top + 157), radius=30, fill=white, outline=(205, 226, 218), width=2)
+        try:
+            domain = PRODUCT_DOMAINS[product.id]
+            logo_request = Request(
+                f"https://www.google.com/s2/favicons?domain={domain}&sz=256",
+                headers={"User-Agent": "AI-Tool-Gems-Marketing-Agent/1.0"},
+            )
+            with urlopen(logo_request, timeout=12) as logo_response:
+                product_logo = Image.open(BytesIO(logo_response.read())).convert("RGBA")
+            product_logo.thumbnail((84, 84))
+            logo_position = (166 - product_logo.width // 2, top + 96 - product_logo.height // 2)
+            image.paste(product_logo, logo_position, product_logo)
+        except Exception:
+            initials = "".join(word[0] for word in product.name.split()[:2]).upper()
+            initials_box = draw.textbbox((0, 0), initials, font=_font(34, True))
+            draw.text((166 - (initials_box[2] - initials_box[0]) / 2, top + 76), initials, font=_font(34, True), fill=ink)
+
+        name_lines = _wrapped_lines(draw, product.name, _font(37, True), 430)
+        name_y = top + 26
+        for line in name_lines[:2]:
+            draw.text((260, name_y), line, font=_font(37, True), fill=ink)
+            name_y += 43
+        draw.text((260, top + 113), f"{product.duration}  |  {product.access} access", font=_font(20, True), fill=muted)
+        draw.text((260, top + 146), f"Delivery {product.delivery}  |  Warranty {product.warranty}", font=_font(18), fill=muted)
+
+        if index == 0:
+            draw.rounded_rectangle((778, top + 18, 969, top + 50), radius=16, fill=(220, 250, 230))
+            draw.text((804, top + 25), "ALWAYS FEATURED", font=_font(14, True), fill=ink)
+        draw.text((747, top + 65), f"Rs. {product.price:,}", font=_font(44, True), fill=ink)
+        if product.saving:
+            draw.text((769, top + 122), f"SAVE Rs. {product.saving:,}", font=_font(19, True), fill=accent)
+
+    cta_top = 1034
+    draw.rounded_rectangle((70, cta_top, 1010, cta_top + 104), radius=48, fill=lime)
+    cta = "ORDER ON WHATSAPP  +92 347 6242709"
+    cta_box = draw.textbbox((0, 0), cta, font=_font(30, True))
+    draw.text(((width - (cta_box[2] - cta_box[0])) / 2, cta_top + 33), cta, font=_font(30, True), fill=ink)
+
+    draw.text((72, 1182), "Compare prices, plans and access details before payment.", font=_font(24), fill=muted)
+    draw.text((72, 1225), "aitoolgems.tech/deals", font=_font(33, True), fill=ink)
+    draw.text((72, 1283), "Availability is confirmed on WhatsApp. Independent reseller.", font=_font(19), fill=muted)
+    ImageOps.exif_transpose(image).save(output, format="JPEG", quality=91, optimize=True, progressive=True)
+    return output
+
+
 def _ffmpeg_executable() -> str | None:
     executable = shutil.which("ffmpeg")
     if executable:
@@ -388,7 +487,7 @@ def _write_original_audio(
         audio.writeframes(samples.tobytes())
 
 
-def render_deal_video(day: date, output: Path | None = None) -> Path | None:
+def _render_single_deal_video_legacy(day: date, output: Path | None = None) -> Path | None:
     """Render an 8-second 9:16 Reel/TikTok creative with original audio."""
     from PIL import Image, ImageDraw
 
@@ -424,6 +523,74 @@ def render_deal_video(day: date, output: Path | None = None) -> Path | None:
     draw.text((130, 1074), "VIEW DETAILS • ORDER ON WHATSAPP", font=_font(22, True), fill=ink)
     draw.text((189, 1160), "aitoolgems.tech", font=_font(32, True), fill=ink)
     draw.text((74, 1218), "Promotional listing • Independent reseller", font=_font(18), fill=muted)
+
+    with tempfile.TemporaryDirectory(prefix="atg-video-") as temporary:
+        temporary_dir = Path(temporary)
+        frame_path = temporary_dir / "frame.png"
+        audio_path = temporary_dir / "original-brand-audio.wav"
+        frame.save(frame_path, format="PNG", optimize=True)
+        _write_original_audio(audio_path, audio_theme_for(audience))
+        command = [
+            executable,
+            "-y",
+            "-loop", "1",
+            "-i", str(frame_path),
+            "-i", str(audio_path),
+            "-t", "8",
+            "-vf", "zoompan=z='min(zoom+0.00015,1.03)':d=200:s=720x1280:fps=25,fade=t=in:st=0:d=0.25,fade=t=out:st=7.5:d=0.5",
+            "-c:v", "libx264",
+            "-preset", "medium",
+            "-crf", "29",
+            "-pix_fmt", "yuv420p",
+            "-c:a", "aac",
+            "-b:a", "96k",
+            "-movflags", "+faststart",
+            "-shortest",
+            str(output),
+        ]
+        completed = subprocess.run(command, capture_output=True, text=True, timeout=120)
+        if completed.returncode != 0:
+            output.unlink(missing_ok=True)
+            raise BufferError(f"Video render failed: {completed.stderr[-500:]}")
+    return output
+
+
+def render_deal_video(day: date, output: Path | None = None) -> Path | None:
+    """Render an 8-second 9:16 creative showing all three deals and prices."""
+    from PIL import Image, ImageDraw
+
+    executable = _ffmpeg_executable()
+    if not executable:
+        return None
+    products = deals_of_the_day(day)
+    focus = products[1]
+    audience = audience_for(focus, day)
+    output = output or deal_video_path(day, focus)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    card = Image.open(render_deal_card(day)).convert("RGB")
+
+    width, height = 720, 1280
+    frame = Image.new("RGB", (width, height))
+    pixels = frame.load()
+    for y in range(height):
+        mix = y / (height - 1)
+        start, end = (239, 255, 246), (232, 244, 255)
+        colour = tuple(round(start[i] * (1 - mix) + end[i] * mix) for i in range(3))
+        for x in range(width):
+            pixels[x, y] = colour
+    draw = ImageDraw.Draw(frame)
+    ink, muted, green, lime = (18, 64, 57), (78, 112, 106), (73, 196, 121), (166, 232, 84)
+    draw.text((38, 35), "3 TOOLS. CLEAR PRICES.", font=_font(34, True), fill=ink)
+    draw.text((40, 84), audience.label.upper()[:48], font=_font(18, True), fill=green)
+    card.thumbnail((660, 825))
+    frame.paste(card, ((width - card.width) // 2, 130))
+    draw.rounded_rectangle((36, 990, 684, 1128), radius=42, fill=lime)
+    cta = "WHATSAPP  +92 347 6242709"
+    cta_box = draw.textbbox((0, 0), cta, font=_font(35, True))
+    draw.text(((width - cta_box[2]) / 2, 1018), cta, font=_font(35, True), fill=ink)
+    draw.text((133, 1075), "GEMINI + 2 ROTATING DAILY DEALS", font=_font(21, True), fill=ink)
+    draw.text((153, 1160), "aitoolgems.tech/deals", font=_font(32, True), fill=ink)
+    draw.text((74, 1218), "Promotional listing | Independent reseller", font=_font(18), fill=muted)
 
     with tempfile.TemporaryDirectory(prefix="atg-video-") as temporary:
         temporary_dir = Path(temporary)
@@ -575,11 +742,14 @@ def publish_daily_deal(
     channels = client.owned_channels()
     state = _read_state(state_path)
     day_state = state.setdefault("published_dates", {}).setdefault(day.isoformat(), {})
-    product = deal_of_the_day(day)
-    audience, learning_mode = learned_audience_for(product, day, state)
+    products = deals_of_the_day(day)
+    focus = products[1]
+    audience, learning_mode = learned_audience_for(focus, day, state)
+    product_names = [product.name for product in products]
     results = {
         "date": day.isoformat(),
-        "product": product.name,
+        "product": " + ".join(product_names),
+        "products": product_names,
         "audience": audience.label,
         "learning_mode": learning_mode,
         "scheduled": {},
@@ -597,11 +767,11 @@ def publish_daily_deal(
         try:
             if media_type == "video":
                 post = client.create_video_post(
-                    channel["id"], service, caption, media_url, due_at, product.name
+                    channel["id"], service, caption, media_url, due_at, "3 AI Tool Deals"
                 )
             else:
                 post = client.create_image_post(
-                    channel["id"], service, caption, media_url, due_at, product.name
+                    channel["id"], service, caption, media_url, due_at, "3 AI Tool Deals"
                 )
             day_state[service] = {
                 "post_id": post["id"],
@@ -609,6 +779,7 @@ def publish_daily_deal(
                 "scheduled_for": post.get("dueAt") or due_at.isoformat(),
                 "audience": audience.id,
                 "learning_mode": learning_mode,
+                "deal_ids": [product.id for product in products],
                 "media_type": media_type,
                 "audio_theme": audio_theme_for(audience) if media_type == "video" else None,
                 "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -635,7 +806,7 @@ def format_publish_confirmation(
     lines = [
         "✅ Daily social campaign scheduled",
         "",
-        f"Product: {result.get('product', deal_of_the_day(day).name)}",
+        f"Deals: {result.get('product', ' + '.join(product.name for product in deals_of_the_day(day)))}",
         f"Audience: {result.get('audience', 'relevant Pakistan buyers')}",
         f"Learning: {result.get('learning_mode', 'exploration')}",
         "",

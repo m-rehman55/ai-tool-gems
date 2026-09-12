@@ -44,7 +44,7 @@ python -m marketing_agent test-telegram
 
 ## Hosted three-day trial
 
-The GitHub workflows run the 12–14 September 2026 public Telegram trial. The social workflow continues every day at 08:30 Pakistan time, rotates all 20 products, creates branded media, and schedules one relevant daily deal through Buffer for the connected Facebook Page, Instagram account and TikTok account. Actual publishing times vary by audience between 18:00 and 22:00 PKT and are staggered by network. It retains a private Telegram copy for the owner and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
+The GitHub workflows run the 12–14 September 2026 public Telegram trial. The social workflow continues every day at 08:30 Pakistan time, creates branded media, and schedules three clearly priced deals through Buffer for the connected Facebook Page, Instagram account and TikTok account. Gemini is always included; the other two products rotate through the remaining catalog. Actual publishing times vary by the focus audience between 18:00 and 22:00 PKT and are staggered by network. Every caption links to the tracked `/deals/` landing page, retains a private Telegram copy for the owner, and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
 
 Useful control commands:
 

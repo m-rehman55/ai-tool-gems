@@ -6,7 +6,7 @@ import unittest
 from datetime import date, datetime, timezone
 from pathlib import Path
 
-from marketing_agent.catalog import load_products
+from marketing_agent.catalog import get_product, load_products
 from marketing_agent.buffer import (
     BufferClient,
     connection_status,
@@ -23,8 +23,15 @@ from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
 from marketing_agent.seo_monitor import inspect_homepage
-from marketing_agent.social import audience_for, caption_for_platform, daily_pack, deal_of_the_day, send_daily_pack
-from marketing_agent.tracking import product_url
+from marketing_agent.social import (
+    audience_for,
+    caption_for_platform,
+    daily_pack,
+    deal_of_the_day,
+    deals_of_the_day,
+    send_daily_pack,
+)
+from marketing_agent.tracking import deals_url, product_url
 from marketing_agent.trial import claim_slot, trial_plan
 
 
@@ -83,6 +90,18 @@ class AgentTests(unittest.TestCase):
         self.assertIn("utm_source=telegram", url)
         self.assertIn("src=tg-chatgpt-20260912-a", url)
 
+    def test_three_deal_url_tracks_the_campaign_and_products(self):
+        url = deals_url(
+            "https://aitoolgems.tech",
+            ("gemini", "capcut", "canva"),
+            "in-gemini-capcut-canva-20260912-creators",
+            "instagram",
+        )
+        self.assertIn("/deals/?", url)
+        self.assertIn("utm_source=instagram", url)
+        self.assertIn("utm_campaign=daily_3_deals", url)
+        self.assertIn("deals=gemini%2Ccapcut%2Ccanva", url)
+
     def test_captions_disclose_independence(self):
         draft = build_drafts(self.settings, date(2026, 9, 12), 1)[0]
         self.assertIn("Independent reseller", draft.caption)
@@ -119,12 +138,27 @@ class AgentTests(unittest.TestCase):
         for source in ("instagram", "facebook", "whatsapp", "tiktok"):
             self.assertIn(f"utm_source={source}", pack)
 
-    def test_social_pack_continues_after_trial_and_uses_one_daily_deal(self):
+    def test_social_pack_continues_and_uses_three_daily_deals_with_gemini(self):
         day = date(2026, 10, 20)
-        product = deal_of_the_day(day)
+        products = deals_of_the_day(day)
         pack = daily_pack(self.settings, day)
         self.assertEqual(len(pack), 5)
-        self.assertTrue(all(product.name in message for message in pack))
+        self.assertEqual(len(products), 3)
+        self.assertEqual(products[0].id, "gemini")
+        self.assertEqual(len({product.id for product in products}), 3)
+        self.assertTrue(all(product.name in pack[0] for product in products))
+        self.assertTrue(all(
+            all(product.name.upper() in message for product in products)
+            for message in pack[1:]
+        ))
+
+    def test_companion_rotation_eventually_covers_the_non_gemini_catalog(self):
+        seen = set()
+        for offset in range(10):
+            products = deals_of_the_day(date.fromordinal(date(2026, 9, 12).toordinal() + offset))
+            self.assertEqual(products[0].id, "gemini")
+            seen.update(product.id for product in products[1:])
+        self.assertEqual(seen, {product.id for product in load_products() if product.id != "gemini"})
 
     def test_already_sent_social_pack_is_skipped_without_api_call(self):
         state = Path(self.temp.name) / "social-state.json"
@@ -193,10 +227,10 @@ class AgentTests(unittest.TestCase):
     def test_buffer_schedules_audience_windows_or_safely_in_future(self):
         early = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
         late = datetime(2026, 9, 12, 17, 0, tzinfo=timezone.utc)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "facebook").hour, 14)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram").hour, 14)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "facebook").hour, 15)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram").hour, 15)
         self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "instagram").minute, 30)
-        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "tiktok").hour, 15)
+        self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), early, "tiktok").hour, 16)
         self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "facebook"), late.replace(minute=10))
         self.assertEqual(scheduled_time(self.settings, date(2026, 9, 12), late, "tiktok"), late.replace(minute=18))
 
@@ -204,21 +238,26 @@ class AgentTests(unittest.TestCase):
         for service in ("instagram", "facebook", "tiktok"):
             caption = caption_for_platform(self.settings, date(2026, 9, 12), service)
             self.assertIn(f"utm_source={service}", caption)
+            self.assertIn("utm_campaign=daily_3_deals", caption)
 
     def test_captions_target_relevant_pakistan_audience_without_spam_tags(self):
         day = date(2026, 9, 12)
         audience = audience_for(deal_of_the_day(day), day)
-        self.assertEqual(audience.id, "students")
+        self.assertEqual(audience.id, "creators")
         for service in ("instagram", "facebook", "tiktok"):
             caption = caption_for_platform(self.settings, day, service)
             self.assertIn("Pakistan", caption)
             self.assertIn("PRICE: Rs.", caption)
-            self.assertIn("LISTED SAVING:", caption)
+            self.assertEqual(caption.count("PRICE: Rs."), 3)
+            self.assertIn("GEMINI PRO", caption)
+            self.assertIn("CAPCUT PRO", caption)
+            self.assertIn("CANVA PRO EDU", caption)
+            self.assertIn("+92 347 6242709", caption)
             self.assertNotIn("#fyp", caption.lower())
             self.assertNotIn("#viral", caption.lower())
 
     def test_social_learning_waits_for_evidence_then_uses_relevant_winner(self):
-        product = deal_of_the_day(date(2026, 9, 12))
+        product = get_product("chatgpt")
         state = {"published_dates": {}}
         for index, (audience, reactions, clicks) in enumerate((
             ("students", 2, 0), ("students", 3, 0),

@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/social-content-pack.yml"
       - "marketing_agent/buffer.py"
+      - "marketing_agent/tracking.py"
       - "marketing_agent/config.py"
       - "marketing_agent/cli.py"
       - "marketing_agent/social.py"
