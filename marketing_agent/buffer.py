@@ -40,9 +40,9 @@ TARGET_SERVICES = ("instagram", "facebook", "tiktok")
 MEDIA_BY_SLOT = {"morning": "image", "evening": "video"}
 VIDEO_SECONDS = 10
 VIDEO_SPECS = {
-    "tiktok": {"seconds": 10, "fps": 18, "cut": "fast"},
-    "instagram": {"seconds": 12, "fps": 18, "cut": "polished"},
-    "facebook": {"seconds": 14, "fps": 18, "cut": "clear"},
+    "tiktok": {"seconds": 10, "fps": 24, "cut": "fast"},
+    "instagram": {"seconds": 12, "fps": 24, "cut": "polished"},
+    "facebook": {"seconds": 14, "fps": 24, "cut": "clear"},
 }
 CREATIVE_CONCEPTS = (
     "orbit-drop",
@@ -1193,6 +1193,17 @@ def render_daily_media(day: date) -> list[Path]:
         if video:
             assets.append(video)
     return assets
+
+
+def render_platform_media(day: date, service: str, slot: str) -> Path:
+    """Render exactly one destination asset for fast, targeted queue repairs."""
+    if service not in TARGET_SERVICES:
+        raise ValueError(f"Unsupported social service: {service}")
+    if slot not in SOCIAL_SLOTS:
+        raise ValueError(f"Unsupported social slot: {slot}")
+    if media_type_for_slot(slot) == "image":
+        return render_deal_card(day, slot=slot)
+    return render_orbit_campaign_video(day, service, slot=slot)
 
 
 def media_url_for(day: date, service: str = "facebook", slot: str = "morning") -> tuple[str, str]:
