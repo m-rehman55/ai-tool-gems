@@ -82,7 +82,6 @@ jobs:
         run: |
           git config user.name "AI Tool Gems Bot"
           git config user.email "actions@users.noreply.github.com"
-          git pull --rebase origin main
           git add marketing_agent/data/buffer-state.json marketing_agent/data/repair-last.log
           if [ "${{ steps.repair.outputs.status }}" = "0" ]; then
             git rm --ignore-unmatch marketing_agent/data/repair-last.log
