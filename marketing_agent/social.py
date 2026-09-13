@@ -189,13 +189,13 @@ def hashtags_for(products: tuple[Product, ...], audience: AudienceAngle, platfor
 
 
 def _deal_line(index: int, product: Product, detailed: bool = False) -> str:
-    saving = f" | Save Rs. {product.saving:,}" if product.saving else ""
+    saving = f" | YOU SAVE Rs. {product.saving:,}" if product.saving else ""
     line = (
         f"{index}. {product.name.upper()}\n"
-        f"   PRICE: Rs. {product.price:,} | {product.duration}{saving}"
+        f"   PRICE: Rs. {product.price:,} PKR | {product.duration}{saving}"
     )
     if detailed:
-        line += f"\n   ACCESS: {product.access} | DELIVERY: {product.delivery} | WARRANTY: {product.warranty}"
+        line += f"\n   {product.access} access | Delivery {product.delivery} | Warranty {product.warranty}"
     return line
 
 
@@ -206,31 +206,34 @@ def _deal_body(
     detailed: bool = False,
 ) -> str:
     rows = "\n\n".join(_deal_line(index, product, detailed) for index, product in enumerate(products, 1))
-    return f"{audience.hook}\n\n{slot.upper()} PICKS — 3 HANDPICKED DEALS\n\n{rows}"
+    return f"{audience.hook}\n\n{slot.upper()} DROP — 3 CLEAR PKR DEALS\n\n{rows}"
 
 
 def _instagram(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date, slot: str) -> str:
     return (
-        f"{slot.upper()} AI TOOL DEALS FOR PAKISTAN 🇵🇰\n\n"
+        f"🚨 {slot.upper()} AI DEAL DROP — PAKISTAN 🇵🇰\n\n"
         f"{_deal_body(products, audience, slot)}\n\n"
-        "Gemini is included in every daily selection. Prices are listed clearly so you can compare first.\n\n"
-        "📲 WHATSAPP: +92 323 6715731\n"
-        f"View all 3 deals and order: {url}\n\n"
+        "💎 Gemini is included in every drop. Save this post and compare all three before choosing.\n"
+        "✅ Clear access type • delivery estimate • warranty confirmation\n\n"
+        "📲 ORDER / CHECK AVAILABILITY: +92 323 6715731\n"
+        f"🔗 Full details: {url}\n\n"
         f"{hashtags_for(products, audience, 'instagram', day)}\n\n"
-        "Promotional listing by AI Tool Gems Pakistan. Independent reseller; brand names belong to their owners."
+        "Independent reseller promotional listing. Availability and final terms are confirmed on WhatsApp before payment."
     )
 
 
 def _facebook(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date, slot: str) -> str:
     return (
-        f"{slot.upper()} — 3 DIGITAL TOOL DEALS\n\n"
+        f"🇵🇰 {slot.upper()} DIGITAL TOOL DEALS — 3 SMART PICKS\n\n"
         f"{_deal_body(products, audience, slot, detailed=True)}\n\n"
-        "Compare the plan, access type, delivery estimate and warranty before ordering. "
-        "Current availability and exact terms are confirmed before payment.\n\n"
-        "WHATSAPP: +92 323 6715731\n"
-        f"View all offers + order: {url}\n\n"
+        "WHY ORDER THROUGH AI TOOL GEMS?\n"
+        "✓ Prices displayed in PKR\n"
+        "✓ Human WhatsApp support\n"
+        "✓ Access, delivery and warranty explained before payment\n\n"
+        "📲 ORDER / ASK A QUESTION: +92 323 6715731\n"
+        f"🔗 Compare all three offers: {url}\n\n"
         f"{hashtags_for(products, audience, 'facebook', day)}\n\n"
-        "Promotional listing by AI Tool Gems Pakistan. Independent reseller."
+        "Independent reseller promotional listing. Availability and final terms are confirmed before payment."
     )
 
 
@@ -245,12 +248,13 @@ def _whatsapp(products: tuple[Product, ...], audience: AudienceAngle, url: str, 
 
 def _tiktok(products: tuple[Product, ...], audience: AudienceAngle, url: str, day: date, slot: str) -> str:
     return (
-        f"{slot.upper()} — 3 AI TOOL DEALS 🇵🇰\n\n"
+        f"STOP OVERPAYING FOR AI 👀 🇵🇰\n{slot.upper()} DROP: 3 TOOLS, CLEAR PKR PRICES\n\n"
         f"{_deal_body(products, audience, slot)}\n\n"
-        "WhatsApp: +92 323 6715731\n"
-        f"Details/order: {url}\n\n"
+        "Which one fits your work or study setup?\n"
+        "📲 WhatsApp: +92 323 6715731\n"
+        f"🔗 Compare/order: {url}\n\n"
         f"{hashtags_for(products, audience, 'tiktok', day)}\n\n"
-        "Promotional listing by AI Tool Gems Pakistan. Independent reseller. Check terms before payment."
+        "Independent reseller promotional listing. Confirm availability and terms before payment."
     )
 
 

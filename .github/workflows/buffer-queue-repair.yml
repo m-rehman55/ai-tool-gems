@@ -1,0 +1,89 @@
+name: Repair current Buffer queue
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/buffer-queue-repair.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-social-marketing-state
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      ATG_WHATSAPP_NUMBER: "923236715731"
+      ATG_TIMEZONE: Asia/Karachi
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install media dependencies
+        shell: bash
+        run: |
+          python -m pip install --disable-pip-version-check pillow==11.3.0
+          command -v ffmpeg >/dev/null || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      - name: Resolve Pakistan date
+        id: campaign
+        shell: bash
+        run: echo "date=$(TZ=Asia/Karachi date +%F)" >> "$GITHUB_OUTPUT"
+      - name: Test repair and publishing safeguards
+        run: python -m unittest discover -s marketing_agent/tests -v
+      - name: Verify all three owned Buffer channels
+        run: python -m marketing_agent buffer-status
+      - name: Build refreshed current-number media
+        run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
+      - name: Publish refreshed media files
+        shell: bash
+        run: |
+          git config user.name "AI Tool Gems Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assets/social-deals/ assets/product-logos/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refresh queued social media with current contact"
+          git push
+      - name: Confirm refreshed media is public
+        shell: bash
+        run: |
+          python - <<'PY' > /tmp/media-urls.txt
+          from datetime import date
+          from marketing_agent.buffer import media_url_for
+          from marketing_agent.social import SOCIAL_SLOTS
+          day = date.fromisoformat('${{ steps.campaign.outputs.date }}')
+          for slot in SOCIAL_SLOTS:
+              for service in ('facebook', 'instagram', 'tiktok'):
+                  print(media_url_for(day, service, slot)[0])
+          PY
+          while IFS= read -r media_url; do
+            curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --output /dev/null "$media_url"
+          done < /tmp/media-urls.txt
+      - name: Repair future posts in place without duplicates
+        run: python -m marketing_agent buffer-repair-future --date "${{ steps.campaign.outputs.date }}" --send
+      - name: Save repair receipt
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "AI Tool Gems Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase origin main
+          git add marketing_agent/data/buffer-state.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record Buffer queue repair"
+          git push
+      - name: Alert owner if repair needs attention
+        if: failure()
+        continue-on-error: true
+        run: python -m marketing_agent social-alert
