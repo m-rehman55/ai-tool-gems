@@ -33,9 +33,11 @@ from .social import (
 API_URL = "https://api.buffer.com"
 STATE_PATH = PROJECT_DIR / "marketing_agent" / "data" / "buffer-state.json"
 CARD_DIR = PROJECT_DIR / "assets" / "social-deals"
+REALISTIC_BACKGROUND = PROJECT_DIR / "assets" / "social-realistic-workspace-v1.png"
 RAW_MEDIA_ROOT = "https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/main/assets/social-deals"
 TARGET_SERVICES = ("instagram", "facebook", "tiktok")
-VIDEO_SERVICES = TARGET_SERVICES
+MEDIA_BY_SLOT = {"morning": "image", "evening": "video"}
+VIDEO_SECONDS = 10
 PRODUCT_DOMAINS = {
     "chatgpt": "chatgpt.com", "gemini": "gemini.google.com", "veo": "deepmind.google",
     "leonardo": "leonardo.ai", "elevenlabs": "elevenlabs.io", "canva": "canva.com",
@@ -195,7 +197,7 @@ class BufferClient:
             raise BufferError(f"Unsupported media type: {media_type}")
         metadata_by_service = {
             "instagram": (
-                "metadata: { instagram: { type: reel, shouldShareToFeed: true } }"
+                "metadata: { instagram: { type: reel, shouldShareToFeed: true, isAiGenerated: true } }"
                 if media_type == "video"
                 else "metadata: { instagram: { type: post, shouldShareToFeed: true } }"
             ),
@@ -205,7 +207,7 @@ class BufferClient:
                 else "metadata: { facebook: { type: post } }"
             ),
             "tiktok": (
-                "metadata: { tiktok: { isAiGenerated: false } }"
+                "metadata: { tiktok: { isAiGenerated: true } }"
                 if media_type == "video"
                 else f"metadata: {{ tiktok: {{ title: {json.dumps(title)} }} }}"
             ),
@@ -219,6 +221,7 @@ class BufferClient:
             channelId: {json.dumps(channel_id)}
             schedulingType: automatic
             mode: customScheduled
+            aiAssisted: true
             dueAt: {json.dumps(due_at.isoformat().replace('+00:00', 'Z'))}
             assets: [{asset}]
             {metadata}
@@ -279,8 +282,16 @@ def deal_video_path(day: date, product: Product | None = None, slot: str = "morn
 
 
 def is_video_day(day: date) -> bool:
-    """All twice-daily campaigns use video so Meta receives Reels, not static deal posts."""
+    """Backwards-compatible helper: every day includes one evening video."""
     return True
+
+
+def media_type_for_slot(slot: str) -> str:
+    """Keep the daily cadence predictable: morning photo, evening Reel/video."""
+    try:
+        return MEDIA_BY_SLOT[slot]
+    except KeyError as exc:
+        raise ValueError(f"Unsupported social slot: {slot}") from exc
 
 
 def _render_single_deal_card_legacy(day: date, output: Path | None = None) -> Path:
@@ -496,31 +507,48 @@ def audio_theme_for(audience: AudienceAngle) -> str:
 def _write_original_audio(
     path: Path,
     theme: str = "focus-tech",
-    seconds: int = 8,
+    seconds: int = VIDEO_SECONDS,
     sample_rate: int = 44_100,
 ) -> None:
-    """Create a short original brand jingle without copyrighted or platform-library audio."""
+    """Create a layered, trend-inspired original soundbed safe for automatic commercial posts."""
     themes = {
-        "focus-tech": ((261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 392.00), 0.13, 92),
-        "creator-pulse": ((329.63, 392.00, 493.88, 659.25, 493.88, 587.33, 523.25, 659.25), 0.15, 110),
-        "clean-business": ((220.00, 277.18, 329.63, 440.00, 329.63, 369.99, 277.18, 329.63), 0.11, 78),
+        "focus-tech": ((261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 392.00), 112),
+        "creator-pulse": ((329.63, 392.00, 493.88, 659.25, 493.88, 587.33, 523.25, 659.25), 124),
+        "clean-business": ((220.00, 277.18, 329.63, 440.00, 329.63, 369.99, 277.18, 329.63), 104),
     }
-    notes, volume, bass_note = themes.get(theme, themes["focus-tech"])
+    notes, bpm = themes.get(theme, themes["focus-tech"])
+    beat_seconds = 60 / bpm
     samples = array("h")
     total = seconds * sample_rate
     for index in range(total):
         elapsed = index / sample_rate
-        note = notes[min(int(elapsed), len(notes) - 1)]
-        within_beat = elapsed % 1.0
-        envelope = min(1.0, within_beat / 0.04) * max(0.0, 1.0 - within_beat * 0.72)
-        chord = math.sin(2 * math.pi * note * elapsed)
-        harmony = 0.42 * math.sin(2 * math.pi * note * 1.5 * elapsed)
-        pulse = 0.24 * math.sin(2 * math.pi * bass_note * elapsed) * max(0.0, 1 - within_beat * 5)
-        sparkle = 0.10 * math.sin(2 * math.pi * note * 2 * elapsed) * max(0.0, 1 - within_beat * 3)
-        value = int(32767 * volume * envelope * (chord + harmony + pulse + sparkle))
-        samples.append(max(-32768, min(32767, value)))
+        beat_index = int(elapsed / beat_seconds)
+        within_beat = elapsed % beat_seconds
+        half_beat = elapsed % (beat_seconds / 2)
+        note = notes[beat_index % len(notes)]
+
+        # Bright pluck, warm bass and dance-style drums create energy without copying a song.
+        pluck_env = math.exp(-7.5 * within_beat)
+        pluck = (
+            math.sin(2 * math.pi * note * elapsed)
+            + 0.35 * math.sin(2 * math.pi * note * 2 * elapsed)
+        ) * pluck_env
+        bass = math.sin(2 * math.pi * (note / 4) * elapsed) * math.exp(-3.2 * within_beat)
+        kick = math.sin(2 * math.pi * (62 - min(36, within_beat * 180)) * elapsed) * math.exp(-18 * within_beat)
+        clap_phase = (elapsed + beat_seconds / 2) % beat_seconds
+        clap_noise = math.sin(index * 12.9898) * math.sin(index * 0.173)
+        clap = clap_noise * math.exp(-34 * clap_phase)
+        hat_noise = math.sin(index * 78.233) * math.sin(index * 0.711)
+        hat = hat_noise * math.exp(-55 * half_beat)
+        riser = math.sin(2 * math.pi * (520 + elapsed * 42) * elapsed) * max(0, elapsed - (seconds - 1.0)) * 0.08
+        master_fade = min(1.0, elapsed / 0.12, max(0.0, (seconds - elapsed) / 0.35))
+        mono = master_fade * (0.16 * pluck + 0.10 * bass + 0.17 * kick + 0.045 * clap + 0.025 * hat + riser)
+        shimmer = 0.025 * math.sin(2 * math.pi * note * 1.5 * elapsed) * pluck_env
+        left = int(32767 * max(-0.92, min(0.92, mono + shimmer)))
+        right = int(32767 * max(-0.92, min(0.92, mono - shimmer)))
+        samples.extend((left, right))
     with wave.open(str(path), "wb") as audio:
-        audio.setnchannels(1)
+        audio.setnchannels(2)
         audio.setsampwidth(2)
         audio.setframerate(sample_rate)
         audio.writeframes(samples.tobytes())
@@ -663,23 +691,175 @@ def render_deal_video(day: date, output: Path | None = None, slot: str = "mornin
     return output
 
 
+def render_realistic_deal_video(day: date, output: Path | None = None, slot: str = "evening") -> Path | None:
+    """Render a photorealistic 10-second, five-scene 9:16 deal Reel."""
+    from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
+
+    executable = _ffmpeg_executable()
+    if not executable:
+        return None
+    products = deals_for_slot(day, slot)
+    focus = products[1]
+    audience = audience_for(focus, day)
+    output = output or deal_video_path(day, focus, slot)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    width, height = 720, 1280
+    palette = _creative_palette(day, slot)
+    ink, primary, cta = palette["ink"], palette["primary"], palette["cta"]
+
+    if REALISTIC_BACKGROUND.exists():
+        source = Image.open(REALISTIC_BACKGROUND).convert("RGB")
+        background = ImageOps.fit(source, (width, height), method=Image.Resampling.LANCZOS)
+        background = ImageEnhance.Color(background).enhance(0.92)
+        background = ImageEnhance.Contrast(background).enhance(0.94)
+    else:
+        background = Image.new("RGB", (width, height), palette["gradient"][0])
+
+    logos: dict[str, Image.Image | None] = {}
+    for product in products:
+        try:
+            request = Request(
+                f"https://www.google.com/s2/favicons?domain={PRODUCT_DOMAINS[product.id]}&sz=256",
+                headers={"User-Agent": "AI-Tool-Gems-Marketing-Agent/1.0"},
+            )
+            with urlopen(request, timeout=12) as response:
+                logo = Image.open(BytesIO(response.read())).convert("RGBA")
+            logo.thumbnail((92, 92), Image.Resampling.LANCZOS)
+            logos[product.id] = logo
+        except Exception:
+            logos[product.id] = None
+
+    brand_logo = Image.open(PROJECT_DIR / "assets" / "brand-logo-light.png").convert("RGBA")
+    brand_logo.thumbnail((76, 76), Image.Resampling.LANCZOS)
+
+    def scene_base(strength: int = 70) -> Image.Image:
+        scene = background.copy().convert("RGBA")
+        scene.alpha_composite(Image.new("RGBA", scene.size, (8, 31, 38, strength)))
+        draw = ImageDraw.Draw(scene, "RGBA")
+        draw.rounded_rectangle((28, 24, 692, 116), radius=34, fill=(255, 255, 255, 230))
+        scene.alpha_composite(brand_logo, (44, 32))
+        draw.text((132, 45), "AI TOOL GEMS", font=_font(29, True), fill=ink)
+        draw.text((133, 80), "PAKISTAN", font=_font(15, True), fill=primary)
+        draw.rounded_rectangle((542, 48, 665, 93), radius=22, fill=cta)
+        draw.text((568, 60), "DEALS", font=_font(18, True), fill=ink)
+        return scene
+
+    def paste_logo(scene: Image.Image, product: Product, box: tuple[int, int, int, int]) -> None:
+        draw = ImageDraw.Draw(scene, "RGBA")
+        draw.rounded_rectangle(box, radius=28, fill=(255, 255, 255, 245), outline=(210, 232, 226, 255), width=2)
+        logo = logos.get(product.id)
+        center_x = (box[0] + box[2]) // 2
+        center_y = (box[1] + box[3]) // 2
+        if logo:
+            scene.alpha_composite(logo, (center_x - logo.width // 2, center_y - logo.height // 2))
+        else:
+            initials = "".join(word[0] for word in product.name.split()[:2]).upper()
+            bounds = draw.textbbox((0, 0), initials, font=_font(36, True))
+            draw.text((center_x - (bounds[2] - bounds[0]) / 2, center_y - 24), initials, font=_font(36, True), fill=ink)
+
+    frames: list[Image.Image] = []
+    intro = scene_base(42)
+    draw = ImageDraw.Draw(intro, "RGBA")
+    draw.rounded_rectangle((36, 650, 684, 1105), radius=46, fill=(255, 255, 255, 232))
+    draw.text((72, 700), "YOUR AI STACK", font=_font(53, True), fill=ink)
+    draw.text((72, 765), "JUST GOT SMARTER.", font=_font(48, True), fill=primary)
+    draw.rounded_rectangle((72, 856, 482, 921), radius=30, fill=cta)
+    draw.text((103, 873), "3 VERIFIED DEALS", font=_font(27, True), fill=ink)
+    draw.text((72, 958), "For students, creators and teams", font=_font(26, True), fill=ink)
+    draw.text((72, 1002), "Clear PKR prices. Fast WhatsApp ordering.", font=_font(21), fill=palette["muted"])
+    draw.text((46, 1215), "AI-generated promotional visual", font=_font(16), fill=(255, 255, 255, 235))
+    frames.append(intro.convert("RGB"))
+
+    for index, product in enumerate(products, 1):
+        scene = scene_base(86)
+        draw = ImageDraw.Draw(scene, "RGBA")
+        draw.rounded_rectangle((38, 510, 682, 1120), radius=50, fill=(255, 255, 255, 240))
+        draw.rounded_rectangle((62, 544, 190, 586), radius=20, fill=primary)
+        draw.text((83, 554), f"DEAL {index}/3", font=_font(17, True), fill=(255, 255, 255))
+        paste_logo(scene, product, (62, 620, 202, 760))
+        name_y = 624
+        for line in _wrapped_lines(draw, product.name, _font(43, True), 410)[:2]:
+            draw.text((232, name_y), line, font=_font(43, True), fill=ink)
+            name_y += 51
+        draw.text((66, 806), "TODAY'S PRICE", font=_font(20, True), fill=palette["muted"])
+        draw.text((64, 840), f"Rs. {product.price:,}", font=_font(72, True), fill=ink)
+        if product.saving:
+            draw.rounded_rectangle((400, 858, 644, 910), radius=26, fill=cta)
+            draw.text((424, 872), f"SAVE Rs. {product.saving:,}", font=_font(20, True), fill=ink)
+        draw.text((68, 950), f"{product.duration}  |  {product.access} access", font=_font(23, True), fill=ink)
+        draw.text((68, 994), f"Delivery {product.delivery}  |  Warranty {product.warranty}", font=_font(20), fill=palette["muted"])
+        draw.text((68, 1054), "Availability confirmed before payment", font=_font(18), fill=palette["muted"])
+        draw.text((46, 1215), "AI-generated promotional visual", font=_font(16), fill=(255, 255, 255, 235))
+        frames.append(scene.convert("RGB"))
+
+    outro = scene_base(92).filter(ImageFilter.GaussianBlur(radius=0.35))
+    draw = ImageDraw.Draw(outro, "RGBA")
+    draw.rounded_rectangle((38, 450, 682, 1130), radius=54, fill=(255, 255, 255, 244))
+    draw.text((75, 500), "PICK YOUR DEAL", font=_font(50, True), fill=ink)
+    for index, product in enumerate(products):
+        row_y = 600 + index * 116
+        draw.rounded_rectangle((72, row_y, 650, row_y + 92), radius=27, fill=palette["rows"][index])
+        draw.text((96, row_y + 18), product.name[:24], font=_font(26, True), fill=ink)
+        price = f"Rs. {product.price:,}"
+        bounds = draw.textbbox((0, 0), price, font=_font(27, True))
+        draw.text((620 - (bounds[2] - bounds[0]), row_y + 47), price, font=_font(27, True), fill=palette["accents"][index])
+    draw.rounded_rectangle((72, 970, 650, 1062), radius=43, fill=cta)
+    draw.text((119, 992), "WHATSAPP +92 347 6242709", font=_font(27, True), fill=ink)
+    draw.text((190, 1082), "aitoolgems.tech/deals", font=_font(25, True), fill=ink)
+    draw.text((46, 1215), "AI-generated promotional visual", font=_font(16), fill=(255, 255, 255, 235))
+    frames.append(outro.convert("RGB"))
+
+    with tempfile.TemporaryDirectory(prefix="atg-video-") as temporary:
+        temporary_dir = Path(temporary)
+        frame_paths: list[Path] = []
+        for index, frame in enumerate(frames):
+            frame_path = temporary_dir / f"scene-{index}.jpg"
+            frame.save(frame_path, format="JPEG", quality=93, optimize=True)
+            frame_paths.append(frame_path)
+        audio_path = temporary_dir / "trend-inspired-original.wav"
+        _write_original_audio(audio_path, audio_theme_for(audience), VIDEO_SECONDS)
+        command = [executable, "-y"]
+        for frame_path in frame_paths:
+            command.extend(("-loop", "1", "-t", "2", "-i", str(frame_path)))
+        command.extend(("-i", str(audio_path)))
+        filters = []
+        for index in range(len(frame_paths)):
+            filters.append(
+                f"[{index}:v]scale=720:1280,setsar=1,fps=25,"
+                "fade=t=in:st=0:d=0.12,fade=t=out:st=1.88:d=0.12"
+                f"[v{index}]"
+            )
+        filters.append("".join(f"[v{index}]" for index in range(len(frame_paths))) + f"concat=n={len(frame_paths)}:v=1:a=0[v]")
+        command.extend((
+            "-filter_complex", ";".join(filters), "-map", "[v]", "-map", f"{len(frame_paths)}:a",
+            "-t", str(VIDEO_SECONDS), "-c:v", "libx264", "-preset", "medium", "-crf", "25",
+            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", "-ar", "44100",
+            "-movflags", "+faststart", "-shortest", str(output),
+        ))
+        completed = subprocess.run(command, capture_output=True, text=True, timeout=180)
+        if completed.returncode != 0:
+            output.unlink(missing_ok=True)
+            raise BufferError(f"Video render failed: {completed.stderr[-700:]}")
+    return output
+
+
 def render_daily_media(day: date) -> list[Path]:
-    assets: list[Path] = []
-    for slot in SOCIAL_SLOTS:
-        assets.append(render_deal_card(day, slot=slot))
-        video = render_deal_video(day, slot=slot)
-        if video:
-            assets.append(video)
+    """Build exactly one photo and one video for the day's two publishing slots."""
+    assets = [render_deal_card(day, slot="morning")]
+    video = render_realistic_deal_video(day, slot="evening")
+    if video:
+        assets.append(video)
     return assets
 
 
 def media_url_for(day: date, service: str = "facebook", slot: str = "morning") -> tuple[str, str]:
     products = deals_for_slot(day, slot)
-    video = deal_video_path(day, products[1], slot)
-    if service in VIDEO_SERVICES and video.exists():
-        return f"{RAW_MEDIA_ROOT}/{video.name}", "video"
-    card = deal_card_path(day, products[1], slot)
-    return f"{RAW_MEDIA_ROOT}/{card.name}", "image"
+    media_type = media_type_for_slot(slot)
+    if media_type == "video":
+        asset = deal_video_path(day, products[1], slot)
+    else:
+        asset = deal_card_path(day, products[1], slot)
+    return f"{RAW_MEDIA_ROOT}/{asset.name}", media_type
 
 
 def scheduled_time(
@@ -832,9 +1012,8 @@ def publish_daily_deal(
             due_at = scheduled_time(settings, day, now, service, audience, slot)
             media_url, media_type = media_url_for(day, service, slot)
             try:
-                if media_type != "video":
-                    raise BufferError(f"{state_key}: required Reel/video asset is not ready")
-                post = client.create_video_post(
+                create_post = client.create_video_post if media_type == "video" else client.create_image_post
+                post = create_post(
                     channel["id"], service, caption, media_url, due_at, f"{slot.title()} — 3 AI Tool Deals"
                 )
                 day_state[state_key] = {
@@ -847,7 +1026,9 @@ def publish_daily_deal(
                     "learning_mode": learning_mode,
                     "deal_ids": [product.id for product in products],
                     "media_type": media_type,
-                    "audio_theme": audio_theme_for(audience),
+                    "audio_theme": audio_theme_for(audience) if media_type == "video" else None,
+                    "audio_strategy": "trend-inspired-original-commercial-safe" if media_type == "video" else None,
+                    "ai_disclosed": media_type == "video",
                     "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 }
                 results["scheduled"][state_key] = post["id"]
@@ -892,7 +1073,7 @@ def format_publish_confirmation(
             time_label = local_time.strftime("%I:%M %p PKT")
         except (TypeError, ValueError):
             time_label = "scheduled"
-        media = "Reel/video"
+        media = "Reel/video" if record.get("media_type") == "video" else "photo post"
         audio = record.get("audio_theme")
         extra = f" • audio: {audio}" if audio else ""
         lines.append(f"• {labels[service]}: {media} • {time_label}{extra}")
