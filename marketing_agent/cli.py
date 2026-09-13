@@ -10,9 +10,11 @@ from pathlib import Path
 
 from .commands import process_updates, setup_bot
 from .buffer import (
+    campaign_preflight,
     connection_status as buffer_connection_status,
     format_publish_confirmation,
     publish_daily_deal,
+    repair_future_posts,
     refresh_performance,
     render_daily_media,
 )
@@ -85,6 +87,11 @@ def parser() -> argparse.ArgumentParser:
     buffer_publish = commands.add_parser("buffer-publish", help="Schedule today's deal on Instagram, Facebook and TikTok")
     buffer_publish.add_argument("--date", default=date.today().isoformat())
     buffer_publish.add_argument("--send", action="store_true", help="Send a Telegram owner confirmation when new posts schedule")
+    buffer_preflight = commands.add_parser("buffer-preflight", help="Check all channels, captions, media and recent delivery before scheduling")
+    buffer_preflight.add_argument("--date", default=date.today().isoformat())
+    buffer_repair = commands.add_parser("buffer-repair-future", help="Safely replace future queued posts without creating duplicates")
+    buffer_repair.add_argument("--date", default=date.today().isoformat())
+    buffer_repair.add_argument("--send", action="store_true", help="Send a private Telegram repair receipt")
     commands.add_parser("buffer-learn", help="Refresh real delivery and engagement results from Buffer")
 
     commands.add_parser("trial-plan", help="Print the duplicate-safe three-day campaign plan")
@@ -205,6 +212,20 @@ def main(argv: list[str] | None = None) -> int:
                 TelegramClient(settings.telegram_bot_token).send_with_retry(
                     settings.telegram_owner_chat_id, confirmation
                 )
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+    elif args.command == "buffer-preflight":
+        print(json.dumps(campaign_preflight(settings, date.fromisoformat(args.date)), indent=2, ensure_ascii=False))
+    elif args.command == "buffer-repair-future":
+        repair_date = date.fromisoformat(args.date)
+        result = repair_future_posts(settings, repair_date)
+        if args.send and settings.owner_reports_ready and result["repaired"]:
+            repaired = ", ".join(key.replace(":", " ").title() for key in result["repaired"])
+            TelegramClient(settings.telegram_bot_token).send_with_retry(
+                settings.telegram_owner_chat_id,
+                "✅ Buffer queue repaired safely\n\n"
+                f"Updated in place: {repaired}\n"
+                "New WhatsApp number, improved caption and current media are applied. No duplicate post was created.",
+            )
         print(json.dumps(result, indent=2, ensure_ascii=False))
     elif args.command == "buffer-learn":
         print(json.dumps(refresh_performance(settings), indent=2, ensure_ascii=False))

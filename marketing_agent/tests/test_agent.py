@@ -10,6 +10,8 @@ from unittest.mock import patch
 from marketing_agent.catalog import get_product, load_products
 from marketing_agent.buffer import (
     BufferClient,
+    BufferError,
+    campaign_preflight,
     connection_status,
     creative_concept_for,
     deal_video_path,
@@ -19,6 +21,7 @@ from marketing_agent.buffer import (
     media_type_for_slot,
     platform_audio_style,
     publish_daily_deal,
+    repair_future_posts,
     refresh_performance,
     scheduled_time,
 )
@@ -189,6 +192,37 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(set(result["channels"]), {"instagram", "facebook", "tiktok"})
         self.assertNotIn("private-key", json.dumps(result))
 
+    def test_daily_preflight_checks_all_channels_captions_and_media(self):
+        class PreflightClient:
+            def owned_channels(self):
+                return {
+                    service: {
+                        "id": service + "-id",
+                        "name": service,
+                        "displayName": service,
+                        "isQueuePaused": False,
+                    }
+                    for service in ("instagram", "facebook", "tiktok")
+                }
+
+            def post_status(self, post_id):
+                return {"id": post_id, "status": "sent"}
+
+        card_dir = Path(self.temp.name) / "media"
+        card_dir.mkdir()
+        day = date(2026, 9, 14)
+        for slot in ("morning", "evening"):
+            for service in ("instagram", "facebook", "tiktok"):
+                filename = media_url_for(day, service, slot)[0].rsplit("/", 1)[-1]
+                (card_dir / filename).write_bytes(b"x" * 6_000)
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text('{"published_dates": {}}', encoding="utf-8")
+        with patch("marketing_agent.buffer.CARD_DIR", card_dir):
+            result = campaign_preflight(self.settings, day, state, PreflightClient())
+        self.assertTrue(result["ready"])
+        self.assertEqual(result["captions_checked"], 6)
+        self.assertEqual(result["assets_checked"], 6)
+
     def test_buffer_publish_is_duplicate_safe_across_all_three_channels(self):
         class FakeClient:
             def __init__(self):
@@ -260,6 +294,58 @@ class AgentTests(unittest.TestCase):
         self.assertIn("tiktok: { isAiGenerated: true }", queries[4])
         self.assertTrue(all("aiAssisted: true" in query for query in queries))
 
+    def test_buffer_repairs_a_future_post_in_place_without_duplicate(self):
+        class RepairClient:
+            def __init__(self):
+                self.edits = []
+
+            def post_status(self, post_id):
+                return {"id": post_id, "status": "scheduled"}
+
+            def edit_media_post(self, post_id, service, text, media_url, title, media_type):
+                self.edits.append((post_id, service, text, media_url, title, media_type))
+                return {"id": post_id}
+
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text(json.dumps({"published_dates": {"2026-09-13": {
+            "morning:facebook": {
+                "post_id": "past-post", "slot": "morning", "service": "facebook",
+                "scheduled_for": "2026-09-13T05:00:00+00:00",
+            },
+            "evening:instagram": {
+                "post_id": "future-post", "slot": "evening", "service": "instagram",
+                "scheduled_for": "2026-09-13T16:00:00+00:00",
+            },
+        }}}), encoding="utf-8")
+        client = RepairClient()
+        result = repair_future_posts(
+            self.settings,
+            date(2026, 9, 13),
+            state,
+            client,
+            datetime(2026, 9, 13, 14, 0, tzinfo=timezone.utc),
+        )
+        self.assertEqual(set(result["repaired"]), {"evening:instagram"})
+        self.assertEqual(len(client.edits), 1)
+        self.assertIn("+92 323 6715731", client.edits[0][2])
+        self.assertEqual(client.edits[0][-1], "video")
+
+    def test_edit_post_uses_official_in_place_mutation(self):
+        queries = []
+
+        def transport(query: str) -> dict:
+            queries.append(query)
+            return {"data": {"editPost": {"post": {"id": "post1"}}}}
+
+        client = BufferClient("private-key", transport)
+        result = client.edit_media_post(
+            "post1", "instagram", "new caption", "https://example.com/reel.mp4", "Deal", "video"
+        )
+        self.assertEqual(result["id"], "post1")
+        self.assertIn("editPost(input:", queries[0])
+        self.assertIn("instagram: { type: reel", queries[0])
+        self.assertNotIn("createPost(input:", queries[0])
+
     def test_buffer_schedules_audience_windows_or_safely_in_future(self):
         early = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)
         late = datetime(2026, 9, 12, 17, 0, tzinfo=timezone.utc)
@@ -290,6 +376,8 @@ class AgentTests(unittest.TestCase):
                 for product in products:
                     self.assertIn(product.name.upper(), caption)
                 self.assertIn("+92 323 6715731", caption)
+                self.assertIn("confirm", caption.lower())
+                self.assertIn("PKR", caption)
                 self.assertNotIn("#fyp", caption.lower())
                 self.assertNotIn("#viral", caption.lower())
 
@@ -311,6 +399,9 @@ class AgentTests(unittest.TestCase):
 
     def test_buffer_performance_refresh_records_real_metrics_without_rescheduling(self):
         class MetricsClient:
+            def post_status(self, post_id):
+                return {"id": post_id, "status": "sent"}
+
             def post_metrics(self, post_id):
                 return {
                     "id": post_id,
@@ -341,6 +432,26 @@ class AgentTests(unittest.TestCase):
         self.assertEqual(result["updated"], 1)
         self.assertEqual(record["delivery_status"], "sent")
         self.assertEqual(record["metrics"]["reactions"], 7)
+
+    def test_delivery_status_still_updates_when_insights_scope_is_unavailable(self):
+        class StatusClient:
+            def post_status(self, post_id):
+                return {"id": post_id, "status": "sent"}
+
+            def post_metrics(self, post_id):
+                raise BufferError("Insufficient scope. Required: insights:read")
+
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text(json.dumps({"published_dates": {"2026-09-12": {
+            "instagram": {"post_id": "ig-post", "scheduled_for": "2026-09-12T14:30:00+00:00"}
+        }}}), encoding="utf-8")
+        result = refresh_performance(
+            self.settings, state, StatusClient(), datetime(2026, 9, 13, 2, 0, tzinfo=timezone.utc)
+        )
+        stored = json.loads(state.read_text(encoding="utf-8"))["published_dates"]["2026-09-12"]["instagram"]
+        self.assertEqual(stored["delivery_status"], "sent")
+        self.assertEqual(result["delivery_errors"], {})
+        self.assertTrue(result["analytics_warnings"])
 
     def test_publish_confirmation_reports_platform_time_and_media_without_secrets(self):
         state = Path(self.temp.name) / "buffer-state.json"

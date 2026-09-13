@@ -193,6 +193,20 @@ class BufferClient:
         """
         return self.graphql(query).get("post", {})
 
+    def post_status(self, post_id: str) -> dict:
+        """Read delivery state without requiring Buffer's optional insights scope."""
+        query = f"""
+        query DailyPostStatus {{
+          post(input: {{ id: {json.dumps(post_id)} }}) {{
+            id
+            status
+            dueAt
+            channelId
+          }}
+        }}
+        """
+        return self.graphql(query).get("post", {})
+
     def create_image_post(
         self, channel_id: str, service: str, text: str, image_url: str, due_at: datetime, title: str
     ) -> dict:
@@ -215,24 +229,7 @@ class BufferClient:
     ) -> dict:
         if media_type not in {"image", "video"}:
             raise BufferError(f"Unsupported media type: {media_type}")
-        metadata_by_service = {
-            "instagram": (
-                "metadata: { instagram: { type: reel, shouldShareToFeed: true, isAiGenerated: true } }"
-                if media_type == "video"
-                else "metadata: { instagram: { type: post, shouldShareToFeed: true } }"
-            ),
-            "facebook": (
-                "metadata: { facebook: { type: reel } }"
-                if media_type == "video"
-                else "metadata: { facebook: { type: post } }"
-            ),
-            "tiktok": (
-                "metadata: { tiktok: { isAiGenerated: true } }"
-                if media_type == "video"
-                else f"metadata: {{ tiktok: {{ title: {json.dumps(title)} }} }}"
-            ),
-        }
-        metadata = metadata_by_service.get(service, "")
+        metadata = self._metadata_for(service, media_type, title)
         asset = f"{{ {media_type}: {{ url: {json.dumps(media_url)} }} }}"
         query = f"""
         mutation CreateDailyDeal {{
@@ -258,6 +255,64 @@ class BufferClient:
         post = result.get("post")
         if not post:
             raise BufferError(f"{service}: Buffer returned no post after scheduling")
+        return post
+
+    @staticmethod
+    def _metadata_for(service: str, media_type: str, title: str) -> str:
+        metadata_by_service = {
+            "instagram": (
+                "metadata: { instagram: { type: reel, shouldShareToFeed: true, isAiGenerated: true } }"
+                if media_type == "video"
+                else "metadata: { instagram: { type: post, shouldShareToFeed: true } }"
+            ),
+            "facebook": (
+                "metadata: { facebook: { type: reel } }"
+                if media_type == "video"
+                else "metadata: { facebook: { type: post } }"
+            ),
+            "tiktok": (
+                "metadata: { tiktok: { isAiGenerated: true } }"
+                if media_type == "video"
+                else f"metadata: {{ tiktok: {{ title: {json.dumps(title)} }} }}"
+            ),
+        }
+        return metadata_by_service.get(service, "")
+
+    def edit_media_post(
+        self,
+        post_id: str,
+        service: str,
+        text: str,
+        media_url: str,
+        title: str,
+        media_type: str,
+    ) -> dict:
+        """Replace a still-scheduled post in place so repairs never create duplicates."""
+        if media_type not in {"image", "video"}:
+            raise BufferError(f"Unsupported media type: {media_type}")
+        metadata = self._metadata_for(service, media_type, title)
+        asset = f"{{ {media_type}: {{ url: {json.dumps(media_url)} }} }}"
+        query = f"""
+        mutation RepairScheduledPost {{
+          editPost(input: {{
+            id: {json.dumps(post_id)}
+            text: {json.dumps(text, ensure_ascii=False)}
+            aiAssisted: true
+            assets: [{asset}]
+            {metadata}
+          }}) {{
+            ... on PostActionSuccess {{ post {{ id text dueAt channelId }} }}
+            ... on MutationError {{ message }}
+          }}
+        }}
+        """
+        data = self.graphql(query)
+        result = data.get("editPost", {})
+        if result.get("message"):
+            raise BufferError(f"{service}: {result['message']}")
+        post = result.get("post")
+        if not post:
+            raise BufferError(f"{service}: Buffer returned no post after repair")
         return post
 
 
@@ -1221,6 +1276,166 @@ def connection_status(settings: Settings, client: BufferClient | None = None) ->
     }
 
 
+def _caption_issues(
+    settings: Settings,
+    day: date,
+    service: str,
+    slot: str,
+    caption: str,
+) -> list[str]:
+    products = deals_for_slot(day, slot)
+    issues: list[str] = []
+    compact_caption = "".join(character for character in caption if character.isdigit())
+    expected_number = "".join(character for character in settings.whatsapp_number if character.isdigit())
+    if expected_number not in compact_caption:
+        issues.append("current WhatsApp number is missing")
+    if "Gemini" not in caption:
+        issues.append("Gemini is missing")
+    if caption.count("PRICE: Rs.") != 3:
+        issues.append("three clear PKR price lines are required")
+    for product in products:
+        if product.name.upper() not in caption:
+            issues.append(f"{product.name} is missing")
+    if f"utm_source={service}" not in caption or f"utm_term={slot}" not in caption:
+        issues.append("platform tracking is incomplete")
+    if settings.site_url.rstrip("/") not in caption:
+        issues.append("website CTA is missing")
+    if any(marker in caption.lower() for marker in ("todo", "example.com", "923476242709")):
+        issues.append("placeholder or legacy contact content detected")
+    hashtag_limit = {"facebook": 3, "instagram": 6, "tiktok": 6}[service]
+    if len([word for word in caption.split() if word.startswith("#")]) > hashtag_limit:
+        issues.append("hashtag count exceeds the platform limit")
+    character_limit = {"facebook": 5000, "instagram": 2200, "tiktok": 2200}[service]
+    if len(caption) > character_limit:
+        issues.append(f"caption exceeds {character_limit} characters")
+    return issues
+
+
+def campaign_preflight(
+    settings: Settings,
+    day: date,
+    state_path: Path = STATE_PATH,
+    client: BufferClient | None = None,
+    now: datetime | None = None,
+) -> dict:
+    """Block unsafe daily scheduling until all three channels, captions and media pass QA."""
+    client = client or BufferClient(settings.buffer_api_key)
+    current = now or datetime.now(timezone.utc)
+    status = connection_status(settings, client)
+    errors: list[str] = []
+    warnings: list[str] = []
+    for service, channel in status["channels"].items():
+        if channel["queue_paused"]:
+            errors.append(f"{service} queue is paused in Buffer")
+
+    checked_assets: list[str] = []
+    for slot in SOCIAL_SLOTS:
+        for service in TARGET_SERVICES:
+            caption = caption_for_platform(settings, day, service, slot=slot)
+            for issue in _caption_issues(settings, day, service, slot, caption):
+                errors.append(f"{slot}:{service}: {issue}")
+            media_url, _ = media_url_for(day, service, slot)
+            asset = CARD_DIR / media_url.rsplit("/", 1)[-1]
+            if not asset.exists() or asset.stat().st_size < 5_000:
+                errors.append(f"{slot}:{service}: media asset is missing or incomplete")
+            else:
+                checked_assets.append(asset.name)
+
+    state = _read_state(state_path)
+    recent: list[tuple[datetime, str, dict]] = []
+    for day_key, records in state.get("published_dates", {}).items():
+        for state_key, record in records.items():
+            try:
+                due_at = datetime.fromisoformat(str(record.get("scheduled_for", "")).replace("Z", "+00:00"))
+            except ValueError:
+                continue
+            if due_at <= current - timedelta(minutes=30):
+                recent.append((due_at, f"{day_key}:{state_key}", record))
+    delivery_checks = 0
+    for _, label, record in sorted(recent, reverse=True)[:6]:
+        try:
+            snapshot = client.post_status(record["post_id"])
+            delivery_checks += 1
+            delivery = str(snapshot.get("status", "unknown")).lower()
+            if delivery in {"error", "failed", "publishing_error"}:
+                errors.append(f"previous delivery failed: {label}")
+        except BufferError as exc:
+            warnings.append(f"could not recheck {label}: {str(exc)[:160]}")
+
+    result = {
+        "ready": not errors,
+        "date": day.isoformat(),
+        "channels": status["channels"],
+        "captions_checked": len(SOCIAL_SLOTS) * len(TARGET_SERVICES),
+        "assets_checked": len(checked_assets),
+        "delivery_checks": delivery_checks,
+        "warnings": warnings,
+        "errors": errors,
+    }
+    if errors:
+        raise BufferError(json.dumps(result, ensure_ascii=False))
+    return result
+
+
+def repair_future_posts(
+    settings: Settings,
+    day: date,
+    state_path: Path = STATE_PATH,
+    client: BufferClient | None = None,
+    now: datetime | None = None,
+) -> dict:
+    """Update future queued posts in place with current captions, media and contact details."""
+    client = client or BufferClient(settings.buffer_api_key)
+    current = now or datetime.now(timezone.utc)
+    state = _read_state(state_path)
+    records = state.get("published_dates", {}).get(day.isoformat(), {})
+    repaired: dict[str, str] = {}
+    skipped: dict[str, str] = {}
+    for state_key, record in records.items():
+        slot = record.get("slot") or (state_key.split(":", 1)[0] if ":" in state_key else "morning")
+        service = record.get("service") or (state_key.split(":", 1)[-1] if ":" in state_key else state_key)
+        if slot not in SOCIAL_SLOTS or service not in TARGET_SERVICES:
+            skipped[state_key] = "unsupported legacy record"
+            continue
+        try:
+            due_at = datetime.fromisoformat(str(record.get("scheduled_for", "")).replace("Z", "+00:00"))
+        except ValueError:
+            skipped[state_key] = "invalid schedule"
+            continue
+        if due_at <= current + timedelta(minutes=2):
+            skipped[state_key] = "already due or too close to publishing"
+            continue
+        snapshot = client.post_status(record["post_id"])
+        if str(snapshot.get("status", "")).lower() in {"sent", "published"}:
+            skipped[state_key] = "already published"
+            continue
+        products = deals_for_slot(day, slot)
+        audience, learning_mode = learned_audience_for(products[1], day, state)
+        caption = caption_for_platform(settings, day, service, audience, slot)
+        media_url, media_type = media_url_for(day, service, slot)
+        post = client.edit_media_post(
+            record["post_id"],
+            service,
+            caption,
+            media_url,
+            f"{slot.title()} — 3 AI Tool Deals",
+            media_type,
+        )
+        record.update({
+            "post_id": post.get("id", record["post_id"]),
+            "audience": audience.id,
+            "learning_mode": learning_mode,
+            "deal_ids": [product.id for product in products],
+            "media_type": media_type,
+            "contact_number": settings.whatsapp_number,
+            "caption_version": 2,
+            "repaired_at": current.isoformat(timespec="seconds"),
+        })
+        repaired[state_key] = record["post_id"]
+        _write_state(state_path, state)
+    return {"date": day.isoformat(), "repaired": repaired, "skipped": skipped}
+
+
 def _metric_value(metrics: dict, *names: str) -> float:
     normalized = {str(key).lower(): value for key, value in metrics.items()}
     for name in names:
@@ -1320,6 +1535,8 @@ def publish_daily_deal(
                     "audio_strategy": "platform-shaped-original-commercial-safe" if media_type == "video" else None,
                     "video_seconds": VIDEO_SPECS[service]["seconds"] if media_type == "video" else None,
                     "ai_disclosed": media_type == "video",
+                    "contact_number": settings.whatsapp_number,
+                    "caption_version": 2,
                     "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 }
                 results["scheduled"][state_key] = post["id"]
@@ -1390,7 +1607,7 @@ def refresh_performance(
     client = client or BufferClient(settings.buffer_api_key)
     state = _read_state(state_path)
     current = now or datetime.now(timezone.utc)
-    checked, updated, errors = 0, 0, {}
+    checked, updated, errors, analytics_warnings = 0, 0, {}, {}
     for day_key, services in state.get("published_dates", {}).items():
         for service, record in services.items():
             scheduled = record.get("scheduled_for", "")
@@ -1404,13 +1621,19 @@ def refresh_performance(
                 continue
             checked += 1
             try:
+                delivery = client.post_status(record["post_id"])
+                record["delivery_status"] = delivery.get("status", "unknown")
+                record["delivery_checked_at"] = current.isoformat(timespec="seconds")
+            except (BufferError, AttributeError) as exc:
+                errors[f"{day_key}:{service}"] = str(exc)
+            try:
                 snapshot = client.post_metrics(record["post_id"])
                 metrics = {
                     metric.get("type", metric.get("name", "unknown")): metric.get("value", 0)
                     for metric in snapshot.get("metrics", [])
                 }
                 record.update({
-                    "delivery_status": snapshot.get("status", "unknown"),
+                    "delivery_status": snapshot.get("status", record.get("delivery_status", "unknown")),
                     "metrics": metrics,
                     "metrics_updated_at": snapshot.get("metricsUpdatedAt"),
                     "metrics_checked_on": current.date().isoformat(),
@@ -1420,6 +1643,11 @@ def refresh_performance(
             except BufferError as exc:
                 record["metrics_error"] = str(exc)[:300]
                 record["metrics_checked_on"] = current.date().isoformat()
-                errors[f"{day_key}:{service}"] = str(exc)
+                analytics_warnings[f"{day_key}:{service}"] = str(exc)
     _write_state(state_path, state)
-    return {"checked": checked, "updated": updated, "errors": errors}
+    return {
+        "checked": checked,
+        "updated": updated,
+        "delivery_errors": errors,
+        "analytics_warnings": analytics_warnings,
+    }
