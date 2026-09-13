@@ -332,6 +332,40 @@ class AgentTests(unittest.TestCase):
         self.assertIn("+92 323 6715731", client.edits[0][2])
         self.assertEqual(client.edits[0][-1], "video")
 
+    def test_buffer_does_not_edit_inside_publishing_lock_window(self):
+        class RepairClient:
+            def __init__(self):
+                self.edits = []
+
+            def post_status(self, post_id):
+                return {"id": post_id, "status": "scheduled"}
+
+            def edit_media_post(self, *args):
+                self.edits.append(args)
+                return {"id": args[0]}
+
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text(json.dumps({"published_dates": {"2026-09-13": {
+            "evening:instagram": {
+                "post_id": "locked-post", "slot": "evening", "service": "instagram",
+                "scheduled_for": "2026-09-13T16:00:00+00:00",
+            },
+        }}}), encoding="utf-8")
+        client = RepairClient()
+        result = repair_future_posts(
+            self.settings,
+            date(2026, 9, 13),
+            state,
+            client,
+            datetime(2026, 9, 13, 15, 50, tzinfo=timezone.utc),
+        )
+        self.assertEqual(result["repaired"], {})
+        self.assertEqual(
+            result["skipped"]["evening:instagram"],
+            "already due or too close to publishing",
+        )
+        self.assertEqual(client.edits, [])
+
     def test_edit_post_uses_official_in_place_mutation(self):
         queries = []
 

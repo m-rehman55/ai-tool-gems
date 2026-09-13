@@ -66,7 +66,8 @@ jobs:
           PY
           )"
           curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --output /dev/null "$media_url"
-      - name: Repair future posts in place without duplicates
+      # Buffer can lock queued posts shortly before publishing; the command skips that safety window.
+      - name: Repair future posts safely without duplicates
         run: python -m marketing_agent buffer-repair-future --date "${{ steps.campaign.outputs.date }}" --send
       - name: Save repair receipt
         if: always()
