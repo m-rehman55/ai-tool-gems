@@ -255,16 +255,25 @@ def _tiktok(products: tuple[Product, ...], audience: AudienceAngle, url: str, da
 
 
 def _reel_script(products: tuple[Product, ...], audience: AudienceAngle, url: str, slot: str) -> str:
+    if slot == "morning":
+        return (
+            "Morning photo-post plan\n"
+            "One readable 4:5 card with all three official product logos and exact PKR prices.\n"
+            f"Target audience: {audience.label}\n"
+            f"Caption link: {url}\n"
+            "No audio: this slot is intentionally a photo post."
+        )
     return (
-        f"8-second {slot} Reel/TikTok plan\n"
-        f"0–1s: {audience.hook}\n"
-        f"1–3s: {products[0].name} — Rs. {products[0].price:,}\n"
-        f"3–5s: {products[1].name} — Rs. {products[1].price:,}\n"
-        f"5–7s: {products[2].name} — Rs. {products[2].price:,}\n"
-        "7–8s: WhatsApp +92 347 6242709\n"
+        f"10-second photorealistic {slot} Reel/TikTok plan\n"
+        f"0–2s: {audience.hook}\n"
+        f"2–4s: {products[0].name} — Rs. {products[0].price:,}\n"
+        f"4–6s: {products[1].name} — Rs. {products[1].price:,}\n"
+        f"6–8s: {products[2].name} — Rs. {products[2].price:,}\n"
+        "8–10s: all three deals + WhatsApp +92 347 6242709\n"
         f"Target audience: {audience.label}\n"
         f"Caption link: {url}\n"
-        "Audio: original copyright-safe brand sound; no unlicensed music or guaranteed-result claims."
+        "Audio: energetic trend-inspired original commercial-safe soundbed. Native trending library music "
+        "cannot be attached through automatic Buffer publishing."
     )
 
 
@@ -298,7 +307,7 @@ def daily_pack(settings: Settings, day: date) -> list[str]:
         f"📣 AI Tool Gems campaign — {day.isoformat()}\n"
         "Two campaigns: MORNING + EVENING\n"
         "Each campaign: Gemini Pro + two rotating deals\n"
-        "Facebook, Instagram and TikTok: vertical video with original copyright-safe audio."
+        "Morning: readable photo. Evening: photorealistic 10-second video with commercial-safe audio."
     ]
     platform_builders = (
         ("INSTAGRAM", "instagram", _instagram),
@@ -319,8 +328,9 @@ def daily_pack(settings: Settings, day: date) -> list[str]:
         campaign_id = "-".join(product.id for product in products)
         code = tracking_code("tiktok", campaign_id, day.strftime("%Y%m%d"), f"{slot}-{audience.id}")
         target = deals_url(settings.site_url, tuple(product.id for product in products), code, "tiktok", slot)
+        media_label = "TIKTOK/PHOTO" if slot == "morning" else "TIKTOK/REEL"
         messages.append(
-            f"{slot.upper()} TIKTOK/REEL — 3 DEALS\n\n"
+            f"{slot.upper()} {media_label} — 3 DEALS\n\n"
             f"{_tiktok(products, audience, target, day, slot)}\n\n"
             f"{_reel_script(products, audience, target, slot)}"
         )

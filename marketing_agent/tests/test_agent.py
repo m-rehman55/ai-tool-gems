@@ -13,6 +13,7 @@ from marketing_agent.buffer import (
     connection_status,
     format_publish_confirmation,
     learned_audience_for,
+    media_type_for_slot,
     publish_daily_deal,
     refresh_performance,
     scheduled_time,
@@ -208,14 +209,19 @@ class AgentTests(unittest.TestCase):
             for slot in ("morning", "evening")
             for service in ("instagram", "facebook", "tiktok")
         }
-        with patch("marketing_agent.buffer.media_url_for", return_value=("https://example.com/reel.mp4", "video")):
-            first = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
-            second = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
+        first = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
+        second = publish_daily_deal(self.settings, date(2026, 9, 12), state, client, now)
         self.assertEqual(set(first["scheduled"]), expected)
         self.assertEqual(set(second["skipped"]), expected)
         self.assertEqual(len(client.calls), 6)
-        self.assertTrue(all(call[1] == "video" for call in client.calls))
+        self.assertEqual([call[1] for call in client.calls], ["image"] * 3 + ["video"] * 3)
         self.assertTrue(all("Independent reseller" in call[2] for call in client.calls))
+
+    def test_daily_media_cadence_is_one_photo_then_one_video(self):
+        self.assertEqual(media_type_for_slot("morning"), "image")
+        self.assertEqual(media_type_for_slot("evening"), "video")
+        with self.assertRaises(ValueError):
+            media_type_for_slot("lunch")
 
     def test_buffer_post_types_are_explicit_for_meta_channels(self):
         queries = []
@@ -233,10 +239,11 @@ class AgentTests(unittest.TestCase):
         client.create_video_post("tt1", "tiktok", "caption", "https://example.com/video.mp4", due_at, "Deal")
         self.assertIn("instagram: { type: post, shouldShareToFeed: true }", queries[0])
         self.assertIn("facebook: { type: post }", queries[1])
-        self.assertIn("instagram: { type: reel, shouldShareToFeed: true }", queries[2])
+        self.assertIn("instagram: { type: reel, shouldShareToFeed: true, isAiGenerated: true }", queries[2])
         self.assertIn("assets: [{ video:", queries[2])
         self.assertIn("facebook: { type: reel }", queries[3])
-        self.assertIn("tiktok: { isAiGenerated: false }", queries[4])
+        self.assertIn("tiktok: { isAiGenerated: true }", queries[4])
+        self.assertTrue(all("aiAssisted: true" in query for query in queries))
 
     def test_buffer_schedules_audience_windows_or_safely_in_future(self):
         early = datetime(2026, 9, 12, 2, 0, tzinfo=timezone.utc)

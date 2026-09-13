@@ -13,7 +13,7 @@ This trial is designed to earn relevant visits without paid ads, fake engagement
 - Duplicate safety: a repository ledger claims a slot before a Telegram message can be published.
 - Facebook, Instagram and TikTok: two audience-matched campaigns per day through Buffer, with platform/day-specific Pakistan times and tracked links.
 - Each campaign: Gemini plus two different rotating products; morning and evening companion products do not repeat.
-- Video-first delivery: every campaign is an 8-second 9:16 video with original audio. Facebook and Instagram publish it as a Reel; TikTok publishes it as video. Missing video blocks that slot instead of silently posting a static card.
+- Mixed-media delivery: every morning campaign is a readable 4:5 photo; every evening campaign is a photorealistic 10-second 9:16 video. Facebook and Instagram publish the video as a Reel; TikTok publishes it as video.
 - Creative variety: colour palettes and companion products rotate automatically while prices and terms continue to come from the verified catalog.
 - Learning: sent-post status and available engagement metrics are refreshed daily and stored against audience/media/time metadata.
 
@@ -22,7 +22,7 @@ This trial is designed to earn relevant visits without paid ads, fake engagement
 1. Open the private Telegram content pack when convenient.
 2. Check any Buffer or Telegram failure alert and reconnect only the affected channel if required.
 3. Confirm current price, stock/access terms and warranty before taking payment.
-4. Do not replace the original audio unless you manually choose a licensed sound from the platform's own commercial-use library.
+4. Automated videos use the layered trend-inspired original soundbed. Do not replace it unless the exact track is cleared for commercial use in the destination platform's library. Native trending music requires notification/manual publishing because Buffer's automatic API cannot attach it.
 
 ## Posting-time evidence and tuning
 

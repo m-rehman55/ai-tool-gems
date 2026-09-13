@@ -12,6 +12,7 @@ on:
       - "marketing_agent/cli.py"
       - "marketing_agent/social.py"
       - "marketing_agent/tests/test_agent.py"
+      - "assets/social-realistic-workspace-v1.png"
   schedule:
     - cron: "45 4 * * *"
       timezone: "Asia/Karachi"
@@ -80,7 +81,7 @@ jobs:
       - name: Refresh real delivery and engagement results
         if: github.event_name != 'push'
         run: python -m marketing_agent buffer-learn
-      - name: Build today's branded image and scheduled short video
+      - name: Build today's morning photo and realistic evening video
         if: github.event_name != 'push'
         run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
       - name: Publish deal card as public media
