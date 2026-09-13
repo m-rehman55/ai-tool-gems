@@ -11,6 +11,7 @@ from marketing_agent.catalog import get_product, load_products
 from marketing_agent.buffer import (
     BufferClient,
     BufferError,
+    VIDEO_SPECS,
     campaign_preflight,
     connection_status,
     creative_concept_for,
@@ -271,6 +272,7 @@ class AgentTests(unittest.TestCase):
             self.assertTrue(platform_audio_style(day, service))
         concepts = {creative_concept_for(date(2026, 9, 14 + offset)) for offset in range(7)}
         self.assertEqual(len(concepts), 7)
+        self.assertGreaterEqual(VIDEO_SPECS["instagram"]["fps"], 23)
 
     def test_buffer_post_types_are_explicit_for_meta_channels(self):
         queries = []

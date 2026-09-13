@@ -17,6 +17,7 @@ from .buffer import (
     repair_future_posts,
     refresh_performance,
     render_daily_media,
+    render_platform_media,
 )
 from .config import get_settings
 from .content import generate_days
@@ -84,6 +85,10 @@ def parser() -> argparse.ArgumentParser:
     commands.add_parser("buffer-status", help="Verify Buffer access and list the three owned social channels")
     buffer_prepare = commands.add_parser("buffer-prepare", help="Create today's branded social image and scheduled video")
     buffer_prepare.add_argument("--date", default=date.today().isoformat())
+    buffer_prepare_platform = commands.add_parser("buffer-prepare-platform", help="Render one platform/slot asset for a targeted repair")
+    buffer_prepare_platform.add_argument("--date", default=date.today().isoformat())
+    buffer_prepare_platform.add_argument("--service", required=True, choices=["instagram", "facebook", "tiktok"])
+    buffer_prepare_platform.add_argument("--slot", required=True, choices=["morning", "evening"])
     buffer_publish = commands.add_parser("buffer-publish", help="Schedule today's deal on Instagram, Facebook and TikTok")
     buffer_publish.add_argument("--date", default=date.today().isoformat())
     buffer_publish.add_argument("--send", action="store_true", help="Send a Telegram owner confirmation when new posts schedule")
@@ -201,6 +206,9 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "buffer-prepare":
         for asset in render_daily_media(date.fromisoformat(args.date)):
             print(asset.relative_to(Path.cwd()))
+    elif args.command == "buffer-prepare-platform":
+        asset = render_platform_media(date.fromisoformat(args.date), args.service, args.slot)
+        print(asset.relative_to(Path.cwd()))
     elif args.command == "buffer-publish":
         publish_date = date.fromisoformat(args.date)
         result = publish_daily_deal(settings, publish_date)
