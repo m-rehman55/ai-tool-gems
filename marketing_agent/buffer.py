@@ -1396,6 +1396,7 @@ def repair_future_posts(
     now: datetime | None = None,
 ) -> dict:
     """Update future queued posts in place with current captions, media and contact details."""
+    queue_edit_safety_window = timedelta(minutes=15)
     client = client or BufferClient(settings.buffer_api_key)
     current = now or datetime.now(timezone.utc)
     state = _read_state(state_path)
@@ -1413,7 +1414,7 @@ def repair_future_posts(
         except ValueError:
             skipped[state_key] = "invalid schedule"
             continue
-        if due_at <= current + timedelta(minutes=2):
+        if due_at <= current + queue_edit_safety_window:
             skipped[state_key] = "already due or too close to publishing"
             continue
         snapshot = client.post_status(record["post_id"])
