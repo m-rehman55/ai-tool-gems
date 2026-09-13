@@ -13,7 +13,8 @@ This trial is designed to earn relevant visits without paid ads, fake engagement
 - Duplicate safety: a repository ledger claims a slot before a Telegram message can be published.
 - Facebook, Instagram and TikTok: two audience-matched campaigns per day through Buffer, with platform/day-specific Pakistan times and tracked links.
 - Each campaign: Gemini plus two different rotating products; morning and evening companion products do not repeat.
-- Mixed-media delivery: every morning campaign is a readable 4:5 photo; every evening campaign is a photorealistic 10-second 9:16 video. Facebook and Instagram publish the video as a Reel; TikTok publishes it as video.
+- Mixed-media delivery: every morning campaign is a readable 4:5 photo with a rotating layout; every evening campaign gets a kinetic 9:16 export tuned to its destination—TikTok 10s, Instagram 12s and Facebook 14s. Facebook and Instagram publish as Reels.
+- Creative rotation: seven named motion concepts prevent a fixed slideshow look while the master logo, number and trust language remain consistent.
 - Creative variety: colour palettes and companion products rotate automatically while prices and terms continue to come from the verified catalog.
 - Learning: sent-post status and available engagement metrics are refreshed daily and stored against audience/media/time metadata.
 
@@ -22,7 +23,7 @@ This trial is designed to earn relevant visits without paid ads, fake engagement
 1. Open the private Telegram content pack when convenient.
 2. Check any Buffer or Telegram failure alert and reconnect only the affected channel if required.
 3. Confirm current price, stock/access terms and warranty before taking payment.
-4. Automated videos use the layered trend-inspired original soundbed. Do not replace it unless the exact track is cleared for commercial use in the destination platform's library. Native trending music requires notification/manual publishing because Buffer's automatic API cannot attach it.
+4. Automated videos use changing platform-shaped original soundbeds, including desi-pop, creator-pop, future-bass and cinematic treatments. Do not replace them unless the exact track is cleared for commercial use in the destination platform's own library. Native trending music requires manual/native editing because Buffer's automatic API cannot attach it; a TikTok-cleared track is not automatically cleared for Meta.
 
 ## Posting-time evidence and tuning
 

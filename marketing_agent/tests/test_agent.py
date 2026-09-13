@@ -11,9 +11,13 @@ from marketing_agent.catalog import get_product, load_products
 from marketing_agent.buffer import (
     BufferClient,
     connection_status,
+    creative_concept_for,
+    deal_video_path,
     format_publish_confirmation,
     learned_audience_for,
+    media_url_for,
     media_type_for_slot,
+    platform_audio_style,
     publish_daily_deal,
     refresh_performance,
     scheduled_time,
@@ -223,6 +227,17 @@ class AgentTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             media_type_for_slot("lunch")
 
+    def test_evening_video_is_platform_specific_and_creative_rotates(self):
+        day = date(2026, 9, 14)
+        urls = {service: media_url_for(day, service, "evening")[0] for service in ("instagram", "facebook", "tiktok")}
+        self.assertEqual(len(set(urls.values())), 3)
+        for service, url in urls.items():
+            self.assertIn(f"-{service}.mp4", url)
+            self.assertEqual(deal_video_path(day, deals_for_slot(day, "evening")[1], "evening", service).name, url.rsplit("/", 1)[-1])
+            self.assertTrue(platform_audio_style(day, service))
+        concepts = {creative_concept_for(date(2026, 9, 14 + offset)) for offset in range(7)}
+        self.assertEqual(len(concepts), 7)
+
     def test_buffer_post_types_are_explicit_for_meta_channels(self):
         queries = []
 
@@ -347,7 +362,8 @@ class AgentTests(unittest.TestCase):
         self.assertIn("Instagram: Reel/video", report)
         self.assertIn("MORNING: Gemini Pro + CapCut Pro + Canva Pro Edu", report)
         self.assertIn("07:30 PM PKT", report)
-        self.assertIn("You do not need to post manually", report)
+        self.assertIn("no manual posting is required", report)
+        self.assertIn("Native library trend songs", report)
         self.assertNotIn("BUFFER", report)
 
 

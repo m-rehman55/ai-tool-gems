@@ -38,6 +38,25 @@ RAW_MEDIA_ROOT = "https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/main
 TARGET_SERVICES = ("instagram", "facebook", "tiktok")
 MEDIA_BY_SLOT = {"morning": "image", "evening": "video"}
 VIDEO_SECONDS = 10
+VIDEO_SPECS = {
+    "tiktok": {"seconds": 10, "fps": 18, "cut": "fast"},
+    "instagram": {"seconds": 12, "fps": 18, "cut": "polished"},
+    "facebook": {"seconds": 14, "fps": 18, "cut": "clear"},
+}
+CREATIVE_CONCEPTS = (
+    "orbit-drop",
+    "creator-portal",
+    "neon-price-radar",
+    "glass-card-rush",
+    "three-gem-reveal",
+    "smart-stack",
+    "deal-countdown",
+)
+PLATFORM_AUDIO_STYLES = {
+    "tiktok": ("desi-pop-pulse", "future-bass-hook", "cinematic-trap"),
+    "instagram": ("creator-pop", "glossy-house", "desi-electro"),
+    "facebook": ("uplifting-desi", "clean-cinematic", "modern-business"),
+}
 PRODUCT_DOMAINS = {
     "chatgpt": "chatgpt.com", "gemini": "gemini.google.com", "veo": "deepmind.google",
     "leonardo": "leonardo.ai", "elevenlabs": "elevenlabs.io", "canva": "canva.com",
@@ -276,9 +295,28 @@ def deal_card_path(day: date, product: Product | None = None, slot: str = "morni
     return CARD_DIR / f"{day.isoformat()}-{slot}-{product.id}.jpg"
 
 
-def deal_video_path(day: date, product: Product | None = None, slot: str = "morning") -> Path:
+def deal_video_path(
+    day: date,
+    product: Product | None = None,
+    slot: str = "morning",
+    service: str | None = None,
+) -> Path:
     product = product or deal_of_the_day(day)
-    return CARD_DIR / f"{day.isoformat()}-{slot}-{product.id}.mp4"
+    suffix = f"-{service}" if service else ""
+    return CARD_DIR / f"{day.isoformat()}-{slot}-{product.id}{suffix}.mp4"
+
+
+def creative_concept_for(day: date, slot: str = "evening") -> str:
+    """Rotate the visual story daily while keeping the core brand recognizable."""
+    return CREATIVE_CONCEPTS[(day.toordinal() + SOCIAL_SLOTS.index(slot)) % len(CREATIVE_CONCEPTS)]
+
+
+def platform_audio_style(day: date, service: str) -> str:
+    """Choose a platform-shaped original music style; never copy a protected melody."""
+    styles = PLATFORM_AUDIO_STYLES.get(service)
+    if not styles:
+        raise ValueError(f"Unsupported social service: {service}")
+    return styles[(day.toordinal() + TARGET_SERVICES.index(service)) % len(styles)]
 
 
 def is_video_day(day: date) -> bool:
@@ -399,6 +437,8 @@ def render_deal_card(day: date, output: Path | None = None, slot: str = "morning
     output.parent.mkdir(parents=True, exist_ok=True)
     width, height = 1080, 1350
     palette = _creative_palette(day, slot)
+    layout_variant = day.toordinal() % 3
+    concept = creative_concept_for(day, slot)
     image = Image.new("RGB", (width, height))
     pixels = image.load()
     for y in range(height):
@@ -414,6 +454,16 @@ def render_deal_card(day: date, output: Path | None = None, slot: str = "morning
     lime = palette["cta"]
     white = (255, 255, 255)
 
+    if layout_variant == 0:
+        draw.ellipse((-120, 140, 360, 620), fill=palette["rows"][0])
+        draw.ellipse((760, 820, 1210, 1270), fill=palette["rows"][2])
+    elif layout_variant == 1:
+        for offset, accent in enumerate(palette["accents"]):
+            draw.rounded_rectangle((760 + offset * 55, -90, 850 + offset * 55, 420), radius=40, fill=accent)
+    else:
+        for radius, accent in ((260, palette["accents"][0]), (190, palette["accents"][1]), (120, palette["accents"][2])):
+            draw.ellipse((940 - radius, 190 - radius, 940 + radius, 190 + radius), outline=accent, width=8)
+
     draw.rounded_rectangle((60, 48, 1020, 205), radius=42, fill=white, outline=(206, 230, 220), width=3)
     logo_path = PROJECT_DIR / "assets" / "brand-logo-light.png"
     logo = Image.open(logo_path).convert("RGBA")
@@ -426,10 +476,11 @@ def render_deal_card(day: date, output: Path | None = None, slot: str = "morning
     draw.rounded_rectangle((762, 91, 976, 157), radius=33, fill=lime)
     draw.text((812, 110), "3 DEALS", font=_font(25, True), fill=ink)
 
-    draw.rounded_rectangle((70, 232, 286, 272), radius=20, fill=green)
-    draw.text((102, 240), "GOOD NEWS", font=_font(19, True), fill=white)
+    ribbon_labels = ("GOOD NEWS", "SMART STACK", "PRICE DROP")
+    draw.rounded_rectangle((70, 232, 306, 272), radius=20, fill=green)
+    draw.text((94, 240), ribbon_labels[layout_variant], font=_font(19, True), fill=white)
     draw.text((70, 283), f"{slot.upper()} — 3 DEALS", font=_font(46, True), fill=ink)
-    draw.text((72, 338), "Gemini every time + two fresh picks for Pakistan", font=_font(24), fill=muted)
+    draw.text((72, 338), f"{concept.replace('-', ' ').title()} | Gemini + two fresh picks", font=_font(23), fill=muted)
 
     row_colours = palette["rows"]
     accent_colours = palette["accents"]
@@ -439,7 +490,10 @@ def render_deal_card(day: date, output: Path | None = None, slot: str = "morning
         accent = accent_colours[index]
         draw.rounded_rectangle((68, top, 1012, bottom), radius=38, fill=row_colours[index], outline=(208, 228, 220), width=2)
         draw.rounded_rectangle((68, top, 82, bottom), radius=7, fill=accent)
-        draw.rounded_rectangle((105, top + 35, 227, top + 157), radius=30, fill=white, outline=(205, 226, 218), width=2)
+        mirror = layout_variant == 1 or (layout_variant == 2 and index % 2 == 1)
+        logo_left = 853 if mirror else 105
+        logo_center = logo_left + 61
+        draw.rounded_rectangle((logo_left, top + 35, logo_left + 122, top + 157), radius=30, fill=white, outline=(205, 226, 218), width=2)
         try:
             domain = PRODUCT_DOMAINS[product.id]
             logo_request = Request(
@@ -449,27 +503,30 @@ def render_deal_card(day: date, output: Path | None = None, slot: str = "morning
             with urlopen(logo_request, timeout=12) as logo_response:
                 product_logo = Image.open(BytesIO(logo_response.read())).convert("RGBA")
             product_logo.thumbnail((84, 84))
-            logo_position = (166 - product_logo.width // 2, top + 96 - product_logo.height // 2)
+            logo_position = (logo_center - product_logo.width // 2, top + 96 - product_logo.height // 2)
             image.paste(product_logo, logo_position, product_logo)
         except Exception:
             initials = "".join(word[0] for word in product.name.split()[:2]).upper()
             initials_box = draw.textbbox((0, 0), initials, font=_font(34, True))
-            draw.text((166 - (initials_box[2] - initials_box[0]) / 2, top + 76), initials, font=_font(34, True), fill=ink)
+            draw.text((logo_center - (initials_box[2] - initials_box[0]) / 2, top + 76), initials, font=_font(34, True), fill=ink)
 
-        name_lines = _wrapped_lines(draw, product.name, _font(37, True), 430)
+        text_x = 105 if mirror else 260
+        price_x = 520 if mirror else 747
+        name_lines = _wrapped_lines(draw, product.name, _font(37, True), 390 if mirror else 430)
         name_y = top + 26
         for line in name_lines[:2]:
-            draw.text((260, name_y), line, font=_font(37, True), fill=ink)
+            draw.text((text_x, name_y), line, font=_font(37, True), fill=ink)
             name_y += 43
-        draw.text((260, top + 113), f"{product.duration}  |  {product.access} access", font=_font(20, True), fill=muted)
-        draw.text((260, top + 146), f"Delivery {product.delivery}  |  Warranty {product.warranty}", font=_font(18), fill=muted)
+        draw.text((text_x, top + 113), f"{product.duration}  |  {product.access} access", font=_font(20, True), fill=muted)
+        draw.text((text_x, top + 146), f"Delivery {product.delivery}  |  Warranty {product.warranty}", font=_font(18), fill=muted)
 
         if index == 0:
-            draw.rounded_rectangle((778, top + 18, 969, top + 50), radius=16, fill=(220, 250, 230))
-            draw.text((804, top + 25), "ALWAYS FEATURED", font=_font(14, True), fill=ink)
-        draw.text((747, top + 65), f"Rs. {product.price:,}", font=_font(44, True), fill=ink)
+            badge_left = 520 if mirror else 778
+            draw.rounded_rectangle((badge_left, top + 18, badge_left + 191, top + 50), radius=16, fill=(220, 250, 230))
+            draw.text((badge_left + 26, top + 25), "ALWAYS FEATURED", font=_font(14, True), fill=ink)
+        draw.text((price_x, top + 65), f"Rs. {product.price:,}", font=_font(44, True), fill=ink)
         if product.saving:
-            draw.text((769, top + 122), f"SAVE Rs. {product.saving:,}", font=_font(19, True), fill=accent)
+            draw.text((price_x + 22, top + 122), f"SAVE Rs. {product.saving:,}", font=_font(19, True), fill=accent)
 
     cta_top = 1034
     draw.rounded_rectangle((70, cta_top, 1010, cta_top + 104), radius=48, fill=lime)
@@ -515,6 +572,17 @@ def _write_original_audio(
         "focus-tech": ((261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 392.00), 112),
         "creator-pulse": ((329.63, 392.00, 493.88, 659.25, 493.88, 587.33, 523.25, 659.25), 124),
         "clean-business": ((220.00, 277.18, 329.63, 440.00, 329.63, 369.99, 277.18, 329.63), 104),
+        # Platform-shaped, fully original arrangements. These follow current short-form
+        # pacing conventions without reproducing any copyrighted melody or recording.
+        "desi-pop-pulse": ((293.66, 349.23, 440.00, 523.25, 440.00, 392.00, 349.23, 440.00), 126),
+        "future-bass-hook": ((246.94, 369.99, 415.30, 554.37, 415.30, 493.88, 369.99, 554.37), 132),
+        "cinematic-trap": ((220.00, 261.63, 329.63, 392.00, 329.63, 293.66, 246.94, 329.63), 140),
+        "creator-pop": ((329.63, 415.30, 493.88, 659.25, 554.37, 493.88, 415.30, 493.88), 120),
+        "glossy-house": ((261.63, 329.63, 392.00, 523.25, 659.25, 523.25, 392.00, 329.63), 124),
+        "desi-electro": ((293.66, 392.00, 440.00, 587.33, 523.25, 440.00, 392.00, 523.25), 128),
+        "uplifting-desi": ((261.63, 329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63), 112),
+        "clean-cinematic": ((220.00, 277.18, 329.63, 415.30, 493.88, 415.30, 329.63, 277.18), 108),
+        "modern-business": ((246.94, 311.13, 369.99, 493.88, 369.99, 415.30, 311.13, 369.99), 116),
     }
     notes, bpm = themes.get(theme, themes["focus-tech"])
     beat_seconds = 60 / bpm
@@ -542,7 +610,13 @@ def _write_original_audio(
         hat = hat_noise * math.exp(-55 * half_beat)
         riser = math.sin(2 * math.pi * (520 + elapsed * 42) * elapsed) * max(0, elapsed - (seconds - 1.0)) * 0.08
         master_fade = min(1.0, elapsed / 0.12, max(0.0, (seconds - elapsed) / 0.35))
-        mono = master_fade * (0.16 * pluck + 0.10 * bass + 0.17 * kick + 0.045 * clap + 0.025 * hat + riser)
+        # A short dhol-like transient adds a South-Asian commercial feel without
+        # sampling a song. The syncopation changes with the selected BPM/style.
+        dhol_phase = (elapsed + beat_seconds / 4) % (beat_seconds / 2)
+        dhol = math.sin(2 * math.pi * (135 - min(58, dhol_phase * 250)) * elapsed) * math.exp(-22 * dhol_phase)
+        mono = master_fade * (
+            0.15 * pluck + 0.10 * bass + 0.16 * kick + 0.042 * clap + 0.024 * hat + 0.07 * dhol + riser
+        )
         shimmer = 0.025 * math.sin(2 * math.pi * note * 1.5 * elapsed) * pluck_env
         left = int(32767 * max(-0.92, min(0.92, mono + shimmer)))
         right = int(32767 * max(-0.92, min(0.92, mono - shimmer)))
@@ -843,12 +917,215 @@ def render_realistic_deal_video(day: date, output: Path | None = None, slot: str
     return output
 
 
+def render_orbit_campaign_video(
+    day: date,
+    service: str,
+    output: Path | None = None,
+    slot: str = "evening",
+) -> Path | None:
+    """Render a kinetic, platform-paced 9:16 campaign with real orbit motion."""
+    from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
+
+    executable = _ffmpeg_executable()
+    if not executable:
+        return None
+    if service not in VIDEO_SPECS:
+        raise ValueError(f"Unsupported social service: {service}")
+
+    products = deals_for_slot(day, slot)
+    focus = products[1]
+    spec = VIDEO_SPECS[service]
+    seconds, fps = int(spec["seconds"]), int(spec["fps"])
+    concept = creative_concept_for(day, slot)
+    audio_style = platform_audio_style(day, service)
+    output = output or deal_video_path(day, focus, slot, service)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    width, height = 720, 1280
+    palette = _creative_palette(day, slot)
+    ink, muted = palette["ink"], palette["muted"]
+    primary, cta = palette["primary"], palette["cta"]
+
+    if REALISTIC_BACKGROUND.exists():
+        source = Image.open(REALISTIC_BACKGROUND).convert("RGB")
+        source = ImageOps.fit(source, (820, 1420), method=Image.Resampling.LANCZOS)
+        source = ImageEnhance.Color(source).enhance(1.04)
+        source = ImageEnhance.Contrast(source).enhance(0.96)
+    else:
+        source = Image.new("RGB", (820, 1420), palette["gradient"][0])
+
+    brand_logo = Image.open(PROJECT_DIR / "assets" / "brand-logo-light.png").convert("RGBA")
+    brand_logo.thumbnail((102, 102), Image.Resampling.LANCZOS)
+    product_logos: dict[str, Image.Image | None] = {}
+    for product in products:
+        try:
+            request = Request(
+                f"https://www.google.com/s2/favicons?domain={PRODUCT_DOMAINS[product.id]}&sz=256",
+                headers={"User-Agent": "AI-Tool-Gems-Marketing-Agent/2.0"},
+            )
+            with urlopen(request, timeout=12) as response:
+                logo = Image.open(BytesIO(response.read())).convert("RGBA")
+            logo.thumbnail((92, 92), Image.Resampling.LANCZOS)
+            product_logos[product.id] = logo
+        except Exception:
+            product_logos[product.id] = None
+
+    hooks = {
+        "tiktok": "STOP OVERPAYING FOR AI",
+        "instagram": "YOUR CREATOR STACK, UPGRADED",
+        "facebook": "3 AI DEALS. CLEAR PKR PRICES.",
+    }
+    concept_labels = {
+        "orbit-drop": "TODAY'S AI ORBIT",
+        "creator-portal": "OPEN YOUR CREATOR PORTAL",
+        "neon-price-radar": "PRICE DROP DETECTED",
+        "glass-card-rush": "3 GEMS. ONE SMART STACK.",
+        "three-gem-reveal": "YOUR 3-GEM REVEAL",
+        "smart-stack": "BUILD A SMARTER STACK",
+        "deal-countdown": "DON'T MISS TODAY'S DROP",
+    }
+
+    def ease_out(value: float) -> float:
+        value = max(0.0, min(1.0, value))
+        return 1 - (1 - value) ** 3
+
+    def centered(draw, text_value: str, y: int, font, fill) -> None:
+        bounds = draw.textbbox((0, 0), text_value, font=font)
+        draw.text(((width - (bounds[2] - bounds[0])) / 2, y), text_value, font=font, fill=fill)
+
+    def logo_tile(frame, logo, center: tuple[int, int], size: int, glow, pulse: float = 1.0) -> None:
+        layer = Image.new("RGBA", frame.size, (0, 0, 0, 0))
+        draw = ImageDraw.Draw(layer, "RGBA")
+        actual = max(54, int(size * pulse))
+        x, y = center
+        draw.ellipse((x - actual // 2 - 13, y - actual // 2 - 13, x + actual // 2 + 13, y + actual // 2 + 13), fill=(*glow, 46))
+        draw.rounded_rectangle(
+            (x - actual // 2, y - actual // 2, x + actual // 2, y + actual // 2),
+            radius=max(18, actual // 4), fill=(255, 255, 255, 244), outline=(*glow, 210), width=3,
+        )
+        frame.alpha_composite(layer)
+        if logo:
+            copy = logo.copy()
+            copy.thumbnail((int(actual * 0.66), int(actual * 0.66)), Image.Resampling.LANCZOS)
+            frame.alpha_composite(copy, (x - copy.width // 2, y - copy.height // 2))
+
+    total_frames = seconds * fps
+    hook_end = 2.05 if service == "tiktok" else 2.4
+    outro_start = seconds - (2.15 if service == "tiktok" else 2.7)
+    reveal_span = (outro_start - hook_end) / 3
+
+    with tempfile.TemporaryDirectory(prefix=f"atg-{service}-orbit-") as temporary:
+        temporary_dir = Path(temporary)
+        for frame_index in range(total_frames):
+            elapsed = frame_index / fps
+            # Slow parallax makes the photoreal workspace feel filmed rather than static.
+            crop_x = int(50 + 22 * math.sin(elapsed * 0.55 + day.day))
+            crop_y = int(58 + 16 * math.cos(elapsed * 0.42 + day.month))
+            frame = source.crop((crop_x, crop_y, crop_x + width, crop_y + height)).convert("RGBA")
+            tint = Image.new("RGBA", frame.size, (*palette["gradient"][0], 30))
+            frame.alpha_composite(tint)
+            shade = Image.new("RGBA", frame.size, (7, 24, 36, 68 if elapsed < hook_end else 86))
+            frame.alpha_composite(shade)
+            draw = ImageDraw.Draw(frame, "RGBA")
+
+            # Moving ambient orbs and orbit paths reinforce the gem/technology identity.
+            for orbit_index, accent in enumerate(palette["accents"]):
+                phase = elapsed * (0.8 + orbit_index * 0.17) + orbit_index * 2.1
+                ox = int(360 + math.cos(phase) * (280 - orbit_index * 44))
+                oy = int(410 + math.sin(phase * 0.76) * (240 - orbit_index * 28))
+                radius = 34 + orbit_index * 8
+                draw.ellipse((ox - radius, oy - radius, ox + radius, oy + radius), fill=(*accent, 40))
+            ring_shift = int(10 * math.sin(elapsed * 1.6))
+            draw.ellipse((95, 170 + ring_shift, 625, 680 - ring_shift), outline=(*primary, 125), width=3)
+            draw.ellipse((150, 222 - ring_shift, 570, 635 + ring_shift), outline=(*cta, 105), width=2)
+
+            # Consistent brand bar; campaign layout and motion change daily.
+            draw.rounded_rectangle((24, 22, 696, 112), radius=34, fill=(255, 255, 255, 236))
+            frame.alpha_composite(brand_logo, (38, 29))
+            draw.text((132, 42), "AI TOOL GEMS", font=_font(29, True), fill=ink)
+            draw.text((133, 77), "PAKISTAN", font=_font(15, True), fill=primary)
+            draw.rounded_rectangle((526, 43, 674, 91), radius=23, fill=cta)
+            draw.text((548, 56), "3 DEALS", font=_font(19, True), fill=ink)
+
+            if elapsed < hook_end:
+                progress = ease_out(elapsed / hook_end)
+                pulse = 1 + 0.06 * math.sin(elapsed * math.pi * 3)
+                logo_tile(frame, brand_logo, (360, 390), 176, primary, pulse)
+                for index, product in enumerate(products):
+                    angle = elapsed * (1.65 if concept in {"orbit-drop", "creator-portal"} else 1.2) + index * math.tau / 3
+                    center = (int(360 + math.cos(angle) * 218), int(415 + math.sin(angle) * 155))
+                    logo_tile(frame, product_logos[product.id], center, 94, palette["accents"][index], 1.0)
+                panel_y = int(790 + (1 - progress) * 120)
+                draw.rounded_rectangle((34, panel_y, 686, 1118), radius=48, fill=(255, 255, 255, 239))
+                centered(draw, hooks[service], panel_y + 46, _font(42 if service != "facebook" else 36, True), ink)
+                centered(draw, concept_labels[concept], panel_y + 111, _font(25, True), primary)
+                centered(draw, "Gemini + 2 fresh picks • clear PKR prices", panel_y + 177, _font(22, True), muted)
+                centered(draw, "WAIT FOR DEAL #3", panel_y + 229, _font(27, True), ink)
+            elif elapsed < outro_start:
+                product_index = min(2, int((elapsed - hook_end) / reveal_span))
+                product = products[product_index]
+                local = (elapsed - hook_end - product_index * reveal_span) / reveal_span
+                enter = ease_out(min(1.0, local / 0.28))
+                exit_value = ease_out(max(0.0, (local - 0.82) / 0.18))
+                slide = int((1 - enter) * (160 if product_index % 2 == 0 else -160) + exit_value * -90)
+                panel_left = 38 + slide
+                draw.rounded_rectangle((panel_left, 455, panel_left + 644, 1125), radius=52, fill=(255, 255, 255, 242))
+                draw.rounded_rectangle((panel_left + 32, 493, panel_left + 188, 541), radius=22, fill=primary)
+                draw.text((panel_left + 56, 505), f"DEAL {product_index + 1}/3", font=_font(19, True), fill=(255, 255, 255))
+                orbit_angle = elapsed * 2.2 + product_index
+                logo_center = (panel_left + 322 + int(math.cos(orbit_angle) * 36), 658 + int(math.sin(orbit_angle) * 20))
+                logo_tile(frame, product_logos[product.id], logo_center, 154, palette["accents"][product_index], 1 + 0.04 * math.sin(elapsed * 5))
+                centered(draw, product.name.upper(), 770, _font(43 if len(product.name) < 17 else 36, True), ink)
+                centered(draw, "TODAY'S PRICE", 839, _font(20, True), muted)
+                price_scale = 1 + 0.05 * math.sin(min(1, local * 4) * math.pi)
+                centered(draw, f"Rs. {product.price:,}", 878, _font(int(70 * price_scale), True), palette["accents"][product_index])
+                if product.saving:
+                    centered(draw, f"SAVE Rs. {product.saving:,}", 970, _font(24, True), primary)
+                centered(draw, f"{product.duration} • {product.access} access", 1020, _font(22, True), ink)
+                centered(draw, "Availability checked before payment", 1066, _font(18, False), muted)
+            else:
+                local = (elapsed - outro_start) / (seconds - outro_start)
+                pulse = 1 + 0.025 * math.sin(local * math.pi * 7)
+                draw.rounded_rectangle((34, 400, 686, 1135), radius=54, fill=(255, 255, 255, 245))
+                centered(draw, "PICK YOUR AI STACK", 446, _font(46, True), ink)
+                for index, product in enumerate(products):
+                    row_y = 548 + index * 114
+                    draw.rounded_rectangle((62, row_y, 658, row_y + 91), radius=29, fill=palette["rows"][index])
+                    logo_tile(frame, product_logos[product.id], (112, row_y + 45), 64, palette["accents"][index])
+                    draw.text((158, row_y + 18), product.name[:25], font=_font(24, True), fill=ink)
+                    draw.text((158, row_y + 52), f"Rs. {product.price:,}", font=_font(23, True), fill=palette["accents"][index])
+                button_width = int(574 * pulse)
+                left = (width - button_width) // 2
+                draw.rounded_rectangle((left, 920, left + button_width, 1018), radius=48, fill=(27, 186, 103, 255))
+                centered(draw, "WHATSAPP +92 347 6242709", 948, _font(28, True), (255, 255, 255))
+                centered(draw, "aitoolgems.tech/deals", 1045, _font(26, True), ink)
+                centered(draw, "Message now • availability confirmed first", 1087, _font(18, False), muted)
+
+            draw.text((28, 1238), f"AI-assisted creative • {concept} • independent reseller", font=_font(15), fill=(255, 255, 255, 225))
+            frame_path = temporary_dir / f"frame-{frame_index:04d}.jpg"
+            frame.convert("RGB").save(frame_path, format="JPEG", quality=88, optimize=True)
+
+        audio_path = temporary_dir / f"{audio_style}.wav"
+        _write_original_audio(audio_path, audio_style, seconds)
+        command = [
+            executable, "-y", "-framerate", str(fps), "-i", str(temporary_dir / "frame-%04d.jpg"),
+            "-i", str(audio_path), "-t", str(seconds), "-c:v", "libx264", "-preset", "medium", "-crf", "24",
+            "-pix_fmt", "yuv420p", "-r", str(fps), "-c:a", "aac", "-b:a", "128k", "-ar", "44100",
+            "-movflags", "+faststart", "-shortest", str(output),
+        ]
+        completed = subprocess.run(command, capture_output=True, text=True, timeout=300)
+        if completed.returncode != 0:
+            output.unlink(missing_ok=True)
+            raise BufferError(f"Advanced video render failed: {completed.stderr[-700:]}")
+    return output
+
+
 def render_daily_media(day: date) -> list[Path]:
-    """Build exactly one photo and one video for the day's two publishing slots."""
+    """Build one photo plus a native-paced video for each destination platform."""
     assets = [render_deal_card(day, slot="morning")]
-    video = render_realistic_deal_video(day, slot="evening")
-    if video:
-        assets.append(video)
+    for service in TARGET_SERVICES:
+        video = render_orbit_campaign_video(day, service, slot="evening")
+        if video:
+            assets.append(video)
     return assets
 
 
@@ -856,7 +1133,7 @@ def media_url_for(day: date, service: str = "facebook", slot: str = "morning") -
     products = deals_for_slot(day, slot)
     media_type = media_type_for_slot(slot)
     if media_type == "video":
-        asset = deal_video_path(day, products[1], slot)
+        asset = deal_video_path(day, products[1], slot, service)
     else:
         asset = deal_card_path(day, products[1], slot)
     return f"{RAW_MEDIA_ROOT}/{asset.name}", media_type
@@ -1001,6 +1278,7 @@ def publish_daily_deal(
             "products": [product.name for product in products],
             "audience": audience.label,
             "learning_mode": learning_mode,
+            "creative_concept": creative_concept_for(day, slot),
         }
         for service in TARGET_SERVICES:
             state_key = f"{slot}:{service}"
@@ -1026,8 +1304,10 @@ def publish_daily_deal(
                     "learning_mode": learning_mode,
                     "deal_ids": [product.id for product in products],
                     "media_type": media_type,
-                    "audio_theme": audio_theme_for(audience) if media_type == "video" else None,
-                    "audio_strategy": "trend-inspired-original-commercial-safe" if media_type == "video" else None,
+                    "creative_concept": creative_concept_for(day, slot),
+                    "audio_theme": platform_audio_style(day, service) if media_type == "video" else None,
+                    "audio_strategy": "platform-shaped-original-commercial-safe" if media_type == "video" else None,
+                    "video_seconds": VIDEO_SPECS[service]["seconds"] if media_type == "video" else None,
                     "ai_disclosed": media_type == "video",
                     "recorded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 }
@@ -1064,6 +1344,7 @@ def format_publish_confirmation(
             lines.extend([
                 f"{slot.upper()}: {' + '.join(products)}",
                 f"Audience: {campaign.get('audience', 'relevant Pakistan buyers')}",
+                f"Creative: {campaign.get('creative_concept', creative_concept_for(day, slot))}",
             ])
             current_slot = slot
         record = day_state.get(state_key, {})
@@ -1082,7 +1363,8 @@ def format_publish_confirmation(
     lines.extend([
         "",
         "Tracked product links and duplicate protection are active.",
-        "You do not need to post manually.",
+        "Automatic-safe original audio is embedded; no manual posting is required.",
+        "Native library trend songs remain platform-only and cannot be attached by Buffer automatic publishing.",
     ])
     return "\n".join(lines)
 

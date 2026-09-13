@@ -264,16 +264,17 @@ def _reel_script(products: tuple[Product, ...], audience: AudienceAngle, url: st
             "No audio: this slot is intentionally a photo post."
         )
     return (
-        f"10-second photorealistic {slot} Reel/TikTok plan\n"
-        f"0–2s: {audience.hook}\n"
-        f"2–4s: {products[0].name} — Rs. {products[0].price:,}\n"
-        f"4–6s: {products[1].name} — Rs. {products[1].price:,}\n"
-        f"6–8s: {products[2].name} — Rs. {products[2].price:,}\n"
-        "8–10s: all three deals + WhatsApp +92 347 6242709\n"
+        f"Platform-paced photorealistic {slot} Reel/TikTok plan\n"
+        f"Hook: {audience.hook}\n"
+        f"Reveal 1: {products[0].name} — Rs. {products[0].price:,}\n"
+        f"Reveal 2: {products[1].name} — Rs. {products[1].price:,}\n"
+        f"Reveal 3: {products[2].name} — Rs. {products[2].price:,}\n"
+        "Final scene: all three deals + pulsing WhatsApp +92 347 6242709\n"
         f"Target audience: {audience.label}\n"
         f"Caption link: {url}\n"
-        "Audio: energetic trend-inspired original commercial-safe soundbed. Native trending library music "
-        "cannot be attached through automatic Buffer publishing."
+        "Motion: daily orbit/portal/radar/glass-card concept with kinetic price reveals.\n"
+        "Audio: platform-shaped original commercial-safe soundbed. Native library trend music requires "
+        "the destination platform's own editor and cannot be attached by Buffer automatic publishing."
     )
 
 
@@ -307,7 +308,7 @@ def daily_pack(settings: Settings, day: date) -> list[str]:
         f"📣 AI Tool Gems campaign — {day.isoformat()}\n"
         "Two campaigns: MORNING + EVENING\n"
         "Each campaign: Gemini Pro + two rotating deals\n"
-        "Morning: readable photo. Evening: photorealistic 10-second video with commercial-safe audio."
+        "Morning: rotating-layout photo. Evening: kinetic platform-paced video with commercial-safe audio."
     ]
     platform_builders = (
         ("INSTAGRAM", "instagram", _instagram),
