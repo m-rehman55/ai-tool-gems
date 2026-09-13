@@ -5,19 +5,129 @@
         "post_id": "6aa543fb9be802d044ee6b18",
         "channel_id": "6aa53e99cd8b9c702c56ef62",
         "scheduled_for": "2026-09-12T12:32:18.000Z",
-        "recorded_at": "2026-09-12T12:22:19+00:00"
+        "recorded_at": "2026-09-12T12:22:19+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-13"
       },
       "instagram": {
         "post_id": "6aa54498c637430b6b561298",
         "channel_id": "6aa53e17cd8b9c702c56ee0d",
         "scheduled_for": "2026-09-12T12:34:56.000Z",
-        "recorded_at": "2026-09-12T12:24:56+00:00"
+        "recorded_at": "2026-09-12T12:24:56+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-13"
       },
       "facebook": {
         "post_id": "6aa544996b734df0253a0dd0",
         "channel_id": "6aa53debcd8b9c702c56ed78",
         "scheduled_for": "2026-09-12T12:34:56.000Z",
-        "recorded_at": "2026-09-12T12:24:57+00:00"
+        "recorded_at": "2026-09-12T12:24:57+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-13"
+      }
+    },
+    "2026-09-13": {
+      "morning:instagram": {
+        "post_id": "6aa5fbaf66679b076f1c275a",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-09-13T05:00:00.000Z",
+        "slot": "morning",
+        "service": "instagram",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "leonardo",
+          "elevenlabs"
+        ],
+        "media_type": "video",
+        "audio_theme": "creator-pulse",
+        "recorded_at": "2026-09-13T01:26:07+00:00"
+      },
+      "morning:facebook": {
+        "post_id": "6aa5fbafeba7bc56778968c9",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-09-13T05:00:00.000Z",
+        "slot": "morning",
+        "service": "facebook",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "leonardo",
+          "elevenlabs"
+        ],
+        "media_type": "video",
+        "audio_theme": "creator-pulse",
+        "recorded_at": "2026-09-13T01:26:08+00:00"
+      },
+      "morning:tiktok": {
+        "post_id": "6aa5fbb0f7b1958d5cda9b3b",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-09-13T04:00:00.000Z",
+        "slot": "morning",
+        "service": "tiktok",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "leonardo",
+          "elevenlabs"
+        ],
+        "media_type": "video",
+        "audio_theme": "creator-pulse",
+        "recorded_at": "2026-09-13T01:26:08+00:00"
+      },
+      "evening:instagram": {
+        "post_id": "6aa5fbb1bcabda92e1a1dd86",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-09-13T16:00:00.000Z",
+        "slot": "evening",
+        "service": "instagram",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "adobe",
+          "figma"
+        ],
+        "media_type": "video",
+        "audio_theme": "creator-pulse",
+        "recorded_at": "2026-09-13T01:26:09+00:00"
+      },
+      "evening:facebook": {
+        "post_id": "6aa5fbb1e58a7c358372811c",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-09-13T15:00:00.000Z",
+        "slot": "evening",
+        "service": "facebook",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "adobe",
+          "figma"
+        ],
+        "media_type": "video",
+        "audio_theme": "creator-pulse",
+        "recorded_at": "2026-09-13T01:26:09+00:00"
+      },
+      "evening:tiktok": {
+        "post_id": "6aa5fbb2eba7bc5677896906",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-09-13T15:00:00.000Z",
+        "slot": "evening",
+        "service": "tiktok",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "adobe",
+          "figma"
+        ],
+        "media_type": "video",
+        "audio_theme": "creator-pulse",
+        "recorded_at": "2026-09-13T01:26:10+00:00"
       }
     }
   }
