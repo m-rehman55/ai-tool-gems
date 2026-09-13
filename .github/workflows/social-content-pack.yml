@@ -81,7 +81,7 @@ jobs:
       - name: Refresh real delivery and engagement results
         if: github.event_name != 'push'
         run: python -m marketing_agent buffer-learn
-      - name: Build today's morning photo and realistic evening video
+      - name: Build today's rotating photo and three platform-paced videos
         if: github.event_name != 'push'
         run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
       - name: Publish deal card as public media

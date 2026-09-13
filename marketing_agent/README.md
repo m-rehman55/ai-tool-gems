@@ -25,7 +25,9 @@ It does **not** scrape audiences, auto-DM people, post to groups without permiss
 - readable platform-specific copy with a clear PKR price, plan, access, delivery and tracked order CTA
 - restrained local/category hashtags instead of generic `#fyp`, `#viral` or hashtag stuffing
 - staggered Pakistan-time posting windows based on audience intent
-- daily photo/video rotation: one readable 4:5 offer card in the morning and one photorealistic 10-second 9:16 Reel/video in the evening
+- daily photo/video rotation: one readable 4:5 offer card with rotating layouts in the morning and three platform-paced 9:16 evening exports (TikTok 10s, Instagram 12s, Facebook 14s)
+- seven rotating kinetic concepts: orbit drop, creator portal, price radar, glass-card rush, three-gem reveal, smart stack and deal countdown
+- platform-shaped original audio styles with desi-pop, creator-pop, future-bass, cinematic and clean-business pacing
 - five-scene videos with Gemini plus two rotating deals, exact PKR prices, WhatsApp CTA, AI disclosure, and a layered trend-inspired original soundbed
 - daily Buffer delivery/engagement refresh when the personal API key permits insights access
 
@@ -45,7 +47,7 @@ python -m marketing_agent test-telegram
 
 ## Hosted three-day trial
 
-The GitHub workflows run the 12–14 September 2026 public Telegram trial. The continuing social workflow starts at 04:45 Pakistan time and schedules two campaigns per day—morning and evening—for the connected Facebook Page, Instagram account and TikTok account. Each campaign contains Gemini plus two different rotating products and uses a changing professional colour theme. The morning campaign is a readable photo post; the evening campaign is a photorealistic 10-second video (a Reel on Facebook/Instagram). Platform/day-specific local posting windows are staggered, tracked, and refined from real account results. Every caption links to the tracked `/deals/` landing page, retains a private Telegram copy for the owner, and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
+The GitHub workflows run the 12–14 September 2026 public Telegram trial. The continuing social workflow starts at 04:45 Pakistan time and schedules two campaigns per day—morning and evening—for the connected Facebook Page, Instagram account and TikTok account. Each campaign contains Gemini plus two different rotating products and uses a changing professional colour theme. The morning campaign is a rotating-layout photo post; the evening campaign is a kinetic video with platform-specific pacing (a Reel on Facebook/Instagram). Platform/day-specific local posting windows are staggered, tracked, and refined from real account results. Every caption links to the tracked `/deals/` landing page, retains a private Telegram copy for the owner, and never stores the Buffer key in the repository. See [ORGANIC-PLAYBOOK.md](ORGANIC-PLAYBOOK.md) for the rotation and operating rules.
 
 Useful control commands:
 
@@ -65,7 +67,7 @@ python -m marketing_agent process-commands
 python -m marketing_agent seo-monitor --json
 ```
 
-The hosted SEO/GEO monitor runs at 07:15 Pakistan time and sends a factual Telegram result. It detects regressions; it does not manufacture daily page edits or promise rankings. Search rankings and social virality cannot be guaranteed. Buffer cannot add native trending music through automatic Instagram/TikTok publishing. Automated videos therefore use an energetic original commercial-safe soundbed. A native trending track can only be added through notification/manual publishing and must be cleared for commercial use (TikTok Commercial Music Library or Meta Sound Collection).
+The hosted SEO/GEO monitor runs at 07:15 Pakistan time and sends a factual Telegram result. It detects regressions; it does not manufacture daily page edits or promise rankings. Search rankings and social virality cannot be guaranteed. Buffer cannot add native trending music through automatic Instagram/TikTok publishing. Automated videos therefore use a changing, platform-shaped original commercial-safe soundbed. A native trending track can only be added through notification/manual publishing and must be cleared for commercial use (TikTok Commercial Music Library or Meta Sound Collection). Music licensed inside one platform is not assumed to be licensed for cross-posting elsewhere.
 
 ## Local draft validation
 
