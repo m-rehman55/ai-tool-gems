@@ -31,6 +31,12 @@
       "claimed_at": "2026-09-13T18:23:03+05:00",
       "product_id": "elevenlabs",
       "tracking_code": "te-elevenlabs-20260913-t2b"
+    },
+    "2026-09-13-slot-3": {
+      "status": "claimed",
+      "claimed_at": "2026-09-13T22:03:15+05:00",
+      "product_id": "canva",
+      "tracking_code": "te-canva-20260913-t3a"
     }
   },
   "reports": {
