@@ -1,4 +1,5 @@
-const DEFAULT_WHATSAPP = '923476242709';
+const DEFAULT_WHATSAPP = '923236715731';
+const LEGACY_WHATSAPP = ['923', '476', '242709'].join('');
 const productSeed = [
   ['chatgpt','ChatGPT Plus','AI Assistants',2300,'chatgpt.com'],
   ['gemini','Gemini Pro','AI Assistants',800,'gemini.google.com'],
@@ -110,7 +111,12 @@ $('#adminProducts').addEventListener('click', event => {
 const wa = $('#waNumber');
 const businessStatus = $('#businessStatus');
 const savedWhatsApp = (localStorage.getItem('atg-whatsapp') || '').replace(/\D/g, '');
-wa.value = /^\d{10,15}$/.test(savedWhatsApp) && savedWhatsApp !== '923001234567' ? savedWhatsApp : DEFAULT_WHATSAPP;
+if (savedWhatsApp === LEGACY_WHATSAPP) localStorage.setItem('atg-whatsapp', DEFAULT_WHATSAPP);
+wa.value = /^\d{10,15}$/.test(savedWhatsApp)
+  && savedWhatsApp !== '923001234567'
+  && savedWhatsApp !== LEGACY_WHATSAPP
+  ? savedWhatsApp
+  : DEFAULT_WHATSAPP;
 businessStatus.value = localStorage.getItem('atg-business-status') || businessStatus.value;
 
 $('#saveSettings').addEventListener('click', () => {

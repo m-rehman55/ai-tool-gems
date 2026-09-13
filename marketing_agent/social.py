@@ -214,7 +214,7 @@ def _instagram(products: tuple[Product, ...], audience: AudienceAngle, url: str,
         f"{slot.upper()} AI TOOL DEALS FOR PAKISTAN 🇵🇰\n\n"
         f"{_deal_body(products, audience, slot)}\n\n"
         "Gemini is included in every daily selection. Prices are listed clearly so you can compare first.\n\n"
-        "📲 WHATSAPP: +92 347 6242709\n"
+        "📲 WHATSAPP: +92 323 6715731\n"
         f"View all 3 deals and order: {url}\n\n"
         f"{hashtags_for(products, audience, 'instagram', day)}\n\n"
         "Promotional listing by AI Tool Gems Pakistan. Independent reseller; brand names belong to their owners."
@@ -227,7 +227,7 @@ def _facebook(products: tuple[Product, ...], audience: AudienceAngle, url: str, 
         f"{_deal_body(products, audience, slot, detailed=True)}\n\n"
         "Compare the plan, access type, delivery estimate and warranty before ordering. "
         "Current availability and exact terms are confirmed before payment.\n\n"
-        "WHATSAPP: +92 347 6242709\n"
+        "WHATSAPP: +92 323 6715731\n"
         f"View all offers + order: {url}\n\n"
         f"{hashtags_for(products, audience, 'facebook', day)}\n\n"
         "Promotional listing by AI Tool Gems Pakistan. Independent reseller."
@@ -238,7 +238,7 @@ def _whatsapp(products: tuple[Product, ...], audience: AudienceAngle, url: str, 
     return (
         f"💎 {slot.upper()} — 3 AI TOOL DEALS\n\n"
         f"{_deal_body(products, audience, slot)}\n\n"
-        "Order: +92 347 6242709\n"
+        "Order: +92 323 6715731\n"
         f"Details: {url}"
     )
 
@@ -247,7 +247,7 @@ def _tiktok(products: tuple[Product, ...], audience: AudienceAngle, url: str, da
     return (
         f"{slot.upper()} — 3 AI TOOL DEALS 🇵🇰\n\n"
         f"{_deal_body(products, audience, slot)}\n\n"
-        "WhatsApp: +92 347 6242709\n"
+        "WhatsApp: +92 323 6715731\n"
         f"Details/order: {url}\n\n"
         f"{hashtags_for(products, audience, 'tiktok', day)}\n\n"
         "Promotional listing by AI Tool Gems Pakistan. Independent reseller. Check terms before payment."
@@ -269,7 +269,7 @@ def _reel_script(products: tuple[Product, ...], audience: AudienceAngle, url: st
         f"Reveal 1: {products[0].name} — Rs. {products[0].price:,}\n"
         f"Reveal 2: {products[1].name} — Rs. {products[1].price:,}\n"
         f"Reveal 3: {products[2].name} — Rs. {products[2].price:,}\n"
-        "Final scene: all three deals + pulsing WhatsApp +92 347 6242709\n"
+        "Final scene: all three deals + pulsing WhatsApp +92 323 6715731\n"
         f"Target audience: {audience.label}\n"
         f"Caption link: {url}\n"
         "Motion: daily orbit/portal/radar/glass-card concept with kinetic price reveals.\n"

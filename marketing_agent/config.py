@@ -70,7 +70,7 @@ def get_settings() -> Settings:
     return Settings(
         database_path=Path(os.getenv("ATG_DATABASE_PATH", str(db_default))).expanduser().resolve(),
         site_url=os.getenv("ATG_SITE_URL", "https://aitoolgems.tech").rstrip("/"),
-        whatsapp_number="".join(c for c in os.getenv("ATG_WHATSAPP_NUMBER", "923476242709") if c.isdigit()),
+        whatsapp_number="".join(c for c in os.getenv("ATG_WHATSAPP_NUMBER", "923236715731") if c.isdigit()),
         timezone=resolve_timezone(os.getenv("ATG_TIMEZONE", "Asia/Karachi")),
         telegram_bot_token=os.getenv("TELEGRAM_BOT_TOKEN", "").strip(),
         telegram_channel_id=os.getenv("TELEGRAM_CHANNEL_ID", "").strip(),

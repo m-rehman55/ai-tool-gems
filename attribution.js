@@ -52,7 +52,7 @@
   function decorateWhatsAppLinks() {
     const source = label();
     if (!source) return;
-    document.querySelectorAll('a[href*="wa.me/923476242709"]').forEach(link => {
+    document.querySelectorAll('a[href*="wa.me/923236715731"]').forEach(link => {
       try {
         const url = new URL(link.href);
         const message = url.searchParams.get('text') || '';

@@ -48,7 +48,7 @@ class AgentTests(unittest.TestCase):
         self.settings = Settings(
             database_path=Path(self.temp.name) / "agent.db",
             site_url="https://aitoolgems.tech",
-            whatsapp_number="923476242709",
+            whatsapp_number="923236715731",
             timezone=resolve_timezone("Asia/Karachi"),
             telegram_bot_token="",
             telegram_channel_id="",
@@ -289,7 +289,7 @@ class AgentTests(unittest.TestCase):
                 self.assertEqual(caption.count("PRICE: Rs."), 3)
                 for product in products:
                     self.assertIn(product.name.upper(), caption)
-                self.assertIn("+92 347 6242709", caption)
+                self.assertIn("+92 323 6715731", caption)
                 self.assertNotIn("#fyp", caption.lower())
                 self.assertNotIn("#viral", caption.lower())
 

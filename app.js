@@ -1,4 +1,5 @@
-const DEFAULT_WA_NUMBER = '923476242709';
+const DEFAULT_WA_NUMBER = '923236715731';
+const LEGACY_WA_NUMBER = ['923', '476', '242709'].join('');
 
 const products = [
   {id:'chatgpt',name:'ChatGPT Plus',category:'AI Assistants',description:'Advanced writing, research, coding, image and creative assistance in one workspace.',price:2300,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Writing','Coding','Study'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Advanced AI models','Image generation','File analysis','Voice conversations'],intent:['writing','research','study','code','coding','content']},
@@ -406,7 +407,12 @@ function openProduct(id) {
 function waLink(message) {
   const saved = localStorage.getItem('atg-whatsapp');
   const cleanSaved = (saved || '').replace(/\D/g, '');
-  const number = /^\d{10,15}$/.test(cleanSaved) && cleanSaved !== '923001234567' ? cleanSaved : DEFAULT_WA_NUMBER;
+  if (cleanSaved === LEGACY_WA_NUMBER) localStorage.setItem('atg-whatsapp', DEFAULT_WA_NUMBER);
+  const number = /^\d{10,15}$/.test(cleanSaved)
+    && cleanSaved !== '923001234567'
+    && cleanSaved !== LEGACY_WA_NUMBER
+    ? cleanSaved
+    : DEFAULT_WA_NUMBER;
   const attributedMessage = window.ATGAttribution ? window.ATGAttribution.appendToMessage(message) : message;
   return `https://wa.me/${number}?text=${encodeURIComponent(attributedMessage)}`;
 }

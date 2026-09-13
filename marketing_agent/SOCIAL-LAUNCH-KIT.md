@@ -8,7 +8,7 @@ Use this pack when creating the official accounts. Account signup must be comple
 - First username choice: `aitoolgemspak`
 - Alternatives: `aitoolgems.pk`, `aitoolgemspakistan`
 - Website: `https://aitoolgems.tech/`
-- WhatsApp: `+92 347 6242709`
+- WhatsApp: `+92 323 6715731`
 - Profile image for all three platforms: `assets/social-profile-ai-tool-gems.png`
 - Category: Product/service or Shopping & retail
 
