@@ -33,6 +33,7 @@ from .social import (
 API_URL = "https://api.buffer.com"
 STATE_PATH = PROJECT_DIR / "marketing_agent" / "data" / "buffer-state.json"
 CARD_DIR = PROJECT_DIR / "assets" / "social-deals"
+PRODUCT_LOGO_DIR = PROJECT_DIR / "assets" / "product-logos"
 REALISTIC_BACKGROUND = PROJECT_DIR / "assets" / "social-realistic-workspace-v1.png"
 RAW_MEDIA_ROOT = "https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/main/assets/social-deals"
 TARGET_SERVICES = ("instagram", "facebook", "tiktok")
@@ -290,6 +291,26 @@ def _wrapped_lines(draw, text: str, font, max_width: int) -> list[str]:
     return lines
 
 
+def _product_logo(product: Product, max_size: int = 92):
+    """Load a locally cached official-site favicon, fetching it once when needed."""
+    from PIL import Image
+
+    PRODUCT_LOGO_DIR.mkdir(parents=True, exist_ok=True)
+    cached = PRODUCT_LOGO_DIR / f"{product.id}.png"
+    if cached.exists():
+        logo = Image.open(cached).convert("RGBA")
+    else:
+        request = Request(
+            f"https://www.google.com/s2/favicons?domain={PRODUCT_DOMAINS[product.id]}&sz=256",
+            headers={"User-Agent": "AI-Tool-Gems-Marketing-Agent/2.0"},
+        )
+        with urlopen(request, timeout=20) as response:
+            logo = Image.open(BytesIO(response.read())).convert("RGBA")
+        logo.save(cached, format="PNG", optimize=True)
+    logo.thumbnail((max_size, max_size), Image.Resampling.LANCZOS)
+    return logo
+
+
 def deal_card_path(day: date, product: Product | None = None, slot: str = "morning") -> Path:
     product = product or deal_of_the_day(day)
     return CARD_DIR / f"{day.isoformat()}-{slot}-{product.id}.jpg"
@@ -416,7 +437,7 @@ def _render_single_deal_card_legacy(day: date, output: Path | None = None) -> Pa
 
     cta_top = 995
     draw.rounded_rectangle((100, cta_top, 980, cta_top + 92), radius=44, fill=lime)
-    cta = "ORDER ON WHATSAPP  +92 347 6242709"
+    cta = "ORDER ON WHATSAPP  +92 323 6715731"
     cta_box = draw.textbbox((0, 0), cta, font=_font(30, True))
     draw.text(((width - (cta_box[2] - cta_box[0])) / 2, cta_top + 27), cta, font=_font(30, True), fill=ink)
 
@@ -495,14 +516,7 @@ def render_deal_card(day: date, output: Path | None = None, slot: str = "morning
         logo_center = logo_left + 61
         draw.rounded_rectangle((logo_left, top + 35, logo_left + 122, top + 157), radius=30, fill=white, outline=(205, 226, 218), width=2)
         try:
-            domain = PRODUCT_DOMAINS[product.id]
-            logo_request = Request(
-                f"https://www.google.com/s2/favicons?domain={domain}&sz=256",
-                headers={"User-Agent": "AI-Tool-Gems-Marketing-Agent/1.0"},
-            )
-            with urlopen(logo_request, timeout=12) as logo_response:
-                product_logo = Image.open(BytesIO(logo_response.read())).convert("RGBA")
-            product_logo.thumbnail((84, 84))
+            product_logo = _product_logo(product, 84)
             logo_position = (logo_center - product_logo.width // 2, top + 96 - product_logo.height // 2)
             image.paste(product_logo, logo_position, product_logo)
         except Exception:
@@ -530,7 +544,7 @@ def render_deal_card(day: date, output: Path | None = None, slot: str = "morning
 
     cta_top = 1034
     draw.rounded_rectangle((70, cta_top, 1010, cta_top + 104), radius=48, fill=lime)
-    cta = "ORDER ON WHATSAPP  +92 347 6242709"
+    cta = "ORDER ON WHATSAPP  +92 323 6715731"
     cta_box = draw.textbbox((0, 0), cta, font=_font(30, True))
     draw.text(((width - (cta_box[2] - cta_box[0])) / 2, cta_top + 33), cta, font=_font(30, True), fill=ink)
 
@@ -727,7 +741,7 @@ def render_deal_video(day: date, output: Path | None = None, slot: str = "mornin
     card.thumbnail((660, 825))
     frame.paste(card, ((width - card.width) // 2, 130))
     draw.rounded_rectangle((36, 990, 684, 1128), radius=42, fill=lime)
-    cta = "WHATSAPP  +92 347 6242709"
+    cta = "WHATSAPP  +92 323 6715731"
     cta_box = draw.textbbox((0, 0), cta, font=_font(35, True))
     draw.text(((width - cta_box[2]) / 2, 1018), cta, font=_font(35, True), fill=ink)
     draw.text((133, 1075), "GEMINI + 2 ROTATING DAILY DEALS", font=_font(21, True), fill=ink)
@@ -878,7 +892,7 @@ def render_realistic_deal_video(day: date, output: Path | None = None, slot: str
         bounds = draw.textbbox((0, 0), price, font=_font(27, True))
         draw.text((620 - (bounds[2] - bounds[0]), row_y + 47), price, font=_font(27, True), fill=palette["accents"][index])
     draw.rounded_rectangle((72, 970, 650, 1062), radius=43, fill=cta)
-    draw.text((119, 992), "WHATSAPP +92 347 6242709", font=_font(27, True), fill=ink)
+    draw.text((119, 992), "WHATSAPP +92 323 6715731", font=_font(27, True), fill=ink)
     draw.text((190, 1082), "aitoolgems.tech/deals", font=_font(25, True), fill=ink)
     draw.text((46, 1215), "AI-generated promotional visual", font=_font(16), fill=(255, 255, 255, 235))
     frames.append(outro.convert("RGB"))
@@ -958,14 +972,7 @@ def render_orbit_campaign_video(
     product_logos: dict[str, Image.Image | None] = {}
     for product in products:
         try:
-            request = Request(
-                f"https://www.google.com/s2/favicons?domain={PRODUCT_DOMAINS[product.id]}&sz=256",
-                headers={"User-Agent": "AI-Tool-Gems-Marketing-Agent/2.0"},
-            )
-            with urlopen(request, timeout=12) as response:
-                logo = Image.open(BytesIO(response.read())).convert("RGBA")
-            logo.thumbnail((92, 92), Image.Resampling.LANCZOS)
-            product_logos[product.id] = logo
+            product_logos[product.id] = _product_logo(product, 92)
         except Exception:
             product_logos[product.id] = None
 
@@ -992,7 +999,7 @@ def render_orbit_campaign_video(
         bounds = draw.textbbox((0, 0), text_value, font=font)
         draw.text(((width - (bounds[2] - bounds[0])) / 2, y), text_value, font=font, fill=fill)
 
-    def logo_tile(frame, logo, center: tuple[int, int], size: int, glow, pulse: float = 1.0) -> None:
+    def logo_tile(frame, logo, center: tuple[int, int], size: int, glow, pulse: float = 1.0, fallback: str = "AI") -> None:
         layer = Image.new("RGBA", frame.size, (0, 0, 0, 0))
         draw = ImageDraw.Draw(layer, "RGBA")
         actual = max(54, int(size * pulse))
@@ -1007,6 +1014,10 @@ def render_orbit_campaign_video(
             copy = logo.copy()
             copy.thumbnail((int(actual * 0.66), int(actual * 0.66)), Image.Resampling.LANCZOS)
             frame.alpha_composite(copy, (x - copy.width // 2, y - copy.height // 2))
+        else:
+            initials = "".join(word[0] for word in fallback.split()[:2]).upper()
+            bounds = draw.textbbox((0, 0), initials, font=_font(max(18, actual // 3), True))
+            draw.text((x - (bounds[2] - bounds[0]) / 2, y - actual // 6), initials, font=_font(max(18, actual // 3), True), fill=ink)
 
     total_frames = seconds * fps
     hook_end = 2.05 if service == "tiktok" else 2.4
@@ -1053,7 +1064,7 @@ def render_orbit_campaign_video(
                 for index, product in enumerate(products):
                     angle = elapsed * (1.65 if concept in {"orbit-drop", "creator-portal"} else 1.2) + index * math.tau / 3
                     center = (int(360 + math.cos(angle) * 218), int(415 + math.sin(angle) * 155))
-                    logo_tile(frame, product_logos[product.id], center, 94, palette["accents"][index], 1.0)
+                    logo_tile(frame, product_logos[product.id], center, 94, palette["accents"][index], 1.0, product.name)
                 panel_y = int(790 + (1 - progress) * 120)
                 draw.rounded_rectangle((34, panel_y, 686, 1118), radius=48, fill=(255, 255, 255, 239))
                 centered(draw, hooks[service], panel_y + 46, _font(42 if service != "facebook" else 36, True), ink)
@@ -1073,7 +1084,7 @@ def render_orbit_campaign_video(
                 draw.text((panel_left + 56, 505), f"DEAL {product_index + 1}/3", font=_font(19, True), fill=(255, 255, 255))
                 orbit_angle = elapsed * 2.2 + product_index
                 logo_center = (panel_left + 322 + int(math.cos(orbit_angle) * 36), 658 + int(math.sin(orbit_angle) * 20))
-                logo_tile(frame, product_logos[product.id], logo_center, 154, palette["accents"][product_index], 1 + 0.04 * math.sin(elapsed * 5))
+                logo_tile(frame, product_logos[product.id], logo_center, 154, palette["accents"][product_index], 1 + 0.04 * math.sin(elapsed * 5), product.name)
                 centered(draw, product.name.upper(), 770, _font(43 if len(product.name) < 17 else 36, True), ink)
                 centered(draw, "TODAY'S PRICE", 839, _font(20, True), muted)
                 price_scale = 1 + 0.05 * math.sin(min(1, local * 4) * math.pi)
@@ -1090,13 +1101,13 @@ def render_orbit_campaign_video(
                 for index, product in enumerate(products):
                     row_y = 548 + index * 114
                     draw.rounded_rectangle((62, row_y, 658, row_y + 91), radius=29, fill=palette["rows"][index])
-                    logo_tile(frame, product_logos[product.id], (112, row_y + 45), 64, palette["accents"][index])
+                    logo_tile(frame, product_logos[product.id], (112, row_y + 45), 64, palette["accents"][index], fallback=product.name)
                     draw.text((158, row_y + 18), product.name[:25], font=_font(24, True), fill=ink)
                     draw.text((158, row_y + 52), f"Rs. {product.price:,}", font=_font(23, True), fill=palette["accents"][index])
                 button_width = int(574 * pulse)
                 left = (width - button_width) // 2
                 draw.rounded_rectangle((left, 920, left + button_width, 1018), radius=48, fill=(27, 186, 103, 255))
-                centered(draw, "WHATSAPP +92 347 6242709", 948, _font(28, True), (255, 255, 255))
+                centered(draw, "WHATSAPP +92 323 6715731", 948, _font(28, True), (255, 255, 255))
                 centered(draw, "aitoolgems.tech/deals", 1045, _font(26, True), ink)
                 centered(draw, "Message now • availability confirmed first", 1087, _font(18, False), muted)
 
