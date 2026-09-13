@@ -25,6 +25,12 @@
       "tracking_code": "te-veo-20260912-t3b",
       "published_at": "2026-09-12T21:28:31+05:00",
       "message_id": 7
+    },
+    "2026-09-13-slot-2": {
+      "status": "claimed",
+      "claimed_at": "2026-09-13T18:23:03+05:00",
+      "product_id": "elevenlabs",
+      "tracking_code": "te-elevenlabs-20260913-t2b"
     }
   },
   "reports": {
