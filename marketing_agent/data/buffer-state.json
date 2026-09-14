@@ -7,7 +7,9 @@
         "scheduled_for": "2026-09-12T12:32:18.000Z",
         "recorded_at": "2026-09-12T12:22:19+00:00",
         "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
-        "metrics_checked_on": "2026-09-13"
+        "metrics_checked_on": "2026-09-14",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00"
       },
       "instagram": {
         "post_id": "6aa54498c637430b6b561298",
@@ -15,7 +17,9 @@
         "scheduled_for": "2026-09-12T12:34:56.000Z",
         "recorded_at": "2026-09-12T12:24:56+00:00",
         "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
-        "metrics_checked_on": "2026-09-13"
+        "metrics_checked_on": "2026-09-14",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00"
       },
       "facebook": {
         "post_id": "6aa544996b734df0253a0dd0",
@@ -23,7 +27,9 @@
         "scheduled_for": "2026-09-12T12:34:56.000Z",
         "recorded_at": "2026-09-12T12:24:57+00:00",
         "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
-        "metrics_checked_on": "2026-09-13"
+        "metrics_checked_on": "2026-09-14",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00"
       }
     },
     "2026-09-13": {
@@ -42,7 +48,11 @@
         ],
         "media_type": "video",
         "audio_theme": "creator-pulse",
-        "recorded_at": "2026-09-13T01:26:07+00:00"
+        "recorded_at": "2026-09-13T01:26:07+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-14"
       },
       "morning:facebook": {
         "post_id": "6aa5fbafeba7bc56778968c9",
@@ -59,7 +69,11 @@
         ],
         "media_type": "video",
         "audio_theme": "creator-pulse",
-        "recorded_at": "2026-09-13T01:26:08+00:00"
+        "recorded_at": "2026-09-13T01:26:08+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-14"
       },
       "morning:tiktok": {
         "post_id": "6aa5fbb0f7b1958d5cda9b3b",
@@ -76,7 +90,11 @@
         ],
         "media_type": "video",
         "audio_theme": "creator-pulse",
-        "recorded_at": "2026-09-13T01:26:08+00:00"
+        "recorded_at": "2026-09-13T01:26:08+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-14"
       },
       "evening:instagram": {
         "post_id": "6aa5fbb1bcabda92e1a1dd86",
@@ -96,7 +114,11 @@
         "recorded_at": "2026-09-13T01:26:09+00:00",
         "contact_number": "923236715731",
         "caption_version": 2,
-        "repaired_at": "2026-09-13T15:54:22+00:00"
+        "repaired_at": "2026-09-13T15:54:22+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-14"
       },
       "evening:facebook": {
         "post_id": "6aa5fbb1e58a7c358372811c",
@@ -113,7 +135,11 @@
         ],
         "media_type": "video",
         "audio_theme": "creator-pulse",
-        "recorded_at": "2026-09-13T01:26:09+00:00"
+        "recorded_at": "2026-09-13T01:26:09+00:00",
+        "delivery_status": "error",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-14"
       },
       "evening:tiktok": {
         "post_id": "6aa5fbb2eba7bc5677896906",
@@ -130,7 +156,11 @@
         ],
         "media_type": "video",
         "audio_theme": "creator-pulse",
-        "recorded_at": "2026-09-13T01:26:10+00:00"
+        "recorded_at": "2026-09-13T01:26:10+00:00",
+        "delivery_status": "error",
+        "delivery_checked_at": "2026-09-14T01:41:47+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-14"
       }
     }
   }
