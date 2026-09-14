@@ -15,6 +15,7 @@ from marketing_agent.buffer import (
     campaign_preflight,
     connection_status,
     creative_concept_for,
+    delivery_audit,
     deal_video_path,
     format_publish_confirmation,
     learned_audience_for,
@@ -223,6 +224,59 @@ class AgentTests(unittest.TestCase):
         self.assertTrue(result["ready"])
         self.assertEqual(result["captions_checked"], 6)
         self.assertEqual(result["assets_checked"], 6)
+
+    def test_preflight_warns_but_does_not_block_on_an_old_delivery_failure(self):
+        class PreflightClient:
+            def owned_channels(self):
+                return {
+                    service: {"id": service, "displayName": service, "service": service, "isQueuePaused": False}
+                    for service in ("instagram", "facebook", "tiktok")
+                }
+
+            def post_status(self, post_id):
+                return {"id": post_id, "status": "error"}
+
+        card_dir = Path(self.temp.name) / "media"
+        card_dir.mkdir()
+        day = date(2026, 9, 14)
+        for slot in ("morning", "evening"):
+            for service in ("instagram", "facebook", "tiktok"):
+                filename = media_url_for(day, service, slot)[0].rsplit("/", 1)[-1]
+                (card_dir / filename).write_bytes(b"x" * 6_000)
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text(json.dumps({"published_dates": {"2026-09-13": {
+            "evening:facebook": {
+                "post_id": "failed-post",
+                "scheduled_for": "2026-09-13T15:00:00+00:00",
+            },
+        }}}), encoding="utf-8")
+        with patch("marketing_agent.buffer.CARD_DIR", card_dir):
+            result = campaign_preflight(
+                self.settings, day, state, PreflightClient(),
+                datetime(2026, 9, 14, 4, 0, tzinfo=timezone.utc),
+            )
+        self.assertTrue(result["ready"])
+        self.assertEqual(result["errors"], [])
+        self.assertIn("previous delivery failed", result["warnings"][0])
+
+    def test_delivery_audit_detects_sent_failed_and_missing_posts(self):
+        class AuditClient:
+            def post_status(self, post_id):
+                return {"id": post_id, "status": "sent" if post_id == "sent-post" else "error"}
+
+        state = Path(self.temp.name) / "buffer-state.json"
+        state.write_text(json.dumps({"published_dates": {"2026-09-14": {
+            "morning:instagram": {"post_id": "sent-post", "scheduled_for": "2026-09-14T05:00:00Z"},
+            "morning:facebook": {"post_id": "failed-post", "scheduled_for": "2026-09-14T05:00:00Z"},
+        }}}), encoding="utf-8")
+        result = delivery_audit(
+            self.settings, date(2026, 9, 14), state, AuditClient(),
+            datetime(2026, 9, 14, 20, 0, tzinfo=timezone.utc),
+        )
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["sent"]["morning:instagram"], "sent")
+        self.assertEqual(result["failed"]["morning:facebook"], "error")
+        self.assertEqual(len(result["missing"]), 4)
 
     def test_buffer_publish_is_duplicate_safe_across_all_three_channels(self):
         class FakeClient:
