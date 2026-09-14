@@ -53,6 +53,12 @@
       "tracking_code": "te-capcut-20260914-t2a",
       "published_at": "2026-09-14T20:08:57+05:00",
       "message_id": 9
+    },
+    "2026-09-14-slot-3": {
+      "status": "claimed",
+      "claimed_at": "2026-09-14T23:51:50+05:00",
+      "product_id": "adobe",
+      "tracking_code": "te-adobe-20260914-t3b"
     }
   },
   "reports": {
