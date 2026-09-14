@@ -45,6 +45,12 @@
       "tracking_code": "te-figma-20260914-t1b",
       "published_at": "2026-09-14T14:49:47+05:00",
       "message_id": 8
+    },
+    "2026-09-14-slot-2": {
+      "status": "claimed",
+      "claimed_at": "2026-09-14T20:08:54+05:00",
+      "product_id": "capcut",
+      "tracking_code": "te-capcut-20260914-t2a"
     }
   },
   "reports": {
