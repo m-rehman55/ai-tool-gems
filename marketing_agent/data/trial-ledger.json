@@ -37,6 +37,12 @@
       "claimed_at": "2026-09-13T22:03:15+05:00",
       "product_id": "canva",
       "tracking_code": "te-canva-20260913-t3a"
+    },
+    "2026-09-14-slot-1": {
+      "status": "claimed",
+      "claimed_at": "2026-09-14T14:49:45+05:00",
+      "product_id": "figma",
+      "tracking_code": "te-figma-20260914-t1b"
     }
   },
   "reports": {
