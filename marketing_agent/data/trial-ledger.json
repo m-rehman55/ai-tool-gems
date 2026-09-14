@@ -47,10 +47,12 @@
       "message_id": 8
     },
     "2026-09-14-slot-2": {
-      "status": "claimed",
+      "status": "published",
       "claimed_at": "2026-09-14T20:08:54+05:00",
       "product_id": "capcut",
-      "tracking_code": "te-capcut-20260914-t2a"
+      "tracking_code": "te-capcut-20260914-t2a",
+      "published_at": "2026-09-14T20:08:57+05:00",
+      "message_id": 9
     }
   },
   "reports": {
