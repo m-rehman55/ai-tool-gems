@@ -118,9 +118,9 @@ def generate_visual_home() -> None:
         'href="deals/"': 'href="../deals/"',
         'href="guides/"': 'href="../guides/"',
         'href="guides/': 'href="../guides/',
-        'href="privacy.html"': 'href="../privacy.html"',
-        'href="terms.html"': 'href="../terms.html"',
-        'href="policies.html': 'href="../policies.html',
+        'href="privacy.html"': 'href="privacy.html"',
+        'href="terms.html"': 'href="terms.html"',
+        'href="policies.html': 'href="policies.html',
         'href="sitemap.xml"': 'href="../sitemap-jp.xml"',
     }.items():
         source = source.replace(old, new)
