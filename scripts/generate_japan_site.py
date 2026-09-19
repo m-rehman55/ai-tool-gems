@@ -81,12 +81,12 @@ def product_page(product: tuple) -> str:
     }, ensure_ascii=False, separators=(",", ":"))
     return page_head(f"{name} 日本価格 | AI Tool Gems Japan", description, canonical, pk, schema) + f'''
 <body>
-  <header class="topbar"><a class="brand" href="../../"><img src="../../assets/brand-logo-light.webp" width="48" height="48" alt="AI Tool Gems Japan logo"><span>AI TOOL <b>GEMS</b><small>JAPAN</small></span></a><nav aria-label="Main navigation"><a href="../../">すべてのツール</a><a href="../../#products">カテゴリー</a><a href="../../../tools/{pid}/">Pakistan / English</a><a href="../../contact.html">お問い合わせ</a></nav></header>
+  <header class="topbar"><a class="brand" href="../../"><img src="../../assets/brand-logo-light.webp" width="48" height="48" alt="AI Tool Gems Japan logo"><span>AI TOOL <b>GEMS</b><small>JAPAN</small></span></a><nav aria-label="Main navigation"><a href="../../">すべてのツール</a><a href="../../#products">カテゴリー</a><a href="../../../tools/{pid}/">English version</a><a href="../../contact.html">お問い合わせ</a></nav></header>
   <main><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">ホーム</a><span>/</span><span>{escape(name)}</span></nav>
     <article class="product-layout"><section class="product-visual"><span class="category">{escape(category)}</span><div class="logo-wrap"><img src="../../assets/brand-logo-light.webp" width="128" height="128" alt="{escape(name)}"></div><p>独立系マーケットプレイス</p></section>
     <section class="product-copy"><p class="eyebrow">AI TOOL SUBSCRIPTION IN JAPAN</p><h1>{escape(name)} 日本価格</h1><p class="lead">{escape(description)} AI Tool Gems Japanでは、価格・期間・アクセス条件を確認してから注文できます。</p><p class="quick-answer"><strong>概要:</strong> 掲載価格は <strong>¥{price:,}</strong>。期間は {escape(duration)}、アクセス形式は {escape(access)} です。提供状況と正確な条件はWhatsAppで注文前に確認します。</p><div class="price"><span>掲載価格</span><strong>¥{price:,}</strong></div><dl><div><dt>期間</dt><dd>{escape(duration)}</dd></div><div><dt>アクセス</dt><dd>{escape(access)}</dd></div><div><dt>通貨</dt><dd>JPY</dd></div></dl><a class="buy" href="{order}" target="_blank" rel="noopener">WhatsAppで注文・確認</a><p class="availability">在庫、支払い方法、配送時間、利用条件は支払い前に確認します。</p></section></article>
     <section class="answer"><h2>ご注文前にご確認ください</h2><p>AI Tool Gems Japanは独立系のデジタルマーケットプレイスです。表示価格は日本向けの掲載価格であり、第三者ブランドの公式販売店・提携先であることを意味しません。ブランド名と商標はそれぞれの権利者に帰属します。</p><p>利用条件、アカウント形式、地域制限、保証・返金条件は商品ごとに異なるため、WhatsAppで最新情報を確認してください。</p></section>
-    <section class="answer"><h2>Related information</h2><p><a href="../../">日本向けAIツール一覧</a> | <a href="../../../tools/{pid}/">English / Pakistan listing</a> | <a href="../../contact.html">お問い合わせ</a></p></section>
+    <section class="answer"><h2>Related information</h2><p><a href="../../">日本向けAIツール一覧</a> | <a href="../../../tools/{pid}/">English version</a> | <a href="../../contact.html">お問い合わせ</a></p></section>
   </main><footer><span>© 2026 AI Tool Gems Japan</span><span>Independent digital marketplace · Third-party trademarks belong to their owners.</span></footer>
 </body></html>'''
 
@@ -96,7 +96,7 @@ def home_page() -> str:
     schema = json.dumps({"@context": "https://schema.org", "@type": ["Organization", "OnlineStore"], "name": "AI Tool Gems Japan", "url": canonical, "areaServed": {"@type": "Country", "name": "Japan"}, "contactPoint": {"@type": "ContactPoint", "telephone": "+" + JP_WA, "contactType": "customer support", "areaServed": "JP", "availableLanguage": ["Japanese", "English"]}}, ensure_ascii=False, separators=(",", ":"))
     cards = "\n".join(f'<article><h2><a href="tools/{pid}/">{escape(name)}</a></h2><p>{escape(description)}</p><strong>¥{price:,}</strong><p>{escape(duration)} · {escape(access)}</p></article>' for pid, name, category, price, duration, access, description in PRODUCTS)
     return page_head("AI Tools Japan | JPY Prices & WhatsApp Support", "Compare AI tools and digital subscriptions for customers in Japan with JPY prices, bilingual support, and direct WhatsApp ordering.", canonical, SITE + "/", schema) + f'''
-<body><header class="topbar"><a class="brand" href="./"><img src="../assets/brand-logo-light.webp" width="48" height="48" alt="AI Tool Gems Japan logo"><span>AI TOOL <b>GEMS</b><small>JAPAN</small></span></a><nav aria-label="Main navigation"><a href="#products">AIツール</a><a href="#how">ご利用方法</a><a href="../">Pakistan / English</a><a href="contact.html">お問い合わせ</a></nav></header>
+<body><header class="topbar"><a class="brand" href="./"><img src="../assets/brand-logo-light.webp" width="48" height="48" alt="AI Tool Gems Japan logo"><span>AI TOOL <b>GEMS</b><small>JAPAN</small></span></a><nav aria-label="Main navigation"><a href="#products">AIツール</a><a href="#how">ご利用方法</a><a href="../">English version</a><a href="contact.html">お問い合わせ</a></nav></header>
 <main><section class="hero"><p class="eyebrow">AI TOOLS FOR JAPAN</p><h1>日本向けAIツールとサブスクリプション</h1><p>JPY価格、期間、アクセス条件を比較。日本語・English対応で、注文前にWhatsAppで在庫と条件を確認できます。</p><a class="buy" href="https://wa.me/{JP_WA}?text=AI%20Tool%20Gems%20Japan%20の商品について相談したいです。">WhatsAppで相談する</a></section><section id="products"><h2>AI Tools — JPY Prices</h2><div class="product-grid">{cards}</div></section><section id="how" class="answer"><h2>ご利用方法 / How it works</h2><ol><li>商品と掲載価格を比較します。</li><li>WhatsAppで在庫、アクセス形式、支払い、配送時間を確認します。</li><li>条件に同意した後に注文を進めます。</li></ol><p>AI Tool Gems Japanは独立系マーケットプレイスであり、第三者ブランドの公式提携を意味しません。</p></section></main><footer><span>© 2026 AI Tool Gems Japan</span><span>Japan support: +81 70 9512 8428</span></footer></body></html>'''
 
 
@@ -106,6 +106,7 @@ def generate_visual_home() -> None:
     for old, new in {
         '<html lang="en-PK">': '<html lang="ja-JP">',
         "AI Tool Gems Pakistan": "AI Tool Gems Japan",
+        "PAKISTAN": "JAPAN",
         "Pakistan-based AI Tools Marketplace": "Japan AI Tools Marketplace",
         "Premium AI Tools in Pakistan": "Premium AI Tools in Japan",
         'href="assets/': 'href="../assets/',
@@ -127,7 +128,7 @@ def generate_visual_home() -> None:
     source = re.sub(r'<link rel="canonical" href="[^"]*">', '<link rel="canonical" href="https://aitoolgems.tech/jp/">\n  <link rel="alternate" hreflang="ja-JP" href="https://aitoolgems.tech/jp/">\n  <link rel="alternate" hreflang="en-PK" href="https://aitoolgems.tech/">\n  <link rel="alternate" hreflang="x-default" href="https://aitoolgems.tech/">', source, count=1)
     source = re.sub(r'<title>.*?</title>', '<title>AI Tools Japan — JPY Prices &amp; WhatsApp Support</title>', source, count=1, flags=re.S)
     source = source.replace('https://wa.me/923236715731', 'https://wa.me/817095128428').replace('Rs. ', '¥').replace('PKR', 'JPY')
-    source = source.replace('Pakistan', 'Japan').replace('Japan / English', 'Pakistan / English').replace('facebook.com/people/AI-Tool-Gems-Japan/', 'facebook.com/people/AI-Tool-Gems-Pakistan/').replace('20 AI', '22 AI').replace('all 20', 'all 22').replace('20 listings', '22 listings')
+    source = source.replace('Pakistan', 'Japan').replace('PAKISTAN', 'JAPAN').replace('Japan / English', 'English version').replace('facebook.com/people/AI-Tool-Gems-Japan/', 'facebook.com/people/AI-Tool-Gems-Pakistan/').replace('20 AI', '22 AI').replace('all 20', 'all 22').replace('20 listings', '22 listings')
     for old, new in {
         'Premium AI tools': '日本向けプレミアムAIツール',
         'Compare before you choose.': '選ぶ前に比較しましょう。',
