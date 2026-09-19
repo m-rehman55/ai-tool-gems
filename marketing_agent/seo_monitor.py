@@ -145,6 +145,8 @@ def audit_site(settings: Settings, fetch: Callable[[str], FetchResult] = _fetch)
     try:
         sitemap = fetch(f"{site}/sitemap.xml")
         urls = _sitemap_urls(sitemap.body)
+        japan_sitemap = fetch(f"{site}/sitemap-jp.xml")
+        urls.extend(_sitemap_urls(japan_sitemap.body))
     except Exception as exc:
         return {"ok": False, "score": 0, "urls_total": 0, "urls_ok": 0,
                 "issues": [f"Sitemap fetch/parse failed: {type(exc).__name__}"]}
