@@ -387,12 +387,21 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "OnlineStore"],
     "@id": "https://aitoolgems.tech/#organization",
     "name": "AI Tool Gems Pakistan",
     "url": "https://aitoolgems.tech/",
     "logo": "https://aitoolgems.tech/assets/brand-logo-light.png",
     "description": "Pakistan-based independent marketplace for comparing and ordering AI tools and digital subscriptions with transparent PKR pricing.",
+    "currenciesAccepted": "PKR",
+    "paymentAccepted": "WhatsApp-assisted payment confirmation",
+    "priceRange": "PKR 700-23000",
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "PK",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+      "merchantReturnLink": "https://aitoolgems.tech/policies.html"
+    },
     "sameAs": [
       "https://www.tiktok.com/@aitoolgems",
       "https://www.instagram.com/aitoolgemspak/",
