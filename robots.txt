@@ -17,5 +17,6 @@ Disallow: /.env
 Disallow: /.env.example
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
+Sitemap: https://aitoolgems.tech/sitemap-jp.xml
 
 # IndexNow key: https://aitoolgems.tech/e1a8c47f9d2b4f30a6c8116de5b97042.txt
