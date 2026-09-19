@@ -35,6 +35,17 @@ PRODUCTS = [
 ]
 
 
+JA_ACCESS = {"Private": "個人アクセス", "Shared": "共有アクセス", "Invitation": "招待形式", "License Key": "ライセンスキー"}
+
+
+def ja_access(value: str) -> str:
+    return JA_ACCESS.get(value, value)
+
+
+def ja_duration(value: str) -> str:
+    return (value.replace("1 Month", "1か月").replace("18 Months", "18か月").replace("1 Year", "1年間").replace("2 Years", "2年間").replace("3 Months", "3か月").replace("2 Months", "2か月").replace("Unlimited", "無制限").replace("Lifetime", "永久ライセンス").replace("Credits", "クレジット"))
+
+
 def hreflang(jp_url: str, pk_url: str) -> str:
     return (
         f'<link rel="alternate" hreflang="ja-JP" href="{jp_url}">\n'
@@ -71,6 +82,8 @@ def page_head(title: str, description: str, canonical: str, alternate: str, sche
 
 def product_page(product: tuple) -> str:
     pid, name, category, price, duration, access, description = product
+    duration = ja_duration(duration)
+    access = ja_access(access)
     canonical = f"{SITE}/jp/tools/{pid}/"
     pk = f"{SITE}/tools/{pid}/"
     order = f"https://wa.me/{JP_WA}?text={name.replace(' ', '%20')}%20の在庫、条件、配送時間を確認したいです。"
@@ -152,6 +165,8 @@ def generate_visual_home() -> None:
     app = (ROOT / "app.js").read_text(encoding="utf-8")
     lines = []
     for pid, name, category, price, duration, access, description in PRODUCTS:
+        duration = ja_duration(duration)
+        access = ja_access(access)
         lines.append(f"  {{id:'{pid}',name:'{name}',category:'{category}',description:'{description}',price:{price},oldPrice:{round(price * 1.2)},duration:'{duration}',access:'{access}',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']}}")
     app = re.sub(r'const products = \[.*?\];\n\nconst categoryData', "const products = [\n" + ",\n".join(lines) + "\n];\n\nconst categoryData", app, count=1, flags=re.S)
     app = app.replace("const DEFAULT_WA_NUMBER = '923236715731';", "const DEFAULT_WA_NUMBER = '817095128428';").replace("const LEGACY_WA_NUMBER = ['923', '476', '242709'].join('');", "const LEGACY_WA_NUMBER = '923236715731';")
