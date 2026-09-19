@@ -128,6 +128,24 @@ def generate_visual_home() -> None:
     source = re.sub(r'<title>.*?</title>', '<title>AI Tools Japan — JPY Prices &amp; WhatsApp Support</title>', source, count=1, flags=re.S)
     source = source.replace('https://wa.me/923236715731', 'https://wa.me/817095128428').replace('Rs. ', '¥').replace('PKR', 'JPY')
     source = source.replace('Pakistan', 'Japan').replace('Japan / English', 'Pakistan / English').replace('facebook.com/people/AI-Tool-Gems-Japan/', 'facebook.com/people/AI-Tool-Gems-Pakistan/').replace('20 AI', '22 AI').replace('all 20', 'all 22').replace('20 listings', '22 listings')
+    for old, new in {
+        'Premium AI tools': '日本向けプレミアムAIツール',
+        'Compare before you choose.': '選ぶ前に比較しましょう。',
+        'Find my tool': '最適なツールを探す',
+        'How it works': 'ご利用方法',
+        'Marketplace': 'マーケットプレイス',
+        'Categories': 'カテゴリー',
+        'Guides': 'ガイド',
+        'Cart': 'カート',
+        'Search': '検索',
+        'Buy now': '今すぐ注文',
+        'Order on WhatsApp': 'WhatsAppで注文',
+        'WhatsApp support': 'WhatsAppサポート',
+        'Compare': '比較',
+        'All tools': 'すべてのツール',
+        'How it works': 'ご利用方法',
+    }.items():
+        source = source.replace(old, new)
     (ROOT / "jp" / "index.html").write_text(source, encoding="utf-8")
 
     app = (ROOT / "app.js").read_text(encoding="utf-8")
@@ -137,6 +155,14 @@ def generate_visual_home() -> None:
     app = re.sub(r'const products = \[.*?\];\n\nconst categoryData', "const products = [\n" + ",\n".join(lines) + "\n];\n\nconst categoryData", app, count=1, flags=re.S)
     app = app.replace("const DEFAULT_WA_NUMBER = '923236715731';", "const DEFAULT_WA_NUMBER = '817095128428';").replace("const LEGACY_WA_NUMBER = ['923', '476', '242709'].join('');", "const LEGACY_WA_NUMBER = '923236715731';")
     app = app.replace("'Rs. ' + n.toLocaleString('en-PK')", "'¥' + n.toLocaleString('ja-JP')").replace("'PKR'", "'JPY'").replace("PKR pricing", "JPY pricing").replace("assets/", "../assets/")
+    for old, new in {
+        'Marketplace': 'マーケットプレイス', 'Categories': 'カテゴリー', 'Guides': 'ガイド',
+        'Find my tool': '最適なツールを探す', 'How it works': 'ご利用方法', 'Buy now': '今すぐ注文',
+        'Order on WhatsApp': 'WhatsAppで注文', 'Compare now': '比較する', 'Select 2 or 3 products': '2〜3個の商品を選択',
+        'Price': '価格', 'Duration': '期間', 'Access': 'アクセス', 'Features': '機能',
+        'Cart': 'カート', 'All tools': 'すべてのツール', 'Search': '検索',
+    }.items():
+        app = app.replace(old, new)
     (ROOT / "jp" / "app-jp.js").write_text(app, encoding="utf-8")
 
 

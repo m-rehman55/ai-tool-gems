@@ -2,27 +2,27 @@ const DEFAULT_WA_NUMBER = '817095128428';
 const LEGACY_WA_NUMBER = '923236715731';
 
 const products = [
-  {id:'gemini',name:'Gemini Pro',category:'AI Assistants',description:'Gemini Proを日本向けに比較。18か月、¥849。利用条件と提供状況は注文前に確認します。',price:849,oldPrice:1019,duration:'18 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'chatgpt',name:'ChatGPT Plus',category:'AI Assistants',description:'ChatGPT Plusを日本向けに比較。1か月、¥1,697。利用条件と提供状況は注文前に確認します。',price:1697,oldPrice:2036,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'veo',name:'Veo 3 Ultra',category:'AI Video',description:'Veo 3 Ultraの日本向け掲載。¥1,415。動画生成プランと利用条件は注文前に確認します。',price:1415,oldPrice:1698,duration:'Unlimited',access:'Shared',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'leonardo',name:'Leonardo AI Essential',category:'Design',description:'Leonardo AI Essentialを日本向けに比較。8,500クレジット、¥1,358。',price:1358,oldPrice:1630,duration:'8,500 Credits',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'elevenlabs',name:'ElevenLabs',category:'AI Voice',description:'ElevenLabsの日本向け掲載。130Kクレジット、1か月、¥2,150。',price:2150,oldPrice:2580,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'canva',name:'Canva Pro Edu',category:'Design',description:'Canva Pro Eduを日本向けに比較。1年、¥679。利用条件は注文前に確認します。',price:679,oldPrice:815,duration:'1 Year',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'figma',name:'Figma Pro Private',category:'Design',description:'Figma Pro Privateを日本向けに比較。2年、¥2,207。',price:2207,oldPrice:2648,duration:'2 Years',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'capcut',name:'CapCut Pro',category:'AI Video',description:'CapCut Proを日本向けに比較。1か月、¥679。',price:679,oldPrice:815,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'adobe',name:'Adobe Creative',category:'Design',description:'Adobe Creativeの日本向け掲載。2か月¥1,075、1年¥15,277。プランは注文前に確認します。',price:1075,oldPrice:1290,duration:'2 Months / 1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'lovable',name:'Lovable Pro',category:'Development',description:'Lovable Proを日本向けに比較。1か月、¥1,075。',price:1075,oldPrice:1290,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'gamma',name:'Gamma Pro',category:'Productivity',description:'Gamma Proを日本向けに比較。1年、¥14,711。',price:14711,oldPrice:17653,duration:'1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'replit',name:'Replit Core',category:'Development',description:'Replit Coreの日本向け掲載。$40クレジット¥2,150、1年¥7,921。プランは注文前に確認します。',price:2150,oldPrice:2580,duration:'$40 Credits / 1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'n8n',name:'n8n Starter',category:'Development',description:'n8n Starterを日本向けに比較。1年、¥4,526。',price:4526,oldPrice:5431,duration:'1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'manus',name:'Manus AI Pro',category:'AI Assistants',description:'Manus AI Proの日本向け掲載。1年、¥8,487。利用条件は注文前に確認します。',price:8487,oldPrice:10184,duration:'1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'notion',name:'Notion Business',category:'Productivity',description:'Notion Businessを日本向けに比較。3か月、¥1,415。',price:1415,oldPrice:1698,duration:'3 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'nordvpn',name:'NordVPN',category:'VPN & Security',description:'NordVPNを日本向けに比較。3か月、¥6,846。',price:6846,oldPrice:8215,duration:'3 Months',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'surfshark',name:'Surfshark VPN',category:'VPN & Security',description:'Surfshark VPNを日本向けに比較。2か月、¥679。',price:679,oldPrice:815,duration:'2 Months',access:'Shared',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'youtube',name:'YouTube Premium',category:'Entertainment',description:'YouTube Premiumを日本向けに比較。3か月、¥1,018。',price:1018,oldPrice:1222,duration:'3 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'netflix',name:'Netflix Premium 4K',category:'Entertainment',description:'Netflix Premium 4Kを日本向けに比較。1か月、¥453。',price:453,oldPrice:544,duration:'1 Month',access:'Shared',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'LinkedIn Premiumを日本向けに比較。2か月、¥1,075。',price:1075,oldPrice:1290,duration:'2 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
-  {id:'windows',name:'Windows 11 Pro License Key',category:'Software',description:'Windows 11 Pro License Keyを日本向けに比較。¥1,245。ライセンス条件は注文前に確認します。',price:1245,oldPrice:1494,duration:'Lifetime',access:'License Key',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']}
+  {id:'gemini',name:'Gemini Pro',category:'AI Assistants',description:'Gemini Proを日本向けに比較。18か月、¥849。利用条件と提供状況は注文前に確認します。',price:849,old価格:1019,duration:'18 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'chatgpt',name:'ChatGPT Plus',category:'AI Assistants',description:'ChatGPT Plusを日本向けに比較。1か月、¥1,697。利用条件と提供状況は注文前に確認します。',price:1697,old価格:2036,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'veo',name:'Veo 3 Ultra',category:'AI Video',description:'Veo 3 Ultraの日本向け掲載。¥1,415。動画生成プランと利用条件は注文前に確認します。',price:1415,old価格:1698,duration:'Unlimited',access:'Shared',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'leonardo',name:'Leonardo AI Essential',category:'Design',description:'Leonardo AI Essentialを日本向けに比較。8,500クレジット、¥1,358。',price:1358,old価格:1630,duration:'8,500 Credits',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'elevenlabs',name:'ElevenLabs',category:'AI Voice',description:'ElevenLabsの日本向け掲載。130Kクレジット、1か月、¥2,150。',price:2150,old価格:2580,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'canva',name:'Canva Pro Edu',category:'Design',description:'Canva Pro Eduを日本向けに比較。1年、¥679。利用条件は注文前に確認します。',price:679,old価格:815,duration:'1 Year',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'figma',name:'Figma Pro Private',category:'Design',description:'Figma Pro Privateを日本向けに比較。2年、¥2,207。',price:2207,old価格:2648,duration:'2 Years',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'capcut',name:'CapCut Pro',category:'AI Video',description:'CapCut Proを日本向けに比較。1か月、¥679。',price:679,old価格:815,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'adobe',name:'Adobe Creative',category:'Design',description:'Adobe Creativeの日本向け掲載。2か月¥1,075、1年¥15,277。プランは注文前に確認します。',price:1075,old価格:1290,duration:'2 Months / 1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'lovable',name:'Lovable Pro',category:'Development',description:'Lovable Proを日本向けに比較。1か月、¥1,075。',price:1075,old価格:1290,duration:'1 Month',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'gamma',name:'Gamma Pro',category:'Productivity',description:'Gamma Proを日本向けに比較。1年、¥14,711。',price:14711,old価格:17653,duration:'1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'replit',name:'Replit Core',category:'Development',description:'Replit Coreの日本向け掲載。$40クレジット¥2,150、1年¥7,921。プランは注文前に確認します。',price:2150,old価格:2580,duration:'$40 Credits / 1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'n8n',name:'n8n Starter',category:'Development',description:'n8n Starterを日本向けに比較。1年、¥4,526。',price:4526,old価格:5431,duration:'1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'manus',name:'Manus AI Pro',category:'AI Assistants',description:'Manus AI Proの日本向け掲載。1年、¥8,487。利用条件は注文前に確認します。',price:8487,old価格:10184,duration:'1 Year',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'notion',name:'Notion Business',category:'Productivity',description:'Notion Businessを日本向けに比較。3か月、¥1,415。',price:1415,old価格:1698,duration:'3 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'nordvpn',name:'NordVPN',category:'VPN & Security',description:'NordVPNを日本向けに比較。3か月、¥6,846。',price:6846,old価格:8215,duration:'3 Months',access:'Private',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'surfshark',name:'Surfshark VPN',category:'VPN & Security',description:'Surfshark VPNを日本向けに比較。2か月、¥679。',price:679,old価格:815,duration:'2 Months',access:'Shared',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'youtube',name:'YouTube Premium',category:'Entertainment',description:'YouTube Premiumを日本向けに比較。3か月、¥1,018。',price:1018,old価格:1222,duration:'3 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'netflix',name:'Netflix Premium 4K',category:'Entertainment',description:'Netflix Premium 4Kを日本向けに比較。1か月、¥453。',price:453,old価格:544,duration:'1 Month',access:'Shared',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'LinkedIn Premiumを日本向けに比較。2か月、¥1,075。',price:1075,old価格:1290,duration:'2 Months',access:'Invitation',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']},
+  {id:'windows',name:'Windows 11 Pro License Key',category:'Software',description:'Windows 11 Pro License Keyを日本向けに比較。¥1,245。ライセンス条件は注文前に確認します。',price:1245,old価格:1494,duration:'Lifetime',access:'License Key',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'../assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']}
 ];
 
 const categoryData = [
@@ -87,7 +87,7 @@ try {
           category: safeCatalogText(saved.category),
           description: saved.description ? safeCatalogText(saved.description) : 'A newly added subscription. Contact our team for complete plan details.',
           price: Number(saved.price),
-          oldPrice: Math.ceil(Number(saved.price) * 1.2),
+          old価格: Math.ceil(Number(saved.price) * 1.2),
           duration: '1 Month',
           access: 'Private',
           delivery: '30–60 min',
@@ -106,7 +106,7 @@ try {
   localStorage.removeItem('atg-admin-products');
 }
 
-function loadStoredCart() {
+function loadStoredカート() {
   try {
     const saved = JSON.parse(localStorage.getItem('atg-cart') || '[]');
     return Array.isArray(saved) ? saved.filter(id => products.some(p => p.id === id)) : [];
@@ -120,7 +120,7 @@ let state = {
   category: 'All',
   query: '',
   limit: 20,
-  cart: loadStoredCart(),
+  cart: loadStoredカート(),
   compare: [],
   finder: { intent: '', minBudget: 0, maxBudget: Infinity }
 };
@@ -128,7 +128,7 @@ let state = {
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const money = n => '¥' + n.toLocaleString('ja-JP');
-const discount = p => Math.round((1 - p.price / p.oldPrice) * 100);
+const discount = p => Math.round((1 - p.price / p.old価格) * 100);
 const svg = id => `<svg><use href="#${id}"></use></svg>`;
 const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
 
@@ -137,15 +137,15 @@ function trackEvent(event, details = {}) {
   window.dataLayer.push({ event, ...details });
 }
 
-function clearSearchField() {
-  const input = $('#heroSearch');
+function clear検索Field() {
+  const input = $('#hero検索');
   if (input) input.value = '';
 }
 
 /* --------------------------------------------------------------------------
    RENDERING FUNCTIONS
    -------------------------------------------------------------------------- */
-function renderCategories() {
+function renderカテゴリー() {
   const container = $('#categoryGrid');
   if (!container) return;
   container.innerHTML = categoryData.map((c, index) => {
@@ -191,7 +191,7 @@ function filteredProducts() {
 }
 
 function card(p) {
-  const inCart = state.cart.includes(p.id);
+  const inカート = state.cart.includes(p.id);
   const comparing = state.compare.includes(p.id);
   return `
   <article class="product-card" data-id="${p.id}">
@@ -218,16 +218,16 @@ function card(p) {
       </div>
       <div class="product-price">
         <div class="price-block">
-          <small>${money(p.oldPrice)}</small>
+          <small>${money(p.old価格)}</small>
           <strong>${money(p.price)}</strong>
         </div>
         <span class="saving">Save ${discount(p)}%</span>
       </div>
       <div class="card-actions">
-        <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} Buy now</button>
+        <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} 今すぐ注文</button>
         <button class="detail-button" data-detail="${p.id}">View details</button>
-        <button class="add-button ${inCart ? 'added' : ''}" data-add="${p.id}" aria-label="${inCart ? 'Remove' : 'Add'} ${p.name} ${inCart ? 'from' : 'to'} cart" aria-pressed="${inCart}">
-          ${svg(inCart ? 'i-check' : 'i-plus')}
+        <button class="add-button ${inカート ? 'added' : ''}" data-add="${p.id}" aria-label="${inカート ? 'Remove' : 'Add'} ${p.name} ${inカート ? 'from' : 'to'} cart" aria-pressed="${inカート}">
+          ${svg(inカート ? 'i-check' : 'i-plus')}
         </button>
       </div>
     </div>
@@ -255,10 +255,10 @@ function renderProducts() {
 /* --------------------------------------------------------------------------
    CART & COMPARE LOGIC
    -------------------------------------------------------------------------- */
-function updateCart() {
+function updateカート() {
   localStorage.setItem('atg-cart', JSON.stringify(state.cart));
   const cCount = $('#cartCount');
-  const mCount = $('#mobileCartCount');
+  const mCount = $('#mobileカートCount');
   if (cCount) cCount.textContent = state.cart.length;
   if (mCount) mCount.textContent = state.cart.length;
 
@@ -302,12 +302,12 @@ function updateBundleButton() {
   button.innerHTML = isComplete ? `Stack in cart ${svg('i-check')}` : `Add creator stack ${svg('i-plus')}`;
 }
 
-function toggleCart(id) {
-  const wasInCart = state.cart.includes(id);
+function toggleカート(id) {
+  const wasInカート = state.cart.includes(id);
   state.cart = state.cart.includes(id) ? state.cart.filter(x => x !== id) : [...state.cart, id];
   const product = products.find(p => p.id === id);
-  if (product) trackEvent(wasInCart ? 'remove_from_cart' : 'add_to_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'JPY' });
-  updateCart();
+  if (product) trackEvent(wasInカート ? 'remove_from_cart' : 'add_to_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'JPY' });
+  updateカート();
   renderProducts();
   toast(state.cart.includes(id) ? 'Added to your cart' : 'Removed from cart');
 }
@@ -383,10 +383,10 @@ function openProduct(id) {
           <h2 id="productDetailTitle">${p.name}</h2>
           <div class="detail-rating">Plan details confirmed before payment</div>
           <p>${p.description} Availability, access type, and delivery timing are confirmed directly on WhatsApp before payment.</p>
-          <div class="detail-price">${money(p.price)} <del>${money(p.oldPrice)}</del></div>
+          <div class="detail-price">${money(p.price)} <del>${money(p.old価格)}</del></div>
           <div class="detail-grid">
             <div class="detail-spec"><small>Plan duration</small><b>${p.duration}</b></div>
-            <div class="detail-spec"><small>Access type</small><b>${p.access} Plan</b></div>
+            <div class="detail-spec"><small>アクセス type</small><b>${p.access} Plan</b></div>
             <div class="detail-spec"><small>Delivery speed</small><b>${p.delivery}</b></div>
             <div class="detail-spec"><small>Warranty</small><b>${p.warranty}</b></div>
           </div>
@@ -395,7 +395,7 @@ function openProduct(id) {
           </div>
           <div class="detail-actions">
             <button class="add-detail" data-add="${p.id}">${state.cart.includes(p.id) ? 'Added to cart' : 'Add to cart'}</button>
-            <button class="order-now" data-order="${p.id}">${svg('i-whatsapp')} Order on WhatsApp</button>
+            <button class="order-now" data-order="${p.id}">${svg('i-whatsapp')} WhatsAppで注文</button>
           </div>
           <a class="full-details-link" href="tools/${p.id}/">Open full product page ${svg('i-arrow')}</a>
         </div>
@@ -422,7 +422,7 @@ function orderProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
   trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: p.price, currency: 'JPY' });
-  window.open(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`), '_blank');
+  window.open(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ 期間: ${p.duration}\n🔑 アクセス: ${p.access}\n💰 価格: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`), '_blank');
 }
 
 function checkout() {
@@ -454,10 +454,10 @@ function showSuggestions(q) {
   box.classList.add('show');
 }
 
-function applySearch(q) {
+function apply検索(q) {
   state.query = q;
   state.limit = 20;
-  const sInput = $('#heroSearch');
+  const sInput = $('#hero検索');
   if (sInput) sInput.value = q;
   const box = $('#suggestions');
   if (box) box.classList.remove('show');
@@ -474,7 +474,7 @@ function renderCompare() {
     <div class="cart-empty">
       <img src="../assets/logo-transparent.webp" width="1024" height="1024" loading="lazy" class="empty-state-logo" alt="">
       <h3>Select one more tool</h3>
-      <p>Select 2 or 3 products to compare features and prices side by side.</p>
+      <p>2〜3個の商品を選択 to compare features and prices side by side.</p>
     </div>
   ` : `
     <table class="compare-table">
@@ -486,9 +486,9 @@ function renderCompare() {
       </thead>
       <tbody>
         ${[
-          ['Price', p => money(p.price)],
-          ['Duration', p => p.duration],
-          ['Access Type', p => p.access],
+          ['価格', p => money(p.price)],
+          ['期間', p => p.duration],
+          ['アクセス Type', p => p.access],
           ['Delivery', p => p.delivery],
           ['Warranty', p => p.warranty],
           ['Best For', p => p.bestFor.join(', ')]
@@ -641,7 +641,7 @@ function updateFinderPreview(intent) {
   if (name) name.textContent = data.name;
   const desc = $('#finderMatchDesc');
   if (desc) desc.textContent = data.desc;
-  const price = $('#finderMatchPrice');
+  const price = $('#finderMatch価格');
   if (price) price.textContent = money(data.price);
   const logo = $('#finderMatchLogo');
   if (logo) {
@@ -780,13 +780,13 @@ function init3dCards() {
 document.addEventListener('click', e => {
   const add = e.target.closest('[data-add]');
   if (add) {
-    toggleCart(add.dataset.add);
+    toggleカート(add.dataset.add);
     if ($('#productModal').classList.contains('open')) openProduct(add.dataset.add);
     return;
   }
   const remove = e.target.closest('[data-remove]');
   if (remove) {
-    toggleCart(remove.dataset.remove);
+    toggleカート(remove.dataset.remove);
     return;
   }
   const comp = e.target.closest('[data-compare]');
@@ -811,7 +811,7 @@ document.addEventListener('click', e => {
   if (cat) {
     state.category = cat.dataset.category;
     state.query = '';
-    clearSearchField();
+    clear検索Field();
     state.limit = 20;
     renderProducts();
     $('#products').scrollIntoView({ behavior: 'smooth' });
@@ -821,13 +821,13 @@ document.addEventListener('click', e => {
   if (catLink) {
     state.category = catLink.dataset.categoryLink;
     state.query = '';
-    clearSearchField();
+    clear検索Field();
     renderProducts();
     return;
   }
   const query = e.target.closest('[data-query]');
   if (query) {
-    applySearch(query.dataset.query);
+    apply検索(query.dataset.query);
     return;
   }
   const suggestion = e.target.closest('[data-suggest]');
@@ -870,7 +870,7 @@ document.addEventListener('click', e => {
     if (action === 'search') {
       const ps = $('#products');
       if (ps) ps.scrollIntoView({ behavior: 'smooth' });
-      if (heroSearch) heroSearch.focus();
+      if (hero検索) hero検索.focus();
     } else if (action === 'cart') {
       openLayer($('#cartDrawer'));
     } else if (action === 'whatsapp') {
@@ -904,7 +904,7 @@ document.addEventListener('click', e => {
   }
   if (e.target.id === 'clearQuery') {
     state.query = '';
-    clearSearchField();
+    clear検索Field();
     renderProducts();
     return;
   }
@@ -914,30 +914,30 @@ document.addEventListener('click', e => {
   }
 });
 
-/* Search listeners */
-const heroSearch = $('#heroSearch');
-if (heroSearch) {
-  heroSearch.addEventListener('input', e => showSuggestions(e.target.value));
-  heroSearch.addEventListener('keydown', e => {
-    if (e.key === 'Enter') applySearch(e.target.value);
+/* 検索 listeners */
+const hero検索 = $('#hero検索');
+if (hero検索) {
+  hero検索.addEventListener('input', e => showSuggestions(e.target.value));
+  hero検索.addEventListener('keydown', e => {
+    if (e.key === 'Enter') apply検索(e.target.value);
     if (e.key === 'Escape') $('#suggestions').classList.remove('show');
   });
 }
 
-const openSearch = $('#openSearch');
-if (openSearch && heroSearch) {
-  openSearch.onclick = () => {
-    heroSearch.focus();
-    heroSearch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+const open検索 = $('#open検索');
+if (open検索 && hero検索) {
+  open検索.onclick = () => {
+    hero検索.focus();
+    hero検索.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 }
 
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
     e.preventDefault();
-    if (heroSearch) {
-      heroSearch.focus();
-      heroSearch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (hero検索) {
+      hero検索.focus();
+      hero検索.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
   if (e.key === 'Escape') {
@@ -968,10 +968,10 @@ document.addEventListener('keydown', e => {
   }
 });
 
-const openCart = $('#openCart');
-const mobileCart = $('#mobileCart');
-if (openCart) openCart.onclick = () => openLayer($('#cartDrawer'));
-if (mobileCart) mobileCart.onclick = () => openLayer($('#cartDrawer'));
+const openカート = $('#openカート');
+const mobileカート = $('#mobileカート');
+if (openカート) openカート.onclick = () => openLayer($('#cartDrawer'));
+if (mobileカート) mobileカート.onclick = () => openLayer($('#cartDrawer'));
 
 const checkoutWA = $('#checkoutWhatsApp');
 if (checkoutWA) checkoutWA.onclick = checkout;
@@ -998,7 +998,7 @@ if (clearFilt) {
   clearFilt.onclick = () => {
     state.category = 'All';
     state.query = '';
-    clearSearchField();
+    clear検索Field();
     renderProducts();
   };
 }
@@ -1049,7 +1049,7 @@ if (addBundleBtn) {
     bundleIds.forEach(id => {
       if (!state.cart.includes(id)) state.cart.push(id);
     });
-    updateCart();
+    updateカート();
     renderProducts();
     toast('4 Creator stack tools added to your cart');
   };
@@ -1058,9 +1058,9 @@ if (addBundleBtn) {
 /* --------------------------------------------------------------------------
    INITIALIZATION
    -------------------------------------------------------------------------- */
-renderCategories();
+renderカテゴリー();
 renderProducts();
-updateCart();
+updateカート();
 updateCompare();
 init3dHero();
 init3dCards();
