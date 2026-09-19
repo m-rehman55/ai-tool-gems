@@ -349,7 +349,11 @@
         "ai_disclosed": false,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-19T04:24:09+00:00"
+        "recorded_at": "2026-09-19T04:24:09+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-19T20:39:06+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-19"
       },
       "morning:facebook": {
         "post_id": "6aae0e6924705c9044989e8f",
@@ -372,7 +376,11 @@
         "ai_disclosed": false,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-19T04:24:09+00:00"
+        "recorded_at": "2026-09-19T04:24:09+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-19T20:39:06+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-19"
       },
       "morning:tiktok": {
         "post_id": "6aae0e6904838aa1c45ac053",
@@ -395,7 +403,11 @@
         "ai_disclosed": false,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-19T04:24:09+00:00"
+        "recorded_at": "2026-09-19T04:24:09+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-19T20:39:06+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-19"
       },
       "evening:instagram": {
         "post_id": "6aae0e6b560f708e814d0d4a",
@@ -464,7 +476,11 @@
         "ai_disclosed": true,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-19T04:24:14+00:00"
+        "recorded_at": "2026-09-19T04:24:14+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-19T20:39:06+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-19"
       }
     }
   }
