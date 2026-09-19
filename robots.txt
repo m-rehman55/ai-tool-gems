@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 Disallow: /marketing_agent/
+Disallow: /.env
 Disallow: /.env.example
 
 User-agent: GPTBot
@@ -12,6 +13,7 @@ User-agent: PerplexityBot
 Allow: /
 Disallow: /admin.html
 Disallow: /marketing_agent/
+Disallow: /.env
 Disallow: /.env.example
 
 Sitemap: https://aitoolgems.tech/sitemap.xml

@@ -1,0 +1,2 @@
+timestamp,commit,URL(s),change_type,description,reason,data_evidence,expected_effect,risk_level,approval,deployment_status,validation_status,rollback_method
+2026-09-19,,,,robots,Disallow root .env files in robots.txt to protect accidental public exposure,Repository audit found only .env.example was disallowed,Prevent crawlers from requesting environment files,low,owner-approved,not-deployed,local validation pending,Remove the two added Disallow lines

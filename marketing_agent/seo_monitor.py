@@ -15,7 +15,7 @@ from .telegram import TelegramClient
 
 
 AI_CRAWLERS = ("GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "PerplexityBot")
-REQUIRED_SCHEMA = {"Organization", "WebSite", "ItemList"}
+REQUIRED_SCHEMA = {"Organization", "OnlineStore", "WebSite", "ItemList"}
 REQUIRED_SOCIAL_PROFILES = (
     "https://www.tiktok.com/@aitoolgems",
     "https://www.instagram.com/aitoolgemspak/",
@@ -109,6 +109,26 @@ def inspect_homepage(html: str, canonical_url: str) -> list[str]:
     missing = sorted(REQUIRED_SCHEMA - schema_types)
     if missing:
         issues.append("Homepage missing schema types: " + ", ".join(missing))
+    # Local/geo signals must describe the service area without inventing a street
+    # address. This is an online marketplace serving Pakistan, not a storefront.
+    joined_schema = " ".join(parser.schemas)
+    if '"areaServed"' not in joined_schema or '"Pakistan"' not in joined_schema:
+        issues.append("Homepage schema is missing the Pakistan service area")
+    if '"telephone"' not in joined_schema or "+923236715731" not in joined_schema:
+        issues.append("Homepage schema is missing the verified WhatsApp support number")
+    return issues
+
+
+def inspect_indexable_page(html: str, expected_url: str) -> list[str]:
+    parser = PageSignals()
+    parser.feed(html)
+    issues: list[str] = []
+    if not parser.title.strip():
+        issues.append(f"Missing title: {expected_url}")
+    if not parser.description.strip():
+        issues.append(f"Missing meta description: {expected_url}")
+    if parser.canonical.rstrip("/") != expected_url.rstrip("/"):
+        issues.append(f"Missing or incorrect canonical: {expected_url}")
     return issues
 
 
@@ -144,6 +164,8 @@ def audit_site(settings: Settings, fetch: Callable[[str], FetchResult] = _fetch)
                 checked[url] = result.status
                 if result.status != 200:
                     issues.append(f"Non-200 sitemap URL: {url} ({result.status})")
+                else:
+                    issues.extend(inspect_indexable_page(result.body, url))
             except Exception as exc:
                 checked[url] = 0
                 issues.append(f"Unreachable sitemap URL: {url} ({type(exc).__name__})")
@@ -152,6 +174,10 @@ def audit_site(settings: Settings, fetch: Callable[[str], FetchResult] = _fetch)
     try:
         homepage = fetch(site + "/")
         issues.extend(inspect_homepage(homepage.body, site + "/"))
+        homepage_text = homepage.body.lower()
+        for local_signal in ("pakistan", "pkr", "whatsapp"):
+            if local_signal not in homepage_text:
+                issues.append(f"Homepage is missing local conversion signal: {local_signal}")
         aeo_answer_blocks = homepage.body.lower().count("<details")
         if aeo_answer_blocks < 3:
             issues.append("Homepage has fewer than three server-rendered answer blocks")

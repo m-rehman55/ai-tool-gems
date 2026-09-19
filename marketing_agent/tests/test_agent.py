@@ -33,7 +33,7 @@ from marketing_agent.db import connect, database_status, initialize
 from marketing_agent.metrics import record_metrics
 from marketing_agent.posting import approve_posts
 from marketing_agent.reporting import build_report
-from marketing_agent.seo_monitor import inspect_homepage
+from marketing_agent.seo_monitor import inspect_homepage, inspect_indexable_page
 from marketing_agent.social import (
     audience_for,
     caption_for_platform,
@@ -132,9 +132,26 @@ class AgentTests(unittest.TestCase):
         <title>AI Tool Gems Pakistan Marketplace</title>
         <meta name="description" content="Compare AI tools and digital subscriptions in Pakistan with clear PKR prices, access terms, delivery details and direct support before ordering.">
         <link rel="canonical" href="https://aitoolgems.tech/">
-        <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization"},{"@type":"WebSite"},{"@type":"ItemList"}]}</script>
+        <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["Organization","OnlineStore"],"areaServed":{"@type":"Country","name":"Pakistan"},"telephone":"+923236715731"},{"@type":"WebSite"},{"@type":"ItemList"}]}</script>
         </head><body><h1>AI tools in Pakistan</h1></body></html>'''
         self.assertEqual(inspect_homepage(html, "https://aitoolgems.tech/"), [])
+
+    def test_seo_monitor_checks_indexable_page_metadata(self):
+        html = '''<html><head><title>Example</title>
+        <meta name="description" content="A useful page.">
+        <link rel="canonical" href="https://aitoolgems.tech/example/">
+        </head><body></body></html>'''
+        self.assertEqual(
+            inspect_indexable_page(html, "https://aitoolgems.tech/example/"), []
+        )
+        self.assertEqual(
+            inspect_indexable_page("<html><head></head></html>", "https://aitoolgems.tech/example/"),
+            [
+                "Missing title: https://aitoolgems.tech/example/",
+                "Missing meta description: https://aitoolgems.tech/example/",
+                "Missing or incorrect canonical: https://aitoolgems.tech/example/",
+            ],
+        )
 
     def test_trial_claim_is_duplicate_safe(self):
         ledger = Path(self.temp.name) / "ledger.json"
