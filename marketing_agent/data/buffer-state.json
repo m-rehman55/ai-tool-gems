@@ -326,6 +326,146 @@
         "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
         "metrics_checked_on": "2026-09-19"
       }
+    },
+    "2026-09-19": {
+      "morning:instagram": {
+        "post_id": "6aae0e6965e5b8cd5b2882fe",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-09-19T05:00:00.000Z",
+        "slot": "morning",
+        "service": "instagram",
+        "audience": "developers",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "replit",
+          "notion"
+        ],
+        "media_type": "image",
+        "creative_concept": "deal-countdown",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-19T04:24:09+00:00"
+      },
+      "morning:facebook": {
+        "post_id": "6aae0e6924705c9044989e8f",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-09-19T05:00:00.000Z",
+        "slot": "morning",
+        "service": "facebook",
+        "audience": "developers",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "replit",
+          "notion"
+        ],
+        "media_type": "image",
+        "creative_concept": "deal-countdown",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-19T04:24:09+00:00"
+      },
+      "morning:tiktok": {
+        "post_id": "6aae0e6904838aa1c45ac053",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-09-19T05:00:00.000Z",
+        "slot": "morning",
+        "service": "tiktok",
+        "audience": "developers",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "replit",
+          "notion"
+        ],
+        "media_type": "image",
+        "creative_concept": "deal-countdown",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-19T04:24:09+00:00"
+      },
+      "evening:instagram": {
+        "post_id": "6aae0e6b560f708e814d0d4a",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-09-19T16:00:00.000Z",
+        "slot": "evening",
+        "service": "instagram",
+        "audience": "students",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "gamma",
+          "n8n"
+        ],
+        "media_type": "video",
+        "creative_concept": "orbit-drop",
+        "audio_theme": "creator-pop",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 12,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-19T04:24:11+00:00"
+      },
+      "evening:facebook": {
+        "post_id": "6aae0e6c560f708e814d0d74",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-09-19T17:00:00.000Z",
+        "slot": "evening",
+        "service": "facebook",
+        "audience": "students",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "gamma",
+          "n8n"
+        ],
+        "media_type": "video",
+        "creative_concept": "orbit-drop",
+        "audio_theme": "clean-cinematic",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 14,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-19T04:24:13+00:00"
+      },
+      "evening:tiktok": {
+        "post_id": "6aae0e6e65e5b8cd5b28832c",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-09-19T12:00:00.000Z",
+        "slot": "evening",
+        "service": "tiktok",
+        "audience": "students",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "gamma",
+          "n8n"
+        ],
+        "media_type": "video",
+        "creative_concept": "orbit-drop",
+        "audio_theme": "cinematic-trap",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 10,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-19T04:24:14+00:00"
+      }
     }
   }
 }
