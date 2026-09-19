@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from html import escape
 from pathlib import Path
 
@@ -99,6 +100,46 @@ def home_page() -> str:
 <main><section class="hero"><p class="eyebrow">AI TOOLS FOR JAPAN</p><h1>日本向けAIツールとサブスクリプション</h1><p>JPY価格、期間、アクセス条件を比較。日本語・English対応で、注文前にWhatsAppで在庫と条件を確認できます。</p><a class="buy" href="https://wa.me/{JP_WA}?text=AI%20Tool%20Gems%20Japan%20の商品について相談したいです。">WhatsAppで相談する</a></section><section id="products"><h2>AI Tools — JPY Prices</h2><div class="product-grid">{cards}</div></section><section id="how" class="answer"><h2>ご利用方法 / How it works</h2><ol><li>商品と掲載価格を比較します。</li><li>WhatsAppで在庫、アクセス形式、支払い、配送時間を確認します。</li><li>条件に同意した後に注文を進めます。</li></ol><p>AI Tool Gems Japanは独立系マーケットプレイスであり、第三者ブランドの公式提携を意味しません。</p></section></main><footer><span>© 2026 AI Tool Gems Japan</span><span>Japan support: +81 70 9512 8428</span></footer></body></html>'''
 
 
+def generate_visual_home() -> None:
+    source = (ROOT / "index.html").read_text(encoding="utf-8")
+    source = re.sub(r'\s*<script type="application/ld\+json">.*?</script>', "", source, flags=re.S)
+    for old, new in {
+        '<html lang="en-PK">': '<html lang="ja-JP">',
+        "AI Tool Gems Pakistan": "AI Tool Gems Japan",
+        "Pakistan-based AI Tools Marketplace": "Japan AI Tools Marketplace",
+        "Premium AI Tools in Pakistan": "Premium AI Tools in Japan",
+        'href="assets/': 'href="../assets/',
+        'src="assets/': 'src="../assets/',
+        'href="styles.css"': 'href="../styles.css"',
+        'href="light-theme.css"': 'href="../light-theme.css"',
+        'src="attribution.js"': 'src="../attribution.js"',
+        'src="app.js"': 'src="app-jp.js"',
+        'href="deals/"': 'href="../deals/"',
+        'href="guides/"': 'href="../guides/"',
+        'href="guides/': 'href="../guides/',
+        'href="privacy.html"': 'href="../privacy.html"',
+        'href="terms.html"': 'href="../terms.html"',
+        'href="policies.html': 'href="../policies.html',
+        'href="sitemap.xml"': 'href="../sitemap-jp.xml"',
+    }.items():
+        source = source.replace(old, new)
+    source = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Compare AI tools and digital subscriptions in Japan with JPY pricing, Japanese and English support, and direct WhatsApp ordering.">', source, count=1)
+    source = re.sub(r'<link rel="canonical" href="[^"]*">', '<link rel="canonical" href="https://aitoolgems.tech/jp/">\n  <link rel="alternate" hreflang="ja-JP" href="https://aitoolgems.tech/jp/">\n  <link rel="alternate" hreflang="en-PK" href="https://aitoolgems.tech/">\n  <link rel="alternate" hreflang="x-default" href="https://aitoolgems.tech/">', source, count=1)
+    source = re.sub(r'<title>.*?</title>', '<title>AI Tools Japan — JPY Prices &amp; WhatsApp Support</title>', source, count=1, flags=re.S)
+    source = source.replace('https://wa.me/923236715731', 'https://wa.me/817095128428').replace('Rs. ', '¥').replace('PKR', 'JPY')
+    source = source.replace('Pakistan', 'Japan').replace('Japan / English', 'Pakistan / English').replace('facebook.com/people/AI-Tool-Gems-Japan/', 'facebook.com/people/AI-Tool-Gems-Pakistan/').replace('20 AI', '22 AI').replace('all 20', 'all 22').replace('20 listings', '22 listings')
+    (ROOT / "jp" / "index.html").write_text(source, encoding="utf-8")
+
+    app = (ROOT / "app.js").read_text(encoding="utf-8")
+    lines = []
+    for pid, name, category, price, duration, access, description in PRODUCTS:
+        lines.append(f"  {{id:'{pid}',name:'{name}',category:'{category}',description:'{description}',price:{price},oldPrice:{round(price * 1.2)},duration:'{duration}',access:'{access}',delivery:'15–60 min',warranty:'7 Days',rating:4.8,badge:'Japan',bestFor:['AI','Work'],logo:'assets/brand-logo-light.webp',features:['Plan details confirmed before payment','Japanese and English WhatsApp support'],intent:['ai','work','study','creator']}}")
+    app = re.sub(r'const products = \[.*?\];\n\nconst categoryData', "const products = [\n" + ",\n".join(lines) + "\n];\n\nconst categoryData", app, count=1, flags=re.S)
+    app = app.replace("const DEFAULT_WA_NUMBER = '923236715731';", "const DEFAULT_WA_NUMBER = '817095128428';").replace("const LEGACY_WA_NUMBER = ['923', '476', '242709'].join('');", "const LEGACY_WA_NUMBER = '923236715731';")
+    app = app.replace("'Rs. ' + n.toLocaleString('en-PK')", "'¥' + n.toLocaleString('ja-JP')").replace("'PKR'", "'JPY'").replace("PKR pricing", "JPY pricing").replace("assets/", "../assets/")
+    (ROOT / "jp" / "app-jp.js").write_text(app, encoding="utf-8")
+
+
 def main() -> None:
     home = ROOT / "jp"
     (home / "tools").mkdir(parents=True, exist_ok=True)
@@ -121,6 +162,7 @@ def main() -> None:
         pk_url = f"{SITE}/" if relative == "index.html" else f"{SITE}/{relative.replace('/index.html', '/').replace('index.html', '')}"
         tags = f'  <link rel="alternate" hreflang="ja-JP" href="{jp_url}">\n  <link rel="alternate" hreflang="en-PK" href="{pk_url}">\n  <link rel="alternate" hreflang="x-default" href="{pk_url}">\n'
         path.write_text(html.replace("</head>", tags + "</head>", 1), encoding="utf-8")
+    generate_visual_home()
 
 
 if __name__ == "__main__":
