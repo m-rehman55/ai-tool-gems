@@ -12,6 +12,7 @@ from .commands import process_updates, setup_bot
 from .buffer import (
     campaign_preflight,
     connection_status as buffer_connection_status,
+    delivery_audit,
     format_publish_confirmation,
     publish_daily_deal,
     repair_future_posts,
@@ -98,6 +99,9 @@ def parser() -> argparse.ArgumentParser:
     buffer_repair.add_argument("--date", default=date.today().isoformat())
     buffer_repair.add_argument("--send", action="store_true", help="Send a private Telegram repair receipt")
     commands.add_parser("buffer-learn", help="Refresh real delivery and engagement results from Buffer")
+    buffer_delivery = commands.add_parser("buffer-delivery-check", help="Verify all six daily Buffer deliveries")
+    buffer_delivery.add_argument("--date", default=date.today().isoformat())
+    buffer_delivery.add_argument("--strict", action="store_true", help="Fail when a post is missing or rejected")
 
     commands.add_parser("trial-plan", help="Print the duplicate-safe three-day campaign plan")
     trial_claim = commands.add_parser("trial-claim", help="Claim one trial slot before publishing")
@@ -237,6 +241,12 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2, ensure_ascii=False))
     elif args.command == "buffer-learn":
         print(json.dumps(refresh_performance(settings), indent=2, ensure_ascii=False))
+    elif args.command == "buffer-delivery-check":
+        print(json.dumps(
+            delivery_audit(settings, date.fromisoformat(args.date), strict=args.strict),
+            indent=2,
+            ensure_ascii=False,
+        ))
     elif args.command == "trial-plan":
         print(json.dumps(trial_plan(settings), indent=2, ensure_ascii=False))
     elif args.command == "trial-claim":

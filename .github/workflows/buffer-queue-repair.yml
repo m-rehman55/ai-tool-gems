@@ -66,32 +66,19 @@ jobs:
           PY
           )"
           curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --output /dev/null "$media_url"
-      - name: Repair future posts in place without duplicates
-        id: repair
-        shell: bash
-        run: |
-          set +e
-          python -m marketing_agent buffer-repair-future --date "${{ steps.campaign.outputs.date }}" --send > marketing_agent/data/repair-last.log 2>&1
-          status=$?
-          set -e
-          echo "status=$status" >> "$GITHUB_OUTPUT"
-          cat marketing_agent/data/repair-last.log
+      # Buffer can lock queued posts shortly before publishing; the command skips that safety window.
+      - name: Repair future posts safely without duplicates
+        run: python -m marketing_agent buffer-repair-future --date "${{ steps.campaign.outputs.date }}" --send
       - name: Save repair receipt
         if: always()
         shell: bash
         run: |
           git config user.name "AI Tool Gems Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add marketing_agent/data/buffer-state.json marketing_agent/data/repair-last.log
-          if [ "${{ steps.repair.outputs.status }}" = "0" ]; then
-            git rm --ignore-unmatch marketing_agent/data/repair-last.log
-          fi
+          git add marketing_agent/data/buffer-state.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Record Buffer queue repair"
           git push
-      - name: Fail safely after recording repair diagnostics
-        if: steps.repair.outputs.status != '0'
-        run: exit 1
       - name: Alert owner if repair needs attention
         if: failure()
         continue-on-error: true

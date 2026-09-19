@@ -1329,7 +1329,7 @@ def campaign_preflight(
     client: BufferClient | None = None,
     now: datetime | None = None,
 ) -> dict:
-    """Block unsafe daily scheduling until all three channels, captions and media pass QA."""
+    """Block unsafe inputs, while reporting past delivery failures without stopping a new day."""
     client = client or BufferClient(settings.buffer_api_key)
     current = now or datetime.now(timezone.utc)
     status = connection_status(settings, client)
@@ -1369,7 +1369,7 @@ def campaign_preflight(
             delivery_checks += 1
             delivery = str(snapshot.get("status", "unknown")).lower()
             if delivery in {"error", "failed", "publishing_error"}:
-                errors.append(f"previous delivery failed: {label}")
+                warnings.append(f"previous delivery failed: {label}")
         except BufferError as exc:
             warnings.append(f"could not recheck {label}: {str(exc)[:160]}")
 
@@ -1396,6 +1396,7 @@ def repair_future_posts(
     now: datetime | None = None,
 ) -> dict:
     """Update future queued posts in place with current captions, media and contact details."""
+    queue_edit_safety_window = timedelta(minutes=15)
     client = client or BufferClient(settings.buffer_api_key)
     current = now or datetime.now(timezone.utc)
     state = _read_state(state_path)
@@ -1413,7 +1414,7 @@ def repair_future_posts(
         except ValueError:
             skipped[state_key] = "invalid schedule"
             continue
-        if due_at <= current + timedelta(minutes=2):
+        if due_at <= current + queue_edit_safety_window:
             skipped[state_key] = "already due or too close to publishing"
             continue
         snapshot = client.post_status(record["post_id"])
@@ -1662,3 +1663,63 @@ def refresh_performance(
         "delivery_errors": errors,
         "analytics_warnings": analytics_warnings,
     }
+
+
+def delivery_audit(
+    settings: Settings,
+    day: date,
+    state_path: Path = STATE_PATH,
+    client: BufferClient | None = None,
+    now: datetime | None = None,
+    strict: bool = False,
+) -> dict:
+    """Verify that every daily post reached a terminal sent state after its due time."""
+    client = client or BufferClient(settings.buffer_api_key)
+    current = now or datetime.now(timezone.utc)
+    state = _read_state(state_path)
+    records = state.get("published_dates", {}).get(day.isoformat(), {})
+    expected = {f"{slot}:{service}" for slot in SOCIAL_SLOTS for service in TARGET_SERVICES}
+    missing = sorted(expected - set(records))
+    sent: dict[str, str] = {}
+    pending: dict[str, str] = {}
+    failed: dict[str, str] = {}
+
+    for state_key in sorted(expected & set(records)):
+        record = records[state_key]
+        try:
+            snapshot = client.post_status(record["post_id"])
+            status = str(snapshot.get("status", "unknown")).lower()
+        except (BufferError, KeyError) as exc:
+            failed[state_key] = f"status check failed: {str(exc)[:180]}"
+            continue
+        record["delivery_status"] = status
+        record["delivery_checked_at"] = current.isoformat(timespec="seconds")
+        if status in {"sent", "published"}:
+            sent[state_key] = status
+            continue
+        if status in {"error", "failed", "publishing_error"}:
+            failed[state_key] = status
+            continue
+        try:
+            due_at = datetime.fromisoformat(str(record.get("scheduled_for", "")).replace("Z", "+00:00"))
+        except ValueError:
+            failed[state_key] = "invalid scheduled time"
+            continue
+        if due_at <= current - timedelta(minutes=45):
+            failed[state_key] = f"stuck after due time ({status})"
+        else:
+            pending[state_key] = status
+
+    _write_state(state_path, state)
+    result = {
+        "ok": not missing and not failed,
+        "date": day.isoformat(),
+        "expected": len(expected),
+        "sent": sent,
+        "pending": pending,
+        "missing": missing,
+        "failed": failed,
+    }
+    if strict and not result["ok"]:
+        raise BufferError(json.dumps(result, ensure_ascii=False))
+    return result
