@@ -65,7 +65,7 @@ jobs:
       - name: Run marketing-agent tests
         run: python -m unittest discover -s marketing_agent/tests -v
       - name: Verify Buffer connection and owned channels
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         shell: bash
         run: |
           set +e
@@ -79,16 +79,16 @@ jobs:
             exit "$status"
           fi
       - name: Refresh real delivery and engagement results
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         run: python -m marketing_agent buffer-learn
       - name: Build today's rotating photo and three platform-paced videos
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
       - name: Preflight all channels captions media and recent deliveries
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         run: python -m marketing_agent buffer-preflight --date "${{ steps.campaign.outputs.date }}"
       - name: Publish deal card as public media
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         shell: bash
         run: |
           git config user.name "AI Tool Gems Bot"
@@ -96,9 +96,10 @@ jobs:
           git add assets/social-deals/ assets/product-logos/
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Create daily social deal card for ${{ steps.campaign.outputs.date }}"
+          git pull --rebase origin main
           git push
       - name: Confirm public media is ready
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         shell: bash
         run: |
           python - <<'PY' > /tmp/media-urls.txt
@@ -114,7 +115,7 @@ jobs:
             curl --fail --silent --show-error --location --retry 8 --retry-delay 3 --output /dev/null "$media_url"
           done < /tmp/media-urls.txt
       - name: Schedule on Instagram, Facebook and TikTok
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         shell: bash
         run: |
           set +e
@@ -128,10 +129,10 @@ jobs:
             exit "$status"
           fi
       - name: Deliver private owner copy and short-video script
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         run: python -m marketing_agent social-pack --date "${{ steps.campaign.outputs.date }}" --send
       - name: Save duplicate-protection state
-        if: always() && github.event_name != 'push'
+        if: always() && (github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]'))
         shell: bash
         run: |
           git config user.name "AI Tool Gems Bot"
@@ -139,6 +140,7 @@ jobs:
           git add marketing_agent/data/buffer-state.json marketing_agent/data/social-state.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Record social delivery for ${{ steps.campaign.outputs.date }}"
+          git pull --rebase origin main
           git push
       - name: Alert owner if the hosted campaign needs attention
         if: failure()

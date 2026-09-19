@@ -31,12 +31,47 @@
       "claimed_at": "2026-09-13T18:23:03+05:00",
       "product_id": "elevenlabs",
       "tracking_code": "te-elevenlabs-20260913-t2b"
+    },
+    "2026-09-13-slot-3": {
+      "status": "claimed",
+      "claimed_at": "2026-09-13T22:03:15+05:00",
+      "product_id": "canva",
+      "tracking_code": "te-canva-20260913-t3a"
+    },
+    "2026-09-14-slot-1": {
+      "status": "published",
+      "claimed_at": "2026-09-14T14:49:45+05:00",
+      "product_id": "figma",
+      "tracking_code": "te-figma-20260914-t1b",
+      "published_at": "2026-09-14T14:49:47+05:00",
+      "message_id": 8
+    },
+    "2026-09-14-slot-2": {
+      "status": "published",
+      "claimed_at": "2026-09-14T20:08:54+05:00",
+      "product_id": "capcut",
+      "tracking_code": "te-capcut-20260914-t2a",
+      "published_at": "2026-09-14T20:08:57+05:00",
+      "message_id": 9
+    },
+    "2026-09-14-slot-3": {
+      "status": "published",
+      "claimed_at": "2026-09-14T23:51:50+05:00",
+      "product_id": "adobe",
+      "tracking_code": "te-adobe-20260914-t3b",
+      "published_at": "2026-09-14T23:51:53+05:00",
+      "message_id": 10
     }
   },
   "reports": {
     "2026-09-12": {
       "sent_at": "2026-09-12T23:01:28+05:00",
       "published_posts": 3,
+      "channel_members": 2
+    },
+    "2026-09-15": {
+      "sent_at": "2026-09-15T01:06:44+05:00",
+      "published_posts": 0,
       "channel_members": 2
     }
   }

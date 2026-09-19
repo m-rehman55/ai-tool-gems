@@ -1,0 +1,67 @@
+name: Verify daily social delivery
+
+on:
+  schedule:
+    - cron: "15 23 * * *"
+      timezone: "Asia/Karachi"
+  workflow_dispatch:
+    inputs:
+      delivery_date:
+        description: "Optional date (YYYY-MM-DD); blank uses today in Pakistan"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-social-marketing-state
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      ATG_TIMEZONE: Asia/Karachi
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Resolve Pakistan delivery date
+        id: campaign
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.delivery_date }}" ]; then
+            delivery_date="${{ inputs.delivery_date }}"
+          else
+            delivery_date="$(TZ=Asia/Karachi date +%F)"
+          fi
+          echo "date=$delivery_date" >> "$GITHUB_OUTPUT"
+      - name: Verify Buffer and refresh delivery statuses
+        run: |
+          python -m marketing_agent buffer-status
+          python -m marketing_agent buffer-learn
+      - name: Verify all six daily deliveries
+        run: python -m marketing_agent buffer-delivery-check --date "${{ steps.campaign.outputs.date }}" --strict
+      - name: Save delivery receipt
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "AI Tool Gems Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add marketing_agent/data/buffer-state.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record verified social delivery for ${{ steps.campaign.outputs.date }}"
+          git pull --rebase origin main
+          git push
+      - name: Alert owner when a platform rejects or misses a post
+        if: failure()
+        continue-on-error: true
+        run: python -m marketing_agent social-alert
