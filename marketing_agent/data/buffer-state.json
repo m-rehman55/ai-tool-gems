@@ -490,6 +490,146 @@
         "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
         "metrics_checked_on": "2026-09-20"
       }
+    },
+    "2026-09-20": {
+      "morning:instagram": {
+        "post_id": "6aaf39c9a490f1cf65d5dd59",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-09-20T05:00:00.000Z",
+        "slot": "morning",
+        "service": "instagram",
+        "audience": "office",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "windows",
+          "youtube"
+        ],
+        "media_type": "image",
+        "creative_concept": "orbit-drop",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-20T01:41:29+00:00"
+      },
+      "morning:facebook": {
+        "post_id": "6aaf39c98d048c06b4f648c8",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-09-20T05:00:00.000Z",
+        "slot": "morning",
+        "service": "facebook",
+        "audience": "office",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "windows",
+          "youtube"
+        ],
+        "media_type": "image",
+        "creative_concept": "orbit-drop",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-20T01:41:30+00:00"
+      },
+      "morning:tiktok": {
+        "post_id": "6aaf39ca4594e3153f469aa1",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-09-20T04:00:00.000Z",
+        "slot": "morning",
+        "service": "tiktok",
+        "audience": "office",
+        "learning_mode": "exploration",
+        "deal_ids": [
+          "gemini",
+          "windows",
+          "youtube"
+        ],
+        "media_type": "image",
+        "creative_concept": "orbit-drop",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-20T01:41:30+00:00"
+      },
+      "evening:instagram": {
+        "post_id": "6aaf39ca566e1a89bc201968",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-09-20T16:00:00.000Z",
+        "slot": "evening",
+        "service": "instagram",
+        "audience": "career",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "linkedin",
+          "nordvpn"
+        ],
+        "media_type": "video",
+        "creative_concept": "creator-portal",
+        "audio_theme": "glossy-house",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 12,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-20T01:41:30+00:00"
+      },
+      "evening:facebook": {
+        "post_id": "6aaf39cb566e1a89bc201992",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-09-20T15:00:00.000Z",
+        "slot": "evening",
+        "service": "facebook",
+        "audience": "career",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "linkedin",
+          "nordvpn"
+        ],
+        "media_type": "video",
+        "creative_concept": "creator-portal",
+        "audio_theme": "modern-business",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 14,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-20T01:41:31+00:00"
+      },
+      "evening:tiktok": {
+        "post_id": "6aaf39cbb87fe813045630b1",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-09-20T15:00:00.000Z",
+        "slot": "evening",
+        "service": "tiktok",
+        "audience": "career",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "linkedin",
+          "nordvpn"
+        ],
+        "media_type": "video",
+        "creative_concept": "creator-portal",
+        "audio_theme": "desi-pop-pulse",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 10,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-09-20T01:41:31+00:00"
+      }
     }
   }
 }
