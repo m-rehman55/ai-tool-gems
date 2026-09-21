@@ -677,7 +677,11 @@
         "ai_disclosed": false,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-21T01:43:30+00:00"
+        "recorded_at": "2026-09-21T01:43:30+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-21T21:58:22+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-21"
       },
       "morning:facebook": {
         "post_id": "6ab08bc23649bbabeab9699d",
@@ -700,7 +704,11 @@
         "ai_disclosed": false,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-21T01:43:30+00:00"
+        "recorded_at": "2026-09-21T01:43:30+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-21T21:58:22+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-21"
       },
       "morning:tiktok": {
         "post_id": "6ab08bc226caf7929b06fefd",
@@ -723,7 +731,11 @@
         "ai_disclosed": false,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-21T01:43:30+00:00"
+        "recorded_at": "2026-09-21T01:43:30+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-21T21:58:22+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-21"
       },
       "evening:instagram": {
         "post_id": "6ab08bc3d03859abc75c1a89",
@@ -746,7 +758,11 @@
         "ai_disclosed": true,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-21T01:43:32+00:00"
+        "recorded_at": "2026-09-21T01:43:32+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-21T21:58:22+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-21"
       },
       "evening:facebook": {
         "post_id": "6ab08bc49644849c89a71623",
@@ -792,7 +808,11 @@
         "ai_disclosed": true,
         "contact_number": "923236715731",
         "caption_version": 2,
-        "recorded_at": "2026-09-21T01:43:33+00:00"
+        "recorded_at": "2026-09-21T01:43:33+00:00",
+        "delivery_status": "sent",
+        "delivery_checked_at": "2026-09-21T21:58:22+00:00",
+        "metrics_error": "Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.; Insufficient scope. Required: insights:read. Granted: posts:read, posts:write, account:read.",
+        "metrics_checked_on": "2026-09-21"
       }
     }
   }
