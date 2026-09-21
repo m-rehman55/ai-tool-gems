@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+  const MEASUREMENT_ID = 'G-NQJCMDCLLP';
   const STORAGE_KEY = 'atg-attribution';
   const ALLOWED_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'src'];
 
@@ -61,6 +62,24 @@
       } catch (_) {}
     });
   }
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', MEASUREMENT_ID, { send_page_view: true });
+  const analyticsScript = document.createElement('script');
+  analyticsScript.async = true;
+  analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
+  document.head.appendChild(analyticsScript);
+
+  const originalPush = window.dataLayer.push.bind(window.dataLayer);
+  window.dataLayer.push = function (entry) {
+    if (entry && typeof entry === 'object' && entry.event && typeof window.gtag === 'function') {
+      const { event, ...parameters } = entry;
+      window.gtag('event', event, parameters);
+    }
+    return originalPush(entry);
+  };
 
   window.ATGAttribution = { current, label, appendToMessage };
   if (document.readyState === 'loading') {
