@@ -115,6 +115,10 @@ def parser() -> argparse.ArgumentParser:
     seo_monitor = commands.add_parser("seo-monitor", help="Audit live SEO/GEO integrity and optionally alert the owner")
     seo_monitor.add_argument("--send", action="store_true")
     seo_monitor.add_argument("--json", action="store_true")
+    seo_api = commands.add_parser("seo-api-report", help="Pull Google Search Console + Bing data and send a Telegram summary")
+    seo_api.add_argument("--days", type=int, default=7, help="Lookback window in days")
+    seo_api.add_argument("--send", action="store_true", help="Send to Telegram owner chat (requires credentials)")
+    seo_api.add_argument("--authorize", action="store_true", help="Start GSC OAuth2 browser consent flow")
     tick = commands.add_parser("tick", help="Idempotent scheduler tick: generate, publish due, report after 21:00")
     tick.add_argument("--dry-run", action="store_true")
     return root
@@ -126,6 +130,65 @@ def _print_posts(rows) -> None:
         return
     for row in rows:
         print(f"#{row['id']:03d} {row['status']:<9} {row['scheduled_at']} | {row['product_name']} | {row['segment']} | {row['variant']}")
+
+
+def _format_search_report(report: dict) -> list[str]:
+    """Turn the search_apis.build_search_report dict into Telegram-ready lines."""
+    lines: list[str] = []
+    lines.append("📊 AI Tool Gems — Google + Bing Search Report")
+    lines.append("")
+    lines.append(f"📅 Period: {report.get('period', 'unknown')}")
+    lines.append("")
+
+    gsc = report.get("gsc", {})
+    metadata = gsc.get("metadata", {})
+    if "error" in metadata:
+        lines.append(f"🔴 GSC Error: {metadata['error']}")
+    else:
+        lines.append(f"🔍 GSC — Impressions: {metadata.get('total_impressions', 0):,}")
+        lines.append(f"🔍 GSC — Clicks: {metadata.get('total_clicks', 0):,}")
+        lines.append("")
+        lines.append("🏆 Top queries (by impressions):")
+        for row in gsc.get("top_queries", []):
+            q = row.get("keys", ["?"])[0]
+            imp = int(row.get("impressions", 0))
+            clk = int(row.get("clicks", 0))
+            ctr = float(row.get("ctr", 0)) * 100
+            pos = float(row.get("position", 0))
+            lines.append(f"  • {q[:60]}")
+            lines.append(f"    Impressions: {imp:,} | Clicks: {clk:,} | CTR: {ctr:.1f}% | Pos: {pos:.1f}")
+        lines.append("")
+
+    site_status = gsc.get("site_status", {})
+    if "error" not in site_status:
+        lines.append("🛡️ GSC Site Status:")
+        coverage = site_status.get("coverageState", {})
+        lines.append(f"  Coverage issues: {coverage.get('coverageState', 'unknown')}")
+        sitemaps = site_status.get("sitemaps", [])
+        for s in sitemaps:
+            lines.append(f"  Sitemap: {s.get('path', '?')} — {s.get('lastSubmitted', '?')} | Status: {s.get('sitemapStatus', '?')}")
+        lines.append("")
+
+    bing = report.get("bing", {})
+    if bing.get("site_info", {}).get("error"):
+        lines.append(f"🔴 Bing Error: {bing['site_info']['error']}")
+    else:
+        info = bing.get("site_info", {}).get("siteInfo", {})
+        lines.append("🌐 Bing Webmaster:")
+        lines.append(f"  Site: {info.get('siteUrl', '?')}")
+        lines.append(f"  Ownership: {info.get('ownershipType', '?')}")
+        lines.append(f"  Crawl rate: {info.get('crawlRate', '?')}")
+
+    crawl = bing.get("crawl_stats", {}).get("crawlStats", {})
+    if crawl:
+        lines.append("")
+        lines.append("  Last crawl: " + crawl.get("lastCrawled", "?"))
+        lines.append(f"  Crawled URLs (7d): {crawl.get('pagesCrawled', '?'):,}")
+        lines.append(f"  Pages requested: {crawl.get('pagesRequested', '?'):,}")
+
+    lines.append("")
+    lines.append("— This report runs daily via GitHub Actions.")
+    return lines
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -261,6 +324,32 @@ def main(argv: list[str] | None = None) -> int:
     elif args.command == "seo-monitor":
         result = run_monitor(settings, send=args.send)
         print(json.dumps(result, indent=2) if args.json else format_seo_report(result))
+    elif args.command == "seo-api-report":
+        from .search_apis import GSCClient, BingClient, build_search_report
+
+        if args.authorize:
+            if not settings.gsc_client_id or not settings.gsc_client_secret:
+                raise RuntimeError("Set GSC_CLIENT_ID and GSC_CLIENT_SECRET in .env or GitHub secrets first")
+            client = GSCClient(settings.gsc_client_id, settings.gsc_client_secret, settings.site_url)
+            client.authorize()
+            print("Done. Run without --authorize next time.")
+        else:
+            if not settings.gsc_client_id or not settings.gsc_client_secret:
+                raise RuntimeError("GSC_CLIENT_ID and GSC_CLIENT_SECRET are required for seo-api-report")
+            if not settings.bing_api_key:
+                print("⚠️  BING_API_KEY not set — Bing data skipped")
+            gsc = GSCClient(settings.gsc_client_id, settings.gsc_client_secret, settings.site_url)
+            bing = BingClient(settings.bing_api_key, settings.site_url) if settings.bing_api_key else None
+            report = build_search_report(gsc, bing, days=args.days)
+            lines = _format_search_report(report)
+            print("\n".join(lines))
+            if args.send:
+                if not settings.owner_reports_ready:
+                    raise RuntimeError("Owner Telegram credentials are missing")
+                TelegramClient(settings.telegram_bot_token).send_with_retry(
+                    settings.telegram_owner_chat_id, "\n".join(lines)
+                )
+                print("→ Telegram report sent.")
     elif args.command == "tick":
         today = datetime.now(settings.timezone).date()
         inserted, duplicates = generate_days(settings, today, 1, settings.auto_approve)

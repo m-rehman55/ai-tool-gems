@@ -22,10 +22,18 @@ jobs:
       TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
       ATG_TIMEZONE: Asia/Karachi
       ATG_SITE_URL: https://aitoolgems.tech
+      GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
+      GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+      BING_API_KEY: ${{ secrets.BING_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Check live sitemap, answer blocks, entity signals, structured data and AI crawler access
+
+      - name: Run technical SEO/GEO integrity audit
         run: python -m marketing_agent seo-monitor --json --send
+
+      - name: Pull Google Search Console + Bing data and send report
+        if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
+        run: python -m marketing_agent seo-api-report --send --days 7

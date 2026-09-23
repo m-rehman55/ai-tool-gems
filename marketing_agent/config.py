@@ -49,6 +49,9 @@ class Settings:
     buffer_api_key: str
     posts_per_day: int
     auto_approve: bool
+    gsc_client_id: str
+    gsc_client_secret: str
+    bing_api_key: str
 
     @property
     def telegram_ready(self) -> bool:
@@ -78,4 +81,7 @@ def get_settings() -> Settings:
         buffer_api_key=os.getenv("BUFFER_API_KEY", "").strip(),
         posts_per_day=posts,
         auto_approve=os.getenv("ATG_AUTO_APPROVE", "false").lower() in {"1", "true", "yes"},
+        gsc_client_id=os.getenv("GSC_CLIENT_ID", "").strip(),
+        gsc_client_secret=os.getenv("GSC_CLIENT_SECRET", "").strip(),
+        bing_api_key=os.getenv("BING_API_KEY", "").strip(),
     )
