@@ -6,7 +6,7 @@ import json
 import os
 import webbrowser
 from datetime import datetime, timedelta, timezone
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from dataclasses import dataclass, field
@@ -16,7 +16,7 @@ from typing import Any
 
 GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
 GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
-GSC_API_BASE = "https://searchconsole.googleapis.com/searchconsole/v1"
+GSC_API_ROOT = "https://searchconsole.googleapis.com"
 
 # Scopes — Read-only is enough for monitoring
 GSC_SCOPE = "https://www.googleapis.com/auth/webmasters.readonly"
@@ -129,7 +129,8 @@ class GSCClient:
     # ── GSC queries ────────────────────────────────────────────────────────────
 
     def _gsc_get(self, path: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
-        url = f"{GSC_API_BASE}{path}"
+        """Call GSC API — path is like 'webmasters/v3/sites'."""
+        url = f"{GSC_API_ROOT}/{path}"
         if params:
             url += "?" + urlencode({k: v for k, v in params.items() if v is not None})
         req = Request(url, headers=self._headers())
@@ -138,12 +139,12 @@ class GSCClient:
 
     def list_sites(self) -> list[dict[str, Any]]:
         """Return all Search Console properties for this account."""
-        return self._gsc_get("/sites").get("siteEntry", [])
+        return self._gsc_get("webmasters/v3/sites").get("siteEntry", [])
 
     def get_site_status(self) -> dict[str, Any]:
-        """Coverage, sitemap, and enhancements status for the primary site."""
+        """Site info for the primary site."""
         site_url = self.site_url.rstrip("/")
-        return self._gsc_get(f"/sites/{site_url}/siteStatus")
+        return self._gsc_get(f"webmasters/v3/sites/{quote(site_url, safe='')}")
 
     def query_analytics(
         self,
@@ -156,6 +157,7 @@ class GSCClient:
 
         Returns top rows by impressions.
         """
+        site_url = self.site_url.rstrip("/")
         body = {
             "startDate": start_date,
             "endDate": end_date,
@@ -164,7 +166,7 @@ class GSCClient:
             "startRow": 0,
         }
         req = Request(
-            f"{GSC_API_BASE}/sites/{self.site_url.rstrip('/')}/query",
+            f"{GSC_API_ROOT}/webmasters/v3/sites/{quote(site_url, safe='')}/searchAnalytics/query",
             data=json.dumps(body).encode(),
             headers=self._headers(),
             method="POST",
@@ -175,13 +177,8 @@ class GSCClient:
         return data.get("rows", [])
 
     def get_coverage_issues(self) -> list[dict[str, Any]]:
-        """Return recent indexing coverage errors."""
-        site_url = self.site_url.rstrip("/")
-        try:
-            data = self._gsc_get(f"/sites/{site_url}/indexedPages")
-            return data.get("coverageState", [])
-        except HTTPError:
-            return []
+        """Return recent indexing coverage errors (not available via read-only)."""
+        return []
 
 
 # ── Bing Webmaster helpers ──────────────────────────────────────────────────────
@@ -196,17 +193,13 @@ class BingClient:
     api_key: str
     site_url: str
 
-    def _headers(self) -> dict[str, str]:
-        return {
-            "Authorization": f"Bearer {self.api_key}",
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        }
-
-    def _get(self, endpoint: str, body: dict[str, Any] | None = None) -> dict[str, Any]:
+    def _get(self, endpoint: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
         url = f"{BING_API_BASE}/{endpoint}"
-        data = json.dumps(body).encode() if body else None
-        req = Request(url, data=data, headers=self._headers(), method="POST" if data else "GET")
+        all_params = {"apikey": self.api_key}
+        if params:
+            all_params.update(params)
+        url += "?" + urlencode(all_params)
+        req = Request(url, headers={"Accept": "application/json"}, method="GET")
         try:
             with urlopen(req, timeout=20) as resp:
                 raw = resp.read().decode("utf-8")
