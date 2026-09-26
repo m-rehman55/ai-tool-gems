@@ -128,6 +128,30 @@ def sanitize_japan_product_pages() -> None:
         if not path.exists():
             continue
         html = path.read_text(encoding="utf-8")
+        schema_match = re.search(r'<script type="application/ld\+json">(.*?)</script>', html, flags=re.S)
+        if schema_match:
+            try:
+                schema = json.loads(schema_match.group(1))
+                nodes = schema.get("@graph", []) if isinstance(schema, dict) else []
+                for node in nodes:
+                    if not isinstance(node, dict):
+                        continue
+                    if node.get("@type") == "Product":
+                        node.setdefault("image", f"{SITE}/assets/brand-logo-light.webp")
+                        node.setdefault("sku", f"ATG-JP-{pid.upper()}")
+                        offer = node.setdefault("offers", {"@type": "Offer"})
+                        offer["hasMerchantReturnPolicy"] = {"@type": "MerchantReturnPolicy", "applicableCountry": "JP", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}
+                    if node.get("@type") == "FAQPage":
+                        node["mainEntity"] = [
+                            {"@type": "Question", "name": f"{name}のアクセス形式は？", "acceptedAnswer": {"@type": "Answer", "text": f"掲載情報では{ja_access(access)}です。利用条件と提供状況は支払い前にWhatsAppで確認します。"}},
+                            {"@type": "Question", "name": "配送時間はどのくらいですか？", "acceptedAnswer": {"@type": "Answer", "text": "掲載の配送目安は商品ごとに異なります。正確な時間は注文前に確認してください。"}},
+                            {"@type": "Question", "name": "保証や返金条件はありますか？", "acceptedAnswer": {"@type": "Answer", "text": "保証・返金条件は商品ごとに異なります。購入前にポリシーと最新条件をご確認ください。"}},
+                            {"@type": "Question", "name": "どのように注文しますか？", "acceptedAnswer": {"@type": "Answer", "text": "WhatsAppで在庫、条件、支払い方法を確認し、同意後に注文を進めてください。"}},
+                        ]
+                schema_html = json.dumps(schema, ensure_ascii=False, indent=2)
+                html = html[:schema_match.start(1)] + "\n" + schema_html + "\n" + html[schema_match.end(1):]
+            except (json.JSONDecodeError, TypeError):
+                pass
         html = re.sub(r'\s*<section class="answer"><h2>Related information</h2>.*?</section>', "", html, count=1, flags=re.S)
         html = re.sub(r'\s*<section class="answer"><h2>Frequently asked questions.*?</section>', "", html, count=1, flags=re.S)
         html = re.sub(r'\s*<section[^>]*class="faq-section"[^>]*>.*?</section>', "", html, count=1, flags=re.S)
