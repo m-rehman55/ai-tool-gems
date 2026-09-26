@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="en-PK">
 <head>
+<link rel="preconnect" href="https://www.google.com" crossorigin>
+<link rel="preconnect" href="https://t0.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://t1.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://t3.gstatic.com" crossorigin>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f7faf6">
@@ -27,7 +32,7 @@
   <link rel="icon" type="image/png" href="assets/brand-logo-light.png">
   <link rel="apple-touch-icon" href="assets/brand-logo-light.png">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="light-theme.css">
+  <link rel="stylesheet" href="light-theme.css" media="print" onload="this.media='all'">
   <link rel="alternate" hreflang="ja-JP" href="https://aitoolgems.tech/jp/">
   <link rel="alternate" hreflang="en-PK" href="https://aitoolgems.tech/">
   <link rel="alternate" hreflang="x-default" href="https://aitoolgems.tech/">
@@ -67,7 +72,7 @@
   <header class="site-header">
     <a class="brand" href="#top" aria-label="AI Tool Gems home">
       <span class="brand-mark-3d">
-        <img src="assets/brand-logo-light.webp" width="512" height="512" alt="AI Tool Gems Logo" class="brand-nav-logo">
+        <img src="assets/brand-logo-light.webp" width="119" height="119" alt="AI Tool Gems Logo" class="brand-nav-logo">
       </span>
       <span class="brand-title">AI TOOL <b>GEMS</b><small>PAKISTAN</small></span>
     </a>
@@ -127,7 +132,7 @@
             <div class="gem-halo-bloom"></div>
             <div class="gem-badge-3d">
               <div class="gem-glint"></div>
-              <img src="assets/brand-logo-light.webp" width="512" height="512" fetchpriority="high" alt="AI Tool Gems 3D Cyber Diamond" class="gem-logo-img">
+              <img src="assets/brand-logo-light.webp" width="119" height="119" fetchpriority="high" loading="eager" alt="AI Tool Gems 3D Cyber Diamond" class="gem-logo-img">
             </div>
             <div class="gem-caption">
               <span class="gem-status-dot"></span>
@@ -136,10 +141,10 @@
             </div>
           </div>
 
-          <div class="float-card float-chatgpt" data-depth="45" data-detail="chatgpt" role="button" tabindex="0" aria-label="View ChatGPT Plus details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&amp;sz=128" width="128" height="128" loading="lazy" alt="chatgpt favicon"><span><small>AI assistant</small>ChatGPT Plus</span></div>
-          <div class="float-card float-canva" data-depth="55" data-detail="canva" role="button" tabindex="0" aria-label="View Canva Pro details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=canva.com&amp;sz=128" width="128" height="128" loading="lazy" alt="canva favicon"><span><small>Design</small>Canva Pro</span></div>
-          <div class="float-card float-capcut" data-depth="40" data-detail="capcut" role="button" tabindex="0" aria-label="View CapCut Pro details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&amp;sz=128" width="128" height="128" loading="lazy" alt="capcut favicon"><span><small>Video editing</small>CapCut Pro</span></div>
-          <div class="float-card float-figma" data-depth="50" data-detail="figma" role="button" tabindex="0" aria-label="View Figma Pro details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=figma.com&amp;sz=128" width="128" height="128" loading="lazy" alt="figma favicon"><span><small>UI / UX</small>Figma Pro</span></div>
+          <div class="float-card float-chatgpt" data-depth="45" data-detail="chatgpt" role="button" tabindex="0" aria-label="View ChatGPT Plus details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="chatgpt favicon"><span><small>AI assistant</small>ChatGPT Plus</span></div>
+          <div class="float-card float-canva" data-depth="55" data-detail="canva" role="button" tabindex="0" aria-label="View Canva Pro details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=canva.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="canva favicon"><span><small>Design</small>Canva Pro</span></div>
+          <div class="float-card float-capcut" data-depth="40" data-detail="capcut" role="button" tabindex="0" aria-label="View CapCut Pro details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="capcut favicon"><span><small>Video editing</small>CapCut Pro</span></div>
+          <div class="float-card float-figma" data-depth="50" data-detail="figma" role="button" tabindex="0" aria-label="View Figma Pro details"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=figma.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="figma favicon"><span><small>UI / UX</small>Figma Pro</span></div>
         </div>
       </div>
     </section>
@@ -194,7 +199,7 @@
           </tbody></table></div>
         </details>
         <div class="empty-state" id="emptyState">
-          <img src="assets/brand-logo-light.webp" width="512" height="512" loading="lazy" class="empty-state-logo" alt="AI Tool Gems Diamond">
+          <img src="assets/brand-logo-light.webp" width="119" height="119" loading="lazy" class="empty-state-logo" alt="AI Tool Gems Diamond">
           <h3>No matching tools found</h3>
           <p>Try searching for other keywords like "video", "assistant", or "design".</p>
           <button class="secondary-button" id="clearFilters">Clear filters</button>
@@ -228,7 +233,7 @@
             <button type="button" class="preview-option" data-preview-intent="code" aria-pressed="false"><svg><use href="#i-code"></use></svg> Code</button>
           </div>
           <div class="match-card clickable-match" id="finderMatchCard" data-detail="veo" role="button" tabindex="0" aria-label="View recommended Veo 3 Ultra details" title="Click to view full details">
-            <div class="logo-box-wrap"><img id="finderMatchLogo" class="match-brand-logo" src="https://www.google.com/s2/favicons?domain=deepmind.google&amp;sz=128" width="128" height="128" loading="lazy" alt="deepmind.google favicon"></div>
+            <div class="logo-box-wrap"><img id="finderMatchLogo" class="match-brand-logo" src="https://www.google.com/s2/favicons?domain=deepmind.google&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="deepmind.google favicon"></div>
             <div>
               <small id="finderMatchBadge">Top match · 96% fit</small>
               <b id="finderMatchName">Veo 3 Ultra</b>
@@ -293,10 +298,10 @@
           </div>
         </div>
         <div class="stack-visual">
-          <div class="stack-item s1 clickable-stack" data-detail="chatgpt" role="button" tabindex="0" title="Inspect ChatGPT Plus"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&amp;sz=128" width="128" height="128" loading="lazy" alt="chatgpt favicon"><span><small>Writing &amp; Code</small>ChatGPT Plus</span></div>
-          <div class="stack-item s2 clickable-stack" data-detail="canva" role="button" tabindex="0" title="Inspect Canva Pro"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=canva.com&amp;sz=128" width="128" height="128" loading="lazy" alt="canva favicon"><span><small>Design &amp; Social</small>Canva Pro</span></div>
-          <div class="stack-item s3 clickable-stack" data-detail="capcut" role="button" tabindex="0" title="Inspect CapCut Pro"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&amp;sz=128" width="128" height="128" loading="lazy" alt="capcut favicon"><span><small>Video &amp; Reels</small>CapCut Pro</span></div>
-          <div class="stack-item s4 clickable-stack" data-detail="elevenlabs" role="button" tabindex="0" title="Inspect ElevenLabs"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=elevenlabs.io&amp;sz=128" width="128" height="128" loading="lazy" alt="elevenlabs favicon"><span><small>AI Voice &amp; Dubbing</small>ElevenLabs</span></div>
+          <div class="stack-item s1 clickable-stack" data-detail="chatgpt" role="button" tabindex="0" title="Inspect ChatGPT Plus"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="chatgpt favicon"><span><small>Writing &amp; Code</small>ChatGPT Plus</span></div>
+          <div class="stack-item s2 clickable-stack" data-detail="canva" role="button" tabindex="0" title="Inspect Canva Pro"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=canva.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="canva favicon"><span><small>Design &amp; Social</small>Canva Pro</span></div>
+          <div class="stack-item s3 clickable-stack" data-detail="capcut" role="button" tabindex="0" title="Inspect CapCut Pro"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="capcut favicon"><span><small>Video &amp; Reels</small>CapCut Pro</span></div>
+          <div class="stack-item s4 clickable-stack" data-detail="elevenlabs" role="button" tabindex="0" title="Inspect ElevenLabs"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=elevenlabs.io&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="elevenlabs favicon"><span><small>AI Voice &amp; Dubbing</small>ElevenLabs</span></div>
         </div>
       </div>
     </section>
@@ -330,7 +335,7 @@
     <section class="final-cta">
       <div class="shell">
         <div class="cta-badge-3d">
-          <img src="assets/brand-logo-light.webp" width="512" height="512" loading="lazy" alt="AI Tool Gems 3D Logo" class="cta-logo-img">
+          <img src="assets/brand-logo-light.webp" width="119" height="119" loading="lazy" decoding="async" alt="AI Tool Gems 3D Logo" class="cta-logo-img">
         </div>
         <h2>Better tools are one<br>smart decision away.</h2>
         <p>Explore handpicked AI subscriptions with transparent PKR pricing and 1-on-1 human support.</p>
@@ -347,7 +352,7 @@
       <div class="footer-brand">
         <a class="brand" href="#top">
           <span class="brand-mark-3d">
-            <img src="assets/brand-logo-light.webp" width="512" height="512" loading="lazy" alt="AI Tool Gems" class="brand-nav-logo">
+            <img src="assets/brand-logo-light.webp" width="119" height="119" loading="lazy" decoding="async" alt="AI Tool Gems" class="brand-nav-logo">
           </span>
           <span class="brand-title">AI TOOL <b>GEMS</b><small>PAKISTAN</small></span>
         </a>

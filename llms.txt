@@ -7,43 +7,43 @@ Last reviewed: 2026-09-12
 ## Core pages
 
 - https://aitoolgems.tech/ — complete marketplace, categories, finder, ordering process, and FAQs
-- https://aitoolgems.tech/deals/ — current 20-item PKR marketplace directory with duration and access comparisons
-- https://aitoolgems.tech/about.html — marketplace identity, listing process, and independence disclosure
-- https://aitoolgems.tech/how-we-review.html — listing review method, source policy, access definitions, and corrections process
-- https://aitoolgems.tech/contact.html — verified WhatsApp contact route
-- https://aitoolgems.tech/policies.html — access, delivery, warranty, refund, privacy, and trademark policies
-- https://aitoolgems.tech/privacy.html — website and optional social-publishing privacy policy
-- https://aitoolgems.tech/terms.html — website and owner-authorized social-publishing terms
+- [-](https://aitoolgems.tech/deals/) — current 20-item PKR marketplace directory with duration and access comparisons
+- [-](https://aitoolgems.tech/about.html) — marketplace identity, listing process, and independence disclosure
+- [-](https://aitoolgems.tech/how-we-review.html) — listing review method, source policy, access definitions, and corrections process
+- [-](https://aitoolgems.tech/contact.html) — verified WhatsApp contact route
+- [-](https://aitoolgems.tech/policies.html) — access, delivery, warranty, refund, privacy, and trademark policies
+- [-](https://aitoolgems.tech/privacy.html) — website and optional social-publishing privacy policy
+- [-](https://aitoolgems.tech/terms.html) — website and owner-authorized social-publishing terms
 
 ## Editorial guides
 
-- https://aitoolgems.tech/guides/ — Pakistan-focused AI tools guide hub
-- https://aitoolgems.tech/guides/ai-tools-price-pakistan/ — all 20 current listings compared by PKR price, duration, and access type
-- https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/ — task-based ChatGPT Plus and Gemini Pro comparison
-- https://aitoolgems.tech/guides/canva-vs-figma-pakistan/ — workflow-based Canva Pro and Figma Pro comparison
+- [-](https://aitoolgems.tech/guides/) — Pakistan-focused AI tools guide hub
+- [-](https://aitoolgems.tech/guides/ai-tools-price-pakistan/) — all 20 current listings compared by PKR price, duration, and access type
+- [-](https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/) — task-based ChatGPT Plus and Gemini Pro comparison
+- [-](https://aitoolgems.tech/guides/canva-vs-figma-pakistan/) — workflow-based Canva Pro and Figma Pro comparison
 
 ## Product catalog
 
-- https://aitoolgems.tech/tools/chatgpt/ — ChatGPT Plus price and plan details in Pakistan
-- https://aitoolgems.tech/tools/gemini/ — Gemini Pro price and plan details in Pakistan
-- https://aitoolgems.tech/tools/veo/ — Veo 3 Ultra price and plan details in Pakistan
-- https://aitoolgems.tech/tools/leonardo/ — Leonardo AI Essential price and plan details in Pakistan
-- https://aitoolgems.tech/tools/elevenlabs/ — ElevenLabs price and plan details in Pakistan
-- https://aitoolgems.tech/tools/canva/ — Canva Pro Edu price and plan details in Pakistan
-- https://aitoolgems.tech/tools/figma/ — Figma Pro Private price and plan details in Pakistan
-- https://aitoolgems.tech/tools/capcut/ — CapCut Pro price and plan details in Pakistan
-- https://aitoolgems.tech/tools/adobe/ — Adobe Creative Cloud price and plan details in Pakistan
-- https://aitoolgems.tech/tools/lovable/ — Lovable Pro price and plan details in Pakistan
-- https://aitoolgems.tech/tools/gamma/ — Gamma Pro price and plan details in Pakistan
-- https://aitoolgems.tech/tools/replit/ — Replit Core price and plan details in Pakistan
-- https://aitoolgems.tech/tools/n8n/ — n8n Starter price and plan details in Pakistan
-- https://aitoolgems.tech/tools/notion/ — Notion Business price and plan details in Pakistan
-- https://aitoolgems.tech/tools/nordvpn/ — NordVPN price and plan details in Pakistan
-- https://aitoolgems.tech/tools/surfshark/ — Surfshark VPN price and plan details in Pakistan
-- https://aitoolgems.tech/tools/youtube/ — YouTube Premium price and plan details in Pakistan
-- https://aitoolgems.tech/tools/netflix/ — Netflix Premium 4K price and plan details in Pakistan
-- https://aitoolgems.tech/tools/linkedin/ — LinkedIn Premium price and plan details in Pakistan
-- https://aitoolgems.tech/tools/windows/ — Windows 11 Pro Key price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/chatgpt/) — ChatGPT Plus price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/gemini/) — Gemini Pro price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/veo/) — Veo 3 Ultra price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/leonardo/) — Leonardo AI Essential price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/elevenlabs/) — ElevenLabs price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/canva/) — Canva Pro Edu price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/figma/) — Figma Pro Private price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/capcut/) — CapCut Pro price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/adobe/) — Adobe Creative Cloud price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/lovable/) — Lovable Pro price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/gamma/) — Gamma Pro price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/replit/) — Replit Core price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/n8n/) — n8n Starter price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/notion/) — Notion Business price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/nordvpn/) — NordVPN price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/surfshark/) — Surfshark VPN price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/youtube/) — YouTube Premium price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/netflix/) — Netflix Premium 4K price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/linkedin/) — LinkedIn Premium price and plan details in Pakistan
+- [-](https://aitoolgems.tech/tools/windows/) — Windows 11 Pro Key price and plan details in Pakistan
 
 ## Ordering facts
 
@@ -57,4 +57,4 @@ Last reviewed: 2026-09-12
 - Official TikTok profile: https://www.tiktok.com/@aitoolgems.
 - AI Tool Gems is independent and is not affiliated with listed third-party brands unless explicitly stated.
 
-Sitemap: https://aitoolgems.tech/sitemap.xml
+Sitemap: [Sitemap:](https://aitoolgems.tech/sitemap.xml)
