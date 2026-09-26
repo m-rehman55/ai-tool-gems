@@ -13,3 +13,4 @@ marketing_agent/data/*.db-*
 marketing_agent/exports/
 __pycache__/
 *.py[cod]
+marketing_agent/data/gsc_token.json
