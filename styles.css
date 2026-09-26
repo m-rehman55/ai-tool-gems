@@ -535,6 +535,8 @@ svg {
   justify-content: center;
   transform-style: preserve-3d;
   transition: transform 0.15s ease-out;
+  content-visibility: auto;
+  contain-intrinsic-size: 400px 400px;
 }
 
 /* 3D Cyber Orbital Rings */

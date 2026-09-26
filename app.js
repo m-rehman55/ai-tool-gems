@@ -1061,5 +1061,17 @@ renderCategories();
 renderProducts();
 updateCart();
 updateCompare();
-init3dHero();
-init3dCards();
+updateCompare();
+
+// Defer 3D initialization to avoid blocking LCP
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => {
+    init3dHero();
+    init3dCards();
+  });
+} else {
+  setTimeout(() => {
+    init3dHero();
+    init3dCards();
+  }, 0);
+}

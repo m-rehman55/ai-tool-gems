@@ -11,6 +11,7 @@ Har page ke liye:
 """
 
 import json
+import os
 import re
 from pathlib import Path
 
@@ -198,7 +199,7 @@ def main():
 
     # Collect all HTML pages
     html_files = []
-    for root, dirs, files in BASE.walk():
+    for root, dirs, files in os.walk(BASE):
         # Skip build artifacts
         if ".git" in root or "__pycache__" in root or "node_modules" in root:
             continue
