@@ -526,6 +526,46 @@ svg {
   pointer-events: none;
 }
 
+/* CLS Fix: Reserve space for catalog directory */
+.catalog-directory {
+  min-height: 48px;
+  padding: 12px 16px;
+  overflow: hidden;
+}
+.catalog-directory strong {
+  display: block;
+  margin-bottom: 8px;
+}
+.catalog-directory a {
+  display: inline-block;
+  margin: 2px 6px 2px 0;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+/* CLS Fix: Reserve space for price directory */
+.price-directory {
+  min-height: 48px;
+  padding: 12px 16px;
+}
+.price-table-wrap {
+  overflow-x: auto;
+}
+.price-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* CLS Fix: Reserve space for step cards */
+.step-card {
+  min-height: 80px;
+}
+
+/* CLS Fix: Reserve space for drawer */
+.cart-drawer {
+  contain: layout style;
+}
+
 .hero-3d-stage {
   position: relative;
   width: 100%;
