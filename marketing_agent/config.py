@@ -49,9 +49,9 @@ class Settings:
     buffer_api_key: str
     posts_per_day: int
     auto_approve: bool
-    gsc_client_id: str
-    gsc_client_secret: str
-    bing_api_key: str
+    gsc_client_id: str = ""
+    gsc_client_secret: str = ""
+    bing_api_key: str = ""
 
     @property
     def telegram_ready(self) -> bool:

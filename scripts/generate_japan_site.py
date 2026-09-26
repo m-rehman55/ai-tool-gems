@@ -130,6 +130,7 @@ def sanitize_japan_product_pages() -> None:
         html = path.read_text(encoding="utf-8")
         html = re.sub(r'\s*<section class="answer"><h2>Related information</h2>.*?</section>', "", html, count=1, flags=re.S)
         html = re.sub(r'\s*<section class="answer"><h2>Frequently asked questions.*?</section>', "", html, count=1, flags=re.S)
+        html = re.sub(r'\s*<section[^>]*class="faq-section"[^>]*>.*?</section>', "", html, count=1, flags=re.S)
         html = re.sub(r'\s*<section[^>]*>\s*<h2>Compare related tools before ordering</h2>.*?</section>', "", html, count=1, flags=re.S)
         html = html.replace("current PKR listing data", "current JPY listing data").replace("PKR", "JPY")
         html = html.replace("English version", "英語版").replace("AI TOOL SUBSCRIPTION IN JAPAN", "日本向けAIツール")
