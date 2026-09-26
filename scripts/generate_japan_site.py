@@ -42,6 +42,21 @@ def ja_access(value: str) -> str:
     return JA_ACCESS.get(value, value)
 
 
+PRODUCT_IMAGE_DOMAINS = {
+    "gemini": "gemini.google.com", "chatgpt": "chatgpt.com", "veo": "deepmind.google",
+    "leonardo": "leonardo.ai", "elevenlabs": "elevenlabs.io", "canva": "canva.com",
+    "figma": "figma.com", "capcut": "capcut.com", "adobe": "adobe.com", "lovable": "lovable.dev",
+    "gamma": "gamma.app", "replit": "replit.com", "n8n": "n8n.io", "manus": "manus.im",
+    "notion": "notion.so", "nordvpn": "nordvpn.com", "surfshark": "surfshark.com",
+    "youtube": "youtube.com", "netflix": "netflix.com", "linkedin": "linkedin.com", "windows": "microsoft.com",
+}
+
+
+def product_image(pid: str) -> str:
+    domain = PRODUCT_IMAGE_DOMAINS.get(pid, "aitoolgems.tech")
+    return f"https://www.google.com/s2/favicons?domain={domain}&sz=128"
+
+
 def ja_duration(value: str) -> str:
     return (value.replace("1 Month", "1か月").replace("18 Months", "18か月").replace("1 Year", "1年間").replace("2 Years", "2年間").replace("3 Months", "3か月").replace("2 Months", "2か月").replace("Unlimited", "無制限").replace("Lifetime", "永久ライセンス").replace("Credits", "クレジット"))
 
@@ -90,7 +105,8 @@ def product_page(product: tuple) -> str:
     schema = json.dumps({
         "@context": "https://schema.org", "@type": "Product", "name": name,
         "description": description, "url": canonical, "category": category,
-        "inLanguage": "ja-JP", "offers": {"@type": "Offer", "priceCurrency": "JPY", "price": str(price), "availability": "https://schema.org/LimitedAvailability", "url": canonical},
+        "image": product_image(pid), "sku": f"ATG-JP-{pid.upper()}", "brand": {"@type": "Brand", "name": "AI Tool Gems"},
+        "inLanguage": "ja-JP", "offers": {"@type": "Offer", "priceCurrency": "JPY", "price": str(price), "availability": "https://schema.org/LimitedAvailability", "url": canonical, "seller": {"@type": "Organization", "name": "AI Tool Gems Japan", "url": f"{SITE}/jp/"}, "hasMerchantReturnPolicy": {"@type": "MerchantReturnPolicy", "applicableCountry": "JP", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}},
     }, ensure_ascii=False, separators=(",", ":"))
     return page_head(f"{name} 日本価格 | AI Tool Gems Japan", description, canonical, pk, schema) + f'''
 <body>
@@ -102,6 +118,29 @@ def product_page(product: tuple) -> str:
     <section class="answer"><h2>Related information</h2><p><a href="../../">日本向けAIツール一覧</a> | <a href="../../../tools/{pid}/">English version</a> | <a href="../../contact.html">お問い合わせ</a></p></section>
   </main><footer><span>© 2026 AI Tool Gems Japan</span><span>Independent digital marketplace · Third-party trademarks belong to their owners.</span></footer>
 </body></html>'''
+
+
+def sanitize_japan_product_pages() -> None:
+    related = '<section class="answer"><h2>関連情報</h2><p><a href="../../">日本向けAIツール一覧</a> | <a href="../../../tools/{pid}/">英語版</a> | <a href="../../contact.html">お問い合わせ</a></p><p>購入前に価格、期間、アクセス形式、在庫条件をWhatsAppで確認してください。</p></section>'
+    faq = '<section class="answer"><h2>よくある質問</h2><h3>{name}のアクセス形式は？</h3><p>掲載情報では{access}です。利用条件と提供状況は支払い前にWhatsAppで確認します。</p><h3>配送時間はどのくらいですか？</h3><p>掲載の配送目安は商品ごとに異なります。正確な時間は注文前に確認してください。</p><h3>保証や返金条件はありますか？</h3><p>保証・返金条件は商品ごとに異なります。購入前に<a href="../../policies.html">ポリシー</a>と最新条件をご確認ください。</p><h3>どのように注文しますか？</h3><p>WhatsAppで在庫、条件、支払い方法を確認し、同意後に注文を進めてください。</p></section>'
+    for pid, name, _category, _price, _duration, access, _description in PRODUCTS:
+        path = ROOT / "jp" / "tools" / pid / "index.html"
+        if not path.exists():
+            continue
+        html = path.read_text(encoding="utf-8")
+        html = re.sub(r'\s*<section class="answer"><h2>Related information</h2>.*?</section>', "", html, count=1, flags=re.S)
+        html = re.sub(r'\s*<section class="answer"><h2>Frequently asked questions.*?</section>', "", html, count=1, flags=re.S)
+        html = re.sub(r'\s*<section[^>]*>\s*<h2>Compare related tools before ordering</h2>.*?</section>', "", html, count=1, flags=re.S)
+        html = html.replace("current PKR listing data", "current JPY listing data").replace("PKR", "JPY")
+        html = html.replace("English version", "英語版").replace("AI TOOL SUBSCRIPTION IN JAPAN", "日本向けAIツール")
+        html = html.replace("Independent digital marketplace · Third-party trademarks belong to their owners.", "独立系デジタルマーケットプレイス · 第三者商標は各権利者に帰属します。")
+        for old, new in {"AI Assistants": "AIアシスタント", "AI Video": "AI動画", "AI Voice": "AI音声", "Design": "デザイン", "Development": "開発", "Productivity": "生産性", "VPN & Security": "VPN・セキュリティ", "Entertainment": "エンターテインメント", "Business": "ビジネス", "Software": "ソフトウェア"}.items():
+            html = html.replace(f">{old}<", f">{new}<")
+        html = html.replace("../guides/ai-tools-price-pakistan/", "../../guides/ai-tools-price-japan/")
+        if "よくある質問" not in html:
+            block = related.format(pid=pid) + faq.format(name=escape(name), access=escape(ja_access(access)))
+            html = html.replace("</main>", block + "</main>", 1)
+        path.write_text(html, encoding="utf-8")
 
 
 def home_page() -> str:
@@ -138,7 +177,11 @@ def generate_visual_home() -> None:
     }.items():
         source = source.replace(old, new)
     source = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Compare AI tools and digital subscriptions in Japan with JPY pricing, Japanese and English support, and direct WhatsApp ordering.">', source, count=1)
-    source = re.sub(r'<link rel="canonical" href="[^"]*">', '<link rel="canonical" href="https://aitoolgems.tech/jp/">\n  <link rel="alternate" hreflang="ja-JP" href="https://aitoolgems.tech/jp/">\n  <link rel="alternate" hreflang="en-PK" href="https://aitoolgems.tech/">\n  <link rel="alternate" hreflang="x-default" href="https://aitoolgems.tech/">', source, count=1)
+    source = re.sub(r'<link rel="canonical" href="[^"]*">', '<link rel="canonical" href="https://aitoolgems.tech/jp/">', source, count=1)
+    source = source.replace('<meta property="og:url" content="https://aitoolgems.tech/">', '<meta property="og:url" content="https://aitoolgems.tech/jp/">')
+    source = re.sub(r'\n\s*<link rel="alternate" hreflang="(?:ja-JP|en-PK|x-default)" href="[^"]+">', '', source)
+    source = source.replace('href="../guides/ai-tools-price-pakistan/"', 'href="guides/ai-tools-price-japan/"').replace('href="../guides/chatgpt-vs-gemini-pakistan/"', 'href="guides/chatgpt-vs-gemini-japan/"').replace('href="../guides/canva-vs-figma-pakistan/"', 'href="guides/canva-vs-figma-japan/"')
+    source = source.replace('</head>', '  <link rel="alternate" hreflang="ja-JP" href="https://aitoolgems.tech/jp/">\n  <link rel="alternate" hreflang="en-PK" href="https://aitoolgems.tech/">\n  <link rel="alternate" hreflang="x-default" href="https://aitoolgems.tech/">\n</head>', 1)
     source = re.sub(r'<title>.*?</title>', '<title>AI Tools Japan — JPY Prices &amp; WhatsApp Support</title>', source, count=1, flags=re.S)
     source = source.replace('https://wa.me/923236715731', 'https://wa.me/817095128428').replace('Rs. ', '¥').replace('PKR', 'JPY')
     source = source.replace('Pakistan', 'Japan').replace('PAKISTAN', 'JAPAN').replace('Japan / English', 'English version').replace('facebook.com/people/AI-Tool-Gems-Japan/', 'facebook.com/people/AI-Tool-Gems-Pakistan/').replace('20 AI', '22 AI').replace('all 20', 'all 22').replace('20 listings', '22 listings')
@@ -190,6 +233,7 @@ def main() -> None:
         path = home / "tools" / product[0] / "index.html"
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(product_page(product), encoding="utf-8")
+    sanitize_japan_product_pages()
 
     equivalents = {"index.html": f"{SITE}/jp/", "contact.html": f"{SITE}/jp/contact.html"}
     for pid, *_ in PRODUCTS:
@@ -199,11 +243,16 @@ def main() -> None:
         if not path.exists():
             continue
         html = path.read_text(encoding="utf-8")
-        if 'hreflang="ja-JP"' in html:
-            continue
         pk_url = f"{SITE}/" if relative == "index.html" else f"{SITE}/{relative.replace('/index.html', '/').replace('index.html', '')}"
-        tags = f'  <link rel="alternate" hreflang="ja-JP" href="{jp_url}">\n  <link rel="alternate" hreflang="en-PK" href="{pk_url}">\n  <link rel="alternate" hreflang="x-default" href="{pk_url}">\n'
-        path.write_text(html.replace("</head>", tags + "</head>", 1), encoding="utf-8")
+        tags = {
+            "ja-JP": f'<link rel="alternate" hreflang="ja-JP" href="{jp_url}">',
+            "en-PK": f'<link rel="alternate" hreflang="en-PK" href="{pk_url}">',
+            "x-default": f'<link rel="alternate" hreflang="x-default" href="{pk_url}">',
+        }
+        for language, tag in tags.items():
+            if f'hreflang="{language}"' not in html:
+                html = html.replace("</head>", f"  {tag}\n</head>", 1)
+        path.write_text(html, encoding="utf-8")
     generate_visual_home()
 
 
