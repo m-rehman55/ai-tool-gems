@@ -67,9 +67,14 @@ def audit_page(page_path: Path) -> dict:
         result["score"] += 5
         url = og_url_match.group(1)
         if page_path.suffix == ".html":
-            expected = f"https://aitoolgems.tech{page_path.as_posix()}"
+            # For tool/guide pages (index.html in directory), expect directory URL
+            rel_path = page_path.relative_to(BASE).as_posix()
+            if rel_path.endswith("/index.html"):
+                expected = f"https://aitoolgems.tech{rel_path[:-10]}/"
+            else:
+                expected = f"https://aitoolgems.tech{rel_path}"
             if url != expected and not url.startswith("https://aitoolgems.tech/jp"):
-                result["warnings"].append(f"og:url may be incorrect: {url}")
+                result["warnings"].append(f"og:url may be incorrect: {url} (expected {expected})")
     else:
         result["warnings"].append("Missing og:url")
 
