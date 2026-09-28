@@ -252,7 +252,10 @@ def build_search_report(
         site_info = bing.site_info()
         bing_status = site_info.get("siteInfo", {})
         bing_crawl = bing.crawl_stats()
-        bing_crawl_data = bing_crawl.get("crawlStats", {})
+        # Bing returns crawl stats in a 'd' array
+        crawl_data = bing_crawl.get("d", [])
+        # Get the most recent entry
+        bing_crawl_data = crawl_data[-1] if crawl_data else {}
     except Exception as exc:
         bing_status = {"error": str(exc)}
         bing_crawl_data = {}

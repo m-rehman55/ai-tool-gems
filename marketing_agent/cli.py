@@ -173,18 +173,28 @@ def _format_search_report(report: dict) -> list[str]:
     if bing.get("site_info", {}).get("error"):
         lines.append(f"🔴 Bing Error: {bing['site_info']['error']}")
     else:
-        info = bing.get("site_info", {}).get("siteInfo", {})
+        info = bing.get("site_info", {})
         lines.append("🌐 Bing Webmaster:")
         lines.append(f"  Site: {info.get('siteUrl', '?')}")
         lines.append(f"  Ownership: {info.get('ownershipType', '?')}")
         lines.append(f"  Crawl rate: {info.get('crawlRate', '?')}")
 
-    crawl = bing.get("crawl_stats", {}).get("crawlStats", {})
+    crawl = bing.get("crawl_stats", {})
     if crawl:
         lines.append("")
-        lines.append("  Last crawl: " + crawl.get("lastCrawled", "?"))
-        lines.append(f"  Crawled URLs (7d): {crawl.get('pagesCrawled', '?'):,}")
-        lines.append(f"  Pages requested: {crawl.get('pagesRequested', '?'):,}")
+        # Parse Bing date format: /Date(1790467200000)/
+        import re
+        last_crawled = crawl.get("Date", "?")
+        if last_crawled != "?":
+            match = re.search(r"/Date\((\d+)\)/", last_crawled)
+            if match:
+                from datetime import datetime
+                ts = int(match.group(1)) / 1000
+                last_crawled = datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
+        lines.append(f"  Last crawl: {last_crawled}")
+        lines.append(f"  Crawled URLs: {crawl.get('CrawledPages', '?'):,}")
+        lines.append(f"  In Index: {crawl.get('InIndex', '?'):,}")
+        lines.append(f"  Crawl Errors: {crawl.get('CrawlErrors', '?'):,}")
 
     lines.append("")
     lines.append("— This report runs daily via GitHub Actions.")
