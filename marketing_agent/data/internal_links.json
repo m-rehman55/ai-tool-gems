@@ -1,0 +1,456 @@
+{
+  "date": "2026-10-01",
+  "total_pages": 85,
+  "linked_pages": 28,
+  "orphan_pages": [
+    "guides\\businesses\\index.html",
+    "jp\\tools\\netflix\\index.html",
+    "terms.html",
+    "jp\\tools\\lovable\\index.html",
+    "how-we-review.html",
+    "tools\\elevenlabs\\index.html",
+    "guides\\ai-tools-pakistan\\index.html",
+    "jp\\privacy.html",
+    "about.html",
+    "jp\\tools\\youtube\\index.html",
+    "guides\\ai-subscriptions-pakistan\\index.html",
+    "contact.html",
+    "tools\\youtube\\index.html",
+    "guides\\students\\index.html",
+    "guides\\developers\\index.html",
+    "guides\\chatgpt-alternatives\\index.html",
+    "guides\\creators\\index.html",
+    "jp\\tools\\canva\\index.html",
+    "jp\\how-we-review.html",
+    "guides\\canva-vs-figma-pakistan\\index.html",
+    "jp\\terms.html",
+    "jp\\policies.html",
+    "jp\\tools\\chatgpt\\index.html",
+    "guides\\ai-tools-price-pakistan\\index.html",
+    "guides\\canva\\index.html",
+    "gsc_daily_checklist.html",
+    "jp\\tools\\veo\\index.html",
+    "how-we-price.html",
+    "jp\\tools\\figma\\index.html",
+    "tools\\replit\\index.html",
+    "admin.html",
+    "jp\\tools\\gamma\\index.html",
+    "tools\\capcut\\index.html",
+    "jp\\tools\\gemini\\index.html",
+    "guides\\gemini\\index.html",
+    "tools\\windows\\index.html",
+    "tools\\n8n\\index.html",
+    "tools\\surfshark\\index.html",
+    "index.html",
+    "prices\\index.html",
+    "jp\\tools\\linkedin\\index.html",
+    "guides\\ai-tools-pricing\\index.html",
+    "tools\\figma\\index.html",
+    "deals\\index.html",
+    "guides\\capcut\\index.html",
+    "jp\\guides\\chatgpt-vs-gemini-japan\\index.html",
+    "jp\\guides\\canva-vs-figma-japan\\index.html",
+    "jp\\guides\\ai-tools-price-japan\\index.html",
+    "jp\\tools\\leonardo\\index.html",
+    "jp\\tools\\surfshark\\index.html",
+    "jp\\tools\\nordvpn\\index.html",
+    "tools\\linkedin\\index.html",
+    "jp\\tools\\adobe\\index.html",
+    "jp\\tools\\n8n\\index.html",
+    "guides\\chatgpt-vs-gemini-pakistan\\index.html",
+    "tools\\canva\\index.html",
+    "product-verification.html",
+    "jp\\tools\\notion\\index.html",
+    "tools\\adobe\\index.html",
+    "tools\\chatgpt\\index.html",
+    "tools\\veo\\index.html",
+    "guides\\productivity\\index.html",
+    "jp\\tools\\manus\\index.html",
+    "googleb36d12ee905644d9.html",
+    "tools\\leonardo\\index.html",
+    "jp\\tools\\elevenlabs\\index.html",
+    "jp\\tools\\capcut\\index.html",
+    "tools\\nordvpn\\index.html",
+    "tools\\netflix\\index.html",
+    "jp\\tools\\replit\\index.html",
+    "policies.html",
+    "jp\\guides\\index.html",
+    "404.html",
+    "tools\\lovable\\index.html",
+    "privacy.html",
+    "tools\\gamma\\index.html",
+    "jp\\contact.html",
+    "how-we-source.html",
+    "jp\\about.html",
+    "jp\\tools\\windows\\index.html",
+    "tools\\gemini\\index.html",
+    "guides\\index.html",
+    "correction-policy.html",
+    "jp\\index.html",
+    "tools\\notion\\index.html"
+  ],
+  "links": {
+    "404.html": [],
+    "about.html": [],
+    "admin.html": [],
+    "contact.html": [],
+    "correction-policy.html": [],
+    "googleb36d12ee905644d9.html": [],
+    "gsc_daily_checklist.html": [],
+    "how-we-price.html": [],
+    "how-we-review.html": [],
+    "how-we-source.html": [],
+    "index.html": [],
+    "policies.html": [],
+    "privacy.html": [],
+    "product-verification.html": [],
+    "terms.html": [],
+    "deals\\index.html": [],
+    "guides\\index.html": [],
+    "guides\\ai-subscriptions-pakistan\\index.html": [],
+    "guides\\ai-tools-pakistan\\index.html": [],
+    "guides\\ai-tools-price-pakistan\\index.html": [
+      "../",
+      "../"
+    ],
+    "guides\\ai-tools-pricing\\index.html": [],
+    "guides\\businesses\\index.html": [],
+    "guides\\canva\\index.html": [],
+    "guides\\canva-vs-figma-pakistan\\index.html": [
+      "../",
+      "../"
+    ],
+    "guides\\capcut\\index.html": [],
+    "guides\\chatgpt-alternatives\\index.html": [],
+    "guides\\chatgpt-vs-gemini-pakistan\\index.html": [
+      "../",
+      "../"
+    ],
+    "guides\\creators\\index.html": [],
+    "guides\\developers\\index.html": [],
+    "guides\\gemini\\index.html": [],
+    "guides\\productivity\\index.html": [],
+    "guides\\students\\index.html": [],
+    "jp\\about.html": [],
+    "jp\\contact.html": [],
+    "jp\\how-we-review.html": [],
+    "jp\\index.html": [
+      "guides/",
+      "guides/",
+      "guides/ai-tools-price-japan/",
+      "guides/chatgpt-vs-gemini-japan/",
+      "guides/canva-vs-figma-japan/",
+      "guides/"
+    ],
+    "jp\\policies.html": [],
+    "jp\\privacy.html": [],
+    "jp\\terms.html": [],
+    "jp\\guides\\index.html": [],
+    "jp\\guides\\ai-tools-price-japan\\index.html": [
+      "../../contact.html",
+      "../../",
+      "../"
+    ],
+    "jp\\guides\\canva-vs-figma-japan\\index.html": [
+      "../../contact.html",
+      "../../",
+      "../"
+    ],
+    "jp\\guides\\chatgpt-vs-gemini-japan\\index.html": [
+      "../../contact.html",
+      "../../",
+      "../"
+    ],
+    "jp\\tools\\adobe\\index.html": [
+      "../",
+      "../",
+      "../../tools/adobe/",
+      "../",
+      "../",
+      "../../tools/adobe/",
+      "../",
+      "../../tools/adobe/"
+    ],
+    "jp\\tools\\canva\\index.html": [
+      "../",
+      "../",
+      "../../tools/canva/",
+      "../",
+      "../",
+      "../../tools/canva/",
+      "../",
+      "../../tools/canva/"
+    ],
+    "jp\\tools\\capcut\\index.html": [
+      "../",
+      "../",
+      "../../tools/capcut/",
+      "../",
+      "../",
+      "../../tools/capcut/",
+      "../",
+      "../../tools/capcut/"
+    ],
+    "jp\\tools\\chatgpt\\index.html": [
+      "../",
+      "../",
+      "../../tools/chatgpt/",
+      "../",
+      "../",
+      "../../tools/chatgpt/",
+      "../",
+      "../../tools/chatgpt/"
+    ],
+    "jp\\tools\\elevenlabs\\index.html": [
+      "../",
+      "../",
+      "../../tools/elevenlabs/",
+      "../",
+      "../",
+      "../../tools/elevenlabs/",
+      "../",
+      "../../tools/elevenlabs/"
+    ],
+    "jp\\tools\\figma\\index.html": [
+      "../",
+      "../",
+      "../../tools/figma/",
+      "../",
+      "../",
+      "../../tools/figma/",
+      "../",
+      "../../tools/figma/"
+    ],
+    "jp\\tools\\gamma\\index.html": [
+      "../",
+      "../",
+      "../../tools/gamma/",
+      "../",
+      "../",
+      "../../tools/gamma/",
+      "../",
+      "../../tools/gamma/"
+    ],
+    "jp\\tools\\gemini\\index.html": [
+      "../",
+      "../",
+      "../../tools/gemini/",
+      "../",
+      "../",
+      "../../tools/gemini/",
+      "../",
+      "../../tools/gemini/"
+    ],
+    "jp\\tools\\leonardo\\index.html": [
+      "../",
+      "../",
+      "../../tools/leonardo/",
+      "../",
+      "../",
+      "../../tools/leonardo/",
+      "../",
+      "../../tools/leonardo/"
+    ],
+    "jp\\tools\\linkedin\\index.html": [
+      "../",
+      "../",
+      "../../tools/linkedin/",
+      "../",
+      "../",
+      "../../tools/linkedin/",
+      "../",
+      "../../tools/linkedin/"
+    ],
+    "jp\\tools\\lovable\\index.html": [
+      "../",
+      "../",
+      "../../tools/lovable/",
+      "../",
+      "../",
+      "../../tools/lovable/",
+      "../",
+      "../../tools/lovable/"
+    ],
+    "jp\\tools\\manus\\index.html": [
+      "../",
+      "../",
+      "../../tools/manus/",
+      "../",
+      "../",
+      "../../tools/manus/",
+      "../",
+      "../../tools/manus/"
+    ],
+    "jp\\tools\\n8n\\index.html": [
+      "../",
+      "../",
+      "../../tools/n8n/",
+      "../",
+      "../",
+      "../../tools/n8n/",
+      "../",
+      "../../tools/n8n/"
+    ],
+    "jp\\tools\\netflix\\index.html": [
+      "../",
+      "../",
+      "../../tools/netflix/",
+      "../",
+      "../",
+      "../../tools/netflix/",
+      "../",
+      "../../tools/netflix/"
+    ],
+    "jp\\tools\\nordvpn\\index.html": [
+      "../",
+      "../",
+      "../../tools/nordvpn/",
+      "../",
+      "../",
+      "../../tools/nordvpn/",
+      "../",
+      "../../tools/nordvpn/"
+    ],
+    "jp\\tools\\notion\\index.html": [
+      "../",
+      "../",
+      "../../tools/notion/",
+      "../",
+      "../",
+      "../../tools/notion/",
+      "../",
+      "../../tools/notion/"
+    ],
+    "jp\\tools\\replit\\index.html": [
+      "../",
+      "../",
+      "../../tools/replit/",
+      "../",
+      "../",
+      "../../tools/replit/",
+      "../",
+      "../../tools/replit/"
+    ],
+    "jp\\tools\\surfshark\\index.html": [
+      "../",
+      "../",
+      "../../tools/surfshark/",
+      "../",
+      "../",
+      "../../tools/surfshark/",
+      "../",
+      "../../tools/surfshark/"
+    ],
+    "jp\\tools\\veo\\index.html": [
+      "../",
+      "../",
+      "../../tools/veo/",
+      "../",
+      "../",
+      "../../tools/veo/",
+      "../",
+      "../../tools/veo/"
+    ],
+    "jp\\tools\\windows\\index.html": [
+      "../",
+      "../",
+      "../../tools/windows/",
+      "../",
+      "../",
+      "../../tools/windows/",
+      "../",
+      "../../tools/windows/"
+    ],
+    "jp\\tools\\youtube\\index.html": [
+      "../",
+      "../",
+      "../../tools/youtube/",
+      "../",
+      "../",
+      "../../tools/youtube/",
+      "../",
+      "../../tools/youtube/"
+    ],
+    "prices\\index.html": [],
+    "tools\\adobe\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\canva\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\capcut\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\chatgpt\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\elevenlabs\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\figma\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\gamma\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\gemini\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\leonardo\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\linkedin\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\lovable\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\n8n\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\netflix\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\nordvpn\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\notion\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\replit\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\surfshark\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\veo\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\windows\\index.html": [
+      "../",
+      "../"
+    ],
+    "tools\\youtube\\index.html": [
+      "../",
+      "../"
+    ]
+  }
+}
