@@ -63,7 +63,7 @@
 - ❌ No original data assets
 - ❌ No linkable assets as pages
 - ❌ No content decay system
-- ⚠️ JP pages thin
+- ✅ JP content expanded (25→205+ chars)
 - ✅ People-first content
 
 ### International SEO (5/10)
@@ -71,7 +71,7 @@
 - ✅ hreflang reciprocal
 - ✅ No currency contamination
 - ❌ 9 broken hreflang targets
-- ❌ JP content thin
+- ✅ JP content expanded
 - ❌ No future market config
 
 ### Performance (7/10)
