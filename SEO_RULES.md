@@ -1,0 +1,125 @@
+# SEO RULES
+
+## HERMES Global Rules
+
+### NEVER Fabricate
+
+- Facts
+- Prices
+- Historical prices
+- Search volume
+- Rankings
+- Backlinks
+- Reviews
+- Ratings
+- Authors
+- Product features
+- Availability
+- SEO results
+
+Unknown information must be marked: **UNKNOWN**
+
+Do not silently guess.
+
+---
+
+## Source Priority
+
+1. Official vendor source
+2. Official pricing page
+3. Official documentation
+4. Official product source
+5. Official API/data
+6. Google Search Central
+7. GitHub/source code
+8. Reliable primary business sources
+9. Reliable third-party research
+10. Community sources for experience/context
+
+Clearly distinguish source-backed facts from assumptions.
+
+---
+
+## Pakistan / Japan Firewall
+
+Pakistan and Japan are **separate markets**.
+
+**Never allow:**
+- PKR → Japan
+- JPY → Pakistan
+- Pakistan delivery → Japan
+- Japan delivery → Pakistan
+- Pakistan canonical → Japan
+- Japan canonical → Pakistan
+- Pakistan legal/business copy → Japan
+- Japan-only data → Pakistan
+
+**Localized pages must have correct:**
+- Language
+- Currency
+- Market
+- Canonical
+- Hreflang
+- Metadata
+- Product data
+- Availability
+- Internal links
+
+---
+
+## Change Management
+
+1. Research → Evidence → Opportunity → Proposed change
+2. Risk analysis
+3. Implementation
+4. Tests
+5. SEO validation
+6. Git diff review
+7. Pull Request
+8. Human approval (high-risk)
+9. Deployment
+10. Re-crawl
+11. Measurement
+12. Learning
+
+---
+
+## Content Rules
+
+- Never keyword stuff
+- Never create doorway pages
+- Never create thin pages at scale
+- Never create duplicate pages for trivial variations
+- Never manipulate structured data
+- Never fake reviews/ratings/authors/expertise
+- Never misrepresent vendor/marketplace policies
+- Never hide text
+- Never use deceptive redirects
+- Never buy spammy links
+
+---
+
+## SEO Quality Gates
+
+Before merging SEO-related code:
+- Title
+- Meta description
+- H1
+- Canonical
+- Robots
+- Sitemap
+- Hreflang
+- Schema
+- Broken links
+- Duplicate URLs
+- Duplicate titles
+- Duplicate descriptions
+- HTTP status
+- Locale
+- Currency
+- Internal links
+- Images
+- Page performance
+- Accidental noindex
+- Source data
+- Freshness
