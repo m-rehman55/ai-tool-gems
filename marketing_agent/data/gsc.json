@@ -32,5 +32,306 @@
       "device": []
     }
   },
-  "opportunities": []
+  "opportunities": [
+    {
+      "keyword": "AI tools Pakistan",
+      "country": "PK",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools in Pakistan",
+      "country": "PK",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI subscriptions Pakistan",
+      "country": "PK",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/prices/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools price Pakistan",
+      "country": "PK",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/prices/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools PKR",
+      "country": "PK",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/prices/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "best AI tools for students",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/students/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for freelancers",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/productivity/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for content creators",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/creators/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for YouTubers",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/creators/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for developers",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/developers/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for designers",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/productivity/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for businesses",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/businesses/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for education",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/students/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for research",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/productivity/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools Japan",
+      "country": "JP",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/jp/tools/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools price Japan",
+      "country": "JP",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/jp/tools/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI subscription prices Pakistan",
+      "country": "PK",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/prices/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools in PKR",
+      "country": "PK",
+      "intent": "commercial",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/prices/",
+      "business_value": "high",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for Pakistani students",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/students/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for freelancers Pakistan",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/productivity/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for businesses Pakistan",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/businesses/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for creators Pakistan",
+      "country": "PK",
+      "intent": "informational",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/guides/creators/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools near me",
+      "country": "PK",
+      "intent": "local",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools Lahore",
+      "country": "PK",
+      "intent": "local",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools Karachi",
+      "country": "PK",
+      "intent": "local",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools Islamabad",
+      "country": "PK",
+      "intent": "local",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tool for writing",
+      "country": "PK",
+      "intent": "problem-solving",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/chatgpt/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tool for coding",
+      "country": "PK",
+      "intent": "problem-solving",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/chatgpt/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tool for design",
+      "country": "PK",
+      "intent": "problem-solving",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/canva/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tool for video",
+      "country": "PK",
+      "intent": "problem-solving",
+      "opportunity": "high",
+      "reason": "rising_trend_low_competition_no_ranking",
+      "target_url": "/tools/capcut/",
+      "business_value": "medium",
+      "last_checked": "2026-10-01"
+    }
+  ]
 }

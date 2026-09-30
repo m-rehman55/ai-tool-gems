@@ -736,29 +736,6 @@
     "intent_classified": "product"
   },
   {
-    "keyword": "AI tools price Pakistan",
-    "country": "PK",
-    "language": "en",
-    "intent": "commercial",
-    "volume": null,
-    "trend": "rising",
-    "competition": "medium",
-    "serp_type": "mixed",
-    "current_rank": null,
-    "target_url": "/prices/",
-    "business_value": "high",
-    "content_gap": false,
-    "competitor_urls": [
-      "https://aitools.com.pk",
-      "https://aisubscription.store",
-      "https://toolbazaar.pk",
-      "https://aitooldirectory.com",
-      "https://promptbase.com"
-    ],
-    "last_checked": "2026-10-01",
-    "intent_classified": "commercial"
-  },
-  {
     "keyword": "AI subscription prices Pakistan",
     "country": "PK",
     "language": "en",
