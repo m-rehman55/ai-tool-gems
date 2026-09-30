@@ -1,42 +1,20 @@
 """
-Source of Truth Hierarchy
+Source of Truth Hierarchy - FREE-FIRST: Uses free data sources only.
 """
 
 SOT = {
-  "description": "Source of truth hierarchy",
-  "AIToolGems_website": [
-    "URLs",
-    "titles",
-    "descriptions",
-    "H1",
-    "canonical",
-    "hreflang",
-    "schema",
-    "products",
-    "prices",
-    "categories",
-    "internal links",
-    "indexable pages",
-    "content",
-    "last updated",
-    "Pakistan/Japan localization",
-    "page status",
-    "HTTP status",
-    "robots directives"
-  ],
-  "rule": "Never rely only on repository files when production verification is required."
+    "description": "Source of truth hierarchy",
+    "AIToolGems_website": ["URLs", "titles", "descriptions", "H1", "canonical", "hreflang", "schema", "products", "prices", "categories", "internal links", "indexable pages", "content"],
+    "GSC": ["clicks", "impressions", "CTR", "average position", "queries", "pages", "countries", "devices"],
+    "GA4": ["users", "sessions", "engaged sessions", "engagement rate", "landing pages", "traffic acquisition", "organic search traffic", "conversions"],
+    "SERP": ["keyword", "position", "URL", "snippet", "features"],
+    "keyword_tools": ["volume", "competition", "trend"],
+    "backlink_tools": ["domain authority", "referring domains", "anchors"],
+    "competitor_sites": ["pages", "keywords", "content"],
+    "social_media": ["mentions", "shares"],
+    "manual_research": ["notes", "observations"]
 }
 
-def get_sot():
-    """Return source of truth hierarchy."""
-    return SOT
-
-def verify_production(url):
-    """Verify against production website."""
-    return {"url": url, "verified": True, "source": "production"}
-
-
-# ─── FREE-FIRST SOURCE PRIORITY ───
 FREE_FIRST_PRIORITY = {
     "1 - AIToolGems_website": "AIToolGems_website",
     "2 - GSC": "GSC",
@@ -49,6 +27,10 @@ FREE_FIRST_PRIORITY = {
     "9 - social_media": "social_media",
     "10 - manual_research": "manual_research"
 }
+
+def get_source_priority_status():
+    """Return source priority status."""
+    return {"priorities": FREE_FIRST_PRIORITY}
 
 def get_free_first_priority():
     """Return free-first priority order."""
