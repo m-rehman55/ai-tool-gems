@@ -30,3 +30,15 @@
 
 ### Status
 HERMES Master Bootstrap COMPLETE. Ready for Level 0.
+
+## Level 4 (2026-10-01)
+
+- MODES: AUDIT/PROPOSE/PR/AUTO
+- DECISION ENGINE: confidence/impact/effort/risk/evidence/affected URLs/expected result/rollback
+- DAILY LOOP: 18 steps
+- SELF-HEALING: detect/diagnose/repair/test/retry/rollback/verify/report
+- FIREWALL: 11 rules
+- EXPERIMENT ENGINE: hypothesis/control/variant/metric/start/end/result/decision
+- ROLLBACK: STOP/ROLLBACK/VERIFY/TELEGRAM/INCIDENT/RESUME
+- GITHUB: branch→commit→push→test→deploy→verify
+- TELEGRAM: critical alerts/deployment/daily/weekly/monthly/experiments/rollback/score

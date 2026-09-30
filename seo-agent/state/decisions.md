@@ -37,3 +37,18 @@
 - JP content extremely thin
 - No linkable assets as pages
 - 27 P0 findings unresolved
+
+
+## Level 4 Decisions (2026-10-01)
+
+| Decision | Rationale | Affected URLs | Rollback |
+|----------|-----------|---------------|----------|
+| MODES implemented | AUDIT/PROPOSE/PR/AUTO | All | Revert to previous mode |
+| DECISION ENGINE implemented | confidence/impact/effort/risk | All | Manual review |
+| DAILY LOOP implemented | crawl→GSC→analytics→rankings→SERP→competitors→freshness→decay→links→technical→opportunities→prioritize→implement→test→deploy→verify→learn→Telegram | All | Stop loop |
+| SELF-HEALING implemented | detect→diagnose→repair→test→retry | All | Rollback |
+| FIREWALL implemented | mass noindex/canonical/redirects/sitemap/robots/locale/currency/schema/thin/performance/data | All | Block + rollback |
+| EXPERIMENT ENGINE implemented | hypothesis/control/variant/metric/start/end/result/decision | All | REVERT |
+| ROLLBACK implemented | STOP/ROLLBACK/VERIFY/TELEGRAM/INCIDENT/RESUME | All | Rollback |
+| GITHUB implemented | branch→commit→push→test→deploy→verify | All | Revert commit |
+| TELEGRAM implemented | critical alerts/deployment/daily/weekly/monthly/experiments/rollback/score | All | N/A |

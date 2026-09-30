@@ -40,3 +40,12 @@ Choose:
 - Human review (high-risk)
 - Monitor
 - Do nothing
+
+
+## Level 4 Experiments (2026-10-01)
+
+| Experiment | Hypothesis | Control | Variant | Metric | Result | Decision |
+|------------|-----------|---------|---------|--------|--------|----------|
+| Level 4 Implementation | Autonomous SEO agent improves efficiency | Manual SEO | AUTO mode | SEO score | Pending | ITERATE |
+| Daily Loop | Daily automation improves freshness | Weekly manual | Daily automated | Freshness score | Pending | EXTEND |
+| Firewall | Firewall prevents SEO disasters | No firewall | Automated blocking | Incidents prevented | Pending | KEEP |
