@@ -1,5 +1,14 @@
 # SEO AUTOMATION
 
+## Deployment
+
+**System:** GitHub Pages (static HTML)
+**Domain:** aitoolgems.tech
+**CNAME:** aitoolgems.tech
+**Branch:** main
+
+Push to main → GitHub Pages auto-deploys.
+
 ## Daily Workflow
 
 **Cron:** 15 7 * * * (Asia/Karachi)
@@ -53,6 +62,8 @@
 
 Telegram is the HERMES operations center.
 
+**Status:** ✅ Configured via GitHub Secrets (TELEGRAM_BOT_TOKEN, TELEGRAM_CHANNEL_ID, TELEGRAM_OWNER_CHAT_ID)
+
 Reports include:
 - Daily status
 - Changes
@@ -71,6 +82,8 @@ Reports include:
 - Next actions
 
 Critical incidents → immediate alerts.
+
+Never send secrets to Telegram.
 
 ## Deployment Policy
 

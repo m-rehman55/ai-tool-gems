@@ -25,11 +25,11 @@
 
 ### Key Findings
 
-- No GA4 tracking (0/68 pages)
+- GA4: G- IDs in schema only, NO tracking code (not 0/68 — corrected)
 - 9 broken hreflang targets
 - No original data assets
 - No SEO firewall
-- No memory system
+- No memory system (now created)
 - No rollback capability
 - JP content extremely thin
 - No linkable assets as pages

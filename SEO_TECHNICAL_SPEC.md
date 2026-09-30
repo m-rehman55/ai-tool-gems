@@ -33,6 +33,12 @@
 - Lazy loading: 18% (24/133) ⚠️
 - Responsive images (srcset): 0% ❌
 
+### GA4 Status
+- G- IDs in schema: YES (G-CHATGPT, G-JP-CHATGPT)
+- Actual gtag tracking code: NO ❌
+- GA4 measurement ID in <head>: YES (but no gtag script)
+- Status: GA4 NOT FUNCTIONAL — IDs in schema only, no tracking code
+
 ### Mobile
 - Viewport: 100% ✅
 - Responsive: ✅
