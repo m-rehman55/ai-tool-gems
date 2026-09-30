@@ -52,3 +52,22 @@
 | ROLLBACK implemented | STOP/ROLLBACK/VERIFY/TELEGRAM/INCIDENT/RESUME | All | Rollback |
 | GITHUB implemented | branch→commit→push→test→deploy→verify | All | Revert commit |
 | TELEGRAM implemented | critical alerts/deployment/daily/weekly/monthly/experiments/rollback/score | All | N/A |
+
+
+## Level 5 Decisions (2026-10-01)
+
+| Decision | Rationale | Affected URLs | Rollback |
+|----------|-----------|---------------|----------|
+| Continuous Mode | Never stop after Level 5 | All | Stop mode |
+| Daily Automation | Technical+Search+Content+Product+Competitors+Automation | All | Stop loop |
+| Weekly Automation | SEO health+traffic+competitors+score delta | All | Skip week |
+| Monthly Automation | Complete SEO audit+content+product+technical+international | All | Skip month |
+| Quarterly Automation | Re-evaluate architecture+strategy | All | Skip quarter |
+| Score Evolution | Track score delta+evidence | All | Reset score |
+| Learning System | Expected vs actual+lesson+next action | All | Ignore learning |
+| Search Monitor | Ranking+structured data+spam+appearance changes | All | Ignore update |
+| Content Automation | DISCOVERED+UPDATED+OPTIMIZED+MERGED+EXPANDED+REFRESHED | All | Skip content |
+| Product Automation | Price+availability+features+source+freshness | All | Revert product |
+| International Automation | Pakistan+Japan+future markets | All | Block market |
+| Data Moat | Price index+comparison+calculator+research | All | Skip update |
+| Telegram Control Center | Daily+weekly+monthly+critical+deployment+rollback+experiment+incident | All | N/A |

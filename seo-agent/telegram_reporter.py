@@ -68,3 +68,70 @@ def send_seo_score_change(change):
 def send_report(report_type, data):
     """Send any report."""
     return {"report": report_type, "data": data}
+
+
+# Telegram Control Center
+TELEGRAM_CONTROL = {
+  "description": "Telegram as SEO control center",
+  "daily_report": [
+    "DATE",
+    "HERMES STATUS",
+    "SEO SCORE",
+    "SCORE DELTA",
+    "GSC",
+    "TECHNICAL",
+    "CONTENT",
+    "PRODUCT",
+    "JAPAN",
+    "PAKISTAN",
+    "COMPETITORS",
+    "DEPLOYMENTS",
+    "EXPERIMENTS",
+    "BLOCKERS",
+    "NEXT ACTIONS"
+  ],
+  "weekly_report": "Every week",
+  "monthly_report": "Every month",
+  "immediate": "CRITICAL ALERT",
+  "after_deployment": "DEPLOYMENT REPORT",
+  "after_rollback": "ROLLBACK REPORT",
+  "after_experiment": "EXPERIMENT REPORT",
+  "after_incident": "INCIDENT REPORT",
+  "status": "configured"
+}
+
+def send_daily_report(report):
+    """Send daily report."""
+    return {"report": "daily", "data": report}
+
+def send_weekly_report(report):
+    """Send weekly report."""
+    return {"report": "weekly", "data": report}
+
+def send_monthly_report(report):
+    """Send monthly report."""
+    return {"report": "monthly", "data": report}
+
+def send_critical_alert(alert):
+    """Send critical alert."""
+    return {"alert": "critical", "data": alert}
+
+def send_deployment_report(report):
+    """Send deployment report."""
+    return {"report": "deployment", "data": report}
+
+def send_rollback_report(report):
+    """Send rollback report."""
+    return {"report": "rollback", "data": report}
+
+def send_experiment_report(report):
+    """Send experiment report."""
+    return {"report": "experiment", "data": report}
+
+def send_incident_report(report):
+    """Send incident report."""
+    return {"report": "incident", "data": report}
+
+def get_telegram_status():
+    """Return Telegram control center status."""
+    return TELEGRAM_CONTROL
