@@ -42,3 +42,19 @@ HERMES Master Bootstrap COMPLETE. Ready for Level 0.
 - ROLLBACK: STOP/ROLLBACK/VERIFY/TELEGRAM/INCIDENT/RESUME
 - GITHUB: branch→commit→push→test→deploy→verify
 - TELEGRAM: critical alerts/deployment/daily/weekly/monthly/experiments/rollback/score
+
+## Level 5 (2026-10-01)
+
+- Continuous SEO Mode
+- Daily: Technical+Search+Content+Product+Competitors+Automation
+- Weekly: SEO health+traffic+competitors+score delta
+- Monthly: Complete SEO audit+content+product+technical+international
+- Quarterly: Re-evaluate architecture+strategy
+- Score Evolution: previous+current+delta+reason+evidence
+- Learning: expected vs actual+lesson+next action
+- Search Monitor: ranking+structured data+spam+appearance
+- Content: DISCOVERED+UPDATED+OPTIMIZED+MERGED+EXPANDED+REFRESHED
+- Product: price+availability+features+source+freshness
+- International: Pakistan+Japan+future markets
+- Data Moat: price index+comparison+calculator+research
+- Telegram Control Center: daily+weekly+monthly+critical+deployment+rollback+experiment+incident
