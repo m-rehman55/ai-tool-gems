@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-09-30",
+  "site": "aitoolgems.tech",
+  "github": "m-rehman55/ai-tool-gems",
+  "branch": "main",
+  "commit": "33a5804",
+  "pages_total": 68,
+  "products_total": 20,
+  "seo_os_score": {
+    "current": 38,
+    "max": 90,
+    "percentage": 42
+  },
+  "phases_complete": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "total_findings": 89,
+  "p0": 27,
+  "p1": 32,
+  "p2": 30,
+  "markets": ["en-PK", "ja-JP"],
+  "autonomy_mode": "AUDIT/PROPOSE/PR",
+  "last_audit": "2026-09-30"
+}
