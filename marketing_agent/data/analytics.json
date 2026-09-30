@@ -34,12 +34,27 @@
   ],
   "tracking_code": {
     "ga4": {
-      "status": "not_installed",
-      "reason": "G- IDs in schema data only, no gtag() tracking code in HTML",
-      "affected_pages": 0,
-      "fix_required": true
+      "status": "installed",
+      "measurement_id": "G-NQJCMDCLLP",
+      "implementation": "attribution.js",
+      "pages_covered": 85,
+      "coverage": "100%",
+      "events": [
+        "view_item",
+        "select_item",
+        "search",
+        "click_whatsapp",
+        "click_order",
+        "click_affiliate",
+        "view_comparison",
+        "view_guide",
+        "language_switch",
+        "market_switch"
+      ],
+      "async_loading": true,
+      "consent_integration": "privacy.html exists"
     }
   },
-  "ga4_status": "IDs in schema only, no tracking code",
-  "tracking_needed": true
+  "ga4_status": "installed",
+  "tracking_needed": false
 }
