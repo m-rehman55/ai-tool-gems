@@ -1,0 +1,11 @@
+{
+  "total_products": 20,
+  "total_price": 61500,
+  "average_price": 3075.0,
+  "min_price": 400,
+  "max_price": 23000,
+  "currency": "PKR",
+  "market": "Pakistan",
+  "last_updated": "2026-10-01",
+  "source": "AIToolGems marketplace"
+}

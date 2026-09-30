@@ -1,0 +1,322 @@
+[
+  {
+    "id": "chatgpt",
+    "name": "ChatGPT Plus",
+    "provider": "OpenAI",
+    "marketplace_price": 2300,
+    "currency": "PKR",
+    "duration": "1 Month",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "writing",
+      "coding",
+      "study"
+    ]
+  },
+  {
+    "id": "gemini",
+    "name": "Gemini Pro",
+    "provider": "Google",
+    "marketplace_price": 800,
+    "currency": "PKR",
+    "duration": "18 Months",
+    "access_type": "Invitation",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "research",
+      "study",
+      "Google workflows"
+    ]
+  },
+  {
+    "id": "veo",
+    "name": "Veo 3 Ultra",
+    "provider": "Google DeepMind",
+    "marketplace_price": 2100,
+    "currency": "PKR",
+    "duration": "Unlimited plan listing",
+    "access_type": "Shared",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "AI video",
+      "ads",
+      "creators"
+    ]
+  },
+  {
+    "id": "leonardo",
+    "name": "Leonardo AI Essential",
+    "provider": "Leonardo AI",
+    "marketplace_price": 1900,
+    "currency": "PKR",
+    "duration": "8,500 Credits",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "images",
+      "assets",
+      "concept art"
+    ]
+  },
+  {
+    "id": "elevenlabs",
+    "name": "ElevenLabs",
+    "provider": "ElevenLabs",
+    "marketplace_price": 3300,
+    "currency": "PKR",
+    "duration": "1 Month",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "voice",
+      "dubbing",
+      "audio"
+    ]
+  },
+  {
+    "id": "canva",
+    "name": "Canva Pro Edu",
+    "provider": "Canva",
+    "marketplace_price": 900,
+    "currency": "PKR",
+    "duration": "1 Year",
+    "access_type": "Invitation",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "design",
+      "social media",
+      "students"
+    ]
+  },
+  {
+    "id": "figma",
+    "name": "Figma Pro Private",
+    "provider": "Figma",
+    "marketplace_price": 3000,
+    "currency": "PKR",
+    "duration": "2 Years",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "UI/UX",
+      "teams",
+      "web design"
+    ]
+  },
+  {
+    "id": "capcut",
+    "name": "CapCut Pro",
+    "provider": "CapCut",
+    "marketplace_price": 900,
+    "currency": "PKR",
+    "duration": "1 Month",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "reels",
+      "shorts",
+      "editing"
+    ]
+  },
+  {
+    "id": "adobe",
+    "name": "Adobe Creative Cloud",
+    "provider": "Adobe",
+    "marketplace_price": 1700,
+    "currency": "PKR",
+    "duration": "2 Months",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "creative work",
+      "photo",
+      "video"
+    ]
+  },
+  {
+    "id": "lovable",
+    "name": "Lovable Pro",
+    "provider": "Lovable",
+    "marketplace_price": 1600,
+    "currency": "PKR",
+    "duration": "1 Month",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "apps",
+      "web",
+      "MVPs"
+    ]
+  },
+  {
+    "id": "gamma",
+    "name": "Gamma Pro",
+    "provider": "Gamma",
+    "marketplace_price": 23000,
+    "currency": "PKR",
+    "duration": "1 Year",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "slides",
+      "pitching",
+      "documents"
+    ]
+  },
+  {
+    "id": "replit",
+    "name": "Replit Core",
+    "provider": "Replit",
+    "marketplace_price": 3200,
+    "currency": "PKR",
+    "duration": "$40 Credits",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "coding",
+      "apps",
+      "deployment"
+    ]
+  },
+  {
+    "id": "n8n",
+    "name": "n8n Starter",
+    "provider": "n8n",
+    "marketplace_price": 7000,
+    "currency": "PKR",
+    "duration": "1 Year",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "workflows",
+      "agents",
+      "teams"
+    ]
+  },
+  {
+    "id": "notion",
+    "name": "Notion Business",
+    "provider": "Notion",
+    "marketplace_price": 2200,
+    "currency": "PKR",
+    "duration": "3 Months",
+    "access_type": "Invitation",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "docs",
+      "projects",
+      "teams"
+    ]
+  },
+  {
+    "id": "nordvpn",
+    "name": "NordVPN",
+    "provider": "Nord Security",
+    "marketplace_price": 1800,
+    "currency": "PKR",
+    "duration": "3 Months",
+    "access_type": "Private",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "privacy",
+      "travel",
+      "streaming"
+    ]
+  },
+  {
+    "id": "surfshark",
+    "name": "Surfshark VPN",
+    "provider": "Nord Security",
+    "marketplace_price": 800,
+    "currency": "PKR",
+    "duration": "2 Months",
+    "access_type": "Shared",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "privacy",
+      "multiple devices",
+      "travel"
+    ]
+  },
+  {
+    "id": "youtube",
+    "name": "YouTube Premium",
+    "provider": "Google",
+    "marketplace_price": 1200,
+    "currency": "PKR",
+    "duration": "3 Months",
+    "access_type": "Invitation",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "music",
+      "video",
+      "mobile"
+    ]
+  },
+  {
+    "id": "netflix",
+    "name": "Netflix Premium 4K",
+    "provider": "Netflix",
+    "marketplace_price": 400,
+    "currency": "PKR",
+    "duration": "1 Month",
+    "access_type": "Shared",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "movies",
+      "series",
+      "4K streaming"
+    ]
+  },
+  {
+    "id": "linkedin",
+    "name": "LinkedIn Premium",
+    "provider": "Microsoft",
+    "marketplace_price": 1500,
+    "currency": "PKR",
+    "duration": "2 Months",
+    "access_type": "Invitation",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "jobs",
+      "learning",
+      "sales"
+    ]
+  },
+  {
+    "id": "windows",
+    "name": "Windows 11 Pro Key",
+    "provider": "Microsoft",
+    "marketplace_price": 1900,
+    "currency": "PKR",
+    "duration": "Lifetime license listing",
+    "access_type": "License Key",
+    "features": [],
+    "limitations": [],
+    "audience": [
+      "PC",
+      "work",
+      "security"
+    ]
+  }
+]

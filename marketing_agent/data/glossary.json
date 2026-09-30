@@ -1,0 +1,17 @@
+{
+  "AI": "Artificial Intelligence — computer systems that can perform tasks that typically require human intelligence.",
+  "ML": "Machine Learning — a subset of AI that allows systems to learn and improve from experience.",
+  "NLP": "Natural Language Processing — AI that understands and generates human language.",
+  "LLM": "Large Language Model — a type of AI model that can generate human-like text.",
+  "GPT": "Generative Pre-trained Transformer — a type of LLM developed by OpenAI.",
+  "API": "Application Programming Interface — a set of rules that allows different software applications to communicate.",
+  "SaaS": "Software as a Service — a software distribution model where applications are hosted by a provider.",
+  "Subscription": "A recurring payment model where users pay a regular fee to access a service.",
+  "Marketplace": "A platform where users can purchase digital products and services from third-party providers.",
+  "PKR": "Pakistan Rupee — the official currency of Pakistan.",
+  "JPY": "Japanese Yen — the official currency of Japan.",
+  "VPN": "Virtual Private Network — a service that encrypts internet traffic and hides IP addresses.",
+  "SEO": "Search Engine Optimization — the practice of improving website visibility in search engines.",
+  "GSC": "Google Search Console — a free Google tool for monitoring website performance in search results.",
+  "GA4": "Google Analytics 4 — Google's web analytics platform for tracking user behavior."
+}
