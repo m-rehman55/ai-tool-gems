@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-01",
+  "seo_behavior": {
+    "product_views": 0,
+    "cta_clicks": 0,
+    "whatsapp_clicks": 0,
+    "order_intent": 0,
+    "checkout_intent": 0,
+    "commercial_pages": []
+  },
+  "ga4_configured": true,
+  "ga4_ids": [
+    "G-JP",
+    "G-ADOBE",
+    "G-CANVA",
+    "G-CAPCUT",
+    "G-CHATGPT",
+    "G-ELEVENLABS",
+    "G-FIGMA",
+    "G-GAMMA",
+    "G-GEMINI",
+    "G-LEONARDO",
+    "G-LINKEDIN",
+    "G-LOVABLE",
+    "G-N8N",
+    "G-NETFLIX",
+    "G-NORDVPN",
+    "G-NOTION",
+    "G-REPLIT",
+    "G-SURFSHARK",
+    "G-VEO",
+    "G-WINDOWS",
+    "G-YOUTUBE"
+  ],
+  "tracking_code": false
+}

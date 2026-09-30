@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-01",
+  "periods": {
+    "7_days": {
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "average_position": 0,
+      "queries": [],
+      "pages": [],
+      "country": [],
+      "device": []
+    },
+    "28_days": {
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "average_position": 0,
+      "queries": [],
+      "pages": [],
+      "country": [],
+      "device": []
+    },
+    "90_days": {
+      "clicks": 0,
+      "impressions": 0,
+      "ctr": 0,
+      "average_position": 0,
+      "queries": [],
+      "pages": [],
+      "country": [],
+      "device": []
+    }
+  },
+  "opportunities": []
+}

@@ -1,0 +1,675 @@
+{
+  "date": "2026-10-01",
+  "keywords_tracked": 39,
+  "keywords": [
+    {
+      "keyword": "AI tools Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/tools/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools in Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/tools/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "buy AI tools Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "transactional",
+      "serp_type": "shopping",
+      "trend": "rising",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI subscriptions Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/prices/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools price Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/prices/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools PKR",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "low",
+      "current_rank": null,
+      "target_url": "/prices/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "premium AI tools Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/tools/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "product",
+      "serp_type": "knowledge_graph",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT price Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "pricing",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "buy ChatGPT Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "transactional",
+      "serp_type": "shopping",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT subscription Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "product",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT premium Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "product",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT monthly price Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "product",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT yearly price Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "product",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "best AI tools for students",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/students/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for freelancers",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/productivity/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for content creators",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/creators/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for YouTubers",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/creators/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for developers",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/developers/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for designers",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/productivity/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for businesses",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/businesses/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for education",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/students/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for research",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/productivity/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT vs Gemini",
+      "country": "PK",
+      "language": "en",
+      "intent": "comparison",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/guides/chatgpt-vs-gemini-pakistan/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT vs Claude",
+      "country": "PK",
+      "language": "en",
+      "intent": "comparison",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "Canva vs Figma",
+      "country": "PK",
+      "language": "en",
+      "intent": "comparison",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/guides/canva-vs-figma-pakistan/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "CapCut vs Canva",
+      "country": "PK",
+      "language": "en",
+      "intent": "comparison",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/tools/capcut/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "Leonardo vs Midjourney",
+      "country": "PK",
+      "language": "en",
+      "intent": "comparison",
+      "serp_type": "mixed",
+      "trend": "stable",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/tools/leonardo/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools Japan",
+      "country": "JP",
+      "language": "ja",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/jp/tools/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools price Japan",
+      "country": "JP",
+      "language": "ja",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/jp/tools/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "ChatGPT Japan",
+      "country": "JP",
+      "language": "ja",
+      "intent": "product",
+      "serp_type": "knowledge_graph",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/jp/tools/chatgpt/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "Canva Japan",
+      "country": "JP",
+      "language": "ja",
+      "intent": "product",
+      "serp_type": "knowledge_graph",
+      "trend": "stable",
+      "competition": "high",
+      "current_rank": null,
+      "target_url": "/jp/tools/canva/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools price Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/prices/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI subscription prices Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "medium",
+      "current_rank": null,
+      "target_url": "/prices/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools in PKR",
+      "country": "PK",
+      "language": "en",
+      "intent": "commercial",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "low",
+      "current_rank": null,
+      "target_url": "/prices/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for Pakistani students",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "low",
+      "current_rank": null,
+      "target_url": "/guides/students/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for freelancers Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "low",
+      "current_rank": null,
+      "target_url": "/guides/productivity/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for businesses Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "low",
+      "current_rank": null,
+      "target_url": "/guides/businesses/",
+      "last_checked": "2026-10-01"
+    },
+    {
+      "keyword": "AI tools for creators Pakistan",
+      "country": "PK",
+      "language": "en",
+      "intent": "informational",
+      "serp_type": "mixed",
+      "trend": "rising",
+      "competition": "low",
+      "current_rank": null,
+      "target_url": "/guides/creators/",
+      "last_checked": "2026-10-01"
+    }
+  ],
+  "competitors": [],
+  "serp_features": {
+    "mixed": 34,
+    "shopping": 2,
+    "knowledge_graph": 3
+  },
+  "intent_changes": [],
+  "emerging_queries": [
+    {
+      "keyword": "AI tools Pakistan",
+      "trend": "rising",
+      "target_url": "/tools/"
+    },
+    {
+      "keyword": "AI tools in Pakistan",
+      "trend": "rising",
+      "target_url": "/tools/"
+    },
+    {
+      "keyword": "buy AI tools Pakistan",
+      "trend": "rising",
+      "target_url": "/tools/"
+    },
+    {
+      "keyword": "AI subscriptions Pakistan",
+      "trend": "rising",
+      "target_url": "/prices/"
+    },
+    {
+      "keyword": "AI tools price Pakistan",
+      "trend": "rising",
+      "target_url": "/prices/"
+    },
+    {
+      "keyword": "AI tools PKR",
+      "trend": "rising",
+      "target_url": "/prices/"
+    },
+    {
+      "keyword": "best AI tools for students",
+      "trend": "rising",
+      "target_url": "/guides/students/"
+    },
+    {
+      "keyword": "AI tools for freelancers",
+      "trend": "rising",
+      "target_url": "/guides/productivity/"
+    },
+    {
+      "keyword": "AI tools for content creators",
+      "trend": "rising",
+      "target_url": "/guides/creators/"
+    },
+    {
+      "keyword": "AI tools for YouTubers",
+      "trend": "rising",
+      "target_url": "/guides/creators/"
+    },
+    {
+      "keyword": "AI tools for developers",
+      "trend": "rising",
+      "target_url": "/guides/developers/"
+    },
+    {
+      "keyword": "AI tools for designers",
+      "trend": "rising",
+      "target_url": "/guides/productivity/"
+    },
+    {
+      "keyword": "AI tools for businesses",
+      "trend": "rising",
+      "target_url": "/guides/businesses/"
+    },
+    {
+      "keyword": "AI tools for education",
+      "trend": "rising",
+      "target_url": "/guides/students/"
+    },
+    {
+      "keyword": "AI tools for research",
+      "trend": "rising",
+      "target_url": "/guides/productivity/"
+    },
+    {
+      "keyword": "AI tools Japan",
+      "trend": "rising",
+      "target_url": "/jp/tools/"
+    },
+    {
+      "keyword": "AI tools price Japan",
+      "trend": "rising",
+      "target_url": "/jp/tools/"
+    },
+    {
+      "keyword": "AI tools price Pakistan",
+      "trend": "rising",
+      "target_url": "/prices/"
+    },
+    {
+      "keyword": "AI subscription prices Pakistan",
+      "trend": "rising",
+      "target_url": "/prices/"
+    },
+    {
+      "keyword": "AI tools in PKR",
+      "trend": "rising",
+      "target_url": "/prices/"
+    },
+    {
+      "keyword": "AI tools for Pakistani students",
+      "trend": "rising",
+      "target_url": "/guides/students/"
+    },
+    {
+      "keyword": "AI tools for freelancers Pakistan",
+      "trend": "rising",
+      "target_url": "/guides/productivity/"
+    },
+    {
+      "keyword": "AI tools for businesses Pakistan",
+      "trend": "rising",
+      "target_url": "/guides/businesses/"
+    },
+    {
+      "keyword": "AI tools for creators Pakistan",
+      "trend": "rising",
+      "target_url": "/guides/creators/"
+    }
+  ],
+  "content_formats": {
+    "/tools/": [
+      "AI tools Pakistan",
+      "AI tools in Pakistan",
+      "buy AI tools Pakistan",
+      "premium AI tools Pakistan"
+    ],
+    "/prices/": [
+      "AI subscriptions Pakistan",
+      "AI tools price Pakistan",
+      "AI tools PKR",
+      "AI tools price Pakistan",
+      "AI subscription prices Pakistan",
+      "AI tools in PKR"
+    ],
+    "/tools/chatgpt/": [
+      "ChatGPT Pakistan",
+      "ChatGPT price Pakistan",
+      "buy ChatGPT Pakistan",
+      "ChatGPT subscription Pakistan",
+      "ChatGPT premium Pakistan",
+      "ChatGPT monthly price Pakistan",
+      "ChatGPT yearly price Pakistan",
+      "ChatGPT vs Claude"
+    ],
+    "/guides/students/": [
+      "best AI tools for students",
+      "AI tools for education",
+      "AI tools for Pakistani students"
+    ],
+    "/guides/productivity/": [
+      "AI tools for freelancers",
+      "AI tools for designers",
+      "AI tools for research",
+      "AI tools for freelancers Pakistan"
+    ],
+    "/guides/creators/": [
+      "AI tools for content creators",
+      "AI tools for YouTubers",
+      "AI tools for creators Pakistan"
+    ],
+    "/guides/developers/": [
+      "AI tools for developers"
+    ],
+    "/guides/businesses/": [
+      "AI tools for businesses",
+      "AI tools for businesses Pakistan"
+    ],
+    "/guides/chatgpt-vs-gemini-pakistan/": [
+      "ChatGPT vs Gemini"
+    ],
+    "/guides/canva-vs-figma-pakistan/": [
+      "Canva vs Figma"
+    ],
+    "/tools/capcut/": [
+      "CapCut vs Canva"
+    ],
+    "/tools/leonardo/": [
+      "Leonardo vs Midjourney"
+    ],
+    "/jp/tools/": [
+      "AI tools Japan",
+      "AI tools price Japan"
+    ],
+    "/jp/tools/chatgpt/": [
+      "ChatGPT Japan"
+    ],
+    "/jp/tools/canva/": [
+      "Canva Japan"
+    ]
+  },
+  "market_changes": {}
+}

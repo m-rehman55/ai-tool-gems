@@ -1,0 +1,156 @@
+[
+  {
+    "type": "technology_publication",
+    "name": "Pakistan Tech Publications",
+    "url": "https://www.techjuice.pk",
+    "description": "Pakistan technology news and reviews",
+    "link_type": "resource_page",
+    "difficulty": "medium",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "technology_publication",
+    "name": "ProPakistani",
+    "url": "https://propakistani.pk",
+    "description": "Pakistan technology and business news",
+    "link_type": "resource_page",
+    "difficulty": "medium",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "ai_community",
+    "name": "Pakistan AI Community",
+    "url": "https://www.facebook.com/groups/pakistanAI",
+    "description": "Pakistan AI community group",
+    "link_type": "community",
+    "difficulty": "low",
+    "business_value": "medium",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "ai_community",
+    "name": "AI Pakistan",
+    "url": "https://www.linkedin.com/company/ai-pakistan",
+    "description": "AI Pakistan LinkedIn group",
+    "link_type": "community",
+    "difficulty": "low",
+    "business_value": "medium",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "educational_resource",
+    "name": "NUST",
+    "url": "https://nust.edu.pk",
+    "description": "National University of Sciences and Technology",
+    "link_type": "educational",
+    "difficulty": "high",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "educational_resource",
+    "name": "LUMS",
+    "url": "https://lums.edu.pk",
+    "description": "Lahore University of Management Sciences",
+    "link_type": "educational",
+    "difficulty": "high",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "resource_page",
+    "name": "AI Resources",
+    "url": "https://www.aitools.com/resources",
+    "description": "AI tools resource page",
+    "link_type": "resource_page",
+    "difficulty": "medium",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "directory",
+    "name": "Product Hunt",
+    "url": "https://www.producthunt.com",
+    "description": "Product discovery platform",
+    "link_type": "directory",
+    "difficulty": "medium",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "directory",
+    "name": "G2",
+    "url": "https://www.g2.com",
+    "description": "Software review platform",
+    "link_type": "directory",
+    "difficulty": "medium",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "journalist",
+    "name": "Tech Journalists Pakistan",
+    "url": "https://www.twitter.com/techjournalistpk",
+    "description": "Pakistan tech journalists",
+    "link_type": "digital_pr",
+    "difficulty": "medium",
+    "business_value": "high",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "broken_link",
+    "name": "AI Tools Resource Page",
+    "url": "https://www.aitools.com/resources",
+    "description": "Broken link opportunity on AI resources page",
+    "link_type": "broken_link",
+    "difficulty": "low",
+    "business_value": "medium",
+    "status": "find",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "original_research",
+    "name": "AI Tools Price Index",
+    "url": "https://aitoolgems.tech/prices/",
+    "description": "Original price index data - linkable asset",
+    "link_type": "original_research",
+    "difficulty": "low",
+    "business_value": "high",
+    "status": "create",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "original_research",
+    "name": "AI Subscription Price Tracker",
+    "url": "https://aitoolgems.tech/prices/",
+    "description": "Original price tracking data - linkable asset",
+    "link_type": "original_research",
+    "difficulty": "low",
+    "business_value": "high",
+    "status": "create",
+    "last_checked": "2026-10-01"
+  },
+  {
+    "type": "original_research",
+    "name": "AI Tools Comparison Database",
+    "url": "https://aitoolgems.tech/comparisons/",
+    "description": "Original comparison data - linkable asset",
+    "link_type": "original_research",
+    "difficulty": "low",
+    "business_value": "high",
+    "status": "create",
+    "last_checked": "2026-10-01"
+  }
+]
