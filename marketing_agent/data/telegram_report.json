@@ -2,14 +2,15 @@
   "date": "2026-10-01",
   "type": "daily",
   "sections": {
-    "keyword_opportunities": 44,
+    "keyword_opportunities": 55,
     "ranking_changes": "not available",
-    "gsc_trends": "not available",
+    "gsc_trends": "30 opportunities identified",
     "competitor_changes": "not available",
     "authority_opportunities": 14,
     "cannibalization": 5,
     "content_opportunities": 25,
     "experiments": 0,
     "deployments": 1
-  }
+  },
+  "status": "LEVEL 3 VERIFIED"
 }

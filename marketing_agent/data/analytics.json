@@ -32,5 +32,14 @@
     "G-WINDOWS",
     "G-YOUTUBE"
   ],
-  "tracking_code": false
+  "tracking_code": {
+    "ga4": {
+      "status": "not_installed",
+      "reason": "G- IDs in schema data only, no gtag() tracking code in HTML",
+      "affected_pages": 0,
+      "fix_required": true
+    }
+  },
+  "ga4_status": "IDs in schema only, no tracking code",
+  "tracking_needed": true
 }
