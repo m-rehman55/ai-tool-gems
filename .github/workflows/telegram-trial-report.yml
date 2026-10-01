@@ -1,6 +1,6 @@
 name: Telegram trial daily report
 
-on:
+'on':
   schedule:
     - cron: "0 21 12-14 9 *"
       timezone: "Asia/Karachi"

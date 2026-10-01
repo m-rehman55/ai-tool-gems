@@ -1,6 +1,6 @@
 name: Daily SEO, GEO and AEO integrity monitor
 
-on:
+'on':
   schedule:
     - cron: "15 7 * * *"
       timezone: "Asia/Karachi"
