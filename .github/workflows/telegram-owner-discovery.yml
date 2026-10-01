@@ -1,6 +1,6 @@
 name: Telegram owner discovery
 
-on:
+'on':
   workflow_dispatch:
 
 permissions:

@@ -1,7 +1,7 @@
 name: Daily Pakistan social growth campaign
 # BUFFER_API_KEY is supplied only through GitHub Actions repository secrets.
 
-on:
+'on':
   push:
     branches: [main]
     paths:

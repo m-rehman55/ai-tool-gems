@@ -1,6 +1,6 @@
 name: Telegram connection check
 
-on:
+'on':
   workflow_dispatch:
 
 permissions:
