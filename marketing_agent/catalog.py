@@ -32,9 +32,17 @@ class Product:
         return round(self.saving / self.old_price * 100) if self.old_price else 0
 
 
+PRODUCT_FIELDS = {"id", "name", "category", "price", "old_price", "duration", "access", "delivery", "warranty", "best_for"}
+
+
 def load_products(path: Path = CATALOG_PATH) -> list[Product]:
     rows = json.loads(path.read_text(encoding="utf-8"))
-    return [Product(**{**row, "best_for": tuple(row["best_for"])}) for row in rows]
+    result = []
+    for row in rows:
+        filtered = {k: v for k, v in row.items() if k in PRODUCT_FIELDS}
+        filtered["best_for"] = tuple(filtered["best_for"])
+        result.append(Product(**filtered))
+    return result
 
 
 def get_product(product_id: str) -> Product:
