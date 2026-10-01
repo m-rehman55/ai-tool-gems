@@ -33,7 +33,9 @@ jobs:
 
       - name: Run technical SEO/GEO integrity audit
         run: python -m marketing_agent seo-monitor --json --send
+        continue-on-error: true
 
       - name: Pull Google Search Console + Bing data and send report
         if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
         run: python -m marketing_agent seo-api-report --send --days 7
+        continue-on-error: true
