@@ -77,14 +77,17 @@ def process_updates(settings: Settings, state_path: Path = STATE_PATH) -> int:
     handled = 0
     latest = int(state.get("last_update_id", 0))
     for update in updates:
-        latest = max(latest, int(update["update_id"]))
-        message = update.get("message") or {}
-        chat = message.get("chat") or {}
-        if chat.get("type") != "private":
-            continue
-        command = str(message.get("text") or "").strip().split()[0].lower()
-        _reply(settings, client, str(chat["id"]), command)
-        handled += 1
+            latest = max(latest, int(update["update_id"]))
+            message = update.get("message") or {}
+            chat = message.get("chat") or {}
+            if chat.get("type") != "private":
+                continue
+            text = str(message.get("text") or "").strip()
+            if not text:
+                continue
+            command = text.split()[0].lower()
+            _reply(settings, client, str(chat["id"]), command)
+            handled += 1
     if latest != int(state.get("last_update_id", 0)):
         _save_state({"last_update_id": latest, "updated_at": datetime.now(settings.timezone).isoformat(timespec="seconds")}, state_path)
     return handled
