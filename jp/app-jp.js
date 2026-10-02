@@ -546,10 +546,10 @@ function finderStep(step = 1) {
         <h2 id="finderTitle">What is your budget target?</h2>
         <p>We’ll prioritize tools with the highest verified ROI in your range.</p>
         <div class="finder-choices">
-          <button class="finder-choice" data-budget-min="0" data-budget-max="999">Under Rs. 1,000<small>Budget friendly</small></button>
-          <button class="finder-choice" data-budget-min="1000" data-budget-max="2500">Rs. 1,000 – 2,500<small>Most popular tier</small></button>
-          <button class="finder-choice" data-budget-min="2501" data-budget-max="5000">Rs. 2,500 – 5,000<small>Power creator</small></button>
-          <button class="finder-choice" data-budget-min="5001" data-budget-max="999999">Rs. 5,000+<small>Annual &amp; teams</small></button>
+          <button class="finder-choice" data-budget-min="0" data-budget-max="999">Under ¥1,000<small>Budget friendly</small></button>
+          <button class="finder-choice" data-budget-min="1000" data-budget-max="2500">¥1,000 – 2,500<small>Most popular tier</small></button>
+          <button class="finder-choice" data-budget-min="2501" data-budget-max="5000">¥2,500 – 5,000<small>Power creator</small></button>
+          <button class="finder-choice" data-budget-min="5001" data-budget-max="999999">¥5,000+<small>Annual &amp; teams</small></button>
         </div>
         <button class="finder-back" type="button" data-finder-back="1">← Change your goal</button>
       </div>
@@ -884,7 +884,7 @@ document.addEventListener('click', e => {
   }
   const orderBundle = e.target.closest('#orderBundleWa');
   if (orderBundle) {
-    window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to order the Creator Stack Power Bundle (4 Tools):\n1. ChatGPT Plus (1 Month, Private) — Rs. 2,300\n2. Canva Pro Edu (1 Year, Invitation) — Rs. 900\n3. CapCut Pro (1 Month, Private) — Rs. 900\n4. ElevenLabs (1 Month, Private) — Rs. 3,300\n\n💎 Bundle Total: Rs. 7,400\n\nPlease confirm availability, the accepted payment route, and activation time.`), '_blank');
+    window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to order the Creator Stack Power Bundle (4 Tools):\n1. ChatGPT Plus (1 Month, Private) — ¥2,300\n2. Canva Pro Edu (1 Year, Invitation) — ¥900\n3. CapCut Pro (1 Month, Private) — ¥900\n4. ElevenLabs (1 Month, Private) — ¥3,300\n\n💎 Bundle Total: ¥7,400\n\nPlease confirm availability, the accepted payment route, and activation time.`), '_blank');
     return;
   }
   const wa = e.target.closest('[data-whatsapp]');
