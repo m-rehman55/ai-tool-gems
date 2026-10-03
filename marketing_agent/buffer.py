@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import time
 import wave
 from array import array
 from io import BytesIO
@@ -134,7 +135,20 @@ class BufferClient:
                     payload = json.loads(response.read().decode("utf-8"))
             except HTTPError as exc:
                 detail = exc.read().decode("utf-8", errors="replace")
-                raise BufferError(f"Buffer API HTTP {exc.code}: {detail[:300]}") from exc
+                if exc.code == 429:
+                    time.sleep(5)
+                    try:
+                        with urlopen(request, timeout=30) as response:
+                            payload = json.loads(response.read().decode("utf-8"))
+                    except HTTPError as exc2:
+                        if exc2.code == 429:
+                            time.sleep(15)
+                            with urlopen(request, timeout=30) as response:
+                                payload = json.loads(response.read().decode("utf-8"))
+                        else:
+                            raise BufferError(f"Buffer API HTTP {exc2.code}: {detail[:300]}") from exc2
+                else:
+                    raise BufferError(f"Buffer API HTTP {exc.code}: {detail[:300]}") from exc
             except (URLError, TimeoutError) as exc:
                 raise BufferError(f"Buffer API connection failed: {exc}") from exc
         if payload.get("errors"):
