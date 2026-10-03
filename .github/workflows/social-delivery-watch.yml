@@ -1,6 +1,6 @@
 name: Verify daily social delivery
 
-on:
+"on":
   schedule:
     - cron: "15 23 * * *"
       timezone: "Asia/Karachi"
