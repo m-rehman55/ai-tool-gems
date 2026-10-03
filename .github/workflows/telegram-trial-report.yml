@@ -1,6 +1,6 @@
 name: Telegram trial daily report
 
-'on':
+"on":
   schedule:
     - cron: "0 21 12-14 9 *"
       timezone: "Asia/Karachi"
@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   report:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -29,7 +29,7 @@ jobs:
       ATG_TIMEZONE: Asia/Karachi
       ATG_TRIAL_START: "2026-09-12"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 0
