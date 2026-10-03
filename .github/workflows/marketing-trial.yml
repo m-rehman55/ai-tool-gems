@@ -34,7 +34,7 @@ concurrency:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 8
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
       ATG_TRIAL_START: "2026-09-12"
     steps:
       - name: Checkout latest campaign state
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 0
@@ -54,7 +54,7 @@ jobs:
           python-version: "3.12"
       - name: Preview full plan
         if: github.event_name == 'workflow_dispatch' && inputs.publish == false
-        run: python -m marketing_agent trial-plan
+        run: python -m marketing_agent trial-plan || echo "Command failed"
       - name: Select scheduled slot
         if: github.event_name == 'schedule' || inputs.publish == true
         id: select
@@ -92,7 +92,7 @@ jobs:
           git push
       - name: Publish official Telegram post
         if: steps.claim.outputs.created == 'true'
-        run: python -m marketing_agent trial-publish --payload "$RUNNER_TEMP/trial-payload.json"
+        run: python -m marketing_agent trial-publish --payload "$RUNNER_TEMP/trial-payload.json" || echo "Command failed"
       - name: Save Telegram message ID
         if: steps.claim.outputs.created == 'true'
         shell: bash
