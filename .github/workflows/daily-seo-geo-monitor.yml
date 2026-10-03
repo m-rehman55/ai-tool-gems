@@ -1,6 +1,6 @@
 name: Daily SEO, GEO and AEO integrity monitor
 
-'on':
+"on":
   schedule:
     - cron: "15 7 * * *"
       timezone: "Asia/Karachi"
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   audit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 8
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -26,16 +26,14 @@ jobs:
       GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
       BING_API_KEY: ${{ secrets.BING_API_KEY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Run technical SEO/GEO integrity audit
-        run: python -m marketing_agent seo-monitor --json --send
-        continue-on-error: true
+        run: python -m marketing_agent seo-monitor --json --send || echo "Command failed"
 
       - name: Pull Google Search Console + Bing data and send report
         if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
-        run: python -m marketing_agent seo-api-report --send --days 7
-        continue-on-error: true
+        run: python -m marketing_agent seo-api-report --send --days 7 || echo "Command failed"
