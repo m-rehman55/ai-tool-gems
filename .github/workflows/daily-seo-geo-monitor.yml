@@ -35,5 +35,5 @@ jobs:
         run: python -m marketing_agent seo-monitor --json --send || echo "Command failed"
 
       - name: Pull Google Search Console + Bing data and send report
-        if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
+        if: false
         run: python -m marketing_agent seo-api-report --send --days 7 || echo "Command failed"
