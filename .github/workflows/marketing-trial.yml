@@ -1,6 +1,6 @@
 name: Three-day organic marketing trial
 
-on:
+"on":
   schedule:
     - cron: "15 9 12-14 9 *"
       timezone: "Asia/Karachi"

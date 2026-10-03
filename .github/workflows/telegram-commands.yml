@@ -1,6 +1,6 @@
 name: Telegram bot commands
 
-on:
+"on":
   schedule:
     - cron: "*/30 * * * *"
       timezone: "Asia/Karachi"
