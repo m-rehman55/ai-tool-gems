@@ -6,7 +6,7 @@ Checks every HTML file for all required elements
 from pathlib import Path
 import re
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 issues = []
 
 def check_file(filepath, rel_path):
@@ -104,8 +104,8 @@ def check_file(filepath, rel_path):
         if '"@type": "FAQPage"' not in html:
             issues.append(f"⚠️  {name}: No FAQPage schema")
 
-# Check all HTML files
-html_files = sorted(BASE.rglob("*.html"))
+# Check all HTML files (excluding hidden directories)
+html_files = sorted([f for f in BASE.rglob("*.html") if not any(part.startswith(".") for part in f.parts)])
 print(f"Auditing {len(html_files)} HTML files...\n")
 
 for f in html_files:

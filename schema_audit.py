@@ -15,7 +15,7 @@ import re
 import os
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 
 def audit_page(page_path: Path) -> dict:
