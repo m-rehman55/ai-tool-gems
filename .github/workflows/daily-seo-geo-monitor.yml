@@ -32,6 +32,7 @@ jobs:
           python-version: "3.12"
 
       - name: Run technical SEO/GEO integrity audit
+        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_OWNER_CHAT_ID != '' }}
         run: python -m marketing_agent seo-monitor --json --send || echo "SEO monitor completed with warnings"
 
       - name: Pull Google Search Console + Bing data and send report
