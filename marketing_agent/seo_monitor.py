@@ -71,15 +71,23 @@ class PageSignals(HTMLParser):
             self._in_schema = False
 
 
-def _fetch(url: str, timeout: int = 20) -> FetchResult:
+def _fetch(url: str, timeout: int = 20, retries: int = 2) -> FetchResult:
     request = Request(url, headers={"User-Agent": "AI-Tool-Gems-SEO-Monitor/1.0"})
-    with urlopen(request, timeout=timeout) as response:
-        charset = response.headers.get_content_charset() or "utf-8"
-        return FetchResult(
-            url=response.geturl(), status=int(response.status),
-            content_type=response.headers.get("Content-Type", ""),
-            body=response.read().decode(charset, errors="replace"),
-        )
+    last_exc: Exception | None = None
+    for attempt in range(retries + 1):
+        try:
+            with urlopen(request, timeout=timeout) as response:
+                charset = response.headers.get_content_charset() or "utf-8"
+                return FetchResult(
+                    url=response.geturl(), status=int(response.status),
+                    content_type=response.headers.get("Content-Type", ""),
+                    body=response.read().decode(charset, errors="replace"),
+                )
+        except Exception as exc:
+            last_exc = exc
+    if last_exc:
+        raise last_exc
+    raise RuntimeError(f"Failed to fetch {url}")
 
 
 def inspect_homepage(html: str, canonical_url: str) -> list[str]:

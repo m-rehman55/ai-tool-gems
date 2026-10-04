@@ -116,11 +116,19 @@ class PageSignals(HTMLParser):
             self._in_schema = False
 
 
-def _fetch(url: str, timeout: int = 20) -> str:
+def _fetch(url: str, timeout: int = 20, retries: int = 2) -> str:
     request = Request(url, headers={"User-Agent": "AI-Tool-Gems-SEO-Agent/1.0"})
-    with urlopen(request, timeout=timeout) as response:
-        charset = response.headers.get_content_charset() or "utf-8"
-        return response.read().decode(charset, errors="replace")
+    last_exc: Exception | None = None
+    for attempt in range(retries + 1):
+        try:
+            with urlopen(request, timeout=timeout) as response:
+                charset = response.headers.get_content_charset() or "utf-8"
+                return response.read().decode(charset, errors="replace")
+        except Exception as exc:
+            last_exc = exc
+    if last_exc:
+        raise last_exc
+    raise RuntimeError(f"Failed to fetch {url}")
 
 
 def _sitemap_urls(sitemap_xml: str) -> list[str]:
