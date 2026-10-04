@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 from urllib.parse import urljoin
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # Alt text replacement rules (generic → specific)
 ALT_RULES = [

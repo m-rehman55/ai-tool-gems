@@ -11,8 +11,8 @@ from pathlib import Path
 
 # ── Tool directories (Pakistan + Japan) ──────────────────────────────────
 TOOL_DIRS = [
-    Path(r"D:/ai-tool-gems/tools"),
-    Path(r"D:/ai-tool-gems/jp/tools"),
+    Path(__file__).resolve().parent / "tools",
+    Path(__file__).resolve().parent / "jp" / "tools",
 ]
 
 # ── Sabhi 20 tools ke liye FAQs ──────────────────────────────────────────
@@ -467,7 +467,7 @@ def main():
             print(f"\n⚠ Directory not found: {tool_dir}")
             continue
 
-        rel_path = tool_dir.relative_to(Path(r"D:/ai-tool-gems"))
+        rel_path = tool_dir.relative_to(Path(__file__).resolve().parent)
         print(f"\n📁 {rel_path}/")
 
         for tool_name, tool_data in TOOL_FAQS.items():

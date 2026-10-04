@@ -2,7 +2,7 @@
 """Fix all PK tool pages: Bing meta + WebP OG + WebP favicon"""
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 tools_dir = BASE / "tools"
 
 BING_META = '  <meta name="msvalidate.01" content="737494F711E656D83B3126A5D5707776">\n'

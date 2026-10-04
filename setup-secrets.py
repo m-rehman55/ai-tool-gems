@@ -24,7 +24,7 @@ import json
 import subprocess
 from pathlib import Path
 
-REPO = "D:/ai-tool-gems"
+REPO = str(Path(__file__).resolve().parent)
 GITHUB_REPO = "m-rehman55/ai-tool-gems"
 
 def run_cmd(cmd, timeout=30):

@@ -5,7 +5,7 @@ Add brand field to all JP tool Product schemas for better GSC rich results.
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 JP_TOOLS = [
     "chatgpt", "gemini", "veo", "leonardo", "elevenlabs",

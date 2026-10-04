@@ -9,7 +9,7 @@ import re
 import json
 from pathlib import Path
 
-REPO_DIR = Path("D:/ai-tool-gems")
+REPO_DIR = Path(__file__).resolve().parent
 TOOLS_DIR = REPO_DIR / "tools"
 
 # ── All 20 tools ke liye FAQ data ──────────────────────────────────────────

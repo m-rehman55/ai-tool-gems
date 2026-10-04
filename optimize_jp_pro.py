@@ -13,7 +13,7 @@ Pro-level JP Homepage Optimization per Bing Webmaster Guidelines:
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 path = BASE / "jp" / "index.html"
 html = path.read_text(encoding="utf-8")
 

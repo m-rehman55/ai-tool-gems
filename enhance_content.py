@@ -7,7 +7,7 @@ Step 3: Add cross-links between related pages
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # Tool data for content enhancement
 TOOL_DATA = {

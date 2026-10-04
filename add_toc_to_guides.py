@@ -7,7 +7,7 @@ Guide pages mein headings (h2/h3) extract karke TOC generate karta hai.
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 GUIDE_DIRS = [
     BASE / "guides",

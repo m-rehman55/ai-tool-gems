@@ -7,7 +7,7 @@ Also update Product schema brand for better GSC rich results.
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # Correct image URL (exists on live site)
 CORRECT_IMAGE = "https://aitoolgems.tech/assets/brand-logo-light.webp"

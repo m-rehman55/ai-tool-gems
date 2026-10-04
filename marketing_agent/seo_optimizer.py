@@ -15,7 +15,14 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import date, datetime, timedelta, timezone
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 from urllib.parse import urlencode, quote
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
@@ -185,10 +192,11 @@ class SEOOptimizer:
                 "issues": [{"page": None, "issue": f"Sitemap fetch failed: {exc}"}],
             }
 
-        for url in all_urls:
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        def _check_url(url: str) -> tuple[str, int, list[str]]:
             try:
                 html = _fetch(url, timeout=10)
-                checked[url] = 200
                 parser = PageSignals()
                 parser.feed(html)
                 page_issues: list[str] = []
@@ -200,13 +208,18 @@ class SEOOptimizer:
                     page_issues.append("Missing canonical")
                 elif parser.canonical.rstrip("/") != url.rstrip("/"):
                     page_issues.append(f"Canonical → {parser.canonical}")
-                healthy[url] = len(page_issues) == 0
+                return url, 200, page_issues
+            except Exception as exc:
+                return url, 0, [f"Unreachable: {exc}"]
+
+        with ThreadPoolExecutor(max_workers=8) as executor:
+            futures = [executor.submit(_check_url, u) for u in all_urls]
+            for fut in as_completed(futures):
+                url, status, page_issues = fut.result()
+                checked[url] = status
+                healthy[url] = (status == 200 and len(page_issues) == 0)
                 if page_issues:
                     issues.append({"page": url, "issues": page_issues})
-            except Exception as exc:
-                checked[url] = 0
-                healthy[url] = False
-                issues.append({"page": url, "issue": f"Unreachable: {exc}"})
 
         reachable = sum(1 for s in checked.values() if s == 200)
         healthy_count = sum(1 for v in healthy.values() if v)
@@ -303,9 +316,16 @@ class SEOOptimizer:
         all_keywords = TARGET_KEYWORDS_PK + TARGET_KEYWORDS_JP
         results: dict[str, Any] = {}
 
+        try:
+            from hermes_tools import web_search
+        except ImportError:
+            web_search = None
+
         for kw in all_keywords:
+            if not web_search:
+                results[kw] = {"status": "unconfigured", "message": "Live SERP API not configured", "our_rank": None, "competitors": [], "top_10": []}
+                continue
             try:
-                from hermes_tools import web_search
                 search_result = web_search(kw, limit=10)
                 web_data = search_result.get("data", {}).get("web", [])
                 our_rank = None
@@ -542,24 +562,11 @@ def format_report(report: DailySEOReport) -> str:
     return "\n".join(lines)
 
 
-def run_daily(send: bool = False) -> str:
-    settings = Settings(
-        database_path=__import__("pathlib").Path("marketing_agent/data/marketing.db"),
-        site_url=os.getenv("ATG_SITE_URL", "https://aitoolgems.tech"),
-        whatsapp_number="923236715731",
-        timezone=__import__("zoneinfo").ZoneInfo("Asia/Karachi"),
-        telegram_bot_token=os.getenv("TELEGRAM_BOT_TOKEN", "").strip(),
-        telegram_channel_id=os.getenv("TELEGRAM_CHANNEL_ID", "").strip(),
-        telegram_owner_chat_id=os.getenv("TELEGRAM_OWNER_CHAT_ID", "").strip(),
-        buffer_api_key=os.getenv("BUFFER_API_KEY", "").strip(),
-        posts_per_day=3,
-        auto_approve=False,
-        gsc_client_id=os.getenv("GSC_CLIENT_ID", "").strip(),
-        gsc_client_secret=os.getenv("GSC_CLIENT_SECRET", "").strip(),
-        bing_api_key=os.getenv("BING_API_KEY", "").strip(),
-    )
+def run_daily(send: bool = False, settings: Settings | None = None) -> str:
+    from .config import get_settings
+    resolved_settings = settings or get_settings()
 
-    optimizer = SEOOptimizer(settings)
+    optimizer = SEOOptimizer(resolved_settings)
     report = optimizer.run_daily()
     message = format_report(report)
 
