@@ -8,7 +8,7 @@ import json
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # Image URLs
 PK_IMAGE = "https://aitoolgems.tech/assets/brand-logo-light.png"
@@ -115,7 +115,7 @@ def main():
     print("=" * 60)
     
     html_files = sorted(BASE.rglob("*.html"))
-    html_files = [f for f in html_files if ".git" not in str(f)]
+    html_files = [f for f in html_files if not any(part.startswith(".") for part in f.parts)]
     
     results = {"fixed": [], "ok": [], "errors": []}
     

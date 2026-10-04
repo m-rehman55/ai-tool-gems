@@ -6,12 +6,12 @@ import json
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 def get_all_html_files():
     files = []
     for f in BASE.rglob("*.html"):
-        if ".git" not in str(f):
+        if not any(part.startswith(".") for part in f.parts):
             files.append(f)
     return sorted(files)
 

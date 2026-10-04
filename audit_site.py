@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from html.parser import HTMLParser
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # ============================================================
 # 1. SCHEMA IMAGE AUDIT — saari pages mein image field check
@@ -103,41 +103,37 @@ def check_links(page_path: Path):
         if isinstance(link, tuple):
             # It's an image
             src = link[1]
-            if src.startswith("http"):
+            if src.startswith("http") or src.startswith("//"):
                 continue  # External
-            # Check if local file exists
-            full_path = page_path.parent / src
-            if not full_path.exists():
-                rel_path = src
-                issues.append(f"  MISSING IMG: {rel_path}")
+            clean_src = src.split("#")[0].split("?")[0]
+            if not clean_src:
+                continue
+            if clean_src.startswith("/"):
+                target = BASE / clean_src.lstrip("/")
+            else:
+                target = page_path.parent / clean_src
+            if not target.exists():
+                issues.append(f"  MISSING IMG: {src}")
         else:
             href = link
-            if href.startswith("http"):
+            if href.startswith("http") or href.startswith("//"):
                 continue  # External
-            if href.startswith("#"):
-                continue  # Anchor
-            if href.startswith("mailto:"):
+            if href.startswith("#") or href.startswith("mailto:") or href.startswith("tel:") or "wa.me" in href or "whatsapp" in href:
                 continue
-            if href.startswith("tel:"):
+            clean_href = href.split("#")[0].split("?")[0]
+            if not clean_href:
                 continue
-            if href.startswith("https://wa.me"):
-                continue
-            if href.startswith("whatsapp"):
-                continue
-            # Check if local file/dir exists
-            full_path = page_path.parent / href
-            if full_path.exists():
-                continue
-            # Check if it's a route like #products
-            if href.startswith("#"):
-                continue
-            # It might be a directory index
-            if href.endswith("/"):
-                if not (page_path.parent / href / "index.html").exists():
-                    issues.append(f"  BROKEN LINK: {href} (dir index not found)")
+            if clean_href.startswith("/"):
+                target = BASE / clean_href.lstrip("/")
             else:
-                if not full_path.exists():
-                    issues.append(f"  BROKEN LINK: {href}")
+                target = page_path.parent / clean_href
+            if target.exists():
+                continue
+            if (target / "index.html").exists():
+                continue
+            if clean_href.endswith(".html") and target.exists():
+                continue
+            issues.append(f"  BROKEN LINK: {href}")
     
     return issues
 
@@ -190,26 +186,33 @@ def get_html_files() -> set[str]:
     jp_base_url = "https://aitoolgems.tech/jp"
     
     for html_file in BASE.rglob("*.html"):
-        if ".git" in str(html_file):
+        if any(part.startswith(".") for part in html_file.parts):
             continue
         rel = html_file.relative_to(BASE)
         parts = rel.parts
         
-        if parts and parts[0] == "jp":
-            # Japan site
-            url_path = "/".join(parts[1:])  # skip 'jp'
-            if url_path.endswith(".html"):
-                url_path = url_path[:-5]  # remove .html
-            if not url_path.endswith("/"):
-                url_path += "/"
-            urls.add(f"{jp_base_url}/{url_path}")
+        # Skip utility / admin files not intended for public sitemap
+        if parts[0] in ("admin.html", "404.html", "gsc_daily_checklist.html") or parts[0].startswith("google"):
+            continue
+            
+        if parts[0] == "jp":
+            if len(parts) == 1 or parts == ("jp", "index.html"):
+                urls.add(f"{jp_base_url}/")
+            elif parts[-1] == "index.html":
+                url_path = "/".join(parts[1:-1]) + "/"
+                urls.add(f"{jp_base_url}/{url_path}")
+            else:
+                url_path = "/".join(parts[1:])
+                urls.add(f"{jp_base_url}/{url_path}")
         else:
-            url_path = "/".join(parts)
-            if url_path.endswith(".html"):
-                url_path = url_path[:-5]  # remove .html
-            if not url_path.endswith("/"):
-                url_path += "/"
-            urls.add(f"{base_url}/{url_path}")
+            if parts == ("index.html",):
+                urls.add(f"{base_url}/")
+            elif parts[-1] == "index.html":
+                url_path = "/".join(parts[:-1]) + "/"
+                urls.add(f"{base_url}/{url_path}")
+            else:
+                url_path = "/".join(parts)
+                urls.add(f"{base_url}/{url_path}")
     
     return urls
 
@@ -223,7 +226,7 @@ def main():
     print("=" * 70)
     
     html_files = list(BASE.rglob("*.html"))
-    html_files = [f for f in html_files if ".git" not in str(f)]
+    html_files = [f for f in html_files if not any(part.startswith(".") for part in f.parts)]
     html_files.sort()
     
     # -------------------------------------------------------
