@@ -2,8 +2,7 @@ name: Verify daily social delivery
 
 "on":
   schedule:
-    - cron: "15 23 * * *"
-      timezone: "Asia/Karachi"
+    - cron: "15 18 * * *" # 23:15 PKT (UTC+5)
   workflow_dispatch:
     inputs:
       delivery_date:
@@ -27,11 +26,11 @@ jobs:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       ATG_TIMEZONE: Asia/Karachi
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Resolve Pakistan delivery date

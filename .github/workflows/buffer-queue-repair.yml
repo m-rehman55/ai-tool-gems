@@ -24,11 +24,11 @@ jobs:
       ATG_WHATSAPP_NUMBER: "923236715731"
       ATG_TIMEZONE: Asia/Karachi
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install media dependencies
@@ -54,6 +54,7 @@ jobs:
           git add assets/social-deals/ assets/product-logos/ marketing_agent/data/buffer-state.json marketing_agent/data/social-state.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Render Instagram Reel at Buffer-safe frame rate"
+          git pull --rebase origin main
           git push
       - name: Confirm refreshed media is public
         shell: bash
@@ -78,6 +79,7 @@ jobs:
           git add marketing_agent/data/buffer-state.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Record Buffer queue repair"
+          git pull --rebase origin main
           git push
       - name: Alert owner if repair needs attention
         if: failure()

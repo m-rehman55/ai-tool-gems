@@ -119,6 +119,17 @@ def parser() -> argparse.ArgumentParser:
     seo_api.add_argument("--days", type=int, default=7, help="Lookback window in days")
     seo_api.add_argument("--send", action="store_true", help="Send to Telegram owner chat (requires credentials)")
     seo_api.add_argument("--authorize", action="store_true", help="Start GSC OAuth2 browser consent flow")
+    hermes_p = commands.add_parser("hermes", help="Hermes autonomous SEO Operating System")
+    hermes_subs = hermes_p.add_subparsers(dest="hermes_command", required=True)
+    hermes_audit = hermes_subs.add_parser("audit", help="Run local/production SEO audit")
+    hermes_audit.add_argument("--offline", action="store_true", default=True, help="Run offline repository audit")
+    hermes_audit.add_argument("--online", action="store_true", help="Include production HTTP checks")
+    hermes_report = hermes_subs.add_parser("report", help="Format and print latest Hermes report")
+    hermes_report.add_argument("--send", action="store_true", help="Send report to owner Telegram")
+    hermes_run = hermes_subs.add_parser("run", help="Collect, audit, and deliver report")
+    hermes_run.add_argument("--online", action="store_true", help="Include production HTTP checks")
+    hermes_run.add_argument("--send", action="store_true", help="Send report to owner Telegram")
+
     tick = commands.add_parser("tick", help="Idempotent scheduler tick: generate, publish due, report after 21:00")
     tick.add_argument("--dry-run", action="store_true")
     return root
@@ -172,6 +183,8 @@ def _format_search_report(report: dict) -> list[str]:
     bing = report.get("bing", {})
     if bing.get("site_info", {}).get("error"):
         lines.append(f"🔴 Bing Error: {bing['site_info']['error']}")
+    elif bing.get("site_info", {}).get("status") == "skipped":
+        lines.append("ℹ️ Bing Webmaster: Not configured (set BING_API_KEY to enable)")
     else:
         info = bing.get("site_info", {})
         lines.append("🌐 Bing Webmaster:")
@@ -360,6 +373,18 @@ def main(argv: list[str] | None = None) -> int:
                     settings.telegram_owner_chat_id, "\n".join(lines)
                 )
                 print("→ Telegram report sent.")
+    elif args.command == "hermes":
+        from . import hermes as hermes_os
+        repo_root = Path.cwd()
+        if args.hermes_command == "audit":
+            res = hermes_os.audit(settings, repo_root) if not args.online else hermes_os.collect(settings, repo_root)
+            print(hermes_os.format_report(res))
+        elif args.hermes_command == "report":
+            res = hermes_os.report(settings, repo_root, telegram=args.send)
+            print(hermes_os.format_report(res))
+        elif args.hermes_command == "run":
+            res = hermes_os.run(settings, repo_root, online=args.online)
+            print(hermes_os.format_report(res))
     elif args.command == "tick":
         today = datetime.now(settings.timezone).date()
         inserted, duplicates = generate_days(settings, today, 1, settings.auto_approve)

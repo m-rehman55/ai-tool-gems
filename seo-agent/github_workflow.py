@@ -14,9 +14,9 @@ GITHUB = {
   ],
   "branch_prefix": "seo/",
   "commit_message_format": "fix: description",
-  "require_tests": true,
-  "require_verification": true,
-  "no_false_success": true
+  "require_tests": True,
+  "require_verification": True,
+  "no_false_success": True
 }
 
 def create_branch(name):
