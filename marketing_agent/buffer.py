@@ -12,7 +12,7 @@ import time
 import wave
 from array import array
 from io import BytesIO
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Callable
 from urllib.error import HTTPError, URLError
