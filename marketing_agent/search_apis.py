@@ -55,9 +55,10 @@ class GSCClient:
             return None
 
     def _refresh_access_token(self) -> None:
-        cached = self._load_token()
-        if not cached:
-            raise RuntimeError("No cached token — run authorize() first")
+        cached = self._load_token() or {}
+        refresh_token = os.environ.get("GSC_REFRESH_TOKEN") or cached.get("refresh_token")
+        if not refresh_token:
+            raise RuntimeError("No cached token or GSC_REFRESH_TOKEN secret — run authorize() first")
         if self._access_token and self._token_expiry and (
             datetime.now(timezone.utc) < self._token_expiry - timedelta(minutes=5)
         ):
@@ -66,7 +67,7 @@ class GSCClient:
         body = urlencode({
             "client_id": self.client_id,
             "client_secret": self.client_secret,
-            "refresh_token": cached["refresh_token"],
+            "refresh_token": refresh_token,
             "grant_type": "refresh_token",
         }).encode()
         req = Request(GOOGLE_TOKEN_URL, data=body, method="POST")
@@ -248,16 +249,18 @@ def build_search_report(
         gsc_metadata = {"error": str(exc)}
 
     # Bing data
-    try:
-        site_info = bing.site_info()
-        bing_status = site_info.get("siteInfo", {})
-        bing_crawl = bing.crawl_stats()
-        # Bing returns crawl stats in a 'd' array
-        crawl_data = bing_crawl.get("d", [])
-        # Get the most recent entry
-        bing_crawl_data = crawl_data[-1] if crawl_data else {}
-    except Exception as exc:
-        bing_status = {"error": str(exc)}
+    if bing:
+        try:
+            site_info = bing.site_info()
+            bing_status = site_info.get("siteInfo", {})
+            bing_crawl = bing.crawl_stats()
+            crawl_data = bing_crawl.get("d", [])
+            bing_crawl_data = crawl_data[-1] if crawl_data else {}
+        except Exception as exc:
+            bing_status = {"error": str(exc)}
+            bing_crawl_data = {}
+    else:
+        bing_status = {"status": "skipped", "message": "BING_API_KEY not configured"}
         bing_crawl_data = {}
 
     # GSC site status

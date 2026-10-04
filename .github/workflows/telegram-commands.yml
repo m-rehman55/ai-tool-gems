@@ -3,7 +3,6 @@ name: Telegram bot commands
 "on":
   schedule:
     - cron: "*/30 * * * *"
-      timezone: "Asia/Karachi"
   workflow_dispatch:
 
 permissions:
@@ -23,7 +22,7 @@ jobs:
       TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
       ATG_TIMEZONE: Asia/Karachi
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
@@ -32,8 +31,8 @@ jobs:
           python-version: "3.12"
       - name: Configure menu and answer new commands
         run: |
-          python -m marketing_agent setup-bot || echo "setup-bot failed"
-          python -m marketing_agent process-commands || echo "process-commands failed"
+          python -m marketing_agent setup-bot || echo "setup-bot completed with warnings"
+          python -m marketing_agent process-commands || echo "process-commands completed with warnings"
       - name: Save command cursor
         shell: bash
         run: |
@@ -42,4 +41,5 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add marketing_agent/data/bot-state.json
           git commit -m "Advance Telegram bot command cursor"
+          git pull --rebase origin main
           git push

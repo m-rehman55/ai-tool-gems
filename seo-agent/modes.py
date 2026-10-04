@@ -11,8 +11,8 @@ MODES = {
       "analyze",
       "report"
     ],
-    "auto_deploy": false,
-    "requires_approval": false
+    "auto_deploy": False,
+    "requires_approval": False
   },
   "PROPOSE": {
     "description": "Propose changes, create PR",
@@ -21,8 +21,8 @@ MODES = {
       "pr",
       "review"
     ],
-    "auto_deploy": false,
-    "requires_approval": true
+    "auto_deploy": False,
+    "requires_approval": True
   },
   "PR": {
     "description": "Create PR for review",
@@ -32,8 +32,8 @@ MODES = {
       "push",
       "pr"
     ],
-    "auto_deploy": false,
-    "requires_approval": true
+    "auto_deploy": False,
+    "requires_approval": True
   },
   "AUTO": {
     "description": "Auto-execute low-risk verified changes",
@@ -43,8 +43,8 @@ MODES = {
       "deploy",
       "verify"
     ],
-    "auto_deploy": true,
-    "requires_approval": false
+    "auto_deploy": True,
+    "requires_approval": False
   }
 }
 

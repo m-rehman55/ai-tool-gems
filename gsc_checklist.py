@@ -5,7 +5,7 @@ Each link opens GSC URL Inspection for that specific URL.
 """
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 OUTPUT = BASE / "gsc_daily_checklist.html"
 
 PK_TOOLS = [
@@ -71,6 +71,7 @@ html = f"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>GSC Daily Indexing Checklist</title>
 <style>
     * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -291,6 +292,7 @@ html = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>GSC Daily Indexing Checklist</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -502,7 +504,7 @@ html += """
 </html>
 """
 
-write_html(OUTPUT, html)
-print(f"✅ Checklist saved to {OUTPUT}")
+Path(OUTPUT).write_text(html, encoding="utf-8")
+print(f"Checklist saved to {OUTPUT}")
 print(f"   Total URLs: {7 + 20 + 21 + 8} = 56 tool+guide + 14 core = 70")
 print(f"   Open in browser: file:///{OUTPUT}")

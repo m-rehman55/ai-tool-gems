@@ -46,8 +46,8 @@ LOOP = {
     "Telegram"
   ],
   "frequency": "daily",
-  "last_run": null,
-  "next_run": null,
+  "last_run": None,
+  "next_run": None,
   "status": "ready"
 }
 

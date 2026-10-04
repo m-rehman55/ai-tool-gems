@@ -14,8 +14,7 @@ name: Daily Pakistan social growth campaign
       - "marketing_agent/tests/test_agent.py"
       - "assets/social-realistic-workspace-v1.png"
   schedule:
-    - cron: "45 4 * * *"
-      timezone: "Asia/Karachi"
+    - cron: "45 23 * * *" # 04:45 PKT (UTC+5)
   workflow_dispatch:
     inputs:
       pack_date:
@@ -40,11 +39,11 @@ jobs:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
       ATG_TIMEZONE: Asia/Karachi
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install social media dependencies

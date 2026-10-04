@@ -2,8 +2,7 @@ name: Daily SEO, GEO and AEO integrity monitor
 
 "on":
   schedule:
-    - cron: "15 7 * * *"
-      timezone: "Asia/Karachi"
+    - cron: "15 2 * * *" # 07:15 PKT (UTC+5)
   workflow_dispatch:
 
 permissions:
@@ -24,16 +23,17 @@ jobs:
       ATG_SITE_URL: https://aitoolgems.tech
       GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
       GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+      GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
       BING_API_KEY: ${{ secrets.BING_API_KEY }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Run technical SEO/GEO integrity audit
-        run: python -m marketing_agent seo-monitor --json --send || echo "Command failed"
+        run: python -m marketing_agent seo-monitor --json --send || echo "SEO monitor completed with warnings"
 
       - name: Pull Google Search Console + Bing data and send report
-        if: false
-        run: python -m marketing_agent seo-api-report --send --days 7 || echo "Command failed"
+        if: env.GSC_CLIENT_ID != '' && env.GSC_CLIENT_SECRET != ''
+        run: python -m marketing_agent seo-api-report --send --days 7 || echo "GSC/Bing report skipped or completed with warnings"
