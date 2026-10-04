@@ -9,7 +9,7 @@ SEO: Smart Image Alt Text Improver
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 
 def get_image_context(page_html: str, img_tag: str) -> dict:

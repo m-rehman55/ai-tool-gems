@@ -8,7 +8,7 @@ Content depth course principle: "100 more words than competitor".
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # Per-tool content expansion — additional paragraphs (100+ words each)
 # These add real value: use cases, who-should-buy, comparison notes, tips

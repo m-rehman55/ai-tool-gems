@@ -9,7 +9,7 @@ import re
 import os
 from pathlib import Path
 
-BASE = Path(r"D:\ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 TOOL_DIRS = [
     BASE / "tools",
     BASE / "jp" / "tools",

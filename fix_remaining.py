@@ -3,7 +3,7 @@
 from pathlib import Path
 import re
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 PRELOAD = '  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">\n'
 FIXED = 0
 

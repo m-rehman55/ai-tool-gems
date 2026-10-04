@@ -6,7 +6,7 @@ Fixes: LCP (image), CLS (layout shift), Cache TTL, Render-blocking CSS, llms.txt
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 def fix_index_html():
     """Fix homepage: image dimensions, CLS, cache headers via meta tags."""

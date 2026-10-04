@@ -6,7 +6,7 @@ Also ensure sitemap has proper hreflang alternates.
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # PK static pages missing hreflang
 PK_STATIC = [

@@ -8,7 +8,7 @@ Fix JP homepage schema per Bing Webmaster Guidelines:
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # Tool data for Product schema
 TOOLS = [

@@ -8,7 +8,7 @@ import json
 import re
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 PK_IMAGE = "https://aitoolgems.tech/assets/brand-logo-light.png"
 JP_IMAGE = "https://aitoolgems.tech/jp/assets/brand-logo-light.png"
 

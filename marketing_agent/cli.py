@@ -130,6 +130,9 @@ def parser() -> argparse.ArgumentParser:
     hermes_run.add_argument("--online", action="store_true", help="Include production HTTP checks")
     hermes_run.add_argument("--send", action="store_true", help="Send report to owner Telegram")
 
+    seo_growth = commands.add_parser("seo-growth", help="Run daily SEO growth agent (indexing, opportunities, actions)")
+    seo_growth.add_argument("--send", action="store_true", help="Send report to owner Telegram")
+
     tick = commands.add_parser("tick", help="Idempotent scheduler tick: generate, publish due, report after 21:00")
     tick.add_argument("--dry-run", action="store_true")
     return root
@@ -385,6 +388,9 @@ def main(argv: list[str] | None = None) -> int:
         elif args.hermes_command == "run":
             res = hermes_os.run(settings, repo_root, online=args.online)
             print(hermes_os.format_report(res))
+    elif args.command == "seo-growth":
+        from .seo_optimizer import run_daily as run_growth
+        print(run_growth(send=args.send))
     elif args.command == "tick":
         today = datetime.now(settings.timezone).date()
         inserted, duplicates = generate_days(settings, today, 1, settings.auto_approve)

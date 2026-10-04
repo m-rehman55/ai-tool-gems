@@ -7,7 +7,7 @@ Fix all JP tool pages:
 """
 from pathlib import Path
 
-BASE = Path(r"D:/ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 jp_dir = BASE / "jp" / "tools"
 
 BING_META = '  <meta name="msvalidate.01" content="737494F711E656D83B3126A5D5707776">\n'

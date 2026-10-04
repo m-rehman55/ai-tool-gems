@@ -8,7 +8,7 @@ import re
 import json
 from pathlib import Path
 
-BASE = Path(r"D:\ai-tool-gems")
+BASE = Path(__file__).resolve().parent
 
 # ── Related tools mapping ─────────────────────────────────────────────────
 # Har tool ke liye 3-4 related tools (course ke mutabiq: same category / workflow)
