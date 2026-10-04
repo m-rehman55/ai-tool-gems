@@ -36,5 +36,9 @@ jobs:
         run: python -m marketing_agent seo-monitor --json --send || echo "SEO monitor completed with warnings"
 
       - name: Pull Google Search Console + Bing data and send report
-        if: env.GSC_CLIENT_ID != '' && env.GSC_CLIENT_SECRET != ''
-        run: python -m marketing_agent seo-api-report --send --days 7 || echo "GSC/Bing report skipped or completed with warnings"
+        if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
+        run: python -m marketing_agent seo-api-report --send --days 7 || echo "Command failed"
+
+      - name: Deploy to GitHub Pages
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: actions/deploy-pages@v4
