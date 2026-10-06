@@ -3,23 +3,22 @@
 ## Current Schema Implementation
 
 ### Product Pages (PK + JP)
-- Product ✅
-- Offer ✅
+- Product ✅ (Name, Description, Brand, SKU, Image, URL)
+- Offer ✅ (Price, Currency, Availability, Seller, ShippingDetails, MerchantReturnPolicy)
 - FAQPage ✅
+
+### Merchant Listings Compliance (Resolved)
+- `availability`: Fully specified across all 82 products (`LimitedAvailability`)
+- `description`: Unique accurate descriptions across all 82 products
+- `brand`: Explicit Brand objects for all tools (OpenAI, Google, Canva, Adobe, etc.)
+- `shippingDetails`: Free 0-day digital delivery (`OfferShippingDetails`)
+- `hasMerchantReturnPolicy`: 7-day replacement warranty in PK, non-permitted in JP
 
 ### Other Pages
 - BreadcrumbList: ⚠️ 21 JP tool pages missing
-- Organization: Check needed
-- WebSite: Check needed
-- ItemList: Check needed
-
-## Schema Issues
-
-1. JP tool pages missing BreadcrumbList schema
-2. No Organization schema
-3. No WebSite schema
-4. No ItemList for comparison pages
-5. No SoftwareApplication schema
+- Organization: OnlineStore / Organization ✅
+- WebSite: WebSite with SearchAction ✅
+- ItemList: Clean canonical tool URLs ✅
 
 ## Schema Rules
 

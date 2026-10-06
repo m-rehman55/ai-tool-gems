@@ -46,7 +46,39 @@
     "priceCurrency": "JPY",
     "price": "8487",
     "availability": "https://schema.org/LimitedAvailability",
-    "url": "https://aitoolgems.tech/jp/tools/manus/"
+    "url": "https://aitoolgems.tech/jp/tools/manus/",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "JPY"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "JP"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0,
+          "maxValue": 0,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0,
+          "maxValue": 0,
+          "unitCode": "DAY"
+        }
+      }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "JP",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+    }
   }
 }
 </script>
