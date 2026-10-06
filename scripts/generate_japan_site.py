@@ -106,7 +106,7 @@ def product_page(product: tuple) -> str:
         "@context": "https://schema.org", "@type": "Product", "name": name,
         "description": description, "url": canonical, "category": category,
         "image": product_image(pid), "sku": f"ATG-JP-{pid.upper()}", "brand": {"@type": "Brand", "name": "AI Tool Gems"},
-        "inLanguage": "ja-JP", "offers": {"@type": "Offer", "priceCurrency": "JPY", "price": str(price), "availability": "https://schema.org/LimitedAvailability", "url": canonical, "seller": {"@type": "Organization", "name": "AI Tool Gems Japan", "url": f"{SITE}/jp/"}, "hasMerchantReturnPolicy": {"@type": "MerchantReturnPolicy", "applicableCountry": "JP", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}},
+        "inLanguage": "ja-JP", "offers": {"@type": "Offer", "priceCurrency": "JPY", "price": str(price), "availability": "https://schema.org/LimitedAvailability", "url": canonical, "seller": {"@type": "Organization", "name": "AI Tool Gems Japan", "url": f"{SITE}/jp/"}, "shippingDetails": {"@type": "OfferShippingDetails", "shippingRate": {"@type": "MonetaryAmount", "value": "0", "currency": "JPY"}, "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "JP"}, "deliveryTime": {"@type": "ShippingDeliveryTime", "handlingTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}, "transitTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}}}, "hasMerchantReturnPolicy": {"@type": "MerchantReturnPolicy", "applicableCountry": "JP", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}},
     }, ensure_ascii=False, separators=(",", ":"))
     return page_head(f"{name} 日本価格 | AI Tool Gems Japan", description, canonical, pk, schema) + f'''
 <body>
@@ -140,6 +140,7 @@ def sanitize_japan_product_pages() -> None:
                         node.setdefault("image", f"{SITE}/assets/brand-logo-light.webp")
                         node.setdefault("sku", f"ATG-JP-{pid.upper()}")
                         offer = node.setdefault("offers", {"@type": "Offer"})
+                        offer["shippingDetails"] = {"@type": "OfferShippingDetails", "shippingRate": {"@type": "MonetaryAmount", "value": "0", "currency": "JPY"}, "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "JP"}, "deliveryTime": {"@type": "ShippingDeliveryTime", "handlingTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}, "transitTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}}}
                         offer["hasMerchantReturnPolicy"] = {"@type": "MerchantReturnPolicy", "applicableCountry": "JP", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}
                     if node.get("@type") == "FAQPage":
                         node["mainEntity"] = [
