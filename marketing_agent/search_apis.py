@@ -18,8 +18,8 @@ GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
 GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 GSC_API_ROOT = "https://searchconsole.googleapis.com"
 
-# Scopes — Read-only is enough for monitoring
-GSC_SCOPE = "https://www.googleapis.com/auth/webmasters.readonly"
+# Scopes — Read-only is enough for monitoring Search Console + Google Analytics
+GSC_SCOPE = "https://www.googleapis.com/auth/webmasters.readonly https://www.googleapis.com/auth/analytics.readonly"
 
 # Path where the refresh token is stored (inside the package, gitignored)
 _TOKEN_CACHE = os.path.join(os.path.dirname(__file__), "data", "gsc_token.json")
