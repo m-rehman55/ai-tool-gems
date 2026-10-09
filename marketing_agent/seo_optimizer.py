@@ -186,10 +186,7 @@ class SEOOptimizer:
 
         try:
             sitemap_main = _fetch(f"{self.site_url}/sitemap.xml")
-            urls_main = _sitemap_urls(sitemap_main)
-            sitemap_jp = _fetch(f"{self.site_url}/sitemap-jp.xml")
-            urls_jp = _sitemap_urls(sitemap_jp)
-            all_urls = urls_main + urls_jp
+            all_urls = _sitemap_urls(sitemap_main)
         except Exception as exc:
             return {
                 "error": str(exc),

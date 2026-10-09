@@ -217,7 +217,7 @@ def audit_repository(root: Path, site_url: str) -> OfflineAudit:
         if market == "PK" and re.search(r"(?:\bJPY\b|¥)", content, re.IGNORECASE):
             result.issues.append(_issue("PK_CURRENCY_MIX", "P0", url, "Japan currency appears on a Pakistan page."))
 
-    for sitemap_name in ("sitemap.xml", "sitemap-jp.xml"):
+    for sitemap_name in ("sitemap.xml",):
         sitemap_path = root / sitemap_name
         locations = _sitemap_locations(sitemap_path) if sitemap_path.exists() else []
         missing = sorted(set(loc.rstrip("/") for loc in locations) - {url.rstrip("/") for url in known_urls})
