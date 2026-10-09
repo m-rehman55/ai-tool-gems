@@ -128,10 +128,14 @@ def collect_bing(site_url: str) -> ConnectorResult:
         return ConnectorResult("Bing", DataStatus.ACCESS_REQUIRED, "Bing Webmaster API", details={"required": ["BING_API_KEY"]})
     details: dict[str, Any] = {"site_url": site_url}
     try:
-        params = urlencode({"apikey": api_key, "siteUrl": site_url})
-        site = _json_request(f"{BING_ROOT}/GetSite?{params}")
-        crawl = _json_request(f"{BING_ROOT}/GetCrawlStats?{params}")
-        details.update({"site": site, "crawl": crawl})
+        normalized_url = site_url if site_url.endswith("/") else (site_url + "/")
+        sites_data = _json_request(f"{BING_ROOT}/GetUserSites?apikey={api_key}")
+        crawl_params = urlencode({"apikey": api_key, "siteUrl": normalized_url})
+        crawl_data = _json_request(f"{BING_ROOT}/GetCrawlStats?{crawl_params}")
+        details.update({
+            "verified_sites": len(sites_data.get("d", [])),
+            "crawl_records": len(crawl_data.get("d", []))
+        })
         return ConnectorResult("Bing", DataStatus.VERIFIED, "Bing Webmaster API", details=details)
     except HTTPError as exc:
         return ConnectorResult("Bing", DataStatus.ERROR, "Bing Webmaster API", details=details, error=f"HTTP {exc.code}")
@@ -142,11 +146,16 @@ def collect_bing(site_url: str) -> ConnectorResult:
 def unavailable_connectors() -> list[ConnectorResult]:
     return [
         ConnectorResult("SERP", DataStatus.NOT_AVAILABLE, "No free official SERP API configured", details={"reason": "Restricted search-result scraping and paid providers are not used."}),
-        ConnectorResult("Keywords", DataStatus.NOT_AVAILABLE, "GSC query data", details={"reason": "Free keyword volume API is not configured; GSC queries remain the source of truth."}),
         ConnectorResult("Backlinks", DataStatus.ACCESS_REQUIRED, "Authorized backlink provider", details={"required": ["An authorized free provider export or API"]}),
         ConnectorResult("Trends", DataStatus.NOT_SUPPORTED, "Google Trends", details={"reason": "No supported official Google Trends API is available in this dependency-free agent."}),
     ]
 
 
 def collect_online(site_url: str) -> list[ConnectorResult]:
-    return [collect_gsc(site_url), collect_ga4(site_url), collect_bing(site_url), *unavailable_connectors()]
+    gsc = collect_gsc(site_url)
+    ga4 = collect_ga4(site_url)
+    bing = collect_bing(site_url)
+    kw_status = DataStatus.VERIFIED if gsc.status in {DataStatus.VERIFIED, DataStatus.NO_DATA} else DataStatus.NOT_AVAILABLE
+    kw_details = {"source": "GSC Search Console Query Stream", "records": len(gsc.records)}
+    keywords = ConnectorResult("Keywords", kw_status, "Google Search Console Query Stream", details=kw_details)
+    return [gsc, ga4, bing, keywords, *unavailable_connectors()]
