@@ -31,6 +31,7 @@ jobs:
 
       - name: Run DOM and schema completeness audit
         run: |
+          python audit_all.py
           python schema_audit.py
           python audit_complete.py
 

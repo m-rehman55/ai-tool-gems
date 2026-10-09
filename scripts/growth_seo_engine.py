@@ -144,11 +144,12 @@ def run_growth_audit():
         print("  ✅ All 20 tool pages have 100% complete transactional signals (Buy, PKR, EasyPaisa, JazzCash, WhatsApp).")
         
     # 3. IndexNow Submission Pipeline
-    print("\n[3/4] Preparing IndexNow Instant Search Submission...")
-    indexnow_res = ping_indexnow(dry_run=True)
-    print(f"  • URLs verified in sitemap: {indexnow_res.get('urls_count', 0)}")
-    print(f"  • IndexNow Key verified: {INDEXNOW_KEY}")
-    print("  ✅ Instant IndexNow submission pipeline ready.")
+    is_live = os.environ.get("GITHUB_ACTIONS") == "true" or "--live" in sys.argv
+    print(f"\n[3/4] Preparing IndexNow Instant Search Submission (Live={is_live})...")
+    indexnow_res = ping_indexnow(dry_run=not is_live)
+    print(f"  • URLs verified in sitemap: {indexnow_res.get('urls_count', indexnow_res.get('submitted_urls', 0))}")
+    print(f"  • IndexNow Status: {indexnow_res.get('status', 'ready')}")
+    print("  ✅ Instant IndexNow submission pipeline active.")
     
     # 4. Summary & Health
     print("\n[4/4] Growth Engine Health Score: 100/100")

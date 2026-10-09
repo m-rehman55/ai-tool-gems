@@ -23,7 +23,11 @@ def check_file(filepath, rel_path):
     
     name = rel_path.replace("\\", "/")
     
-    # 1. Bing verification meta
+    # Skip search engine verification tokens and internal noindex utility pages
+    if name.startswith("google") and name.endswith(".html"):
+        return
+    if 'content="noindex' in html or "content='noindex" in html:
+        return
     if 'msvalidate' not in html:
         issues.append(f"❌ {name}: Missing Bing verification meta")
     
