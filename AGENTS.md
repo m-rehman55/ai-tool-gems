@@ -63,18 +63,11 @@ seo-agent/state/
 - incidents.md
 - deployments.md
 
-### GitHub Workflows (9 Active)
+### GitHub Workflows (3 Streamlined Active)
 
-All 9 GitHub Actions workflows in `.github/workflows/` are verified and production-ready:
-1. `daily-seo-geo-monitor.yml`: Runs SEO/GEO monitor at 07:15 PKT (`15 2 * * *` UTC).
-2. `social-content-pack.yml`: Generates daily deals, renders media, and publishes via Buffer at 04:45 PKT.
-3. `social-delivery-watch.yml`: Verifies daily social deliveries at 23:15 PKT (`15 18 * * *` UTC).
-4. `buffer-queue-repair.yml`: In-place repair of future Buffer queued posts without duplicates.
-5. `marketing-trial.yml`: 3-day multi-slot organic marketing campaign.
-6. `telegram-commands.yml`: Every 30-min polling and replies for private owner commands.
-7. `telegram-trial-report.yml`: Nightly honest trial delivery report at 21:00 PKT (`0 16 * * *` UTC).
-8. `telegram-smoke.yml`: Bot token and channel verification dispatch.
-9. `telegram-owner-discovery.yml`: Automatic owner chat ID discovery.
+1. `seo-growth-pipeline.yml`: Continuous testing, DOM audit, and instant IndexNow search engine submission on push to `main`.
+2. `daily-seo-geo-monitor.yml`: Runs SEO/GEO integrity monitor at 07:15 PKT (`15 2 * * *` UTC).
+3. `social-content-pack.yml`: Generates daily deals, renders media, and publishes via Buffer at 04:45 PKT.
 
 ### Safety
 

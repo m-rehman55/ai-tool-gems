@@ -13,7 +13,11 @@ Har page ke liye:
 import json
 import re
 import os
+import sys
 from pathlib import Path
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 BASE = Path(__file__).resolve().parent
 
@@ -70,9 +74,12 @@ def audit_page(page_path: Path) -> dict:
             # For tool/guide pages (index.html in directory), expect directory URL
             rel_path = page_path.relative_to(BASE).as_posix()
             if rel_path.endswith("/index.html"):
-                expected = f"https://aitoolgems.tech{rel_path[:-10]}/"
+                slug = rel_path[:-10].strip("/")
+                expected = f"https://aitoolgems.tech/{slug}/"
+            elif rel_path == "index.html":
+                expected = "https://aitoolgems.tech/"
             else:
-                expected = f"https://aitoolgems.tech{rel_path}"
+                expected = f"https://aitoolgems.tech/{rel_path}"
             if url != expected and not url.startswith("https://aitoolgems.tech/jp"):
                 result["warnings"].append(f"og:url may be incorrect: {url} (expected {expected})")
     else:
