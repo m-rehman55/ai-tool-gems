@@ -3,7 +3,7 @@
 These invariants govern how content, metadata, and structured data are generated, modified, or audited for AIToolGems.
 
 ## 1. Generative Engine Optimization (GEO)
-- **Information Gain Patent Compliance**: Never produce generic AI summaries that merely rephrase existing top SERP results. Every page must contain primary value: actual verified Pakistani Rupee (PKR) or Japanese Yen (JPY) pricing, local payment method availability (Sadapay, Nayapay, JazzCash, Raast, local cards), and confirmed delivery/warranty specifics.
+- **Information Gain Patent Compliance**: Never produce generic AI summaries that merely rephrase existing top SERP results. Every page must contain primary value: actual verified Pakistani Rupee (PKR) pricing, local payment method availability (Sadapay, Nayapay, JazzCash, Raast, local cards), and confirmed delivery/warranty specifics.
 - **Authoritative Citation Grounding**: Back claims with official documentation, official pricing pages, or developer API specifications.
 - **Quantitative & Technical Precision**: State exact entity numbers (e.g., token context windows, monthly fees, benchmark scores) rather than vague descriptors.
 - **AI Crawlability**: Keep `/llms.txt` synchronized with the product catalog and ensure benevolent AI crawlers (`GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`) are permitted in `robots.txt`.
@@ -18,4 +18,4 @@ These invariants govern how content, metadata, and structured data are generated
 
 ## 3. Google Helpful Content & E-E-A-T
 - **People-First Intent**: Content must resolve user pain points (e.g. paying for AI subscriptions from Pakistan) rather than search-engine word counts.
-- **Strict Locale Separation**: Pakistan (PKR) and Japan (JPY) data, links, canonicals, and schemas must never intermix.
+- **100% Pakistan Exclusive**: All catalog data, links, canonicals, and schemas focus exclusively on the Pakistani market (PKR, Urdu/English search intent, verified local payment rails).

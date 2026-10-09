@@ -10,12 +10,11 @@ Use this skill whenever creating, modifying, or auditing pages to maximize organ
 ## 1. Keyword & Intent Discovery
 - Identify the primary target query and its search intent (Transactional, Commercial Investigation, Informational, AEO Question, or GEO Prompt).
 - Verify localized alignment:
-  - For Pakistan (`/`, `/guides/`, `/tools/`): Target queries with PKR pricing, local payment methods (Nayapay, Sadapay, JazzCash, Raast), and local delivery terms.
-  - For Japan (`/jp/`): Target queries with JPY pricing, Japanese localization, and Japan-specific purchasing habits. Never cross-contaminate.
+  - For Pakistan (`/`, `/guides/`, `/tools/`, `/prices/`, `/deals/`): Target queries with PKR pricing, local payment methods (Nayapay, Sadapay, JazzCash, Raast), and local delivery terms.
 
 ## 2. Information Gain & GEO Content Construction
 - Ensure the page contains **Information Gain** (proprietary, verified data):
-  - Real active prices in PKR/JPY.
+  - Real active prices in PKR.
   - Verification of payment method compatibility.
   - Hands-on feature breakdowns and delivery speed facts.
 - Use explicit quantitative data (e.g., "$20/mo (~5,600 PKR)", "100k context window") to facilitate LLM citation grounding.
