@@ -658,11 +658,13 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 }
 .real-ss-media {
   position: relative;
-  background: #0f172a;
-  padding: 8px;
+  background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+  border-bottom: 1px solid #e2ece6;
+  padding: 12px;
   text-align: center;
   overflow: hidden;
   height: 380px;
+  display: block;
 }
 .real-ss-media img {
   width: 100%;
@@ -670,6 +672,7 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
   object-fit: cover;
   object-position: top center;
   border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 .wa-real-ss-card:hover .real-ss-media img {
@@ -677,22 +680,24 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 }
 .ss-zoom-badge {
   position: absolute;
-  bottom: 14px;
-  right: 14px;
-  background: rgba(0, 0, 0, 0.75);
+  bottom: 16px;
+  right: 16px;
+  background: rgba(15, 23, 42, 0.82);
   backdrop-filter: blur(8px);
   color: #ffffff;
   font-size: 11px;
   font-weight: 800;
-  padding: 5px 12px;
+  padding: 6px 12px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 .real-ss-info {
   padding: 18px 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  background: #ffffff;
 }
 .ss-tag {
   display: inline-block;
@@ -719,4 +724,220 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
   line-height: 1.5;
   margin: 0;
 }
+
+/* WhatsApp Proof Footer Strip — Light Theme */
+.wa-proof-footer-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 16px 24px;
+  background: #ffffff !important;
+  border: 1.5px solid #d2e4d9 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 16px rgba(35, 75, 60, 0.05) !important;
+  margin-top: 24px;
+}
+.wa-proof-footer-strip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #154d3e !important;
+}
+
+/* Comparison Table — Matching Light Theme */
+.comparison-section {
+  padding: 40px 0;
+}
+.comparison-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff !important;
+  border: 1.5px solid #d2e4d9 !important;
+  border-radius: 20px !important;
+  padding: 6px !important;
+  box-shadow: 0 10px 30px rgba(35, 75, 60, 0.07) !important;
+}
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+.comp-table th, .comp-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e7efe9 !important;
+}
+.comp-table th {
+  background: #f8faf9 !important;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #173c35 !important;
+  font-weight: 800 !important;
+}
+.comp-table td {
+  color: #334155 !important;
+}
+.comp-table th.highlight-col, .comp-table td.highlight-col {
+  background: #f0fdf4 !important;
+  border-left: 2px solid #10b981 !important;
+  border-right: 2px solid #10b981 !important;
+  color: #064e3b !important;
+  font-weight: 700 !important;
+}
+.comp-table th.highlight-col {
+  color: #047857 !important;
+  font-weight: 900 !important;
+  background: #ecfdf5 !important;
+}
+.comp-table tr:hover td {
+  background: #fbfdfc !important;
+}
+.comp-table tr:hover td.highlight-col {
+  background: #e6f9ed !important;
+}
+
+/* Live Order Social Proof Toast — Light Theme */
+.live-order-toast {
+  background: #ffffff !important;
+  border: 1.5px solid #10b981 !important;
+  box-shadow: 0 14px 35px rgba(16, 185, 129, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+.toast-content {
+  color: #475569 !important;
+}
+.toast-content b {
+  color: #0f172a !important;
+}
+.toast-content span {
+  color: #059669 !important;
+  font-weight: 800 !important;
+}
+.toast-content small {
+  color: #64748b !important;
+}
+
+/* ==========================================================================
+   OFFICIAL WHATSAPP CHANNEL COMMUNITY BANNER
+   ========================================================================== */
+.wa-channel-banner-wrap {
+  margin: 32px auto 44px;
+}
+.wa-channel-banner {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+  border-radius: 22px;
+  padding: 26px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  box-shadow: 0 12px 35px rgba(6, 78, 59, 0.25);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+.wa-channel-banner::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+.wa-channel-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 620px;
+}
+.wa-channel-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: #25d366;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
+}
+.wa-channel-pill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  color: #a7f3d0;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.wa-channel-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+.wa-channel-desc {
+  font-size: 13.5px;
+  color: #d1fae5;
+  margin: 0;
+  line-height: 1.5;
+}
+.wa-channel-cta-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.wa-channel-perks {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  font-weight: 700;
+  color: #a7f3d0;
+}
+.wa-channel-join-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25d366;
+  color: #064e3b;
+  font-weight: 800;
+  font-size: 14.5px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.wa-channel-join-btn:hover {
+  transform: translateY(-2px);
+  background: #22c55e;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+}
+@media (max-width: 768px) {
+  .wa-channel-cta-box {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .wa-channel-join-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 
