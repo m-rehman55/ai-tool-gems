@@ -34,13 +34,13 @@ FIREWALL_RULES = {
     "severity": "critical"
   },
   "locale_contamination": {
-    "description": "Block PK/JP locale contamination",
+    "description": "Block non-Pakistan locale contamination",
     "threshold": 1,
     "action": "block",
     "severity": "critical"
   },
   "currency_contamination": {
-    "description": "Block PKR/JPY currency contamination",
+    "description": "Block non-PKR currency contamination",
     "threshold": 1,
     "action": "block",
     "severity": "critical"

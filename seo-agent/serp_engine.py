@@ -5,7 +5,7 @@ SERP Engine - FREE-FIRST: Uses free SERP sources (browser, SERP API free tier, G
 SERP_ENGINE = {
     "description": "Real SERP data engine",
     "status": "ACCESS_REQUIRED",
-    "markets": ["Pakistan", "Japan"],
+    "markets": ["Pakistan"],
     "free": True,
     "source": "Free SERP sources"
 }

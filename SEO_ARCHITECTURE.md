@@ -15,32 +15,24 @@
 /privacy.html              → Privacy
 /terms.html                → Terms
 /how-we-review.html        → Review methodology
-/jp/                       → Japan homepage
-/jp/tools/                 → JP product pages
-/jp/guides/                → JP guides
-/jp/about.html             → JP About
-/jp/contact.html           → JP Contact
 ```
 
 ## Page Types
 
 - Homepage
-- Product
-- Guide
-- Comparison
+- Product (20 tools)
+- Guide & Comparison
 - Deals
 - About
 - Contact
-- Policies
-- Locale pages
+- Policies & Legal
 
 ## URL Rules
 
 - Clean URLs, no parameters
 - No duplicate slugs
 - No tracking URLs indexed
-- Locale prefix: /jp/ for Japan
-- PK: root level
+- Root level Pakistan URLs
 - Trailing slash consistent
 
 ## Link Structure
@@ -56,7 +48,6 @@ Pricing ↔ Product
 
 ## Sitemaps
 
-- sitemap.xml (PK)
-- sitemap-jp.xml (JP)
+- sitemap.xml
 - robots.txt
 - llms.txt

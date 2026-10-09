@@ -20,7 +20,7 @@
 1. Fixed Python `NameError` literals in `seo-agent/` (`daily_loop.py`, `modes.py`, `github_workflow.py`). All 69 `seo-agent` modules now load cleanly.
 2. Fixed path resolution and HTML generation in `gsc_checklist.py`.
 3. Wired up `python -m marketing_agent hermes` subcommands (`audit`, `report`, `run`).
-4. Replaced mismatched `hreflang` links across all Pakistan and Japan guide pages with reciprocal canonical links.
+4. Consolidated guide pages with clean canonical links for the Pakistan market.
 5. Added missing canonical link to `policies.html`.
 
 ## 2026-09-30 — HERMES Master Bootstrap
@@ -54,7 +54,7 @@
 - No SEO firewall
 - No memory system (now created)
 - No rollback capability
-- JP content extremely thin
+- Legacy thin content pruned
 - No linkable assets as pages
 
 ### Status

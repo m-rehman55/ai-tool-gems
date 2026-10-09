@@ -3,28 +3,6 @@
   "total_issues": 5,
   "issues": [
     {
-      "intent": "commercial",
-      "urls": [
-        "/tools/",
-        "/prices/",
-        "/jp/tools/"
-      ],
-      "keywords": [
-        "AI tools Pakistan",
-        "AI tools in Pakistan",
-        "premium AI tools Pakistan",
-        "AI subscriptions Pakistan",
-        "AI tools price Pakistan",
-        "AI tools PKR",
-        "AI tools price Pakistan",
-        "AI subscription prices Pakistan",
-        "AI tools in PKR",
-        "AI tools Japan",
-        "AI tools price Japan"
-      ],
-      "recommendation": "differentiate"
-    },
-    {
       "intent": "transactional",
       "urls": [
         "/tools/",
@@ -33,24 +11,6 @@
       "keywords": [
         "buy AI tools Pakistan",
         "buy ChatGPT Pakistan"
-      ],
-      "recommendation": "differentiate"
-    },
-    {
-      "intent": "product",
-      "urls": [
-        "/tools/chatgpt/",
-        "/jp/tools/chatgpt/",
-        "/jp/tools/canva/"
-      ],
-      "keywords": [
-        "ChatGPT Pakistan",
-        "ChatGPT subscription Pakistan",
-        "ChatGPT premium Pakistan",
-        "ChatGPT monthly price Pakistan",
-        "ChatGPT yearly price Pakistan",
-        "ChatGPT Japan",
-        "Canva Japan"
       ],
       "recommendation": "differentiate"
     },

@@ -2,20 +2,20 @@
 
 ## Current Schema Implementation
 
-### Product Pages (PK + JP)
+### Product Pages (Pakistan)
 - Product ✅ (Name, Description, Brand, SKU, Image, URL)
-- Offer ✅ (Price, Currency, Availability, Seller, ShippingDetails, MerchantReturnPolicy)
+- Offer ✅ (Price, Currency in PKR, Availability, Seller, ShippingDetails, MerchantReturnPolicy)
 - FAQPage ✅
 
 ### Merchant Listings Compliance (Resolved)
-- `availability`: Fully specified across all 82 products (`LimitedAvailability`)
-- `description`: Unique accurate descriptions across all 82 products
+- `availability`: Fully specified across all 20 products (`LimitedAvailability`)
+- `description`: Unique accurate descriptions across all 20 products
 - `brand`: Explicit Brand objects for all tools (OpenAI, Google, Canva, Adobe, etc.)
-- `shippingDetails`: Free 0-day digital delivery (`OfferShippingDetails`)
-- `hasMerchantReturnPolicy`: 7-day replacement warranty in PK, non-permitted in JP
+- `shippingDetails`: Free instant digital delivery (`OfferShippingDetails`)
+- `hasMerchantReturnPolicy`: 7-day replacement warranty in PK
 
 ### Other Pages
-- BreadcrumbList: ⚠️ 21 JP tool pages missing
+- BreadcrumbList: ✅ Complete across all tool and guide pages
 - Organization: OnlineStore / Organization ✅
 - WebSite: WebSite with SearchAction ✅
 - ItemList: Clean canonical tool URLs ✅

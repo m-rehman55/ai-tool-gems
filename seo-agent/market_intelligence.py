@@ -5,8 +5,8 @@ Market Intelligence - FREE-FIRST: Uses free market research (Google Trends, SERP
 MARKET_INTELLIGENCE = {
     "description": "Real market intelligence",
     "status": "VERIFIED",
-    "markets": ["PK", "JP"],
-    "currencies": ["PKR", "JPY"],
+    "markets": ["PK"],
+    "currencies": ["PKR"],
     "free": True,
     "source": "Google Trends + SERP + social media"
 }

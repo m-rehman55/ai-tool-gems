@@ -73,7 +73,7 @@ def format_report(report: dict[str, Any]) -> str:
         f"Run: {report.get('run_id', 'unknown')} | Mode: {report.get('mode', 'unknown')}",
         "",
         "LOCAL SEO AUDIT",
-        f"Pages: {summary.get('pages', 'NOT_AVAILABLE')} | PK: {summary.get('pk_pages', 'NOT_AVAILABLE')} | JP: {summary.get('jp_pages', 'NOT_AVAILABLE')}",
+        f"Pages: {summary.get('pages', 'NOT_AVAILABLE')} | Pakistan Pages: {summary.get('pk_pages', 'NOT_AVAILABLE')}",
         f"Issues: {summary.get('issues', 'NOT_AVAILABLE')} | P0: {summary.get('p0', 'NOT_AVAILABLE')} | P1: {summary.get('p1', 'NOT_AVAILABLE')} | P2: {summary.get('p2', 'NOT_AVAILABLE')}",
         "",
         "DATA HEALTH",

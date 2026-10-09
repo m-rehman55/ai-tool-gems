@@ -35,7 +35,7 @@ from .config import Settings
 from .search_apis import GSCClient, BingClient
 from .telegram import TelegramClient
 
-# ── Target keywords (Pakistan + Japan) ────────────────────────────────────────
+# ── Target keywords (Pakistan) ────────────────────────────────────────
 
 TARGET_KEYWORDS_PK = [
     "ai tools pakistan",
@@ -52,20 +52,9 @@ TARGET_KEYWORDS_PK = [
     "ai tool gems pakistan",
 ]
 
-TARGET_KEYWORDS_JP = [
-    "aiツール 日本",
-    "aiツール 価格 日本",
-    "chatgpt plus 日本価格",
-    "canva pro 日本価格",
-    "netflix premium 日本価格",
-    "aiマーケットプレイス 日本",
-    "aiツール 購入 日本",
-    "ai tool gems japan",
-    "aitoolgems",
-]
-
 # Competitor domains to watch
 COMPETITOR_DOMAINS = [
+    "aitoolspak.tech",
     "aitools.com",
     "futurepedia.io",
     "theresanaiforthat.com",

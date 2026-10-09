@@ -56,7 +56,6 @@ GitHub Pages redeploys automatically.
 |------|---------|
 | CNAME | Domain mapping |
 | robots.txt | Crawl directives |
-| sitemap.xml | PK sitemap |
-| sitemap-jp.xml | JP sitemap |
+| sitemap.xml | Site XML sitemap |
 | llms.txt | LLM context |
 | .github/workflows/ | Automation |

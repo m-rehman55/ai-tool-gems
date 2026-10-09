@@ -71,7 +71,7 @@ seo-agent/state/
 ### Safety
 
 - Never fabricate facts, prices, rankings, backlinks
-- Japan/Pakistan firewall — never mix PKR/JPY
+- 100% Pakistan-exclusive — PKR and verified local payment methods only
 - Mass changes require PR + human approval
 - SEO firewall blocks dangerous changes
 - Rollback capability required for every change

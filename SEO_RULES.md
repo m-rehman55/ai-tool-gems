@@ -40,24 +40,16 @@ Clearly distinguish source-backed facts from assumptions.
 
 ---
 
-## Pakistan / Japan Firewall
+## Pakistan Market Exclusivity
 
-Pakistan and Japan are **separate markets**.
+AIToolGems is a **100% Pakistan-exclusive marketplace**.
 
-**Never allow:**
-- PKR → Japan
-- JPY → Pakistan
-- Pakistan delivery → Japan
-- Japan delivery → Pakistan
-- Pakistan canonical → Japan
-- Japan canonical → Pakistan
-- Pakistan legal/business copy → Japan
-- Japan-only data → Pakistan
-
-**Localized pages must have correct:**
-- Language
-- Currency
-- Market
+**Requirements:**
+- Exclusive PKR currency across all tools and guides
+- Pakistan local payment integrations: EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, IBFT
+- Local Pakistani delivery speed (5-30 minutes WhatsApp delivery)
+- Self-referencing Pakistani canonical URLs
+- Localized English & Urdu transactional search intent
 - Canonical
 - Hreflang
 - Metadata

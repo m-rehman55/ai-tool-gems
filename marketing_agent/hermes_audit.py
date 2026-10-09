@@ -97,9 +97,6 @@ class OfflineAudit:
 
 
 def _market_for(path: Path, root: Path) -> tuple[str, str, str]:
-    relative = path.relative_to(root).as_posix()
-    if relative == "jp/index.html" or relative.startswith("jp/"):
-        return "JP", "JP", "ja"
     return "PK", "PK", "en"
 
 
@@ -127,20 +124,6 @@ def _schema_types(schemas: list[dict]) -> list[str]:
     return sorted(set(types))
 
 
-def _counterpart(path: Path, root: Path, market: str) -> Path | None:
-    relative = path.relative_to(root).as_posix()
-    pk_to_jp = {
-        "guides/ai-tools-price-pakistan/index.html": "jp/guides/ai-tools-price-japan/index.html",
-        "guides/canva-vs-figma-pakistan/index.html": "jp/guides/canva-vs-figma-japan/index.html",
-        "guides/chatgpt-vs-gemini-pakistan/index.html": "jp/guides/chatgpt-vs-gemini-japan/index.html",
-    }
-    if market == "PK":
-        candidate = pk_to_jp.get(relative, f"jp/{relative}")
-    else:
-        reverse = {jp: pk for pk, jp in pk_to_jp.items()}
-        candidate = reverse.get(relative, relative.removeprefix("jp/"))
-    counterpart = root / candidate
-    return counterpart if counterpart.exists() else None
 
 
 def _issue(code: str, severity: str, url: str, message: str) -> dict:
@@ -200,22 +183,10 @@ def audit_repository(root: Path, site_url: str) -> OfflineAudit:
             result.issues.append(_issue("MISSING_CANONICAL", "P1", url, "Page has no canonical link."))
         if indexable and signals.h1_count != 1:
             result.issues.append(_issue("H1_COUNT", "P1", url, f"Expected one H1, found {signals.h1_count}."))
-        counterpart = _counterpart(path, root, market)
-        if indexable and counterpart:
-            counterpart_url = _url_for(counterpart, root, site_url)
-            expected_language = "ja-JP" if market == "PK" else "en-PK"
-            alternate_urls = {alternate["href"] for alternate in signals.hreflang if alternate["hreflang"].lower() == expected_language.lower()}
-            if counterpart_url not in alternate_urls:
-                result.issues.append(_issue("MISSING_HREFLANG", "P1", url, f"Missing {expected_language} alternate for {counterpart_url}."))
         if indexable and any(schema.get("_invalid_jsonld") for schema in signals.schemas):
             result.issues.append(_issue("INVALID_JSONLD", "P1", url, "A JSON-LD block is invalid."))
         if indexable and page["missing_alt_count"]:
             result.issues.append(_issue("MISSING_ALT", "P2", url, f"{page['missing_alt_count']} image(s) lack alt text."))
-        content = path.read_text(encoding="utf-8", errors="replace")
-        if market == "JP" and re.search(r"(?:\bPKR\b|\bRs\.?\s*[0-9]|₨)", content, re.IGNORECASE):
-            result.issues.append(_issue("JP_CURRENCY_MIX", "P0", url, "Pakistan currency appears on a Japan page."))
-        if market == "PK" and re.search(r"(?:\bJPY\b|¥)", content, re.IGNORECASE):
-            result.issues.append(_issue("PK_CURRENCY_MIX", "P0", url, "Japan currency appears on a Pakistan page."))
 
     for sitemap_name in ("sitemap.xml",):
         sitemap_path = root / sitemap_name
@@ -238,7 +209,6 @@ def audit_repository(root: Path, site_url: str) -> OfflineAudit:
     result.summary = {
         "pages": len(result.pages),
         "pk_pages": sum(page["market"] == "PK" for page in result.pages),
-        "jp_pages": sum(page["market"] == "JP" for page in result.pages),
         "issues": len(result.issues),
         "p0": sum(issue["severity"] == "P0" for issue in result.issues),
         "p1": sum(issue["severity"] == "P1" for issue in result.issues),

@@ -30,8 +30,7 @@
   "p1": 0,
   "p2": 0,
   "markets": [
-    "en-PK",
-    "ja-JP"
+    "en-PK"
   ],
   "autonomy_mode": "AUDIT/PROPOSE/PR",
   "last_audit": "2026-10-04",
