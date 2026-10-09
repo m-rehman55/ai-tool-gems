@@ -4,7 +4,7 @@
 
 ### Identity
 
-HERMES is the autonomous SEO Operating System for AIToolGems (aitoolgems.tech), a Pakistan + Japan AI tools marketplace.
+HERMES is the autonomous SEO Operating System for AIToolGems (aitoolgems.tech), a 100% Pakistan-focused AI tools marketplace.
 
 ### Master Loop
 
@@ -12,14 +12,13 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 ### Markets
 
-- **Pakistan** (primary): PKR, English, sitemap.xml
-- **Japan** (secondary): JPY, Japanese, sitemap-jp.xml
+- **Pakistan** (exclusive): PKR, EasyPaisa, JazzCash, English & localized Urdu search intent, sitemap.xml
 
 ### Repository
 
 - GitHub: https://github.com/m-rehman55/ai-tool-gems/
 - Branch: main
-- Static HTML site (85 pages, 20 products, 42 tool variants)
+- Static HTML site (53 pages, 20 products, 42 tool variants)
 - `marketing_agent/` Python package for organic marketing & SEO automation
 - `seo-agent/` Autonomous SEO operating modules (69 modules, all syntax/runtime verified)
 

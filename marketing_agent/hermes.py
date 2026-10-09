@@ -28,7 +28,7 @@ def _source_status(connectors: list[ConnectorResult]) -> dict[str, str]:
 
 def _production_checks(site_url: str) -> dict[str, Any]:
     checks = {}
-    for suffix in ("/", "/robots.txt", "/sitemap.xml", "/sitemap-jp.xml"):
+    for suffix in ("/", "/robots.txt", "/sitemap.xml"):
         checks[suffix] = fetch_production(site_url.rstrip("/") + suffix)
     return checks
 
