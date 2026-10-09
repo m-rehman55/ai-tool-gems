@@ -218,8 +218,25 @@ body {
 .search-wrap kbd { background: #fff; border-color: #d4ddd7; color: #65766f; }
 .quick-search { color: #819088; }
 .quick-search button { background: #f2f6f2; border-color: #dce4df; color: #50665e; }
-.suggestions { background: #fff; border-color: #dce5df; box-shadow: var(--shadow-3d); }
-.suggestion:hover { background: #f1f7ef; }
+.suggestions {
+  background: #ffffff !important;
+  border: 1.5px solid #d2e4d9 !important;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12) !important;
+}
+.suggestion {
+  color: #0f172a !important;
+}
+.suggestion:hover {
+  background: #f0fdf4 !important;
+}
+.suggestion span {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+.suggestion small {
+  color: #047857 !important;
+  font-weight: 800 !important;
+}
 
 .stats-strip { background: #fff; border-color: #e0e8e2; }
 .stats-inner div { border-color: #e0e8e2; }
@@ -464,6 +481,123 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 .price-directory td:last-child { font-weight:800; white-space:nowrap; }
 
 /* ==========================================================================
+   BUNDLE CALCULATOR — LIGHT THEME HIGH CONTRAST STYLING
+   ========================================================================== */
+.bundle-calculator-section {
+  padding: 36px 0;
+}
+.calc-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 36px;
+}
+.calc-eyebrow {
+  display: inline-block;
+  color: #047857 !important;
+  background: #ecfdf5 !important;
+  border: 1.5px solid #86efac !important;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.calc-header h2 {
+  color: #0f172a !important; /* ULTRA CLEAR DARK CHARCOAL */
+  font-size: clamp(28px, 3.5vw, 38px) !important;
+  font-weight: 900 !important;
+  margin: 0 0 12px !important;
+  line-height: 1.2 !important;
+}
+.calc-header p {
+  color: #334155 !important; /* CLEAR SLATE */
+  font-size: 15.5px !important;
+  line-height: 1.6 !important;
+}
+.calc-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.calc-tool-item {
+  background: #ffffff !important;
+  border: 1.5px solid #d2e4d9 !important;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.2s ease;
+}
+.calc-tool-item:hover {
+  background: #f0fdf4 !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12) !important;
+}
+.calc-tool-item.selected {
+  background: #ecfdf5 !important;
+  border-color: #059669 !important;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.15) !important;
+}
+.calc-tool-info b {
+  color: #0f172a !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+.calc-tool-info span {
+  color: #047857 !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+}
+.calc-summary-card {
+  background: #ffffff !important;
+  border: 1.5px solid #d2e4d9 !important;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(35, 75, 60, 0.08) !important;
+}
+.calc-summary-card h3 {
+  color: #0f172a !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  margin: 0 0 16px !important;
+}
+.calc-stat-row {
+  border-bottom: 1px solid #e7efe9 !important;
+  color: #475569 !important;
+  padding: 10px 0 !important;
+  font-size: 14px !important;
+}
+.calc-stat-row strong {
+  color: #0f172a !important;
+}
+.calc-stat-row #calcOfficialTotal {
+  color: #64748b !important;
+  text-decoration: line-through;
+}
+.calc-stat-row.total-row {
+  border-top: 2px solid #10b981 !important;
+  border-bottom: none !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+.calc-stat-row.total-row b {
+  color: #059669 !important;
+  font-size: 24px !important;
+  font-weight: 900 !important;
+}
+.calc-savings-badge {
+  background: #ecfdf5 !important;
+  border: 1.5px dashed #059669 !important;
+  color: #047857 !important;
+  font-weight: 800 !important;
+  font-size: 13.5px !important;
+  border-radius: 12px;
+  padding: 10px 16px;
+  text-align: center;
+}
+
+
+/* ==========================================================================
    PAKISTAN PAYMENT TRUST STRIP — HIGH CONTRAST THEME STYLING
    ========================================================================== */
 .payment-trust-strip {
@@ -632,13 +766,51 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 }
 
 /* ==========================================================================
-   ORIGINAL WHATSAPP PROOF SCREENSHOTS GALLERY
+   ORIGINAL WHATSAPP PROOF SCREENSHOTS GALLERY & HEADER TYPOGRAPHY
    ========================================================================== */
+.real-results-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 36px;
+}
+.real-results-eyebrow {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #047857 !important;
+  background: #ecfdf5 !important;
+  border: 1.5px solid #86efac !important;
+  padding: 6px 18px !important;
+  border-radius: 999px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  margin-bottom: 12px !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.08);
+}
+.real-results-title {
+  font-size: clamp(30px, 4vw, 42px) !important;
+  font-weight: 900 !important;
+  color: #0f172a !important; /* ULTRA CLEAR OBSIDIAN/DARK CHARCOAL — 100% VISIBLE */
+  margin: 0 0 12px !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+}
+.real-results-desc {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #334155 !important; /* CLEAR SLATE — 100% VISIBLE */
+  line-height: 1.6 !important;
+  max-width: 680px;
+  margin: 0 auto !important;
+}
+
 .original-proof-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  margin-top: 28px;
 }
 .wa-real-ss-card {
   background: #ffffff;
@@ -941,3 +1113,149 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 }
 
 
+
+
+/* ==========================================================================
+   PRODUCT DETAILS, MODAL, CART DRAWER & FINDER — HIGH CONTRAST LIGHT THEME
+   ========================================================================== */
+.detail-copy {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+.detail-category {
+  color: #047857 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+}
+.detail-copy h2,
+#productDetailTitle {
+  color: #0f172a !important;
+  font-weight: 900 !important;
+}
+.detail-rating {
+  color: #b45309 !important;
+  font-weight: 700 !important;
+}
+.detail-copy > p {
+  color: #334155 !important;
+  font-size: 14.5px !important;
+}
+.detail-price {
+  color: #0f172a !important;
+  font-weight: 900 !important;
+}
+.detail-price del {
+  color: #94a3b8 !important;
+}
+.detail-spec {
+  background: #f8fafc !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+}
+.detail-spec small {
+  color: #047857 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+.detail-spec b {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+.feature-list span {
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+.feature-list svg {
+  color: #059669 !important;
+}
+.full-details-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 18px !important;
+  color: #047857 !important;
+  background: #ecfdf5 !important;
+  border: 1.5px solid #a7f3d0 !important;
+  padding: 8px 18px !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 13.5px !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+.full-details-link:hover {
+  background: #047857 !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+/* Cart Drawer High Contrast */
+.cart-item {
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+}
+.cart-item b {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+.cart-item small {
+  color: #64748b !important;
+}
+.cart-item strong {
+  color: #047857 !important;
+  font-weight: 800 !important;
+}
+.cart-empty h3 {
+  color: #0f172a !important;
+  font-weight: 900 !important;
+}
+.cart-empty p {
+  color: #64748b !important;
+}
+.cart-footer {
+  background: #ffffff !important;
+  border-top: 1.5px solid #e2e8f0 !important;
+}
+.cart-footer > div b {
+  color: #0f172a !important;
+  font-weight: 900 !important;
+}
+.cart-footer > div span {
+  color: #475569 !important;
+}
+.cart-footer p {
+  color: #64748b !important;
+}
+
+/* Finder Step & AI Assistant High Contrast */
+.finder-step h3,
+.finder-step h4 {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+.finder-choice b {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+.finder-result b {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+.finder-result span {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+/* Card titles and text crispness */
+.product-body h3 {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+.product-desc,
+.product-specs {
+  color: #334155 !important;
+}
+.product-price strong {
+  color: #0f172a !important;
+  font-weight: 900 !important;
+}
