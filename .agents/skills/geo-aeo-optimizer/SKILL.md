@@ -33,7 +33,7 @@ Use this skill whenever creating, modifying, or auditing pages to maximize organ
   - `FAQPage` for question-and-answer sections.
   - `SoftwareApplication` or `Product` for tools and pricing plans.
   - `BreadcrumbList` for navigation hierarchy.
-- Ensure `llms.txt` and `sitemap.xml` / `sitemap-jp.xml` include the URL.
+- Ensure `llms.txt` and `sitemap.xml` include the URL.
 - Verify that `robots.txt` permits benevolent AI crawlers (`Google-Extended`, `GPTBot`, `ClaudeBot`, `PerplexityBot`).
 
 ## 5. Verification Commands
