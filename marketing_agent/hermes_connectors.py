@@ -37,6 +37,15 @@ def _google_access_token(prefix: str) -> tuple[str | None, str | None]:
     refresh_token = os.getenv(f"{prefix}_REFRESH_TOKEN", "").strip()
     if not refresh_token and prefix == "GSC":
         refresh_token = os.getenv("GOOGLE_REFRESH_TOKEN", "").strip()
+    if not refresh_token:
+        cache_file = os.path.join(os.path.dirname(__file__), "data", "gsc_token.json")
+        if os.path.isfile(cache_file):
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    cached_data = json.load(f)
+                refresh_token = cached_data.get("refresh_token", "").strip()
+            except Exception:
+                pass
     if not all((client_id, client_secret, refresh_token)):
         return None, "OAuth credentials are not configured."
     body = urlencode({"client_id": client_id, "client_secret": client_secret, "refresh_token": refresh_token, "grant_type": "refresh_token"}).encode()
