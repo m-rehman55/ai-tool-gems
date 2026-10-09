@@ -21,14 +21,27 @@ const products = [
   {id:'youtube',name:'YouTube Premium',category:'Entertainment',description:'Ad-free videos, background play on mobile, offline downloads, and YouTube Music.',price:1200,oldPrice:1700,duration:'3 Months',access:'Invitation',delivery:'15–30 min',warranty:'30 Days',rating:4.8,badge:'Popular',bestFor:['Music','Video','Mobile'],logo:'https://cdn.simpleicons.org/youtube/FFFFFF',features:['Zero video ads','Background & picture-in-picture','Offline smart downloads','Full YouTube Music access'],intent:['entertainment','video','music']},
   {id:'netflix',name:'Netflix Premium 4K',category:'Entertainment',description:'Stream global movies and series in crisp 4K Ultra HD with spatial audio.',price:400,oldPrice:650,duration:'1 Month',access:'Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.5,badge:'Quick Delivery',bestFor:['Movies','Series','4K'],logo:'https://cdn.simpleicons.org/netflix/FFFFFF',features:['4K Ultra HD & HDR resolution','Spatial audio support','Smart TV & laptop compatibility','Dedicated profile access'],intent:['entertainment','video','movies']},
   {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'Career insights, applicant tools and professional learning features.',price:1500,oldPrice:2400,duration:'2 Months',access:'Invitation',delivery:'30–60 min',warranty:'7 Days',rating:4.6,badge:'Career',bestFor:['Jobs','Learning','Sales'],logo:'https://cdn.simpleicons.org/linkedin/FFFFFF',features:['InMail allowance subject to tier','Profile-viewer insights','Applicant comparison tools','LinkedIn Learning access'],intent:['business','jobs','study']},
-  {id:'windows',name:'Windows 11 Pro Key',category:'Software',description:'Digital license key for Windows 11 Pro activation, subject to confirmed terms.',price:1900,oldPrice:2800,duration:'Lifetime',access:'License Key',delivery:'15–30 min',warranty:'7 Days',rating:4.7,badge:'License Key',bestFor:['PC','Work','Security'],logo:'https://cdn.simpleicons.org/windows11/FFFFFF',features:['Digital retail activation key','BitLocker drive encryption','Remote Desktop Host','Online activation instructions'],intent:['software','windows','business']}
+  {id:'windows',name:'Windows 11 Pro Key',category:'Software',description:'Digital license key for Windows 11 Pro activation, subject to confirmed terms.',price:1900,oldPrice:2800,duration:'Lifetime',access:'License Key',delivery:'15–30 min',warranty:'7 Days',rating:4.7,badge:'License Key',bestFor:['PC','Work','Security'],logo:'https://cdn.simpleicons.org/windows11/FFFFFF',features:['Digital retail activation key','BitLocker drive encryption','Remote Desktop Host','Online activation instructions'],intent:['software','windows','business']},
+  {id:'claude',name:'Claude Pro (3.5 Sonnet)',category:'AI Assistants',description:'Anthropic’s flagship AI for coding, deep analysis, technical writing, and live Artifacts rendering.',price:2200,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Coding','Artifacts','Logic'],logo:'https://www.google.com/s2/favicons?domain=anthropic.com&sz=128',features:['Claude 3.5 Sonnet & Opus models','Interactive Artifacts visualizer','200K token deep context','Private access on your personal email'],intent:['claude','coding','code','writing','artifacts']},
+  {id:'midjourney',name:'Midjourney v6.1 Pro',category:'Design',description:'Industry-standard ultra-photorealistic AI image and art generation via Discord and Web portal.',price:2400,oldPrice:3500,duration:'1 Month',access:'Private / Discord',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Photorealism','Art','Creatives'],logo:'https://www.google.com/s2/favicons?domain=midjourney.com&sz=128',features:['Ultra-high resolution outputs','Fast GPU generation hours','Commercial reproduction rights','Web generator and Discord bot'],intent:['midjourney','images','art','design','photorealism']},
+  {id:'cursor',name:'Cursor AI Pro',category:'Development',description:'The AI-first code editor built on VS Code with multi-file Composer, Claude 3.5 Sonnet & GPT-4o.',price:2800,oldPrice:3800,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.9,badge:'Developer Pick',bestFor:['Coding','Engineers','Fullstack'],logo:'https://www.google.com/s2/favicons?domain=cursor.com&sz=128',features:['Composer multi-file AI editing','Unlimited fast tab completions','Claude 3.5 Sonnet & GPT-4o inside IDE','Private code indexing'],intent:['cursor','code','coding','editor','developer']},
+  {id:'perplexity',name:'Perplexity Pro',category:'AI Assistants',description:'Real-time AI research engine with direct source citations, PDF deep search, and multi-model access.',price:1400,oldPrice:2200,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.8,badge:'Top Research',bestFor:['Research','Students','Fact-Checking'],logo:'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128',features:['Pro Search with cited links','Unlimited file & document uploads','Switch Claude 3.5, GPT-4o & Sonar','Included monthly API credits'],intent:['perplexity','research','study','search']},
+  {id:'deepseek',name:'DeepSeek Unlimited',category:'AI Assistants',description:'Cutting-edge DeepSeek R1 & V3 reasoning engine with chain-of-thought logic and instant math solving.',price:1100,oldPrice:1800,duration:'1 Month',access:'Private Portal',delivery:'10–20 min',warranty:'7 Days',rating:4.8,badge:'Viral AI',bestFor:['Math','Logic','Reasoning'],logo:'https://www.google.com/s2/favicons?domain=deepseek.com&sz=128',features:['DeepSeek R1 full reasoning chain','Mathematical proof & coding engine','Zero queue peak-hour access','Fast web & mobile access'],intent:['deepseek','reasoning','math','code']},
+  {id:'grok',name:'SuperGrok / Grok 2',category:'AI Assistants',description:'X Premium Grok 2 with real-time Twitter/X intelligence and uncensored Flux image generation.',price:1800,oldPrice:2600,duration:'1 Month',access:'Private',delivery:'15–30 min',warranty:'7 Days',rating:4.7,badge:'X Premium',bestFor:['Realtime X','Flux Art','News'],logo:'https://www.google.com/s2/favicons?domain=x.ai&sz=128',features:['Real-time news search on X','Flux-powered photorealistic images','Creative & uncensored mode','Direct X web access'],intent:['grok','supergrok','twitter','news']},
+  {id:'runway',name:'Runway ML Gen-3 Pro',category:'AI Video',description:'Hollywood-grade cinematic video generator with Gen-3 Alpha, Motion Brush, and multi-camera directing.',price:3500,oldPrice:4800,duration:'1 Month',access:'Private',delivery:'30–60 min',warranty:'7 Days',rating:4.8,badge:'Hollywood AI',bestFor:['VFX','Cinematics','Video Ads'],logo:'https://www.google.com/s2/favicons?domain=runwayml.com&sz=128',features:['Gen-3 Alpha photorealistic video','Motion brush camera pathing','4K output upscaler','Commercial video license'],intent:['runway','video','vfx','animation']},
+  {id:'heygen',name:'HeyGen AI Avatar Pro',category:'AI Video',description:'AI video creation platform with hyper-realistic human avatars, lip-syncing, and multi-language voiceovers.',price:4200,oldPrice:5800,duration:'1 Month',access:'Private',delivery:'30–60 min',warranty:'7 Days',rating:4.8,badge:'Video Avatars',bestFor:['Marketing','TikTok Ads','Spokesperson'],logo:'https://www.google.com/s2/favicons?domain=heygen.com&sz=128',features:['Studio-quality human avatars','Automatic 40+ language voice dubbing','Instant script-to-video generator','Custom personal avatar cloning'],intent:['heygen','avatar','video','marketing']},
+  {id:'grammarly',name:'Grammarly Premium',category:'Writing & SEO',description:'AI writing assistant for error-free essays, grammar correction, vocabulary enhancement, and tone refinement.',price:750,oldPrice:1200,duration:'1 Month',access:'Private / Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.8,badge:'Student Pick',bestFor:['Essays','Grammar','Proposals'],logo:'https://www.google.com/s2/favicons?domain=grammarly.com&sz=128',features:['Full sentence rewrites & tone tuner','Built-in plagiarism detector','Browser extension & MS Word plugin','Vocabulary & clarity enhancement'],intent:['grammarly','writing','grammar','student','plagiarism']},
+  {id:'quillbot',name:'QuillBot Premium',category:'Writing & SEO',description:'Fast AI paraphraser, summarizer, citation generator, and grammar checker for academic writing.',price:450,oldPrice:800,duration:'1 Month',access:'Private / Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.8,badge:'Lowest Price',bestFor:['Paraphrasing','Students','Assignments'],logo:'https://www.google.com/s2/favicons?domain=quillbot.com&sz=128',features:['Unlimited words in Paraphraser','All 8 custom paraphrasing modes','Freeze words terminology protection','Grammar & citation creator'],intent:['quillbot','paraphrase','writing','assignment']},
+  {id:'semrush',name:'SEMrush Pro',category:'Writing & SEO',description:'All-in-one SEO and digital marketing suite for keyword research, competitor analysis, and site audit.',price:1500,oldPrice:2500,duration:'1 Month',access:'Shared',delivery:'15–30 min',warranty:'7 Days',rating:4.7,badge:'SEO Suite',bestFor:['SEO','Keywords','Agencies'],logo:'https://www.google.com/s2/favicons?domain=semrush.com&sz=128',features:['Keyword Magic tool with PKR metrics','Competitor organic search audit','Backlink analytics & link gaps','On-page SEO checker'],intent:['semrush','seo','keywords','backlinks','ranking']},
+  {id:'allinone',name:'All-in-One Mega AI Portal',category:'AI Assistants',description:'Unified AI workspace combining Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Perplexity Pro & DeepSeek in 1 login.',price:1999,oldPrice:4500,duration:'1 Month',access:'Private Portal (LibreChat)',delivery:'2–5 min',warranty:'30 Days',rating:4.98,badge:'Best Value Deal',bestFor:['All Models','Full Power','Cost Saver'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal','Single simple login on PC & Mobile','Zero VPN needed in Pakistan','Instant 2-minute activation on WhatsApp'],intent:['allinone','portal','mega','claude','chatgpt','gemini','perplexity','deepseek']}
 ];
 
 const categoryData = [
-  ['AI Assistants','AI','2 tools'],
-  ['AI Video','▶','2 tools'],
-  ['Design','✦','4 tools'],
-  ['Development','</>','3 tools'],
+  ['AI Assistants','AI','7 tools'],
+  ['AI Video','▶','4 tools'],
+  ['Design','✦','5 tools'],
+  ['Development','</>','4 tools'],
+  ['Writing & SEO','✍','3 tools'],
   ['Productivity','P','2 tools'],
   ['AI Voice','∿','1 tool'],
   ['VPN & Security','S','2 tools'],
@@ -57,7 +70,19 @@ const officialLogos = {
   youtube: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=128',
   netflix: 'https://www.google.com/s2/favicons?domain=netflix.com&sz=128',
   linkedin: 'https://www.google.com/s2/favicons?domain=linkedin.com&sz=128',
-  windows: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=128'
+  windows: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=128',
+  claude: 'https://www.google.com/s2/favicons?domain=anthropic.com&sz=128',
+  midjourney: 'https://www.google.com/s2/favicons?domain=midjourney.com&sz=128',
+  cursor: 'https://www.google.com/s2/favicons?domain=cursor.com&sz=128',
+  perplexity: 'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128',
+  deepseek: 'https://www.google.com/s2/favicons?domain=deepseek.com&sz=128',
+  grok: 'https://www.google.com/s2/favicons?domain=x.ai&sz=128',
+  runway: 'https://www.google.com/s2/favicons?domain=runwayml.com&sz=128',
+  heygen: 'https://www.google.com/s2/favicons?domain=heygen.com&sz=128',
+  grammarly: 'https://www.google.com/s2/favicons?domain=grammarly.com&sz=128',
+  quillbot: 'https://www.google.com/s2/favicons?domain=quillbot.com&sz=128',
+  semrush: 'https://www.google.com/s2/favicons?domain=semrush.com&sz=128',
+  allinone: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128'
 };
 
 products.forEach(p => {
@@ -166,7 +191,7 @@ function renderCategories() {
 }
 
 function renderFilters() {
-  const cats = ['All','AI Assistants','AI Video','Design','Development','Productivity','VPN & Security','Entertainment'];
+  const cats = ['All','AI Assistants','AI Video','Design','Development','Writing & SEO','Productivity','VPN & Security','Entertainment'];
   const row = $('#filterRow');
   if (!row) return;
   row.innerHTML = cats.map(c => `
@@ -1081,10 +1106,10 @@ function initBundleCalculator() {
   const container = document.getElementById('calcToolsList');
   if (!container) return;
 
-  const popularBundleIds = ['chatgpt', 'canva', 'elevenlabs', 'gemini', 'capcut', 'adobe', 'leonardo', 'notion', 'nordvpn'];
+  const popularBundleIds = ['chatgpt', 'claude', 'canva', 'cursor', 'perplexity', 'allinone', 'elevenlabs', 'gemini', 'capcut', 'adobe', 'leonardo', 'notion', 'nordvpn'];
   const calcTools = products.filter(p => popularBundleIds.includes(p.id));
 
-  let selectedIds = new Set(['chatgpt', 'canva']); // default selection
+  let selectedIds = new Set(['chatgpt', 'claude', 'canva']); // default selection
 
   function renderTools() {
     container.innerHTML = calcTools.map(tool => {
@@ -1160,4 +1185,44 @@ function initBundleCalculator() {
 }
 
 initBundleCalculator();
+
+// ── Real-Time Verified Order Notification Ticker ──
+function initLiveOrderToast() {
+  const orders = [
+    { name: 'Hamza K.', city: 'Lahore', tool: 'Claude Pro (3.5 Sonnet)', time: '2m ago' },
+    { name: 'Zainab M.', city: 'Karachi', tool: 'All-in-One Mega AI Portal', time: '5m ago' },
+    { name: 'Usman R.', city: 'Islamabad', tool: 'ChatGPT Plus (Private)', time: '8m ago' },
+    { name: 'Bilal T.', city: 'Rawalpindi', tool: 'Cursor AI Pro', time: '11m ago' },
+    { name: 'Ayesha S.', city: 'Faisalabad', tool: 'Canva Pro (1-Year Edu)', time: '14m ago' },
+    { name: 'Saad N.', city: 'Peshawar', tool: 'Midjourney v6.1 Pro', time: '19m ago' },
+    { name: 'Fatima Z.', city: 'Multan', tool: 'QuillBot + Grammarly', time: '23m ago' }
+  ];
+  let idx = 0;
+  const toast = document.createElement('div');
+  toast.className = 'live-order-toast';
+  document.body.appendChild(toast);
+
+  function showNext() {
+    const o = orders[idx];
+    idx = (idx + 1) % orders.length;
+    toast.innerHTML = `
+      <div class="toast-avatar">${o.name.charAt(0)}</div>
+      <div class="toast-content">
+        <b>${o.name}</b> from ${o.city}<br>
+        Ordered <span>${o.tool}</span>
+        <small>⚡ Verified EasyPaisa • ${o.time}</small>
+      </div>
+    `;
+    toast.classList.add('active');
+    setTimeout(() => {
+      toast.classList.remove('active');
+    }, 4500);
+  }
+
+  setTimeout(showNext, 3500);
+  setInterval(showNext, 12000);
+}
+
+initLiveOrderToast();
+
 
