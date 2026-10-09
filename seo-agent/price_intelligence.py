@@ -6,7 +6,7 @@ PRICE_INTELLIGENCE = {
     "description": "Real price intelligence",
     "status": "VERIFIED",
     "products": 20,
-    "markets": ["PK", "JP"],
+    "markets": ["PK"],
     "free": True,
     "source": "GSC + SERP + browser search"
 }

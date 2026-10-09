@@ -15,7 +15,6 @@ FINAL_DATA_STATUS = {
   "Data_Provenance": "VERIFIED",
   "Fake_Data_Protection": "ACTIVE",
   "Pakistan_Data": "VERIFIED",
-  "Japan_Data": "VERIFIED",
   "Telegram_Reporting": "VERIFIED",
   "Deployment": "VERIFIED",
   "GitHub": "VERIFIED"

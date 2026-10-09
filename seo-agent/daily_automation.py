@@ -37,8 +37,7 @@ DAILY = {
     "availability",
     "features",
     "source freshness",
-    "Pakistan catalog",
-    "Japan catalog"
+    "Pakistan catalog"
   ],
   "competitors": [
     "new pages",

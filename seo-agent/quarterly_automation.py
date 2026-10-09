@@ -10,7 +10,6 @@ QUARTERLY = {
     "content architecture",
     "product taxonomy",
     "international strategy",
-    "Japan strategy",
     "Pakistan strategy",
     "technical architecture",
     "automation architecture",

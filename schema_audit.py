@@ -80,7 +80,7 @@ def audit_page(page_path: Path) -> dict:
                 expected = "https://aitoolgems.tech/"
             else:
                 expected = f"https://aitoolgems.tech/{rel_path}"
-            if url != expected and not url.startswith("https://aitoolgems.tech/jp"):
+            if url != expected:
                 result["warnings"].append(f"og:url may be incorrect: {url} (expected {expected})")
     else:
         result["warnings"].append("Missing og:url")
@@ -123,8 +123,8 @@ def audit_page(page_path: Path) -> dict:
         result["warnings"].append("Missing meta description")
 
     # Tool pages specific checks
-    if "tools/" in str(page_path) and "/jp/" not in str(page_path):
-        # Check for FAQPage on PK tool pages
+    if "tools/" in str(page_path):
+        # Check for FAQPage on tool pages
         if '"@type": "FAQPage"' in html:
             result["max_score"] += 15
             result["score"] += 15
@@ -143,23 +143,8 @@ def audit_page(page_path: Path) -> dict:
             result["max_score"] += 5
             result["score"] += 5
 
-    if "/jp/tools/" in str(page_path):
-        # Check for FAQPage on JP tool pages
-        if '"@type": "FAQPage"' in html:
-            result["max_score"] += 15
-            result["score"] += 15
-        else:
-            result["issues"].append("Missing FAQPage schema")
-
-        # Check for Product schema
-        if '"@type": "Product"' in html:
-            result["max_score"] += 10
-            result["score"] += 10
-        else:
-            result["warnings"].append("Missing Product schema")
-
     # Guide pages specific
-    if "/guides/" in str(page_path) and "jp" not in str(page_path):
+    if "/guides/" in str(page_path):
         if '"@type": "CollectionPage"' in html or '"@type": "WebPage"' in html:
             result["max_score"] += 5
             result["score"] += 5
@@ -170,25 +155,8 @@ def audit_page(page_path: Path) -> dict:
         else:
             result["warnings"].append("Missing Table of Contents")
 
-    if "jp/guides/" in str(page_path):
-        if '"@type": "CollectionPage"' in html or '"@type": "WebPage"' in html:
-            result["max_score"] += 5
-            result["score"] += 5
-        if '<nav class="toc"' in html:
-            result["max_score"] += 5
-            result["score"] += 5
-        else:
-            result["warnings"].append("Missing Table of Contents")
-
     # About pages
     if page_path.name == "about.html":
-        if '"@type": "Person"' in html:
-            result["max_score"] += 10
-            result["score"] += 10
-        else:
-            result["issues"].append("Missing Person schema")
-
-    if "jp/about.html" == str(page_path):
         if '"@type": "Person"' in html:
             result["max_score"] += 10
             result["score"] += 10

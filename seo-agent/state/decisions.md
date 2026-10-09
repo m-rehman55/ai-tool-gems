@@ -20,10 +20,10 @@
 - **Evidence:** Phase 0 Change Control, Master Bootstrap #14
 - **Status:** Active
 
-### Decision 4: Markets PK+JP
-- **What:** Pakistan primary, Japan secondary
-- **Why:** Business reality, existing site structure
-- **Evidence:** Site structure, hreflang, sitemaps
+### Decision 4: Market 100% Pakistan
+- **What:** Pakistan exclusive market
+- **Why:** Maximum local SEO dominance, direct targeting of PKR / EasyPaisa / JazzCash search intent
+- **Evidence:** Site structure, sitemap.xml
 - **Status:** Active
 
 ### Key Findings Summary
@@ -34,7 +34,7 @@
 - No SEO firewall
 - No memory system (now created)
 - No rollback capability
-- JP content extremely thin
+- Legacy thin content pruned
 - No linkable assets as pages
 - 27 P0 findings unresolved
 
@@ -68,6 +68,6 @@
 | Search Monitor | Ranking+structured data+spam+appearance changes | All | Ignore update |
 | Content Automation | DISCOVERED+UPDATED+OPTIMIZED+MERGED+EXPANDED+REFRESHED | All | Skip content |
 | Product Automation | Price+availability+features+source+freshness | All | Revert product |
-| International Automation | Pakistan+Japan+future markets | All | Block market |
+| International Automation | Pakistan exclusive market | All | Single market |
 | Data Moat | Price index+comparison+calculator+research | All | Skip update |
 | Telegram Control Center | Daily+weekly+monthly+critical+deployment+rollback+experiment+incident | All | N/A |

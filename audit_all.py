@@ -5,6 +5,10 @@ Checks every HTML file for all required elements
 """
 from pathlib import Path
 import re
+import sys
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 BASE = Path(__file__).resolve().parent
 issues = []
@@ -100,7 +104,7 @@ def check_file(filepath, rel_path):
             issues.append(f"⚠️  {name}: No Organization/LocalBusiness schema")
     
     # 18. Check for FAQ schema on homepage
-    if name.endswith('jp/index.html') or name.endswith('index.html'):
+    if name == 'index.html' or name.endswith('/index.html'):
         if '"@type": "FAQPage"' not in html:
             issues.append(f"⚠️  {name}: No FAQPage schema")
 

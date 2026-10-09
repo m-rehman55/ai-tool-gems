@@ -15,7 +15,6 @@ WEEKLY = {
     "technical issues",
     "content changes",
     "product changes",
-    "Japan performance",
     "Pakistan performance",
     "competitor changes",
     "backlink opportunities",

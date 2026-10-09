@@ -20,17 +20,9 @@ GitHub repository:
 
 https://github.com/m-rehman55/ai-tool-gems/
 
-Japan locale:
+Market:
 
-https://aitoolgems.tech/jp/
-
-Primary market:
-
-Pakistan
-
-Secondary/current international market:
-
-Japan
+100% Pakistan Exclusive (Nationwide: Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta)
 
 Business model:
 
@@ -151,7 +143,7 @@ Inspect:
 * product data
 * category data
 * guide data
-* Japan data
+* Pakistan local market data
 * configuration
 * metadata
 * schema
@@ -591,7 +583,6 @@ Recommended conceptual structure:
 * `/prices/`
 * `/research/`
 * `/pakistan/`
-* `/jp/`
 
 Only implement routes that fit the actual business and codebase.
 
@@ -1081,13 +1072,9 @@ Track:
 
 Support market-specific SEO.
 
-Current:
+Current Market:
 
-Pakistan
-
-Japan
-
-Future markets must be easy to add.
+Pakistan (100% Exclusive)
 
 Each market may need:
 
@@ -1106,30 +1093,30 @@ Each market may need:
 
 ---
 
-# 32. JAPAN SEO
+# 32. PAKISTAN LOCAL SEO & TRANSACTIONAL DOMINANCE
 
-Audit `/jp/` deeply.
+Audit Pakistan local landing pages deeply.
 
 Check:
 
-* Japanese language
-* Japanese titles
+* English & Urdu localized intent
+* Local Pakistani high-CTR titles
 * descriptions
 * headings
 * prices
-* JPY currency
+* PKR currency guarantee
 * product availability
-* Japanese content
+* Local Pakistani trust & payment content
 * hreflang
 * canonical
 * internal links
 * sitemap
 * structured data
-* Japanese search intent
+* Pakistani commercial search intent
 
-Never display PKR as JPY.
+Always guarantee authentic PKR pricing and transparent discounts.
 
-Never claim Japanese availability unless verified.
+Always guarantee authentic stock and instant 5-30 minute delivery.
 
 ---
 
@@ -1328,7 +1315,7 @@ Implement evidence-based GEO strategies (based on Princeton GEO research & moder
 
 3. **Machine-Readable AI Context Architecture (`llms.txt` & `llms-full.txt`)**:
    - Maintain an up-to-date `/llms.txt` file adhering to the `/llms.txt` standard for AI agents and LLM web crawlers.
-   - Structure clean markdown digests of all tools, prices in PKR and JPY, category hierarchies, and verified FAQs.
+   - Structure clean markdown digests of all tools, prices in PKR, category hierarchies, and verified FAQs.
    - Ensure clean robots.txt permissions for benevolent AI search crawlers (`GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`).
 
 ---
@@ -1363,7 +1350,7 @@ Target Google Featured Snippets, AI Overviews, voice search, and conversational 
 ### 41.3 Ethical AI & Search Integrity Guardrails
 
 - **Zero Hallucination / Zero Fabrication**: Never generate hypothetical prices, synthetic rankings, or non-existent reviews.
-- **Strict Locale Separation**: Maintain an impenetrable firewall between Pakistan (PKR) and Japan (JPY) data.
+- **Local Market Focus**: Maintain 100% focus on Pakistan (PKR) with EasyPaisa, JazzCash, and local payment methods.
 - **Anti-Spam / People-First Content**: Comply strictly with Google's Helpful Content System and March 2024 Core Update. No low-effort, bulk-generated AI filler. Every page must serve genuine human search intent.
 
 ---
@@ -2333,11 +2320,11 @@ Bad:
 
 Good:
 
-"17 product pages switched from PKR to JPY unexpectedly. Deployment X caused the change. Affected URLs listed. Automatic deployment blocked."
+"Product prices switched unexpectedly. Deployment X caused the change. Affected URLs listed. Automatic deployment blocked."
 
 ---
 
-# 84. JAPAN / MULTI-MARKET DATA ISOLATION
+# 84. PAKISTAN TRANSACTIONAL DATA INTEGRITY & ISOLATION
 
 Never allow:
 
@@ -2345,7 +2332,7 @@ Pakistan data
 
 to accidentally appear as:
 
-Japan data.
+local market data.
 
 Keep:
 
@@ -2365,7 +2352,7 @@ properly separated.
 Architecture should allow:
 
 * Pakistan
-* Japan
+* Pakistan Nationwide
 * other countries
 
 without rebuilding the entire SEO system.
@@ -2553,7 +2540,7 @@ Work in phases.
 
 ## PHASE 5 — INTERNATIONAL
 
-* Japan
+* Pakistan Nationwide
 * localization
 * currency
 * hreflang
@@ -2593,7 +2580,7 @@ Start with:
 5. robots
 6. sitemap
 7. hreflang
-8. Japan localization/currency correctness
+8. Pakistan pricing and local payment correctness
 9. product template
 10. schema
 11. metadata
@@ -2772,7 +2759,7 @@ Return:
 
 ## 11. Schema
 
-## 12. International/Japan
+## 12. Local Pakistani Market Intelligence
 
 ## 13. Performance
 
@@ -2828,6 +2815,6 @@ Build the system so that another engineer can understand it six months later.
 
 Build it so the SEO agent can improve it every day without destroying it.
 
-Build it so AIToolGems can scale from Pakistan to Japan and eventually other markets.
+Build it so AIToolGems dominates the Pakistan AI tools marketplace with highest authority.
 
 Start with repository inspection now.

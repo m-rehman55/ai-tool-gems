@@ -5,8 +5,7 @@ SEO Agent Autonomous International System
 INTERNATIONAL_AUTO = {
   "description": "Autonomous international system",
   "monitor": [
-    "Pakistan",
-    "Japan"
+    "Pakistan"
   ],
   "future_markets": "Prepare architecture without contaminating current markets",
   "requirements": [

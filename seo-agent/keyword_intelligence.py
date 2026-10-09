@@ -6,7 +6,7 @@ KEYWORD_INTELLIGENCE = {
     "description": "Real keyword intelligence",
     "status": "VERIFIED",
     "keywords": 55,
-    "markets": ["PK", "JP"],
+    "markets": ["PK"],
     "free": True,
     "source": "Google Trends + GSC + browser search"
 }

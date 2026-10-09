@@ -55,6 +55,6 @@ HERMES Master Bootstrap COMPLETE. Ready for Level 0.
 - Search Monitor: ranking+structured data+spam+appearance
 - Content: DISCOVERED+UPDATED+OPTIMIZED+MERGED+EXPANDED+REFRESHED
 - Product: price+availability+features+source+freshness
-- International: Pakistan+Japan+future markets
+- International: 100% Pakistan exclusive market
 - Data Moat: price index+comparison+calculator+research
 - Telegram Control Center: daily+weekly+monthly+critical+deployment+rollback+experiment+incident

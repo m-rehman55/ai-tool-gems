@@ -164,7 +164,7 @@
 
   // language_switch - language switching
   document.addEventListener('click', function(e) {
-    var langLink = e.target.closest('a[href*="/jp/"], a[href*="/en/"], a[href*="lang="], a[href*="language="]');
+    var langLink = e.target.closest('a[href*="/en/"], a[href*="lang="], a[href*="language="]');
     if (langLink) {
       trackEvent('language_switch', { link_url: langLink.href });
     }
@@ -172,7 +172,7 @@
 
   // market_switch - market switching
   document.addEventListener('click', function(e) {
-    var marketLink = e.target.closest('a[href*="/jp/"], a[href*="/pk/"], a[href*="market="], a[href*="country="]');
+    var marketLink = e.target.closest('a[href*="/pk/"], a[href*="market="], a[href*="country="]');
     if (marketLink) {
       trackEvent('market_switch', { link_url: marketLink.href });
     }

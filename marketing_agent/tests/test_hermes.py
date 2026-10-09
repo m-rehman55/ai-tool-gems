@@ -20,24 +20,20 @@ class HermesTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
-        (self.root / "jp").mkdir()
         (self.root / "index.html").write_text(
-            """<html><head><title>PK</title><meta name='description' content='Pakistan page'>
-            <link rel='canonical' href='https://example.test/'><link rel='alternate' hreflang='en-pk' href='https://example.test/'>
-            <link rel='alternate' hreflang='ja-jp' href='https://example.test/jp/'></head>
-            <body><h1>Pakistan</h1><img src='x.png' alt='x'></body></html>""",
+            """<html><head><title>PK Home</title><meta name='description' content='Pakistan home'>
+            <link rel='canonical' href='https://example.test/'></head>
+            <body><h1>Pakistan Home</h1><img src='x.png' alt='x'></body></html>""",
             encoding="utf-8",
         )
-        (self.root / "jp" / "index.html").write_text(
-            """<html><head><title>日本</title><meta name='description' content='日本のページ'>
-            <link rel='canonical' href='https://example.test/jp/'><link rel='alternate' hreflang='en-pk' href='https://example.test/'>
-            <link rel='alternate' hreflang='ja-jp' href='https://example.test/jp/'></head>
-            <body><h1>日本</h1><img src='x.png' alt='x'></body></html>""",
+        (self.root / "about.html").write_text(
+            """<html><head><title>About</title><meta name='description' content='About Pakistan'>
+            <link rel='canonical' href='https://example.test/about.html'></head>
+            <body><h1>About Us</h1><img src='x.png' alt='x'></body></html>""",
             encoding="utf-8",
         )
         (self.root / "robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: https://example.test/sitemap.xml\n", encoding="utf-8")
-        (self.root / "sitemap.xml").write_text("<urlset><url><loc>https://example.test/</loc></url></urlset>", encoding="utf-8")
-        (self.root / "sitemap-jp.xml").write_text("<urlset><url><loc>https://example.test/jp/</loc></url></urlset>", encoding="utf-8")
+        (self.root / "sitemap.xml").write_text("<urlset><url><loc>https://example.test/</loc></url><url><loc>https://example.test/about.html</loc></url></urlset>", encoding="utf-8")
         self.settings = Settings(
             database_path=self.root / "marketing.db",
             site_url="https://example.test",
@@ -58,15 +54,14 @@ class HermesTests(unittest.TestCase):
         with patch("marketing_agent.hermes_audit.urlopen", side_effect=AssertionError("network used")):
             result = audit_repository(self.root, self.settings.site_url)
         self.assertEqual(result.summary["pages"], 2)
-        self.assertEqual(result.summary["pk_pages"], 1)
-        self.assertEqual(result.summary["jp_pages"], 1)
-        self.assertEqual(result.pages[0]["url"], "https://example.test/")
+        self.assertEqual(result.summary["pk_pages"], 2)
+        self.assertIn("https://example.test/", [p["url"] for p in result.pages])
 
-    def test_currency_isolation_is_reported(self) -> None:
-        (self.root / "jp" / "bad.html").write_text("<h1>Bad</h1> ¥100 and Rs. 2", encoding="utf-8")
+    def test_missing_title_is_reported(self) -> None:
+        (self.root / "bad.html").write_text("<html><head><meta name='description' content='test'><link rel='canonical' href='https://example.test/bad.html'></head><body><h1>Bad</h1></body></html>", encoding="utf-8")
         result = audit_repository(self.root, self.settings.site_url)
         codes = {issue["code"] for issue in result.issues}
-        self.assertIn("JP_CURRENCY_MIX", codes)
+        self.assertIn("MISSING_TITLE", codes)
 
     def test_missing_online_credentials_are_explicit(self) -> None:
         with patch.dict("os.environ", {}, clear=True):
