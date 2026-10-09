@@ -462,3 +462,261 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 .price-directory tbody th { font-weight:700; }
 .price-directory tbody a { color:#227b67; text-decoration:underline; text-underline-offset:2px; }
 .price-directory td:last-child { font-weight:800; white-space:nowrap; }
+
+/* ==========================================================================
+   PAKISTAN PAYMENT TRUST STRIP — HIGH CONTRAST THEME STYLING
+   ========================================================================== */
+.payment-trust-strip {
+  background: #ffffff !important;
+  border: 1.5px solid #d2e4d9 !important;
+  border-radius: 20px;
+  padding: 22px 28px;
+  margin: 16px auto 36px;
+  box-shadow: 0 10px 30px rgba(35, 75, 60, 0.08);
+}
+.payment-trust-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e7efe9 !important;
+}
+.payment-trust-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f4c3a !important;
+  letter-spacing: 0.02em;
+}
+.payment-trust-title svg {
+  stroke: #059669 !important;
+  flex-shrink: 0;
+}
+.payment-trust-speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #f1f5f3 !important;
+  border: 1px solid #d2ded7 !important;
+  color: #1e3a34 !important;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 999px;
+}
+.payment-trust-speed svg {
+  stroke: #059669 !important;
+}
+.payment-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.payment-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.payment-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.09);
+}
+.payment-pill svg {
+  flex-shrink: 0;
+}
+.pill-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.dot-ep {
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+}
+.dot-jc {
+  background: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.8);
+}
+.payment-pill.pill-easypaisa {
+  background: #f0fdf4 !important;
+  border: 1.5px solid #86efac !important;
+  color: #14532d !important;
+}
+.payment-pill.pill-easypaisa b {
+  color: #047857 !important;
+  font-weight: 800;
+}
+.payment-pill.pill-jazzcash {
+  background: #fef2f2 !important;
+  border: 1.5px solid #fca5a5 !important;
+  color: #7f1d1d !important;
+}
+.payment-pill.pill-jazzcash b {
+  color: #b91c1c !important;
+  font-weight: 800;
+}
+.payment-pill.pill-sadapay {
+  background: #f0fdfa !important;
+  border: 1.5px solid #99f6e4 !important;
+  color: #134e4a !important;
+}
+.payment-pill.pill-sadapay svg {
+  stroke: #0d9488 !important;
+}
+.payment-pill.pill-sadapay b {
+  color: #0f766e !important;
+  font-weight: 800;
+}
+.payment-pill.pill-nayapay {
+  background: #eff6ff !important;
+  border: 1.5px solid #bfdbfe !important;
+  color: #1e3a8a !important;
+}
+.payment-pill.pill-nayapay svg {
+  stroke: #2563eb !important;
+}
+.payment-pill.pill-nayapay b {
+  color: #1d4ed8 !important;
+  font-weight: 800;
+}
+.payment-pill.pill-raast {
+  background: #fffbeb !important;
+  border: 1.5px solid #fde68a !important;
+  color: #78350f !important;
+}
+.payment-pill.pill-raast svg {
+  stroke: #d97706 !important;
+}
+.payment-pill.pill-raast b {
+  color: #b45309 !important;
+  font-weight: 800;
+}
+.payment-pill.pill-bank {
+  background: #f8fafc !important;
+  border: 1.5px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+.payment-pill.pill-bank svg {
+  stroke: #475569 !important;
+}
+.payment-pill.pill-bank b {
+  color: #1e293b !important;
+  font-weight: 800;
+}
+.payment-pill.pill-warranty {
+  background: #ecfdf5 !important;
+  border: 1.5px solid #6ee7b7 !important;
+  color: #064e3b !important;
+}
+.payment-pill.pill-warranty svg {
+  stroke: #059669 !important;
+}
+.payment-pill.pill-warranty b {
+  color: #047857 !important;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   ORIGINAL WHATSAPP PROOF SCREENSHOTS GALLERY
+   ========================================================================== */
+.original-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+.wa-real-ss-card {
+  background: #ffffff;
+  border: 1.5px solid #d2e4d9;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(35, 75, 60, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+}
+.wa-real-ss-card:hover {
+  transform: translateY(-5px);
+  border-color: #10b981;
+  box-shadow: 0 16px 40px rgba(16, 185, 129, 0.18);
+}
+.real-ss-media {
+  position: relative;
+  background: #0f172a;
+  padding: 8px;
+  text-align: center;
+  overflow: hidden;
+  height: 380px;
+}
+.real-ss-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+.wa-real-ss-card:hover .real-ss-media img {
+  transform: scale(1.02);
+}
+.ss-zoom-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.real-ss-info {
+  padding: 18px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.ss-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+.real-ss-info b {
+  font-size: 15px;
+  color: #173c35;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+.real-ss-info p {
+  font-size: 12.5px;
+  color: #61766e;
+  line-height: 1.5;
+  margin: 0;
+}
+
