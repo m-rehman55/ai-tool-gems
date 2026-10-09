@@ -307,7 +307,7 @@ class SEOOptimizer:
         """Check where we and competitors rank for target keywords.
         Uses web_search to simulate Google results.
         """
-        all_keywords = TARGET_KEYWORDS_PK + TARGET_KEYWORDS_JP
+        all_keywords = TARGET_KEYWORDS_PK
         results: dict[str, Any] = {}
 
         try:

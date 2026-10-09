@@ -26,8 +26,12 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 | Command | Purpose |
 |---------|---------|
+| `python -m marketing_agent seo-growth` | GSC live impression, click, CTR & ranking growth analyzer |
+| `python scripts/growth_seo_engine.py` | DOM, Pakistani transactional signals, & instant IndexNow ping |
+| `python audit_all.py` | Full 53-page Google/Bing Search Central technical audit |
+| `python schema_audit.py` | Complete JSON-LD Product, FAQ, & Breadcrumb completeness audit |
 | `python -m marketing_agent seo-monitor --json` | Automated SEO/GEO integrity check (Target: 100/100) |
-| `python -m marketing_agent hermes audit` | Offline repository audit across all 85 pages (0 issues) |
+| `python -m marketing_agent hermes audit` | Offline repository audit across all 53 pages (0 issues) |
 | `python -m marketing_agent hermes report` | Generate latest HERMES SEO report |
 | `python -m marketing_agent buffer-status` | Verify Buffer social channels connection |
 | `python -m marketing_agent trial-plan` | Duplicate-safe 3-day Telegram trial plan |

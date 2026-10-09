@@ -30,13 +30,34 @@ Do not silently guess.
 3. Official documentation
 4. Official product source
 5. Official API/data
-6. Google Search Central
+6. Google Search Central Documentation (https://developers.google.com/search/docs)
 7. GitHub/source code
 8. Reliable primary business sources
 9. Reliable third-party research
 10. Community sources for experience/context
 
 Clearly distinguish source-backed facts from assumptions.
+
+---
+
+## Google Search Central Operational Standards (https://developers.google.com/search/docs)
+
+All autonomous agents and content generators must strictly adhere to Google Search Central specifications:
+1. **Search Essentials Compliance**: Never generate doorway pages, scraped content, or misleading cloaked text. Provide genuine people-first Information Gain.
+2. **Crawling & Indexing Guardrails**: 
+   - Maintain a pristine `sitemap.xml` with zero 404s, zero redirects, and exact `<lastmod>` timestamps.
+   - Never block essential CSS/JS in `robots.txt`. Permit benevolent search and AI agents (`Googlebot`, `Google-Extended`, `GPTBot`, `PerplexityBot`, `ClaudeBot`).
+   - Every indexable page must contain a self-referencing canonical URL.
+3. **Search Appearance & High-CTR Engineering**:
+   - **Title Links**: Craft concise 50–60 character titles combining primary intent keyword, price anchor in PKR, and brand name to avoid truncations in SERP snippets.
+   - **Meta Descriptions**: 140–160 characters with clear value propositions, trust signals (e.g. WhatsApp instant delivery, 7-day warranty), and local payment options (EasyPaisa/JazzCash).
+4. **Structured Data Completeness**:
+   - Every product page must validate with complete `Product` schema (including `offers`, `aggregateRating`, `review`, and in-stock availability).
+   - FAQ sections must implement valid `FAQPage` schema.
+   - Navigation must implement valid `BreadcrumbList` schema.
+5. **Continuous Verification & Re-Testing**:
+   - Multi-layer automated testing (`audit_all.py`, `schema_audit.py`, `audit_complete.py`, `growth_seo_engine.py`, `unittest discover`).
+   - 0 errors tolerance before any commit to `main`.
 
 ---
 
