@@ -1,0 +1,38 @@
+name: Autonomous SEO Growth & IndexNow Pipeline
+
+"on":
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seo-growth-pipeline
+  cancel-in-progress: true
+
+jobs:
+  growth-pipeline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run unit test regression suite
+        run: python -m unittest discover -s marketing_agent/tests -v
+
+      - name: Run DOM and schema completeness audit
+        run: |
+          python schema_audit.py
+          python audit_complete.py
+
+      - name: Execute Autonomous SEO Growth Engine & IndexNow Ping
+        run: python scripts/growth_seo_engine.py

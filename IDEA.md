@@ -776,7 +776,27 @@ Pattern:
 * Leonardo vs Midjourney
 * product alternatives
 
-Do not automatically create a page for every keyword permutation.
+## AEO Direct-Question Queries (Featured Snippets & Voice Search)
+
+* "how to buy [product] in Pakistan without international credit card"
+* "is [product] available in Pakistan"
+* "what is the price of [product] in Pakistani rupees"
+* "does [product] accept Pakistani debit cards / JazzCash / Nayapay"
+* "what is the best AI tool for [specific use case] in 2026"
+
+## GEO Conversational & Generative Queries (LLM Citation Targets)
+
+* "compare pricing and limits of top AI image generators for Pakistani creators"
+* "best alternatives to ChatGPT Plus that can be subscribed in PKR"
+* "complete pricing guide for AI productivity tools in Pakistan"
+
+## Localized Payment & Accessibility Queries
+
+* "[product] payment via Nayapay / Sadapay / JazzCash"
+* "[product] price PKR after bank tax / withholding tax"
+* "[product] student discount Pakistan"
+
+Do not automatically create a page for every keyword permutation. Group related queries into topic clusters with canonical pillar pages.
 
 ---
 
@@ -1285,23 +1305,66 @@ If video is added:
 
 ---
 
-# 41. AI SEARCH / ANSWER ENGINE VISIBILITY
+# 41. AI SEARCH / GEO / AEO ENGINE VISIBILITY
 
-Optimize content so that useful facts are:
+Transform AIToolGems into an authority node for both classic search engines and generative AI engines (Google AI Overviews, Perplexity, ChatGPT Search, Claude, Copilot, Gemini).
 
-* clearly stated
-* well structured
-* attributable
-* supported by evidence
-* easy to extract
-* internally connected
-* up to date
+---
 
-Do NOT create "AI SEO hacks."
+### 41.1 Generative Engine Optimization (GEO) Framework
 
-Do NOT attempt to manipulate AI answers.
+Implement evidence-based GEO strategies (based on Princeton GEO research & modern LLM retrieval-augmented generation standards):
 
-Build genuinely useful information architecture.
+1. **Information Gain Scoring (Google Patent Standards)**:
+   - Every page must contain original, non-commodity insights that cannot be found by simply aggregating top 3 SERP results.
+   - Include proprietary market data: real Pakistan PKR prices vs USD rates, payment method availability (Sadapay, Nayapay, JazzCash, Raast, local cards), localized delivery speed, and hands-on feature verification.
+   - Provide structured data tables comparing pricing tiers, token limits, and regional accessibility.
+
+2. **LLM Citation & Source Attribution Optimization**:
+   - **Authoritative Citation Integration**: Ground claims with direct references to official vendor documentation and primary developer benchmarks.
+   - **Quotation Frequency**: Use crisp, memorable, authoritative statements summarizing core tool verdicts for easy LLM quotation.
+   - **Statistical Grounding**: Present quantitative facts in clean numeric formats (e.g., "$20/mo (~5,600 PKR)", "200k context window", "99.8% uptime").
+   - **Technical Terminology Precision**: Use exact entity names, model identifiers (e.g., "Claude 3.5 Sonnet", "GPT-4o"), and standard domain taxonomies to maximize vector embedding cosine similarity.
+
+3. **Machine-Readable AI Context Architecture (`llms.txt` & `llms-full.txt`)**:
+   - Maintain an up-to-date `/llms.txt` file adhering to the `/llms.txt` standard for AI agents and LLM web crawlers.
+   - Structure clean markdown digests of all tools, prices in PKR and JPY, category hierarchies, and verified FAQs.
+   - Ensure clean robots.txt permissions for benevolent AI search crawlers (`GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`).
+
+---
+
+### 41.2 Answer Engine Optimization (AEO) Framework
+
+Target Google Featured Snippets, AI Overviews, voice search, and conversational answer boxes:
+
+1. **Inverted Pyramid Direct-Answer Architecture**:
+   - Under every question-based H2/H3 header (e.g., "How much does ChatGPT Plus cost in Pakistan?"), provide a direct, standalone **40–55 word definitive answer block** before diving into nuance or background.
+   - Ensure the direct answer contains the primary entity, the target attribute, the exact price/status, and the market context.
+
+2. **Featured Snippet & AI Summary Formatting**:
+   - **Table Snippets**: Format pricing comparisons, feature matrices, and pros/cons in semantic HTML `<table>` elements with clean `<thead>` and `<tbody>`.
+   - **List Snippets**: Use ordered `<ol>` for sequential step-by-step instructions (e.g., "How to subscribe to Midjourney in Pakistan") and unordered `<ul>` for category listings.
+   - **Definition Snippets**: Provide bold entity definitions in the format: `**[Tool Name]** is a [category] that [core function], available in Pakistan for [price PKR].`
+
+3. **Entity Knowledge Graph & Schema Integration**:
+   - Every page must render validated JSON-LD structured data including `FAQPage`, `SoftwareApplication`, `Product`, `AggregateRating`, and `BreadcrumbList`.
+   - Connect internal entities to global knowledge graphs (Wikidata, official vendor URLs, Wikipedia) via `sameAs` properties in schema.
+   - Maintain a synchronized internal link graph so search engines and vector embeddings understand entity relationships without ambiguity.
+
+4. **Conversational Search & Long-Tail Query Mapping**:
+   - Capture natural-language voice and chat search patterns:
+     - "Which AI tool is best for Urdu content writing?"
+     - "Can I pay for Claude Pro in Pakistani rupees?"
+     - "What is the cheapest way to buy Midjourney in Pakistan?"
+   - Preserve zero-click brand recognition: even when the AI answers directly without a click, ensure AIToolGems is cited as the definitive source.
+
+---
+
+### 41.3 Ethical AI & Search Integrity Guardrails
+
+- **Zero Hallucination / Zero Fabrication**: Never generate hypothetical prices, synthetic rankings, or non-existent reviews.
+- **Strict Locale Separation**: Maintain an impenetrable firewall between Pakistan (PKR) and Japan (JPY) data.
+- **Anti-Spam / People-First Content**: Comply strictly with Google's Helpful Content System and March 2024 Core Update. No low-effort, bulk-generated AI filler. Every page must serve genuine human search intent.
 
 ---
 

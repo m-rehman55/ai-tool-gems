@@ -123,3 +123,18 @@ Before merging SEO-related code:
 - Accidental noindex
 - Source data
 - Freshness
+
+---
+
+## GEO & AEO Invariants
+
+### Generative Engine Optimization (GEO)
+- Every page must satisfy Google's Information Gain requirement: include original localized data (PKR pricing, local payment methods like Nayapay/Sadapay/JazzCash, verified delivery guarantees).
+- Claims must be grounded with official vendor references, quantitative specs, and precise model entity names.
+- Maintain public machine-readable AI context (/llms.txt) and allow reputable generative search crawlers in robots.txt.
+
+### Answer Engine Optimization (AEO)
+- Under every question heading (H2/H3), provide a standalone 40–55 word direct answer block before detailed discussion.
+- Maintain clean semantic HTML: use <table> for comparisons, <ol> for sequential steps, and validated JSON-LD schema for all entities.
+- Target zero-click and voice search intent with clear entity definition sentences.
+

@@ -4,7 +4,11 @@ Complete site audit - finds all issues across the website
 """
 import json
 import re
+import sys
 from pathlib import Path
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 BASE = Path(__file__).resolve().parent
 

@@ -10,6 +10,7 @@ User-agent: ChatGPT-User
 User-agent: OAI-SearchBot
 User-agent: ClaudeBot
 User-agent: PerplexityBot
+User-agent: Google-Extended
 Allow: /
 Disallow: /admin.html
 Disallow: /marketing_agent/
@@ -19,4 +20,6 @@ Disallow: /.env.example
 Sitemap: https://aitoolgems.tech/sitemap.xml
 Sitemap: https://aitoolgems.tech/sitemap-jp.xml
 
+# AI & LLM Context: https://aitoolgems.tech/llms.txt
 # IndexNow key: https://aitoolgems.tech/e1a8c47f9d2b4f30a6c8116de5b97042.txt
+

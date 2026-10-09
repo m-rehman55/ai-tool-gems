@@ -1075,3 +1075,89 @@ if ('requestIdleCallback' in window) {
     init3dCards();
   }, 0);
 }
+
+// ── Pakistan AI Bundle & Savings Calculator ──
+function initBundleCalculator() {
+  const container = document.getElementById('calcToolsList');
+  if (!container) return;
+
+  const popularBundleIds = ['chatgpt', 'canva', 'elevenlabs', 'gemini', 'capcut', 'adobe', 'leonardo', 'notion', 'nordvpn'];
+  const calcTools = products.filter(p => popularBundleIds.includes(p.id));
+
+  let selectedIds = new Set(['chatgpt', 'canva']); // default selection
+
+  function renderTools() {
+    container.innerHTML = calcTools.map(tool => {
+      const isSel = selectedIds.has(tool.id);
+      return `
+        <label class="calc-tool-item ${isSel ? 'selected' : ''}" data-id="${tool.id}">
+          <input type="checkbox" class="calc-checkbox" ${isSel ? 'checked' : ''}>
+          <img src="${officialLogos[tool.id] || tool.logo}" width="28" height="28" style="border-radius:6px; object-fit:contain;" alt="${tool.name}">
+          <div class="calc-tool-info">
+            <b>${tool.name}</b>
+            <span>Rs. ${tool.price.toLocaleString()}</span>
+          </div>
+        </label>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.calc-tool-item').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'INPUT') {
+          const chk = el.querySelector('input');
+          chk.checked = !chk.checked;
+        }
+        const id = el.dataset.id;
+        const isChecked = el.querySelector('input').checked;
+        if (isChecked) {
+          selectedIds.add(id);
+          el.classList.add('selected');
+        } else {
+          selectedIds.delete(id);
+          el.classList.remove('selected');
+        }
+        updateTotals();
+      });
+    });
+  }
+
+  function updateTotals() {
+    const selected = calcTools.filter(p => selectedIds.has(p.id));
+    const countEl = document.getElementById('calcCount');
+    const offEl = document.getElementById('calcOfficialTotal');
+    const ourEl = document.getElementById('calcOurTotal');
+    const badgeEl = document.getElementById('calcSavingsBadge');
+    const btnEl = document.getElementById('calcWhatsAppBtn');
+
+    if (countEl) countEl.textContent = `${selected.length} tool${selected.length === 1 ? '' : 's'}`;
+
+    const ourTotal = selected.reduce((sum, p) => sum + p.price, 0);
+    const offTotal = selected.reduce((sum, p) => sum + (p.oldPrice || (p.price * 1.6)), 0);
+    const savings = Math.max(0, offTotal - ourTotal);
+    const pct = offTotal > 0 ? Math.round((savings / offTotal) * 100) : 0;
+
+    if (offEl) offEl.textContent = `Rs. ${Math.round(offTotal).toLocaleString()}`;
+    if (ourEl) ourEl.textContent = `Rs. ${ourTotal.toLocaleString()}`;
+
+    if (badgeEl) {
+      if (selected.length > 0 && savings > 0) {
+        badgeEl.style.display = 'block';
+        badgeEl.innerHTML = `🎉 You Save Rs. ${Math.round(savings).toLocaleString()} (${pct}% OFF)`;
+      } else {
+        badgeEl.style.display = 'none';
+      }
+    }
+
+    if (btnEl) {
+      const names = selected.map(p => p.name).join(', ');
+      const msg = encodeURIComponent(`Hi AI Tool Gems, I want to order this custom AI bundle:\nTools: ${names}\nTotal Price: Rs. ${ourTotal.toLocaleString()}\nPayment: EasyPaisa / JazzCash`);
+      btnEl.href = `https://wa.me/923236715731?text=${msg}`;
+    }
+  }
+
+  renderTools();
+  updateTotals();
+}
+
+initBundleCalculator();
+
