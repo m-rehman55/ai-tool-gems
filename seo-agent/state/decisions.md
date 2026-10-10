@@ -71,3 +71,11 @@
 | International Automation | Pakistan exclusive market | All | Single market |
 | Data Moat | Price index+comparison+calculator+research | All | Skip update |
 | Telegram Control Center | Daily+weekly+monthly+critical+deployment+rollback+experiment+incident | All | N/A |
+
+## Phase 1 Decisions (2026-10-10)
+
+| Decision | Rationale | Affected URLs | Rollback |
+|----------|-----------|---------------|----------|
+| Full Pakistan Sitemap Coverage | Expand sitemap.xml from 32 to 49 URLs to ensure complete search engine discovery of all guides, trust docs, and price hubs | 17 newly added URLs | Revert sitemap.xml commit |
+| Strict Mono-Locale Isolation | Enforce 100% Pakistan exclusivity (`lang="en-PK"`, PKR only, zero international hreflang) | All 53 pages | Revert commit |
+| Instant Search Engine Pinging | Submit expanded sitemap URLs to IndexNow for expedited indexing across search engines | 49 URLs | N/A |

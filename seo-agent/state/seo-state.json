@@ -1,29 +1,20 @@
 {
   "version": "1.0",
-  "last_updated": "2026-10-04",
+  "last_updated": "2026-10-10",
   "site": "aitoolgems.tech",
   "github": "m-rehman55/ai-tool-gems",
   "branch": "main",
-  "commit": "HEAD",
-  "pages_total": 85,
+  "commit": "5a84c67",
+  "pages_total": 53,
   "products_total": 20,
   "seo_os_score": {
-    "current": 90,
-    "max": 90,
+    "current": 100,
+    "max": 100,
     "percentage": 100
   },
   "phases_complete": [
     0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10
+    1
   ],
   "total_findings": 0,
   "p0": 0,
@@ -32,8 +23,10 @@
   "markets": [
     "en-PK"
   ],
+  "currency": "PKR",
+  "japan_content_purged": true,
   "autonomy_mode": "AUDIT/PROPOSE/PR",
-  "last_audit": "2026-10-04",
+  "last_audit": "2026-10-10",
   "level_4": {
     "status": "complete",
     "started": "2026-10-01",
@@ -51,7 +44,7 @@
     "rollback": "implemented",
     "github": "implemented",
     "telegram": "implemented",
-    "last_updated": "2026-10-01"
+    "last_updated": "2026-10-10"
   },
   "level_5": {
     "status": "complete",
@@ -69,7 +62,7 @@
     "international_automation": "implemented",
     "data_moat": "implemented",
     "telegram_control": "implemented",
-    "completed": "2026-10-01",
+    "completed": "2026-10-10",
     "real_data_engine": "implemented"
   }
 }
