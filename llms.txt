@@ -20,7 +20,7 @@ Last reviewed: 2026-10-11
 - [Privacy](https://aitoolgems.tech/privacy.html) — website and customer privacy policy
 - [Terms](https://aitoolgems.tech/terms.html) — website terms of service and order conditions
 
-## Editorial Guides (15 Clusters)
+## Editorial Guides (16 Clusters)
 
 - [Guides Hub](https://aitoolgems.tech/guides/) — Pakistan-focused AI tools guide hub
 - [AI Subscriptions Pakistan](https://aitoolgems.tech/guides/ai-subscriptions-pakistan/) — complete buyer's guide to AI tool plans in Pakistan
@@ -31,6 +31,7 @@ Last reviewed: 2026-10-11
 - [Canva vs Figma Pakistan](https://aitoolgems.tech/guides/canva-vs-figma-pakistan/) — workflow-based Canva Pro and Figma Pro comparison
 - [Canva Pro Guide](https://aitoolgems.tech/guides/canva/) — Canva Pro features, templates, and team setup in Pakistan
 - [CapCut Pro Guide](https://aitoolgems.tech/guides/capcut/) — CapCut Pro PC and mobile video editing workflow
+- [Claude 3.5 Sonnet Pakistan](https://aitoolgems.tech/guides/claude-ai-pakistan/) — complete guide to Claude 3.5 Sonnet & Claude Pro in Pakistan
 - [ChatGPT Alternatives](https://aitoolgems.tech/guides/chatgpt-alternatives/) — best LLM and reasoning alternatives to ChatGPT Plus
 - [ChatGPT vs Gemini Pakistan](https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/) — task-based ChatGPT Plus and Gemini Pro comparison
 - [AI Tools for Creators](https://aitoolgems.tech/guides/creators/) — generative AI stack for YouTubers, TikTokers, and influencers
