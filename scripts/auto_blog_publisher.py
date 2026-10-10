@@ -18,12 +18,33 @@ import sys
 import json
 import re
 import datetime
+import urllib.request
+import urllib.error
 from pathlib import Path
 
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 BASE = Path(__file__).resolve().parent.parent
+
+def query_gemini_api(prompt: str, api_key: str) -> str | None:
+    """Optional dynamic generation using Google Gemini 1.5 Flash free tier."""
+    if not api_key:
+        return None
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.4, "maxOutputTokens": 3000}
+    }
+    data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            res_json = json.loads(resp.read().decode("utf-8"))
+            return res_json["candidates"][0]["content"]["parts"][0]["text"]
+    except Exception as e:
+        print(f"⚠️ Gemini API notice: {e}. Using structured engine fallback.")
+        return None
 
 ARTICLE_BLUEPRINTS = [
     {
