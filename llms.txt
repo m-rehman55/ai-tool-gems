@@ -7,6 +7,7 @@ Last reviewed: 2026-10-11
 ## Core pages
 
 - [Homepage](https://aitoolgems.tech/) — complete marketplace, software license keys, finder, ordering process, and FAQs
+- [All Tools Directory](https://aitoolgems.tech/tools/) — complete 2026 directory of verified AI software tools, subscriptions, and license keys in Pakistan
 - [Deals](https://aitoolgems.tech/deals/) — current 20-item PKR marketplace directory with license key discounts and bundle savings
 - [Price Index](https://aitoolgems.tech/prices/) — full 2026 directory of verified AI tools and subscription rates in PKR
 - [About](https://aitoolgems.tech/about.html) — marketplace identity, listing process, and independence disclosure
