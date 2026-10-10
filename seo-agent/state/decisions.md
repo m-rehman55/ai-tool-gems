@@ -87,3 +87,11 @@
 | Hreflang Canonical Alignment | Ensure hreflang links point to canonical directory format without trailing index.html | 13 guide & price pages | Revert commit |
 | Product Freshness Timestamp Refresh | Update last_verified to current audit date 2026-10-10 across all 20 products and prices index to pass 30-day freshness gate | 20 tool pages + prices/index.html | Revert commit |
 | Offer priceValidUntil Attribute | Add explicit validity date (2026-12-31) to Product schema offers to satisfy Google Rich Snippet guidelines | 20 tool pages | Revert commit |
+
+## Phase 3 Decisions (2026-10-11)
+
+| Decision | Rationale | Affected URLs | Rollback |
+|----------|-----------|---------------|----------|
+| Full Topical Guides Hub Interlinking | Present all 15 Pakistan guides in responsive 3-column grid on guides/index.html to eliminate orphan and underlinked status | guides/index.html + 15 guides | Revert commit |
+| Complete 100+ Keyword Architecture | Operationalize 107 keywords across 10 search intents without fabricated volume metrics | All site landing pages | Revert commit |
+| Production Link Graph Computation | Build automated graph traversal in internal_link_graph.py to monitor link equity and identify orphan pages | All indexable pages | Revert commit |
