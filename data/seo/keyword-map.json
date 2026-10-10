@@ -1,0 +1,399 @@
+[
+  {
+    "slug": "cursor-ai-pakistan",
+    "primary_keyword": "Cursor AI Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani software engineers, freelance developers, and full-stack creators",
+    "secondary_keywords": [
+      "Cursor AI price in Pakistan",
+      "Cursor Pro EasyPaisa",
+      "Cursor AI vs GitHub Copilot",
+      "Claude 3.5 Sonnet Cursor"
+    ],
+    "faq_opportunities": [
+      "How to pay for Cursor AI Pro in Pakistan without a credit card?",
+      "Is Cursor AI better than GitHub Copilot for Pakistani developers?",
+      "Can I use Claude 3.5 Sonnet inside Cursor AI?"
+    ],
+    "overlapping_pages": [
+      "/guides/developers/",
+      "/tools/replit/"
+    ],
+    "internal_link_targets": [
+      "/tools/replit/",
+      "/tools/lovable/",
+      "/guides/claude-ai-pakistan/",
+      "/guides/developers/"
+    ],
+    "research_sources": [
+      "https://www.cursor.com/pricing",
+      "Official Cursor documentation",
+      "Pakistani tech communities and developer forums"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/cursor-ai-pakistan/",
+    "published_date": "2026-10-10",
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "claude-ai-pakistan",
+    "primary_keyword": "Claude 3.5 Sonnet Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani developers, content writers, and AI prompt engineers",
+    "secondary_keywords": [
+      "Claude Pro price in Pakistan",
+      "Claude 3.5 Sonnet benchmarks",
+      "Buy Claude subscription PKR",
+      "Anthropic Claude Pakistan payment"
+    ],
+    "faq_opportunities": [
+      "Is Claude 3.5 Sonnet available in Pakistan?",
+      "How much does Claude Pro cost in Pakistani Rupees (PKR)?",
+      "Can I pay for Claude Pro using EasyPaisa or JazzCash?"
+    ],
+    "overlapping_pages": [
+      "/guides/chatgpt-alternatives/",
+      "/tools/chatgpt/"
+    ],
+    "internal_link_targets": [
+      "/tools/chatgpt/",
+      "/tools/gemini/",
+      "/guides/cursor-ai-pakistan/",
+      "/guides/chatgpt-alternatives/"
+    ],
+    "research_sources": [
+      "https://www.anthropic.com/pricing",
+      "Anthropic model benchmarks (LMSYS Arena)",
+      "State Bank of Pakistan digital payment notices"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/claude-ai-pakistan/",
+    "published_date": "2026-10-10",
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "ai-tools-price-pakistan",
+    "primary_keyword": "AI tools price in Pakistan",
+    "search_intent": "commercial_transactional",
+    "target_audience": "All Pakistani digital creators, students, and businesses looking for verified PKR rates",
+    "secondary_keywords": [
+      "AI subscription prices Pakistan",
+      "Cheap AI tools PKR",
+      "ChatGPT Plus price Pakistan",
+      "Canva Pro price EasyPaisa"
+    ],
+    "faq_opportunities": [
+      "Why do official dollar AI subscriptions cost more with Pakistani bank cards?",
+      "Which AI tool has the lowest monthly subscription in Pakistan?",
+      "What is the difference between private account and invitation access?"
+    ],
+    "overlapping_pages": [
+      "/prices/",
+      "/deals/",
+      "/guides/ai-tools-pricing/"
+    ],
+    "internal_link_targets": [
+      "/prices/",
+      "/deals/",
+      "/tools/chatgpt/",
+      "/tools/canva/",
+      "/policies.html#warranty"
+    ],
+    "research_sources": [
+      "AI Tool Gems verified first-party PKR price table",
+      "Pakistani banking foreign exchange and card taxation schedules"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/ai-tools-price-pakistan/",
+    "published_date": "2026-09-12",
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "chatgpt-alternatives",
+    "primary_keyword": "ChatGPT alternatives in Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani professionals and students looking for alternatives to ChatGPT Plus",
+    "secondary_keywords": [
+      "Best AI alternatives ChatGPT",
+      "Claude vs ChatGPT Pakistan",
+      "Gemini Advanced vs ChatGPT Plus",
+      "Free AI tools like ChatGPT"
+    ],
+    "faq_opportunities": [
+      "What is the best alternative to ChatGPT for coding in Pakistan?",
+      "Which ChatGPT alternative offers free access to powerful models?",
+      "Can I get Google Gemini Pro cheaper than ChatGPT Plus?"
+    ],
+    "overlapping_pages": [
+      "/guides/chatgpt-vs-gemini-pakistan/",
+      "/guides/claude-ai-pakistan/"
+    ],
+    "internal_link_targets": [
+      "/tools/chatgpt/",
+      "/tools/gemini/",
+      "/guides/claude-ai-pakistan/",
+      "/guides/chatgpt-vs-gemini-pakistan/"
+    ],
+    "research_sources": [
+      "OpenAI, Google DeepMind, and Anthropic official feature documentation",
+      "LMSYS Chatbot Arena leaderboards"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/chatgpt-alternatives/",
+    "published_date": "2026-09-15",
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "chatgpt-vs-gemini-pakistan",
+    "primary_keyword": "ChatGPT Plus vs Gemini Pro Pakistan",
+    "search_intent": "commercial_comparison",
+    "target_audience": "Pakistani researchers, freelancers, and students comparing multimodal AI models",
+    "secondary_keywords": [
+      "ChatGPT vs Gemini price Pakistan",
+      "Google Gemini Pro 18 months invitation",
+      "GPT-4o vs Gemini 1.5 Pro",
+      "Best general purpose AI Pakistan"
+    ],
+    "faq_opportunities": [
+      "Is Gemini Pro better than ChatGPT Plus for long PDF research?",
+      "How do subscription costs compare between Gemini and ChatGPT in PKR?",
+      "Can Gemini Pro analyze YouTube videos directly?"
+    ],
+    "overlapping_pages": [
+      "/tools/chatgpt/",
+      "/tools/gemini/",
+      "/guides/gemini/"
+    ],
+    "internal_link_targets": [
+      "/tools/chatgpt/",
+      "/tools/gemini/",
+      "/guides/gemini/",
+      "/guides/chatgpt-alternatives/"
+    ],
+    "research_sources": [
+      "Google Workspace and Gemini Advanced official product sheets",
+      "OpenAI ChatGPT Plus technical specifications"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/",
+    "published_date": "2026-09-11",
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "canva-vs-figma-pakistan",
+    "primary_keyword": "Canva Pro vs Figma Pro Pakistan",
+    "search_intent": "commercial_comparison",
+    "target_audience": "Pakistani graphic designers, social media managers, UI/UX designers, and students",
+    "secondary_keywords": [
+      "Canva Pro price Pakistan",
+      "Figma Pro subscription PKR",
+      "Canva vs Figma UI design",
+      "Canva Pro Edu invitation"
+    ],
+    "faq_opportunities": [
+      "Should I buy Canva Pro or Figma Pro for social media freelancing?",
+      "Can Figma replace Canva for rapid poster design?",
+      "How does Canva Pro invitation access work?"
+    ],
+    "overlapping_pages": [
+      "/tools/canva/",
+      "/tools/figma/",
+      "/guides/canva/"
+    ],
+    "internal_link_targets": [
+      "/tools/canva/",
+      "/tools/figma/",
+      "/guides/canva/",
+      "/deals/"
+    ],
+    "research_sources": [
+      "Canva Pro official licensing and Edu terms",
+      "Figma professional plan documentation"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/",
+    "published_date": "2026-09-11",
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "midjourney-alternatives-pakistan",
+    "primary_keyword": "Midjourney alternatives Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani digital artists, thumbnail designers, marketing agencies, and creative freelancers",
+    "secondary_keywords": [
+      "Leonardo AI vs Midjourney",
+      "AI image generator Pakistan",
+      "Buy Leonardo AI credits PKR",
+      "Adobe Firefly Pakistan price"
+    ],
+    "faq_opportunities": [
+      "Can I buy Midjourney with EasyPaisa in Pakistan?",
+      "Is Leonardo AI Essential a good alternative to Midjourney?",
+      "Which AI image generator is most affordable for Pakistani designers?"
+    ],
+    "overlapping_pages": [
+      "/tools/leonardo/",
+      "/tools/adobe/",
+      "/guides/creators/"
+    ],
+    "internal_link_targets": [
+      "/tools/leonardo/",
+      "/tools/canva/",
+      "/tools/adobe/",
+      "/guides/creators/"
+    ],
+    "research_sources": [
+      "Leonardo.Ai official subscription tier details",
+      "Midjourney billing requirements and credit system",
+      "Adobe Creative Cloud generative credits policy"
+    ],
+    "status": "queued",
+    "published_url": null,
+    "published_date": null,
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "best-ai-video-generators-pakistan",
+    "primary_keyword": "AI video generator Pakistan",
+    "search_intent": "commercial_comparison",
+    "target_audience": "Pakistani YouTubers, TikTok content creators, video editors, and digital agencies",
+    "secondary_keywords": [
+      "CapCut Pro price Pakistan",
+      "Google Veo 3 Ultra Pakistan",
+      "AI video tools for YouTubers PKR",
+      "ElevenLabs voice cloning video"
+    ],
+    "faq_opportunities": [
+      "How to unlock CapCut Pro features in Pakistan without international card?",
+      "What is Google Veo 3 Ultra and how do Pakistani creators use it?",
+      "Can I export 4K 60fps videos with CapCut Pro on PC?"
+    ],
+    "overlapping_pages": [
+      "/tools/capcut/",
+      "/tools/veo/",
+      "/tools/elevenlabs/",
+      "/guides/capcut/"
+    ],
+    "internal_link_targets": [
+      "/tools/capcut/",
+      "/tools/veo/",
+      "/tools/elevenlabs/",
+      "/guides/creators/"
+    ],
+    "research_sources": [
+      "CapCut Pro official pricing and feature tiers",
+      "Google DeepMind Veo documentation",
+      "ElevenLabs speech synthesis benchmarks"
+    ],
+    "status": "queued",
+    "published_url": null,
+    "published_date": null,
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "elevenlabs-voice-ai-pakistan",
+    "primary_keyword": "ElevenLabs voice AI Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani voiceover artists, faceless YouTube channel creators, and digital podcasters",
+    "secondary_keywords": [
+      "ElevenLabs price in Pakistan",
+      "AI voice cloning Urdu English",
+      "ElevenLabs characters credit PKR",
+      "Faceless YouTube automation Pakistan"
+    ],
+    "faq_opportunities": [
+      "Does ElevenLabs support realistic Urdu and Pakistani English accents?",
+      "How do character credits work in ElevenLabs plans?",
+      "Can I monetize YouTube videos made with ElevenLabs voices?"
+    ],
+    "overlapping_pages": [
+      "/tools/elevenlabs/",
+      "/guides/creators/"
+    ],
+    "internal_link_targets": [
+      "/tools/elevenlabs/",
+      "/tools/capcut/",
+      "/guides/creators/",
+      "/prices/"
+    ],
+    "research_sources": [
+      "ElevenLabs official voice cloning and commercial license guidelines",
+      "YouTube monetization policies on synthetic media"
+    ],
+    "status": "queued",
+    "published_url": null,
+    "published_date": null,
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "lovable-vs-replit-pakistan",
+    "primary_keyword": "Lovable vs Replit Pakistan",
+    "search_intent": "commercial_comparison",
+    "target_audience": "Pakistani fullstack developers, freelance agency builders, and startup founders",
+    "secondary_keywords": [
+      "Lovable Pro price Pakistan",
+      "Replit Core subscription PKR",
+      "AI fullstack app builder Pakistan",
+      "No-code AI web app builder"
+    ],
+    "faq_opportunities": [
+      "Is Lovable Pro better than Replit for building complete web apps fast?",
+      "How to pay for Replit Core or Lovable in Pakistan using EasyPaisa?",
+      "Can I export production code from Lovable to GitHub?"
+    ],
+    "overlapping_pages": [
+      "/tools/lovable/",
+      "/tools/replit/",
+      "/guides/developers/"
+    ],
+    "internal_link_targets": [
+      "/tools/lovable/",
+      "/tools/replit/",
+      "/guides/cursor-ai-pakistan/",
+      "/guides/developers/"
+    ],
+    "research_sources": [
+      "Lovable.dev platform documentation and pricing",
+      "Replit Core platform features and cloud hosting tiers"
+    ],
+    "status": "queued",
+    "published_url": null,
+    "published_date": null,
+    "last_updated": "2026-10-11"
+  },
+  {
+    "slug": "n8n-automation-pakistan",
+    "primary_keyword": "n8n automation Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani digital marketing agencies, e-commerce stores, and automation engineers",
+    "secondary_keywords": [
+      "n8n Starter price Pakistan",
+      "n8n vs Zapier Pakistan",
+      "WhatsApp workflow automation n8n",
+      "AI agent automation for small business"
+    ],
+    "faq_opportunities": [
+      "Why is n8n more cost-effective than Zapier for Pakistani agencies?",
+      "Can n8n connect with WhatsApp API and Google Sheets?",
+      "How to purchase an n8n Starter cloud subscription in PKR?"
+    ],
+    "overlapping_pages": [
+      "/tools/n8n/",
+      "/guides/businesses/"
+    ],
+    "internal_link_targets": [
+      "/tools/n8n/",
+      "/tools/chatgpt/",
+      "/guides/businesses/",
+      "/guides/productivity/"
+    ],
+    "research_sources": [
+      "n8n.io official cloud pricing and self-hosted documentation",
+      "Local agency automation case studies"
+    ],
+    "status": "queued",
+    "published_url": null,
+    "published_date": null,
+    "last_updated": "2026-10-11"
+  }
+]

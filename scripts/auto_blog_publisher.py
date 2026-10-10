@@ -2,15 +2,16 @@
 """
 AIToolGems Autonomous Daily SEO Blog & Guide Publisher
 ------------------------------------------------------
-Fully automated, free-first, Pakistan-focused content engine that:
-1. Discovers untapped search opportunities & under-covered tools.
-2. Constructs comprehensive 1,500-2,000 word semantic SEO articles.
-3. Automatically embeds Article, Breadcrumb, and FAQPage JSON-LD schemas.
-4. Performs anti-stuffing keyword density audits (safe 0.5% - 2.0% bounds).
-5. Updates sitemap.xml, llms.txt, and triggers instant IndexNow pings.
-6. Operates in two modes:
-   - PR Mode / Dry Run: Proposes changes safely for human review.
-   - Publish Mode: Writes directly to /guides/<slug>/ and syncs sitemap.
+Production-ready, safe, Pakistan-focused content automation engine that:
+1. Discovers approved topics from data/seo/content-queue.json.
+2. Enforces anti-cannibalization checks against data/seo/keyword-map.json.
+3. Incorporates contextual links from data/seo/internal-link-map.json.
+4. Generates 1,500+ word semantic SEO articles with Article, Breadcrumb, FAQPage schemas.
+5. Validates word count, keyword density (0.5%-2.0%), H1, meta desc, canonical, and links.
+6. Updates sitemap.xml, llms.txt, guides/index.html, and keyword status.
+7. Operates in two modes:
+   - Dry Run (default): Generates, audits, and previews without committing.
+   - Publish Mode (--publish): Writes file, syncs dependencies, triggers IndexNow.
 """
 
 import os
@@ -26,6 +27,11 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 BASE = Path(__file__).resolve().parent.parent
+
+# Import validator
+sys.path.insert(0, str(BASE / "scripts"))
+from validate_content import validate_article_file, check_cannibalization
+
 
 def query_gemini_api(prompt: str, api_key: str) -> str | None:
     """Optional dynamic generation using Google Gemini 1.5 Flash free tier."""
@@ -46,64 +52,31 @@ def query_gemini_api(prompt: str, api_key: str) -> str | None:
         print(f"⚠️ Gemini API notice: {e}. Using structured engine fallback.")
         return None
 
-ARTICLE_BLUEPRINTS = [
-    {
-        "slug": "cursor-ai-pakistan",
-        "title": "Cursor AI in Pakistan: Pricing, License & Developer Guide (2026)",
-        "meta_desc": "Complete Cursor AI guide for Pakistani developers. Compare Pro pricing in PKR, bypass card declines with EasyPaisa, and compare with Replit and Copilot.",
-        "tool_key": "replit",
-        "primary_keyword": "Cursor AI Pakistan",
-        "secondary_keywords": ["Cursor AI price in Pakistan", "Cursor Pro EasyPaisa", "Cursor AI vs GitHub Copilot", "Claude 3.5 Sonnet Cursor"],
-        "target_audience": "Pakistani software engineers, freelance developers, and full-stack creators",
-        "related_tools": [("replit", "Replit Core"), ("lovable", "Lovable Pro"), ("chatgpt", "ChatGPT Plus"), ("gemini", "Google Gemini Pro"), ("windows", "Windows 11 Pro")]
-    },
-    {
-        "slug": "midjourney-alternatives-pakistan",
-        "title": "Best Midjourney Alternatives in Pakistan: Free & Paid (2026)",
-        "meta_desc": "Compare top Midjourney alternatives in Pakistan with PKR pricing. Review Leonardo AI, Adobe Firefly & DALL-E with EasyPaisa and JazzCash payment.",
-        "tool_key": "leonardo",
-        "primary_keyword": "Midjourney alternatives Pakistan",
-        "secondary_keywords": ["Leonardo AI vs Midjourney", "AI image generator Pakistan", "buy Leonardo AI credits PKR", "Midjourney price Pakistan"],
-        "target_audience": "Pakistani digital artists, graphic designers, marketing agencies, and content creators",
-        "related_tools": [("leonardo", "Leonardo AI Essential"), ("canva", "Canva Pro Edu"), ("adobe", "Adobe Creative Cloud"), ("figma", "Figma Pro")]
-    },
-    {
-        "slug": "best-ai-video-generators-pakistan",
-        "title": "Top AI Video Generators in Pakistan: CapCut, Veo & Runway (2026)",
-        "meta_desc": "Best AI video generators in Pakistan compared for 2026. Explore CapCut Pro VIP, Google Veo 3 Ultra & ElevenLabs with PKR pricing and instant delivery.",
-        "tool_key": "capcut",
-        "primary_keyword": "AI video generator Pakistan",
-        "secondary_keywords": ["CapCut Pro price Pakistan", "Google Veo 3 Ultra Pakistan", "AI video tools for YouTubers", "ElevenLabs voice cloning PKR"],
-        "target_audience": "Pakistani YouTubers, TikTok creators, social media video editors, and digital agencies",
-        "related_tools": [("capcut", "CapCut Pro"), ("veo", "Veo 3 Ultra"), ("elevenlabs", "ElevenLabs Voice AI"), ("canva", "Canva Pro Edu")]
-    }
-]
 
-def check_keyword_density(html_body: str, primary_kw: str) -> dict:
-    """Audits content to guarantee natural keyword density and eliminate keyword stuffing."""
-    plain_text = re.sub(r'<[^>]+>', ' ', html_body).lower()
-    words = re.findall(r'\b[a-z0-9_-]+\b', plain_text)
-    total_words = len(words)
-    
-    kw_occurrences = len(re.findall(re.escape(primary_kw.lower()), plain_text))
-    density = (kw_occurrences / max(total_words, 1)) * 100
-    
-    # Check max frequency bounds (never repeat any substantive phrase > 25 times)
-    excessive_terms = []
-    freq = {}
-    for w in words:
-        if len(w) > 4 and w not in ["pakistan", "subscription", "delivery", "payment", "easypaisa", "jazzcash", "developer", "developers"]:
-            freq[w] = freq.get(w, 0) + 1
-            if freq[w] > 25 and w not in excessive_terms:
-                excessive_terms.append(w)
-                
-    return {
-        "total_words": total_words,
-        "kw_count": kw_occurrences,
-        "density_pct": round(density, 2),
-        "is_safe": 0.5 <= density <= 2.2 and len(excessive_terms) == 0 and total_words >= 1400,
-        "excessive_terms": excessive_terms
-    }
+def load_queue_candidate() -> dict | None:
+    """Load next eligible, approved topic from content queue."""
+    queue_file = BASE / "data" / "seo" / "content-queue.json"
+    published_slugs = {p.name for p in (BASE / "guides").glob("*/index.html")}
+
+    if queue_file.exists():
+        queue_data = json.loads(queue_file.read_text(encoding="utf-8"))
+        for item in queue_data:
+            if item.get("approved_for_publishing", True) and item["slug"] not in published_slugs:
+                # Format to blueprint format
+                related = [(t["slug"], t["name"]) for t in item.get("related_tools", [])]
+                return {
+                    "slug": item["slug"],
+                    "title": item["title"],
+                    "meta_desc": item["meta_description"],
+                    "primary_keyword": item["primary_keyword"],
+                    "secondary_keywords": item.get("secondary_keywords", []),
+                    "target_audience": item.get("target_audience", "Pakistani professionals"),
+                    "tool_key": item.get("primary_tool", "chatgpt"),
+                    "related_tools": related
+                }
+
+    return None
+
 
 def render_article_html(bp: dict) -> str:
     """Generates a complete 1,500+ word semantic HTML guide with full JSON-LD schema."""
@@ -113,9 +86,8 @@ def render_article_html(bp: dict) -> str:
     pk = bp["primary_keyword"]
     now_date = datetime.date.today().isoformat()
     
-    related_links_html = "\n".join([f'          <li><a href="../../tools/{k}/">{name}</a></li>' for k, name in bp["related_tools"]])
+    related_links_html = "\n".join([f'          <li><a href="../../tools/{k}/">{name} in Pakistan</a></li>' for k, name in bp["related_tools"]])
 
-    # Build comprehensive 1,500+ word article structure
     html = f"""<!doctype html><html lang="en-PK"><head>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style"
   rel="preconnect" href="https://www.google.com" crossorigin>
@@ -189,14 +161,44 @@ def render_article_html(bp: dict) -> str:
         {{
           "@type": "ListItem",
           "position": 2,
-          "name": "Guides",
+          "name": "Guides & Blog",
           "item": "https://aitoolgems.tech/guides/"
         }},
         {{
           "@type": "ListItem",
           "position": 3,
-          "name": "{pk}",
+          "name": "{title}",
           "item": "https://aitoolgems.tech/guides/{slug}/"
+        }}
+      ],
+      "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
+    }},
+    {{
+      "@type": "FAQPage",
+      "mainEntity": [
+        {{
+          "@type": "Question",
+          "name": "What is the verified price of {pk} subscriptions in Pakistan?",
+          "acceptedAnswer": {{
+            "@type": "Answer",
+            "text": "Official international plans charged in USD incur forex margins and 10% to 15% card withholding taxes. AI Tool Gems provides verified rates directly in PKR with local payment."
+          }}
+        }},
+        {{
+          "@type": "Question",
+          "name": "Can I pay for {pk} using EasyPaisa or JazzCash?",
+          "acceptedAnswer": {{
+            "@type": "Answer",
+            "text": "Yes! AI Tool Gems enables instant local activation via EasyPaisa, JazzCash, SadaPay, NayaPay, and bank transfer without international credit card declines."
+          }}
+        }},
+        {{
+          "@type": "Question",
+          "name": "How fast is delivery and order confirmation in Pakistan?",
+          "acceptedAnswer": {{
+            "@type": "Answer",
+            "text": "All accounts, invitation seats, and license keys are delivered within 15 to 30 minutes via WhatsApp, supported by a 7-day replacement warranty."
+          }}
         }}
       ],
       "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
@@ -205,185 +207,172 @@ def render_article_html(bp: dict) -> str:
   "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
 }}
 </script>
-  <meta name="twitter:title" content="{title}">
-  <meta name="twitter:description" content="{desc}">
-  <meta name="twitter:image" content="https://aitoolgems.tech/assets/brand-logo-light.webp">
-<script type="application/ld+json">
-{{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {{
-      "@type": "Question",
-      "name": "What is the real cost of AI software subscriptions in Pakistan?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "Official international prices charged in USD incur foreign exchange fees and mandatory 10% to 15% withholding taxes on Pakistani bank cards. AI Tool Gems provides verified subscriptions directly in flat Pakistani Rupees (PKR) with local payment via EasyPaisa and JazzCash."
-      }}
-    }},
-    {{
-      "@type": "Question",
-      "name": "Can I pay for modern AI subscriptions using EasyPaisa or JazzCash?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "Yes! While overseas platforms require international credit cards, AI Tool Gems enables instant activation in Pakistan using EasyPaisa, JazzCash, SadaPay, NayaPay, or direct bank transfer."
-      }}
-    }},
-    {{
-      "@type": "Question",
-      "name": "How fast is delivery and order activation in Pakistan?",
-      "acceptedAnswer": {{
-        "@type": "Answer",
-        "text": "All software licenses, account invitations, and private profiles are verified and delivered within 15 to 30 minutes via WhatsApp, backed by an active 7-day replacement warranty."
-      }}
-    }}
-  ],
-  "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
-}}
-</script>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../../"><img src="../../assets/brand-logo-light.webp" width="48" height="48" alt="AI Tool Gems logo" loading="lazy"><span>AI TOOL <b>GEMS</b><small>PAKISTAN</small></span></a>
-    <nav aria-label="Main navigation"><a href="../../#products">All tools</a><a href="../../#categories">Categories</a><a href="../../guides/">Guides</a><a href="../../prices/">Price Index</a><a href="../../about.html">About</a><a href="../../contact.html">Contact</a></nav>
+    <a class="brand" href="../../">
+      <img src="../../assets/brand-logo-light.webp" width="48" height="48" alt="AI Tool Gems logo" loading="lazy">
+      <span>AI TOOL <b>GEMS</b><small>PAKISTAN</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="../../#products">All tools</a>
+      <a href="../../deals/">Deals</a>
+      <a href="../">Guides &amp; Blog</a>
+      <a href="../../#categories">Categories</a>
+      <a href="../../about.html">About</a>
+      <a href="../../contact.html">Contact</a>
+    </nav>
   </header>
+
   <main>
-    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../">Guides</a><span>/</span><span>{pk}</span></nav>
-    <article class="guide-layout">
-      <header class="guide-header">
-        <p class="eyebrow">PAKISTAN AI TECHNOLOGY &amp; WORKFLOW REPORT</p>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span>/</span>
+      <a href="../">Guides &amp; Blog</a><span>/</span>
+      <span>{title}</span>
+    </nav>
+
+    <article class="article-content">
+      <header class="article-header">
+        <p class="eyebrow">EDITORIAL RESEARCH &bull; PAKISTAN MARKET</p>
         <h1>{title}</h1>
-        <p class="lead">Navigating modern generative AI tools and subscription pricing in Pakistan requires balancing international exchange rates, local bank card restrictions, and workflow demands. This comprehensive analysis breaks down verified costs, local payment methods, and benchmark performance for {bp["target_audience"]}.</p>
         <div class="byline">
-          <span>Published by AI Tool Gems Editorial Team</span>
-          <span>Verified: {now_date}</span>
-          <span>Target Market: Pakistan (PKR Exclusive)</span>
+          <span>By AI Tool Gems Editorial Team</span>
+          <span>Updated {now_date}</span>
+          <span>Verified Pakistan Pricing (PKR)</span>
         </div>
       </header>
 
-      <section class="quick-answer-card">
-        <h2>Quick answer: How to access and evaluate {pk}</h2>
-        <p><strong>Direct Summary:</strong> For professionals and engineering teams in Pakistan, utilizing modern generative development workflows with <strong>{pk}</strong> provides significant speed advantages. However, official overseas checkout flows frequently fail due to banking restrictions, card declines, and foreign exchange taxes. By understanding actual conversion rates and combining local marketplace options starting from Rs. 800 to Rs. 3,200 with instant WhatsApp delivery (15–30 minutes) and 7-day replacement warranties, Pakistani teams can eliminate billing friction using EasyPaisa, JazzCash, or SadaPay.</p>
+      <section class="quick-summary">
+        <h2>Quick Answer &amp; Overview</h2>
+        <p>Finding affordable, reliable access to <strong>{pk}</strong> has become a crucial challenge for {bp["target_audience"]}. International billing in USD frequently leads to high forex conversion fees, bank withholding taxes, or outright transaction declines on Pakistani debit cards. This independent guide breaks down actual PKR costs, feature benchmarks, local payment methods (EasyPaisa, JazzCash, SadaPay), and how to verify subscription legitimacy before spending money.</p>
+        <p>In Pakistan's fast-growing digital economy, freelancers working on Upwork and Fiverr, content creators scaling YouTube channels, and digital agencies need powerful generative tools without overpaying in foreign exchange fees. Our analysis examines the top alternatives, prompt accuracy, commercial usage rights, and straightforward ordering steps.</p>
       </section>
 
-      <section class="guide-section">
-        <h2>Comparative Value Matrix for Pakistani Workflows</h2>
-        <p>Before purchasing software subscriptions, analyze the differences in official vendor costs versus local Pakistani accessibility:</p>
+      <section class="content-section">
+        <h2>Understanding the Real Cost in Pakistan (USD vs PKR)</h2>
+        <p>When purchasing foreign software directly from vendor websites, Pakistani buyers face several hidden costs that significantly inflate the final expense:</p>
+        <ul>
+          <li><strong>Foreign Currency Transaction Fees:</strong> Most Pakistani commercial banks charge between 3.5% and 5.0% for foreign currency conversions on every overseas billing cycle.</li>
+          <li><strong>Mandatory Withholding Tax:</strong> Under Federal Board of Revenue regulations, transactions on international merchants incur withholding taxes of up to 10% for active tax filers and up to 15% for non-filers.</li>
+          <li><strong>Frequent Card Declines:</strong> Many domestic digital wallets and basic debit cards lack active international e-commerce permissions, blocking recurring monthly software subscriptions.</li>
+        </ul>
+        <p>By leveraging AI Tool Gems, local professionals bypass cross-border friction entirely. All plans are listed in transparent Pakistani Rupees (PKR) and backed by guaranteed delivery within 15 to 30 minutes via WhatsApp.</p>
+      </section>
+
+      <section class="content-section">
+        <h2>Detailed Feature &amp; Performance Evaluation</h2>
+        <p>Evaluating tools in this category requires looking past marketing claims to examine practical output quality, rendering speed, and cost efficiency:</p>
+        <ol>
+          <li><strong>Prompt Comprehension &amp; Detail Fidelity:</strong> How accurately the engine renders intricate styling, lighting, and anatomy without distorting complex prompt instructions.</li>
+          <li><strong>Rendering Speed &amp; Generation Credits:</strong> Turnaround time per request and the volume of generations available within standard monthly allowances.</li>
+          <li><strong>Commercial Licensing Rights:</strong> Clear terms permitting client deliverables for Pakistani freelance projects across international marketplaces.</li>
+          <li><strong>Platform Interface &amp; Workflow Simplicity:</strong> Clean browser-based or desktop software avoiding complex technical setup or difficult local installation hurdles.</li>
+        </ol>
+      </section>
+
+      <section class="content-section">
+        <h2>Practical Use Cases for Pakistani Creators &amp; Agencies</h2>
+        <p>Different workflows require tailored tool selections across local professional sectors:</p>
+        <ul>
+          <li><strong>Freelance Designers on Fiverr &amp; Upwork:</strong> Delivering client logos, concept art, website banners, and marketing mockups on tight turnaround schedules.</li>
+          <li><strong>YouTube &amp; Social Media Video Editors:</strong> Designing high-CTR video thumbnails, background art, and social media carousels that drive strong audience engagement.</li>
+          <li><strong>E-commerce &amp; Digital Marketing Agencies:</strong> Generating product showcase scenes, social ad creatives, and promotional material for local Pakistani brands.</li>
+          <li><strong>Students &amp; Academic Researchers:</strong> Preparing visually engaging presentation decks and design portfolios on student-friendly PKR budgets.</li>
+        </ul>
+      </section>
+
+      <section class="content-section">
+        <h2>Pre-Payment Verification &amp; Safety Checklist</h2>
+        <p>Before purchasing any digital subscription in Pakistan, always review these four safety benchmarks:</p>
+        <ol>
+          <li><strong>Verify Access Type:</strong> Distinguish between Private Account credentials (your own profile), Team Invitation access, and official License Keys.</li>
+          <li><strong>Inspect Warranty Coverage:</strong> Never buy digital access without an explicit, documented replacement warranty (e.g., 7-day or 30-day warranty).</li>
+          <li><strong>Confirm WhatsApp Availability:</strong> Ensure active customer support is available to assist with onboarding and immediate access questions.</li>
+          <li><strong>Recheck PKR Pricing:</strong> Ensure no hidden foreign exchange markups are applied at the time of checkout.</li>
+        </ol>
+      </section>
+
+      <section class="content-section">
+        <h2>How to Order via EasyPaisa and JazzCash</h2>
+        <p>Activating your subscription takes less than 30 minutes using our streamlined WhatsApp order process:</p>
+        <ol>
+          <li>Explore the verified marketplace listing on AI Tool Gems.</li>
+          <li>Click 'Order on WhatsApp' to connect directly with our support team.</li>
+          <li>Confirm availability, plan type (Private, Invitation, or License Key), and exact PKR total.</li>
+          <li>Send payment via EasyPaisa, JazzCash, SadaPay, NayaPay, or direct bank transfer.</li>
+          <li>Receive credentials and active warranty confirmation directly on WhatsApp.</li>
+        </ol>
+      </section>
+
+      <section class="content-section">
+        <h2>Comparison Matrix: Features, Access &amp; Pakistani PKR Rates</h2>
+        <p>To help you choose the best match for your specific workload, compare the key factors below:</p>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Platform / Tool</th>
-                <th>Official USD Plan</th>
-                <th>Estimated Bank Cost in PKR</th>
-                <th>AI Tool Gems Rate</th>
-                <th>Delivery Speed</th>
-                <th>Payment Methods</th>
+                <th>Tool / Solution</th>
+                <th>Primary Strength</th>
+                <th>Access Type</th>
+                <th>Local Payment Support</th>
+                <th>Warranty Coverage</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>ChatGPT Plus (GPT-4o)</strong></td>
-                <td>$20.00 / mo</td>
-                <td>~Rs. 6,200 – 6,600</td>
-                <td><strong>Rs. 2,300 / mo</strong></td>
-                <td>15–30 mins</td>
-                <td>EasyPaisa, JazzCash, SadaPay</td>
-              </tr>
-              <tr>
-                <td><strong>Google Gemini Pro</strong></td>
-                <td>$19.99 / mo</td>
-                <td>~Rs. 6,100 – 6,500</td>
-                <td><strong>Rs. 800 / 18 Mo</strong></td>
-                <td>15–30 mins</td>
-                <td>EasyPaisa, JazzCash, SadaPay</td>
-              </tr>
-              <tr>
-                <td><strong>Replit Core Cloud IDE</strong></td>
-                <td>$25.00 / mo</td>
-                <td>~Rs. 7,800 – 8,200</td>
-                <td><strong>Rs. 3,200 / mo</strong></td>
-                <td>15–30 mins</td>
-                <td>EasyPaisa, JazzCash, SadaPay</td>
-              </tr>
-              <tr>
                 <td><strong>Leonardo AI Essential</strong></td>
-                <td>$12.00 / mo</td>
-                <td>~Rs. 3,800 – 4,200</td>
-                <td><strong>Rs. 1,900 / mo</strong></td>
-                <td>15–30 mins</td>
+                <td>High-fidelity photorealism &amp; prompt fidelity</td>
+                <td>Private Account</td>
+                <td>EasyPaisa, JazzCash, Bank Transfer</td>
+                <td>7-Day Replacement Warranty</td>
+              </tr>
+              <tr>
+                <td><strong>Canva Pro Edu</strong></td>
+                <td>Social graphics, templates &amp; magic studio</td>
+                <td>Invitation Seat</td>
                 <td>EasyPaisa, JazzCash, SadaPay</td>
+                <td>30-Day Replacement Warranty</td>
+              </tr>
+              <tr>
+                <td><strong>Adobe Creative Cloud</strong></td>
+                <td>Full industry suite &amp; Firefly generation</td>
+                <td>Invitation / Private</td>
+                <td>EasyPaisa, JazzCash, Bank Transfer</td>
+                <td>Active Period Warranty</td>
+              </tr>
+              <tr>
+                <td><strong>CapCut Pro VIP</strong></td>
+                <td>Auto-captions, 4K 60fps export &amp; video effects</td>
+                <td>Private Profile</td>
+                <td>EasyPaisa, JazzCash, SadaPay</td>
+                <td>7-Day Replacement Warranty</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <section class="guide-section">
-        <h2>Overcoming Pakistan Payment Barriers for AI Subscriptions</h2>
-        <p>Freelancers, software engineers, and digital creative agencies across Karachi, Lahore, Islamabad, Faisalabad, and Rawalpindi frequently encounter severe hurdles when attempting to purchase overseas software licenses:</p>
-        <ul>
-          <li><strong>Foreign Transaction Taxes:</strong> Under Section 236Y of the Pakistan Income Tax Ordinance, advance withholding taxes between 5% and 15% are deducted automatically from Pakistani debit and credit cards on international transactions.</li>
-          <li><strong>Recurring Subscription Declines:</strong> Local financial institutions like Meezan, HBL, UBL, and Bank Alfalah often decline automated foreign recurring merchant subscriptions due to State Bank of Pakistan compliance rules.</li>
-          <li><strong>Absence of PayPal:</strong> Because PayPal does not operate merchant services in Pakistan, local teams cannot easily manage cross-border recurring billing profiles.</li>
-          <li><strong>Domestic Currency Solutions:</strong> AI Tool Gems overcomes this barrier by offering transparent, upfront pricing in Pakistani Rupees (PKR) with instant activation via EasyPaisa, JazzCash, SadaPay, NayaPay, and direct bank IBFT.</li>
-        </ul>
+      <section class="content-section">
+        <h2>Final Recommendation for Pakistani Buyers</h2>
+        <p>If you are creating digital assets for international clients or building a local brand in Pakistan, avoiding high bank deductions and unverified seller accounts is essential. Review your monthly generation requirements, verify the access model that fits your team, and confirm delivery timelines with our support team on WhatsApp before ordering.</p>
       </section>
 
-      <section class="guide-section">
-        <h2>Architecture and Practical Capabilities of {pk}</h2>
-        <p>Understanding how <strong>{pk}</strong> integrates into real-world production environments requires examining its core operational architecture:</p>
-        <p>Unlike traditional static developer utilities, modern AI systems parse contextual workspace graphs. They ingest repository layouts, semantic function definitions, and package dependencies in real time. This ensures that generated code snippets, documentation, or design drafts align directly with existing project patterns rather than generating isolated code fragments.</p>
-        <p>Furthermore, model agility is essential. Rather than being constrained to a single model provider, advanced workflows allow Pakistani practitioners to alternate between Claude 3.5 Sonnet for deep architectural refactoring, GPT-4o for rapid multi-turn explanations, and lightweight models for high-speed inline completions. This reduces token waste and accelerates project delivery.</p>
-      </section>
-
-      <section class="guide-section">
-        <h2>Step-by-Step Implementation Guide for Pakistani Teams</h2>
-        <p>Setting up your workflow with <strong>{pk}</strong> without financial friction follows a structured, verified pathway:</p>
-        <ol>
-          <li><strong>Evaluate Project Needs:</strong> Determine whether your primary demand is local cloud hosting, front-end visual scaffolding, or backend API generation.</li>
-          <li><strong>Select Complementary Tooling:</strong> Choose foundational platforms from AI Tool Gems, such as <a href="../../tools/replit/">Replit Core</a> for cloud servers or <a href="../../tools/chatgpt/">ChatGPT Plus</a> for multi-modal reasoning.</li>
-          <li><strong>Confirm Availability on WhatsApp:</strong> Use the dedicated WhatsApp link to confirm instant seat delivery and current PKR pricing.</li>
-          <li><strong>Complete Local Payment:</strong> Transfer funds securely through EasyPaisa, JazzCash, or SadaPay without foreign exchange surcharges.</li>
-          <li><strong>Receive Verified Activation:</strong> Within 15 to 30 minutes, your team receives official invitation links or login access backed by a 7-day replacement warranty.</li>
-        </ol>
-      </section>
-
-      <section class="guide-section">
-        <h2>Recommended Professional Workflow Integration</h2>
-        <p>To maximize return on investment, successful Pakistani creators and businesses combine complementary tools rather than relying on a single vendor:</p>
-        <ul>
-          <li><strong>Code &amp; Cloud Development:</strong> Combine cloud environments like <a href="../../tools/replit/">Replit Core</a> with local code editors and full-stack builders like <a href="../../tools/lovable/">Lovable Pro</a>.</li>
-          <li><strong>Creative &amp; Visual Design:</strong> Pair <a href="../../tools/canva/">Canva Pro</a> with <a href="../../tools/figma/">Figma Pro</a> and generate custom visuals using <a href="../../tools/leonardo/">Leonardo AI</a>.</li>
-          <li><strong>Video &amp; Audio Production:</strong> Edit high-engagement short-form videos in <a href="../../tools/capcut/">CapCut Pro</a> and generate human-grade AI voiceovers using <a href="../../tools/elevenlabs/">ElevenLabs</a>.</li>
-          <li><strong>System OS &amp; Security:</strong> Ensure team workstations run on genuine <a href="../../tools/windows/">Windows 11 Pro</a> licenses and protect remote development traffic via <a href="../../tools/nordvpn/">NordVPN</a>.</li>
-        </ul>
-      </section>
-
-      <section class="guide-section">
-        <h2>Long-Term Cost Optimization Strategies for Pakistani Creators</h2>
-        <p>For independent freelancers and boutique agencies operating in Pakistan, software overhead can quickly accumulate. Managing these expenses sustainably requires tactical discipline:</p>
-        <p>First, audit team seats every quarter. Team members often transition between active client projects; keeping inactive shared accounts active unnecessarily drains agency margins. Second, take advantage of bundled offerings and verified invitation tiers on AI Tool Gems to reduce recurring costs by up to 50% to 70% compared to direct USD subscriptions. Finally, always verify replacement warranty terms before purchase to prevent unexpected account lockouts during critical delivery deadlines.</p>
-      </section>
-
-      <section class="guide-section">
-        <h2>Explore Related AI Guides and Verified Tools</h2>
-        <p>Learn more about optimizing your digital stack in Pakistan:</p>
+      <section class="content-section">
+        <h2>Related AI Tools &amp; Local Guides</h2>
+        <p>Explore complementary tools in the Pakistani digital creator stack:</p>
         <ul>
 {related_links_html}
-          <li><a href="../../prices/">AI Tools Price Index Pakistan (PKR)</a></li>
-          <li><a href="../../deals/">AI Tool Deals &amp; Discounts in Pakistan</a></li>
-          <li><a href="../claude-ai-pakistan/">Claude 3.5 Sonnet Pakistan Guide</a></li>
-          <li><a href="../chatgpt-alternatives/">Best ChatGPT Alternatives in Pakistan</a></li>
-          <li><a href="../developers/">AI Tools for Pakistani Developers</a></li>
+          <li><a href="../ai-tools-price-pakistan/">AI Tools Price Guide for Pakistan (PKR Table)</a></li>
+          <li><a href="../../deals/">Current Verified Deals &amp; Discounts</a></li>
+          <li><a href="../../policies.html#warranty">Verified 7-Day Warranty Policy</a></li>
         </ul>
       </section>
 
       <section class="faq-section">
         <h2>Frequently Asked Questions</h2>
         <div class="faq-item">
-          <h3>What is the real cost of AI tools and subscriptions in Pakistan?</h3>
-          <p>Official international prices charged in USD incur foreign exchange fees and mandatory 10% to 15% withholding taxes on Pakistani bank cards. AI Tool Gems provides verified subscriptions directly in flat Pakistani Rupees (PKR) with local payment via EasyPaisa and JazzCash.</p>
+          <h3>What is the real cost of AI subscriptions in Pakistan?</h3>
+          <p>Official USD prices incur bank exchange fees and withholding taxes on Pakistani cards. AI Tool Gems provides verified subscriptions directly in flat Pakistani Rupees (PKR) with local payment via EasyPaisa and JazzCash.</p>
         </div>
         <div class="faq-item">
           <h3>Can I pay for modern AI subscriptions using EasyPaisa or JazzCash?</h3>
@@ -396,6 +385,7 @@ def render_article_html(bp: dict) -> str:
       </section>
     </article>
   </main>
+
   <footer>
     <span>&copy; 2026 AI Tool Gems Pakistan</span>
     <span>Independent digital marketplace &middot; All third-party trademarks belong to their respective owners.</span>
@@ -405,65 +395,108 @@ def render_article_html(bp: dict) -> str:
 </html>"""
     return html
 
+
 def run_publisher(dry_run: bool = True):
     print("=================================================================")
     print("🤖 AIToolGems Autonomous Daily Blog & Guide Publisher")
     print("=================================================================")
     print(f"Mode: {'DRY RUN (Preview Only)' if dry_run else 'LIVE PUBLISH'}")
-    
-    # 1. Discover next eligible topic
-    published_guides = [p.name for p in (BASE / "guides").glob("*/index.html")]
-    candidate = None
-    for bp in ARTICLE_BLUEPRINTS:
-        if bp["slug"] not in published_guides:
-            candidate = bp
-            break
-            
+
+    candidate = load_queue_candidate()
     if not candidate:
         print("ℹ️ All candidate topics from current queue are already published.")
         return
-        
+
     print(f"🎯 Selected Topic: {candidate['title']}")
     print(f"📂 Target Slug: /guides/{candidate['slug']}/")
     print(f"🔑 Primary Keyword: {candidate['primary_keyword']}")
-    
+
+    # 1. Anti-cannibalization check
+    can_ok, can_msg = check_cannibalization(candidate["slug"], candidate["primary_keyword"])
+    if not can_ok:
+        print(f"❌ Cannibalization check failed: {can_msg}. Aborting.")
+        return
+    print(f"✅ Anti-cannibalization check: {can_msg}")
+
     # 2. Render content
     html_content = render_article_html(candidate)
-    
-    # 3. Quality & Anti-stuffing Audit
-    audit = check_keyword_density(html_content, candidate["primary_keyword"])
-    print(f"\n📊 Content Quality Audit:")
-    print(f"  • Word Count: {audit['total_words']} words")
-    print(f"  • Primary Keyword Count: {audit['kw_count']}")
-    print(f"  • Keyword Density: {audit['density_pct']}% (Target: 0.5% - 2.0%)")
-    print(f"  • Safe Anti-Stuffing Check: {'PASSED' if audit['is_safe'] else 'NEEDS ADJUSTMENT'}")
-    
-    if not audit["is_safe"]:
-        print("❌ Article failed anti-stuffing quality checks. Aborting.")
+
+    # 3. Write temp file and run full validation
+    temp_dir = BASE / "guides" / candidate["slug"]
+    temp_dir.mkdir(parents=True, exist_ok=True)
+    temp_file = temp_dir / "index.html"
+    temp_file.write_text(html_content, encoding="utf-8")
+
+    is_valid, issues = validate_article_file(temp_file, candidate["slug"])
+    if not is_valid:
+        print(f"❌ Pre-publish validation failed with {len(issues)} issue(s):")
+        for iss in issues:
+            print(f"  • {iss}")
+        if dry_run:
+            temp_file.unlink(missing_ok=True)
+            if not any(temp_dir.iterdir()):
+                temp_dir.rmdir()
         return
 
-    # 4. If live, write file and sync dependencies
-    if not dry_run:
-        target_dir = BASE / "guides" / candidate["slug"]
-        target_dir.mkdir(parents=True, exist_ok=True)
-        target_file = target_dir / "index.html"
-        target_file.write_text(html_content, encoding="utf-8")
-        print(f"\n✅ Published article to: {target_file}")
-        
-        # Sync sitemap
-        sitemap_file = BASE / "sitemap.xml"
-        sitemap_txt = sitemap_file.read_text(encoding="utf-8")
-        new_loc = f"https://aitoolgems.tech/guides/{candidate['slug']}/"
-        if new_loc not in sitemap_txt:
-            today = datetime.date.today().isoformat()
-            new_entry = f"  <url><loc>{new_loc}</loc><lastmod>{today}</lastmod></url>\n</urlset>"
-            sitemap_txt = sitemap_txt.replace("</urlset>", new_entry)
-            sitemap_file.write_text(sitemap_txt, encoding="utf-8")
-            print(f"✅ Added {new_loc} to sitemap.xml")
-            
-        print("\n🚀 Ready for IndexNow instant submission.")
-    else:
-        print("\n✨ Dry run complete. Content generated and validated successfully.")
+    print("✅ Pre-publish content, SEO, link, and integrity checks PASSED.")
+
+    # 4. If dry run, clean up temp file and report
+    if dry_run:
+        temp_file.unlink(missing_ok=True)
+        if not any(temp_dir.iterdir()):
+            temp_dir.rmdir()
+        print("\n✨ Dry run complete. Validated topic is queued and ready for publication.")
+        return
+
+    # 5. Live publish: sync sitemap, llms.txt, guides/index.html, keyword-map.json
+    print(f"\n🚀 Finalizing publication for: {temp_file}")
+
+    # Update sitemap.xml
+    sitemap_file = BASE / "sitemap.xml"
+    sitemap_txt = sitemap_file.read_text(encoding="utf-8")
+    new_loc = f"https://aitoolgems.tech/guides/{candidate['slug']}/"
+    if new_loc not in sitemap_txt:
+        today = datetime.date.today().isoformat()
+        new_entry = f"  <url><loc>{new_loc}</loc><lastmod>{today}</lastmod></url>\n</urlset>"
+        sitemap_txt = sitemap_txt.replace("</urlset>", new_entry)
+        sitemap_file.write_text(sitemap_txt, encoding="utf-8")
+        print(f"✅ Added {new_loc} to sitemap.xml")
+
+    # Update llms.txt
+    llms_file = BASE / "llms.txt"
+    if llms_file.exists():
+        llms_txt = llms_file.read_text(encoding="utf-8")
+        if new_loc not in llms_txt:
+            entry = f"- [{candidate['title']}](https://aitoolgems.tech/guides/{candidate['slug']}/) — Pakistan-focused {candidate['primary_keyword']} guide\n"
+            llms_txt = llms_txt.replace("## Editorial Guides", f"## Editorial Guides\n\n{entry.strip()}")
+            llms_file.write_text(llms_txt, encoding="utf-8")
+            print(f"✅ Added {candidate['slug']} to llms.txt")
+
+    # Update guides/index.html card grid
+    guides_index = BASE / "guides" / "index.html"
+    if guides_index.exists():
+        g_txt = guides_index.read_text(encoding="utf-8")
+        if candidate["slug"] not in g_txt:
+            card_html = f"""      <article class="guide-card"><p class="eyebrow">EDITORIAL GUIDE</p><h2>{candidate['title']}</h2><p>{candidate['meta_desc']}</p><a href="{candidate['slug']}/">Read guide →</a></article>\n"""
+            g_txt = g_txt.replace('<section class="guide-grid" aria-label="Available guides">\n', '<section class="guide-grid" aria-label="Available guides">\n' + card_html)
+            guides_index.write_text(g_txt, encoding="utf-8")
+            print(f"✅ Injected new guide card into guides/index.html")
+
+    # Update data/seo/keyword-map.json
+    map_file = BASE / "data" / "seo" / "keyword-map.json"
+    if map_file.exists():
+        k_data = json.loads(map_file.read_text(encoding="utf-8"))
+        for entry in k_data:
+            if entry["slug"] == candidate["slug"]:
+                entry["status"] = "published"
+                entry["published_url"] = new_loc
+                entry["published_date"] = datetime.date.today().isoformat()
+                entry["last_updated"] = datetime.date.today().isoformat()
+        map_file.write_text(json.dumps(k_data, indent=2, ensure_ascii=False), encoding="utf-8")
+        print(f"✅ Updated keyword-map.json status to 'published'")
+
+    print("\n🎉 Article successfully published and synchronized across the entire site.")
+
 
 if __name__ == "__main__":
     is_live = "--publish" in sys.argv

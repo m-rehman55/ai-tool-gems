@@ -46,8 +46,9 @@ jobs:
         run: |
           python scripts/auto_blog_publisher.py --publish
 
-      - name: Verify Technical SEO & Schema Completeness
+      - name: Verify Technical SEO, Schema Completeness & Inventory
         run: |
+          python scripts/build_url_inventory.py
           python audit_all.py
           python schema_audit.py
           python scripts/growth_seo_engine.py
