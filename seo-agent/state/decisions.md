@@ -79,3 +79,11 @@
 | Full Pakistan Sitemap Coverage | Expand sitemap.xml from 32 to 49 URLs to ensure complete search engine discovery of all guides, trust docs, and price hubs | 17 newly added URLs | Revert sitemap.xml commit |
 | Strict Mono-Locale Isolation | Enforce 100% Pakistan exclusivity (`lang="en-PK"`, PKR only, zero international hreflang) | All 53 pages | Revert commit |
 | Instant Search Engine Pinging | Submit expanded sitemap URLs to IndexNow for expedited indexing across search engines | 49 URLs | N/A |
+
+## Phase 2 Decisions (2026-10-10)
+
+| Decision | Rationale | Affected URLs | Rollback |
+|----------|-----------|---------------|----------|
+| Hreflang Canonical Alignment | Ensure hreflang links point to canonical directory format without trailing index.html | 13 guide & price pages | Revert commit |
+| Product Freshness Timestamp Refresh | Update last_verified to current audit date 2026-10-10 across all 20 products and prices index to pass 30-day freshness gate | 20 tool pages + prices/index.html | Revert commit |
+| Offer priceValidUntil Attribute | Add explicit validity date (2026-12-31) to Product schema offers to satisfy Google Rich Snippet guidelines | 20 tool pages | Revert commit |
