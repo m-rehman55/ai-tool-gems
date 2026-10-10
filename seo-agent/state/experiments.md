@@ -58,3 +58,10 @@ Choose:
 | Level 5 Implementation | Permanent autonomous SEO OS | Manual SEO | Continuous mode | SEO score | Pending | ITERATE |
 | Daily Automation | Daily loop improves freshness | Weekly manual | Daily automated | Freshness score | Pending | EXTEND |
 | Telegram Control Center | Telegram is central control | Email reports | Telegram daily/weekly/monthly | Report delivery | Pending | KEEP |
+
+## Active Experiments (Pakistan Market)
+
+| Experiment ID | Hypothesis | Baseline | Variant | Metric | Window | Decision |
+|---------------|-----------|----------|---------|--------|--------|----------|
+| EXP-PK-001 | Including explicit "EasyPaisa / JazzCash" and PKR price anchors in tool snippet titles improves CTR | 0.0% CTR in GSC | Transactional PKR Snippets | Organic CTR in GSC | 2026-10-11 to 2026-10-25 | ACTIVE |
+
