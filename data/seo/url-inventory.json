@@ -219,7 +219,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/ai-subscriptions-pakistan/",
     "indexable": true,
-    "internal_links_count": 6,
+    "internal_links_count": 7,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -267,7 +267,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/ai-tools-pricing/",
     "indexable": true,
-    "internal_links_count": 6,
+    "internal_links_count": 7,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -283,7 +283,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/businesses/",
     "indexable": true,
-    "internal_links_count": 6,
+    "internal_links_count": 7,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -395,7 +395,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/creators/",
     "indexable": true,
-    "internal_links_count": 6,
+    "internal_links_count": 7,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -411,7 +411,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/developers/",
     "indexable": true,
-    "internal_links_count": 6,
+    "internal_links_count": 7,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -475,7 +475,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/productivity/",
     "indexable": true,
-    "internal_links_count": 6,
+    "internal_links_count": 7,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -491,7 +491,23 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/students/",
     "indexable": true,
-    "internal_links_count": 6,
+    "internal_links_count": 7,
+    "last_verified": "2026-10-11",
+    "status": "live_verified"
+  },
+  {
+    "url": "https://aitoolgems.tech/tools/",
+    "relative_file": "tools/index.html",
+    "page_type": "product",
+    "search_intent": "transactional",
+    "topic": "Tool license key purchase & WhatsApp checkout",
+    "title": "All AI Tools & Subscriptions in Pakistan (2026 Directory) | PKR",
+    "meta_description": "Browse all 20 verified AI tools & subscriptions in Pakistan at lowest PKR rates. Instant delivery via EasyPaisa, JazzCash & WhatsApp.",
+    "h1": "All AI Tools & Subscriptions in Pakistan",
+    "h1_count": 1,
+    "canonical": "https://aitoolgems.tech/tools/",
+    "indexable": true,
+    "internal_links_count": 37,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
