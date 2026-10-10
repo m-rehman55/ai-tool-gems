@@ -1,0 +1,284 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-10-11",
+  "base_url": "https://aitoolgems.tech",
+  "targets": {
+    "tools": {
+      "chatgpt": {
+        "url": "/tools/chatgpt/",
+        "canonical": "https://aitoolgems.tech/tools/chatgpt/",
+        "category": "AI Assistants",
+        "recommended_anchors": [
+          "ChatGPT Plus subscription in Pakistan",
+          "buy ChatGPT Plus in PKR",
+          "ChatGPT Plus license plan",
+          "genuine ChatGPT Plus access"
+        ]
+      },
+      "gemini": {
+        "url": "/tools/gemini/",
+        "canonical": "https://aitoolgems.tech/tools/gemini/",
+        "category": "AI Assistants",
+        "recommended_anchors": [
+          "Google Gemini Pro invitation seat",
+          "Gemini Pro 18-month plan in Pakistan",
+          "buy Gemini Advanced in PKR",
+          "Gemini multimodal assistant"
+        ]
+      },
+      "leonardo": {
+        "url": "/tools/leonardo/",
+        "canonical": "https://aitoolgems.tech/tools/leonardo/",
+        "category": "Design & Image Generation",
+        "recommended_anchors": [
+          "Leonardo AI Essential credits in Pakistan",
+          "buy Leonardo AI with EasyPaisa",
+          "Leonardo AI image generation plan",
+          "affordable Midjourney alternative in PKR"
+        ]
+      },
+      "canva": {
+        "url": "/tools/canva/",
+        "canonical": "https://aitoolgems.tech/tools/canva/",
+        "category": "Design",
+        "recommended_anchors": [
+          "Canva Pro Edu invitation in Pakistan",
+          "Canva Pro brand kit access",
+          "buy Canva Pro with JazzCash",
+          "Canva Pro lifetime & annual plans"
+        ]
+      },
+      "figma": {
+        "url": "/tools/figma/",
+        "canonical": "https://aitoolgems.tech/tools/figma/",
+        "category": "Design",
+        "recommended_anchors": [
+          "Figma Pro private account in Pakistan",
+          "Figma Professional team seat in PKR",
+          "UI/UX design tools in Pakistan"
+        ]
+      },
+      "capcut": {
+        "url": "/tools/capcut/",
+        "canonical": "https://aitoolgems.tech/tools/capcut/",
+        "category": "Video Editing",
+        "recommended_anchors": [
+          "CapCut Pro PC and mobile subscription",
+          "CapCut Pro VIP license in Pakistan",
+          "buy CapCut Pro with EasyPaisa",
+          "CapCut 4K export features"
+        ]
+      },
+      "veo": {
+        "url": "/tools/veo/",
+        "canonical": "https://aitoolgems.tech/tools/veo/",
+        "category": "Video AI",
+        "recommended_anchors": [
+          "Google Veo 3 Ultra in Pakistan",
+          "generative AI video creation with Veo",
+          "buy Veo 3 Ultra license key"
+        ]
+      },
+      "elevenlabs": {
+        "url": "/tools/elevenlabs/",
+        "canonical": "https://aitoolgems.tech/tools/elevenlabs/",
+        "category": "Voice AI",
+        "recommended_anchors": [
+          "ElevenLabs voice cloning subscription",
+          "buy ElevenLabs characters in PKR",
+          "AI voiceover generation plan"
+        ]
+      },
+      "adobe": {
+        "url": "/tools/adobe/",
+        "canonical": "https://aitoolgems.tech/tools/adobe/",
+        "category": "Creative Suite",
+        "recommended_anchors": [
+          "Adobe Creative Cloud all-apps in Pakistan",
+          "Adobe CC photography & Firefly plan",
+          "genuine Adobe CC access in PKR"
+        ]
+      },
+      "replit": {
+        "url": "/tools/replit/",
+        "canonical": "https://aitoolgems.tech/tools/replit/",
+        "category": "Development",
+        "recommended_anchors": [
+          "Replit Core subscription in Pakistan",
+          "cloud coding IDE with Replit",
+          "buy Replit Core with EasyPaisa"
+        ]
+      },
+      "lovable": {
+        "url": "/tools/lovable/",
+        "canonical": "https://aitoolgems.tech/tools/lovable/",
+        "category": "Development",
+        "recommended_anchors": [
+          "Lovable Pro full-stack app builder",
+          "buy Lovable Pro in PKR",
+          "no-code AI web app development"
+        ]
+      },
+      "n8n": {
+        "url": "/tools/n8n/",
+        "canonical": "https://aitoolgems.tech/tools/n8n/",
+        "category": "Automation",
+        "recommended_anchors": [
+          "n8n Starter cloud workflow plan",
+          "workflow automation in Pakistan",
+          "Zapier alternative in PKR"
+        ]
+      },
+      "notion": {
+        "url": "/tools/notion/",
+        "canonical": "https://aitoolgems.tech/tools/notion/",
+        "category": "Productivity",
+        "recommended_anchors": [
+          "Notion Business workspace plan",
+          "Notion AI subscription in Pakistan",
+          "team wiki and productivity software"
+        ]
+      },
+      "windows": {
+        "url": "/tools/windows/",
+        "canonical": "https://aitoolgems.tech/tools/windows/",
+        "category": "Operating Systems",
+        "recommended_anchors": [
+          "Windows 11 Pro retail license key",
+          "genuine Windows 11 activation in Pakistan",
+          "lifetime Windows 11 key in PKR"
+        ]
+      }
+    },
+    "guides": {
+      "cursor_ai": {
+        "url": "/guides/cursor-ai-pakistan/",
+        "canonical": "https://aitoolgems.tech/guides/cursor-ai-pakistan/",
+        "recommended_anchors": [
+          "Cursor AI developer and pricing guide",
+          "complete Cursor AI tutorial for Pakistani coders",
+          "how to pay for Cursor Pro in Pakistan"
+        ]
+      },
+      "claude_ai": {
+        "url": "/guides/claude-ai-pakistan/",
+        "canonical": "https://aitoolgems.tech/guides/claude-ai-pakistan/",
+        "recommended_anchors": [
+          "Claude 3.5 Sonnet Pakistan benchmark guide",
+          "Claude Pro review and pricing in PKR",
+          "using Claude 3.5 for software engineering"
+        ]
+      },
+      "price_guide": {
+        "url": "/guides/ai-tools-price-pakistan/",
+        "canonical": "https://aitoolgems.tech/guides/ai-tools-price-pakistan/",
+        "recommended_anchors": [
+          "Pakistan AI tools price guide",
+          "compare all 20 AI tools by PKR price",
+          "Pakistani AI subscription cost breakdown"
+        ]
+      },
+      "chatgpt_alternatives": {
+        "url": "/guides/chatgpt-alternatives/",
+        "canonical": "https://aitoolgems.tech/guides/chatgpt-alternatives/",
+        "recommended_anchors": [
+          "top ChatGPT alternatives in Pakistan",
+          "best AI reasoning and coding alternatives",
+          "comparing ChatGPT vs Claude vs Gemini"
+        ]
+      },
+      "chatgpt_vs_gemini": {
+        "url": "/guides/chatgpt-vs-gemini-pakistan/",
+        "canonical": "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/",
+        "recommended_anchors": [
+          "ChatGPT Plus vs Gemini Pro comparison",
+          "task-by-task AI assistant evaluation",
+          "Gemini Pro 18 months vs ChatGPT Plus"
+        ]
+      },
+      "canva_vs_figma": {
+        "url": "/guides/canva-vs-figma-pakistan/",
+        "canonical": "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/",
+        "recommended_anchors": [
+          "Canva Pro vs Figma Pro for Pakistani creators",
+          "rapid social graphics vs product design workflows",
+          "choosing between Canva and Figma"
+        ]
+      },
+      "students_guide": {
+        "url": "/guides/students/",
+        "canonical": "https://aitoolgems.tech/guides/students/",
+        "recommended_anchors": [
+          "AI tools for Pakistani students",
+          "budget-friendly AI research and study stack",
+          "academic AI tools with PKR payment"
+        ]
+      },
+      "developers_guide": {
+        "url": "/guides/developers/",
+        "canonical": "https://aitoolgems.tech/guides/developers/",
+        "recommended_anchors": [
+          "AI tools for Pakistani developers",
+          "complete Pakistani coding assistant stack",
+          "full-stack AI development workflows"
+        ]
+      },
+      "creators_guide": {
+        "url": "/guides/creators/",
+        "canonical": "https://aitoolgems.tech/guides/creators/",
+        "recommended_anchors": [
+          "AI tools for Pakistani content creators",
+          "YouTube automation and video editing AI stack",
+          "social media creative AI workflow"
+        ]
+      }
+    },
+    "core": {
+      "deals": {
+        "url": "/deals/",
+        "canonical": "https://aitoolgems.tech/deals/",
+        "recommended_anchors": [
+          "explore current Pakistani AI tool deals",
+          "check verified marketplace bundle savings",
+          "current 20-item PKR catalog"
+        ]
+      },
+      "prices": {
+        "url": "/prices/",
+        "canonical": "https://aitoolgems.tech/prices/",
+        "recommended_anchors": [
+          "browse complete 2026 PKR price directory",
+          "check verified replacement warranties and pricing",
+          "live PKR subscription rate card"
+        ]
+      },
+      "guides_hub": {
+        "url": "/guides/",
+        "canonical": "https://aitoolgems.tech/guides/",
+        "recommended_anchors": [
+          "explore all practical AI buying guides",
+          "AI Tool Gems editorial guides and tutorials",
+          "read all Pakistan-focused AI articles"
+        ]
+      },
+      "review_method": {
+        "url": "/how-we-review.html",
+        "canonical": "https://aitoolgems.tech/how-we-review.html",
+        "recommended_anchors": [
+          "how we review AI tools and listings",
+          "our editorial testing and verification method",
+          "independent review standards"
+        ]
+      },
+      "warranty_policy": {
+        "url": "/policies.html#warranty",
+        "canonical": "https://aitoolgems.tech/policies.html",
+        "recommended_anchors": [
+          "7-day replacement warranty policy",
+          "order terms and warranty coverage",
+          "marketplace replacement guarantee"
+        ]
+      }
+    }
+  }
+}
