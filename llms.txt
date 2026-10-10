@@ -22,7 +22,8 @@ Last reviewed: 2026-10-11
 
 ## Editorial Guides (17 Clusters)
 
-- [Guides Hub](https://aitoolgems.tech/guides/) — Pakistan-focused AI tools guide hub
+- [Guides & Blog Hub](https://aitoolgems.tech/guides/) — Pakistan-focused AI tools guide & blog hub
+- [Blog & Guides](https://aitoolgems.tech/blog/) — official AI Tool Gems blog, latest tech tutorials, and developer articles
 - [AI Subscriptions Pakistan](https://aitoolgems.tech/guides/ai-subscriptions-pakistan/) — complete buyer's guide to AI tool plans in Pakistan
 - [AI Tools Pakistan](https://aitoolgems.tech/guides/ai-tools-pakistan/) — top AI software for Pakistani freelancers and businesses
 - [AI Tools Price Pakistan](https://aitoolgems.tech/guides/ai-tools-price-pakistan/) — all 20 current listings compared by PKR price, duration, and access type
