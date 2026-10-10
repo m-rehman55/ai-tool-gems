@@ -49,7 +49,7 @@
     "official_sources": [
       "https://www.capcut.com/pro",
       "https://deepmind.google/technologies/veo/",
-      "https://elevenlabs.io/pricing"
+      "https://elevenlabs.io/"
     ],
     "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
     "approved_for_publishing": true,
@@ -74,7 +74,7 @@
       {"slug": "veo", "name": "Veo 3 Ultra"}
     ],
     "official_sources": [
-      "https://elevenlabs.io/pricing",
+      "https://elevenlabs.io/",
       "https://elevenlabs.io/text-to-speech"
     ],
     "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
