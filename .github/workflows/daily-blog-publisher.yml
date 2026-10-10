@@ -29,6 +29,7 @@ jobs:
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       INDEXNOW_KEY: "e1a8c47f9d2b4f30a6c8116de5b97042"
     steps:
       - name: Checkout Repository
