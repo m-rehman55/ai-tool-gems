@@ -14,7 +14,7 @@ print("1. CHECK OG:URL VS CANONICAL")
 print("=" * 60)
 og_mismatches = []
 for f in BASE.glob("**/*.html"):
-    if ".git" in str(f) or ".seo-cache" in str(f):
+    if any(x in str(f) for x in [".git", ".seo-cache"]):
         continue
     txt = f.read_text(encoding="utf-8")
     og = re.search(r'property=["\']og:url["\']\s+content=["\']([^"\']+)["\']', txt) or re.search(r'content=["\']([^"\']+)["\']\s+property=["\']og:url["\']', txt)
@@ -30,7 +30,7 @@ print("2. CHECK CSS LINKS (BROKEN CSS)")
 print("=" * 60)
 broken_css = []
 for f in BASE.glob("**/*.html"):
-    if ".git" in str(f) or ".seo-cache" in str(f):
+    if any(x in str(f) for x in [".git", ".seo-cache"]):
         continue
     txt = f.read_text(encoding="utf-8")
     for m in re.finditer(r'<link[^>]+>', txt):
@@ -49,12 +49,12 @@ for item in broken_css:
     print(f"  • {item[0]} -> '{item[1]}'")
 
 print("\n" + "=" * 60)
-print("3. CHECK META DESCRIPTION LENGTHS")
+print("3. CHECK META DESCRIPTION LENGTHS (Target: 120-155 chars)")
 print("=" * 60)
 long_desc = []
 short_desc = []
 for f in BASE.glob("**/*.html"):
-    if ".git" in str(f) or ".seo-cache" in str(f):
+    if any(x in str(f) for x in [".git", ".seo-cache"]):
         continue
     txt = f.read_text(encoding="utf-8")
     meta_m = re.search(r'<meta\s+name=["\']description["\']\s+content=["\']([^"\']*)["\']', txt, re.IGNORECASE) or \
@@ -62,100 +62,118 @@ for f in BASE.glob("**/*.html"):
     if meta_m:
         desc = meta_m.group(1)
         length = len(desc)
-        # Ahrefs standard: < 70 chars is short, > 155 chars is long
         if length > 155:
             long_desc.append((str(f.relative_to(BASE)), length, desc))
             print(f"• [LONG {length} chars] {f.relative_to(BASE)}:\n    \"{desc}\"")
-        elif length < 70:
+        elif length < 120:
             short_desc.append((str(f.relative_to(BASE)), length, desc))
             print(f"• [SHORT {length} chars] {f.relative_to(BASE)}:\n    \"{desc}\"")
 print(f"Total Meta Descriptions Too Long (>155 chars): {len(long_desc)}")
-print(f"Total Meta Descriptions Too Short (<70 chars): {len(short_desc)}")
+print(f"Total Meta Descriptions Too Short (<120 chars): {len(short_desc)}")
 
 print("\n" + "=" * 60)
-print("4. CHECK INTERNAL LINKS TO REDIRECTS (Trailing slash / www / http)")
+print("4. CHECK META REFRESH REDIRECTS")
 print("=" * 60)
-redirect_links = []
+meta_refreshes = []
 for f in BASE.glob("**/*.html"):
-    if ".git" in str(f) or ".seo-cache" in str(f):
+    if any(x in str(f) for x in [".git", ".seo-cache"]):
         continue
     txt = f.read_text(encoding="utf-8")
-    for m in re.finditer(r'<a\s+[^>]*href=["\']([^"\']+)["\']', txt):
+    if re.search(r'http-equiv=["\']refresh["\']', txt, re.I):
+        meta_refreshes.append(str(f.relative_to(BASE)))
+        print(f"• Meta refresh found in: {f.relative_to(BASE)}")
+print(f"Total meta refresh redirects: {len(meta_refreshes)}")
+
+print("\n" + "=" * 60)
+print("5. CHECK OUTBOUND LINKS (Known 3XX / 4XX Redirects)")
+print("=" * 60)
+outbound_issues = []
+for f in BASE.glob("**/*.html"):
+    if any(x in str(f) for x in [".git", ".seo-cache"]):
+        continue
+    txt = f.read_text(encoding="utf-8")
+    for m in re.finditer(r'<a\s+[^>]*href=["\']([^"\']+)["\'][^>]*>', txt):
         href = m.group(1)
-        if href.startswith("http://"):
-            redirect_links.append((str(f.relative_to(BASE)), href, "HTTP to HTTPS redirect"))
-            print(f"• {f.relative_to(BASE)} -> HTTP Link: {href}")
-        elif href.startswith("/") or href.startswith("../") or not href.startswith(("http", "mailto:", "tel:", "#", "javascript:")):
-            clean = href.split("#")[0].split("?")[0]
-            if clean in ["/deals", "/prices", "/guides", "/tools", "deals", "prices", "guides", "tools", "../deals", "../prices", "../guides", "../tools"]:
-                redirect_links.append((str(f.relative_to(BASE)), href, "Missing trailing slash"))
-                print(f"• {f.relative_to(BASE)} -> Missing trailing slash link: {href}")
-print(f"Total redirect links found: {len(redirect_links)}")
+        tag = m.group(0)
+        # Check known redirect URLs
+        if "openai.com/chatgpt/pricing" in href:
+            outbound_issues.append((str(f.relative_to(BASE)), href, "Redirects to chatgpt.com/pricing"))
+        elif "elevenlabs.io/pricing" in href:
+            outbound_issues.append((str(f.relative_to(BASE)), href, "Blocks crawlers with 403"))
+        elif "whatsapp.com/channel/" in href and "www.whatsapp.com" not in href:
+            outbound_issues.append((str(f.relative_to(BASE)), href, "Redirects to www.whatsapp.com/channel/"))
+        elif ("wa.me/" in href or "api.whatsapp.com" in href) and not re.search(r'rel=["\'][^"\']*\bnofollow\b', tag):
+            outbound_issues.append((str(f.relative_to(BASE)), href, "WhatsApp link missing rel='nofollow'"))
+for item in outbound_issues:
+    print(f"  • {item[0]}: {item[1]} ({item[2]})")
+print(f"Total outbound link issues: {len(outbound_issues)}")
 
 print("\n" + "=" * 60)
-print("5. CHECK ORPHAN PAGES & INCOMING INLINKS")
-print("=" * 60)
-all_html_files = {str(f.relative_to(BASE)).replace("\\", "/") for f in BASE.glob("**/*.html") if not any(x in str(f) for x in [".git", ".seo-cache", "google"])}
-inlinks = {p: 0 for p in all_html_files}
-for f in BASE.glob("**/*.html"):
-    if ".git" in str(f) or ".seo-cache" in str(f):
-        continue
-    txt = f.read_text(encoding="utf-8")
-    for m in re.finditer(r'<a\s+[^>]*href=["\']([^"\']+)["\']', txt):
-        href = m.group(1).split("#")[0].split("?")[0]
-        if not href or href.startswith(("http:", "https:", "mailto:", "tel:", "javascript:")):
-            continue
-        target = (f.parent / href).resolve()
-        try:
-            rel = str(target.relative_to(BASE)).replace("\\", "/")
-            if rel in inlinks:
-                inlinks[rel] += 1
-            elif (target / "index.html").exists():
-                rel_idx = str((target / "index.html").relative_to(BASE)).replace("\\", "/")
-                if rel_idx in inlinks:
-                    inlinks[rel_idx] += 1
-        except Exception:
-            pass
-
-orphans = [p for p, count in inlinks.items() if count == 0 and not p.startswith("404")]
-low_links = [p for p, count in inlinks.items() if count == 1]
-print(f"Orphan pages (0 internal inlinks): {len(orphans)}")
-for o in orphans:
-    print(f"  • {o}")
-print(f"\nPages with only 1 inlink: {len(low_links)}")
-for l in low_links:
-    print(f"  • {l} (inlinks: {inlinks[l]})")
-
-print("\n" + "=" * 60)
-print("6. CHECK STRUCTURED DATA SCHEMAS")
+print("6. CHECK STRUCTURED DATA SCHEMAS (Schema.org & Google Rich Results)")
 print("=" * 60)
 schema_issues = []
 for f in BASE.glob("**/*.html"):
-    if ".git" in str(f) or ".seo-cache" in str(f):
+    if any(x in str(f) for x in [".git", ".seo-cache"]):
         continue
     txt = f.read_text(encoding="utf-8")
-    for m in re.finditer(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>', txt, re.DOTALL):
-        raw = m.group(1).strip()
+    scripts = re.findall(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>', txt, re.DOTALL)
+    if not scripts:
+        continue
+    defined_ids = set()
+    referenced_ids = set()
+
+    for s in scripts:
         try:
-            data = json.loads(raw)
-            # check graph items
-            items = data.get("@graph", [data])
-            for item in items:
-                stype = item.get("@type")
-                # Product check
-                if stype == "Product":
-                    if not item.get("offers"):
-                        schema_issues.append((str(f.relative_to(BASE)), "Product missing offers"))
-                    if not item.get("aggregateRating") and not item.get("review"):
-                        schema_issues.append((str(f.relative_to(BASE)), "Product missing aggregateRating or review"))
-                # Article check
-                elif stype == "Article":
-                    if not item.get("author"):
-                        schema_issues.append((str(f.relative_to(BASE)), "Article missing author"))
-                    if not item.get("datePublished"):
-                        schema_issues.append((str(f.relative_to(BASE)), "Article missing datePublished"))
+            data = json.loads(s.strip())
         except Exception as e:
-            schema_issues.append((str(f.relative_to(BASE)), f"Malformed JSON: {e}"))
-print(f"Schema issues detected: {len(schema_issues)}")
-for si in schema_issues:
-    print(f"  • {si[0]}: {si[1]}")
+            schema_issues.append((str(f.relative_to(BASE)), f"Invalid JSON: {e}"))
+            continue
+
+        def audit_node(node, is_graph=False):
+            if not isinstance(node, dict):
+                return
+            ntype = node.get("@type")
+            nid = node.get("@id")
+            if nid:
+                defined_ids.add(nid)
+            if is_graph and "@context" in node:
+                schema_issues.append((str(f.relative_to(BASE)), f"@context inside graph node {ntype}"))
+            if ntype in ["FAQPage", "BreadcrumbList", "ItemList"] and "image" in node:
+                schema_issues.append((str(f.relative_to(BASE)), f"Illegal property 'image' on {ntype}"))
+            if ntype == "Article":
+                pub = node.get("publisher")
+                if isinstance(pub, dict) and len(pub) == 1 and "@id" in pub:
+                    referenced_ids.add((pub["@id"], "Article.publisher"))
+                elif isinstance(pub, dict) and "name" not in pub:
+                    schema_issues.append((str(f.relative_to(BASE)), "Article.publisher missing 'name'"))
+
+            for k, v in node.items():
+                if isinstance(v, dict) and "@id" in v and len(v) == 1:
+                    referenced_ids.add((v["@id"], f"{ntype}.{k}"))
+
+        if isinstance(data, dict):
+            if "@graph" in data:
+                if "image" in data:
+                    schema_issues.append((str(f.relative_to(BASE)), "Illegal property 'image' on @graph container"))
+                for n in data["@graph"]:
+                    audit_node(n, is_graph=True)
+            else:
+                audit_node(data, is_graph=False)
+
+    for ref_id, loc in referenced_ids:
+        if ref_id.startswith("https://aitoolgems.tech/#") and ref_id not in defined_ids:
+            schema_issues.append((str(f.relative_to(BASE)), f"Unresolved {loc} pointing to {ref_id}"))
+
+print(f"Total schema issues detected: {len(schema_issues)}")
+for item in schema_issues[:20]:
+    print(f"  • {item[0]}: {item[1]}")
+if len(schema_issues) > 20:
+    print(f"  ... and {len(schema_issues) - 20} more.")
+
+print("\n" + "=" * 60)
+print("7. CHECK CSS SIZE (< 100 KB)")
+print("=" * 60)
+styles_file = BASE / "styles.css"
+if styles_file.exists():
+    sz = len(styles_file.read_bytes())
+    print(f"styles.css size: {sz:,} bytes ({'PASS' if sz < 100000 else 'FAIL'})")
