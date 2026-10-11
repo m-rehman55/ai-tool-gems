@@ -31,9 +31,8 @@ jobs:
           python-version: "3.12"
 
       - name: Run technical SEO/GEO integrity audit
-        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_OWNER_CHAT_ID != '' }}
         run: python -m marketing_agent seo-monitor --json --send
 
       - name: Pull Google Search Console + Bing data and send report
-        if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
+        if: env.GSC_CLIENT_ID != '' && env.GSC_CLIENT_SECRET != ''
         run: python -m marketing_agent seo-api-report --send --days 7
