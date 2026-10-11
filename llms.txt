@@ -21,7 +21,9 @@ Last reviewed: 2026-10-11
 - [Privacy](https://aitoolgems.tech/privacy.html) — website and customer privacy policy
 - [Terms](https://aitoolgems.tech/terms.html) — website terms of service and order conditions
 
-## Editorial Guides (17 Clusters)
+## Editorial Guides
+
+- [Best Midjourney Alternatives in Pakistan: Free & Paid (2026)](https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/) — Pakistan-focused Midjourney alternatives Pakistan guide (17 Clusters)
 
 - [Guides & Blog Hub](https://aitoolgems.tech/guides/) — Pakistan-focused AI tools guide & blog hub
 - [Blog & Guides](https://aitoolgems.tech/blog/) — official AI Tool Gems blog, latest tech tutorials, and developer articles
