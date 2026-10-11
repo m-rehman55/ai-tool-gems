@@ -23,6 +23,7 @@ jobs:
       ATG_SITE_URL: https://aitoolgems.tech
       GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
       GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+      GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
       BING_API_KEY: ${{ secrets.BING_API_KEY }}
     steps:
       - uses: actions/checkout@v4
