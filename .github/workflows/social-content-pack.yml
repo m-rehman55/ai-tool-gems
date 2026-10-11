@@ -79,13 +79,13 @@ jobs:
           fi
       - name: Refresh real delivery and engagement results
         if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
-        run: python -m marketing_agent buffer-learn || echo "Command failed"
+        run: python -m marketing_agent buffer-learn
       - name: Build today's rotating photo and three platform-paced videos
         if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
-        run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}" || echo "Command failed"
+        run: python -m marketing_agent buffer-prepare --date "${{ steps.campaign.outputs.date }}"
       - name: Preflight all channels captions media and recent deliveries
         if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
-        run: python -m marketing_agent buffer-preflight --date "${{ steps.campaign.outputs.date }}" || echo "Command failed"
+        run: python -m marketing_agent buffer-preflight --date "${{ steps.campaign.outputs.date }}"
       - name: Publish deal card as public media
         if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         shell: bash
@@ -129,7 +129,7 @@ jobs:
           fi
       - name: Deliver private owner copy and short-video script
         if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
-        run: python -m marketing_agent social-pack --date "${{ steps.campaign.outputs.date }}" --send || echo "Command failed"
+        run: python -m marketing_agent social-pack --date "${{ steps.campaign.outputs.date }}" --send
       - name: Save duplicate-protection state
         if: always() && (github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]'))
         shell: bash
@@ -144,4 +144,4 @@ jobs:
       - name: Alert owner if the hosted campaign needs attention
         if: failure()
         continue-on-error: true
-        run: python -m marketing_agent social-alert || echo "Command failed"
+        run: python -m marketing_agent social-alert
