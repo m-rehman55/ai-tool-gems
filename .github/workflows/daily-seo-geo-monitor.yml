@@ -33,12 +33,16 @@ jobs:
 
       - name: Run technical SEO/GEO integrity audit
         if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_OWNER_CHAT_ID != '' }}
-        run: python -m marketing_agent seo-monitor --json --send || echo "SEO monitor completed with warnings"
+        run: python -m marketing_agent seo-monitor --json --send
 
       - name: Pull Google Search Console + Bing data and send report
         if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
-        run: python -m marketing_agent seo-api-report --send --days 7 || echo "Command failed"
+        run: python -m marketing_agent seo-api-report --send --days 7
 
+  deploy:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    needs: audit
+    steps:
       - name: Deploy to GitHub Pages
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         uses: actions/deploy-pages@v4
