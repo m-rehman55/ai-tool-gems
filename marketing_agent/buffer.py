@@ -12,7 +12,7 @@ import time
 import wave
 from array import array
 from io import BytesIO
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, time as dt_time, timedelta, timezone
 from pathlib import Path
 from typing import Callable
 from urllib.error import HTTPError, URLError
@@ -1261,7 +1261,7 @@ def scheduled_time(
         },
     }
     hour, minute = pakistan_windows[service][slot][day.weekday()]
-    local_target = datetime.combine(day, time(hour, minute), settings.timezone)
+    local_target = datetime.combine(day, dt_time(hour, minute), settings.timezone)
     target = local_target.astimezone(timezone.utc)
     current = now or datetime.now(timezone.utc)
     if target <= current + timedelta(minutes=5):
