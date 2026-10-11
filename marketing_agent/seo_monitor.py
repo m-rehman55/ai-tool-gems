@@ -122,7 +122,7 @@ def inspect_homepage(html: str, canonical_url: str) -> list[str]:
     joined_schema = " ".join(parser.schemas)
     if '"areaServed"' not in joined_schema or '"Pakistan"' not in joined_schema:
         issues.append("Homepage schema is missing the Pakistan service area")
-    if '"telephone"' not in joined_schema or "+923236715731" not in joined_schema:
+    if '"telephone"' not in joined_schema or ("+923****5731" not in joined_schema and "+92 323 6715731" not in joined_schema):
         issues.append("Homepage schema is missing the verified WhatsApp support number")
     return issues
 
