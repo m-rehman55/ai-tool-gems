@@ -97,6 +97,15 @@ jobs:
           git commit -m "Create daily social deal card for ${{ steps.campaign.outputs.date }}"
           git pull --rebase origin main
           git push
+      - name: Upload social deal cards as artifacts
+        if: always() && (github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]'))
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-deals-${{ steps.campaign.outputs.date }}
+          path: |
+            assets/social-deals/
+            assets/product-logos/
+          retention-days: 7
       - name: Confirm public media is ready
         if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         shell: bash
@@ -127,6 +136,10 @@ jobs:
             echo "::error title=Buffer scheduling failed::$one_line"
             exit "$status"
           fi
+      - name: Verify all six daily Buffer deliveries
+        if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
+        run: python -m marketing_agent buffer-delivery-check --date "${{ steps.campaign.outputs.date }}"
+
       - name: Deliver private owner copy and short-video script
         if: github.event_name != 'push' || contains(github.event.head_commit.message, '[run-social-recovery]')
         run: python -m marketing_agent social-pack --date "${{ steps.campaign.outputs.date }}" --send
