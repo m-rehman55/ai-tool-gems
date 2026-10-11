@@ -37,11 +37,3 @@ jobs:
       - name: Pull Google Search Console + Bing data and send report
         if: ${{ secrets.GSC_CLIENT_ID != '' && secrets.GSC_CLIENT_SECRET != '' }}
         run: python -m marketing_agent seo-api-report --send --days 7
-
-  deploy:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-24.04
-    needs: audit
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
