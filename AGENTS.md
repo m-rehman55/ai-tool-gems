@@ -26,16 +26,16 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 | Command | Purpose |
 |---------|---------|
+| `python -m seo-agent.agent.main --mode audit --report` | HERMES 10-step autonomous offline/live SEO audit & daily report |
+| `python -m seo-agent.agent.main --mode propose` | Autonomous growth proposal & patch generation on dedicated branch |
+| `python -m unittest discover -s seo-agent/tests -v` | Run 28 Scope, Safety Firewall, Schema & Workflow unit tests |
 | `python -m marketing_agent seo-growth` | GSC live impression, click, CTR & ranking growth analyzer |
 | `python scripts/growth_seo_engine.py` | DOM, Pakistani transactional signals, & instant IndexNow ping |
-| `python audit_all.py` | Full 53-page Google/Bing Search Central technical audit |
+| `python audit_all.py` | Full 57-page Google/Bing Search Central technical audit |
 | `python schema_audit.py` | Complete JSON-LD Product, FAQ, & Breadcrumb completeness audit |
 | `python -m marketing_agent seo-monitor --json` | Automated SEO/GEO integrity check (Target: 100/100) |
-| `python -m marketing_agent hermes audit` | Offline repository audit across all 53 pages (0 issues) |
-| `python -m marketing_agent hermes report` | Generate latest HERMES SEO report |
 | `python -m marketing_agent buffer-status` | Verify Buffer social channels connection |
-| `python -m marketing_agent trial-plan` | Duplicate-safe 3-day Telegram trial plan |
-| `python -m unittest discover -s marketing_agent/tests -v` | Run 41 regression tests |
+| `python -m unittest discover -s marketing_agent/tests -v` | Run 33 marketing agent tests |
 
 ### Control Files
 
@@ -58,19 +58,17 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 ### Memory Location
 
-seo-agent/state/
-- seo-state.json
-- decisions.md
-- experiments.md
-- changelog.md
-- incidents.md
-- deployments.md
+seo-agent/
+- reports/ (Daily evidence-backed audit reports)
+- logs/ (Redacted execution traces)
+- config/ (Settings and keyword universes)
 
-### GitHub Workflows (3 Streamlined Active)
+### GitHub Workflows
 
-1. `seo-growth-pipeline.yml`: Continuous testing, DOM audit, and instant IndexNow search engine submission on push to `main`.
-2. `daily-seo-geo-monitor.yml`: Runs SEO/GEO integrity monitor at 07:15 PKT (`15 2 * * *` UTC).
-3. `social-content-pack.yml`: Generates daily deals, renders media, and publishes via Buffer at 04:45 PKT.
+1. `seo-agent-daily.yml`: Daily autonomous SEO growth loop at 07:25 PKT (`25 2 * * *` UTC) with GSC metrics & report artifact.
+2. `seo-agent-validation.yml`: Continuous safety firewall, scope guard, and schema validation on push/PR.
+3. `daily-seo-geo-monitor.yml`: Runs SEO/GEO integrity monitor at 07:15 PKT (`15 2 * * *` UTC).
+4. `social-content-pack.yml`: Generates daily deals, renders media, and publishes via Buffer at 04:45 PKT.
 
 ### Safety
 

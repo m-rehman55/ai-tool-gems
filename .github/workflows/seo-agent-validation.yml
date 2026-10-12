@@ -1,0 +1,58 @@
+name: HERMES SEO Agent Continuous Validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "seo-agent/**"
+      - "scripts/**"
+      - "*.html"
+      - "tools/**"
+      - "guides/**"
+      - "deals/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "seo-agent/**"
+      - "scripts/**"
+      - "*.html"
+      - "tools/**"
+      - "guides/**"
+      - "deals/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hermes-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: "seo-agent/requirements.txt"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r seo-agent/requirements.txt
+
+      - name: Run Scope, Safety, Schema & Technical Unit Tests
+        run: |
+          python -m unittest discover -s seo-agent/tests -v
+
+      - name: Run Offline Repository Audit
+        run: |
+          python -m seo-agent.agent.main --mode audit
