@@ -184,7 +184,7 @@ def main():
         if ".git" in root or "__pycache__" in root or "node_modules" in root:
             continue
         for f in files:
-            if f.endswith(".html"):
+            if f.endswith(".html") and not (f.startswith("google") and f.endswith(".html")):
                 html_files.append(Path(root) / f)
 
     html_files.sort()
