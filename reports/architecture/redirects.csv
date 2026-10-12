@@ -1,0 +1,4 @@
+request_url,redirect_target,http_status,status
+https://aitoolgems.tech/deals,https://aitoolgems.tech/deals/,301,Handled by hosting server trailing slash normalization
+https://aitoolgems.tech/prices,https://aitoolgems.tech/prices/,301,Handled by hosting server trailing slash normalization
+https://aitoolgems.tech/guides,https://aitoolgems.tech/guides/,301,Handled by hosting server trailing slash normalization
