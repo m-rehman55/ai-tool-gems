@@ -41,6 +41,7 @@ jobs:
       GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
@@ -62,11 +63,11 @@ jobs:
         run: |
           python -m unittest discover -s seo-agent/tests -v
 
-      - name: Execute Autonomous SEO Growth Loop
+      - name: Execute Autonomous SEO Growth Loop & Dispatch Telegram Report
         run: |
           MODE="${{ inputs.mode || 'audit' }}"
           LIVE_FLAG="${{ inputs.live_crawl && '--live' || '' }}"
-          python -m seo-agent.agent.main --mode "$MODE" $LIVE_FLAG --report --json
+          python -m seo-agent.agent.main --mode "$MODE" $LIVE_FLAG --report --json --telegram
 
       - name: Upload Daily SEO Growth Artifacts
         uses: actions/upload-artifact@v4
