@@ -3,7 +3,14 @@
 <head>
 
   <link rel="preload" href="assets/brand-logo-light.webp" as="image" type="image/webp">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="light-theme.css" as="style">
   <link rel="preconnect" href="https://www.google.com">
+  <link rel="preconnect" href="https://t0.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://t1.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://t2.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://t3.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.simpleicons.org">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f7faf6">
@@ -31,6 +38,27 @@
   <link rel="icon" type="image/png" href="assets/brand-logo-light.png">
   <link rel="apple-touch-icon" href="assets/brand-logo-light.png">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="light-theme.css">
+  <style>
+    :root {
+      --bg-void: #f7faf6;
+      --bg-space: #eef5ef;
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-hover: #ffffff;
+      --bg-surface: rgba(255, 255, 255, 0.76);
+      --neon-cyan: #2f9f88;
+      --neon-cyan-glow: rgba(47, 159, 136, 0.18);
+      --neon-blue: #5d8fe8;
+      --accent-green: #25b966;
+      --text-primary: #173c35;
+      --text-secondary: #61766e;
+      --text-muted: #7c8d86;
+      --border-glass: rgba(43, 91, 74, 0.13);
+      --border-glass-hover: rgba(47, 159, 136, 0.38);
+    }
+    html { background: #f7faf6; color-scheme: light; }
+    body { background: #f7faf6; color: var(--text-primary); }
+  </style>
   <link rel="alternate" hreflang="en-PK" href="https://aitoolgems.tech/">
   <link rel="alternate" hreflang="x-default" href="https://aitoolgems.tech/">
   <script type="application/ld+json">
@@ -1998,7 +2026,7 @@
   <header class="site-header">
     <a class="brand" href="#top" aria-label="AI Tool Gems home">
       <span class="brand-mark-3d">
-        <img src="assets/brand-logo-light.webp" width="119" height="119" alt="Diamond badge emblem" class="brand-nav-logo" loading="lazy">
+        <img src="assets/brand-logo-light.webp" width="119" height="119" alt="Diamond badge emblem" class="brand-nav-logo" fetchpriority="high" decoding="async">
       </span>
       <span class="brand-title">AI TOOL <b>GEMS</b><small>PAKISTAN</small></span>
     </a>
