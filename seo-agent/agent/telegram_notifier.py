@@ -31,11 +31,16 @@ class TelegramNotifier:
         chat_id: Optional[str] = None,
         timeout: int = 15,
     ):
-        self.bot_token = bot_token or os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+        self.bot_token = (
+            bot_token if bot_token is not None else os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+        )
         self.chat_id = (
             chat_id
-            or os.environ.get("TELEGRAM_OWNER_CHAT_ID", "").strip()
-            or os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+            if chat_id is not None
+            else (
+                os.environ.get("TELEGRAM_OWNER_CHAT_ID", "").strip()
+                or os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+            )
         )
         self.timeout = timeout
 
