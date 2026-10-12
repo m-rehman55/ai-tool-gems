@@ -194,6 +194,8 @@ class Crawler:
         for fpath in html_files:
             if any(part in fpath.parts for part in ignore_parts):
                 continue
+            if fpath.name.startswith("google") and fpath.name.endswith(".html"):
+                continue
 
             rel_path = fpath.relative_to(root).as_posix()
             if rel_path == "index.html":
