@@ -56,3 +56,8 @@ jobs:
       - name: Run Offline Repository Audit
         run: |
           python -m seo-agent.agent.main --mode audit
+
+      - name: Auto-Submit Updated URLs to IndexNow Protocol (Bing & Ahrefs)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          python scripts/submit_indexnow.py --all

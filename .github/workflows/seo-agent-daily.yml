@@ -69,6 +69,10 @@ jobs:
           LIVE_FLAG="${{ inputs.live_crawl && '--live' || '' }}"
           python -m seo-agent.agent.main --mode "$MODE" $LIVE_FLAG --report --json --telegram
 
+      - name: Auto-Submit Updated Pages to IndexNow Protocol (Bing & Ahrefs)
+        run: |
+          python scripts/submit_indexnow.py --all
+
       - name: Upload Daily SEO Growth Artifacts
         uses: actions/upload-artifact@v4
         if: always()
