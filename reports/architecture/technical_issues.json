@@ -1,0 +1,29 @@
+{
+  "audit_timestamp": "2026-10-12T07:50:00+05:00",
+  "scope": {
+    "domain": "https://aitoolgems.tech",
+    "total_pages_scanned": 57,
+    "total_links_mapped": 814
+  },
+  "summary": {
+    "broken_links_count": 0,
+    "orphan_pages_count": 0,
+    "deep_pages_count": 0,
+    "underlinked_pages_count": 0,
+    "canonical_issues_count": 0,
+    "duplicate_metadata_sets": 0
+  },
+  "broken_links": [],
+  "true_orphans": [],
+  "intentional_unlinked": [
+    [
+      "https://aitoolgems.tech/404.html",
+      "404.html",
+      "error_page",
+      false
+    ]
+  ],
+  "deep_pages": [],
+  "underlinked_pages": [],
+  "duplicate_metadata": []
+}
