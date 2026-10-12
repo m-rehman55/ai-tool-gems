@@ -36,6 +36,7 @@ from agent.safety_firewall import SafetyFirewall
 from agent.monitoring import PerformanceMonitor, PerformanceMetrics
 from agent.github_integration import GitHubIntegration
 from agent.reporting import ReportGenerator
+from agent.telegram_notifier import TelegramNotifier, TelegramNotificationResult
 
 class GrowthOrchestrator:
     """Master orchestrator executing the 10-step daily growth loop."""
@@ -45,9 +46,11 @@ class GrowthOrchestrator:
         config_path: Optional[Path | str] = None,
         mode: str = "AUDIT",
         live_crawl: bool = False,
+        send_telegram: bool = False,
     ):
         self.mode = mode.upper()
         self.live_crawl = live_crawl
+        self.send_telegram = send_telegram
         self.base_dir = Path(__file__).resolve().parent.parent.parent
 
         # Load configuration
@@ -76,6 +79,7 @@ class GrowthOrchestrator:
         self.monitor = PerformanceMonitor()
         self.github = GitHubIntegration(target_branch=self.config.get("agent", {}).get("target_branch", "main"))
         self.reporter = ReportGenerator(output_dir=self.base_dir / "seo-agent" / "reports")
+        self.telegram = TelegramNotifier()
 
     def run_preflight(self) -> bool:
         """Step 1: Preflight checks."""
@@ -228,6 +232,29 @@ class GrowthOrchestrator:
         saved_file = self.reporter.save_report(md_report)
         print(f"[OK] Daily report successfully written to: {saved_file}")
 
+        # Dispatch Telegram notification if requested or configured
+        telegram_res = None
+        if self.send_telegram or self.telegram.is_configured():
+            print("--> STEP 10b: Dispatching Telegram Report to Owner...")
+            telegram_res = self.telegram.format_and_send_summary(
+                mode=self.mode,
+                tech_score=tech_report.score,
+                pages_audited=tech_report.total_pages_audited,
+                clean_pages=tech_report.clean_pages_count,
+                issues_count=len(tech_report.issues),
+                scope_passed=scope_res.passed,
+                opportunities_count=len(ranked_opportunities),
+                impressions=metrics.total_impressions,
+                clicks=metrics.total_clicks,
+                report_url_or_path=str(saved_file),
+            )
+            if telegram_res.success:
+                print(f"[OK] Telegram report delivered to owner (Msg ID: {telegram_res.message_id})")
+            elif telegram_res.skipped:
+                print(f"[INFO] {telegram_res.error}")
+            else:
+                print(f"[WARN] Telegram delivery failed: {telegram_res.error}")
+
         elapsed_sec = (datetime.now() - run_start).total_seconds()
         print(f"[DONE] Workflow completed in {round(elapsed_sec, 2)}s.")
 
@@ -240,6 +267,7 @@ class GrowthOrchestrator:
             "report_path": str(saved_file),
             "opportunities_count": len(ranked_opportunities),
             "scope_passed": scope_res.passed,
+            "telegram_delivered": telegram_res.success if telegram_res else False,
             "metrics": {
                 "impressions": metrics.total_impressions,
                 "clicks": metrics.total_clicks,

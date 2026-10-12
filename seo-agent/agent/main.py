@@ -53,6 +53,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Print the generated Markdown report directly to stdout",
     )
+    parser.add_argument(
+        "--telegram",
+        action="store_true",
+        help="Send executive summary report to configured Telegram bot",
+    )
     return parser
 
 def main():
@@ -66,6 +71,7 @@ def main():
         config_path=args.config,
         mode=args.mode,
         live_crawl=args.live,
+        send_telegram=args.telegram,
     )
 
     result = orchestrator.execute_workflow()
