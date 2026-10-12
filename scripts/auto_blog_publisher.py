@@ -30,7 +30,26 @@ BASE = Path(__file__).resolve().parent.parent
 
 # Import validator
 sys.path.insert(0, str(BASE / "scripts"))
+sys.path.insert(0, str(BASE))
 from validate_content import validate_article_file, check_cannibalization
+from submit_indexnow import submit_to_indexnow
+
+
+def send_telegram_alert(text: str) -> bool:
+    """Send autonomous publishing notification to Telegram owner."""
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_OWNER_CHAT_ID") or os.environ.get("TELEGRAM_CHAT_ID")
+    if not token or not chat_id:
+        return False
+    try:
+        from marketing_agent.telegram import TelegramClient
+        tg = TelegramClient(token=token)
+        tg.send_with_retry(chat_id=chat_id, text=text)
+        print("✅ Telegram notification dispatched to owner.")
+        return True
+    except Exception as e:
+        print(f"⚠️ Telegram notice: {e}")
+        return False
 
 
 def query_gemini_api(prompt: str, api_key: str) -> str | None:
@@ -494,6 +513,17 @@ def run_publisher(dry_run: bool = True):
                 entry["last_updated"] = datetime.date.today().isoformat()
         map_file.write_text(json.dumps(k_data, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"✅ Updated keyword-map.json status to 'published'")
+
+    # Trigger IndexNow automatically for the new published article
+    try:
+        idx_res = submit_to_indexnow([new_loc])
+        print(f"⚡ IndexNow submission status: {idx_res.get('status')}")
+    except Exception as e:
+        print(f"⚠️ IndexNow notice: {e}")
+
+    # Dispatch Telegram alert to owner
+    msg = f"📰 *HERMES Content Agent: New Guide Published!*\n\n🎯 *Title:* {candidate['title']}\n🔗 *URL:* {new_loc}\n🇵🇰 *Focus:* {candidate['primary_keyword']}\n⚡ *Status:* Submitted to IndexNow & live on site."
+    send_telegram_alert(msg)
 
     print("\n🎉 Article successfully published and synchronized across the entire site.")
 
