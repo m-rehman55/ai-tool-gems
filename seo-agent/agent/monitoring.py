@@ -14,7 +14,7 @@ import urllib.request
 import urllib.error
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 @dataclass
 class SearchConsoleQuery:
@@ -94,8 +94,8 @@ class PerformanceMonitor:
             )
 
         # Date range
-        end_date = (datetime.utcnow() - timedelta(days=2)).strftime("%Y-%m-%d")
-        start_date = (datetime.utcnow() - timedelta(days=days + 2)).strftime("%Y-%m-%d")
+        end_date = (datetime.now(timezone.utc) - timedelta(days=2)).strftime("%Y-%m-%d")
+        start_date = (datetime.now(timezone.utc) - timedelta(days=days + 2)).strftime("%Y-%m-%d")
 
         api_url = f"https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(self.site_url, safe='')}/searchAnalytics/query"
         payload = json.dumps({
