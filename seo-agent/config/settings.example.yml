@@ -1,0 +1,58 @@
+# AIToolGems Autonomous Worldwide SEO & AI Search Growth Agent Configuration
+
+site:
+  base_url: "https://aitoolgems.tech"
+  name: "AI Tool Gems Pakistan"
+  market_primary: "PK"
+  currency_primary: "PKR"
+  contact_whatsapp: "+92 323 6715731"
+  allowed_payment_methods:
+    - "EasyPaisa"
+    - "JazzCash"
+    - "Bank Transfer"
+  prohibited_locales:
+    - "JP"
+    - "jp"
+    - "ja"
+  prohibited_currencies:
+    - "JPY"
+    - "¥"
+
+agent:
+  autonomy_mode: "PR"  # Modes: AUDIT (read-only), PROPOSE (local branch + patch), PR (create pull request)
+  max_pages_per_run: 100
+  request_timeout_seconds: 15
+  request_delay_seconds: 0.5
+  user_agent: "AIToolGems-GrowthAgent/1.0 (+https://aitoolgems.tech/robots.txt)"
+  branch_prefix: "seo-growth/"
+  target_branch: "main"
+
+safety:
+  enforce_scope_guard: true
+  enforce_zero_foreign_currency: true
+  block_price_auto_publish: true
+  block_destructive_commands: true
+  redact_secrets_in_logs: true
+  require_human_production_merge: true
+
+paths:
+  reports_dir: "seo-agent/reports"
+  logs_dir: "seo-agent/logs"
+  keyword_map_csv: "seo-agent/config/keyword-map.example.csv"
+  existing_keyword_map_json: "data/seo/keyword-map.json"
+  existing_url_inventory_json: "data/seo/url-inventory.json"
+
+integrations:
+  google_search_console:
+    enabled: true
+    site_url: "sc-domain:aitoolgems.tech"
+    client_id_env: "GSC_CLIENT_ID"
+    client_secret_env: "GSC_CLIENT_SECRET"
+    refresh_token_env: "GSC_REFRESH_TOKEN"
+  telegram:
+    enabled: true
+    bot_token_env: "TELEGRAM_BOT_TOKEN"
+    chat_id_env: "TELEGRAM_CHAT_ID"
+  github:
+    enabled: true
+    token_env: "GITHUB_TOKEN"
