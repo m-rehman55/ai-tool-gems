@@ -97,66 +97,68 @@ class PerformanceMonitor:
         end_date = (datetime.now(timezone.utc) - timedelta(days=2)).strftime("%Y-%m-%d")
         start_date = (datetime.now(timezone.utc) - timedelta(days=days + 2)).strftime("%Y-%m-%d")
 
-        api_url = f"https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(self.site_url, safe='')}/searchAnalytics/query"
-        payload = json.dumps({
-            "startDate": start_date,
-            "endDate": end_date,
-            "dimensions": ["query"],
-            "rowLimit": 15,
-        }).encode("utf-8")
+        candidate_urls = [
+            self.site_url,
+            "https://aitoolgems.tech/",
+            "https://aitoolgems.tech",
+            "sc-domain:aitoolgems.tech",
+        ]
+        # Deduplicate while preserving order
+        unique_candidates = list(dict.fromkeys(candidate_urls))
 
-        req = urllib.request.Request(
-            api_url,
-            data=payload,
-            headers={
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json",
-            },
-            method="POST",
-        )
+        last_error = None
+        for candidate in unique_candidates:
+            api_url = f"https://www.googleapis.com/webmasters/v3/sites/{urllib.parse.quote(candidate, safe='')}/searchAnalytics/query"
+            req = urllib.request.Request(
+                api_url,
+                data=payload,
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=12) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    rows = data.get("rows", [])
+                    
+                    total_impr = sum(int(r.get("impressions", 0)) for r in rows)
+                    total_clk = sum(int(r.get("clicks", 0)) for r in rows)
+                    avg_ctr = (total_clk / total_impr * 100.0) if total_impr > 0 else 0.0
+                    avg_pos = sum(float(r.get("position", 0)) for r in rows) / len(rows) if rows else 0.0
 
-        try:
-            with urllib.request.urlopen(req, timeout=12) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                rows = data.get("rows", [])
-                
-                total_impr = sum(int(r.get("impressions", 0)) for r in rows)
-                total_clk = sum(int(r.get("clicks", 0)) for r in rows)
-                avg_ctr = (total_clk / total_impr * 100.0) if total_impr > 0 else 0.0
-                avg_pos = sum(float(r.get("position", 0)) for r in rows) / len(rows) if rows else 0.0
+                    top_q = [
+                        SearchConsoleQuery(
+                            query=r.get("keys", [""])[0],
+                            clicks=int(r.get("clicks", 0)),
+                            impressions=int(r.get("impressions", 0)),
+                            ctr=round(float(r.get("ctr", 0)) * 100, 2),
+                            position=round(float(r.get("position", 0)), 1),
+                        )
+                        for r in rows
+                    ]
 
-                top_q = [
-                    SearchConsoleQuery(
-                        query=r.get("keys", [""])[0],
-                        clicks=int(r.get("clicks", 0)),
-                        impressions=int(r.get("impressions", 0)),
-                        ctr=round(float(r.get("ctr", 0)) * 100, 2),
-                        position=round(float(r.get("position", 0)), 1),
+                    return PerformanceMetrics(
+                        connected=True,
+                        site_url=candidate,
+                        total_impressions=total_impr,
+                        total_clicks=total_clk,
+                        average_ctr=round(avg_ctr, 2),
+                        average_position=round(avg_pos, 1),
+                        top_queries=top_q,
+                        status_message=f"Live GSC data retrieved ({len(rows)} queries, {total_impr} impressions)",
                     )
-                    for r in rows
-                ]
+            except urllib.error.HTTPError as e:
+                last_error = f"HTTP {e.code}"
+                continue
+            except Exception as e:
+                last_error = str(e)
+                continue
 
-                return PerformanceMetrics(
-                    connected=True,
-                    site_url=self.site_url,
-                    total_impressions=total_impr,
-                    total_clicks=total_clk,
-                    average_ctr=round(avg_ctr, 2),
-                    average_position=round(avg_pos, 1),
-                    top_queries=top_q,
-                    status_message=f"Live GSC data retrieved ({len(rows)} queries, {total_impr} impressions)",
-                )
-        except urllib.error.HTTPError as e:
-            return PerformanceMetrics(
-                connected=False,
-                site_url=self.site_url,
-                error=str(e),
-                status_message=f"GSC API error (HTTP {e.code})",
-            )
-        except Exception as e:
-            return PerformanceMetrics(
-                connected=False,
-                site_url=self.site_url,
-                error=str(e),
-                status_message="Failed to connect to GSC API",
-            )
+        return PerformanceMetrics(
+            connected=False,
+            site_url=self.site_url,
+            error=last_error,
+            status_message=f"GSC query failed ({last_error}) across all candidate properties",
+        )
