@@ -97,6 +97,13 @@ class PerformanceMonitor:
         end_date = (datetime.now(timezone.utc) - timedelta(days=2)).strftime("%Y-%m-%d")
         start_date = (datetime.now(timezone.utc) - timedelta(days=days + 2)).strftime("%Y-%m-%d")
 
+        payload = json.dumps({
+            "startDate": start_date,
+            "endDate": end_date,
+            "dimensions": ["query"],
+            "rowLimit": 15,
+        }).encode("utf-8")
+
         candidate_urls = [
             self.site_url,
             "https://aitoolgems.tech/",
