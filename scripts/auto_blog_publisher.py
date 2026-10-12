@@ -53,23 +53,39 @@ def send_telegram_alert(text: str) -> bool:
 
 
 def query_gemini_api(prompt: str, api_key: str) -> str | None:
-    """Optional dynamic generation using Google Gemini 1.5 Flash free tier."""
+    """Dynamic generation using Google Gemini 2.0 Flash (with 1.5 Pro and 1.5 Flash fallbacks)."""
     if not api_key:
         return None
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+
+    # Cascade of available free-tier Google Gemini models from most advanced to fallback
+    models_to_try = [
+        ("gemini-2.0-flash", "Google Gemini 2.0 Flash (Next-Gen State of the Art)"),
+        ("gemini-1.5-pro", "Google Gemini 1.5 Pro (Flagship Reasoning)"),
+        ("gemini-1.5-flash", "Google Gemini 1.5 Flash (Fast Fallback)")
+    ]
+
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"temperature": 0.4, "maxOutputTokens": 3000}
     }
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            res_json = json.loads(resp.read().decode("utf-8"))
-            return res_json["candidates"][0]["content"]["parts"][0]["text"]
-    except Exception as e:
-        print(f"⚠️ Gemini API notice: {e}. Using structured engine fallback.")
-        return None
+    headers = {"Content-Type": "application/json"}
+
+    for model_id, model_name in models_to_try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={api_key}"
+        req = urllib.request.Request(url, data=data, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                res_json = json.loads(resp.read().decode("utf-8"))
+                candidates = res_json.get("candidates", [])
+                if candidates and "content" in candidates[0]:
+                    print(f"✨ Successfully generated organic analysis using {model_name}.")
+                    return candidates[0]["content"]["parts"][0]["text"]
+        except Exception as e:
+            print(f"ℹ️ {model_name} notice: ({e}). Trying next tier model...")
+
+    print("⚠️ All Gemini API models skipped or quota reached. Using high-authority structured engine fallback.")
+    return None
 
 
 def load_queue_candidate() -> dict | None:
@@ -98,13 +114,93 @@ def load_queue_candidate() -> dict | None:
 
 
 def render_article_html(bp: dict) -> str:
-    """Generates a complete 1,500+ word semantic HTML guide with full JSON-LD schema."""
+    """Generates a complete 1,500+ word semantic HTML guide with full JSON-LD schema and dynamic organic keyword targeting."""
     slug = bp["slug"]
     title = bp["title"]
     desc = bp["meta_desc"]
     pk = bp["primary_keyword"]
+    sec_kws = bp.get("secondary_keywords", [])
     now_date = datetime.date.today().isoformat()
     
+    # Extract organic secondary keyword targets
+    sec1 = sec_kws[0] if len(sec_kws) > 0 else f"{pk} vs Alternatives"
+    sec2 = sec_kws[1] if len(sec_kws) > 1 else f"AI generator Pakistan"
+    sec3 = sec_kws[2] if len(sec_kws) > 2 else f"Buy {pk} PKR"
+    sec4 = sec_kws[3] if len(sec_kws) > 3 else f"{pk} price Pakistan"
+
+    # Optional dynamic editorial generation via Google Gemini 2.0 Flash
+    ai_extra_html = ""
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    if api_key:
+        prompt = (
+            f"You are a senior organic SEO tech journalist for aitoolgems.tech (Pakistan's AI tools marketplace).\n"
+            f"Write an authoritative, 500-word editorial analysis section for the article: '{title}'.\n"
+            f"Primary organic keyword: '{pk}'\n"
+            f"Secondary organic keywords to naturally weave into paragraphs: {', '.join(sec_kws)}\n"
+            f"Target Audience: {bp.get('target_audience', 'Pakistani freelancers and agencies')}\n"
+            f"Local Pakistani Context:\n"
+            f"- Transparent PKR pricing with EasyPaisa, JazzCash, SadaPay\n"
+            f"- Avoid international card declines and 10%-15% FBR withholding tax\n"
+            f"- Practical Upwork/Fiverr freelance and Pakistani agency workflows\n"
+            f"Format requirements:\n"
+            f"- Return ONLY clean semantic HTML (<p>, <h3>, <ul>, <li>).\n"
+            f"- DO NOT use <h1> or <h2> tags.\n"
+            f"- DO NOT wrap in markdown code blocks."
+        )
+        ai_resp = query_gemini_api(prompt, api_key)
+        if ai_resp:
+            clean_resp = re.sub(r"^```[a-z]*\s*", "", ai_resp.strip(), flags=re.IGNORECASE)
+            clean_resp = re.sub(r"\s*```$", "", clean_resp).strip()
+            ai_extra_html = f"""
+      <section class="content-section ai-editorial-insight">
+        <h2>In-Depth Technical Analysis &amp; Creator Insights</h2>
+        {clean_resp}
+      </section>"""
+
+    # Dynamic FAQ data targeting organic search queries
+    faq_data = [
+        {
+            "q": f"What is the verified cost of {pk} and {sec4} in Pakistan?",
+            "a": f"Official overseas subscriptions billed in USD incur bank forex conversion fees and 10% to 15% withholding taxes on Pakistani debit cards. AI Tool Gems provides verified subscriptions directly in flat Pakistani Rupees (PKR) without hidden charges."
+        },
+        {
+            "q": f"How does {sec1} compare for local creators and freelancers?",
+            "a": f"When comparing {sec1}, consider generation speed, prompt consistency, and commercial rights. Local freelancers on Upwork and Fiverr require tools with full client usage permissions and responsive customer support in Pakistan."
+        },
+        {
+            "q": f"Can I {sec3} using EasyPaisa or JazzCash?",
+            "a": f"Yes! While international platforms require foreign credit cards that often face declines, AI Tool Gems enables instant local activation in Pakistan using EasyPaisa, JazzCash, SadaPay, NayaPay, or direct bank transfer."
+        },
+        {
+            "q": f"Why is finding a reliable {sec2} crucial for Pakistani agencies?",
+            "a": f"Using a verified {sec2} ensures seamless workflow continuity, high-resolution rendering, and active 7-day replacement warranties, allowing local agencies to deliver client projects on schedule."
+        }
+    ]
+
+    # Render JSON-LD FAQ entities
+    faq_schema_items = []
+    for item in faq_data:
+        q_escaped = item['q'].replace('"', '\\"')
+        a_escaped = item['a'].replace('"', '\\"')
+        faq_schema_items.append(f"""        {{
+          "@type": "Question",
+          "name": "{q_escaped}",
+          "acceptedAnswer": {{
+            "@type": "Answer",
+            "text": "{a_escaped}"
+          }}
+        }}""")
+    faq_schema_str = ",\n".join(faq_schema_items)
+
+    # Render HTML FAQ accordion
+    faq_html_items = []
+    for item in faq_data:
+        faq_html_items.append(f"""        <div class="faq-item">
+          <h3>{item['q']}</h3>
+          <p>{item['a']}</p>
+        </div>""")
+    faq_accordion_html = "\n".join(faq_html_items)
+
     related_links_html = "\n".join([f'          <li><a href="../../tools/{k}/">{name} in Pakistan</a></li>' for k, name in bp["related_tools"]])
 
     html = f"""<!doctype html><html lang="en-PK"><head>
@@ -195,30 +291,7 @@ def render_article_html(bp: dict) -> str:
     {{
       "@type": "FAQPage",
       "mainEntity": [
-        {{
-          "@type": "Question",
-          "name": "What is the verified price of {pk} subscriptions in Pakistan?",
-          "acceptedAnswer": {{
-            "@type": "Answer",
-            "text": "Official international plans charged in USD incur forex margins and 10% to 15% card withholding taxes. AI Tool Gems provides verified rates directly in PKR with local payment."
-          }}
-        }},
-        {{
-          "@type": "Question",
-          "name": "Can I pay for {pk} using EasyPaisa or JazzCash?",
-          "acceptedAnswer": {{
-            "@type": "Answer",
-            "text": "Yes! AI Tool Gems enables instant local activation via EasyPaisa, JazzCash, SadaPay, NayaPay, and bank transfer without international credit card declines."
-          }}
-        }},
-        {{
-          "@type": "Question",
-          "name": "How fast is delivery and order confirmation in Pakistan?",
-          "acceptedAnswer": {{
-            "@type": "Answer",
-            "text": "All accounts, invitation seats, and license keys are delivered within 15 to 30 minutes via WhatsApp, supported by a 7-day replacement warranty."
-          }}
-        }}
+{faq_schema_str}
       ],
       "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
     }}
@@ -262,14 +335,14 @@ def render_article_html(bp: dict) -> str:
       </header>
 
       <section class="quick-summary">
-        <h2>Quick Answer &amp; Overview</h2>
+        <h2>Quick Answer &amp; Overview: {pk}</h2>
         <p>Finding affordable, reliable access to <strong>{pk}</strong> has become a crucial challenge for {bp["target_audience"]}. International billing in USD frequently leads to high forex conversion fees, bank withholding taxes, or outright transaction declines on Pakistani debit cards. This independent guide breaks down actual PKR costs, feature benchmarks, local payment methods (EasyPaisa, JazzCash, SadaPay), and how to verify subscription legitimacy before spending money.</p>
         <p>In Pakistan's fast-growing digital economy, freelancers working on Upwork and Fiverr, content creators scaling YouTube channels, and digital agencies need powerful generative tools without overpaying in foreign exchange fees. Our analysis examines the top alternatives, prompt accuracy, commercial usage rights, and straightforward ordering steps.</p>
       </section>
 
       <section class="content-section">
-        <h2>Understanding the Real Cost in Pakistan (USD vs PKR)</h2>
-        <p>When purchasing foreign software directly from vendor websites, Pakistani buyers face several hidden costs that significantly inflate the final expense:</p>
+        <h2>Understanding Real Costs: {sec4.title()} &amp; PKR Reality</h2>
+        <p>When investigating <strong>{sec4}</strong> or purchasing foreign software directly from vendor websites, Pakistani buyers face several hidden costs that significantly inflate the final expense:</p>
         <ul>
           <li><strong>Foreign Currency Transaction Fees:</strong> Most Pakistani commercial banks charge between 3.5% and 5.0% for foreign currency conversions on every overseas billing cycle.</li>
           <li><strong>Mandatory Withholding Tax:</strong> Under Federal Board of Revenue regulations, transactions on international merchants incur withholding taxes of up to 10% for active tax filers and up to 15% for non-filers.</li>
@@ -279,8 +352,8 @@ def render_article_html(bp: dict) -> str:
       </section>
 
       <section class="content-section">
-        <h2>Detailed Feature &amp; Performance Evaluation</h2>
-        <p>Evaluating tools in this category requires looking past marketing claims to examine practical output quality, rendering speed, and cost efficiency:</p>
+        <h2>Performance Evaluation: {sec1.title()}</h2>
+        <p>A rigorous evaluation of <strong>{sec1}</strong> requires looking past promotional marketing claims to examine practical output quality, rendering speed, and cost efficiency in Pakistan:</p>
         <ol>
           <li><strong>Prompt Comprehension &amp; Detail Fidelity:</strong> How accurately the engine renders intricate styling, lighting, and anatomy without distorting complex prompt instructions.</li>
           <li><strong>Rendering Speed &amp; Generation Credits:</strong> Turnaround time per request and the volume of generations available within standard monthly allowances.</li>
@@ -290,8 +363,8 @@ def render_article_html(bp: dict) -> str:
       </section>
 
       <section class="content-section">
-        <h2>Practical Use Cases for Pakistani Creators &amp; Agencies</h2>
-        <p>Different workflows require tailored tool selections across local professional sectors:</p>
+        <h2>Practical Workflows: {sec2.title()} for Local Creators</h2>
+        <p>Deploying a verified <strong>{sec2}</strong> workflow powers productivity across several Pakistani digital industries:</p>
         <ul>
           <li><strong>Freelance Designers on Fiverr &amp; Upwork:</strong> Delivering client logos, concept art, website banners, and marketing mockups on tight turnaround schedules.</li>
           <li><strong>YouTube &amp; Social Media Video Editors:</strong> Designing high-CTR video thumbnails, background art, and social media carousels that drive strong audience engagement.</li>
@@ -299,10 +372,11 @@ def render_article_html(bp: dict) -> str:
           <li><strong>Students &amp; Academic Researchers:</strong> Preparing visually engaging presentation decks and design portfolios on student-friendly PKR budgets.</li>
         </ul>
       </section>
+{ai_extra_html}
 
       <section class="content-section">
         <h2>Pre-Payment Verification &amp; Safety Checklist</h2>
-        <p>Before purchasing any digital subscription in Pakistan, always review these four safety benchmarks:</p>
+        <p>Before proceeding to <strong>{sec3}</strong> or purchasing any digital subscription in Pakistan, always review these four safety benchmarks:</p>
         <ol>
           <li><strong>Verify Access Type:</strong> Distinguish between Private Account credentials (your own profile), Team Invitation access, and official License Keys.</li>
           <li><strong>Inspect Warranty Coverage:</strong> Never buy digital access without an explicit, documented replacement warranty (e.g., 7-day or 30-day warranty).</li>
@@ -325,7 +399,7 @@ def render_article_html(bp: dict) -> str:
 
       <section class="content-section">
         <h2>Comparison Matrix: Features, Access &amp; Pakistani PKR Rates</h2>
-        <p>To help you choose the best match for your specific workload, compare the key factors below:</p>
+        <p>To help you compare options including <strong>{sec1}</strong>, review the key factors below:</p>
         <div class="table-wrap">
           <table>
             <thead>
@@ -389,18 +463,7 @@ def render_article_html(bp: dict) -> str:
 
       <section class="faq-section">
         <h2>Frequently Asked Questions</h2>
-        <div class="faq-item">
-          <h3>What is the real cost of AI subscriptions in Pakistan?</h3>
-          <p>Official USD prices incur bank exchange fees and withholding taxes on Pakistani cards. AI Tool Gems provides verified subscriptions directly in flat Pakistani Rupees (PKR) with local payment via EasyPaisa and JazzCash.</p>
-        </div>
-        <div class="faq-item">
-          <h3>Can I pay for modern AI subscriptions using EasyPaisa or JazzCash?</h3>
-          <p>Yes! While overseas platforms require international credit cards, AI Tool Gems enables instant activation in Pakistan using EasyPaisa, JazzCash, SadaPay, NayaPay, or direct bank transfer.</p>
-        </div>
-        <div class="faq-item">
-          <h3>How fast is delivery and order activation in Pakistan?</h3>
-          <p>All software licenses, account invitations, and private profiles are verified and delivered within 15 to 30 minutes via WhatsApp, backed by an active 7-day replacement warranty.</p>
-        </div>
+{faq_accordion_html}
       </section>
     </article>
   </main>
