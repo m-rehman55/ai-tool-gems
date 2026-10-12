@@ -1,0 +1,68 @@
+name: AIToolGems Autonomous Daily Blog Publisher
+
+on:
+  schedule:
+    # Runs at 09:00 PKT (04:00 UTC) every Monday, Wednesday, Friday
+    - cron: "0 4 * * 1,3,5"
+  workflow_dispatch:
+    inputs:
+      force_publish:
+        description: "Force publish next approved queue candidate"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-blog-publisher-state
+  cancel-in-progress: false
+
+jobs:
+  publish-guide:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      ATG_TIMEZONE: Asia/Karachi
+      ATG_SITE_URL: https://aitoolgems.tech
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: "seo-agent/requirements.txt"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r seo-agent/requirements.txt
+
+      - name: Run Autonomous Blog Publisher
+        run: |
+          python scripts/auto_blog_publisher.py --publish
+
+      - name: Commit and Push Newly Published Guide
+        shell: bash
+        run: |
+          git config user.name "AI Tool Gems Content Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add guides/ sitemap.xml llms.txt data/seo/
+          if git diff --cached --quiet; then
+            echo "ℹ️ No changes to commit (queue empty or topic already live)."
+            exit 0
+          fi
+          git commit -m "feat(content): publish autonomous SEO guide via content engine"
+          git pull --rebase origin main
+          git push origin main
