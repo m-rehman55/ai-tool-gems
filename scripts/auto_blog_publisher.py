@@ -91,7 +91,7 @@ def query_gemini_api(prompt: str, api_key: str) -> str | None:
 def load_queue_candidate() -> dict | None:
     """Load next eligible, approved topic from content queue."""
     queue_file = BASE / "data" / "seo" / "content-queue.json"
-    published_slugs = {p.name for p in (BASE / "guides").glob("*/index.html")}
+    published_slugs = {p.parent.name for p in (BASE / "guides").glob("*/index.html")}
 
     if queue_file.exists():
         queue_data = json.loads(queue_file.read_text(encoding="utf-8"))
@@ -563,6 +563,16 @@ def run_publisher(dry_run: bool = True):
             g_txt = g_txt.replace('<section class="guide-grid" aria-label="Available guides">\n', '<section class="guide-grid" aria-label="Available guides">\n' + card_html)
             guides_index.write_text(g_txt, encoding="utf-8")
             print(f"✅ Injected new guide card into guides/index.html")
+
+    # Update blog/index.html articles grid
+    blog_index = BASE / "blog" / "index.html"
+    if blog_index.exists():
+        b_txt = blog_index.read_text(encoding="utf-8")
+        if candidate["slug"] not in b_txt and '<div class="blog-articles">\n' in b_txt:
+            b_card = f"""        <article style="background: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid rgba(43,91,74,0.12); margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);"><p style="font-size: 0.75rem; font-weight: 700; color: #2f9f88; text-transform: uppercase; margin-bottom: 6px;">EDITORIAL GUIDE</p><h3 style="font-size: 1.25rem; margin-bottom: 8px;"><a href="../guides/{candidate['slug']}/" style="color: #173c35; text-decoration: none; font-weight: 700;">{candidate['title']}</a></h3><p style="color: #61766e; font-size: 0.95rem; line-height: 1.5;">{candidate['meta_desc']}</p><a href="../guides/{candidate['slug']}/" style="display: inline-block; margin-top: 10px; color: #2f9f88; font-weight: 600; text-decoration: none;">Read article &rarr;</a></article>\n"""
+            b_txt = b_txt.replace('<div class="blog-articles">\n', '<div class="blog-articles">\n' + b_card)
+            blog_index.write_text(b_txt, encoding="utf-8")
+            print(f"✅ Injected new article link into blog/index.html")
 
     # Update data/seo/keyword-map.json
     map_file = BASE / "data" / "seo" / "keyword-map.json"

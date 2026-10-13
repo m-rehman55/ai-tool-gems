@@ -2,8 +2,8 @@ name: AIToolGems Autonomous Daily Blog Publisher
 
 on:
   schedule:
-    # Runs at 09:00 PKT (04:00 UTC) every Monday, Wednesday, Friday
-    - cron: "0 4 * * 1,3,5"
+    # Runs daily at 09:00 PKT (04:00 UTC)
+    - cron: "0 4 * * *"
   workflow_dispatch:
     inputs:
       force_publish:
@@ -58,7 +58,7 @@ jobs:
         run: |
           git config user.name "AI Tool Gems Content Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add guides/ sitemap.xml llms.txt data/seo/
+          git add guides/ blog/ sitemap.xml llms.txt data/seo/
           if git diff --cached --quiet; then
             echo "ℹ️ No changes to commit (queue empty or topic already live)."
             exit 0
