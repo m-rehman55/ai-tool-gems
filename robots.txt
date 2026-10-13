@@ -4,6 +4,9 @@ Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
+Disallow: /.seo-cache/
+Disallow: /reports/
+Disallow: /scratch/
 
 User-agent: GPTBot
 User-agent: ChatGPT-User
@@ -16,6 +19,9 @@ Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
+Disallow: /.seo-cache/
+Disallow: /reports/
+Disallow: /scratch/
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
 
