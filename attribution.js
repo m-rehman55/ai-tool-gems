@@ -196,11 +196,11 @@
   if (!/\/admin\.html$/i.test(window.location.pathname) && !document.querySelector('script[data-aitg-chatbot]')) {
     const chatbotStyles = document.createElement('link');
     chatbotStyles.rel = 'stylesheet';
-    chatbotStyles.href = '/chatbot/widget.css';
+    chatbotStyles.href = '/chatbot/widget.css?v=2';
     chatbotStyles.dataset.aitgChatbot = 'true';
     document.head.appendChild(chatbotStyles);
     const chatbotScript = document.createElement('script');
-    chatbotScript.src = '/chatbot/widget.js';
+    chatbotScript.src = '/chatbot/widget.js?v=2';
     chatbotScript.defer = true;
     chatbotScript.dataset.aitgChatbot = 'true';
     document.head.appendChild(chatbotScript);
