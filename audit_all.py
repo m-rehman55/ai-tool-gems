@@ -107,10 +107,10 @@ def check_file(filepath, rel_path):
         if '/tools/' in name:
             issues.append(f"⚠️  {name}: No Organization/LocalBusiness schema")
     
-    # 18. Check for FAQ schema on homepage
-    if name == 'index.html' or name.endswith('/index.html'):
-        if '"@type": "FAQPage"' not in html:
-            issues.append(f"⚠️  {name}: No FAQPage schema")
+    # 18. FAQPage is deliberately not required. Google limits FAQ rich
+    # results to well-known authoritative government and health sites.
+    # Visible FAQ content remains useful to readers without forcing an
+    # ineligible rich-result implementation onto ordinary marketplace pages.
 
 # Check all HTML files (excluding hidden directories)
 html_files = sorted([f for f in BASE.rglob("*.html") if not any(part.startswith(".") for part in f.parts)])
