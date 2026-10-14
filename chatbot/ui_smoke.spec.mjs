@@ -7,7 +7,7 @@ test('chatbot controls, request recovery, and mobile reachability', async ({ bro
   const errors = [];
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto(site, { waitUntil: 'networkidle', timeout: 30000 });
+  await page.goto(site, { waitUntil: 'domcontentloaded', timeout: 30000 });
   await expect(page.locator('.aitg-chatbot')).toHaveCount(1);
   const launch = page.locator('.aitg-chatbot-launch');
   const panel = page.locator('.aitg-chatbot-panel');
@@ -36,7 +36,8 @@ test('chatbot controls, request recovery, and mobile reachability', async ({ bro
   await page.unroute('**/api/chat');
 
   const mobile = await browser.newPage({ viewport: { width: 375, height: 667 } });
-  await mobile.goto(site, { waitUntil: 'networkidle', timeout: 30000 });
+  await mobile.goto(site, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await expect(mobile.locator('.aitg-chatbot')).toHaveCount(1);
   await mobile.locator('.aitg-chatbot-launch').click();
   for (const selector of ['.aitg-chatbot-form textarea', '.aitg-chatbot-send', '.aitg-chatbot-minimize', '.aitg-chatbot-close']) {
     const box = await mobile.locator(selector).boundingBox();
