@@ -8,6 +8,7 @@
 .DS_Store
 Thumbs.db
 .env
+/chatbot-worker/.wrangler/
 marketing_agent/data/*.db
 marketing_agent/data/*.db-*
 marketing_agent/exports/
