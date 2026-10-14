@@ -2,7 +2,7 @@
   'use strict';
   if (window.__AITG_CHATBOT__) return;
   window.__AITG_CHATBOT__ = true;
-  var API = window.AITG_CHATBOT_API || '/api/chat';
+  var API = window.AITG_CHATBOT_API || 'https://aitoolgems-chatbot.mrehmanfarooq6.workers.dev/api/chat';
   var WA = 'https://wa.me/923236715731?text=' + encodeURIComponent('Hello AI Tool Gems, I need help choosing a tool or checking an order.');
   var labels = {
     en: { button: 'AI chat', title: 'AI Tool Gems assistant', intro: 'Ask about current PKR tools, budgets, policies, or guides. I will link sources and avoid guessing.', placeholder: 'Ask in English…', send: 'Send', mic: 'Voice input', stop: 'Stop listening', whatsapp: 'Human WhatsApp support', unavailable: 'Text chat is available if voice is not supported.', loading: 'Checking verified site information…' },

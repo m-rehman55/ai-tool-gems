@@ -24,6 +24,6 @@ Do not put the key in `vars`, frontend JavaScript, Git, or the static site. The 
 npx wrangler deploy
 ```
 
-Attach the Worker route `aitoolgems.tech/api/chat` in Cloudflare. The widget already calls `/api/chat`, so no frontend key or provider URL is required. Use the same Worker for preview with a preview origin and set `PUBLIC_ORIGIN` accordingly.
+The production widget calls the free `workers.dev` endpoint configured in `chatbot/widget.js`. A custom `aitoolgems.tech/api/chat` route is not configured because the domain is not hosted as a zone in this Cloudflare account. If DNS is later moved to Cloudflare, the route can be changed to same-origin without exposing any key.
 
 The free tier has quotas and the in-memory rate limiter resets when isolates restart. For higher-risk production order data, add a separate authenticated order service; do not extend this public endpoint with admin mutations.
