@@ -29,3 +29,7 @@ npx wrangler deploy
 The production widget calls the free `workers.dev` endpoint configured in `chatbot/widget.js`. A custom `aitoolgems.tech/api/chat` route is not configured because the domain is not hosted as a zone in this Cloudflare account. If DNS is later moved to Cloudflare, the route can be changed to same-origin without exposing any key.
 
 The free tier has quotas and the in-memory rate limiter resets when isolates restart. The widget stores only the current conversation in memory (not localStorage) and sends only a short, secret-filtered context window. Aggregate chatbot event names use the site analytics hook; message text is not tracked. For higher-risk production order data, add a separate authenticated order service; do not extend this public endpoint with admin mutations.
+
+## Browser smoke test
+
+When Playwright and Chromium are available, run the production UI smoke test from the repository root with `npx playwright test chatbot/ui_smoke.spec.mjs`. It covers open, minimize, restore, successful send, network-failure recovery, close/reopen, duplicate-widget protection, and mobile button reachability.
