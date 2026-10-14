@@ -192,4 +192,18 @@
     trackViewItem();
   }
 
+  // Shared source-based assistant. Keep the private admin portal out of the public widget.
+  if (!/\/admin\.html$/i.test(window.location.pathname) && !document.querySelector('script[data-aitg-chatbot]')) {
+    const chatbotStyles = document.createElement('link');
+    chatbotStyles.rel = 'stylesheet';
+    chatbotStyles.href = '/chatbot/widget.css';
+    chatbotStyles.dataset.aitgChatbot = 'true';
+    document.head.appendChild(chatbotStyles);
+    const chatbotScript = document.createElement('script');
+    chatbotScript.src = '/chatbot/widget.js';
+    chatbotScript.defer = true;
+    chatbotScript.dataset.aitgChatbot = 'true';
+    document.head.appendChild(chatbotScript);
+  }
+
 })();

@@ -1,0 +1,35 @@
+name: Chatbot validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "chatbot/**"
+      - "chatbot-worker/**"
+      - "attribution.js"
+      - ".github/workflows/chatbot-validation.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "chatbot/**"
+      - "chatbot-worker/**"
+      - "attribution.js"
+      - ".github/workflows/chatbot-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check widget syntax
+        run: node --check chatbot/widget.js
+      - name: Run Worker tests
+        working-directory: chatbot-worker
+        run: npm test
