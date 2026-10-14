@@ -14,7 +14,7 @@ const KNOWLEDGE = [
 ];
 
 function json(data, status = 200, origin = DEFAULT_ORIGIN) {
-  return new Response(JSON.stringify(data), {
+  return new Response(status === 204 ? null : JSON.stringify(data), {
     status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
@@ -67,15 +67,19 @@ function sourceLink(path, origin = DEFAULT_ORIGIN) {
 
 function findMatches(question, products) {
   const q = normalize(question);
-  const budget = q.match(/(?:under|below|budget|within|less than|rs|pkr)\s*(?:rs\.?|pkr)?\s*([\d,]+)/i);
-  const max = budget ? Number(budget[1].replace(/,/g, '')) : null;
-  const words = q.split(/\s+/).filter(word => word.length > 2);
-  return products
+  const rawQuestion = String(question || '');
+  const budget = rawQuestion.match(/(?:under|below|budget|within|less than|rs|pkr)\s*(?:rs\.?|pkr)?\s*([\d][\d,\s]*)/i);
+  const max = budget ? Number(budget[1].replace(/[\s,]/g, '')) : null;
+  const stopWords = new Set(['what', 'can', 'you', 'help', 'me', 'with', 'the', 'and', 'for', 'how', 'please', 'batao', 'mujhe', 'hai', 'mera', 'best', 'tool', 'tools']);
+  const words = q.split(/\s+/).filter(word => word.length > 2 && !stopWords.has(word));
+  const matches = products
     .map(product => ({ product, score: words.reduce((score, word) => score + (normalize(`${product.name} ${product.category} ${product.description}`).includes(word) ? 1 : 0), 0) }))
     .filter(item => item.score > 0 && (max === null || item.product.price <= max))
     .sort((a, b) => b.score - a.score || a.product.price - b.product.price)
     .slice(0, 5)
     .map(item => item.product);
+  if (!matches.length && max !== null) return products.filter(product => product.price <= max).sort((a, b) => a.price - b.price).slice(0, 5);
+  return matches;
 }
 
 function localizedPolicyText(item, language) {
@@ -94,6 +98,15 @@ function localizedPolicyText(item, language) {
 
 function deterministicAnswer(question, products, origin, language) {
   const q = normalize(question);
+  const generalHelp = /what can you help|how can you help|help me|aap kya|kis tarah madad/.test(q);
+  const policyIntent = /faq|frequently|delivery|payment|refund|warranty|access|privacy|order|support|policy|status|وارنٹی|ادائیگی|ڈیلیوری|رازداری|آرڈر/.test(q);
+  const comparisonIntent = /compare|comparison|versus|\bvs\b|muqabla|موازنہ/.test(q);
+  if (generalHelp) return { answer: language === 'roman-ur' ? 'Main current PKR listings compare, budget ke mutabiq tools recommend, product pages aur guides se maloomat, delivery/payment/warranty policies, aur human WhatsApp support provide kar sakta hoon. Price, availability ya order status guess nahi karunga.' : language === 'ur' ? 'میں موجودہ PKR فہرست کا موازنہ، بجٹ کے مطابق سفارش، پروڈکٹ پیجز اور گائیڈز کی معلومات، ڈیلیوری/ادائیگی/وارنٹی پالیسی اور انسانی WhatsApp مدد فراہم کر سکتا ہوں۔ قیمت، دستیابی یا آرڈر اسٹیٹس کا اندازہ نہیں لگاؤں گا۔' : 'I can compare current PKR listings, recommend tools by budget, explain product pages and guides, answer delivery/payment/warranty questions, and connect you to human WhatsApp support. I will not guess prices, availability, or order status.', sources: [{ title: 'Browse the catalog', url: sourceLink('/', origin) }, { title: 'WhatsApp support', url: DEFAULT_WHATSAPP }] };
+  if (policyIntent && !comparisonIntent && !/(?:price|cost|قیمت|دام)/.test(q)) {
+    const item = q.includes('refund') || q.includes('return') ? KNOWLEDGE.find(entry => entry.title === 'Terms of service') : q.includes('privacy') || q.includes('رازداری') ? KNOWLEDGE.find(entry => entry.title === 'Privacy policy') : q.includes('delivery') || q.includes('ڈیلیوری') ? KNOWLEDGE.find(entry => entry.title === 'Store policies') : KNOWLEDGE.find(entry => normalize(`${entry.title} ${entry.text}`).split(' ').some(word => word.length > 3 && q.includes(word))) || KNOWLEDGE[0];
+    const confirmation = language === 'roman-ur' ? 'Payment se pehle exact product terms human support se confirm karein.' : language === 'ur' ? 'ادائیگی سے پہلے انسانی مدد سے پروڈکٹ کی درست شرائط کی تصدیق کریں۔' : 'Please confirm the exact product terms with human support before payment.';
+    return { answer: `${localizedPolicyText(item, language)}\n\n${confirmation}`, sources: [{ title: item.title, url: sourceLink(item.url, origin) }, { title: 'WhatsApp support', url: DEFAULT_WHATSAPP }] };
+  }
   const matches = findMatches(question, products);
   const links = [];
   if (/order|buy|purchase|khareed|mangwana|whatsapp|support|help/.test(q)) links.push({ title: 'WhatsApp human support', url: DEFAULT_WHATSAPP });
@@ -105,10 +118,11 @@ function deterministicAnswer(question, products, origin, language) {
     const lines = matches.map(product => `• ${product.name} — Rs. ${product.price.toLocaleString('en-PK')} | ${product.duration} | ${product.access} | delivery ${product.delivery} | warranty ${product.warranty}\n  ${sourceLink(product.url, origin)}`);
     const intro = language === 'roman-ur' ? 'Aap ke sawal ke mutabiq current catalog matches (payment se pehle availability confirm karein):' : language === 'ur' ? 'آپ کے سوال کے مطابق موجودہ کیٹلاگ نتائج (ادائیگی سے پہلے دستیابی کی تصدیق کریں):' : 'Current catalog matches (please reconfirm availability before payment):';
     const note = language === 'roman-ur' ? 'Prices aur access terms badal sakte hain; final offer WhatsApp par confirm hota hai.' : language === 'ur' ? 'قیمتیں اور رسائی کی شرائط بدل سکتی ہیں؛ حتمی پیشکش WhatsApp پر تصدیق ہوتی ہے۔' : 'Prices and access terms can change; WhatsApp confirmation controls the final offer.';
-    return { answer: `${intro}\n${lines.join('\n')}\n\n${note}`, sources: matches.map(product => ({ title: product.name, url: sourceLink(product.url, origin) })).concat(links) };
+    const heading = comparisonIntent ? (language === 'roman-ur' ? 'Aap ke tools ka comparison:' : language === 'ur' ? 'آپ کے ٹولز کا موازنہ:' : 'Your tool comparison:') : intro;
+    return { answer: `${heading}\n${lines.join('\n')}\n\n${note}`, sources: matches.map(product => ({ title: product.name, url: sourceLink(product.url, origin) })).concat(links) };
   }
-  if (/faq|frequently|delivery|payment|refund|warranty|access|privacy|order|support|policy|وارنٹی|ادائیگی|ڈیلیوری|رازداری|آرڈر/.test(q)) {
-    const item = KNOWLEDGE.find(entry => normalize(`${entry.title} ${entry.text}`).split(' ').some(word => word.length > 3 && q.includes(word))) || KNOWLEDGE[0];
+  if (policyIntent) {
+    const item = q.includes('refund') || q.includes('return') ? KNOWLEDGE.find(entry => entry.title === 'Terms of service') : q.includes('privacy') || q.includes('رازداری') ? KNOWLEDGE.find(entry => entry.title === 'Privacy policy') : KNOWLEDGE.find(entry => normalize(`${entry.title} ${entry.text}`).split(' ').some(word => word.length > 3 && q.includes(word))) || KNOWLEDGE[0];
     const confirmation = language === 'roman-ur' ? 'Payment se pehle exact product terms human support se confirm karein.' : language === 'ur' ? 'ادائیگی سے پہلے انسانی مدد سے پروڈکٹ کی درست شرائط کی تصدیق کریں۔' : 'Please confirm the exact product terms with human support before payment.';
     return { answer: `${localizedPolicyText(item, language)}\n\n${confirmation}`, sources: [{ title: item.title, url: sourceLink(item.url, origin) }, { title: 'WhatsApp support', url: DEFAULT_WHATSAPP }] };
   }
