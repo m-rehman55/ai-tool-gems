@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test_worker.mjs"
+    "test": "node --test test_worker.mjs",
+    "validate-catalog": "node validate_catalog.mjs"
   }
 }

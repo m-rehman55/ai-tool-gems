@@ -37,6 +37,14 @@ function containsSensitiveInput(text) {
   return /(password|passcode|one[- ]?time|otp|cvv|cvc|card number|api[_ -]?key|secret|token)\s*[:=]?/i.test(text);
 }
 
+function safeHistory(value) {
+  if (!Array.isArray(value)) return [];
+  return value.slice(-6)
+    .filter(item => item && (item.role === 'user' || item.role === 'assistant'))
+    .map(item => ({ role: item.role, content: String(item.content || '').slice(0, 600) }))
+    .filter(item => item.content && !containsSensitiveInput(item.content));
+}
+
 function normalize(text) {
   return String(text || '').toLowerCase().replace(/[^\p{L}\p{N}\s.-]/gu, ' ');
 }
@@ -136,11 +144,12 @@ function languageInstruction(language) {
   return 'Reply in clear English.';
 }
 
-async function modelAnswer(question, language, context, env) {
+async function modelAnswer(question, language, context, history, env) {
   if (!env.GEMINI_API_KEY) return null;
   const model = env.GEMINI_MODEL || 'gemini-2.0-flash';
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(env.GEMINI_API_KEY)}`;
-  const prompt = `You are the AI Tool Gems Pakistan shopping assistant. ${languageInstruction(language)} Answer only from the supplied context. Never invent prices, availability, warranties, delivery times, payment acceptance, product features, or order status. If the context is insufficient, say so and link human WhatsApp support. Do not request or process passwords, OTPs, card details, API keys, or secrets. Keep the answer concise and include relevant source URLs.\n\nCONTEXT:\n${context}\n\nQUESTION:\n${question}`;
+  const prior = history.length ? `\n\nRECENT NON-SENSITIVE CONTEXT:\n${history.map(item => `${item.role}: ${item.content}`).join('\n')}` : '';
+  const prompt = `You are the AI Tool Gems Pakistan shopping assistant. ${languageInstruction(language)} Answer only from the supplied context. Never invent prices, availability, warranties, delivery times, payment acceptance, product features, or order status. If the context is insufficient, say so and link human WhatsApp support. Do not request or process passwords, OTPs, card details, API keys, or secrets. Keep the answer concise and include relevant source URLs.\n\nCONTEXT:\n${context}${prior}\n\nQUESTION:\n${question}`;
   const response = await fetch(endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.1, maxOutputTokens: 500 } }) });
   if (!response.ok) return null;
   const data = await response.json();
@@ -169,6 +178,7 @@ export default {
     try { body = await request.json(); } catch { return json({ error: 'Invalid JSON' }, 400, origin); }
     const question = String(body?.message || '').trim();
     const language = ['en', 'roman-ur', 'ur'].includes(body?.language) ? body.language : 'en';
+    const history = safeHistory(body?.history);
     if (!question || question.length > 800) return json({ error: 'Please send a question up to 800 characters.' }, 400, origin);
     if (containsSensitiveInput(question)) return json({ answer: 'Please do not send passwords, OTPs, card details, API keys, or other secrets. For secure order help, contact human support on WhatsApp.', sources: [{ title: 'WhatsApp support', url: DEFAULT_WHATSAPP }] }, 200, origin);
     try {
@@ -176,7 +186,7 @@ export default {
       const deterministic = deterministicAnswer(question, products, env.PUBLIC_ORIGIN || DEFAULT_ORIGIN, language);
       const matched = findMatches(question, products);
       const context = [...matched.map(product => `${product.name}: Rs. ${product.price}; ${product.duration}; ${product.access}; delivery ${product.delivery}; warranty ${product.warranty}; page ${sourceLink(product.url, env.PUBLIC_ORIGIN || DEFAULT_ORIGIN)}`), ...KNOWLEDGE.map(item => `${item.title}: ${item.text} Source: ${sourceLink(item.url, env.PUBLIC_ORIGIN || DEFAULT_ORIGIN)}`)].join('\n');
-      const generated = await modelAnswer(question, language, context, env);
+      const generated = await modelAnswer(question, language, context, history, env);
       return json({ answer: generated || deterministic.answer, sources: deterministic.sources, generated: Boolean(generated), updated: new Date().toISOString() }, 200, origin);
     } catch (error) {
       return json({ answer: 'The catalog is temporarily unavailable. I will not guess the answer. Please use WhatsApp support for current prices, availability, or order help.', sources: [{ title: 'WhatsApp support', url: DEFAULT_WHATSAPP }], error: env.DEBUG === 'true' ? error.message : undefined }, 200, origin);
