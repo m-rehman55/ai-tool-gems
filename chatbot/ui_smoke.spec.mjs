@@ -43,6 +43,15 @@ test('chatbot controls, request recovery, and mobile reachability', async ({ bro
     const box = await mobile.locator(selector).boundingBox();
     expect(box && box.x >= 0 && box.y >= 0 && box.x + box.width <= 375 && box.y + box.height <= 667).toBeTruthy();
   }
+  await mobile.locator('.aitg-chatbot-form textarea').fill('What can you help me with?');
+  await mobile.locator('.aitg-chatbot-send').click();
+  await expect(mobile.locator('.aitg-chatbot-message.bot').filter({ hasText: 'current PKR' })).toBeVisible({ timeout: 30000 });
+  await mobile.locator('.aitg-chatbot-minimize').click();
+  await expect(mobile.locator('.aitg-chatbot-panel')).toBeHidden();
+  await mobile.locator('.aitg-chatbot-launch').click();
+  await expect(mobile.locator('.aitg-chatbot-panel')).toBeVisible();
+  await mobile.locator('.aitg-chatbot-close').click();
+  await expect(mobile.locator('.aitg-chatbot-panel')).toBeHidden();
   expect(errors).toEqual([]);
   await mobile.close();
   await page.close();
