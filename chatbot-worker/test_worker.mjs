@@ -61,6 +61,7 @@ test('routes order status requests to human support', async () => {
   const response = await worker.fetch(request('Meri payment aur order status check karo.', 'en'), { PUBLIC_ORIGIN: 'https://aitoolgems.tech', CATALOG_URL: 'https://aitoolgems.tech/app.js' });
   const body = await response.json();
   assert.match(body.answer, /WhatsApp|human|order status/i);
+  assert.match(body.answer, /cannot access|private|password|OTP/i);
   assert.ok(body.sources.some(source => source.url.includes('wa.me')));
 });
 
