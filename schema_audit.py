@@ -135,6 +135,17 @@ def audit_page(page_path: Path) -> dict:
         if '"@type": "Product"' in html:
             result["max_score"] += 10
             result["score"] += 10
+            # Validate Merchant Listing Offer fields
+            if '"validFrom"' in html:
+                result["max_score"] += 5
+                result["score"] += 5
+            else:
+                result["warnings"].append("Missing validFrom in Product offer schema")
+            if '"priceValidUntil"' in html:
+                result["max_score"] += 5
+                result["score"] += 5
+            else:
+                result["warnings"].append("Missing priceValidUntil in Product offer schema")
         else:
             result["warnings"].append("Missing Product schema")
 
