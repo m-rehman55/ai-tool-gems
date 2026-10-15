@@ -11,10 +11,16 @@ for t in tools:
     # 1. Update last_verified meta
     c = re.sub(r'<meta name="last_verified" content="[^"]*">', '<meta name="last_verified" content="2026-10-10">', c)
     
-    # 2. Ensure priceValidUntil is present in the Offer schema if not already present
-    if '"priceValidUntil"' not in c:
+    # 2. Ensure validFrom and priceValidUntil are present in the Offer schema
+    if '"validFrom"' not in c:
         c = re.sub(
             r'("price":\s*"[^"]*",)(\s*"availability")',
+            r'\1\n        "validFrom": "2026-09-11",\2',
+            c
+        )
+    if '"priceValidUntil"' not in c:
+        c = re.sub(
+            r'("validFrom":\s*"[^"]*",)(\s*"availability")',
             r'\1\n        "priceValidUntil": "2026-12-31",\2',
             c
         )
