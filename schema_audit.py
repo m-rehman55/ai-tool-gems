@@ -146,6 +146,17 @@ def audit_page(page_path: Path) -> dict:
                 result["score"] += 5
             else:
                 result["warnings"].append("Missing priceValidUntil in Product offer schema")
+            # Validate Product Snippets review and aggregateRating
+            if '"review"' in html:
+                result["max_score"] += 5
+                result["score"] += 5
+            else:
+                result["warnings"].append("Missing review in Product schema")
+            if '"aggregateRating"' in html:
+                result["max_score"] += 5
+                result["score"] += 5
+            else:
+                result["warnings"].append("Missing aggregateRating in Product schema")
         else:
             result["warnings"].append("Missing Product schema")
 
