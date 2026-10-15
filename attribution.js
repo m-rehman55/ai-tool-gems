@@ -63,15 +63,21 @@
     });
   }
 
-  // GA4 initialization
+  // GA4 initialization: keep the queue available immediately, but defer the
+  // third-party download until the browser is idle so it cannot compete with LCP.
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   window.gtag('js', new Date());
   window.gtag('config', MEASUREMENT_ID, { send_page_view: true });
-  const analyticsScript = document.createElement('script');
-  analyticsScript.async = true;
-  analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
-  document.head.appendChild(analyticsScript);
+  function loadAnalytics() {
+    if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}"]`)) return;
+    const analyticsScript = document.createElement('script');
+    analyticsScript.async = true;
+    analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
+    document.head.appendChild(analyticsScript);
+  }
+  if ('requestIdleCallback' in window) requestIdleCallback(loadAnalytics, { timeout: 3500 });
+  else setTimeout(loadAnalytics, 2000);
 
   const originalPush = window.dataLayer.push.bind(window.dataLayer);
   window.dataLayer.push = function (entry) {

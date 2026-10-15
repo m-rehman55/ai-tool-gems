@@ -148,6 +148,7 @@ let state = {
   compare: [],
   finder: { intent: '', minBudget: 0, maxBudget: Infinity }
 };
+let productsRendered = false;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
@@ -175,7 +176,7 @@ function renderCategories() {
   container.innerHTML = categoryData.map((c, index) => {
     const count = products.filter(product => product.category === c[0]).length;
     return `
-    <button class="category-card" data-category="${c[0]}" aria-label="Explore ${c[0]}">
+    <button class="category-card" data-category="${c[0]}">
       <span class="category-visual" style="--category-x:${(index % 5) * 25}%;--category-y:${index < 5 ? 0 : 100}%">
         <span class="category-count">${count} ${count === 1 ? 'tool' : 'tools'}</span>
       </span>
@@ -259,6 +260,7 @@ function card(p) {
 }
 
 function renderProducts() {
+  productsRendered = true;
   const all = filteredProducts();
   const shown = all.slice(0, state.limit);
   const grid = $('#productGrid');
@@ -1083,22 +1085,45 @@ if (addBundleBtn) {
    INITIALIZATION
    -------------------------------------------------------------------------- */
 renderCategories();
-renderProducts();
+function scheduleInitialProductRender() {
+  const render = () => {
+    if (productsRendered) return;
+    renderProducts();
+  };
+  const section = document.getElementById('products');
+  if (!section || !('IntersectionObserver' in window)) {
+    if ('requestIdleCallback' in window) requestIdleCallback(render, { timeout: 1200 });
+    else setTimeout(render, 300);
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      observer.disconnect();
+      render();
+    }
+  }, { rootMargin: '0px' });
+  observer.observe(section);
+}
+scheduleInitialProductRender();
 updateCart();
 updateCompare();
 updateCompare();
 
-// Defer 3D initialization to avoid blocking LCP
-if ('requestIdleCallback' in window) {
-  requestIdleCallback(() => {
-    init3dHero();
-    init3dCards();
-  });
-} else {
-  setTimeout(() => {
-    init3dHero();
-    init3dCards();
-  }, 0);
+// Defer 3D initialization to avoid blocking LCP. Mobile keeps the visual
+// centerpiece static so touch scrolling and the first render stay responsive.
+const enable3dEffects = !window.matchMedia('(max-width: 768px)').matches;
+if (enable3dEffects) {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+      init3dHero();
+      init3dCards();
+    });
+  } else {
+    setTimeout(() => {
+      init3dHero();
+      init3dCards();
+    }, 0);
+  }
 }
 
 // ── Pakistan AI Bundle & Savings Calculator ──
@@ -1184,7 +1209,8 @@ function initBundleCalculator() {
   updateTotals();
 }
 
-initBundleCalculator();
+if ('requestIdleCallback' in window) requestIdleCallback(() => initBundleCalculator(), { timeout: 3000 });
+else setTimeout(initBundleCalculator, 1500);
 
 // ── Real-Time Verified Order Notification Ticker ──
 function initLiveOrderToast() {
@@ -1223,6 +1249,7 @@ function initLiveOrderToast() {
   setInterval(showNext, 12000);
 }
 
-initLiveOrderToast();
+if ('requestIdleCallback' in window) requestIdleCallback(() => initLiveOrderToast(), { timeout: 4000 });
+else setTimeout(initLiveOrderToast, 2000);
 
 
