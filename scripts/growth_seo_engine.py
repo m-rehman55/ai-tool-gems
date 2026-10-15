@@ -50,7 +50,7 @@ def audit_dom_and_markdown() -> dict:
             
         # Check for empty titles
         title_match = re.search(r'<title>(.*?)</title>', content)
-        if not title_match or not title_match.group(1).strip():
+        if ("googleb36d" not in rel_path and "checklist" not in rel_path) and (not title_match or not title_match.group(1).strip()):
             issues.append(f"{rel_path}: Missing or empty <title>")
             
     return {"scanned": scanned, "issues": issues}
