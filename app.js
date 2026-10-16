@@ -232,7 +232,7 @@ function card(p) {
         <span>${p.category}</span>
         <span class="rating">PKR pricing</span>
       </div>
-      <h3><a class="product-page-link" href="tools/${p.id}/">${p.name}</a></h3>
+      <h3>${STATIC_TOOL_PAGES.has(p.id) ? `<a class="product-page-link" href="tools/${p.id}/">${p.name}</a>` : `<a class="product-page-link" href="#productModal" data-detail="${p.id}">${p.name}</a>`}</h3>
       <p class="product-desc">${p.description}</p>
       <div class="tags">
         ${p.bestFor.map(t => `<span>${t}</span>`).join('')}
@@ -423,7 +423,7 @@ function openProduct(id) {
             <button class="add-detail" data-add="${p.id}">${state.cart.includes(p.id) ? 'Added to cart' : 'Add to cart'}</button>
             <button class="order-now" data-order="${p.id}">${svg('i-whatsapp')} Order on WhatsApp</button>
           </div>
-          <a class="full-details-link" href="tools/${p.id}/">Open full product page ${svg('i-arrow')}</a>
+          ${STATIC_TOOL_PAGES.has(p.id) ? `<a class="full-details-link" href="tools/${p.id}/">Open full product page ${svg('i-arrow')}</a>` : ""}
         </div>
       </div>
     `;
@@ -444,11 +444,22 @@ function waLink(message) {
   return `https://wa.me/${number}?text=${encodeURIComponent(attributedMessage)}`;
 }
 
+function openWhatsApp(url) {
+  try {
+    const win = window.open(url, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      window.location.href = url;
+    }
+  } catch (_) {
+    window.location.href = url;
+  }
+}
+
 function orderProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
   trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: p.price, currency: 'PKR' });
-  window.open(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`), '_blank');
+  openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`));
 }
 
 function checkout() {
@@ -457,7 +468,7 @@ function checkout() {
   const total = selected.reduce((s, p) => s + p.price, 0);
   trackEvent('begin_checkout', { item_ids: selected.map(p => p.id), item_count: selected.length, value: total, currency: 'PKR', destination: 'whatsapp' });
   const lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — ${money(p.price)}`).join('\n');
-  window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability, the accepted payment route, and delivery time.`), '_blank');
+  openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability, the accepted payment route, and delivery time.`));
 }
 
 function showSuggestions(q) {
@@ -900,7 +911,7 @@ document.addEventListener('click', e => {
     } else if (action === 'cart') {
       openLayer($('#cartDrawer'));
     } else if (action === 'whatsapp') {
-      window.open(waLink('Hello AI Tool Gems 👋\n\nI would like to order an AI tool and have a quick question.'), '_blank');
+      openWhatsApp(waLink('Hello AI Tool Gems 👋\n\nI would like to order an AI tool and have a quick question.'), '_blank');
     } else if (action === 'warranty') {
       toast('✓ Exact delivery time and replacement warranty are shown on every tool');
       const faq = $('#faqList');
@@ -910,13 +921,13 @@ document.addEventListener('click', e => {
   }
   const orderBundle = e.target.closest('#orderBundleWa');
   if (orderBundle) {
-    window.open(waLink(`Hello AI Tool Gems 👋\n\nI want to order the Creator Stack Power Bundle (4 Tools):\n1. ChatGPT Plus (1 Month, Private) — Rs. 2,300\n2. Canva Pro Edu (1 Year, Invitation) — Rs. 900\n3. CapCut Pro (1 Month, Private) — Rs. 900\n4. ElevenLabs (1 Month, Private) — Rs. 3,300\n\n💎 Bundle Total: Rs. 7,400\n\nPlease confirm availability, the accepted payment route, and activation time.`), '_blank');
+    openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI want to order the Creator Stack Power Bundle (4 Tools):\n1. ChatGPT Plus (1 Month, Private) — Rs. 2,300\n2. Canva Pro Edu (1 Year, Invitation) — Rs. 900\n3. CapCut Pro (1 Month, Private) — Rs. 900\n4. ElevenLabs (1 Month, Private) — Rs. 3,300\n\n💎 Bundle Total: Rs. 7,400\n\nPlease confirm availability, the accepted payment route, and activation time.`), '_blank');
     return;
   }
   const wa = e.target.closest('[data-whatsapp]');
   if (wa) {
     e.preventDefault();
-    window.open(waLink('Hello AI Tool Gems, I need assistance choosing a premium AI tool.'), '_blank');
+    openWhatsApp(waLink('Hello AI Tool Gems, I need assistance choosing a premium AI tool.'), '_blank');
     return;
   }
   if (e.target.closest('[data-open-finder]')) {

@@ -136,9 +136,9 @@
 
   // click_whatsapp - WhatsApp links
   document.addEventListener('click', function(e) {
-    var waLink = e.target.closest('a[href*="wa.me"], a[href*="whatsapp"]');
+    var waLink = e.target.closest('a[href*="wa.me"], a[href*="whatsapp"], button[data-order], .buy-now-card, .order-now, [data-step-action="whatsapp"], [data-whatsapp]');
     if (waLink) {
-      trackEvent('click_whatsapp', { link_url: waLink.href });
+      trackEvent('click_whatsapp', { link_url: waLink.href || 'https://wa.me/923236715731' });
     }
   });
 
@@ -196,6 +196,35 @@
   // Track view_item on product pages
   if (document.querySelector('[class*="product"], [id*="product"], .product, #product')) {
     trackViewItem();
+  }
+
+// Global floating WhatsApp button (ensures WhatsApp +923236715731 is accessible site-wide)
+  function ensureFloatingWhatsApp() {
+    if (document.querySelector('.floating-whatsapp, .floating-wa-btn')) return;
+    if (/\/admin\.html$/i.test(window.location.pathname)) return;
+
+    var waBtn = document.createElement('a');
+    waBtn.className = 'floating-whatsapp';
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener nofollow';
+    waBtn.setAttribute('aria-label', 'Chat with us on WhatsApp (+92 323 6715731)');
+
+    var msg = 'Hello AI Tool Gems 👋, I need assistance choosing a premium AI tool.';
+    var h1 = document.querySelector('h1');
+    if (h1 && h1.textContent.trim()) {
+      var title = h1.textContent.trim().replace(/\s+/g, ' ').slice(0, 70);
+      msg = 'Hello AI Tool Gems 👋\n\nI am interested in:\n' + title + '\n\nPlease confirm availability and details.';
+    }
+    waBtn.href = 'https://wa.me/923236715731?text=' + encodeURIComponent(msg);
+    waBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.587 1.771.879 2.796.88h.001c3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.767-5.769-5.767zm7.536 5.765c-.002 4.148-3.375 7.52-7.525 7.52-1.309 0-2.548-.344-3.642-.947l-4.04 1.059 1.079-3.94c-.663-1.144-1.026-2.454-1.026-3.692.002-4.149 3.375-7.52 7.525-7.52 4.15 0 7.525 3.371 7.529 7.52z"/></svg><span>WhatsApp</span>';
+
+    document.body.appendChild(waBtn);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureFloatingWhatsApp, { once: true });
+  } else {
+    ensureFloatingWhatsApp();
   }
 
   // Shared source-based assistant. Keep the private admin portal out of the public widget.
