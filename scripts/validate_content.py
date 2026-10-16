@@ -98,10 +98,10 @@ def validate_article_file(file_path: Path, expected_slug: str = None) -> tuple[b
     parser = ArticleParser()
     parser.feed(html)
 
-    # Title check
+    # Title check (standard SEO max length 70 characters)
     title = parser.title.strip()
-    if not (20 <= len(title) <= 65):
-        errors.append(f"Title length ({len(title)} chars) outside 20–65 bounds: '{title}'")
+    if not (20 <= len(title) <= 70):
+        errors.append(f"Title length ({len(title)} chars) outside 20–70 bounds: '{title}'")
 
     # Meta description check
     meta = parser.meta_desc
