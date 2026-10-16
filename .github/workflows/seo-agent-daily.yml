@@ -2,7 +2,7 @@ name: AIToolGems HERMES Autonomous Growth Agent
 
 on:
   schedule:
-    - cron: "25 2 * * *"  # 07:25 PKT (UTC+5) daily
+    - cron: "17 22 * * *"  # 03:17 PKT (UTC+05:00) daily [22:17 UTC previous day]
   workflow_dispatch:
     inputs:
       mode:
