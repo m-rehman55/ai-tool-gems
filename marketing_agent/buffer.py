@@ -143,8 +143,12 @@ class BufferClient:
                     except HTTPError as exc2:
                         if exc2.code == 429:
                             time.sleep(15)
-                            with urlopen(request, timeout=30) as response:
-                                payload = json.loads(response.read().decode("utf-8"))
+                            try:
+                                with urlopen(request, timeout=30) as response:
+                                    payload = json.loads(response.read().decode("utf-8"))
+                            except HTTPError as exc3:
+                                detail3 = exc3.read().decode("utf-8", errors="replace")
+                                raise BufferError(f"Buffer API HTTP {exc3.code}: {detail3[:300]}") from exc3
                         else:
                             raise BufferError(f"Buffer API HTTP {exc2.code}: {detail[:300]}") from exc2
                 else:
@@ -1647,12 +1651,14 @@ def refresh_performance(
                 continue
             checked += 1
             try:
+                time.sleep(0.5)
                 delivery = client.post_status(record["post_id"])
                 record["delivery_status"] = delivery.get("status", "unknown")
                 record["delivery_checked_at"] = current.isoformat(timespec="seconds")
-            except (BufferError, AttributeError) as exc:
+            except Exception as exc:
                 errors[f"{day_key}:{service}"] = str(exc)
             try:
+                time.sleep(0.5)
                 snapshot = client.post_metrics(record["post_id"])
                 metrics = {
                     metric.get("type", metric.get("name", "unknown")): metric.get("value", 0)
@@ -1666,7 +1672,7 @@ def refresh_performance(
                 })
                 record.pop("metrics_error", None)
                 updated += 1
-            except BufferError as exc:
+            except Exception as exc:
                 record["metrics_error"] = str(exc)[:300]
                 record["metrics_checked_on"] = current.date().isoformat()
                 analytics_warnings[f"{day_key}:{service}"] = str(exc)
