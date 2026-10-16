@@ -28,13 +28,16 @@ class InternalLinkAnalyzer:
     def __init__(self, root_url: str = "https://aitoolgems.tech/"):
         self.root_url = root_url.rstrip("/") + "/"
 
-    def _normalize_url(self, url: str) -> str:
+    def _normalize_url(self, url: str, base_url: str = "https://aitoolgems.tech/") -> str:
         """Normalizes URLs for graph edge comparison."""
+        import urllib.parse
         clean = url.split("#")[0].split("?")[0].strip()
-        if not clean:
+        if not clean or clean.startswith("mailto:") or clean.startswith("tel:") or clean.startswith("javascript:"):
             return ""
-        if clean.startswith("/"):
-            clean = "https://aitoolgems.tech" + clean
+        if not clean.startswith("http://") and not clean.startswith("https://"):
+            clean = urllib.parse.urljoin(base_url, clean)
+        if clean.startswith("http://aitoolgems.tech"):
+            clean = "https://" + clean[len("http://"):]
         if not clean.endswith("/") and not clean.endswith(".html"):
             clean += "/"
         return clean
@@ -49,7 +52,7 @@ class InternalLinkAnalyzer:
         for page in pages:
             source_url = self._normalize_url(page.url)
             for raw_dest in page.internal_links:
-                dest = self._normalize_url(raw_dest)
+                dest = self._normalize_url(raw_dest, source_url)
                 if not dest:
                     continue
                 
