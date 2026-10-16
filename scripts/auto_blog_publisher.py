@@ -54,7 +54,8 @@ def send_telegram_alert(text: str) -> bool:
 
 def query_gemini_api(prompt: str, api_key: str) -> str | None:
     """Dynamic generation using Google Gemini 2.0 Flash (with 1.5 Pro and 1.5 Flash fallbacks)."""
-    if not api_key:
+    keys = [k.strip() for k in api_key.split(",") if k.strip()]
+    if not keys:
         return None
 
     # Cascade of available free-tier Google Gemini models from most advanced to fallback
@@ -71,20 +72,21 @@ def query_gemini_api(prompt: str, api_key: str) -> str | None:
     data = json.dumps(payload).encode("utf-8")
     headers = {"Content-Type": "application/json"}
 
-    for model_id, model_name in models_to_try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={api_key}"
-        req = urllib.request.Request(url, data=data, headers=headers)
-        try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                res_json = json.loads(resp.read().decode("utf-8"))
-                candidates = res_json.get("candidates", [])
-                if candidates and "content" in candidates[0]:
-                    print(f"✨ Successfully generated organic analysis using {model_name}.")
-                    return candidates[0]["content"]["parts"][0]["text"]
-        except Exception as e:
-            print(f"ℹ️ {model_name} notice: ({e}). Trying next tier model...")
+    for key_idx, key in enumerate(keys, 1):
+        for model_id, model_name in models_to_try:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={key}"
+            req = urllib.request.Request(url, data=data, headers=headers)
+            try:
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    res_json = json.loads(resp.read().decode("utf-8"))
+                    candidates = res_json.get("candidates", [])
+                    if candidates and "content" in candidates[0]:
+                        print(f"✨ Successfully generated organic analysis using {model_name} (Key #{key_idx}).")
+                        return candidates[0]["content"]["parts"][0]["text"]
+            except Exception as e:
+                print(f"ℹ️ {model_name} on Key #{key_idx} notice: ({e}). Trying next tier...")
 
-    print("⚠️ All Gemini API models skipped or quota reached. Using high-authority structured engine fallback.")
+    print("⚠️ All Gemini API models/keys skipped or quota reached. Using high-authority structured engine fallback.")
     return None
 
 
