@@ -391,9 +391,9 @@
       "n8n.io official cloud pricing and self-hosted documentation",
       "Local agency automation case studies"
     ],
-    "status": "queued",
-    "published_url": null,
-    "published_date": null,
-    "last_updated": "2026-10-11"
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/n8n-automation-pakistan/",
+    "published_date": "2026-10-16",
+    "last_updated": "2026-10-16"
   }
 ]
