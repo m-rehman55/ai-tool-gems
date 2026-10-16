@@ -514,10 +514,11 @@ def run_publisher(dry_run: bool = True):
         print(f"❌ Pre-publish validation failed with {len(issues)} issue(s):")
         for iss in issues:
             print(f"  • {iss}")
-        if dry_run:
-            temp_file.unlink(missing_ok=True)
-            if not any(temp_dir.iterdir()):
-                temp_dir.rmdir()
+        temp_file.unlink(missing_ok=True)
+        if temp_dir.exists() and not any(temp_dir.iterdir()):
+            temp_dir.rmdir()
+        if not dry_run:
+            sys.exit(1)
         return
 
     print("✅ Pre-publish content, SEO, link, and integrity checks PASSED.")
