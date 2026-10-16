@@ -8,6 +8,7 @@
 .DS_Store
 Thumbs.db
 .env
+.vscode/
 /chatbot-worker/.wrangler/
 marketing_agent/data/*.db
 marketing_agent/data/*.db-*
@@ -15,3 +16,13 @@ marketing_agent/exports/
 __pycache__/
 *.py[cod]
 marketing_agent/data/gsc_token.json
+*-desktop*.json
+*-mobile*.json
+phase2-*.json
+baseline-*.json
+final-*.json
+after-*.json
+live-*.json
+*.trace.json
+*.devtoolslog.json
+test-results/
