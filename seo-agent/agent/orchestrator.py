@@ -37,6 +37,7 @@ from agent.monitoring import PerformanceMonitor, PerformanceMetrics
 from agent.github_integration import GitHubIntegration
 from agent.reporting import ReportGenerator
 from agent.telegram_notifier import TelegramNotifier, TelegramNotificationResult
+from agent.deployment_verifier import DeploymentVerifier
 
 class GrowthOrchestrator:
     """Master orchestrator executing the 10-step daily growth loop."""
@@ -219,18 +220,26 @@ class GrowthOrchestrator:
         metrics = self.monitor.fetch_metrics(days=28)
         print(f"    GSC Status: {metrics.status_message} (Impressions: {metrics.total_impressions})")
 
-        # STEP 10: Report
-        print("--> STEP 10: Generating Report & Summary...")
-        md_report = self.reporter.generate_markdown_report(
+        # STEP 10: Report (14-Artifact Daily Suite)
+        print("--> STEP 10: Generating Complete 14-Artifact Daily Report Suite...")
+        dep_data = None
+        if self.live_crawl:
+            verifier = DeploymentVerifier(base_url=self.crawler.base_url)
+            dep_data = verifier.verify_live_deployment()
+
+        suite_dir = self.reporter.generate_full_report_suite(
             mode=self.mode,
+            crawled_pages=crawled_pages,
             tech_report=tech_report,
+            link_report=link_report,
             scope_res=scope_res,
             opportunities=ranked_opportunities,
             metrics=metrics,
+            deployment_data=dep_data,
             pr_info=pr_details,
         )
-        saved_file = self.reporter.save_report(md_report)
-        print(f"[OK] Daily report successfully written to: {saved_file}")
+        saved_file = self.base_dir / "seo-agent" / "reports" / f"daily-report-{suite_dir.name}.md"
+        print(f"[OK] 14-artifact daily report suite successfully written to: {suite_dir}")
 
         # Dispatch Telegram notification if requested or configured
         telegram_res = None
