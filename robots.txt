@@ -26,5 +26,6 @@ Disallow: /scratch/
 Sitemap: https://aitoolgems.tech/sitemap.xml
 
 # AI & LLM Context: https://aitoolgems.tech/llms.txt
+# AI & LLM Full Corpus: https://aitoolgems.tech/llms-full.txt
 # IndexNow key: https://aitoolgems.tech/e1a8c47f9d2b4f30a6c8116de5b97042.txt
 
