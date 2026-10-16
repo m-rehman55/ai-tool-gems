@@ -113,7 +113,15 @@ class DeploymentVerifier:
 
         # Check robots.txt content
         robots_res = next((r for r in results if r["url"].endswith("/robots.txt")), None)
-        robots_valid = bool(robots_res and robots_res["success"] and "sitemap.xml" in (robots_res.get("content_sample") or "").lower())
+        robots_valid = False
+        if robots_res and robots_res["success"]:
+            try:
+                req = urllib.request.Request(robots_res["url"], headers={"User-Agent": "AIToolGems-DeploymentVerifier/1.0"})
+                with urllib.request.urlopen(req, timeout=self.timeout) as r:
+                    robots_text = r.read().decode("utf-8", errors="ignore").lower()
+                    robots_valid = "user-agent:" in robots_text and "sitemap.xml" in robots_text
+            except Exception:
+                robots_valid = False
 
         is_verified = (passed_count == len(KEY_ROUTES)) and sitemap_valid and robots_valid
 
