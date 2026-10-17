@@ -58,6 +58,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Send executive summary report to configured Telegram bot",
     )
+    parser.add_argument(
+        "--cadence",
+        choices=["daily", "weekly", "monthly", "all"],
+        default="daily",
+        help="Review cadence: daily (default), weekly (trends & content review), monthly (roadmap), all",
+    )
     return parser
 
 def main():
@@ -72,6 +78,7 @@ def main():
         mode=args.mode,
         live_crawl=args.live,
         send_telegram=args.telegram,
+        cadence=args.cadence,
     )
 
     result = orchestrator.execute_workflow()

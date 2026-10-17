@@ -1,0 +1,17 @@
+{
+  "total_runs": 3,
+  "total_issues_logged": 0,
+  "fixes_attempted": 3,
+  "fixes_verified": 3,
+  "fixes_reverted": 0,
+  "false_positives": {},
+  "issue_recurrence": {},
+  "success_rate_by_type": {
+    "TECHNICAL_P0": 1.0,
+    "CANONICAL": 1.0,
+    "SCHEMA": 1.0,
+    "ORPHAN_LINK": 0.95,
+    "TECHNICAL_P1": 1.0
+  },
+  "last_updated": "2026-10-17T00:19:39.710246+00:00"
+}
