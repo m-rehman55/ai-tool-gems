@@ -1,0 +1,109 @@
+{
+  "version": "2.2.0",
+  "last_updated": "2026-10-17T05:00:00Z",
+  "sources": [
+    {
+      "id": "GOOGLE_SEARCH_CENTRAL",
+      "url": "https://developers.google.com/search/docs",
+      "title": "Google Search Central Documentation",
+      "authority": "OFFICIAL_REQUIREMENT",
+      "topics": ["crawling", "indexing", "ranking"],
+      "principles": [
+        "Ensure HTTP 200 responses for indexable pages with valid content.",
+        "Maintain accessible sitemap.xml and robots.txt without blocking indexable content.",
+        "Use absolute, self-referential or intended target canonical links."
+      ],
+      "mapped_checks": ["STATUS_CODE", "ROBOTS_TXT", "SITEMAP_XML", "CANONICAL"]
+    },
+    {
+      "id": "GOOGLE_SEARCH_BLOG",
+      "url": "https://developers.google.com/search/blog",
+      "title": "Google Search Central Official Blog",
+      "authority": "OFFICIAL_RECOMMENDATION",
+      "topics": ["algorithm_updates", "search_features", "guidelines"],
+      "principles": [
+        "Focus on genuine user utility, original reporting, and real market experiences.",
+        "Avoid chasing algorithmic quirks or speculative SEO hacks."
+      ],
+      "mapped_checks": ["CONTENT_QUALITY", "EXPERIENCE_SIGNALS"]
+    },
+    {
+      "id": "GOOGLE_SEARCH_ESSENTIALS",
+      "url": "https://developers.google.com/search/docs/essentials",
+      "title": "Google Search Essentials (formerly Webmaster Guidelines)",
+      "authority": "OFFICIAL_REQUIREMENT",
+      "topics": ["technical_requirements", "spam_policies", "key_best_practices"],
+      "principles": [
+        "Serve valid HTML that Googlebot can parse.",
+        "Avoid deceptive redirects, cloaking, and scraped content.",
+        "Provide unique, descriptive title tags and meaningful meta descriptions."
+      ],
+      "mapped_checks": ["TITLE", "META_DESC", "CLOAKING", "REDIRECT"]
+    },
+    {
+      "id": "GOOGLE_SEO_STARTER_GUIDE",
+      "url": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+      "title": "Google SEO Starter Guide",
+      "authority": "OFFICIAL_RECOMMENDATION",
+      "topics": ["headings", "navigation", "anchor_text", "images"],
+      "principles": [
+        "Structure pages logically with a single prominent H1 heading per document.",
+        "Use descriptive anchor text for internal links rather than generic 'click here'.",
+        "Add meaningful, contextual alt text to informative images; omit or empty alt for purely decorative icons."
+      ],
+      "mapped_checks": ["H1", "INTERNAL_LINKS", "IMAGE_ALT"]
+    },
+    {
+      "id": "GOOGLE_SPAM_POLICIES",
+      "url": "https://developers.google.com/search/docs/essentials/spam-policies",
+      "title": "Google Search Spam Policies",
+      "authority": "OFFICIAL_REQUIREMENT",
+      "topics": ["scaled_content_abuse", "site_reputation", "hidden_text"],
+      "principles": [
+        "Scaled content abuse: mass-producing low-value, programmatic or unverified AI content violates spam policy.",
+        "Ensure commercial claims, pricing, and warranties are factual and verifiable.",
+        "Never hide text or links using CSS tricks or microscopic fonts."
+      ],
+      "mapped_checks": ["SCALED_CONTENT", "PRICE_INTEGRITY", "HIDDEN_TEXT"]
+    },
+    {
+      "id": "GOOGLE_AI_OPTIMIZATION_GUIDE",
+      "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+      "title": "Google Guidance for Generative AI & AI Search Experiences",
+      "authority": "OFFICIAL_AI_SEARCH_GUIDANCE",
+      "topics": ["ai_overviews", "answer_engines", "factual_attribution", "llms_txt"],
+      "principles": [
+        "AI Search systems prioritize direct, factually verifiable answers with transparent source attribution.",
+        "Structured data (Schema.org Product, FAQPage, BreadcrumbList) provides clear semantic cues for answer engines.",
+        "Do not invent special GEO/AEO tricks or manipulate hidden prompts in markup; clear, concise text wins.",
+        "Expose clean markdown or text knowledge bases (e.g., llms.txt, llms-full.txt) to aid large language models."
+      ],
+      "mapped_checks": ["SCHEMA_PRODUCT", "SCHEMA_FAQ", "LLMS_TXT", "AI_SEARCH_READINESS"]
+    },
+    {
+      "id": "GOOGLE_SEARCH_CONSOLE_DOCS",
+      "url": "https://support.google.com/webmasters/",
+      "title": "Google Search Console Help & Inspection Guide",
+      "authority": "OFFICIAL_RECOMMENDATION",
+      "topics": ["url_inspection", "indexing_status", "performance_metrics"],
+      "principles": [
+        "HTTP 200 or sitemap presence does not guarantee indexing.",
+        "Use URL Inspection selectively for high-priority new or materially improved URLs within daily quotas.",
+        "Never submit entire sites repeatedly daily; respect Google's autonomous discovery."
+      ],
+      "mapped_checks": ["URL_INSPECTION", "INDEXING_STATUS", "GSC_QUOTA"]
+    },
+    {
+      "id": "SEARCH_CONSOLE_API_DOCS",
+      "url": "https://developers.google.com/webmaster-tools/",
+      "title": "Search Console API Documentation",
+      "authority": "OFFICIAL_REQUIREMENT",
+      "topics": ["search_analytics", "sitemaps", "rate_limits"],
+      "principles": [
+        "Search analytics queries are aggregated across rolling date windows (typically 2-3 day lag).",
+        "Handle OAuth token refreshes gracefully without storing credentials in code or version control."
+      ],
+      "mapped_checks": ["OAUTH_TOKEN", "API_QUOTA", "METRIC_AGGREGATION"]
+    }
+  ]
+}

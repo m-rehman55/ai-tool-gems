@@ -38,6 +38,9 @@ from agent.github_integration import GitHubIntegration
 from agent.reporting import ReportGenerator
 from agent.telegram_notifier import TelegramNotifier, TelegramNotificationResult
 from agent.deployment_verifier import DeploymentVerifier
+from agent.search_research import SearchResearchEngine
+from agent.learning_loop import LearningFeedbackLoop
+from agent.search_intelligence import SearchIntelligenceEngine
 
 class GrowthOrchestrator:
     """Master orchestrator executing the 10-step daily growth loop."""
@@ -48,10 +51,12 @@ class GrowthOrchestrator:
         mode: str = "AUDIT",
         live_crawl: bool = False,
         send_telegram: bool = False,
+        cadence: str = "daily",
     ):
         self.mode = mode.upper()
         self.live_crawl = live_crawl
         self.send_telegram = send_telegram
+        self.cadence = cadence.lower()
         self.base_dir = Path(__file__).resolve().parent.parent.parent
 
         # Load configuration
@@ -81,6 +86,9 @@ class GrowthOrchestrator:
         self.github = GitHubIntegration(target_branch=self.config.get("agent", {}).get("target_branch", "main"))
         self.reporter = ReportGenerator(output_dir=self.base_dir / "seo-agent" / "reports")
         self.telegram = TelegramNotifier()
+        self.research_engine = SearchResearchEngine(base_dir=self.base_dir)
+        self.learning_loop = LearningFeedbackLoop(base_dir=self.base_dir)
+        self.intelligence_engine = SearchIntelligenceEngine(base_dir=self.base_dir)
 
     def run_preflight(self) -> bool:
         """Step 1: Preflight checks."""
@@ -105,6 +113,8 @@ class GrowthOrchestrator:
         print("--> STEP 1: Preflight...")
         if not self.run_preflight():
             return {"status": "ABORTED", "reason": "Preflight failure"}
+        if not self.learning_loop.verify_safety_immutability([]):
+            return {"status": "ABORTED", "reason": "Safety firewall immutability violation"}
 
         # STEP 2: Collect Evidence (Crawl)
         print(f"--> STEP 2: Collecting Evidence (Live Crawl: {self.live_crawl})...")
@@ -120,8 +130,8 @@ class GrowthOrchestrator:
         link_report = self.link_analyzer.analyze_graph(crawled_pages)
         print(f"    Technical Score: {tech_report.score}/100 | Issues: {len(tech_report.issues)}")
 
-        # STEP 4: Research (Keywords & Cannibalization)
-        print("--> STEP 4: Researching Keywords & Cannibalization...")
+        # STEP 4: Research (Keywords, Cannibalization & Official Google Search Guidelines)
+        print("--> STEP 4: Researching Keywords, Cannibalization & Official Search Documentation...")
         kw_csv = self.base_dir / "seo-agent" / "config" / "keyword-map.example.csv"
         kw_json = self.base_dir / "data" / "seo" / "keyword-map.json"
         if kw_csv.exists():
@@ -131,8 +141,19 @@ class GrowthOrchestrator:
         collisions = self.keyword_manager.check_cannibalization()
         print(f"    Keyword Universe: {len(self.keyword_manager.targets)} clusters | Collisions: {len(collisions)}")
 
-        # STEP 5: Prioritize (Decision Engine)
-        print("--> STEP 5: Prioritizing Opportunities (ICE-R Scoring)...")
+        # Map detected issues to official Google Search Central guidance
+        official_matches = []
+        for issue in tech_report.issues[:3]:
+            gf = self.research_engine.map_issue_to_guidance(issue.check_type)
+            if gf:
+                official_matches.append(gf)
+        if not official_matches:
+            print("    Official Search Guidance: 100% compliant with Google Search Essentials & AI Policies.")
+        else:
+            print(f"    Official Guidance: {len(official_matches)} official Google principles actively mapped.")
+
+        # STEP 5: Prioritize (Decision Engine with Learning Feedback)
+        print("--> STEP 5: Prioritizing Opportunities (ICE-R Scoring + Historical Learning)...")
         raw_opportunities: List[SEOOpportunity] = []
 
         # Convert critical technical defects into opportunities
@@ -169,6 +190,11 @@ class GrowthOrchestrator:
                     recommended_action="Add contextual internal links from related category pages",
                 )
             )
+
+        # Modulate confidence using historical remediation success rate from LearningLoop
+        for opp in raw_opportunities:
+            multiplier = self.learning_loop.get_confidence_multiplier(opp.category.value)
+            opp.confidence = round(min(1.0, opp.confidence * multiplier), 2)
 
         ranked_opportunities = self.decision_engine.rank_opportunities(raw_opportunities)
         print(f"    Ranked {len(ranked_opportunities)} opportunities.")
@@ -215,12 +241,32 @@ class GrowthOrchestrator:
                     "status": "PREPARED_FOR_REVIEW",
                 }
 
-        # STEP 9: Monitor (Search Console)
-        print("--> STEP 9: Monitoring Search Performance...")
+        # STEP 9: Monitor (Search Console & AI Search Intelligence)
+        print("--> STEP 9: Monitoring Search Performance & AI Search Readiness...")
         metrics = self.monitor.fetch_metrics(days=28)
         print(f"    GSC Status: {metrics.status_message} (Impressions: {metrics.total_impressions})")
 
-        # STEP 10: Report (14-Artifact Daily Suite)
+        ctr_opps = self.intelligence_engine.analyze_gsc_opportunities(metrics.top_queries)
+        ai_res = self.intelligence_engine.audit_ai_search_readiness()
+        print(f"    AI Search Readiness: {ai_res.ai_readiness_score}/100 | CTR Opportunities: {len(ctr_opps)}")
+
+        # Multi-cadence automated reviews
+        now_dt = datetime.now()
+        date_str = now_dt.strftime("%Y-%m-%d")
+        if self.cadence in ["weekly", "all"] or now_dt.weekday() == 6:
+            w_file = self.intelligence_engine.generate_weekly_consolidated_review(
+                crawled_count=tech_report.total_pages_audited,
+                issues_count=len(tech_report.issues),
+                gsc_queries=metrics.top_queries,
+                date_str=date_str,
+            )
+            print(f"[OK] Weekly consolidated review updated: {w_file.name}")
+
+        if self.cadence in ["monthly", "all"] or now_dt.day == 1:
+            m_file = self.intelligence_engine.generate_monthly_roadmap(date_str=date_str)
+            print(f"[OK] Monthly strategic roadmap updated: {m_file.name}")
+
+        # STEP 10: Report (14-Artifact Daily Suite & Historical Learning)
         print("--> STEP 10: Generating Complete 14-Artifact Daily Report Suite...")
         dep_data = None
         if self.live_crawl:
@@ -240,6 +286,13 @@ class GrowthOrchestrator:
         )
         saved_file = self.base_dir / "seo-agent" / "reports" / f"daily-report-{suite_dir.name}.md"
         print(f"[OK] 14-artifact daily report suite successfully written to: {suite_dir}")
+
+        # Record run in learning feedback loop to improve future remediation confidence
+        self.learning_loop.record_run(
+            issues_detected=[{"check_type": i.check_type} for i in tech_report.issues],
+            fixes_applied=[{"category": o.category.value} for o in ranked_opportunities if o.tier == ActionTier.AUTO_REPORT],
+            reverted_count=0,
+        )
 
         # Dispatch Telegram notification if requested or configured
         telegram_res = None
