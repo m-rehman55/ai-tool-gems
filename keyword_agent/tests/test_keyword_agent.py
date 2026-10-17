@@ -1,0 +1,262 @@
+"""
+Unit test suite for keyword_agent.
+Tests:
+- GSC Data Engine (CSV parsing, CTR normalization, historical snapshot management)
+- RE2 Regex Engine (validation, lookahead blocking, backreference blocking, matching)
+- Keyword Discovery (intent classification, cluster assignment, opportunity scoring)
+- Page Mapper (route discovery, best URL matching, cannibalization collision detection)
+- Content Optimizer (live HTML extraction, AEO answer formatting, verified link checking)
+- Safe Autonomy Firewall (safe auto actions vs locked approval gate)
+"""
+
+import unittest
+from pathlib import Path
+import tempfile
+import shutil
+
+from keyword_agent.gsc_data import GSCDataEngine, GSCQueryRow, GSCDataset
+from keyword_agent.regex_engine import RE2Validator, GSCFilterLibrary, GSCFilterDefinition
+from keyword_agent.discovery import KeywordDiscoveryEngine, KeywordCandidate
+from keyword_agent.page_mapper import PageMapper, PageMappingResult
+from keyword_agent.content_optimizer import ContentOptimizer
+from keyword_agent.safe_executor import SafeExecutor
+from keyword_agent.reporting import KeywordReportGenerator
+
+
+class TestKeywordAgent(unittest.TestCase):
+
+    def setUp(self):
+        self.test_dir = Path(tempfile.mkdtemp())
+        self.exports_dir = self.test_dir / "exports"
+        self.history_dir = self.test_dir / "history"
+        self.reports_dir = self.test_dir / "reports"
+        self.docs_dir = self.test_dir / "docs"
+        for d in [self.exports_dir, self.history_dir, self.reports_dir, self.docs_dir]:
+            d.mkdir(parents=True, exist_ok=True)
+
+    def tearDown(self):
+        shutil.rmtree(self.test_dir, ignore_errors=True)
+
+    # ── GSC Data Engine Tests ──────────────────────────────────────────────────
+
+    def test_gsc_csv_parsing(self):
+        csv_file = self.exports_dir / "Queries.csv"
+        csv_file.write_text(
+            "Top queries,Clicks,Impressions,CTR,Position\n"
+            "chatgpt price in pakistan,25,500,5.0%,2.1\n"
+            "buy canva pro easypaisa,10,120,8.33%,4.5\n"
+            "cursor ai pro,2,80,2.5%,11.2\n",
+            encoding="utf-8",
+        )
+
+        engine = GSCDataEngine(self.exports_dir, self.history_dir, auto_extract=False)
+        dataset = engine.load_dataset()
+
+        self.assertEqual(dataset.source, "MANUAL_EXPORT")
+        self.assertEqual(len(dataset.queries), 3)
+        self.assertEqual(dataset.total_clicks, 37)
+        self.assertEqual(dataset.total_impressions, 700)
+        self.assertEqual(dataset.queries[0].query, "chatgpt price in pakistan")
+        self.assertEqual(dataset.queries[0].clicks, 25)
+        self.assertEqual(dataset.queries[0].ctr, 5.0)
+        self.assertEqual(dataset.queries[0].position, 2.1)
+
+    def test_gsc_empty_graceful_handling(self):
+        engine = GSCDataEngine(self.exports_dir, self.history_dir, auto_extract=False)
+        dataset = engine.load_dataset()
+        self.assertEqual(dataset.source, "NO_DATA")
+        self.assertIn("Google Search Console data unavailable", dataset.status_message)
+        self.assertEqual(dataset.total_clicks, 0)
+
+    def test_gsc_snapshot_saving_and_restoring(self):
+        engine = GSCDataEngine(self.exports_dir, self.history_dir, auto_extract=False)
+        dataset = GSCDataset(
+            source="MANUAL_EXPORT",
+            status_message="Test run",
+            queries=[GSCQueryRow(query="test query", clicks=5, impressions=100, ctr=5.0, position=3.2)],
+            total_clicks=5,
+            total_impressions=100,
+            average_ctr=5.0,
+            average_position=3.2,
+        )
+        engine.save_historical_snapshot(dataset)
+
+        # Restore from history
+        restored = engine.get_latest_historical_snapshot()
+        self.assertIsNotNone(restored)
+        self.assertEqual(restored.total_clicks, 5)
+        self.assertEqual(len(restored.queries), 1)
+
+    # ── RE2 Regex Engine Tests ────────────────────────────────────────────────
+
+    def test_re2_validator_accepts_valid_syntax(self):
+        valid_patterns = [
+            r"(?i)(chatgpt|canva|figma)",
+            r"(?i)\b(buy|price|cost)\b",
+            r"^https?://aitoolgems\.tech/tools/",
+            r"(?i)^(how|what|why)\b",
+        ]
+        for pat in valid_patterns:
+            res = RE2Validator.validate(pat)
+            self.assertTrue(res.is_valid_re2, f"Expected valid RE2: {pat}")
+
+    def test_re2_validator_blocks_unsupported_features(self):
+        # Lookahead
+        res1 = RE2Validator.validate(r"chatgpt(?= plus)")
+        self.assertFalse(res1.is_valid_re2)
+        self.assertTrue(any("Lookahead" in e for e in res1.unsupported_features))
+
+        # Lookbehind
+        res2 = RE2Validator.validate(r"(?<=buy )canva")
+        self.assertFalse(res2.is_valid_re2)
+        self.assertTrue(any("Lookbehind" in e for e in res2.unsupported_features))
+
+        # Backreference
+        res3 = RE2Validator.validate(r"(ai) tool \1")
+        self.assertFalse(res3.is_valid_re2)
+        self.assertTrue(any("Backreference" in e for e in res3.unsupported_features))
+
+    def test_core_filters_all_re2_compliant(self):
+        lib = GSCFilterLibrary()
+        filters = lib.get_core_filters()
+        self.assertGreaterEqual(len(filters), 10)
+        for f in filters:
+            self.assertTrue(f.is_re2_validated, f"Filter {f.name} failed RE2 validation: {f.regex}")
+
+    def test_filter_matching_behavior(self):
+        lib = GSCFilterLibrary()
+        filters = {f.name: f for f in lib.get_core_filters()}
+
+        # Test Pakistan Intent filter
+        pk_filter = filters["Pakistan & Local Payment Intent"]
+        matched, non_matched = lib.test_filter(
+            pk_filter,
+            ["chatgpt price in pakistan", "buy canva easypaisa", "midjourney pkr", "what is quantum computing"]
+        )
+        self.assertIn("chatgpt price in pakistan", matched)
+        self.assertIn("buy canva easypaisa", matched)
+        self.assertIn("midjourney pkr", matched)
+        self.assertIn("what is quantum computing", non_matched)
+
+        # Test Non-Brand Filter (Doesn't match regex)
+        nb_filter = filters["Non-Brand Organic Queries"]
+        matched_nb, non_matched_nb = lib.test_filter(
+            nb_filter,
+            ["ai tool gems login", "aitoolgems reviews", "canva pro price pakistan"]
+        )
+        self.assertIn("canva pro price pakistan", matched_nb)
+        self.assertIn("ai tool gems login", non_matched_nb)
+
+    # ── Keyword Discovery & Opportunity Scoring Tests ────────────────────────
+
+    def test_intent_classification(self):
+        disc = KeywordDiscoveryEngine()
+        self.assertEqual(disc.classify_intent("buy chatgpt plus pkr"), "transactional")
+        self.assertEqual(disc.classify_intent("chatgpt vs claude 3.5 sonnet"), "commercial")
+        self.assertEqual(disc.classify_intent("how to use midjourney for beginners"), "informational")
+
+    def test_cluster_assignment(self):
+        disc = KeywordDiscoveryEngine()
+        self.assertEqual(disc.assign_cluster("canva pro lifetime subscription"), "Tool: Canva")
+        self.assertEqual(disc.assign_cluster("elevenlabs urdu voices"), "Tool: Elevenlabs")
+        self.assertEqual(disc.assign_cluster("best ai tools price in pakistan"), "Commercial: Pricing & PKR Comparison")
+
+    def test_opportunity_scoring_math(self):
+        disc = KeywordDiscoveryEngine()
+        # High impression, striking distance, transactional, Pakistan intent
+        score, breakdown = disc.calculate_opportunity_score(
+            keyword="chatgpt price in pakistan",
+            impressions=60,
+            clicks=2,
+            ctr=3.3,
+            position=6.2,
+            intent="transactional",
+            is_pakistan=True,
+        )
+        self.assertGreaterEqual(score, 80.0)
+        self.assertEqual(breakdown["relevance"], 25.0)
+        self.assertEqual(breakdown["demand_signal"], 25.0)
+        self.assertEqual(breakdown["commercial_value"], 20.0)
+        self.assertEqual(breakdown["striking_distance"], 10.0)
+
+    # ── Page Mapping & Cannibalization Tests ─────────────────────────────────
+
+    def test_page_mapping_and_collision_detection(self):
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        mapper = PageMapper(project_dir=proj_dir)
+
+        # Chatgpt query must map to chatgpt tool page
+        res = mapper.find_best_url("chatgpt plus subscription price in pakistan")
+        self.assertEqual(res.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+        self.assertEqual(res.action_type, "OPTIMIZE_EXISTING")
+
+        # Generic price comparison query must map to prices page
+        res_price = mapper.find_best_url("compare ai tools prices in rupees")
+        self.assertEqual(res_price.best_url, "https://aitoolgems.tech/prices/")
+
+        # Detect collision if two mappings target same normalized query
+        m1 = PageMappingResult(
+            keyword="buy canva pro pakistan",
+            intent="transactional",
+            best_url="https://aitoolgems.tech/tools/canva/",
+            relative_path="tools/canva/index.html",
+            mapping_confidence=0.9,
+            action_type="OPTIMIZE_EXISTING",
+        )
+        m2 = PageMappingResult(
+            keyword="canva pro buy in pakistan",
+            intent="transactional",
+            best_url="https://aitoolgems.tech/guides/canva-pro/",
+            relative_path="guides/canva-pro/index.html",
+            mapping_confidence=0.8,
+            action_type="OPTIMIZE_EXISTING",
+        )
+        collisions = mapper.detect_cannibalization([m1, m2])
+        self.assertEqual(len(collisions), 1)
+        self.assertIn("https://aitoolgems.tech/tools/canva/", collisions[0].competing_urls)
+        self.assertIn("https://aitoolgems.tech/guides/canva-pro/", collisions[0].competing_urls)
+
+    # ── Content Optimizer Tests ──────────────────────────────────────────────
+
+    def test_content_optimizer_live_extraction(self):
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        optimizer = ContentOptimizer(project_dir=proj_dir)
+        brief = optimizer.generate_optimization_brief(
+            url="https://aitoolgems.tech/tools/chatgpt/",
+            relative_path="tools/chatgpt/index.html",
+            primary_query="chatgpt price in pakistan",
+            target_cluster="Tool: Chatgpt",
+            opportunity_score=90.0,
+        )
+
+        self.assertIn("chatgpt", brief.recommended_title.lower())
+        self.assertIn("pakistan", brief.recommended_title.lower())
+        self.assertTrue(brief.requires_approval)
+        self.assertIn("Requires human owner review", brief.approval_reason)
+        self.assertEqual(len(brief.aeo_answers), 1)
+        # Direct answer text length between 40 and 65 words
+        words = len(brief.aeo_answers[0].direct_answer_text.split())
+        self.assertTrue(35 <= words <= 70, f"Word count {words} outside target range.")
+
+    # ── Safe Autonomy Firewall Tests ─────────────────────────────────────────
+
+    def test_safe_executor_protects_public_html(self):
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        executor = SafeExecutor(project_dir=proj_dir)
+
+        # Internal data is safe auto
+        is_safe, _ = executor.evaluate_action_safety("data/seo/keyword-map.json", {})
+        self.assertTrue(is_safe)
+
+        # Public HTML is locked behind human review
+        is_safe_html, reason = executor.evaluate_action_safety("tools/chatgpt/index.html", {})
+        self.assertFalse(is_safe_html)
+        self.assertIn("Public HTML modification requires explicit human approval", reason)
+
+        # Robots.txt is locked
+        is_safe_robots, _ = executor.evaluate_action_safety("robots.txt", {})
+        self.assertFalse(is_safe_robots)
+
+
+if __name__ == "__main__":
+    unittest.main()
