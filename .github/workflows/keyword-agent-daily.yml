@@ -1,0 +1,52 @@
+name: AIToolGems Keyword Intelligence & GSC Filter Engine
+
+on:
+  schedule:
+    - cron: "45 23 * * *"  # 04:45 PKT (UTC+05:00) daily [23:45 UTC previous day]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: keyword-intelligence-agent
+  cancel-in-progress: false
+
+jobs:
+  run-keyword-agent:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      ATG_TIMEZONE: Asia/Karachi
+      ATG_SITE_URL: https://aitoolgems.tech
+      GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
+      GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+      GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Keyword Agent Unit Test Suite
+        run: |
+          python -m unittest discover -s keyword_agent/tests -v
+
+      - name: Execute Keyword Discovery, GSC Filter Engine & Content Briefs
+        run: |
+          python -m keyword_agent audit
+
+      - name: Upload Daily Keyword Intelligence Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: keyword-agent-reports
+          path: |
+            reports/keyword-agent/
+            docs/GSC_REGEX_LIBRARY.md
+            docs/COMPETITOR_KEYWORD_GAP_ANALYSIS.md
+          retention-days: 30
