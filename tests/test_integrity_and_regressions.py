@@ -223,6 +223,11 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn('Instant Account Delivery', index_html, "Instant Account Delivery must not be in index.html")
         self.assertNotIn('2–15 Minute WhatsApp Activation', index_html, "2–15 Minute WhatsApp Activation must not be in index.html")
         self.assertNotIn('Fast 2 to 15 Minutes WhatsApp Activation', index_html, "Fast 2 to 15 Minutes WhatsApp Activation must not be in index.html")
+        self.assertNotIn('immediate activation', index_html.lower(), "immediate activation must not be in index.html")
+        self.assertNotIn('in 2 minutes', index_html.lower(), "in 2 minutes claim must not be in index.html")
+        self.assertNotIn('in 3–5 minutes', index_html, "in 3–5 minutes claim must not be in index.html")
+        self.assertNotIn('in 5 minutes', index_html.lower(), "in 5 minutes claim must not be in index.html")
+        self.assertIn('activation after payment and availability confirmation', index_html.lower(), "Expected activation after payment confirmation wording in index.html")
 
         # 6. Contact protection: 03476242709 must not be published anywhere in any HTML file in the repository
         for root, dirs, files in os.walk(REPO_ROOT):
