@@ -296,6 +296,7 @@ class TestKeywordAgent(unittest.TestCase):
             ("chatgpt pro price in pakistan", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.90),
             ("adobe illustrator price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.90),
             ("photoshop price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.90),
+            ("Adobe Creative Cloud All Apps price in Pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.95),
             ("capcut pro price in pakistan", "https://aitoolgems.tech/tools/capcut/", "OPTIMIZE_EXISTING", 0.95),
             ("nord vpn price in pakistan", "https://aitoolgems.tech/tools/nordvpn/", "OPTIMIZE_EXISTING", 0.95),
             ("windows 11 key price", "https://aitoolgems.tech/tools/windows/", "OPTIMIZE_EXISTING", 0.95),
@@ -311,13 +312,20 @@ class TestKeywordAgent(unittest.TestCase):
             self.assertEqual(res.action_type, expected_action, f"Failed action for query: {query}")
             self.assertGreaterEqual(res.mapping_confidence, min_conf, f"Low confidence for query: {query}")
 
-        # Assert specific bundle inclusion explanation for Adobe subapps
+        # Assert full suite gets 0.95 exact match justification
+        r_adobe_full = mapper.find_best_url("Adobe Creative Cloud All Apps price in Pakistan")
+        self.assertEqual(r_adobe_full.mapping_confidence, 0.95)
+        self.assertIn("Exact commercial/transactional tool match for 'adobe'", r_adobe_full.rational_justification)
+
+        # Assert specific bundle inclusion explanation for Adobe subapps gets 0.90
         r_adobe_sub = mapper.find_best_url("adobe illustrator price in pakistan")
+        self.assertEqual(r_adobe_sub.mapping_confidence, 0.90)
         self.assertIn("Bundle inclusion match", r_adobe_sub.rational_justification)
         self.assertIn("Creative Cloud All Apps", r_adobe_sub.rational_justification)
 
-        # Assert tier distinction explanation for ChatGPT Pro
+        # Assert tier distinction explanation for ChatGPT Pro gets 0.90
         r_cg_pro = mapper.find_best_url("chatgpt pro price in pakistan")
+        self.assertEqual(r_cg_pro.mapping_confidence, 0.90)
         self.assertIn("Plan distinction match", r_cg_pro.rational_justification)
         self.assertIn("Pro is not stocked", r_cg_pro.rational_justification)
 
