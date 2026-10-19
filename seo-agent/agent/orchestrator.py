@@ -59,6 +59,18 @@ class GrowthOrchestrator:
         self.cadence = cadence.lower()
         self.base_dir = Path(__file__).resolve().parent.parent.parent
 
+        # Load local .env if present
+        env_file = self.base_dir / ".env"
+        if env_file.exists():
+            try:
+                for line in env_file.read_text(encoding="utf-8").splitlines():
+                    if line.strip() and not line.strip().startswith("#") and "=" in line:
+                        k, v = line.strip().split("=", 1)
+                        if k.strip() not in os.environ:
+                            os.environ[k.strip()] = v.strip()
+            except Exception:
+                pass
+
         # Load configuration
         cfg_file = Path(config_path) if config_path else (self.base_dir / "seo-agent" / "config" / "settings.example.yml")
         self.config: Dict[str, Any] = {}
