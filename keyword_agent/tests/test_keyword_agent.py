@@ -216,6 +216,75 @@ class TestKeywordAgent(unittest.TestCase):
         self.assertIn("https://aitoolgems.tech/tools/canva/", collisions[0].competing_urls)
         self.assertIn("https://aitoolgems.tech/guides/canva-pro/", collisions[0].competing_urls)
 
+    def test_intent_mapping_transactional_vs_comparison(self):
+        """Verifies transactional purchase queries map to tool product pages while vs queries map to comparison guides."""
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        mapper = PageMapper(project_dir=proj_dir)
+
+        # Transactional & price queries
+        r_cg = mapper.find_best_url("buy chatgpt plus in pakistan easypaisa", "transactional")
+        self.assertEqual(r_cg.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+        self.assertEqual(r_cg.action_type, "OPTIMIZE_EXISTING")
+
+        r_canva = mapper.find_best_url("canva pro price in pakistan jazzcash", "transactional")
+        self.assertEqual(r_canva.best_url, "https://aitoolgems.tech/tools/canva/")
+
+        r_li = mapper.find_best_url("linkedin premium price in pakistan", "transactional")
+        self.assertEqual(r_li.best_url, "https://aitoolgems.tech/tools/linkedin/")
+
+        r_cap = mapper.find_best_url("capcut pro price in pakistan", "transactional")
+        self.assertEqual(r_cap.best_url, "https://aitoolgems.tech/tools/capcut/")
+
+        # Local comparison query maps to Pakistan comparison guide
+        r_vs = mapper.find_best_url("chatgpt vs gemini price in pakistan", "commercial")
+        self.assertEqual(r_vs.best_url, "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/")
+        self.assertEqual(r_vs.action_type, "OPTIMIZE_EXISTING")
+
+    def test_brand_and_tool_name_aliases_mapping(self):
+        """Verifies that common tool aliases (illustrator, photoshop, chat gpt, nord vpn) correctly map to product pages."""
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        mapper = PageMapper(project_dir=proj_dir)
+
+        r_ill = mapper.find_best_url("illustrator price in pakistan", "transactional")
+        self.assertEqual(r_ill.best_url, "https://aitoolgems.tech/tools/adobe/")
+        self.assertIn("adobe", r_ill.rational_justification)
+
+        r_ps = mapper.find_best_url("photoshop subscription in rupees", "transactional")
+        self.assertEqual(r_ps.best_url, "https://aitoolgems.tech/tools/adobe/")
+
+        r_cg_space = mapper.find_best_url("chat gpt pro price in pakistan", "transactional")
+        self.assertEqual(r_cg_space.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+
+        r_vpn_space = mapper.find_best_url("nord vpn price in pakistan", "transactional")
+        self.assertEqual(r_vpn_space.best_url, "https://aitoolgems.tech/tools/nordvpn/")
+
+    def test_global_vs_pakistan_comparison_mapping(self):
+        """Verifies that global comparison queries do NOT map to -pakistan guides and are flagged for monitoring."""
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        mapper = PageMapper(project_dir=proj_dir)
+
+        # Global query without Pakistan intent
+        r_global = mapper.find_best_url("canva vs figma comparison", "commercial")
+        self.assertEqual(r_global.best_url, "https://aitoolgems.tech/tools/canva/")
+        self.assertEqual(r_global.action_type, "MONITOR")
+        self.assertNotIn("-pakistan", r_global.best_url)
+
+        # Pakistan-specific comparison query
+        r_pk = mapper.find_best_url("canva vs figma price in pakistan", "commercial")
+        self.assertEqual(r_pk.best_url, "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/")
+        self.assertEqual(r_pk.action_type, "OPTIMIZE_EXISTING")
+
+    def test_ambiguous_multi_tool_query_detection(self):
+        """Verifies that queries referencing multiple tools without comparison intent are flagged for MANUAL_REVIEW."""
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        mapper = PageMapper(project_dir=proj_dir)
+
+        r_ambig = mapper.find_best_url("chatgpt canva bundle offer", "transactional")
+        self.assertEqual(r_ambig.action_type, "MANUAL_REVIEW")
+        self.assertGreaterEqual(len(r_ambig.competing_urls), 2)
+        self.assertIn("https://aitoolgems.tech/tools/chatgpt/", r_ambig.competing_urls)
+        self.assertIn("https://aitoolgems.tech/tools/canva/", r_ambig.competing_urls)
+
     # ── Content Optimizer Tests ──────────────────────────────────────────────
 
     def test_content_optimizer_live_extraction(self):
