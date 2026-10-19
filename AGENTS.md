@@ -28,18 +28,20 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 | Command | Purpose |
 | --------- | --------- |
+| `python scripts/link_graph_checker.py --strict` | Run 73-page internal link graph, fragment anchor, route & sitemap integrity audit |
+| `python -m unittest discover -s tests -v` | Run 32 link-graph, integrity, regression, and UI interaction unit tests |
 | `python -m keyword_agent audit` | Run full keyword discovery, GSC filter analysis, cannibalization check & report |
 | `python -m keyword_agent competitor-gap` | Run live competitor gap analysis against `aitoolspak.tech` & export matrix |
 | `python -m keyword_agent regex-library` | Export verified copy-ready RE2 regex filters to `docs/GSC_REGEX_LIBRARY.md` |
 | `python -m keyword_agent gsc-setup` | Display instructions for Search Console OAuth & manual CSV import |
 | `python -m keyword_agent optimize-page <slug>` | Formulate AEO/GEO direct-answer brief for a tool page |
-| `python -m unittest discover -s keyword_agent/tests -v` | Run 15 Keyword Agent unit tests (GSC, RE2, scoring, page mapping, competitor gap) |
+| `python -m unittest discover -s keyword_agent/tests -v` | Run 18 Keyword Agent unit tests (GSC, RE2, scoring, page mapping, competitor gap) |
 | `python -m seo-agent.agent.main --mode audit --report` | HERMES 10-step autonomous offline/live SEO audit & daily report |
 | `python -m seo-agent.agent.main --mode propose` | Autonomous growth proposal & patch generation on dedicated branch |
 | `python -m unittest discover -s seo-agent/tests -v` | Run 43 Scope, Safety Firewall, Schema & Workflow unit tests |
 | `python -m marketing_agent seo-growth` | GSC live impression, click, CTR & ranking growth analyzer |
 | `python scripts/growth_seo_engine.py` | DOM, Pakistani transactional signals, & instant IndexNow ping |
-| `python audit_all.py` | Full 57-page Google/Bing Search Central technical audit |
+| `python audit_all.py` | Full 74-page Google/Bing Search Central technical audit |
 | `python schema_audit.py` | Complete JSON-LD Product, FAQ, & Breadcrumb completeness audit |
 | `python -m marketing_agent seo-monitor --json` | Automated SEO/GEO integrity check (Target: 100/100) |
 | `python -m marketing_agent buffer-status` | Verify Buffer social channels connection |
