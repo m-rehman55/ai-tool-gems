@@ -215,6 +215,12 @@ function filteredProducts() {
   return out;
 }
 
+const STATIC_TOOL_PAGES = new Set([
+  'adobe', 'canva', 'capcut', 'chatgpt', 'elevenlabs', 'figma', 'gamma', 'gemini',
+  'leonardo', 'linkedin', 'lovable', 'n8n', 'netflix', 'nordvpn', 'notion',
+  'replit', 'surfshark', 'veo', 'windows', 'youtube'
+]);
+
 function card(p) {
   const inCart = state.cart.includes(p.id);
   const comparing = state.compare.includes(p.id);
@@ -1222,45 +1228,5 @@ function initBundleCalculator() {
 
 if ('requestIdleCallback' in window) requestIdleCallback(() => initBundleCalculator(), { timeout: 3000 });
 else setTimeout(initBundleCalculator, 1500);
-
-// ── Real-Time Verified Order Notification Ticker ──
-function initLiveOrderToast() {
-  const orders = [
-    { name: 'Hamza K.', city: 'Lahore', tool: 'Claude Pro (3.5 Sonnet)', time: '2m ago' },
-    { name: 'Zainab M.', city: 'Karachi', tool: 'All-in-One Mega AI Portal', time: '5m ago' },
-    { name: 'Usman R.', city: 'Islamabad', tool: 'ChatGPT Plus (Private)', time: '8m ago' },
-    { name: 'Bilal T.', city: 'Rawalpindi', tool: 'Cursor AI Pro', time: '11m ago' },
-    { name: 'Ayesha S.', city: 'Faisalabad', tool: 'Canva Pro (1-Year Edu)', time: '14m ago' },
-    { name: 'Saad N.', city: 'Peshawar', tool: 'Midjourney v6.1 Pro', time: '19m ago' },
-    { name: 'Fatima Z.', city: 'Multan', tool: 'QuillBot + Grammarly', time: '23m ago' }
-  ];
-  let idx = 0;
-  const toast = document.createElement('div');
-  toast.className = 'live-order-toast';
-  document.body.appendChild(toast);
-
-  function showNext() {
-    const o = orders[idx];
-    idx = (idx + 1) % orders.length;
-    toast.innerHTML = `
-      <div class="toast-avatar">${o.name.charAt(0)}</div>
-      <div class="toast-content">
-        <b>${o.name}</b> from ${o.city}<br>
-        Ordered <span>${o.tool}</span>
-        <small>⚡ Verified EasyPaisa • ${o.time}</small>
-      </div>
-    `;
-    toast.classList.add('active');
-    setTimeout(() => {
-      toast.classList.remove('active');
-    }, 4500);
-  }
-
-  setTimeout(showNext, 3500);
-  setInterval(showNext, 12000);
-}
-
-if ('requestIdleCallback' in window) requestIdleCallback(() => initLiveOrderToast(), { timeout: 4000 });
-else setTimeout(initLiveOrderToast, 2000);
 
 

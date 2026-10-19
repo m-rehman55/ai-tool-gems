@@ -27,7 +27,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/",
     "indexable": true,
-    "internal_links_count": 97,
+    "internal_links_count": 100,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -347,7 +347,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/claude-ai-pakistan/",
     "indexable": true,
-    "internal_links_count": 23,
+    "internal_links_count": 24,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -395,7 +395,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/creators/",
     "indexable": true,
-    "internal_links_count": 7,
+    "internal_links_count": 10,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -411,7 +411,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/developers/",
     "indexable": true,
-    "internal_links_count": 7,
+    "internal_links_count": 9,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -443,7 +443,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/guides/",
     "indexable": true,
-    "internal_links_count": 33,
+    "internal_links_count": 37,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -459,7 +459,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/blog/",
     "indexable": true,
-    "internal_links_count": 8,
+    "internal_links_count": 18,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -651,7 +651,7 @@
     "h1_count": 1,
     "canonical": "https://aitoolgems.tech/tools/leonardo/",
     "indexable": true,
-    "internal_links_count": 20,
+    "internal_links_count": 21,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   },
@@ -848,6 +848,22 @@
     "status": "live_verified"
   },
   {
+    "url": "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/",
+    "relative_file": "guides/elevenlabs-voice-ai-pakistan/index.html",
+    "page_type": "guide",
+    "search_intent": "informational_commercial",
+    "topic": "Topical guide, benchmark or tutorial",
+    "title": "ElevenLabs Voice AI in Pakistan: Pricing, Urdu Support & Guide",
+    "meta_description": "Complete guide to ElevenLabs Voice AI in Pakistan. Review character plans in PKR, Urdu voice cloning, and payment via EasyPaisa and JazzCash.",
+    "h1": "ElevenLabs Voice AI in Pakistan: Pricing, Urdu Support & Guide",
+    "h1_count": 1,
+    "canonical": "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/",
+    "indexable": true,
+    "internal_links_count": 15,
+    "last_verified": "2026-10-11",
+    "status": "live_verified"
+  },
+  {
     "url": "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/",
     "relative_file": "guides/midjourney-alternatives-pakistan/index.html",
     "page_type": "guide",
@@ -860,6 +876,54 @@
     "canonical": "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/",
     "indexable": true,
     "internal_links_count": 16,
+    "last_verified": "2026-10-11",
+    "status": "live_verified"
+  },
+  {
+    "url": "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/",
+    "relative_file": "guides/best-ai-video-generators-pakistan/index.html",
+    "page_type": "guide",
+    "search_intent": "informational_commercial",
+    "topic": "Topical guide, benchmark or tutorial",
+    "title": "Top AI Video Generators in Pakistan: CapCut, Veo & Runway (2026)",
+    "meta_description": "Best AI video generators in Pakistan compared for 2026. Explore CapCut Pro VIP, Google Veo 3 Ultra & ElevenLabs with PKR pricing and instant delivery.",
+    "h1": "Top AI Video Generators in Pakistan: CapCut, Veo & Runway (2026)",
+    "h1_count": 1,
+    "canonical": "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/",
+    "indexable": true,
+    "internal_links_count": 16,
+    "last_verified": "2026-10-11",
+    "status": "live_verified"
+  },
+  {
+    "url": "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/",
+    "relative_file": "guides/lovable-vs-replit-pakistan/index.html",
+    "page_type": "guide",
+    "search_intent": "informational_commercial",
+    "topic": "Topical guide, benchmark or tutorial",
+    "title": "Lovable vs Replit in Pakistan: Best AI App Builder (2026)",
+    "meta_description": "Compare Lovable Pro vs Replit Core in Pakistan. Review full-stack AI coding workflows, cloud deployment, and PKR pricing with local payment.",
+    "h1": "Lovable vs Replit in Pakistan: Best AI App Builder Compared (2026)",
+    "h1_count": 1,
+    "canonical": "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/",
+    "indexable": true,
+    "internal_links_count": 16,
+    "last_verified": "2026-10-11",
+    "status": "live_verified"
+  },
+  {
+    "url": "https://aitoolgems.tech/guides/n8n-automation-pakistan/",
+    "relative_file": "guides/n8n-automation-pakistan/index.html",
+    "page_type": "guide",
+    "search_intent": "informational_commercial",
+    "topic": "Topical guide, benchmark or tutorial",
+    "title": "n8n Workflow Automation in Pakistan: Small Business Guide (2026)",
+    "meta_description": "How Pakistani digital agencies and businesses use n8n for workflow automation. Compare cloud pricing in PKR and replace expensive Zapier accounts.",
+    "h1": "n8n Workflow Automation in Pakistan: Small Business Guide (2026)",
+    "h1_count": 1,
+    "canonical": "https://aitoolgems.tech/guides/n8n-automation-pakistan/",
+    "indexable": true,
+    "internal_links_count": 15,
     "last_verified": "2026-10-11",
     "status": "live_verified"
   }

@@ -3,7 +3,7 @@
 Cadence: one evidence-led guide per week, followed by update and distribution work. Do not publish filler merely to meet the calendar.
 
 | Week | Primary article | Search intent | Supporting action |
-|---:|---|---|---|
+| ---: | --- | --- | --- |
 | 1 | Best AI tools for students in Pakistan | Informational / commercial | Link ChatGPT, Gemini, Canva and Notion; include academic-integrity guidance |
 | 2 | Best AI video tools in Pakistan | Commercial comparison | Compare Veo and CapCut; document credits, exports and access |
 | 3 | ChatGPT Plus price in Pakistan: what the listing includes | Transactional support | Expand with current official features and a privacy checklist |
@@ -28,4 +28,3 @@ Cadence: one evidence-led guide per week, followed by update and distribution wo
 - Unique title/meta, one H1, descriptive question headings
 - Mobile and link validation before publication
 - Sitemap and `llms.txt` update
-

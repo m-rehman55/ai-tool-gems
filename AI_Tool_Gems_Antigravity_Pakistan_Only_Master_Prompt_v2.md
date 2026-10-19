@@ -1,5 +1,6 @@
 # AI Tool Gems Pakistan — Antigravity IDE Autonomous Engineering & SEO Specification
-Version: 2.0 | Target website: https://aitoolgems.tech | Repository: m-rehman55/ai-tool-gems
+
+Version: 2.0 | Target website: <https://aitoolgems.tech> | Repository: m-rehman55/ai-tool-gems
 Primary market: Pakistan | Currency: PKR | Timezone: Asia/Karachi
 
 ## Mission
@@ -8,7 +9,7 @@ Act as the senior engineering, technical SEO, content quality, QA, security, rel
 
 The ONLY website/business target is:
 
-- Website: https://aitoolgems.tech
+- Website: <https://aitoolgems.tech>
 - Market: Pakistan
 - Currency: PKR
 - Business: AI Tool Gems Pakistan
@@ -49,10 +50,12 @@ Do not optimize, generate content for, deploy, monitor as a separate market, or 
 ## Phase 1 — Pakistan-only scope audit and cleanup
 
 Search case-insensitively across source code, workflows, agents, scripts, prompts, docs, data, tests, generated assets, sitemap/robots/llms files, and GitHub Actions for terms and paths such as:
+
 - `/jp/`, `jp/`, `Japan`, `Japanese`, `日本`, Japan locale generators, locale-specific currency/pricing, and country-specific workflow names.
 - Any references that create, publish, crawl, optimize, or monitor a non-Pakistan locale.
 
 Then:
+
 1. Build a reference map before changing or deleting anything.
 2. Remove or disable only the Japan-specific workflow and generated content path, plus stale references, after verifying they are not shared dependencies.
 3. Remove Japan-specific sitemap entries, hreflang alternates, navigation links, internal links, test fixtures, scheduled jobs, prompt instructions, and stale docs if they exist.
@@ -67,6 +70,7 @@ Then:
 Inspect the existing content validator (the visible editor file may be `scripts/validate_content.py`, but verify the actual path and contents) and related tests before editing. Preserve valid existing checks and avoid duplicating validators.
 
 Required checks, where appropriate to the site's technology:
+
 - Valid UTF-8 and HTML parsing; one meaningful title, meta description, canonical URL, and sensible H1 structure.
 - No duplicate title/description or near-duplicate pages without an intentional reason.
 - Internal links resolve to active site URLs; external links are checked carefully and network failures are distinguished from broken links.
@@ -86,6 +90,7 @@ For every issue/page: reproduce → inspect root cause → smallest safe fix →
 Inspect actual agent and workflow implementations before deciding what is missing. Verify (do not assume) whether modules like `seo-agent/daily_loop.py`, `decision_engine.py`, `firewall.py`, `github_workflow.py`, `marketing_agent/`, scripts, and `.github/workflows/` exist and whether they are functional, partial, stubs, broken, or unnecessary.
 
 If missing or incomplete, implement a real daily workflow that:
+
 1. Runs on a reliable scheduler independent of the local IDE being open (prefer GitHub Actions if the repository supports it and free limits are sufficient).
 2. Prevents overlapping runs with concurrency controls/locks.
 3. Checks site availability, sitemap/robots, internal links, canonical/title/meta/H1/schema, redirects, key Pakistan landing pages, and content-quality regression.
@@ -100,6 +105,7 @@ If missing or incomplete, implement a real daily workflow that:
 12. Sends failure notifications only through an already configured channel. Notification failure must not hide the job failure.
 
 GitHub Actions requirements:
+
 - Use valid YAML and supported action versions; pin actions to full commit SHAs where practical and document update procedure.
 - Correctly handle shell exit codes. No `|| echo` masking a critical failure.
 - Add explicit permissions with least privilege, concurrency, timeouts, bounded retries, and clear failure conditions.
@@ -109,6 +115,7 @@ GitHub Actions requirements:
 ## Phase 4 — Decision engine, firewall, and autonomy levels
 
 Define and enforce these modes:
+
 - `MONITOR`: audit/report only.
 - `AUTO`: low-risk, reversible fixes only, after tests pass.
 - `PR`: create a branch and pull request for review.
@@ -118,6 +125,7 @@ Define and enforce these modes:
 Every change proposal must include target files/URLs, evidence, expected impact, confidence, risk, reversibility, tests, and rollback plan.
 
 The firewall must reject:
+
 - Secrets or personal data being committed/logged.
 - Changes outside the Pakistan-only scope.
 - Unapproved price/catalogue changes.
@@ -143,6 +151,7 @@ The decision engine and firewall must be invoked by the actual daily workflow im
 ## Phase 6 — Verification and delivery
 
 After each meaningful change:
+
 1. Review `git diff --check` and the complete diff.
 2. Run the smallest targeted test.
 3. Run relevant regression tests and the full suite when feasible.
@@ -153,6 +162,7 @@ After each meaningful change:
 8. Record exact commands and exit codes. Never report a test as passed if it was not run.
 
 Before finishing, provide:
+
 - Repository and branch verified.
 - Baseline issues and confirmed audit findings.
 - Exact files changed and purpose of each change.
@@ -166,6 +176,7 @@ Before finishing, provide:
 ## Definition of done
 
 Do not call the project complete unless all applicable items have evidence:
+
 - Existing working functionality preserved.
 - Pakistan-only active site scope; no active Japan-specific jobs/content generation.
 - Content/technical validation is tested and fails correctly on critical errors.

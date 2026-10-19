@@ -21,31 +21,32 @@
 ---
 
 ## 2. Search Console Performance & Queries
-_GSC offline: Environment secrets not set._
 
+_GSC offline: Environment secrets not set._
 
 ---
 
 ## 3. Prioritized Growth Opportunities (ICE-R Ranked)
 
 | ID | Action Tier | Score | Opportunity | Risk |
-|----|-------------|-------|-------------|------|
+| ---- | ------------- | ------- | ------------- | ------ |
 | `LINK-1` | AUTO_REPORT | 14.0 | Connect orphan page into navigation graph | SAFE |
 | `LINK-2` | AUTO_REPORT | 14.0 | Connect orphan page into navigation graph | SAFE |
 | `LINK-3` | AUTO_REPORT | 14.0 | Connect orphan page into navigation graph | SAFE |
 
-
 ---
 
 ## 4. Technical Audit Defects (Top Issues)
+
 - ✅ Zero technical defects found across all audited pages.
 
 ---
 
 ## 5. Scope & Safety Disclosures
+
 - **Production Firewall:** Active. Direct writes to `main` are blocked.
 - **Price Policy Freeze:** Active. Product prices require explicit human approval.
 - **Rollback Guidance:** Any proposed branch can be abandoned or reverted with `git checkout main && git reset --hard origin/main`.
 
 ---
-*Report generated autonomously by AIToolGems HERMES SEO Growth Agent.*
+_Report generated autonomously by AIToolGems HERMES SEO Growth Agent._

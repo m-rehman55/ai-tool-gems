@@ -40,4 +40,3 @@
 - GitHub Pages cannot set all desired HTTP security headers through repository files.
 - Google controls crawling, indexing and rankings. No ethical implementation can guarantee a top position.
 - Google Business Profile should be created only if the business satisfies Google’s real-world eligibility requirements; no fake address or doorway city pages should be used.
-

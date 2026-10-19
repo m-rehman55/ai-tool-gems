@@ -16,7 +16,7 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 ### Repository
 
-- GitHub: https://github.com/m-rehman55/ai-tool-gems/
+- GitHub: <https://github.com/m-rehman55/ai-tool-gems/>
 - Branch: main
 - Static HTML site (53 pages, 20 products, 42 tool variants)
 - `marketing_agent/` Python package for organic marketing & SEO automation
@@ -26,7 +26,7 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 ### Operational CLI Commands
 
 | Command | Purpose |
-|---------|---------|
+| --------- | --------- |
 | `python -m keyword_agent audit` | Run full keyword discovery, GSC filter analysis, cannibalization check & report |
 | `python -m keyword_agent competitor-gap` | Run live competitor gap analysis against `aitoolspak.tech` & export matrix |
 | `python -m keyword_agent regex-library` | Export verified copy-ready RE2 regex filters to `docs/GSC_REGEX_LIBRARY.md` |
@@ -47,7 +47,7 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 ### Control Files
 
 | File | Purpose |
-|------|---------|
+| ------ | --------- |
 | SEO_MASTER_PLAN.md | Master plan overview |
 | SEO_RULES.md | Global SEO rules |
 | SEO_ARCHITECTURE.md | Site architecture |
@@ -66,6 +66,7 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 ### Memory Location
 
 seo-agent/
+
 - reports/ (Daily evidence-backed audit reports)
 - logs/ (Redacted execution traces)
 - config/ (Settings and keyword universes)

@@ -16,6 +16,7 @@ Production-conscious, autonomous SEO and AI Search Growth Agent exclusively buil
 ## 2. Evidence-Based Scope Inventory (JP Purge Baseline)
 
 An audit of the repository confirmed:
+
 - Zero `/jp/` directories or routes exist.
 - Zero JPY / Japanese Yen currency symbols exist in the catalog or HTML pages.
 - All 57 static pages enforce `lang="en-PK"`, PKR pricing signals, and local payment methods (`EasyPaisa`, `JazzCash`).
