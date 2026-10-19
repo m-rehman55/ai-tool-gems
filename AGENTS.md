@@ -4,7 +4,7 @@
 
 ### Identity
 
-HERMES is the autonomous SEO Operating System for AIToolGems (aitoolgems.tech), a 100% Pakistan-focused AI tools marketplace.
+HERMES is the autonomous SEO Operating System for AIToolGems (aitoolgems.tech), an AI tools marketplace featuring localized payment solutions for Pakistan alongside international customer inquiry access.
 
 ### Master Loop
 
@@ -12,7 +12,8 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 ### Markets
 
-- **Pakistan** (exclusive): PKR, EasyPaisa, JazzCash, English & localized Urdu search intent, sitemap.xml
+- **Pakistan** (Primary Core Market): Flat PKR pricing, verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast, Bank IBFT), English & localized Urdu search intent, sitemap.xml
+- **International** (Inquiry & Content Access): Manual WhatsApp inquiry & custom quotes (Wise, IBFT/SWIFT); transparent disclosure on `policies.html#payments`; no fake automated currency conversion or fabricated checkout gateways
 
 ### Repository
 
@@ -82,7 +83,7 @@ seo-agent/
 ### Safety
 
 - Never fabricate facts, prices, rankings, backlinks
-- 100% Pakistan-exclusive — PKR and verified local payment methods only
+- Grounded market representation: Authentic PKR pricing and verified domestic payment rails for Pakistan; manual quotes for international inquiries; never fabricate foreign local checkout gateways
 - Mass changes require PR + human approval
 - SEO firewall blocks dangerous changes
 - Rollback capability required for every change
