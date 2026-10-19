@@ -245,6 +245,55 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn('<form id="card-element"', index_html, "No fake card element should be in index.html")
         self.assertNotIn('paypal.com/sdk/js', index_html, "No PayPal SDK script should be injected")
 
+    def test_phase5_delivery_minute_claims_and_guide_tables(self):
+        """Phase 5: Asserts unsupported delivery minute estimates are absent and truthful confirmation wording is present."""
+        # 1. ChatGPT vs Gemini comparison table
+        cg_path = os.path.join(REPO_ROOT, 'guides', 'chatgpt-vs-gemini-pakistan', 'index.html')
+        with open(cg_path, 'r', encoding='utf-8') as f:
+            cg_html = f.read()
+        self.assertNotIn('15–30 minutes', cg_html, "15–30 minutes delivery estimate must not be in chatgpt-vs-gemini guide")
+        self.assertNotIn('15-30 minutes', cg_html, "15-30 minutes delivery estimate must not be in chatgpt-vs-gemini guide")
+        self.assertNotIn('10–20 minutes', cg_html, "10–20 minutes delivery estimate must not be in chatgpt-vs-gemini guide")
+        self.assertNotIn('10-20 minutes', cg_html, "10-20 minutes delivery estimate must not be in chatgpt-vs-gemini guide")
+        self.assertIn('Prompt delivery after payment confirmation', cg_html, "Prompt delivery confirmation required in chatgpt-vs-gemini table")
+
+        # 2. Canva vs Figma comparison table
+        cf_path = os.path.join(REPO_ROOT, 'guides', 'canva-vs-figma-pakistan', 'index.html')
+        with open(cf_path, 'r', encoding='utf-8') as f:
+            cf_html = f.read()
+        self.assertNotIn('5–15 minutes', cf_html, "5–15 minutes delivery estimate must not be in canva-vs-figma guide")
+        self.assertNotIn('5-15 minutes', cf_html, "5-15 minutes delivery estimate must not be in canva-vs-figma guide")
+        self.assertNotIn('10–20 minutes', cf_html, "10–20 minutes delivery estimate must not be in canva-vs-figma guide")
+        self.assertNotIn('10-20 minutes', cf_html, "10-20 minutes delivery estimate must not be in canva-vs-figma guide")
+        self.assertIn('Prompt delivery after payment confirmation', cf_html, "Prompt delivery confirmation required in canva-vs-figma table")
+
+        # 3. All-in-one Mega AI Portal tool page
+        aio_path = os.path.join(REPO_ROOT, 'tools', 'allinone', 'index.html')
+        with open(aio_path, 'r', encoding='utf-8') as f:
+            aio_html = f.read()
+        self.assertNotIn('2-minute activation', aio_html.lower(), "2-minute activation claim must not be in tools/allinone")
+        self.assertNotIn('instant 2-minute', aio_html.lower(), "Instant 2-minute claim must not be in tools/allinone")
+        self.assertIn('Prompt delivery after payment confirmation', aio_html, "Prompt delivery confirmation required in tools/allinone")
+
+        # 4. app.js product catalog
+        app_js_path = os.path.join(REPO_ROOT, 'app.js')
+        with open(app_js_path, 'r', encoding='utf-8') as f:
+            app_js = f.read()
+        self.assertNotIn('Instant 2-minute activation', app_js, "Instant 2-minute activation must not be in app.js")
+        self.assertNotIn("delivery:'2–5 min'", app_js.replace(' ', ''), "2–5 min delivery must not be in app.js")
+
+        # 5. Site-wide reviewBody check across all tool pages and index.html
+        for root, dirs, files in os.walk(REPO_ROOT):
+            if '.git' in root or 'node_modules' in root or '.seo-cache' in root:
+                continue
+            for f in files:
+                if f.endswith('.html'):
+                    fpath = os.path.join(root, f)
+                    with open(fpath, 'r', encoding='utf-8', errors='ignore') as hf:
+                        content = hf.read()
+                    self.assertNotIn('Fast 15-minute delivery', content, f"Found 'Fast 15-minute delivery' in {os.path.relpath(fpath, REPO_ROOT)}")
+                    self.assertNotIn('Instant 2-minute activation', content, f"Found 'Instant 2-minute activation' in {os.path.relpath(fpath, REPO_ROOT)}")
+
 
 if __name__ == '__main__':
     unittest.main()
