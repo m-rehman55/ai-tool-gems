@@ -281,8 +281,42 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             app_js = f.read()
         self.assertNotIn('Instant 2-minute activation', app_js, "Instant 2-minute activation must not be in app.js")
         self.assertNotIn("delivery:'2–5 min'", app_js.replace(' ', ''), "2–5 min delivery must not be in app.js")
+        self.assertNotIn("delivery:'15–30 min'", app_js.replace(' ', ''), "15–30 min delivery must not be in app.js")
+        self.assertNotIn("delivery:'30–60 min'", app_js.replace(' ', ''), "30–60 min delivery must not be in app.js")
+        self.assertNotIn("delivery:'1–2 hours'", app_js.replace(' ', ''), "1–2 hours delivery must not be in app.js")
 
-        # 5. Site-wide reviewBody check across all tool pages and index.html
+        # 5. Cursor AI guide comparison table
+        cur_path = os.path.join(REPO_ROOT, 'guides', 'cursor-ai-pakistan', 'index.html')
+        with open(cur_path, 'r', encoding='utf-8') as f:
+            cur_html = f.read()
+        self.assertNotIn('15–30 mins', cur_html, "15–30 mins delivery estimate must not be in cursor guide")
+        self.assertNotIn('15-30 mins', cur_html, "15-30 mins delivery estimate must not be in cursor guide")
+        self.assertNotIn('instant activation', cur_html.lower(), "instant activation must not be in cursor guide")
+        self.assertIn('Prompt delivery after payment confirmation', cur_html, "Prompt delivery confirmation required in cursor table")
+
+        # 6. index.html hero trust bar
+        index_path = os.path.join(REPO_ROOT, 'index.html')
+        with open(index_path, 'r', encoding='utf-8') as f:
+            index_html = f.read()
+        self.assertNotIn('Estimated WhatsApp Delivery (15–30m)', index_html, "15–30m delivery estimate must not be in hero trust")
+        self.assertIn('Prompt Delivery After Payment Confirmation', index_html, "Expected Prompt Delivery After Payment Confirmation in hero trust")
+
+        # 7. terms.html
+        terms_path = os.path.join(REPO_ROOT, 'terms.html')
+        with open(terms_path, 'r', encoding='utf-8') as f:
+            terms_html = f.read()
+        self.assertNotIn('15 to 60 minutes after payment confirmation', terms_html, "15 to 60 minutes must not be in terms.html")
+        self.assertIn('initiated promptly after payment confirmation', terms_html, "Expected initiated promptly in terms.html")
+
+        # 8. llms.txt and llms-full.txt
+        for lfile in ['llms.txt', 'llms-full.txt']:
+            lpath = os.path.join(REPO_ROOT, lfile)
+            with open(lpath, 'r', encoding='utf-8') as f:
+                lcontent = f.read()
+            self.assertNotIn('15–30 min', lcontent, f"15–30 min must not be in {lfile}")
+            self.assertNotIn('15-30 min', lcontent, f"15-30 min must not be in {lfile}")
+
+        # 9. Site-wide reviewBody check across all tool pages and index.html
         for root, dirs, files in os.walk(REPO_ROOT):
             if '.git' in root or 'node_modules' in root or '.seo-cache' in root:
                 continue
