@@ -34,6 +34,7 @@ class KeywordCandidate:
     priority: str = "P2"  # "P1 - Immediate", "P2 - Secondary", "P3 - Backlog"
     action_type: str = "OPTIMIZE_EXISTING"  # "OPTIMIZE_EXISTING", "MONITOR", "PROPOSE_NEW_PAGE"
     pakistan_relevance: bool = True
+    strategic_classification: str = "Pakistan-specific"  # "Pakistan-specific", "International/global", "Suitable for an existing page", "Requires a genuinely distinct new page", "Research-only/not ready"
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -217,6 +218,14 @@ class KeywordDiscoveryEngine:
                     rec_page = f"https://aitoolgems.tech/tools/{tool_slug}/"
                     break
 
+            # Resolve strategic classification
+            if is_pk:
+                strat_class = "Pakistan-specific"
+            elif rec_page != "https://aitoolgems.tech/" and (q.is_low_ctr_opportunity or q.is_striking_distance or q.position <= 3.0):
+                strat_class = "Suitable for an existing page"
+            else:
+                strat_class = "Research-only/not ready"
+
             candidates.append(KeywordCandidate(
                 keyword=q.query,
                 cluster=cluster,
@@ -235,6 +244,7 @@ class KeywordDiscoveryEngine:
                 priority=priority,
                 action_type=action,
                 pakistan_relevance=is_pk,
+                strategic_classification=strat_class,
             ))
         return candidates
 
@@ -312,19 +322,101 @@ class KeywordDiscoveryEngine:
         """
         intl_candidates: List[KeywordCandidate] = []
 
-        # 1. High-value tool comparisons & alternatives
-        comparisons = [
-            ("ChatGPT vs Claude for coding", "commercial", "Tool: Claude", "https://aitoolgems.tech/tools/claude/", "Compare code reasoning, context windows, and dev workflow integration."),
-            ("Canva vs Figma for freelance designers", "commercial", "Tool: Canva", "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/", "Compare graphic design templates vs interactive vector prototyping."),
-            ("Midjourney vs Leonardo AI for digital art", "commercial", "Tool: Leonardo", "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/", "Analyze photorealism, fine-tuning controls, and commercial usage rights."),
-            ("Lovable vs Replit for fullstack web apps", "commercial", "Tool: Lovable", "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/", "Evaluate prompt-driven UI generation vs cloud workspace environments."),
-            ("Best AI video generators comparison", "commercial", "Informational: Guides & Comparisons", "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/", "Compare Veo, Runway, and CapCut on rendering speed, quality, and licensing."),
-            ("ElevenLabs voice AI setup and pricing", "informational", "Tool: Elevenlabs", "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/", "Explain character allowances, voice cloning tiers, and commercial usage."),
-            ("n8n workflow automation setup guide", "informational", "Tool: N8N", "https://aitoolgems.tech/guides/n8n-automation-pakistan/", "Document self-hosting vs cloud tiers and webhook integrations."),
-            ("ChatGPT alternatives with web browsing", "commercial", "Informational: Guides & Comparisons", "https://aitoolgems.tech/guides/chatgpt-alternatives/", "Compare Perplexity, DeepSeek, and Gemini for live web search synthesis."),
+        # 1. Opportunities suitable for existing pages (Tool landing pages, audience hubs, policies)
+        existing_page_opps = [
+            (
+                "ChatGPT vs Claude for coding",
+                "commercial",
+                "Tool: Claude",
+                "https://aitoolgems.tech/tools/claude/",
+                "Benchmark Claude 3.5 Sonnet vs ChatGPT GPT-4o code reasoning on the existing Claude tool page.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P1 - Immediate",
+            ),
+            (
+                "ChatGPT alternatives with web browsing",
+                "commercial",
+                "Informational: Guides & Comparisons",
+                "https://aitoolgems.tech/guides/chatgpt-alternatives/",
+                "Update the existing non-regional ChatGPT alternatives guide to compare Perplexity, DeepSeek, and Gemini for live search.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P1 - Immediate",
+            ),
+            (
+                "ElevenLabs voice AI setup and pricing",
+                "informational",
+                "Tool: Elevenlabs",
+                "https://aitoolgems.tech/tools/elevenlabs/",
+                "Explain character allowances and commercial voice cloning tiers on the existing ElevenLabs tool page.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P2 - Secondary",
+            ),
+            (
+                "n8n workflow automation setup guide",
+                "informational",
+                "Tool: N8N",
+                "https://aitoolgems.tech/tools/n8n/",
+                "Document self-hosting vs cloud tiers and webhook integrations on the existing n8n tool page.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P2 - Secondary",
+            ),
+            (
+                "AI tools for students and academic research",
+                "commercial",
+                "Audience: Workflows & Use Cases",
+                "https://aitoolgems.tech/guides/students/",
+                "Document citation assistance, PDF analysis, and student discounts on the existing general students hub.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P2 - Secondary",
+            ),
+            (
+                "AI tools for freelance creators and agencies",
+                "commercial",
+                "Audience: Workflows & Use Cases",
+                "https://aitoolgems.tech/guides/creators/",
+                "Cover automated video editing pipelines and thumbnail generation on the existing general creators hub.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P2 - Secondary",
+            ),
+            (
+                "Best AI developer tools for software engineering",
+                "commercial",
+                "Audience: Workflows & Use Cases",
+                "https://aitoolgems.tech/guides/developers/",
+                "Detail Cursor, Replit, and Claude integrations on the existing general developers hub.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P2 - Secondary",
+            ),
+            (
+                "AI tools for small business productivity",
+                "commercial",
+                "Audience: Workflows & Use Cases",
+                "https://aitoolgems.tech/guides/businesses/",
+                "Explain CRM automation and team workspace management on the existing general business hub.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P2 - Secondary",
+            ),
+            (
+                "International inquiry for AI software subscriptions",
+                "commercial",
+                "Commercial: Pricing & Global Inquiry",
+                "https://aitoolgems.tech/policies.html#payments",
+                "Detail manual WhatsApp inquiry routing for Wise and SWIFT international bank transfers on the policies page.",
+                "Suitable for an existing page",
+                "OPTIMIZE_EXISTING",
+                "P1 - Immediate",
+            ),
         ]
 
-        for kw, intent, cluster, target_url, gap in comparisons:
+        for kw, intent, cluster, target_url, gap, strat, action, prio in existing_page_opps:
             score, breakdown = self.calculate_opportunity_score(kw, 15, 1, 6.7, 7.5, intent, is_pakistan=False)
             intl_candidates.append(KeywordCandidate(
                 keyword=kw,
@@ -341,40 +433,124 @@ class KeywordDiscoveryEngine:
                 score_breakdown=breakdown,
                 recommended_page=target_url,
                 content_gap=gap,
-                priority="P1 - Immediate",
-                action_type="OPTIMIZE_EXISTING",
+                priority=prio,
+                action_type=action,
                 pakistan_relevance=False,
+                strategic_classification=strat,
             ))
 
-        # 2. Audience-specific workflows
-        audiences = [
-            ("AI tools for students and academic research", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/students/", "Document citation assistance, PDF analysis, and affordable student options."),
-            ("AI tools for freelance creators and agencies", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/creators/", "Cover automated video editing pipelines, thumbnail generation, and licensing."),
-            ("Best AI developer tools for software engineering", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/developers/", "Detail Cursor, Replit, and Claude integration with Git and debugging flows."),
-            ("AI tools for small business productivity", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/businesses/", "Explain CRM automation, support chatbots, and team workspace management."),
-            ("International inquiry for AI software subscriptions", "commercial", "Commercial: Pricing & PKR Comparison", "https://aitoolgems.tech/policies.html#payments", "Detail manual WhatsApp inquiry routing for Wise and SWIFT international bank transfers."),
+        # 2. Opportunities requiring genuinely distinct new non-regional content
+        distinct_page_opps = [
+            (
+                "Canva vs Figma for freelance designers",
+                "commercial",
+                "Design: Global Comparisons",
+                "Proposed: https://aitoolgems.tech/guides/canva-vs-figma/",
+                "Requires a genuinely distinct international comparison guide covering official global pricing (USD), team seats, and vector vs template workflows without Pakistan-specific payment rails.",
+                "Requires a genuinely distinct new page",
+                "PROPOSE_NEW_PAGE",
+                "P2 - Secondary",
+            ),
+            (
+                "Midjourney vs Leonardo AI for digital art",
+                "commercial",
+                "Design: Global Comparisons",
+                "Proposed: https://aitoolgems.tech/guides/midjourney-vs-leonardo/",
+                "Requires a distinct international guide evaluating fine-tuning models, photorealism benchmarks, and commercial licensing tiers in USD.",
+                "Requires a genuinely distinct new page",
+                "PROPOSE_NEW_PAGE",
+                "P2 - Secondary",
+            ),
+            (
+                "Lovable vs Replit for fullstack web apps",
+                "commercial",
+                "Development: Global Comparisons",
+                "Proposed: https://aitoolgems.tech/guides/lovable-vs-replit/",
+                "Requires a distinct international guide comparing prompt-to-app UI workflows vs hosted cloud development environments in USD.",
+                "Requires a genuinely distinct new page",
+                "PROPOSE_NEW_PAGE",
+                "P2 - Secondary",
+            ),
+            (
+                "Best AI video generators comparison",
+                "commercial",
+                "Video: Global Comparisons",
+                "Proposed: https://aitoolgems.tech/guides/best-ai-video-generators/",
+                "Requires a distinct international comparison analyzing Veo, Runway Gen-3, and CapCut resolution, motion brush, and render limits in USD.",
+                "Requires a genuinely distinct new page",
+                "PROPOSE_NEW_PAGE",
+                "P2 - Secondary",
+            ),
         ]
 
-        for kw, intent, cluster, target_url, gap in audiences:
-            score, breakdown = self.calculate_opportunity_score(kw, 10, 0, 0.0, 9.0, intent, is_pakistan=False)
+        for kw, intent, cluster, target_url, gap, strat, action, prio in distinct_page_opps:
+            score, breakdown = self.calculate_opportunity_score(kw, 20, 1, 5.0, 8.0, intent, is_pakistan=False)
             intl_candidates.append(KeywordCandidate(
                 keyword=kw,
                 cluster=cluster,
                 intent=intent,
                 market="GLOBAL",
                 country_market="International / Global",
-                impressions=10,
-                clicks=0,
-                ctr=0.0,
-                position=9.0,
+                impressions=20,
+                clicks=1,
+                ctr=5.0,
+                position=8.0,
                 source="PUBLIC_RESEARCH",
                 opportunity_score=score,
                 score_breakdown=breakdown,
                 recommended_page=target_url,
                 content_gap=gap,
-                priority="P2 - Secondary",
-                action_type="OPTIMIZE_EXISTING",
+                priority=prio,
+                action_type=action,
                 pakistan_relevance=False,
+                strategic_classification=strat,
+            ))
+
+        # 3. Research-only / Early-stage opportunities
+        research_opps = [
+            (
+                "OpenAI Sora public access and pricing globally",
+                "informational",
+                "Video: Research",
+                "None (Under Research)",
+                "Search demand emerging but vendor access model not finalized; monitor official OpenAI announcements before proposing content.",
+                "Research-only/not ready",
+                "MONITOR",
+                "P3 - Backlog",
+            ),
+            (
+                "Claude Team vs ChatGPT Enterprise comparison",
+                "commercial",
+                "Enterprise: Research",
+                "None (Under Research)",
+                "Requires verified international enterprise seat pricing data and SOC-2 compliance details before formulation.",
+                "Research-only/not ready",
+                "MONITOR",
+                "P3 - Backlog",
+            ),
+        ]
+
+        for kw, intent, cluster, target_url, gap, strat, action, prio in research_opps:
+            score, breakdown = self.calculate_opportunity_score(kw, 5, 0, 0.0, 15.0, intent, is_pakistan=False)
+            intl_candidates.append(KeywordCandidate(
+                keyword=kw,
+                cluster=cluster,
+                intent=intent,
+                market="GLOBAL",
+                country_market="International / Global",
+                impressions=5,
+                clicks=0,
+                ctr=0.0,
+                position=15.0,
+                source="PUBLIC_RESEARCH",
+                opportunity_score=score,
+                score_breakdown=breakdown,
+                recommended_page=target_url,
+                content_gap=gap,
+                priority=prio,
+                action_type=action,
+                pakistan_relevance=False,
+                strategic_classification=strat,
             ))
 
         return intl_candidates

@@ -116,12 +116,22 @@ class KeywordReportGenerator:
             for k in pk_trans[:10]
         ) or "| _No transactional queries mapped_ | - | - | - | - |"
 
+        def format_rec_page(p: str) -> str:
+            if not p:
+                return "None"
+            if p.startswith("Proposed:"):
+                clean = p.replace("Proposed:", "").strip()
+                return f"`Proposed:` [{clean.replace('https://aitoolgems.tech', '')}]({clean})"
+            if p.startswith("None"):
+                return "_Under Research_"
+            return f"[{p.replace('https://aitoolgems.tech', '') or '/'}]({p})"
+
         # Format International search opportunities table
         all_intl = intl_growth + intl_workflows
         intl_rows = "\n".join(
-            f"| `{k.keyword.replace(chr(10), ' ').replace(chr(13), ' ')}` | `{k.country_market}` | `{k.intent}` | `{k.opportunity_score}` | `{k.priority}` | [{(k.recommended_page or 'https://aitoolgems.tech/').replace('https://aitoolgems.tech', '') or '/'}]({k.recommended_page or 'https://aitoolgems.tech/'}) | {k.content_gap} | `{k.action_type}` |"
-            for k in all_intl[:12]
-        ) or "| _No international opportunities mapped_ | - | - | - | - | - | - | - |"
+            f"| `{k.keyword.replace(chr(10), ' ').replace(chr(13), ' ')}` | `{k.country_market}` | `{k.strategic_classification}` | `{k.intent}` | `{k.opportunity_score}` | `{k.priority}` | {format_rec_page(k.recommended_page)} | {k.content_gap} | `{k.action_type}` |"
+            for k in all_intl[:16]
+        ) or "| _No international opportunities mapped_ | - | - | - | - | - | - | - | - |"
 
         # Format cannibalization section
         if collisions:
@@ -193,10 +203,10 @@ Authentic PKR pricing and domestic payment rails (EasyPaisa, JazzCash, SadaPay, 
 ---
 
 ## 5. International SEO Growth & Audience Workflow Opportunities
-Approved non-domestic opportunities targeting tool comparisons, alternatives, workflows, and manual inquiry quotes:
+Approved non-domestic opportunities targeting tool comparisons, alternatives, workflows, and manual inquiry quotes. Categorized strictly into Suitable for an existing page, Requires a genuinely distinct new page, or Research-only/not ready:
 
-| Target Query | Market | Intent | Score | Priority | Relevant Page | Content Gap | Recommended Action |
-|--------------|--------|--------|-------|----------|---------------|-------------|--------------------|
+| Target Query | Market | Strategic Classification | Intent | Score | Priority | Relevant / Proposed Page | Content Gap | Recommended Action |
+|--------------|--------|--------------------------|--------|-------|----------|--------------------------|-------------|--------------------|
 {intl_rows}
 
 ---

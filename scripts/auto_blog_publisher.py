@@ -350,7 +350,7 @@ def render_article_html(bp: dict) -> str:
           <li><strong>Mandatory Withholding Tax:</strong> Under Federal Board of Revenue regulations, transactions on international merchants incur withholding taxes of up to 10% for active tax filers and up to 15% for non-filers.</li>
           <li><strong>Frequent Card Declines:</strong> Many domestic digital wallets and basic debit cards lack active international e-commerce permissions, blocking recurring monthly software subscriptions.</li>
         </ul>
-        <p>By leveraging AI Tool Gems, local professionals bypass cross-border friction entirely. All plans are listed in transparent Pakistani Rupees (PKR) and backed by guaranteed delivery within 15 to 30 minutes via WhatsApp.</p>
+        <p>By leveraging AI Tool Gems, local professionals bypass cross-border friction entirely. All plans are listed in transparent Pakistani Rupees (PKR) and backed by prompt delivery upon payment confirmation via WhatsApp.</p>
       </section>
 
       <section class="content-section">
@@ -389,7 +389,7 @@ def render_article_html(bp: dict) -> str:
 
       <section class="content-section">
         <h2>How to Order via EasyPaisa and JazzCash</h2>
-        <p>Activating your subscription takes less than 30 minutes using our streamlined WhatsApp order process:</p>
+        <p>Activating your subscription is completed promptly after payment confirmation using our streamlined WhatsApp order process:</p>
         <ol>
           <li>Explore the verified marketplace listing on AI Tool Gems.</li>
           <li>Click 'Order on WhatsApp' to connect directly with our support team.</li>

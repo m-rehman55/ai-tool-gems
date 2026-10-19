@@ -269,8 +269,14 @@ class TestKeywordAgent(unittest.TestCase):
             self.assertEqual(c.country_market, "International / Global")
             self.assertFalse(c.pakistan_relevance)
             self.assertIsNotNone(c.content_gap)
-            self.assertIn(c.priority, ["P1 - Immediate", "P2 - Secondary"])
-            self.assertTrue(c.recommended_page.startswith("https://aitoolgems.tech/"))
+            self.assertIn(c.priority, ["P1 - Immediate", "P2 - Secondary", "P3 - Backlog"])
+            self.assertIn(c.strategic_classification, [
+                "Suitable for an existing page",
+                "Requires a genuinely distinct new page",
+                "Research-only/not ready"
+            ])
+            # Crucial rule: Never assign global keywords to Pakistan-only guides
+            self.assertNotIn("-pakistan", c.recommended_page.lower(), f"Global keyword {c.keyword} was assigned to Pakistan guide {c.recommended_page}")
 
     def test_dual_market_opportunity_segmentation(self):
         disc = KeywordDiscoveryEngine()
