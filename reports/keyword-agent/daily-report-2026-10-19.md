@@ -1,8 +1,9 @@
-# 📈 AIToolGems Keyword Intelligence & Content Optimization Report
+# 📈 AIToolGems Keyword Intelligence & Dual-Market SEO Growth Report
 
 **Date:** `2026-10-19`  
 **Site URL:** `https://aitoolgems.tech`  
-**Primary Market:** Pakistan (PKR / EasyPaisa / JazzCash)  
+**Primary Commercial Market:** Pakistan (PKR / EasyPaisa / JazzCash / SadaPay / Bank IBFT)  
+**Secondary Growth Market:** International / Global (Tool Comparisons, Student/Freelancer Workflows, WhatsApp Inquiries)  
 **Search Console Data Source:** `MANUAL_EXPORT`  
 **GSC Status:** Loaded 42 queries and 39 pages from manual GSC exports.  
 
@@ -16,6 +17,18 @@
 - **Active Query Count:** `42`
 - **Active Pages Tracked:** `39`
 - **Pakistan (#1 Market):** `15 clicks` / `213 impressions` (7.04% CTR, pos 11.4)
+
+### 🌍 International Organic Footprint (GSC Measured)
+| Country / Territory | Clicks | Imp | CTR | Average Position |
+|---------------------|--------|-----|-----|------------------|
+| United States | 1 | 45 | 2.22% | 31.2 |
+| Brazil | 1 | 8 | 12.5% | 9.9 |
+| Algeria | 1 | 1 | 100.0% | 2.0 |
+| Italy | 1 | 1 | 100.0% | 3.0 |
+| Japan | 0 | 21 | 0.0% | 12.1 |
+| Spain | 0 | 21 | 0.0% | 16.9 |
+| India | 0 | 8 | 0.0% | 9.6 |
+| United Kingdom | 0 | 4 | 0.0% | 15.2 |
 
 ### 📱 Device Breakdown
 - **Mobile:** `12 clicks` | `143 impressions` | `8.39% CTR` | `Pos: 8.0`
@@ -38,17 +51,18 @@
 
 ---
 
-## 3. High-Impact Quick Wins (High Impression / Low CTR & Striking Distance)
-Queries where incremental optimization can drive immediate click gains without waiting for major ranking changes:
+## 3. High-Impact Quick Wins (Striking Distance & CTR Optimization)
+Queries where incremental metadata and direct-answer optimizations can drive immediate click gains:
 
 | Target Query | Imp | Clicks | CTR | Pos | Cluster | Score | Action |
 |--------------|-----|--------|-----|-----|---------|-------|--------|
-| `intitle:"leonardo ai" "license key"` | 35 | 0 | 0.0% | 6.1 | `Tool: Leonardo` | 90.0 | `OPTIMIZE_EXISTING` |
 | `linkedin premium price in pakistan` | 6 | 0 | 0.0% | 11.0 | `Tool: Linkedin` | 82.0 | `OPTIMIZE_EXISTING` |
 
 ---
 
-## 4. High-Value Pakistani Transactional Queries (PKR & Local Wallets)
+## 4. Pakistan Commercial & Transactional Queries (PKR & Local Wallets)
+Authentic PKR pricing and domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast):
+
 | Target Query | Intent | Cluster | Score | Recommended Action |
 |--------------|--------|---------|-------|--------------------|
 | `chatgpt pro price in pakistan` | `transactional` | `Tool: Chatgpt` | 78.0 | `OPTIMIZE_EXISTING` |
@@ -59,21 +73,43 @@ Queries where incremental optimization can drive immediate click gains without w
 | `linkedin premium cost in pakistan` | `transactional` | `Tool: Linkedin` | 72.0 | `OPTIMIZE_EXISTING` |
 | `capcut pro price in pakistan` | `transactional` | `Tool: Capcut` | 68.0 | `MONITOR` |
 | `chatgpt price pakistan` | `transactional` | `Tool: Chatgpt` | 68.0 | `MONITOR` |
+| `nordvpn price in pakistan` | `transactional` | `Tool: Nordvpn` | 68.0 | `MONITOR` |
+| `adobe creative cloud price in pakistan` | `transactional` | `Tool: Adobe` | 68.0 | `MONITOR` |
 
 ---
 
-## 5. Keyword Cannibalization & URL Mapping Integrity
+## 5. International SEO Growth & Audience Workflow Opportunities
+Approved non-domestic opportunities targeting tool comparisons, alternatives, workflows, and manual inquiry quotes:
+
+| Target Query | Market | Intent | Score | Priority | Relevant Page | Content Gap | Recommended Action |
+|--------------|--------|--------|-------|----------|---------------|-------------|--------------------|
+| `intitle:"leonardo ai" "license key"` | `International / Global` | `transactional` | `93.0` | `P1 - Immediate` | [/tools/leonardo/](https://aitoolgems.tech/tools/leonardo/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
+| `International inquiry for AI software subscriptions` | `International / Global` | `commercial` | `78.0` | `P2 - Secondary` | [/policies.html#payments](https://aitoolgems.tech/policies.html#payments) | Detail manual WhatsApp inquiry routing for Wise and SWIFT international bank transfers. | `OPTIMIZE_EXISTING` |
+| `veo purchase` | `International / Global` | `transactional` | `73.0` | `P1 - Immediate` | [/tools/veo/](https://aitoolgems.tech/tools/veo/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
+| `ChatGPT vs Claude for coding` | `International / Global` | `commercial` | `73.0` | `P1 - Immediate` | [/tools/claude/](https://aitoolgems.tech/tools/claude/) | Compare code reasoning, context windows, and dev workflow integration. | `OPTIMIZE_EXISTING` |
+| `Canva vs Figma for freelance designers` | `International / Global` | `commercial` | `73.0` | `P1 - Immediate` | [/guides/canva-vs-figma-pakistan/](https://aitoolgems.tech/guides/canva-vs-figma-pakistan/) | Compare graphic design templates vs interactive vector prototyping. | `OPTIMIZE_EXISTING` |
+| `Midjourney vs Leonardo AI for digital art` | `International / Global` | `commercial` | `73.0` | `P1 - Immediate` | [/guides/midjourney-alternatives-pakistan/](https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/) | Analyze photorealism, fine-tuning controls, and commercial usage rights. | `OPTIMIZE_EXISTING` |
+| `Lovable vs Replit for fullstack web apps` | `International / Global` | `commercial` | `73.0` | `P1 - Immediate` | [/guides/lovable-vs-replit-pakistan/](https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/) | Evaluate prompt-driven UI generation vs cloud workspace environments. | `OPTIMIZE_EXISTING` |
+| `ChatGPT alternatives with web browsing` | `International / Global` | `commercial` | `73.0` | `P1 - Immediate` | [/guides/chatgpt-alternatives/](https://aitoolgems.tech/guides/chatgpt-alternatives/) | Compare Perplexity, DeepSeek, and Gemini for live web search synthesis. | `OPTIMIZE_EXISTING` |
+| `Best AI video generators comparison` | `International / Global` | `commercial` | `68.0` | `P1 - Immediate` | [/guides/best-ai-video-generators-pakistan/](https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/) | Compare Veo, Runway, and CapCut on rendering speed, quality, and licensing. | `OPTIMIZE_EXISTING` |
+| `intitle:"canva pro" -www.youtube.com -www.facebook.com -www.tiktok.com  -www.instagram.com -www.canva.com "license key"` | `International / Global` | `transactional` | `66.0` | `P3 - Backlog` | [/tools/canva/](https://aitoolgems.tech/tools/canva/) | Monitor impressions and CTR trend in Google Search Console. | `MONITOR` |
+| `ElevenLabs voice AI setup and pricing` | `International / Global` | `informational` | `66.0` | `P1 - Immediate` | [/guides/elevenlabs-voice-ai-pakistan/](https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/) | Explain character allowances, voice cloning tiers, and commercial usage. | `OPTIMIZE_EXISTING` |
+| `leonardo essential` | `International / Global` | `informational` | `65.0` | `P1 - Immediate` | [/tools/leonardo/](https://aitoolgems.tech/tools/leonardo/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
+
+---
+
+## 6. Keyword Cannibalization & URL Mapping Integrity
 ✅ **Zero Cannibalization Collisions Detected.** All keywords map to unique canonical URLs.
 
 ---
 
-## 6. Google Search Console RE2 Filter Engine
-- **Active Verified Filters:** `11` filters available in `docs/GSC_REGEX_LIBRARY.md`
-- **RE2 Compatibility:** 100% verified against RE2 syntax constraints.
+## 7. Google Search Console RE2 Filter Engine
+- **Active Verified Filters:** `13` copy-ready filters available in `docs/GSC_REGEX_LIBRARY.md`
+- **RE2 Compatibility:** 100% verified against RE2 syntax constraints. Includes Dedicated International Filters (#12 Global Comparisons & #13 Cross-Border Inquiries).
 
 ---
 
-## 7. On-Page Content & AEO Optimization Proposals
+## 8. On-Page Content & AEO Optimization Proposals
 ### 📄 On-Page Optimization: `https://aitoolgems.tech/tools/chatgpt/`
 **Status:** 🚨 **REQUIRES OWNER APPROVAL**  
 **Primary Intent Query:** `Chatgpt price in Pakistan`  
@@ -97,7 +133,7 @@ Queries where incremental optimization can drive immediate click gains without w
 
 #### 3. AEO (Answer Engine Optimization) Direct-Answer Blocks (40–55 words)
 #### ❓ `How to buy Chatgpt subscription in Pakistan with EasyPaisa or JazzCash?`
-> **AI Tool Gems Pakistan** provides direct Pakistani access to official Chatgpt subscriptions using local PKR payment methods. Customers in Pakistan can pay via EasyPaisa, JazzCash, SadaPay, or Raast without needing an international credit card. Account credentials or activation keys are delivered via verified WhatsApp support within 15 minutes.
+> **AI Tool Gems Pakistan** provides direct Pakistani access to official Chatgpt subscriptions using local PKR payment methods. Customers in Pakistan can pay via EasyPaisa, JazzCash, SadaPay, or Raast without needing an international credit card. Account access or activation details are delivered via verified WhatsApp support after payment and availability confirmation.
 
 
 #### 4. Proprietary Information Gain Additions (Pakistan Market)
@@ -140,7 +176,7 @@ Addresses high-intent search query 'Chatgpt price in Pakistan' with opportunity 
 
 #### 3. AEO (Answer Engine Optimization) Direct-Answer Blocks (40–55 words)
 #### ❓ `How to buy Canva subscription in Pakistan with EasyPaisa or JazzCash?`
-> **AI Tool Gems Pakistan** provides direct Pakistani access to official Canva subscriptions using local PKR payment methods. Customers in Pakistan can pay via EasyPaisa, JazzCash, SadaPay, or Raast without needing an international credit card. Account credentials or activation keys are delivered via verified WhatsApp support within 15 minutes.
+> **AI Tool Gems Pakistan** provides direct Pakistani access to official Canva subscriptions using local PKR payment methods. Customers in Pakistan can pay via EasyPaisa, JazzCash, SadaPay, or Raast without needing an international credit card. Account access or activation details are delivered via verified WhatsApp support after payment and availability confirmation.
 
 
 #### 4. Proprietary Information Gain Additions (Pakistan Market)
@@ -183,7 +219,7 @@ Addresses high-intent search query 'Canva price in Pakistan' with opportunity sc
 
 #### 3. AEO (Answer Engine Optimization) Direct-Answer Blocks (40–55 words)
 #### ❓ `How to buy Elevenlabs subscription in Pakistan with EasyPaisa or JazzCash?`
-> **AI Tool Gems Pakistan** provides direct Pakistani access to official Elevenlabs subscriptions using local PKR payment methods. Customers in Pakistan can pay via EasyPaisa, JazzCash, SadaPay, or Raast without needing an international credit card. Account credentials or activation keys are delivered via verified WhatsApp support within 15 minutes.
+> **AI Tool Gems Pakistan** provides direct Pakistani access to official Elevenlabs subscriptions using local PKR payment methods. Customers in Pakistan can pay via EasyPaisa, JazzCash, SadaPay, or Raast without needing an international credit card. Account access or activation details are delivered via verified WhatsApp support after payment and availability confirmation.
 
 
 #### 4. Proprietary Information Gain Additions (Pakistan Market)
@@ -205,7 +241,8 @@ Addresses high-intent search query 'Elevenlabs price in Pakistan' with opportuni
 
 ---
 
-## 8. Next Autonomous Action Plan
-1. **Focus on Quick Wins:** Implement CTR optimization for top impression queries (e.g. Leonardo AI license key, LinkedIn Premium Pakistan).
-2. **Review Proposed Changes:** Review the approval gates above before merging any changes to live tool pages.
-3. **Continuous Monitoring:** Scheduled daily run will re-evaluate rankings, clicks, and intent maps.
+## 9. Next Autonomous Action Plan
+1. **Pakistan Focus:** Maintain domestic transactional leadership for ChatGPT, Canva, CapCut, and Gemini Pro via transparent PKR pricing and verified WhatsApp onboarding.
+2. **International Growth:** Optimize existing comparison and workflow guides (`guides/canva-vs-figma-pakistan/`, `guides/chatgpt-vs-gemini-pakistan/`, `guides/students/`, `guides/creators/`) to answer global search intent without creating thin duplicate country pages.
+3. **Cross-Border Inquiry Routing:** Direct international customers to manual WhatsApp support for availability, payment method (Wise, SWIFT), and pricing verification on `policies.html#payments`.
+4. **Safeguards Active:** Preserving strict human review gates, grounded facts, and zero fabricated foreign checkout rails.

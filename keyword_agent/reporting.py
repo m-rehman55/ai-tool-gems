@@ -78,6 +78,8 @@ class KeywordReportGenerator:
         # Summary counts
         quick_wins = opportunities.get("high_impact_quick_wins", [])
         pk_trans = opportunities.get("pakistan_transactional", [])
+        intl_growth = opportunities.get("international_growth_opportunities", [])
+        intl_workflows = opportunities.get("international_audience_workflows", [])
         aeo_opps = opportunities.get("aeo_question_opportunities", [])
 
         # Format quick wins table
@@ -92,9 +94,16 @@ class KeywordReportGenerator:
             for p in sorted(gsc_dataset.pages, key=lambda x: x.clicks, reverse=True)[:8]
         ) or "| _No page data available_ | - | - | - | - |"
 
-        # Format countries and devices
+        # Format countries breakdown (separating Pakistan from International)
         pk_country = next((c for c in gsc_dataset.countries if "pakistan" in c.country.lower()), None)
-        country_summary = f"**Pakistan (#1 Market):** `{pk_country.clicks} clicks` / `{pk_country.impressions} impressions` ({pk_country.ctr}% CTR, pos {pk_country.position:.1f})" if pk_country else "Global data loaded."
+        intl_countries = [c for c in gsc_dataset.countries if "pakistan" not in c.country.lower()]
+        
+        country_summary = f"**Pakistan (#1 Market):** `{pk_country.clicks} clicks` / `{pk_country.impressions} impressions` ({pk_country.ctr}% CTR, pos {pk_country.position:.1f})" if pk_country else "Pakistan data loaded."
+        
+        intl_country_rows = "\n".join(
+            f"| {c.country} | {c.clicks} | {c.impressions} | {c.ctr}% | {c.position:.1f} |"
+            for c in sorted(intl_countries, key=lambda x: (x.clicks, x.impressions), reverse=True)[:8]
+        ) or "| _No international country records found_ | - | - | - | - |"
 
         device_rows = "\n".join(
             f"- **{d.device}:** `{d.clicks} clicks` | `{d.impressions} impressions` | `{d.ctr}% CTR` | `Pos: {d.position:.1f}`"
@@ -104,8 +113,15 @@ class KeywordReportGenerator:
         # Format Pakistan transactional table
         pk_rows = "\n".join(
             f"| `{k.keyword}` | `{k.intent}` | `{k.cluster}` | {k.opportunity_score} | `{k.action_type}` |"
-            for k in pk_trans[:8]
+            for k in pk_trans[:10]
         ) or "| _No transactional queries mapped_ | - | - | - | - |"
+
+        # Format International search opportunities table
+        all_intl = intl_growth + intl_workflows
+        intl_rows = "\n".join(
+            f"| `{k.keyword.replace(chr(10), ' ').replace(chr(13), ' ')}` | `{k.country_market}` | `{k.intent}` | `{k.opportunity_score}` | `{k.priority}` | [{(k.recommended_page or 'https://aitoolgems.tech/').replace('https://aitoolgems.tech', '') or '/'}]({k.recommended_page or 'https://aitoolgems.tech/'}) | {k.content_gap} | `{k.action_type}` |"
+            for k in all_intl[:12]
+        ) or "| _No international opportunities mapped_ | - | - | - | - | - | - | - |"
 
         # Format cannibalization section
         if collisions:
@@ -121,11 +137,12 @@ class KeywordReportGenerator:
         # Format briefs
         briefs_md = "\n\n".join(b.format_markdown() for b in briefs[:3]) if briefs else "_No optimization briefs generated._"
 
-        content = f"""# 📈 AIToolGems Keyword Intelligence & Content Optimization Report
+        content = f"""# 📈 AIToolGems Keyword Intelligence & Dual-Market SEO Growth Report
 
 **Date:** `{today}`  
 **Site URL:** `https://aitoolgems.tech`  
-**Primary Market:** Pakistan (PKR / EasyPaisa / JazzCash)  
+**Primary Commercial Market:** Pakistan (PKR / EasyPaisa / JazzCash / SadaPay / Bank IBFT)  
+**Secondary Growth Market:** International / Global (Tool Comparisons, Student/Freelancer Workflows, WhatsApp Inquiries)  
 **Search Console Data Source:** `{gsc_dataset.source}`  
 **GSC Status:** {gsc_dataset.status_message}  
 
@@ -140,6 +157,11 @@ class KeywordReportGenerator:
 - **Active Pages Tracked:** `{len(gsc_dataset.pages)}`
 - {country_summary}
 
+### 🌍 International Organic Footprint (GSC Measured)
+| Country / Territory | Clicks | Imp | CTR | Average Position |
+|---------------------|--------|-----|-----|------------------|
+{intl_country_rows}
+
 ### 📱 Device Breakdown
 {device_rows}
 
@@ -152,8 +174,8 @@ class KeywordReportGenerator:
 
 ---
 
-## 3. High-Impact Quick Wins (High Impression / Low CTR & Striking Distance)
-Queries where incremental optimization can drive immediate click gains without waiting for major ranking changes:
+## 3. High-Impact Quick Wins (Striking Distance & CTR Optimization)
+Queries where incremental metadata and direct-answer optimizations can drive immediate click gains:
 
 | Target Query | Imp | Clicks | CTR | Pos | Cluster | Score | Action |
 |--------------|-----|--------|-----|-----|---------|-------|--------|
@@ -161,33 +183,45 @@ Queries where incremental optimization can drive immediate click gains without w
 
 ---
 
-## 4. High-Value Pakistani Transactional Queries (PKR & Local Wallets)
+## 4. Pakistan Commercial & Transactional Queries (PKR & Local Wallets)
+Authentic PKR pricing and domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast):
+
 | Target Query | Intent | Cluster | Score | Recommended Action |
 |--------------|--------|---------|-------|--------------------|
 {pk_rows}
 
 ---
 
-## 5. Keyword Cannibalization & URL Mapping Integrity
+## 5. International SEO Growth & Audience Workflow Opportunities
+Approved non-domestic opportunities targeting tool comparisons, alternatives, workflows, and manual inquiry quotes:
+
+| Target Query | Market | Intent | Score | Priority | Relevant Page | Content Gap | Recommended Action |
+|--------------|--------|--------|-------|----------|---------------|-------------|--------------------|
+{intl_rows}
+
+---
+
+## 6. Keyword Cannibalization & URL Mapping Integrity
 {cannibal_md}
 
 ---
 
-## 6. Google Search Console RE2 Filter Engine
-- **Active Verified Filters:** `{len(filters)}` filters available in `docs/GSC_REGEX_LIBRARY.md`
-- **RE2 Compatibility:** 100% verified against RE2 syntax constraints.
+## 7. Google Search Console RE2 Filter Engine
+- **Active Verified Filters:** `{len(filters)}` copy-ready filters available in `docs/GSC_REGEX_LIBRARY.md`
+- **RE2 Compatibility:** 100% verified against RE2 syntax constraints. Includes Dedicated International Filters (#12 Global Comparisons & #13 Cross-Border Inquiries).
 
 ---
 
-## 7. On-Page Content & AEO Optimization Proposals
+## 8. On-Page Content & AEO Optimization Proposals
 {briefs_md}
 
 ---
 
-## 8. Next Autonomous Action Plan
-1. **Focus on Quick Wins:** Implement CTR optimization for top impression queries (e.g. Leonardo AI license key, LinkedIn Premium Pakistan).
-2. **Review Proposed Changes:** Review the approval gates above before merging any changes to live tool pages.
-3. **Continuous Monitoring:** Scheduled daily run will re-evaluate rankings, clicks, and intent maps.
+## 9. Next Autonomous Action Plan
+1. **Pakistan Focus:** Maintain domestic transactional leadership for ChatGPT, Canva, CapCut, and Gemini Pro via transparent PKR pricing and verified WhatsApp onboarding.
+2. **International Growth:** Optimize existing comparison and workflow guides (`guides/canva-vs-figma-pakistan/`, `guides/chatgpt-vs-gemini-pakistan/`, `guides/students/`, `guides/creators/`) to answer global search intent without creating thin duplicate country pages.
+3. **Cross-Border Inquiry Routing:** Direct international customers to manual WhatsApp support for availability, payment method (Wise, SWIFT), and pricing verification on `policies.html#payments`.
+4. **Safeguards Active:** Preserving strict human review gates, grounded facts, and zero fabricated foreign checkout rails.
 """
 
         md_file.write_text(content, encoding="utf-8")
@@ -203,6 +237,7 @@ Queries where incremental optimization can drive immediate click gains without w
             "average_position": gsc_dataset.average_position,
             "quick_wins_count": len(quick_wins),
             "pakistan_transactional_count": len(pk_trans),
+            "international_opportunities_count": len(all_intl),
             "aeo_questions_count": len(aeo_opps),
             "cannibalization_collisions_count": len(collisions),
             "briefs_count": len(briefs),

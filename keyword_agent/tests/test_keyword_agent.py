@@ -258,5 +258,50 @@ class TestKeywordAgent(unittest.TestCase):
         self.assertFalse(is_safe_robots)
 
 
+    # ── International & Dual-Market SEO Growth Tests ───────────────────────
+
+    def test_international_discovery_clusters(self):
+        disc = KeywordDiscoveryEngine()
+        intl_clusters = disc.generate_international_discovery_clusters()
+        self.assertGreaterEqual(len(intl_clusters), 10)
+        for c in intl_clusters:
+            self.assertEqual(c.market, "GLOBAL")
+            self.assertEqual(c.country_market, "International / Global")
+            self.assertFalse(c.pakistan_relevance)
+            self.assertIsNotNone(c.content_gap)
+            self.assertIn(c.priority, ["P1 - Immediate", "P2 - Secondary"])
+            self.assertTrue(c.recommended_page.startswith("https://aitoolgems.tech/"))
+
+    def test_dual_market_opportunity_segmentation(self):
+        disc = KeywordDiscoveryEngine()
+        candidates = disc.generate_seed_discovery_clusters() + disc.generate_international_discovery_clusters()
+        segmented = disc.segment_opportunities(candidates)
+
+        self.assertIn("pakistan_transactional", segmented)
+        self.assertIn("international_growth_opportunities", segmented)
+        self.assertIn("international_audience_workflows", segmented)
+
+        self.assertGreaterEqual(len(segmented["pakistan_transactional"]), 1)
+        self.assertGreaterEqual(len(segmented["international_growth_opportunities"]), 1)
+        self.assertGreaterEqual(len(segmented["international_audience_workflows"]), 1)
+
+    def test_filters_12_and_13_re2_valid(self):
+        lib = GSCFilterLibrary()
+        filters = {f.name: f for f in lib.get_core_filters()}
+        self.assertIn("Global Comparisons & Alternatives", filters)
+        self.assertIn("International Inquiries & Cross-Border Access", filters)
+
+        f12 = filters["Global Comparisons & Alternatives"]
+        self.assertTrue(f12.is_re2_validated)
+        matched12, _ = lib.test_filter(f12, ["chatgpt vs claude for coding", "midjourney alternatives for creators"])
+        self.assertEqual(len(matched12), 2)
+
+        f13 = filters["International Inquiries & Cross-Border Access"]
+        self.assertTrue(f13.is_re2_validated)
+        matched13, _ = lib.test_filter(f13, ["buy ai tools outside pakistan", "pay ai tools via wise"])
+        self.assertEqual(len(matched13), 2)
+
+
 if __name__ == "__main__":
     unittest.main()
+

@@ -271,6 +271,32 @@ class GSCFilterLibrary:
                 "potential_edge_cases": "Captures top-of-funnel informational and AEO traffic.",
                 "metrics_to_inspect": "Informational impressions, organic backlink attraction, and internal link CTR.",
             },
+            # 12. Global Tool Comparisons & Alternatives
+            {
+                "name": "Global Comparisons & Alternatives",
+                "dimension": "Query",
+                "match_type": "Matches regex",
+                "regex": r"(?i)\b(vs|versus|alternative|alternatives|compare|comparison|workflow|for students|for freelancers|for developers|for creators)\b",
+                "matches_summary": "Queries comparing tools, seeking alternatives, or finding audience-specific workflows globally.",
+                "excludes_summary": "Single-tool transactional queries without comparison intent.",
+                "sample_matching": ["chatgpt vs claude for coding", "midjourney alternatives", "ai tools for students", "canva vs figma comparison"],
+                "sample_non_matching": ["buy chatgpt plus", "canva pro price", "easypaisa login"],
+                "potential_edge_cases": "Matches both Pakistan-based and international comparison searches.",
+                "metrics_to_inspect": "High organic CTR, informational impressions, and comparison guide engagement.",
+            },
+            # 13. Cross-Border & International Inquiries
+            {
+                "name": "International Inquiries & Cross-Border Access",
+                "dimension": "Query",
+                "match_type": "Matches regex",
+                "regex": r"(?i)\b(international|abroad|overseas|outside pakistan|wise|swift|inquiry|global|worldwide)\b",
+                "matches_summary": "Queries from diaspora or international customers seeking cross-border ordering and quotes.",
+                "excludes_summary": "Domestic PKR and Pakistani wallet queries.",
+                "sample_matching": ["buy ai tools outside pakistan", "international inquiry ai subscriptions", "pay ai tools via wise"],
+                "sample_non_matching": ["easypaisa ai tools", "jazzcash canva pro", "lahore ai tools"],
+                "potential_edge_cases": "Ensures tracking of manual WhatsApp inquiry volume from non-PK searchers.",
+                "metrics_to_inspect": "Inquiry conversions and international traffic to policies.html#payments.",
+            },
         ]
 
         filters: List[GSCFilterDefinition] = []

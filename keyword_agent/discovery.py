@@ -20,7 +20,8 @@ class KeywordCandidate:
     keyword: str
     cluster: str
     intent: str  # "transactional", "commercial", "informational", "navigational"
-    market: str = "PK"
+    market: str = "PK"  # "PK" or "GLOBAL"
+    country_market: str = "Pakistan"  # "Pakistan" or "International / Global"
     impressions: int = 0
     clicks: int = 0
     ctr: float = 0.0
@@ -29,6 +30,8 @@ class KeywordCandidate:
     opportunity_score: float = 0.0
     score_breakdown: Dict[str, float] = field(default_factory=dict)
     recommended_page: str = ""
+    content_gap: str = ""
+    priority: str = "P2"  # "P1 - Immediate", "P2 - Secondary", "P3 - Backlog"
     action_type: str = "OPTIMIZE_EXISTING"  # "OPTIMIZE_EXISTING", "MONITOR", "PROPOSE_NEW_PAGE"
     pakistan_relevance: bool = True
 
@@ -37,7 +40,7 @@ class KeywordCandidate:
 
 
 class KeywordDiscoveryEngine:
-    """Discovers, clusters, scores, and segments keyword opportunities for Pakistan AI marketplace."""
+    """Discovers, clusters, scores, and segments keyword opportunities for Pakistan & International markets."""
 
     # Pakistan localized transactional modifiers
     PK_TRANSACTIONAL_MODIFIERS = [
@@ -49,16 +52,18 @@ class KeywordDiscoveryEngine:
     # Intent classification patterns
     INTENT_PATTERNS = [
         ("transactional", r"(?i)\b(buy|price|pricing|cost|subscribe|subscription|purchase|pkr|rs|rupees|easypaisa|jazzcash|license|key|account)\b"),
-        ("commercial", r"(?i)\b(vs|versus|alternative|alternatives|compare|comparison|review|reviews|best|top|cheap|deal|discount)\b"),
+        ("commercial", r"(?i)\b(vs|versus|alternative|alternatives|compare|comparison|review|reviews|best|top|cheap|deal|discount|workflow)\b"),
         ("informational", r"(?i)\b(how|what|why|when|where|tutorial|guide|setup|download|error|prompt|use)\b"),
         ("navigational", r"(?i)\b(login|portal|official|sign in|download|app)\b"),
     ]
 
     def __init__(self, catalog_tools: Optional[List[str]] = None):
         self.catalog_tools = catalog_tools or [
-            "chatgpt", "gemini", "veo", "leonardo", "elevenlabs", "canva", "figma",
-            "adobe", "capcut", "lovable", "gamma", "replit", "n8n", "notion",
-            "nordvpn", "surfshark", "youtube", "netflix", "linkedin", "windows",
+            "adobe", "allinone", "canva", "capcut", "chatgpt", "claude", "cursor",
+            "deepseek", "elevenlabs", "figma", "gamma", "gemini", "grammarly", "grok",
+            "heygen", "leonardo", "linkedin", "lovable", "midjourney", "n8n", "netflix",
+            "nordvpn", "notion", "perplexity", "quillbot", "replit", "runway", "semrush",
+            "surfshark", "veo", "windows", "youtube"
         ]
 
     def classify_intent(self, keyword: str) -> str:
@@ -82,8 +87,10 @@ class KeywordDiscoveryEngine:
             return "Informational: Guides & Comparisons"
         if any(w in kw_lower for w in ["deal", "discount", "cheap", "bundle"]):
             return "Commercial: Deals & Discounts"
+        if any(w in kw_lower for w in ["student", "freelancer", "creator", "developer", "business"]):
+            return "Audience: Workflows & Use Cases"
         
-        return "General: AI Tools Pakistan"
+        return "General: AI Tools & Subscriptions"
 
     def calculate_opportunity_score(
         self,
@@ -106,13 +113,15 @@ class KeywordDiscoveryEngine:
         """
         breakdown = {}
 
-        # 1. Relevance (Is it a tool we sell / Pakistan market?)
+        # 1. Relevance (Is it a tool we sell / Pakistan or Global market?)
         rel_score = 15.0
         kw_lower = keyword.lower()
         if any(t in kw_lower for t in self.catalog_tools):
             rel_score += 5.0
         if is_pakistan:
             rel_score += 5.0
+        else:
+            rel_score += 3.0  # International approved opportunity
         breakdown["relevance"] = rel_score
 
         # 2. Demand Signal
@@ -165,12 +174,14 @@ class KeywordDiscoveryEngine:
         return round(total_score, 1), breakdown
 
     def process_gsc_queries(self, gsc_dataset: GSCDataset) -> List[KeywordCandidate]:
-        """Converts raw GSC query data into scored, clustered keyword candidates."""
+        """Converts raw GSC query data into scored, clustered keyword candidates segmented by market."""
         candidates: List[KeywordCandidate] = []
         for q in gsc_dataset.queries:
             intent = self.classify_intent(q.query)
             cluster = self.assign_cluster(q.query)
-            is_pk = bool(re.search(r"(?i)(pakistan|pkr|rs|rupee|easypaisa|jazzcash|lahore|karachi)", q.query))
+            is_pk = bool(re.search(r"(?i)(pakistan|pakistani|pkr|rs\.?|rupees?|easypaisa|jazzcash|sadapay|nayapay|lahore|karachi|islamabad|rawalpindi|faisalabad)", q.query))
+            market = "PK" if is_pk else "GLOBAL"
+            country_market = "Pakistan" if is_pk else "International / Global"
 
             score, breakdown = self.calculate_opportunity_score(
                 keyword=q.query,
@@ -182,19 +193,36 @@ class KeywordDiscoveryEngine:
                 is_pakistan=is_pk,
             )
 
-            # Recommend action based on position & CTR
+            # Recommend action, content gap, and priority based on position & CTR
             if q.position <= 3.0:
                 action = "PROTECT_WINNER"
+                priority = "P1 - Immediate"
+                gap = "Rank #1-3 achieved. Protect SERP snippet, refresh direct answers and maintain high CTR."
             elif q.is_low_ctr_opportunity or q.is_striking_distance:
                 action = "OPTIMIZE_EXISTING"
+                priority = "P1 - Immediate"
+                if is_pk:
+                    gap = "High impression query in striking distance. Highlight PKR pricing and domestic payment rails in visible intro."
+                else:
+                    gap = "International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support."
             else:
                 action = "MONITOR"
+                priority = "P2 - Secondary" if q.impressions >= 5 else "P3 - Backlog"
+                gap = "Monitor impressions and CTR trend in Google Search Console."
+
+            # Resolve best canonical URL if tool matches or generic
+            rec_page = "https://aitoolgems.tech/"
+            for tool_slug in self.catalog_tools:
+                if tool_slug in q.query.lower():
+                    rec_page = f"https://aitoolgems.tech/tools/{tool_slug}/"
+                    break
 
             candidates.append(KeywordCandidate(
                 keyword=q.query,
                 cluster=cluster,
                 intent=intent,
-                market="PK",
+                market=market,
+                country_market=country_market,
                 impressions=q.impressions,
                 clicks=q.clicks,
                 ctr=q.ctr,
@@ -202,6 +230,9 @@ class KeywordDiscoveryEngine:
                 source="GSC",
                 opportunity_score=score,
                 score_breakdown=breakdown,
+                recommended_page=rec_page,
+                content_gap=gap,
+                priority=priority,
                 action_type=action,
                 pakistan_relevance=is_pk,
             ))
@@ -209,7 +240,7 @@ class KeywordDiscoveryEngine:
 
     def generate_seed_discovery_clusters(self) -> List[KeywordCandidate]:
         """
-        Generates baseline Pakistani search clusters for all 20 verified tools in catalog,
+        Generates baseline Pakistani search clusters for all 32 verified tools in catalog,
         ensuring comprehensive target universe even when GSC data is awaiting import.
         """
         seed_candidates: List[KeywordCandidate] = []
@@ -222,9 +253,13 @@ class KeywordDiscoveryEngine:
                 cluster=f"Tool: {tool.title()}",
                 intent="transactional",
                 market="PK",
+                country_market="Pakistan",
                 source="CATALOG_GAP",
                 opportunity_score=s1,
                 score_breakdown=b1,
+                recommended_page=f"https://aitoolgems.tech/tools/{tool}/",
+                content_gap="Prominently display transparent PKR pricing and replacement warranty terms.",
+                priority="P1 - Immediate",
                 action_type="OPTIMIZE_EXISTING",
                 pakistan_relevance=True,
             ))
@@ -237,9 +272,13 @@ class KeywordDiscoveryEngine:
                 cluster=f"Tool: {tool.title()}",
                 intent="transactional",
                 market="PK",
+                country_market="Pakistan",
                 source="CATALOG_GAP",
                 opportunity_score=s2,
                 score_breakdown=b2,
+                recommended_page=f"https://aitoolgems.tech/tools/{tool}/",
+                content_gap="Detail domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast) in payment disclosure.",
+                priority="P1 - Immediate",
                 action_type="OPTIMIZE_EXISTING",
                 pakistan_relevance=True,
             ))
@@ -252,32 +291,118 @@ class KeywordDiscoveryEngine:
                 cluster=f"Tool: {tool.title()}",
                 intent="informational",
                 market="PK",
+                country_market="Pakistan",
                 source="PUBLIC_RESEARCH",
                 opportunity_score=s3,
                 score_breakdown=b3,
+                recommended_page=f"https://aitoolgems.tech/tools/{tool}/",
+                content_gap="Formulate standalone 40-55 word direct answer on overcoming credit card blockades.",
+                priority="P2 - Secondary",
                 action_type="OPTIMIZE_EXISTING",
                 pakistan_relevance=True,
             ))
 
         return seed_candidates
 
+    def generate_international_discovery_clusters(self) -> List[KeywordCandidate]:
+        """
+        Generates legitimate international English search opportunities around comparisons,
+        alternatives, student/freelancer workflows, and global purchasing inquiries.
+        Does not invent foreign pricing or fake local gateways.
+        """
+        intl_candidates: List[KeywordCandidate] = []
+
+        # 1. High-value tool comparisons & alternatives
+        comparisons = [
+            ("ChatGPT vs Claude for coding", "commercial", "Tool: Claude", "https://aitoolgems.tech/tools/claude/", "Compare code reasoning, context windows, and dev workflow integration."),
+            ("Canva vs Figma for freelance designers", "commercial", "Tool: Canva", "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/", "Compare graphic design templates vs interactive vector prototyping."),
+            ("Midjourney vs Leonardo AI for digital art", "commercial", "Tool: Leonardo", "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/", "Analyze photorealism, fine-tuning controls, and commercial usage rights."),
+            ("Lovable vs Replit for fullstack web apps", "commercial", "Tool: Lovable", "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/", "Evaluate prompt-driven UI generation vs cloud workspace environments."),
+            ("Best AI video generators comparison", "commercial", "Informational: Guides & Comparisons", "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/", "Compare Veo, Runway, and CapCut on rendering speed, quality, and licensing."),
+            ("ElevenLabs voice AI setup and pricing", "informational", "Tool: Elevenlabs", "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/", "Explain character allowances, voice cloning tiers, and commercial usage."),
+            ("n8n workflow automation setup guide", "informational", "Tool: N8N", "https://aitoolgems.tech/guides/n8n-automation-pakistan/", "Document self-hosting vs cloud tiers and webhook integrations."),
+            ("ChatGPT alternatives with web browsing", "commercial", "Informational: Guides & Comparisons", "https://aitoolgems.tech/guides/chatgpt-alternatives/", "Compare Perplexity, DeepSeek, and Gemini for live web search synthesis."),
+        ]
+
+        for kw, intent, cluster, target_url, gap in comparisons:
+            score, breakdown = self.calculate_opportunity_score(kw, 15, 1, 6.7, 7.5, intent, is_pakistan=False)
+            intl_candidates.append(KeywordCandidate(
+                keyword=kw,
+                cluster=cluster,
+                intent=intent,
+                market="GLOBAL",
+                country_market="International / Global",
+                impressions=15,
+                clicks=1,
+                ctr=6.7,
+                position=7.5,
+                source="PUBLIC_RESEARCH",
+                opportunity_score=score,
+                score_breakdown=breakdown,
+                recommended_page=target_url,
+                content_gap=gap,
+                priority="P1 - Immediate",
+                action_type="OPTIMIZE_EXISTING",
+                pakistan_relevance=False,
+            ))
+
+        # 2. Audience-specific workflows
+        audiences = [
+            ("AI tools for students and academic research", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/students/", "Document citation assistance, PDF analysis, and affordable student options."),
+            ("AI tools for freelance creators and agencies", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/creators/", "Cover automated video editing pipelines, thumbnail generation, and licensing."),
+            ("Best AI developer tools for software engineering", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/developers/", "Detail Cursor, Replit, and Claude integration with Git and debugging flows."),
+            ("AI tools for small business productivity", "commercial", "Audience: Workflows & Use Cases", "https://aitoolgems.tech/guides/businesses/", "Explain CRM automation, support chatbots, and team workspace management."),
+            ("International inquiry for AI software subscriptions", "commercial", "Commercial: Pricing & PKR Comparison", "https://aitoolgems.tech/policies.html#payments", "Detail manual WhatsApp inquiry routing for Wise and SWIFT international bank transfers."),
+        ]
+
+        for kw, intent, cluster, target_url, gap in audiences:
+            score, breakdown = self.calculate_opportunity_score(kw, 10, 0, 0.0, 9.0, intent, is_pakistan=False)
+            intl_candidates.append(KeywordCandidate(
+                keyword=kw,
+                cluster=cluster,
+                intent=intent,
+                market="GLOBAL",
+                country_market="International / Global",
+                impressions=10,
+                clicks=0,
+                ctr=0.0,
+                position=9.0,
+                source="PUBLIC_RESEARCH",
+                opportunity_score=score,
+                score_breakdown=breakdown,
+                recommended_page=target_url,
+                content_gap=gap,
+                priority="P2 - Secondary",
+                action_type="OPTIMIZE_EXISTING",
+                pakistan_relevance=False,
+            ))
+
+        return intl_candidates
+
     def segment_opportunities(self, candidates: List[KeywordCandidate]) -> Dict[str, List[KeywordCandidate]]:
-        """Segments candidate opportunities into clear strategic action buckets."""
+        """Segments candidate opportunities into clear strategic action buckets for both Pakistan and International markets."""
         segmented: Dict[str, List[KeywordCandidate]] = {
-            "high_impact_quick_wins": [],   # High impression / low CTR or striking distance
-            "pakistan_transactional": [],   # High purchase intent with PKR / local wallets
-            "aeo_question_opportunities": [], # High snippet / generative answer capture
-            "protect_existing_winners": [], # Top 3 positions
-            "untapped_content_backlog": [], # Candidate topics for future guides
+            "high_impact_quick_wins": [],
+            "pakistan_transactional": [],
+            "international_growth_opportunities": [],
+            "international_audience_workflows": [],
+            "aeo_question_opportunities": [],
+            "protect_existing_winners": [],
+            "untapped_content_backlog": [],
         }
 
         for c in sorted(candidates, key=lambda x: x.opportunity_score, reverse=True):
             if c.action_type == "PROTECT_WINNER":
                 segmented["protect_existing_winners"].append(c)
-            elif c.impressions >= 5 and c.ctr < 5.0 and 4.0 <= c.position <= 15.0:
+            elif c.impressions >= 5 and c.ctr < 5.0 and 4.0 <= c.position <= 15.0 and c.pakistan_relevance:
                 segmented["high_impact_quick_wins"].append(c)
             elif c.intent == "transactional" and c.pakistan_relevance:
                 segmented["pakistan_transactional"].append(c)
+            elif not c.pakistan_relevance:
+                if any(w in c.keyword.lower() for w in ["student", "freelancer", "creator", "developer", "business", "workflow"]):
+                    segmented["international_audience_workflows"].append(c)
+                else:
+                    segmented["international_growth_opportunities"].append(c)
             elif c.intent == "informational" and re.search(r"(?i)^(how|can|is|what)\b", c.keyword):
                 segmented["aeo_question_opportunities"].append(c)
             else:

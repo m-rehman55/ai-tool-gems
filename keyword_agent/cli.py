@@ -60,16 +60,33 @@ def run_audit(args: argparse.Namespace) -> int:
     # 3. Discovery & Clustering
     print("--> STEP 3: Discovering Keyword Clusters & Scoring Opportunities...")
     disc_engine = KeywordDiscoveryEngine()
+    candidates: List[KeywordCandidate] = []
     if dataset.queries:
-        candidates = disc_engine.process_gsc_queries(dataset)
-    else:
-        candidates = disc_engine.generate_seed_discovery_clusters()
+        candidates.extend(disc_engine.process_gsc_queries(dataset))
+
+    # Always incorporate seed Pakistan discovery and International clusters (avoiding duplicate keywords)
+    existing_kws = {c.keyword.lower().strip() for c in candidates}
+    for seed in disc_engine.generate_seed_discovery_clusters():
+        if seed.keyword.lower().strip() not in existing_kws:
+            candidates.append(seed)
+            existing_kws.add(seed.keyword.lower().strip())
+
+    for intl in disc_engine.generate_international_discovery_clusters():
+        if intl.keyword.lower().strip() not in existing_kws:
+            candidates.append(intl)
+            existing_kws.add(intl.keyword.lower().strip())
     
     segmented = disc_engine.segment_opportunities(candidates)
     quick_wins = segmented["high_impact_quick_wins"]
     trans = segmented["pakistan_transactional"]
+    intl_opps = segmented.get("international_growth_opportunities", [])
+    intl_workflows = segmented.get("international_audience_workflows", [])
     aeo = segmented["aeo_question_opportunities"]
-    print(f"    Ranked {len(candidates)} total keywords: {len(quick_wins)} quick wins, {len(trans)} local transactional, {len(aeo)} AEO questions.")
+    print(
+        f"    Ranked {len(candidates)} total keywords: {len(quick_wins)} PK quick wins, "
+        f"{len(trans)} PK transactional, {len(intl_opps) + len(intl_workflows)} International growth/workflow opportunities, "
+        f"{len(aeo)} AEO questions."
+    )
 
     # 4. Page Mapping & Cannibalization Check
     print("--> STEP 4: Inspecting Actual Routes & Checking Cannibalization...")
