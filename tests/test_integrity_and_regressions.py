@@ -218,10 +218,22 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         # 5. Unsupported / exaggerated claims removed
         self.assertNotIn('100% Verified Local Payments', index_html, "100% Verified Local Payments claim must be removed from index.html")
         self.assertNotIn('Instant Guaranteed Activation', index_html, "Instant Guaranteed Activation claim must not be in index.html")
+        self.assertNotIn('Instant 15-Minute WhatsApp Activation', index_html, "Instant 15-Minute WhatsApp Activation must not be in index.html")
+        self.assertNotIn('Instant Dispatch', index_html, "Instant Dispatch must not be in index.html")
+        self.assertNotIn('Instant Account Delivery', index_html, "Instant Account Delivery must not be in index.html")
+        self.assertNotIn('2–15 Minute WhatsApp Activation', index_html, "2–15 Minute WhatsApp Activation must not be in index.html")
+        self.assertNotIn('Fast 2 to 15 Minutes WhatsApp Activation', index_html, "Fast 2 to 15 Minutes WhatsApp Activation must not be in index.html")
 
-        # 6. Contact protection: 03476242709 must not be published as public payment detail or link
-        self.assertNotIn('03476242709', index_html, "03476242709 must not be publicly published in index.html")
-        self.assertNotIn('03476242709', policies_html, "03476242709 must not be publicly published in policies.html")
+        # 6. Contact protection: 03476242709 must not be published anywhere in any HTML file in the repository
+        for root, dirs, files in os.walk(REPO_ROOT):
+            if '.git' in root or 'node_modules' in root or '.gemini' in root:
+                continue
+            for f in files:
+                if f.endswith('.html'):
+                    fpath = os.path.join(root, f)
+                    with open(fpath, 'r', encoding='utf-8', errors='ignore') as hf:
+                        content = hf.read()
+                    self.assertNotIn('03476242709', content, f"Found legacy number 03476242709 in {os.path.relpath(fpath, REPO_ROOT)}")
 
         # 7. No fake automated payment gateway scripts or credit card inputs
         self.assertNotIn('stripe.com/v3', index_html, "No Stripe checkout script should be injected")
