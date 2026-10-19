@@ -285,6 +285,58 @@ class TestKeywordAgent(unittest.TestCase):
         self.assertIn("https://aitoolgems.tech/tools/chatgpt/", r_ambig.competing_urls)
         self.assertIn("https://aitoolgems.tech/tools/canva/", r_ambig.competing_urls)
 
+    def test_phase_6b1_realistic_keyword_mappings_and_alias_hardening(self):
+        """Phase 6B.1: Verifies realistic keyword mappings, word boundaries, alias variations, and multi-tool routing."""
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        mapper = PageMapper(project_dir=proj_dir)
+
+        # 1. Transactional & tool aliases
+        cases = [
+            ("buy chatgpt plus in pakistan easypaisa", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.95),
+            ("chatgpt pro price in pakistan", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.95),
+            ("adobe illustrator price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.95),
+            ("photoshop price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.95),
+            ("capcut pro price in pakistan", "https://aitoolgems.tech/tools/capcut/", "OPTIMIZE_EXISTING", 0.95),
+            ("nord vpn price in pakistan", "https://aitoolgems.tech/tools/nordvpn/", "OPTIMIZE_EXISTING", 0.95),
+            ("windows 11 key price", "https://aitoolgems.tech/tools/windows/", "OPTIMIZE_EXISTING", 0.95),
+            ("buy chat-gpt in pakistan", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.95),
+            ("nord-vpn price in pakistan", "https://aitoolgems.tech/tools/nordvpn/", "OPTIMIZE_EXISTING", 0.95),
+            ("chatgpt's best plan", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.95),
+            ("ai tools for students", "https://aitoolgems.tech/guides/students/", "OPTIMIZE_EXISTING", 0.92),
+            ("ai tools for developers", "https://aitoolgems.tech/guides/developers/", "OPTIMIZE_EXISTING", 0.92),
+        ]
+        for query, expected_url, expected_action, min_conf in cases:
+            res = mapper.find_best_url(query)
+            self.assertEqual(res.best_url, expected_url, f"Failed URL for query: {query}")
+            self.assertEqual(res.action_type, expected_action, f"Failed action for query: {query}")
+            self.assertGreaterEqual(res.mapping_confidence, min_conf, f"Low confidence for query: {query}")
+
+        # 2. Multi-tool global comparisons
+        r_3tool = mapper.find_best_url("chatgpt vs claude vs gemini", "commercial")
+        self.assertEqual(r_3tool.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+        self.assertEqual(r_3tool.action_type, "MONITOR")
+        self.assertEqual(r_3tool.mapping_confidence, 0.80)
+        self.assertEqual(len(r_3tool.competing_urls), 3)
+        self.assertIn("https://aitoolgems.tech/tools/chatgpt/", r_3tool.competing_urls)
+        self.assertIn("https://aitoolgems.tech/tools/claude/", r_3tool.competing_urls)
+        self.assertIn("https://aitoolgems.tech/tools/gemini/", r_3tool.competing_urls)
+
+        # 3. Multi-tool ambiguous query (ordering preservation)
+        r_bundle = mapper.find_best_url("chatgpt canva bundle price", "transactional")
+        self.assertEqual(r_bundle.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+        self.assertEqual(r_bundle.action_type, "MANUAL_REVIEW")
+        self.assertEqual(r_bundle.mapping_confidence, 0.75)
+        self.assertEqual(len(r_bundle.competing_urls), 2)
+        self.assertEqual(r_bundle.competing_urls[0], "https://aitoolgems.tech/tools/chatgpt/")
+        self.assertEqual(r_bundle.competing_urls[1], "https://aitoolgems.tech/tools/canva/")
+
+        # 4. Word boundary negative tests (avoid false-positive substrings)
+        r_canvas = mapper.find_best_url("html canvas drawing tutorial", "informational")
+        self.assertNotEqual(r_canvas.best_url, "https://aitoolgems.tech/tools/canva/")
+
+        r_precursor = mapper.find_best_url("precursor chemical list", "informational")
+        self.assertNotEqual(r_precursor.best_url, "https://aitoolgems.tech/tools/cursor/")
+
     # ── Content Optimizer Tests ──────────────────────────────────────────────
 
     def test_content_optimizer_live_extraction(self):

@@ -47,6 +47,20 @@ class PerformanceMonitor:
         refresh_token_env: str = "GSC_REFRESH_TOKEN",
     ):
         self.site_url = site_url
+        if not (os.environ.get(client_id_env) and os.environ.get(refresh_token_env)):
+            env_file = Path(".env")
+            if env_file.exists():
+                try:
+                    with open(env_file, "r", encoding="utf-8") as f:
+                        for line in f:
+                            line = line.strip()
+                            if line and not line.startswith("#") and "=" in line:
+                                k, v = line.split("=", 1)
+                                k_s = k.strip()
+                                if k_s not in os.environ:
+                                    os.environ[k_s] = v.strip().strip('"').strip("'")
+                except Exception:
+                    pass
         self.client_id = os.environ.get(client_id_env, "").strip()
         self.client_secret = os.environ.get(client_secret_env, "").strip()
         self.refresh_token = os.environ.get(refresh_token_env, "").strip()
