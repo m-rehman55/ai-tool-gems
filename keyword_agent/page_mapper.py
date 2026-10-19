@@ -127,7 +127,7 @@ class PageMapper:
     def find_best_url(self, keyword: str, intent: str = "transactional") -> PageMappingResult:
         """Maps a keyword to the single best existing repository route."""
         kw_lower = keyword.lower()
-        norm_kw = self.normalize_keyword(keyword)
+        is_pk_query = bool(re.search(r"(?i)(pakistan|pakistani|pkr|rs\.?|rupees?|easypaisa|jazzcash|sadapay|nayapay|lahore|karachi|islamabad|rawalpindi|faisalabad)", keyword))
 
         # 1. Multi-tool comparison & alternative guide matches
         # A) Explicit multi-tool comparison (vs, versus, compare): requires 2+ tool names in slug
@@ -135,6 +135,9 @@ class PageMapper:
             for url, route in self.routes.items():
                 if route.page_type == "guide":
                     slug = Path(route.relative_path).parent.name
+                    # Global queries must not automatically map to Pakistan-only guides
+                    if "-pakistan" in slug and not is_pk_query:
+                        continue
                     slug_words = [sw for sw in slug.split("-") if len(sw) > 3 and sw not in {"tools", "pakistan", "best", "guide", "price"}]
                     if sum(1 for sw in slug_words if sw in kw_lower) >= 2:
                         return PageMappingResult(
@@ -145,6 +148,20 @@ class PageMapper:
                             mapping_confidence=0.95,
                             action_type="OPTIMIZE_EXISTING",
                             rational_justification=f"Educational multi-tool comparison query aligns with guide: {slug}.",
+                        )
+
+            # If it's a global comparison without a dedicated global guide, route to relevant primary tool page or research
+            if not is_pk_query:
+                for tool_slug in ["canva", "chatgpt", "cursor", "midjourney", "replit", "claude", "gemini", "figma", "leonardo"]:
+                    if tool_slug in kw_lower and f"https://aitoolgems.tech/tools/{tool_slug}/" in self.routes:
+                        return PageMappingResult(
+                            keyword=keyword,
+                            intent=intent,
+                            best_url=f"https://aitoolgems.tech/tools/{tool_slug}/",
+                            relative_path=f"tools/{tool_slug}/index.html",
+                            mapping_confidence=0.80,
+                            action_type="MONITOR",
+                            rational_justification=f"Global comparison query for '{tool_slug}' mapped to existing tool page for monitoring; dedicated global guide requires genuine content proposal.",
                         )
 
         # B) Alternative queries (alternative, alternatives): maps to alternative guides
