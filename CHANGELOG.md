@@ -3,6 +3,35 @@
 All notable changes to the AI Tool Gems platform are documented in this file in reverse chronological order.
 Governing Specification: Prompt 0 — Shared Operating Rules.
 
+## [Phase 3] - 2026-10-19 — Categories Pre-Rendering, Guided Finder & Anchor Resolution
+### Fixed & Generated
+- **Pre-rendered 11 Verified Categories in `index.html`:**
+  - Injected all 11 ambition categories into `<div class="category-grid" id="categoryGrid">` as semantic `<a href="#products" class="category-card" data-category="...">` elements with accurate tool counts and visuals.
+  - Enabled native non-JavaScript navigation to `#products` while preserving interactive JavaScript category filtering.
+  - Added anchor text-decoration reset and accessible `:focus-visible` styles in `light-theme.css`.
+- **Guided Finder Routing & Intent Matching:**
+  - Updated Guided Finder Step 3 recommendation cards to direct anchor links `<a class="finder-result" href="tools/${p.id}/">` pointing directly to canonical first-party tool pages.
+  - Normalized singular/plural intent matching in `app.js` so goals like "Generate Visuals & Art" (`image`) accurately include tools with plural tags (`images`, e.g. Midjourney).
+  - Updated homepage `#finderMatchCard` to link directly to canonical tool routes (`tools/veo/`) with dynamic href updates.
+  - Added honest, transparent no-results state without fabricating products.
+  - Added URL parameter deep-linking support (`?category=...`, `?q=...`, `?find=...`, `#finderModal`).
+- **33 Broken & Placeholder Anchor Links Cleaned:**
+  - Replaced 3 placeholder `href="#"` links on WhatsApp buttons in `index.html` with verified business URL (`https://wa.me/923236715731?text=...`).
+  - Fixed 30 broken Table-of-Contents jump links across 3 guide articles (`guides/ai-tools-price-pakistan/`, `guides/canva-vs-figma-pakistan/`, `guides/chatgpt-vs-gemini-pakistan/`) by mapping verbose slug fragments to actual heading IDs.
+- **Regression Testing:**
+  - Added `test_phase3_category_prerendering_and_anchor_integrity` in `tests/test_integrity_and_regressions.py` covering category rendering, zero `href="#"`, finder links, and TOC anchor resolution.
+
+### Verification
+- 98/98 tests passed across all 4 suites:
+  - `tests`: 7/7 passed
+  - `keyword_agent`: 15/15 passed
+  - `seo-agent`: 43/43 passed
+  - `marketing_agent`: 33/33 passed
+- `schema_audit.py`: 74/74 pages passed (100% score)
+- `audit_all.py`: 74/74 HTML files clean (0 errors, 0 warnings)
+
+---
+
 ## [Phase 2] - 2026-10-19 — Product Catalog Reconciliation (12 Missing Pages & Static Grid)
 ### Fixed & Generated
 - **12 Missing Product Detail Pages Created:**
