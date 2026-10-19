@@ -120,3 +120,29 @@ tbody th { color:#247c69; }
   .toc a { font-size: 14px; }
   .toc .toc-h3 { padding-left: 12px; }
 }
+
+/* Status Badges for Policy and Comparison Tables */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.status-badge.verified {
+  background: #e6f7ef;
+  color: #117852;
+  border: 1px solid #a3e4c4;
+}
+.status-badge.inquiry {
+  background: #fef8e7;
+  color: #92640b;
+  border: 1px solid #f6d88c;
+}
+.status-badge.unsupported {
+  background: #fdf2f2;
+  color: #a72323;
+  border: 1px solid #f6b6b6;
+}

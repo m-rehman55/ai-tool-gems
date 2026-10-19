@@ -1289,4 +1289,15 @@ function initBundleCalculator() {
 
 initBundleCalculator();
 
+function initPaymentDisclosure() {
+  const disclosure = document.getElementById('paymentMethodsDisclosure');
+  if (!disclosure) return;
+  const hint = disclosure.querySelector('.disclosure-toggle-hint');
+  if (!hint) return;
+  disclosure.addEventListener('toggle', () => {
+    hint.textContent = disclosure.open ? 'Collapse ▴' : 'Details ▾';
+  });
+}
+initPaymentDisclosure();
+
 

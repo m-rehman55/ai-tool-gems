@@ -3,6 +3,39 @@
 All notable changes to the AI Tool Gems platform are documented in this file in reverse chronological order.
 Governing Specification: Prompt 0 — Shared Operating Rules.
 
+## [Phase 4] - 2026-10-19 — Payment Transparency, Policy Section & Contact Protection
+### Fixed & Generated
+- **Dedicated Payments Section in `policies.html` (`#payments`):**
+  - Added `<section class="page-section" id="payments">` providing complete transparency on manual WhatsApp payment verification, order confirmation, and delivery processes.
+  - Formatted a responsive comparison table classifying payment rails into 3 truthful tiers:
+    - *Verified & Configured (Local Pakistan):* EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, and Local Bank IBFT (Meezan, HBL, Bank Alfalah, etc.).
+    - *Contact Owner / Inquiry-Only (International):* Wise, Bank Wire (SWIFT). Handled manually on inquiry with quotes per request.
+    - *Unsupported / Unavailable:* PayPal (does not operate for direct receiving in Pakistan) and automated credit/debit card gateway checkout.
+  - Added anti-fraud and security disclosure: no stored cards, no automated debits, and a clear warning that AI Tool Gems will never ask for ATM PINs, CVVs, or OTP codes.
+  - Linked all 32 canonical product detail pages directly to `policies.html#payments`.
+- **Accessible Responsive Payment Disclosure in `index.html`:**
+  - Replaced the static payment trust strip with an accessible `<details class="payment-disclosure" id="paymentMethodsDisclosure" open>` component.
+  - Replaced unsupported claims ("100% Verified Local Payments" and "Instant Guaranteed Activation") with honest, transparent copy: "Local Payments (Pakistan) & International Inquiries" and "Manual WhatsApp Verification".
+  - Structured 3 card categories with distinct status badges (`verified`, `inquiry`, `unsupported`).
+  - Added direct link to `policies.html#payments`.
+  - Added responsive light-theme styling in `light-theme.css` and toggle handler in `app.js`.
+- **Contact Number Protection:**
+  - Redacted unconfirmed private account number `03476242709` from public proof card in `index.html` (line 3853), protecting owner contact details and preventing impersonation.
+  - Preserved verified operational business number `923236715731` across all order buttons.
+- **Regression Testing:**
+  - Added `test_phase4_payment_transparency_and_policy_integrity` in `tests/test_integrity_and_regressions.py` verifying `#payments` fragment resolution, classification wording, absence of fake checkout scripts, and contact protection.
+
+### Verification
+- 99/99 tests passed across all 4 suites:
+  - `tests`: 8/8 passed
+  - `keyword_agent`: 15/15 passed
+  - `seo-agent`: 43/43 passed
+  - `marketing_agent`: 33/33 passed
+- `schema_audit.py`: 74/74 pages passed (100% score)
+- `audit_all.py`: 74/74 HTML files clean (0 errors, 0 warnings)
+
+---
+
 ## [Phase 3] - 2026-10-19 — Categories Pre-Rendering, Guided Finder & Anchor Resolution
 ### Fixed & Generated
 - **Pre-rendered 11 Verified Categories in `index.html`:**

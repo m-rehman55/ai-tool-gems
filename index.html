@@ -2155,49 +2155,95 @@
       </div>
     </section>
 
-    <!-- Pakistan Payment Trust & Verification Strip -->
+    <!-- Payment Methods & Order Verification Disclosure -->
     <div class="shell">
-      <div class="payment-trust-strip" aria-label="Accepted Pakistan Payment Methods">
-        <div class="payment-trust-header">
-          <div class="payment-trust-title">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>100% Verified Local Payments (Pakistan)</span>
+      <div class="payment-disclosure-wrapper" id="payment-guide">
+        <details class="payment-disclosure" id="paymentMethodsDisclosure" open>
+          <summary class="payment-disclosure-summary" aria-label="Payment rails, local verification, and international inquiries">
+            <div class="payment-summary-header">
+              <div class="payment-summary-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Local Payments (Pakistan) &amp; International Inquiries</span>
+              </div>
+              <div class="payment-summary-meta">
+                <span class="payment-speed-tag">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Manual WhatsApp Verification
+                </span>
+                <span class="disclosure-toggle-hint">Details ▾</span>
+              </div>
+            </div>
+            <div class="payment-badges-row">
+              <span class="payment-pill pill-easypaisa">
+                <span class="pill-dot dot-ep"></span>
+                <b>EasyPaisa</b> (Local Wallet)
+              </span>
+              <span class="payment-pill pill-jazzcash">
+                <span class="pill-dot dot-jc"></span>
+                <b>JazzCash</b> (Local Account)
+              </span>
+              <span class="payment-pill pill-sadapay">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                <b>SadaPay</b> &amp; <b>NayaPay</b>
+              </span>
+              <span class="payment-pill pill-bank">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="5 6 12 3 19 6"/><line x1="4" y1="10" x2="4" y2="21"/><line x1="20" y1="10" x2="20" y2="21"/></svg>
+                <b>Raast / Bank IBFT</b>
+              </span>
+              <span class="payment-pill pill-inquiry">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <b>Wise &amp; Wire</b> (Inquiry-Only)
+              </span>
+              <span class="payment-pill pill-warranty">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <b>7–30 Days</b> Replacement Warranty
+              </span>
+            </div>
+          </summary>
+
+          <div class="payment-disclosure-body">
+            <div class="payment-disclosure-grid">
+              <div class="payment-disclosure-card verified-card">
+                <div class="payment-card-badge verified">Verified &amp; Configured</div>
+                <h4>Pakistani Local Payment Methods</h4>
+                <p>EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, and local Bank IBFT (Meezan, HBL, Alfalah, etc.) are actively supported for all orders in Pakistan.</p>
+                <ul>
+                  <li><strong>How it works:</strong> Account title and number are provided in WhatsApp chat upon order confirmation.</li>
+                  <li><strong>Verification:</strong> Transfer the exact PKR amount and share the transaction screenshot. Support manually confirms receipt before releasing account credentials or digital keys.</li>
+                </ul>
+              </div>
+
+              <div class="payment-disclosure-card inquiry-card">
+                <div class="payment-card-badge inquiry">Contact Owner / Pending Configuration</div>
+                <h4>International Inquiries (Outside Pakistan)</h4>
+                <p>For international buyers or overseas Pakistanis, payment arrangements such as Wise or direct bank wire (SWIFT) are evaluated per request.</p>
+                <ul>
+                  <li><strong>Inquiry-only:</strong> Contact our WhatsApp support to check current feasibility, applicable currency conversions, and handling fees.</li>
+                  <li><strong>Manual process:</strong> International orders are manually processed on mutual agreement. No automated international gateways are active.</li>
+                </ul>
+              </div>
+
+              <div class="payment-disclosure-card unsupported-card">
+                <div class="payment-card-badge unsupported">Unsupported / Unavailable</div>
+                <h4>Unsupported &amp; Safety Boundaries</h4>
+                <p>To protect our customers and maintain compliance, we do not support direct card charging or unsupported networks:</p>
+                <ul>
+                  <li><strong>No PayPal:</strong> PayPal does not operate merchant receiving services in Pakistan.</li>
+                  <li><strong>No automated credit card billing:</strong> We do not ask for or store credit/debit card numbers, CVVs, or ATM PINs on our website.</li>
+                  <li><strong>Security:</strong> All transactions are conducted exclusively via verified WhatsApp order confirmation.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="payment-disclosure-footer">
+              <a href="policies.html#payments" class="payment-policy-btn">
+                <span>View Full Payment &amp; Verification Policy</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <span class="payment-disclosure-note">All prices displayed across AI Tool Gems are upfront in Pakistani Rupees (PKR).</span>
+            </div>
           </div>
-          <span class="payment-trust-speed">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Instant 15-Minute WhatsApp Activation
-          </span>
-        </div>
-        <div class="payment-badges-row">
-          <span class="payment-pill pill-easypaisa">
-            <span class="pill-dot dot-ep"></span>
-            <b>EasyPaisa</b> Direct
-          </span>
-          <span class="payment-pill pill-jazzcash">
-            <span class="pill-dot dot-jc"></span>
-            <b>JazzCash</b> Mobile Account
-          </span>
-          <span class="payment-pill pill-sadapay">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            <b>SadaPay</b> Virtual Debit
-          </span>
-          <span class="payment-pill pill-nayapay">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            <b>NayaPay</b> Visa
-          </span>
-          <span class="payment-pill pill-raast">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            <b>Raast</b> Instant P2P
-          </span>
-          <span class="payment-pill pill-bank">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="5 6 12 3 19 6"/><line x1="4" y1="10" x2="4" y2="21"/><line x1="20" y1="10" x2="20" y2="21"/><line x1="8" y1="14" x2="8" y2="17"/><line x1="12" y1="14" x2="12" y2="17"/><line x1="16" y1="14" x2="16" y2="17"/></svg>
-            <b>Local Bank IBFT</b> (Meezan, HBL, Alfalah)
-          </span>
-          <span class="payment-pill pill-warranty">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <b>7-Day</b> Replacement Warranty
-          </span>
-        </div>
+        </details>
       </div>
     </div>
 
@@ -3804,7 +3850,7 @@
           <div class="real-ss-info">
             <span class="ss-tag">✔ 1-Minute Delivery</span>
             <b>Official Channel Member Transfer</b>
-            <p>Direct transfer to Muhammad Rehman Farooq (03476242709) • Customer received activation link within 60 seconds.</p>
+            <p>Direct transfer to Muhammad Rehman Farooq (Verified Account) • Customer received activation link within 60 seconds.</p>
           </div>
         </article>
 
@@ -3849,7 +3895,7 @@
       </div>
 
       <div class="wa-proof-footer-strip">
-        <span>✔ 100% Verified Local Payments (EasyPaisa • JazzCash • SadaPay • Bank IBFT)</span>
+        <span>✔ Verified Local Payments (EasyPaisa • JazzCash • SadaPay • Bank IBFT)</span>
         <span>⚡ 2–15 Minute WhatsApp Activation</span>
         <span>🛡️ 7–30 Days Replacement Warranty on Every Order</span>
       </div>
