@@ -25,6 +25,16 @@ Governing Specification: Prompt 0 — Shared Operating Rules.
 - **Regression Testing:**
   - Added `test_phase4_payment_transparency_and_policy_integrity` in `tests/test_integrity_and_regressions.py` verifying `#payments` fragment resolution, classification wording, absence of fake checkout scripts, and contact protection.
 
+- **Production Verification Remediation & Secondary Copy Clean-up (`fa978a5`):**
+  - Thoroughly audited all visible homepage sections and eliminated remaining instances of unsupported claims:
+    - Replaced `100% Real Customer`, `100% Genuine Pakistani Buyer`, `Instant Dispatch`, `Instant Account Delivery`, `2–15 Minute WhatsApp Activation` with truthful terminology: `Verified Customer`, `Genuine Pakistani Buyer`, `Verified Dispatch`, `Verified Account Delivery`, and `Estimated 15–30 Minute Fulfillment`.
+    - In the comparison table, replaced `Feature / Guarantee`, `100% Flat PKR Pricing`, `100% Private Workspaces`, `Fast 2 to 15 Minutes WhatsApp Activation` with `Marketplace Standards & Terms`, `Transparent Flat PKR Pricing`, `Private Workspaces`, and `Prompt WhatsApp Verification & Delivery`.
+    - Removed `100% PAKISTAN MARKET` and `instant WhatsApp activation` from `tools/index.html`.
+    - Replaced `guaranteed delivery within 15 to 30 minutes` with `estimated delivery within 15 to 30 minutes` across all 5 affected guide articles (`best-ai-video-generators-pakistan`, `elevenlabs-voice-ai-pakistan`, `lovable-vs-replit-pakistan`, `midjourney-alternatives-pakistan`, `n8n-automation-pakistan`).
+    - Verified complete redaction of legacy number `03476242709` across all HTML files in the repository.
+    - Updated `tests/test_integrity_and_regressions.py` with comprehensive assertions covering all remaining claims and recursive scan for `03476242709`.
+    - Monitored GitHub Pages deployment (`39277105966`) and independently validated live production site (`https://aitoolgems.tech/`) confirming `paymentMethodsDisclosure` is live, legacy claims/number are gone, and `policies.html#payments` resolves cleanly.
+
 ### Verification
 - 99/99 tests passed across all 4 suites:
   - `tests`: 8/8 passed
@@ -33,6 +43,7 @@ Governing Specification: Prompt 0 — Shared Operating Rules.
   - `marketing_agent`: 33/33 passed
 - `schema_audit.py`: 74/74 pages passed (100% score)
 - `audit_all.py`: 74/74 HTML files clean (0 errors, 0 warnings)
+- Live production check: HTTP 200, ETag verified, 100% passing checks.
 
 ---
 
