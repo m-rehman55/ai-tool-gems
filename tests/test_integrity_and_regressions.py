@@ -255,7 +255,8 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn('15-30 minutes', cg_html, "15-30 minutes delivery estimate must not be in chatgpt-vs-gemini guide")
         self.assertNotIn('10–20 minutes', cg_html, "10–20 minutes delivery estimate must not be in chatgpt-vs-gemini guide")
         self.assertNotIn('10-20 minutes', cg_html, "10-20 minutes delivery estimate must not be in chatgpt-vs-gemini guide")
-        self.assertIn('Prompt delivery after payment confirmation', cg_html, "Prompt delivery confirmation required in chatgpt-vs-gemini table")
+        self.assertNotIn('Prompt delivery after payment confirmation', cg_html, "Unverified prompt delivery claim must not be in chatgpt-vs-gemini")
+        self.assertIn('After payment confirmation and WhatsApp verification', cg_html, "Neutral delivery confirmation required in chatgpt-vs-gemini table")
 
         # 2. Canva vs Figma comparison table
         cf_path = os.path.join(REPO_ROOT, 'guides', 'canva-vs-figma-pakistan', 'index.html')
@@ -265,7 +266,8 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn('5-15 minutes', cf_html, "5-15 minutes delivery estimate must not be in canva-vs-figma guide")
         self.assertNotIn('10–20 minutes', cf_html, "10–20 minutes delivery estimate must not be in canva-vs-figma guide")
         self.assertNotIn('10-20 minutes', cf_html, "10-20 minutes delivery estimate must not be in canva-vs-figma guide")
-        self.assertIn('Prompt delivery after payment confirmation', cf_html, "Prompt delivery confirmation required in canva-vs-figma table")
+        self.assertNotIn('Prompt delivery after payment confirmation', cf_html, "Unverified prompt delivery claim must not be in canva-vs-figma")
+        self.assertIn('After payment confirmation and WhatsApp verification', cf_html, "Neutral delivery confirmation required in canva-vs-figma table")
 
         # 3. All-in-one Mega AI Portal tool page
         aio_path = os.path.join(REPO_ROOT, 'tools', 'allinone', 'index.html')
@@ -273,7 +275,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             aio_html = f.read()
         self.assertNotIn('2-minute activation', aio_html.lower(), "2-minute activation claim must not be in tools/allinone")
         self.assertNotIn('instant 2-minute', aio_html.lower(), "Instant 2-minute claim must not be in tools/allinone")
-        self.assertIn('Prompt delivery after payment confirmation', aio_html, "Prompt delivery confirmation required in tools/allinone")
+        self.assertIn('Delivery after payment confirmation on WhatsApp', aio_html, "Neutral delivery wording required in tools/allinone")
 
         # 4. app.js product catalog
         app_js_path = os.path.join(REPO_ROOT, 'app.js')
@@ -284,6 +286,8 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn("delivery:'15–30 min'", app_js.replace(' ', ''), "15–30 min delivery must not be in app.js")
         self.assertNotIn("delivery:'30–60 min'", app_js.replace(' ', ''), "30–60 min delivery must not be in app.js")
         self.assertNotIn("delivery:'1–2 hours'", app_js.replace(' ', ''), "1–2 hours delivery must not be in app.js")
+        self.assertNotIn("delivery:'Prompt", app_js, "Prompt delivery must not be in app.js")
+        self.assertIn("delivery:'After payment confirmation'", app_js, "Neutral delivery expected in app.js")
 
         # 5. Cursor AI guide comparison table
         cur_path = os.path.join(REPO_ROOT, 'guides', 'cursor-ai-pakistan', 'index.html')
@@ -292,21 +296,23 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn('15–30 mins', cur_html, "15–30 mins delivery estimate must not be in cursor guide")
         self.assertNotIn('15-30 mins', cur_html, "15-30 mins delivery estimate must not be in cursor guide")
         self.assertNotIn('instant activation', cur_html.lower(), "instant activation must not be in cursor guide")
-        self.assertIn('Prompt delivery after payment confirmation', cur_html, "Prompt delivery confirmation required in cursor table")
+        self.assertIn('After payment confirmation and WhatsApp verification', cur_html, "Neutral delivery confirmation required in cursor table")
 
         # 6. index.html hero trust bar
         index_path = os.path.join(REPO_ROOT, 'index.html')
         with open(index_path, 'r', encoding='utf-8') as f:
             index_html = f.read()
         self.assertNotIn('Estimated WhatsApp Delivery (15–30m)', index_html, "15–30m delivery estimate must not be in hero trust")
-        self.assertIn('Prompt Delivery After Payment Confirmation', index_html, "Expected Prompt Delivery After Payment Confirmation in hero trust")
+        self.assertNotIn('Prompt Delivery After Payment Confirmation', index_html, "Prompt delivery must not be in hero trust")
+        self.assertIn('WhatsApp Delivery After Payment Confirmation', index_html, "Expected WhatsApp Delivery After Payment Confirmation in hero trust")
 
         # 7. terms.html
         terms_path = os.path.join(REPO_ROOT, 'terms.html')
         with open(terms_path, 'r', encoding='utf-8') as f:
             terms_html = f.read()
         self.assertNotIn('15 to 60 minutes after payment confirmation', terms_html, "15 to 60 minutes must not be in terms.html")
-        self.assertIn('initiated promptly after payment confirmation', terms_html, "Expected initiated promptly in terms.html")
+        self.assertNotIn('up to 2 hours', terms_html, "up to 2 hours must not be in terms.html")
+        self.assertIn('starts after payment confirmation and manual order verification on WhatsApp', terms_html, "Expected neutral verification wording in terms.html")
 
         # 8. llms.txt and llms-full.txt
         for lfile in ['llms.txt', 'llms-full.txt']:
@@ -315,6 +321,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
                 lcontent = f.read()
             self.assertNotIn('15–30 min', lcontent, f"15–30 min must not be in {lfile}")
             self.assertNotIn('15-30 min', lcontent, f"15-30 min must not be in {lfile}")
+            self.assertNotIn('Prompt delivery', lcontent, f"Prompt delivery must not be in {lfile}")
 
         # 9. Site-wide reviewBody check across all tool pages and index.html
         for root, dirs, files in os.walk(REPO_ROOT):
@@ -327,6 +334,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
                         content = hf.read()
                     self.assertNotIn('Fast 15-minute delivery', content, f"Found 'Fast 15-minute delivery' in {os.path.relpath(fpath, REPO_ROOT)}")
                     self.assertNotIn('Instant 2-minute activation', content, f"Found 'Instant 2-minute activation' in {os.path.relpath(fpath, REPO_ROOT)}")
+                    self.assertNotIn('Prompt verified delivery', content, f"Found 'Prompt verified delivery' in {os.path.relpath(fpath, REPO_ROOT)}")
 
     def test_phase6a_linkedin_and_chatgpt_snippet_optimization(self):
         """Phase 6A: Verifies high-intent snippet optimization, truthful plan naming, and intent routing."""
@@ -343,6 +351,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn('6 Months access', li_html, "Incorrect 6-month claim must not be in LinkedIn quick-answer")
         self.assertNotIn('| Instant Delivery', li_html, "Instant Delivery must not be in LinkedIn social titles")
         self.assertNotIn('Instant delivery after purchase', li_html, "Instant delivery must not be in LinkedIn overview")
+        self.assertIn('Delivery starts after payment confirmation and manual order verification on WhatsApp', li_html)
         self.assertIn('href="https://wa.me/923236715731', li_html, "Working WhatsApp purchase link required")
 
         # 2. ChatGPT Tool Page Snippet, Pro Clarification & Direct Answer
@@ -359,6 +368,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('Do you offer ChatGPT Pro in Pakistan?', cg_html, "FAQ must address ChatGPT Pro availability")
         self.assertNotIn('| Instant Delivery', cg_html, "Instant Delivery must not be in ChatGPT social titles")
         self.assertNotIn('Instant delivery after purchase', cg_html, "Instant delivery must not be in ChatGPT overview")
+        self.assertIn('Delivery starts after payment confirmation and manual order verification on WhatsApp', cg_html)
         self.assertIn('href="https://wa.me/923236715731', cg_html, "Working WhatsApp purchase link required")
 
         # 3. Keyword-to-Page Intent Resolution
@@ -379,12 +389,15 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         r_canva = pm.find_best_url("canva pro price in pakistan jazzcash", "transactional")
         self.assertEqual(r_canva.best_url, "https://aitoolgems.tech/tools/canva/")
 
-        # Comparison queries map to comparison guides
+        # Pakistan-specific comparison queries map to Pakistan comparison guides
         r_vs = pm.find_best_url("chatgpt vs gemini price in pakistan", "commercial")
         self.assertEqual(r_vs.best_url, "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/")
 
-        r_cf = pm.find_best_url("canva vs figma comparison", "commercial")
-        self.assertEqual(r_cf.best_url, "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/")
+        # Global comparison queries must NOT map to -pakistan guide; mapped to existing tool page for monitoring
+        r_cf_global = pm.find_best_url("canva vs figma feature comparison", "commercial")
+        self.assertEqual(r_cf_global.best_url, "https://aitoolgems.tech/tools/canva/")
+        self.assertEqual(r_cf_global.action_type, "MONITOR")
+        self.assertNotIn("-pakistan", r_cf_global.best_url, "Global comparison query must not map to Pakistan-only guide")
 
         # Audience workflow queries map to audience guides
         r_stud = pm.find_best_url("ai tools for students", "commercial")
