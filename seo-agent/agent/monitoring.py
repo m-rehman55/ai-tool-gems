@@ -15,6 +15,7 @@ import urllib.error
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 @dataclass
 class SearchConsoleQuery:
