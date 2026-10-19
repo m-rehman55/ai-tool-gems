@@ -125,9 +125,9 @@ Approved non-domestic opportunities targeting tool comparisons, alternatives, wo
 #### 1. Metadata & Primary Headings
 | Element | Current Live Value | Recommended Optimization |
 |---------|-------------------|--------------------------|
-| **HTML Title** | `ChatGPT Plus in Pakistan (PKR)` | `Chatgpt Price in Pakistan | Buy via EasyPaisa (PKR)` |
+| **HTML Title** | `ChatGPT Plus Price in Pakistan (Rs. 2,300) | Plus vs Pro` | `Chatgpt Price in Pakistan | Buy via EasyPaisa (PKR)` |
 | **Main H1** | `ChatGPT Plus License Key & GPT-4o Subscription Price in Pakistan` | `Chatgpt in Pakistan: PKR Pricing, Features & Instant Local Payment` |
-| **Meta Description** | `Buy ChatGPT Plus license key & subscription in Pakistan for Rs. 2,300. Prompt WhatsApp delivery after payment confirmation, GPT-4o, 7-day warranty. Pay via EasyPaisa & JazzCash.` | `Buy official Chatgpt in Pakistan at verified PKR rates. Instant payment via EasyPaisa, JazzCash & WhatsApp delivery. 100% money-back guarantee.` |
+| **Meta Description** | `ChatGPT Plus price in Pakistan is Rs. 2,300/mo for GPT-4o private access. Note: $200 ChatGPT Pro is not stocked. Pay via EasyPaisa, JazzCash, or SadaPay.` | `Buy official Chatgpt in Pakistan at verified PKR rates. Instant payment via EasyPaisa, JazzCash & WhatsApp delivery. 100% money-back guarantee.` |
 
 #### 2. Suggested H2/H3 Heading Hierarchy
 - `Chatgpt Price in Pakistan (2026 PKR Rates)`
@@ -168,9 +168,9 @@ Addresses high-intent search query 'Chatgpt price in Pakistan' with opportunity 
 #### 1. Metadata & Primary Headings
 | Element | Current Live Value | Recommended Optimization |
 |---------|-------------------|--------------------------|
-| **HTML Title** | `Canva Pro License Key in Pakistan (Rs. 900) | Instant Delivery` | `Canva Price in Pakistan | Buy via EasyPaisa (PKR)` |
+| **HTML Title** | `Canva Pro License Key in Pakistan (Rs. 900) | Verified Delivery` | `Canva Price in Pakistan | Buy via EasyPaisa (PKR)` |
 | **Main H1** | `Canva Pro License Key & Premium Subscription Price in Pakistan` | `Canva in Pakistan: PKR Pricing, Features & Instant Local Payment` |
-| **Meta Description** | `Buy genuine Canva Pro license key & team access in Pakistan for Rs. 900. Prompt WhatsApp delivery after payment confirmation, 100M+ assets. Pay via EasyPaisa & JazzCash.` | `Buy official Canva in Pakistan at verified PKR rates. Instant payment via EasyPaisa, JazzCash & WhatsApp delivery. 100% money-back guarantee.` |
+| **Meta Description** | `Buy genuine Canva Pro license key & team access in Pakistan for Rs. 900. WhatsApp delivery after payment confirmation and manual verification, 100M+ assets. Pay via EasyPaisa & JazzCash.` | `Buy official Canva in Pakistan at verified PKR rates. Instant payment via EasyPaisa, JazzCash & WhatsApp delivery. 100% money-back guarantee.` |
 
 #### 2. Suggested H2/H3 Heading Hierarchy
 - `Canva Price in Pakistan (2026 PKR Rates)`
@@ -211,9 +211,9 @@ Addresses high-intent search query 'Canva price in Pakistan' with opportunity sc
 #### 1. Metadata & Primary Headings
 | Element | Current Live Value | Recommended Optimization |
 |---------|-------------------|--------------------------|
-| **HTML Title** | `ElevenLabs License Key in Pakistan (Rs. 3,300) | Instant Delivery` | `Elevenlabs Price in Pakistan | Buy via EasyPaisa (PKR)` |
+| **HTML Title** | `ElevenLabs License Key in Pakistan (Rs. 3,300) | Verified Delivery` | `Elevenlabs Price in Pakistan | Buy via EasyPaisa (PKR)` |
 | **Main H1** | `ElevenLabs License Key & AI Voice Cloning Price in Pakistan` | `Elevenlabs in Pakistan: PKR Pricing, Features & Instant Local Payment` |
-| **Meta Description** | `Buy ElevenLabs voice AI license key in Pakistan for Rs. 3,300. Prompt WhatsApp delivery after payment confirmation, voice cloning, 7-day warranty. Pay via EasyPaisa & JazzCash.` | `Buy official Elevenlabs in Pakistan at verified PKR rates. Instant payment via EasyPaisa, JazzCash & WhatsApp delivery. 100% money-back guarantee.` |
+| **Meta Description** | `Buy ElevenLabs voice AI license key in Pakistan for Rs. 3,300. WhatsApp delivery after payment confirmation and manual verification, voice cloning, 7-day warranty. Pay via EasyPaisa & JazzCash.` | `Buy official Elevenlabs in Pakistan at verified PKR rates. Instant payment via EasyPaisa, JazzCash & WhatsApp delivery. 100% money-back guarantee.` |
 
 #### 2. Suggested H2/H3 Heading Hierarchy
 - `Elevenlabs Price in Pakistan (2026 PKR Rates)`

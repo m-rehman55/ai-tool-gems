@@ -406,6 +406,56 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         r_creat = pm.find_best_url("best ai tools for freelance creators", "commercial")
         self.assertEqual(r_creat.best_url, "https://aitoolgems.tech/guides/creators/")
 
+    def test_phase6b_adobe_and_capcut_snippet_optimization(self):
+        """Phase 6B: Confirms Adobe and CapCut snippet optimization, price alignment, plan distinction and intent mapping."""
+        # 1. Adobe Tool Page
+        adobe_path = os.path.join(REPO_ROOT, 'tools', 'adobe', 'index.html')
+        with open(adobe_path, 'r', encoding='utf-8') as f:
+            adobe_html = f.read()
+
+        self.assertIn('<title>Adobe Illustrator & Creative Cloud Price in Pakistan (Rs. 1,700)</title>', adobe_html)
+        self.assertIn('Rs. 1,700 PKR', adobe_html)
+        self.assertIn('2 Months', adobe_html)
+        self.assertIn('Adobe Illustrator & Creative Cloud Price in Pakistan', adobe_html)
+        self.assertIn('Standalone Illustrator subscriptions are not sold separately on AI Tool Gems', adobe_html)
+        self.assertIn('Can I buy Adobe Illustrator separately in Pakistan?', adobe_html)
+        self.assertNotIn('15-minute', adobe_html.lower())
+        self.assertNotIn('prompt delivery', adobe_html.lower())
+        self.assertIn('https://aitoolgems.tech/tools/adobe/', adobe_html)
+
+        # 2. CapCut Tool Page
+        capcut_path = os.path.join(REPO_ROOT, 'tools', 'capcut', 'index.html')
+        with open(capcut_path, 'r', encoding='utf-8') as f:
+            capcut_html = f.read()
+
+        self.assertIn('<title>CapCut Pro Price in Pakistan (Rs. 900) | AI Tool Gems</title>', capcut_html)
+        self.assertIn('Rs. 900 PKR', capcut_html)
+        self.assertIn('1-month private access', capcut_html)
+        self.assertIn('CapCut Pro Price in Pakistan (Rs. 900) & Video Editor Access', capcut_html)
+        self.assertIn('What is the CapCut Pro price in Pakistan?', capcut_html)
+        self.assertNotIn('15-minute', capcut_html.lower())
+        self.assertNotIn('prompt delivery', capcut_html.lower())
+        self.assertIn('https://aitoolgems.tech/tools/capcut/', capcut_html)
+
+        # 3. Titles and meta descriptions are distinct
+        self.assertNotEqual(
+            '<title>Adobe Illustrator & Creative Cloud Price in Pakistan (Rs. 1,700)</title>',
+            '<title>CapCut Pro Price in Pakistan (Rs. 900) | AI Tool Gems</title>'
+        )
+
+        # 4. Keyword-to-Page Intent Mapping
+        from pathlib import Path
+        from keyword_agent.page_mapper import PageMapper
+        pm = PageMapper(Path(REPO_ROOT))
+
+        r_adobe = pm.find_best_url("adobe illustrator price in pakistan", "transactional")
+        self.assertEqual(r_adobe.best_url, "https://aitoolgems.tech/tools/adobe/")
+        self.assertEqual(r_adobe.action_type, "OPTIMIZE_EXISTING")
+
+        r_capcut = pm.find_best_url("capcut pro price in pakistan", "transactional")
+        self.assertEqual(r_capcut.best_url, "https://aitoolgems.tech/tools/capcut/")
+        self.assertEqual(r_capcut.action_type, "OPTIMIZE_EXISTING")
+
 
 if __name__ == '__main__':
     unittest.main()
