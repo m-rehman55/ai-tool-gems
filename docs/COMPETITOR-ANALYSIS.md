@@ -7,7 +7,7 @@ This is a qualitative market review, not a fabricated traffic or authority repor
 ## Observed marketplace competitors
 
 | Site | Visible strength | Opportunity for AI Tool Gems |
-|---|---|---|
+| --- | --- | --- |
 | [Sub Bazaar](https://subbazaar.pk/) | Broad subscription catalog and multi-term pricing | Win on clearer access definitions, vendor sourcing and focused AI comparisons |
 | [AI Tools Pak](https://aitoolspak.tech/) | Large AI catalog and an existing content hub | Win on transparent methodology, first-party PKR tables and tighter product-guide linking |
 | [SubscribAI](https://subscribai.com/) | Clear subscription and delivery messaging | Win on detailed product decision content and independent-source disclosures |
@@ -36,4 +36,3 @@ This is a qualitative market review, not a fabricated traffic or authority repor
 - Identify queries with impressions but low CTR, then test titles without changing URLs.
 - Compare referring domains using a connected provider; do not estimate authority scores.
 - Manually review the top ten Google results for each priority query before publishing a new cluster.
-

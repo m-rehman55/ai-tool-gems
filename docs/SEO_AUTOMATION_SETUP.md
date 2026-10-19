@@ -120,8 +120,10 @@ python -m unittest discover -s marketing_agent/tests -v
 
 ## 6. How to Add or Reject Topics
 
-### Adding a New Topic:
+### Adding a New Topic
+
 Append a new entry to `data/seo/content-queue.json`:
+
 ```json
 {
   "slug": "new-ai-tool-pakistan",
@@ -139,7 +141,8 @@ Append a new entry to `data/seo/content-queue.json`:
 }
 ```
 
-### Rejecting or Skipping a Topic:
+### Rejecting or Skipping a Topic
+
 Set `"approved_for_publishing": false` in `data/seo/content-queue.json`.
 
 ---
@@ -147,6 +150,7 @@ Set `"approved_for_publishing": false` in `data/seo/content-queue.json`.
 ## 7. Verifying a Published Page
 
 After deployment to GitHub Pages (`aitoolgems.tech`):
+
 1. **HTTP Status & Canonical:** Confirm `https://aitoolgems.tech/guides/<slug>/` returns HTTP 200 with matching canonical tag.
 2. **Schema Test:** Paste the URL into the [Google Rich Results Test](https://search.google.com/test/rich-results) — it should detect `Article`, `BreadcrumbList`, and `FAQPage`.
 3. **IndexNow Ping:** Verify that `scripts/growth_seo_engine.py` reported `IndexNow Status: success`.

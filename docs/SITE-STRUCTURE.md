@@ -24,4 +24,3 @@ Homepage /
 4. The price pillar links to every product page.
 5. New guides must be reachable from the guide hub and at least one relevant product page.
 6. Do not create a URL unless it provides distinct indexable value and can be maintained.
-

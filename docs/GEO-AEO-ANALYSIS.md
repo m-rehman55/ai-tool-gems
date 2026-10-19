@@ -34,7 +34,7 @@ Stable entity anchors:
 ## Citability scorecard
 
 | Signal | Current state | Next improvement |
-|---|---|---|
+| --- | --- | --- |
 | Clear answer-first passages | Strong on products and three core guides | Apply to every future article |
 | First-party data | Strong PKR catalog snapshot | Publish dated change notes and methodology |
 | Primary-source citations | Strong on core comparisons | Add official sources to each new guide |
@@ -46,4 +46,3 @@ Stable entity anchors:
 ## AI visibility workflow
 
 Quarterly, test a fixed set of prompts across major answer engines: “AI tools prices in Pakistan,” “ChatGPT Plus vs Gemini Pakistan,” and “Canva vs Figma Pakistan.” Record whether the brand is mentioned, which page is cited and whether facts are accurate. Treat results as observations, not guaranteed rankings. Improve missing passages or sourcing, but never manufacture mentions on external platforms.
-
