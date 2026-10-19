@@ -1386,3 +1386,12 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
   border-color: #1b6555;
 }
 
+a.category-card {
+  text-decoration: none;
+  color: inherit;
+}
+a.category-card:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 3px;
+}
+

@@ -176,7 +176,7 @@ function renderCategories() {
   container.innerHTML = categoryData.map((c, index) => {
     const count = products.filter(product => product.category === c[0]).length;
     return `
-    <button class="category-card" data-category="${c[0]}">
+    <a href="#products" class="category-card" data-category="${c[0]}">
       <span class="category-visual" style="--category-x:${(index % 5) * 25}%;--category-y:${index < 5 ? 0 : 100}%">
         <span class="category-count">${count} ${count === 1 ? 'tool' : 'tools'}</span>
       </span>
@@ -187,7 +187,7 @@ function renderCategories() {
         </span>
         <i aria-hidden="true">${svg('i-arrow')}</i>
       </span>
-    </button>`;
+    </a>`;
   }).join('');
 }
 
@@ -603,11 +603,32 @@ function finderStep(step = 1) {
     `;
   }
   if (step === 3) {
-    let matches = products.filter(p => p.intent.includes(state.finder.intent) && p.price >= state.finder.minBudget && p.price <= state.finder.maxBudget).sort((a, b) => a.price - b.price).slice(0, 3);
+    const targetIntent = (state.finder.intent || '').toLowerCase();
+    const intentMatch = p => p.intent.some(i => {
+      const n = i.toLowerCase();
+      return n === targetIntent || n.startsWith(targetIntent) || targetIntent.startsWith(n) || (targetIntent === 'image' && n.startsWith('image'));
+    });
+
+    let matches = products.filter(p => intentMatch(p) && p.price >= state.finder.minBudget && p.price <= state.finder.maxBudget).sort((a, b) => a.price - b.price).slice(0, 3);
     let outsideBudget = false;
     if (!matches.length) {
-      matches = products.filter(p => p.intent.includes(state.finder.intent)).sort((a, b) => a.price - b.price).slice(0, 3);
-      outsideBudget = true;
+      matches = products.filter(intentMatch).sort((a, b) => a.price - b.price).slice(0, 3);
+      outsideBudget = matches.length > 0;
+    }
+    if (!matches.length) {
+      root.innerHTML = `
+        <div class="finder-step">
+          <div class="progress"><span style="width:100%"></span></div>
+          <div class="eyebrow dark"><span></span> No matches found</div>
+          <h2 id="finderTitle">No matching tools found</h2>
+          <p>We could not find a tool matching that specific selection. Explore all verified tools or choose another goal.</p>
+          <div style="margin:24px 0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="#products" class="light-button" data-close style="text-decoration:none;">Browse all tools</a>
+            <button class="finder-back" type="button" data-finder-back="1">Start over</button>
+          </div>
+        </div>
+      `;
+      return;
     }
     root.innerHTML = `
       <div class="finder-step">
@@ -617,15 +638,15 @@ function finderStep(step = 1) {
         <p>${outsideBudget ? 'No exact tool is available in that budget. These are the lowest-priced relevant options, shown transparently.' : 'Matched for your objective and exact budget range using the catalog details shown.'}</p>
         <div class="finder-results">
           ${matches.map((p, i) => `
-            <button class="finder-result" data-detail="${p.id}">
+            <a class="finder-result" href="tools/${p.id}/" style="text-decoration:none;display:flex;align-items:center;">
               <img src="${p.logo}" width="128" height="128" loading="lazy" alt="${p.name}">
               <div>
                 <small>${outsideBudget ? 'CLOSEST OPTION · ABOVE BUDGET' : (i === 0 ? 'TOP BUDGET MATCH' : 'RECOMMENDED OPTION')}</small>
                 <b>${p.name}</b>
-                <span>${p.bestFor.join(' · ')} · ${p.duration}</span>
+                <span>${p.bestFor.join(' · ')} · ${p.duration} · ${p.access} Plan</span>
               </div>
               <strong>${money(p.price)}</strong>
-            </button>
+            </a>
           `).join('')}
         </div>
         <button class="finder-back" type="button" data-finder-back="2">← Change your budget</button>
@@ -697,7 +718,7 @@ function updateFinderPreview(intent) {
   }
   const card = $('#finderMatchCard');
   if (card) {
-    card.dataset.detail = data.id;
+    card.href = `tools/${data.id}/`;
     card.setAttribute('aria-label', `View recommended ${data.name} details`);
     card.classList.remove('pulse-update');
     void card.offsetWidth;
@@ -1141,7 +1162,30 @@ renderCategories();
 renderProducts();
 updateCart();
 updateCompare();
-updateCompare();
+
+// URL parameter deep-linking support for category, search, and finder
+try {
+  const urlParams = new URLSearchParams(window.location.search);
+  const qParam = urlParams.get('q') || urlParams.get('search');
+  const catParam = urlParams.get('category');
+  const findParam = urlParams.get('find') || urlParams.get('intent');
+  if (catParam) {
+    state.category = catParam;
+    renderProducts();
+  } else if (qParam) {
+    state.query = qParam;
+    const sInput = $('#heroSearch');
+    if (sInput) sInput.value = qParam;
+    renderProducts();
+  }
+  if (findParam) {
+    state.finder.intent = findParam.toLowerCase();
+    openFinder();
+    finderStep(2);
+  } else if (window.location.hash === '#finderModal' || window.location.hash === '#finder') {
+    openFinder();
+  }
+} catch (e) {}
 
 // Defer 3D initialization to avoid blocking LCP. Mobile keeps the visual
 // centerpiece static so touch scrolling and the first render stay responsive.

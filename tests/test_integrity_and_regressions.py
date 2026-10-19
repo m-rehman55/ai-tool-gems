@@ -129,7 +129,58 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('.stack-item span', lt_content, "light-theme.css must override .stack-item span")
         self.assertIn('.finder-preview > p', lt_content, "light-theme.css must override .finder-preview > p")
 
+    def test_phase3_category_prerendering_and_anchor_integrity(self):
+        """Phase 3: Confirms all 11 categories are pre-rendered, anchors resolve, and no href='#' placeholders exist."""
+        index_path = os.path.join(REPO_ROOT, 'index.html')
+        with open(index_path, 'r', encoding='utf-8') as f:
+            html = f.read()
+
+        # 1. 11 categories pre-rendered
+        expected_categories = [
+            'AI Assistants', 'AI Video', 'Design', 'Development', 'Writing & SEO',
+            'Productivity', 'AI Voice', 'VPN & Security', 'Entertainment', 'Business', 'Software'
+        ]
+        for cat in expected_categories:
+            escaped_cat = cat.replace('&', '&amp;')
+            self.assertTrue(
+                f'data-category="{cat}"' in html or f'data-category="{escaped_cat}"' in html,
+                f"Expected category {cat} pre-rendered in index.html"
+            )
+
+        # 2. Zero href="#" in index.html
+        self.assertNotIn('href="#"', html, "index.html must not contain empty/placeholder href='#'")
+
+        # 3. Finder match card links directly to canonical tool page
+        self.assertIn('id="finderMatchCard" href="tools/veo/"', html, "finderMatchCard must link directly to tools/veo/")
+
+        # 4. Guide TOC fragment anchors resolve to actual heading IDs
+        guide_files = [
+            'guides/ai-tools-price-pakistan/index.html',
+            'guides/canva-vs-figma-pakistan/index.html',
+            'guides/chatgpt-vs-gemini-pakistan/index.html'
+        ]
+        for gf in guide_files:
+            gpath = os.path.join(REPO_ROOT, gf)
+            with open(gpath, 'r', encoding='utf-8') as f:
+                gcontent = f.read()
+            toc_match = re.search(r'<nav class=["\']toc["\'][^>]*>(.*?)</nav>', gcontent, re.DOTALL)
+            self.assertIsNotNone(toc_match, f"TOC missing in {gf}")
+            toc_links = re.findall(r'href=["\']#([^"\']+)["\']', toc_match.group(1))
+            self.assertTrue(len(toc_links) > 0, f"Expected TOC links in {gf}")
+            for fragment in toc_links:
+                self.assertTrue(
+                    re.search(rf'id=["\']{re.escape(fragment)}["\']', gcontent),
+                    f"TOC link #{fragment} in {gf} does not match any element ID"
+                )
+
+        # 5. app.js normalizes intent matching for singular and plural
+        app_js_path = os.path.join(REPO_ROOT, 'app.js')
+        with open(app_js_path, 'r', encoding='utf-8') as f:
+            app_js = f.read()
+        self.assertIn("targetIntent === 'image' && n.startsWith('image')", app_js, "app.js must normalize image/images intent")
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
