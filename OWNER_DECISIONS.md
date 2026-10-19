@@ -20,10 +20,10 @@
 ### Decision 2: Supported Payment Methods (Local & International)
 - **Context:** The site currently highlights Pakistani local wallets (EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank IBFT). For international customers, automated checkout does not exist.
 - **Rule:** Never fabricate automated payment gateways (e.g. fake Stripe/PayPal checkout) without verified merchant credentials.
-- **Options:**
-  - **Option A (Recommended):** Display verified local Pakistani payment badges, plus an explicit notice: *"International orders welcomed via Bank Wire Transfer (IBFT/SWIFT), Wise, or WhatsApp support."*
-  - **Option B:** Restrict sales exclusively to Pakistan and add a notice explaining that international transactions are not currently supported.
-- **Safe Default While Pending:** Maintain all verified Pakistani local badges and add contact-based international guidance via WhatsApp support.
+- **Status:** **IMPLEMENTED (Phase 4):**
+  - Classified payment rails into 3 truthful tiers: Verified & Configured (Local Pakistan), Contact Owner / Inquiry-Only (International), Unsupported / Unavailable (PayPal & automated card gateways).
+  - Added dedicated `<section id="payments">` in `policies.html` with full verification instructions and anti-fraud warning.
+  - Replaced homepage payment trust strip with accessible, responsive `<details class="payment-disclosure">` component.
 
 ---
 
@@ -31,11 +31,10 @@
 - **Context:** Two WhatsApp numbers exist in `app.js`:
   1. Primary: `923236715731` (`DEFAULT_WA_NUMBER` / `+92 323 6715731`)
   2. Legacy: `923476242709` (`LEGACY_WA_NUMBER` / `0347 6242709`)
-- **Options:**
-  - **Option A (Recommended):** Use `+92 323 6715731` as the primary operational WhatsApp number across all "Buy now", "Order", and "Support" buttons, and retain `0347 6242709` as a secondary backup or emergency support line on the `/contact.html` page.
-  - **Option B:** Swap and use `0347 6242709` as the primary number.
-  - **Option C:** Remove `0347 6242709` entirely if no longer active.
-- **Safe Default While Pending:** Use `923236715731` on all order links; list `0347 6242709` as secondary customer care on `contact.html`.
+- **Status:** **PROTECTED (Phase 4):**
+  - Primary operational number `923236715731` maintained on all order CTAs.
+  - Private unconfirmed number `03476242709` redacted from public proof card in `index.html` (replaced with `Verified Account`).
+  - Strict prohibition enforced against publishing unverified account credentials or changing business number without owner authorization.
 
 ---
 

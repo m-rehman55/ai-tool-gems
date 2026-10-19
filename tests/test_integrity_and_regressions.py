@@ -179,8 +179,58 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             app_js = f.read()
         self.assertIn("targetIntent === 'image' && n.startsWith('image')", app_js, "app.js must normalize image/images intent")
 
+    def test_phase4_payment_transparency_and_policy_integrity(self):
+        """Phase 4: Verifies payment classifications, truthful wording, policy fragment resolution, and security boundaries."""
+        policies_path = os.path.join(REPO_ROOT, 'policies.html')
+        with open(policies_path, 'r', encoding='utf-8') as f:
+            policies_html = f.read()
+
+        # 1. policies.html has dedicated id="payments" section
+        self.assertIn('id="payments"', policies_html, "policies.html must contain a section with id='payments'")
+        self.assertTrue(
+            re.search(r'<section[^>]*id=["\']payments["\']', policies_html),
+            "Expected <section> element with id='payments' in policies.html"
+        )
+
+        # 2. All 32 tool pages have links to policies.html#payments and the section exists
+        tools_dir = os.path.join(REPO_ROOT, 'tools')
+        tool_dirs = [d for d in os.listdir(tools_dir) if os.path.isdir(os.path.join(tools_dir, d))]
+        self.assertEqual(len(tool_dirs), 32, "Expected 32 tool pages")
+        for td in tool_dirs:
+            tfile = os.path.join(tools_dir, td, 'index.html')
+            with open(tfile, 'r', encoding='utf-8') as f:
+                tcontent = f.read()
+            self.assertIn('policies.html#payments', tcontent, f"{td}/index.html must link to policies.html#payments")
+
+        # 3. Transparent 3-tier payment classification in policies.html
+        self.assertIn('Verified &amp; Configured', policies_html, "policies.html must include 'Verified & Configured' classification")
+        self.assertIn('Contact Owner / Inquiry-Only', policies_html, "policies.html must include 'Contact Owner / Inquiry-Only' classification")
+        self.assertIn('Unsupported / Unavailable', policies_html, "policies.html must include 'Unsupported / Unavailable' classification")
+
+        # 4. index.html payment disclosure component
+        index_path = os.path.join(REPO_ROOT, 'index.html')
+        with open(index_path, 'r', encoding='utf-8') as f:
+            index_html = f.read()
+
+        self.assertIn('id="paymentMethodsDisclosure"', index_html, "index.html must have paymentMethodsDisclosure details element")
+        self.assertIn('href="policies.html#payments"', index_html, "index.html payment disclosure must link to policies.html#payments")
+
+        # 5. Unsupported / exaggerated claims removed
+        self.assertNotIn('100% Verified Local Payments', index_html, "100% Verified Local Payments claim must be removed from index.html")
+        self.assertNotIn('Instant Guaranteed Activation', index_html, "Instant Guaranteed Activation claim must not be in index.html")
+
+        # 6. Contact protection: 03476242709 must not be published as public payment detail or link
+        self.assertNotIn('03476242709', index_html, "03476242709 must not be publicly published in index.html")
+        self.assertNotIn('03476242709', policies_html, "03476242709 must not be publicly published in policies.html")
+
+        # 7. No fake automated payment gateway scripts or credit card inputs
+        self.assertNotIn('stripe.com/v3', index_html, "No Stripe checkout script should be injected")
+        self.assertNotIn('<form id="card-element"', index_html, "No fake card element should be in index.html")
+        self.assertNotIn('paypal.com/sdk/js', index_html, "No PayPal SDK script should be injected")
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
