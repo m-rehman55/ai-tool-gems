@@ -510,6 +510,57 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         r_veo = pm.find_best_url("veo purchase", "transactional")
         self.assertEqual(r_veo.best_url, "https://aitoolgems.tech/tools/veo/")
 
+    def test_google_oauth_and_legal_pages_compliance(self):
+        """Google OAuth & Legal Compliance: Verifies /privacy-policy/ and /terms-of-service/ accessibility, scopes, and sitemap."""
+        # 1. Privacy Policy existence and metadata
+        pp_path = os.path.join(REPO_ROOT, 'privacy-policy', 'index.html')
+        self.assertTrue(os.path.exists(pp_path), "privacy-policy/index.html must exist")
+        with open(pp_path, 'r', encoding='utf-8') as f:
+            pp_html = f.read()
+
+        self.assertIn('<title>Privacy Policy | AI Tool Gems Pakistan</title>', pp_html)
+        self.assertIn('rel="canonical" href="https://aitoolgems.tech/privacy-policy/"', pp_html)
+        self.assertIn('content="index,follow', pp_html)
+
+        # Google API Services user data requirements
+        self.assertIn('https://www.googleapis.com/auth/webmasters.readonly', pp_html)
+        self.assertIn('https://www.googleapis.com/auth/analytics.readonly', pp_html)
+        self.assertIn('Google API Services User Data Policy', pp_html)
+        self.assertIn('Limited Use', pp_html)
+        self.assertIn('https://myaccount.google.com/permissions', pp_html)
+        self.assertIn('support@aitoolgems.tech', pp_html)
+        self.assertIn('+92 323 6715731', pp_html)
+
+        # 2. Terms of Service existence and metadata
+        tos_path = os.path.join(REPO_ROOT, 'terms-of-service', 'index.html')
+        self.assertTrue(os.path.exists(tos_path), "terms-of-service/index.html must exist")
+        with open(tos_path, 'r', encoding='utf-8') as f:
+            tos_html = f.read()
+
+        self.assertIn('<title>Terms of Service | AI Tool Gems Pakistan</title>', tos_html)
+        self.assertIn('rel="canonical" href="https://aitoolgems.tech/terms-of-service/"', tos_html)
+        self.assertIn('content="index,follow', tos_html)
+        self.assertIn('official reseller, authorized distributor, partner, or sponsor', tos_html.lower())
+        self.assertIn('starts after payment confirmation and manual order verification on whatsapp', tos_html.lower())
+        self.assertIn('easypaisa', tos_html.lower())
+        self.assertIn('jazzcash', tos_html.lower())
+        self.assertIn('sadapay', tos_html.lower())
+        self.assertIn('replacement warranty', tos_html.lower())
+
+        # 3. Footer links in index.html
+        index_path = os.path.join(REPO_ROOT, 'index.html')
+        with open(index_path, 'r', encoding='utf-8') as f:
+            idx_html = f.read()
+        self.assertIn('href="privacy-policy/"', idx_html, "index.html must link to privacy-policy/")
+        self.assertIn('href="terms-of-service/"', idx_html, "index.html must link to terms-of-service/")
+
+        # 4. Sitemap inclusion
+        sitemap_path = os.path.join(REPO_ROOT, 'sitemap.xml')
+        with open(sitemap_path, 'r', encoding='utf-8') as f:
+            sm_content = f.read()
+        self.assertIn('<loc>https://aitoolgems.tech/privacy-policy/</loc>', sm_content)
+        self.assertIn('<loc>https://aitoolgems.tech/terms-of-service/</loc>', sm_content)
+
 
 if __name__ == '__main__':
     unittest.main()
