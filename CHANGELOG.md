@@ -3,6 +3,41 @@
 All notable changes to the AI Tool Gems platform are documented in this file in reverse chronological order.
 Governing Specification: Prompt 0 — Shared Operating Rules.
 
+## [Phase 5] - 2026-10-19 — Global Positioning, Guardrails Modernization & Technical SEO / AEO / GEO
+### Fixed & Generated
+- **Speed Claim Remediation & Activation Transparency (`a0df742`):**
+  - Replaced "immediate activation" in `index.html` line 3749 with truthful wording: "activation after payment and availability confirmation via WhatsApp".
+  - Eliminated specific unsubstantiated minute speed claims from all customer proof captions:
+    - Replaced `in 2 minutes` with `upon receipt verification` and `upon confirmation`.
+    - Replaced `in 3–5 minutes` with `after payment confirmation`.
+    - Replaced `in 5 minutes` with `after receipt confirmation via WhatsApp`.
+  - Added strict regression coverage in `tests/test_integrity_and_regressions.py` testing for negative absence of `immediate activation`, `in 2 minutes`, `in 3–5 minutes`, and `in 5 minutes`, and asserting presence of the confirmation wording.
+- **Global Positioning & Agent Guardrails Harmonization:**
+  - Modernized `AGENTS.md` to remove obsolete "100% Pakistan-exclusive" phrasing while preserving authentic domestic focus:
+    - Established Pakistan as the Primary Core Market (authoritative PKR pricing, verified local wallets EasyPaisa/JazzCash/SadaPay/Raast/IBFT).
+    - Established International as Inquiry & Content Access (manual WhatsApp routing, custom Wise/IBFT quotes, no fake automated gateways or currency switchers).
+    - Updated Safety section to prohibit fabricating foreign local payment rails or fake country offices.
+  - Recorded Decisions 8 & 9 in `OWNER_DECISIONS.md` establishing policies on currency display (no fake switchers) and language versioning (canonical `en-PK` without fake `hreflang` alternate links).
+- **Technical SEO, Schema & AEO/GEO Verification:**
+  - Confirmed 71 canonical indexable URLs in `sitemap.xml` with zero admin or private URLs.
+  - Verified `robots.txt` disallows private paths while explicitly granting access to beneficial AI crawlers (`GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`).
+  - Ran `schema_audit.py`: 74/74 pages pass with 100.0% schema completeness.
+  - Ran `audit_all.py`: 74/74 HTML files clean with 0 errors and 0 warnings.
+  - Ran `marketing_agent seo-monitor`: scored 100/100 across 70 verified URLs with 8 AEO answer blocks and 0 issues.
+  - Ran `keyword_agent audit`: compiled 11 RE2-compliant GSC filters, mapped 42 keywords with 0 route collisions.
+
+### Verification
+- 99/99 tests passed across all 4 suites:
+  - `tests`: 8/8 passed
+  - `keyword_agent`: 15/15 passed
+  - `seo-agent`: 43/43 passed
+  - `marketing_agent`: 33/33 passed
+- `schema_audit.py`: 74/74 pages passed (100% score)
+- `audit_all.py`: 74/74 HTML files clean (0 errors, 0 warnings)
+- `seo-monitor`: 100/100 score (0 issues)
+
+---
+
 ## [Phase 4] - 2026-10-19 — Payment Transparency, Policy Section & Contact Protection
 ### Fixed & Generated
 - **Dedicated Payments Section in `policies.html` (`#payments`):**

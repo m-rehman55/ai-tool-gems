@@ -74,6 +74,28 @@
   3. The "Who Should Use This Tool" section includes links to target workflows (e.g. students, designers, coders).
   4. The "Frequently Asked Questions" section provides clear, actionable answers with links to policies, warranties, or WhatsApp support.
   5. The "Alternatives" and "Compare related tools" sections link directly to active static pages in the catalog (e.g. `../midjourney/`, `../canva/`, `../veo/`) rather than dead plain text.
-- **Status:** **CONFIRMED BY OWNER** (Targeted for implementation across Phase 1 and Phase 2).
+- **Status:** **CONFIRMED BY OWNER & IMPLEMENTED** (Phase 1 & Phase 2).
+
+---
+
+### Decision 8: Global Audience Positioning & Currency Display Strategy (Phase 5)
+- **Context:** The marketplace aims to welcome international customers without violating transparency rules.
+- **Rules Followed:**
+  1. Base prices remain authoritative in PKR (`Rs.`) across all product pages.
+  2. No fake currency switchers or fabricated automated exchange rates.
+  3. International visitors are directed to manual WhatsApp quotes (`policies.html#payments`) for custom payment routing (Wise, IBFT/SWIFT).
+  4. No fabricated foreign offices, foreign support staff, or unsupported regional gateways.
+- **Status:** **ACTIVE SAFE DEFAULT:** Grounded PKR base pricing with transparent international WhatsApp inquiry routing.
+
+---
+
+### Decision 9: hreflang & Language Versioning (Phase 5)
+- **Context:** Technical SEO requires truthful language tags.
+- **Rules Followed:**
+  1. All public pages are canonicalized under `lang="en-PK"` (English with localized Pakistani search terminology).
+  2. No `hreflang="ur"` or other translated alternate links are published unless authentic full Urdu or translated sub-paths are built.
+  3. No labeling untranslated pages as translated.
+- **Status:** **ACTIVE SAFE DEFAULT:** Single canonical locale `en-PK` without fake `hreflang` alternate tags.
+
 
 
