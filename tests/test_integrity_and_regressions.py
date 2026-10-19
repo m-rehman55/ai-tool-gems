@@ -328,6 +328,71 @@ class TestIntegrityAndRegressions(unittest.TestCase):
                     self.assertNotIn('Fast 15-minute delivery', content, f"Found 'Fast 15-minute delivery' in {os.path.relpath(fpath, REPO_ROOT)}")
                     self.assertNotIn('Instant 2-minute activation', content, f"Found 'Instant 2-minute activation' in {os.path.relpath(fpath, REPO_ROOT)}")
 
+    def test_phase6a_linkedin_and_chatgpt_snippet_optimization(self):
+        """Phase 6A: Verifies high-intent snippet optimization, truthful plan naming, and intent routing."""
+        # 1. LinkedIn Tool Page Snippet & Direct Answer
+        li_path = os.path.join(REPO_ROOT, 'tools', 'linkedin', 'index.html')
+        with open(li_path, 'r', encoding='utf-8') as f:
+            li_html = f.read()
+
+        self.assertIn('<title>LinkedIn Premium Price in Pakistan (Rs. 1,500) | AI Tool Gems</title>', li_html)
+        self.assertIn('name="description" content="Check LinkedIn Premium price in Pakistan. 2-month invitation voucher for Rs. 1,500 PKR', li_html)
+        self.assertIn('href="https://aitoolgems.tech/tools/linkedin/"', li_html)
+        self.assertIn('Rs. 1,500 PKR', li_html)
+        self.assertIn('2-Month invitation-based voucher', li_html)
+        self.assertNotIn('6 Months access', li_html, "Incorrect 6-month claim must not be in LinkedIn quick-answer")
+        self.assertNotIn('| Instant Delivery', li_html, "Instant Delivery must not be in LinkedIn social titles")
+        self.assertNotIn('Instant delivery after purchase', li_html, "Instant delivery must not be in LinkedIn overview")
+        self.assertIn('href="https://wa.me/923236715731', li_html, "Working WhatsApp purchase link required")
+
+        # 2. ChatGPT Tool Page Snippet, Pro Clarification & Direct Answer
+        cg_path = os.path.join(REPO_ROOT, 'tools', 'chatgpt', 'index.html')
+        with open(cg_path, 'r', encoding='utf-8') as f:
+            cg_html = f.read()
+
+        self.assertIn('<title>ChatGPT Plus Price in Pakistan (Rs. 2,300) | Plus vs Pro</title>', cg_html)
+        self.assertIn('$200 ChatGPT Pro is not stocked', cg_html, "Meta description must clarify ChatGPT Pro is not stocked")
+        self.assertIn('href="https://aitoolgems.tech/tools/chatgpt/"', cg_html)
+        self.assertIn('Rs. 2,300 PKR', cg_html)
+        self.assertIn('ChatGPT Pro', cg_html)
+        self.assertIn('not stocked or sold', cg_html, "Direct answer must explicitly state ChatGPT Pro is not stocked")
+        self.assertIn('Do you offer ChatGPT Pro in Pakistan?', cg_html, "FAQ must address ChatGPT Pro availability")
+        self.assertNotIn('| Instant Delivery', cg_html, "Instant Delivery must not be in ChatGPT social titles")
+        self.assertNotIn('Instant delivery after purchase', cg_html, "Instant delivery must not be in ChatGPT overview")
+        self.assertIn('href="https://wa.me/923236715731', cg_html, "Working WhatsApp purchase link required")
+
+        # 3. Keyword-to-Page Intent Resolution
+        from pathlib import Path
+        from keyword_agent.page_mapper import PageMapper
+        pm = PageMapper(Path(REPO_ROOT))
+
+        # Direct buy/price queries map to tool product pages
+        r_li = pm.find_best_url("linkedin premium price in pakistan", "transactional")
+        self.assertEqual(r_li.best_url, "https://aitoolgems.tech/tools/linkedin/")
+
+        r_cg = pm.find_best_url("chatgpt pro price in pakistan", "transactional")
+        self.assertEqual(r_cg.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+
+        r_buy_cg = pm.find_best_url("buy chatgpt plus in pakistan easypaisa", "transactional")
+        self.assertEqual(r_buy_cg.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+
+        r_canva = pm.find_best_url("canva pro price in pakistan jazzcash", "transactional")
+        self.assertEqual(r_canva.best_url, "https://aitoolgems.tech/tools/canva/")
+
+        # Comparison queries map to comparison guides
+        r_vs = pm.find_best_url("chatgpt vs gemini price in pakistan", "commercial")
+        self.assertEqual(r_vs.best_url, "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/")
+
+        r_cf = pm.find_best_url("canva vs figma comparison", "commercial")
+        self.assertEqual(r_cf.best_url, "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/")
+
+        # Audience workflow queries map to audience guides
+        r_stud = pm.find_best_url("ai tools for students", "commercial")
+        self.assertEqual(r_stud.best_url, "https://aitoolgems.tech/guides/students/")
+
+        r_creat = pm.find_best_url("best ai tools for freelance creators", "commercial")
+        self.assertEqual(r_creat.best_url, "https://aitoolgems.tech/guides/creators/")
+
 
 if __name__ == '__main__':
     unittest.main()

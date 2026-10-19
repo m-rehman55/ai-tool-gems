@@ -129,7 +129,59 @@ class PageMapper:
         kw_lower = keyword.lower()
         norm_kw = self.normalize_keyword(keyword)
 
-        # Check for tool matches
+        # 1. Multi-tool comparison & alternative guide matches
+        # A) Explicit multi-tool comparison (vs, versus, compare): requires 2+ tool names in slug
+        if any(w in kw_lower for w in ["vs", "versus", "compare", "comparison"]):
+            for url, route in self.routes.items():
+                if route.page_type == "guide":
+                    slug = Path(route.relative_path).parent.name
+                    slug_words = [sw for sw in slug.split("-") if len(sw) > 3 and sw not in {"tools", "pakistan", "best", "guide", "price"}]
+                    if sum(1 for sw in slug_words if sw in kw_lower) >= 2:
+                        return PageMappingResult(
+                            keyword=keyword,
+                            intent=intent,
+                            best_url=url,
+                            relative_path=route.relative_path,
+                            mapping_confidence=0.95,
+                            action_type="OPTIMIZE_EXISTING",
+                            rational_justification=f"Educational multi-tool comparison query aligns with guide: {slug}.",
+                        )
+
+        # B) Alternative queries (alternative, alternatives): maps to alternative guides
+        if any(w in kw_lower for w in ["alternative", "alternatives"]):
+            for url, route in self.routes.items():
+                if route.page_type == "guide" and "alternative" in route.relative_path:
+                    slug = Path(route.relative_path).parent.name
+                    slug_words = [sw for sw in slug.split("-") if len(sw) > 3 and sw not in {"tools", "pakistan", "best", "guide", "price", "alternative", "alternatives"}]
+                    if any(sw in kw_lower for sw in slug_words):
+                        return PageMappingResult(
+                            keyword=keyword,
+                            intent=intent,
+                            best_url=url,
+                            relative_path=route.relative_path,
+                            mapping_confidence=0.95,
+                            action_type="OPTIMIZE_EXISTING",
+                            rational_justification=f"Alternative query aligns with dedicated alternative guide: {slug}.",
+                        )
+
+        # 2. Audience workflows (student, creator, freelancer, developer, business)
+        if any(w in kw_lower for w in ["student", "academic", "creator", "freelancer", "developer", "business"]):
+            for url, route in self.routes.items():
+                if route.page_type == "guide":
+                    slug = Path(route.relative_path).parent.name
+                    if any(w in slug for w in ["student", "creator", "developer", "business"]):
+                        if any(w in kw_lower for w in slug.split("-")):
+                            return PageMappingResult(
+                                keyword=keyword,
+                                intent=intent,
+                                best_url=url,
+                                relative_path=route.relative_path,
+                                mapping_confidence=0.92,
+                                action_type="OPTIMIZE_EXISTING",
+                                rational_justification=f"Audience workflow query aligns with dedicated persona guide: {slug}.",
+                            )
+
+        # 3. Direct Tool Matches (Buy, price, rate, subscription, local payment)
         for url, route in self.routes.items():
             if route.page_type == "tool":
                 slug = Path(route.relative_path).parent.name
@@ -141,10 +193,10 @@ class PageMapper:
                         relative_path=route.relative_path,
                         mapping_confidence=0.95,
                         action_type="OPTIMIZE_EXISTING",
-                        rational_justification=f"Exact tool match for '{slug}' maps directly to official product page.",
+                        rational_justification=f"Exact commercial/transactional tool match for '{slug}' maps directly to official product page.",
                     )
 
-        # Check for general pricing queries across tools
+        # 4. Check for general pricing queries across tools
         if any(w in kw_lower for w in ["prices", "pricing", "rate", "rates", "cost"]):
             prices_url = "https://aitoolgems.tech/prices/"
             if prices_url in self.routes:
@@ -158,7 +210,7 @@ class PageMapper:
                     rational_justification="Broad multi-tool pricing query maps to central /prices/ directory.",
                 )
 
-        # Check for general deals / discounts queries
+        # 5. Check for general deals / discounts queries
         if any(w in kw_lower for w in ["deal", "deals", "discount", "cheap", "bundle"]):
             deals_url = "https://aitoolgems.tech/deals/"
             if deals_url in self.routes:
@@ -171,25 +223,6 @@ class PageMapper:
                     action_type="OPTIMIZE_EXISTING",
                     rational_justification="Broad savings & discount query maps to central /deals/ catalog.",
                 )
-
-        # Check for guide matches (comparisons, vs, how-to)
-        if any(w in kw_lower for w in ["vs", "compare", "alternative", "guide", "how"]):
-            # Look for exact guide match
-            for url, route in self.routes.items():
-                if route.page_type == "guide":
-                    slug = Path(route.relative_path).parent.name
-                    # Filter out overly generic words like 'tools', 'pakistan', 'best'
-                    slug_words = [sw for sw in slug.split("-") if len(sw) > 3 and sw not in {"tools", "pakistan", "best", "guide"}]
-                    if any(sw in kw_lower for sw in slug_words):
-                        return PageMappingResult(
-                            keyword=keyword,
-                            intent=intent,
-                            best_url=url,
-                            relative_path=route.relative_path,
-                            mapping_confidence=0.85,
-                            action_type="OPTIMIZE_EXISTING",
-                            rational_justification=f"Educational comparison query aligns with existing guide: {slug}.",
-                        )
 
         # Default fallback to Homepage
         home_url = "https://aitoolgems.tech/"
