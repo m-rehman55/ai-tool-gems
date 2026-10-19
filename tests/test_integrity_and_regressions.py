@@ -106,6 +106,30 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertEqual(len(lines), 1, "ads.txt should contain exactly one verified entry")
         self.assertTrue(lines[0].startswith("google.com, pub-5286528878404514, DIRECT, f08c47fec0942fa0"))
 
+    def test_phase1_breadcrumbs_and_contrast_integrity(self):
+        """Phase 1: Verifies all static tool pages have clickable breadcrumbs and light-theme contrast overrides."""
+        # 1. Breadcrumbs check across all 32 tools
+        tools_dir = os.path.join(REPO_ROOT, 'tools')
+        subdirs = [d for d in os.listdir(tools_dir) if os.path.isdir(os.path.join(tools_dir, d))]
+        self.assertEqual(len(subdirs), 32, "Expected exactly 32 tool directories in tools/")
+        for d in subdirs:
+
+            fp = os.path.join(tools_dir, d, 'index.html')
+            self.assertTrue(os.path.exists(fp), f"Expected {fp} to exist")
+            with open(fp, 'r', encoding='utf-8') as f:
+                content = f.read()
+            self.assertIn('<a href="../../">Home</a>', content, f"{d} breadcrumbs must contain clickable link to Home")
+            self.assertIn('<a href="../../tools/">AI tools</a>', content, f"{d} breadcrumbs must contain link to AI tools directory")
+
+        # 2. Contrast overrides check in light-theme.css
+        light_theme_path = os.path.join(REPO_ROOT, 'light-theme.css')
+        with open(light_theme_path, 'r', encoding='utf-8') as f:
+            lt_content = f.read()
+        self.assertIn('.float-card span', lt_content, "light-theme.css must override .float-card span")
+        self.assertIn('.stack-item span', lt_content, "light-theme.css must override .stack-item span")
+        self.assertIn('.finder-preview > p', lt_content, "light-theme.css must override .finder-preview > p")
+
 
 if __name__ == '__main__':
     unittest.main()
+
