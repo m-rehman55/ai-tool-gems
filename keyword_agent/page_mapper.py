@@ -295,6 +295,34 @@ class PageMapper:
         # Exactly one tool matched -> clean unambiguous routing
         if len(matching_tools) == 1:
             slug, url, rel_p, _ = matching_tools[0]
+
+            # Adobe sub-app bundle inclusion vs full suite distinction
+            if slug == "adobe":
+                subapps = ["illustrator", "photoshop", "premiere pro", "premiere", "after effects", "lightroom", "firefly"]
+                matched_subapp = next((sa for sa in subapps if re.search(rf"\b{re.escape(sa)}\b", kw_clean)), None)
+                if matched_subapp:
+                    return PageMappingResult(
+                        keyword=keyword,
+                        intent=intent,
+                        best_url=url,
+                        relative_path=rel_p,
+                        mapping_confidence=0.90,
+                        action_type="OPTIMIZE_EXISTING",
+                        rational_justification=f"Bundle inclusion match: Standalone '{matched_subapp}' is not sold individually on AI Tool Gems; maps to Adobe Creative Cloud All Apps suite (/tools/adobe/) which includes '{matched_subapp}' with explicit on-page clarification.",
+                    )
+
+            # ChatGPT tier distinction (Plus vs Pro)
+            if slug == "chatgpt" and "pro" in kw_clean:
+                return PageMappingResult(
+                    keyword=keyword,
+                    intent=intent,
+                    best_url=url,
+                    relative_path=rel_p,
+                    mapping_confidence=0.90,
+                    action_type="OPTIMIZE_EXISTING",
+                    rational_justification="Plan distinction match: Query targets '$200 ChatGPT Pro' tier; maps to /tools/chatgpt/ where on-page content explicitly clarifies Pro is not stocked and presents available ChatGPT Plus offer.",
+                )
+
             return PageMappingResult(
                 keyword=keyword,
                 intent=intent,

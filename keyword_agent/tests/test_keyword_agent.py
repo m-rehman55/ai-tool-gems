@@ -293,9 +293,9 @@ class TestKeywordAgent(unittest.TestCase):
         # 1. Transactional & tool aliases
         cases = [
             ("buy chatgpt plus in pakistan easypaisa", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.95),
-            ("chatgpt pro price in pakistan", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.95),
-            ("adobe illustrator price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.95),
-            ("photoshop price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.95),
+            ("chatgpt pro price in pakistan", "https://aitoolgems.tech/tools/chatgpt/", "OPTIMIZE_EXISTING", 0.90),
+            ("adobe illustrator price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.90),
+            ("photoshop price in pakistan", "https://aitoolgems.tech/tools/adobe/", "OPTIMIZE_EXISTING", 0.90),
             ("capcut pro price in pakistan", "https://aitoolgems.tech/tools/capcut/", "OPTIMIZE_EXISTING", 0.95),
             ("nord vpn price in pakistan", "https://aitoolgems.tech/tools/nordvpn/", "OPTIMIZE_EXISTING", 0.95),
             ("windows 11 key price", "https://aitoolgems.tech/tools/windows/", "OPTIMIZE_EXISTING", 0.95),
@@ -310,6 +310,16 @@ class TestKeywordAgent(unittest.TestCase):
             self.assertEqual(res.best_url, expected_url, f"Failed URL for query: {query}")
             self.assertEqual(res.action_type, expected_action, f"Failed action for query: {query}")
             self.assertGreaterEqual(res.mapping_confidence, min_conf, f"Low confidence for query: {query}")
+
+        # Assert specific bundle inclusion explanation for Adobe subapps
+        r_adobe_sub = mapper.find_best_url("adobe illustrator price in pakistan")
+        self.assertIn("Bundle inclusion match", r_adobe_sub.rational_justification)
+        self.assertIn("Creative Cloud All Apps", r_adobe_sub.rational_justification)
+
+        # Assert tier distinction explanation for ChatGPT Pro
+        r_cg_pro = mapper.find_best_url("chatgpt pro price in pakistan")
+        self.assertIn("Plan distinction match", r_cg_pro.rational_justification)
+        self.assertIn("Pro is not stocked", r_cg_pro.rational_justification)
 
         # 2. Multi-tool global comparisons
         r_3tool = mapper.find_best_url("chatgpt vs claude vs gemini", "commercial")
