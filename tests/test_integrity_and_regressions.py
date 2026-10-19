@@ -456,6 +456,57 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertEqual(r_capcut.best_url, "https://aitoolgems.tech/tools/capcut/")
         self.assertEqual(r_capcut.action_type, "OPTIMIZE_EXISTING")
 
+    def test_phase6b_p1_striking_distance_pages_optimization(self):
+        """Phase 6B P1: Confirms Leonardo AI, Gemini Pro, and Veo 3 Ultra snippet optimization, pricing, and intent mapping."""
+        # 1. Leonardo AI Tool Page
+        leo_path = os.path.join(REPO_ROOT, 'tools', 'leonardo', 'index.html')
+        with open(leo_path, 'r', encoding='utf-8') as f:
+            leo_html = f.read()
+
+        self.assertIn('<title>Leonardo AI Price in Pakistan (Rs. 1,900) | Essential Plan</title>', leo_html)
+        self.assertIn('Rs. 1,900 PKR', leo_html)
+        self.assertIn('8,500 monthly fast generation credits', leo_html)
+        self.assertIn('What is the Leonardo AI price in Pakistan?', leo_html)
+        self.assertNotIn('15-minute', leo_html.lower())
+        self.assertNotIn('prompt delivery', leo_html.lower())
+
+        # 2. Gemini Pro Tool Page
+        gemini_path = os.path.join(REPO_ROOT, 'tools', 'gemini', 'index.html')
+        with open(gemini_path, 'r', encoding='utf-8') as f:
+            gemini_html = f.read()
+
+        self.assertIn('<title>Gemini Pro Price in Pakistan (Rs. 800) | AI Tool Gems</title>', gemini_html)
+        self.assertIn('Rs. 800 PKR', gemini_html)
+        self.assertIn('18-month invitation-based access', gemini_html)
+        self.assertIn('What is the Google Gemini Pro price in Pakistan?', gemini_html)
+        self.assertNotIn('15-minute', gemini_html.lower())
+        self.assertNotIn('prompt delivery', gemini_html.lower())
+
+        # 3. Veo 3 Ultra Tool Page
+        veo_path = os.path.join(REPO_ROOT, 'tools', 'veo', 'index.html')
+        with open(veo_path, 'r', encoding='utf-8') as f:
+            veo_html = f.read()
+
+        self.assertIn('<title>Veo 3 Ultra Price in Pakistan (Rs. 2,100) | AI Tool Gems</title>', veo_html)
+        self.assertIn('Rs. 2,100 PKR', veo_html)
+        self.assertIn('What is the Veo 3 Ultra price in Pakistan?', veo_html)
+        self.assertNotIn('15-minute', veo_html.lower())
+        self.assertNotIn('prompt delivery', veo_html.lower())
+
+        # 4. Keyword intent mapping
+        from pathlib import Path
+        from keyword_agent.page_mapper import PageMapper
+        pm = PageMapper(Path(REPO_ROOT))
+
+        r_leo = pm.find_best_url("leonardo ai price in pakistan", "transactional")
+        self.assertEqual(r_leo.best_url, "https://aitoolgems.tech/tools/leonardo/")
+
+        r_gem = pm.find_best_url("gemini pro price in pakistan", "transactional")
+        self.assertEqual(r_gem.best_url, "https://aitoolgems.tech/tools/gemini/")
+
+        r_veo = pm.find_best_url("veo purchase", "transactional")
+        self.assertEqual(r_veo.best_url, "https://aitoolgems.tech/tools/veo/")
+
 
 if __name__ == '__main__':
     unittest.main()
