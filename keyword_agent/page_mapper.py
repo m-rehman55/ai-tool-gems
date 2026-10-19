@@ -44,6 +44,40 @@ class PageMappingResult:
     rational_justification: str = ""
 
 
+# Verified catalog brand aliases and tool synonyms
+TOOL_ALIASES: Dict[str, List[str]] = {
+    "adobe": ["adobe", "illustrator", "photoshop", "creative cloud", "lightroom", "premiere pro", "after effects", "firefly"],
+    "chatgpt": ["chatgpt", "chat gpt", "gpt-4o", "gpt 4o", "gpt-4", "gpt 4", "openai", "chatgpt plus", "chatgpt pro"],
+    "canva": ["canva", "canva pro"],
+    "capcut": ["capcut", "cap cut", "capcut pro"],
+    "linkedin": ["linkedin", "linked in", "linkedin premium", "sales navigator"],
+    "nordvpn": ["nordvpn", "nord vpn"],
+    "surfshark": ["surfshark", "surf shark"],
+    "midjourney": ["midjourney", "mid journey"],
+    "elevenlabs": ["elevenlabs", "eleven labs", "11labs"],
+    "leonardo": ["leonardo", "leonardo ai", "leonardo.ai"],
+    "replit": ["replit", "repl it", "repl.it"],
+    "quillbot": ["quillbot", "quill bot"],
+    "grammarly": ["grammarly", "grammerly"],
+    "gemini": ["gemini", "google gemini", "gemini pro", "gemini advanced"],
+    "veo": ["veo", "veo 3", "google veo", "veo 3 ultra"],
+    "heygen": ["heygen", "hey gen"],
+    "deepseek": ["deepseek", "deep seek"],
+    "perplexity": ["perplexity", "perplexity ai"],
+    "cursor": ["cursor", "cursor ai"],
+    "lovable": ["lovable", "lovable ai", "lovable.dev"],
+    "figma": ["figma", "figma pro"],
+    "runway": ["runway", "runway ml", "runwayml", "gen-3", "gen 3"],
+    "semrush": ["semrush", "sem rush"],
+    "netflix": ["netflix", "netflix 4k", "netflix premium"],
+    "youtube": ["youtube premium", "yt premium"],
+    "windows": ["windows 11", "windows key", "windows 10", "ms office", "office 365"],
+    "allinone": ["all in one", "all-in-one", "ai pack", "mega pack"],
+    "notion": ["notion", "notion ai"],
+    "grok": ["grok", "grok ai", "x ai"],
+}
+
+
 class PageMapper:
     """Discovers real repository pages, maps search keywords, and guards against cannibalization."""
 
@@ -106,15 +140,16 @@ class PageMapper:
                     )
 
         # 5. Trust / Policy pages
-        for p in ["about.html", "contact.html", "how-we-review.html", "how-we-price.html", "policies.html"]:
+        for p in ["about.html", "contact.html", "how-we-review.html", "how-we-price.html", "policies.html", "privacy-policy/index.html", "terms-of-service/index.html"]:
             pf = self.project_dir / p
             if pf.exists():
-                url = f"https://aitoolgems.tech/{p}"
+                clean_path = p.replace("index.html", "") if p.endswith("index.html") else p
+                url = f"https://aitoolgems.tech/{clean_path}"
                 self.routes[url] = SiteRoute(
                     url=url,
                     relative_path=p,
                     page_type="trust",
-                    primary_topic=p.replace(".html", "").replace("-", " ").title(),
+                    primary_topic=p.split("/")[0].replace(".html", "").replace("-", " ").title(),
                 )
 
     @staticmethod
@@ -124,8 +159,19 @@ class PageMapper:
         tokens = [t for t in clean.split() if t not in {"in", "for", "the", "a", "an", "and", "or", "to", "of", "with"}]
         return " ".join(sorted(tokens))
 
+    def _matches_tool(self, slug: str, kw_lower: str) -> bool:
+        """Checks if a query contains the tool slug or any of its documented aliases."""
+        if slug in kw_lower:
+            return True
+        aliases = TOOL_ALIASES.get(slug, [])
+        for alias in aliases:
+            # Word-boundary check for short aliases
+            if re.search(rf"\b{re.escape(alias)}\b", kw_lower):
+                return True
+        return False
+
     def find_best_url(self, keyword: str, intent: str = "transactional") -> PageMappingResult:
-        """Maps a keyword to the single best existing repository route."""
+        """Maps a keyword to the single best existing repository route using intent-first routing."""
         kw_lower = keyword.lower()
         is_pk_query = bool(re.search(r"(?i)(pakistan|pakistani|pkr|rs\.?|rupees?|easypaisa|jazzcash|sadapay|nayapay|lahore|karachi|islamabad|rawalpindi|faisalabad)", keyword))
 
@@ -153,7 +199,7 @@ class PageMapper:
             # If it's a global comparison without a dedicated global guide, route to relevant primary tool page or research
             if not is_pk_query:
                 for tool_slug in ["canva", "chatgpt", "cursor", "midjourney", "replit", "claude", "gemini", "figma", "leonardo"]:
-                    if tool_slug in kw_lower and f"https://aitoolgems.tech/tools/{tool_slug}/" in self.routes:
+                    if self._matches_tool(tool_slug, kw_lower) and f"https://aitoolgems.tech/tools/{tool_slug}/" in self.routes:
                         return PageMappingResult(
                             keyword=keyword,
                             intent=intent,
@@ -198,20 +244,41 @@ class PageMapper:
                                 rational_justification=f"Audience workflow query aligns with dedicated persona guide: {slug}.",
                             )
 
-        # 3. Direct Tool Matches (Buy, price, rate, subscription, local payment)
+        # 3. Direct Tool Matches (Buy, price, rate, subscription, local payment, aliases)
+        matching_tools: List[Tuple[str, str, str]] = []
         for url, route in self.routes.items():
             if route.page_type == "tool":
                 slug = Path(route.relative_path).parent.name
-                if slug in kw_lower:
-                    return PageMappingResult(
-                        keyword=keyword,
-                        intent=intent,
-                        best_url=url,
-                        relative_path=route.relative_path,
-                        mapping_confidence=0.95,
-                        action_type="OPTIMIZE_EXISTING",
-                        rational_justification=f"Exact commercial/transactional tool match for '{slug}' maps directly to official product page.",
-                    )
+                if self._matches_tool(slug, kw_lower):
+                    matching_tools.append((slug, url, route.relative_path))
+
+        # Exactly one tool matched -> clean unambiguous routing
+        if len(matching_tools) == 1:
+            slug, url, rel_p = matching_tools[0]
+            return PageMappingResult(
+                keyword=keyword,
+                intent=intent,
+                best_url=url,
+                relative_path=rel_p,
+                mapping_confidence=0.95,
+                action_type="OPTIMIZE_EXISTING",
+                rational_justification=f"Exact commercial/transactional tool match for '{slug}' (or recognized alias) maps directly to official product page.",
+            )
+
+        # Multiple tools matched without explicit comparison -> flag ambiguous intent for manual review
+        if len(matching_tools) > 1:
+            competing = [m[1] for m in matching_tools]
+            primary_slug, primary_url, primary_rel_p = matching_tools[0]
+            return PageMappingResult(
+                keyword=keyword,
+                intent=intent,
+                best_url=primary_url,
+                relative_path=primary_rel_p,
+                mapping_confidence=0.75,
+                action_type="MANUAL_REVIEW",
+                competing_urls=competing,
+                rational_justification=f"Query references multiple candidate tools ({', '.join([m[0] for m in matching_tools])}) without comparison keywords; flagged for manual intent review.",
+            )
 
         # 4. Check for general pricing queries across tools
         if any(w in kw_lower for w in ["prices", "pricing", "rate", "rates", "cost"]):
