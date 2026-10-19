@@ -170,7 +170,7 @@ class ContentOptimizer:
             direct_answer_text=(
                 f"provides direct Pakistani access to official {tool_name} subscriptions using local PKR payment methods. "
                 "Customers in Pakistan can pay via EasyPaisa, JazzCash, SadaPay, or Raast without needing an international credit card. "
-                "Account credentials or activation keys are delivered via verified WhatsApp support within 15 minutes."
+                "Account access or activation details are delivered via verified WhatsApp support after payment and availability confirmation."
             ),
             entity_name=f"AI Tool Gems Pakistan",
             target_intent="transactional_faq",

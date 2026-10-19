@@ -269,3 +269,49 @@
 
 
 ---
+
+### 🔍 Filter: Global Comparisons & Alternatives
+- **Dimension:** `Query`
+- **Filter Mode:** **Matches regex**
+- **RE2 Compatibility:** ✅ RE2 Validated
+- **Copy-Ready Regex:**
+```regex
+(?i)\b(vs|versus|alternative|alternatives|compare|comparison|workflow|for students|for freelancers|for developers|for creators)\b
+```
+- **What it Matches:** Queries comparing tools, seeking alternatives, or finding audience-specific workflows globally.
+- **What it Excludes:** Single-tool transactional queries without comparison intent.
+- **Example Matches:** `chatgpt vs claude for coding`, `midjourney alternatives`, `ai tools for students`, `canva vs figma comparison`
+- **Example Excluded:** `buy chatgpt plus`, `canva pro price`, `easypaisa login`
+- **Edge Cases & False Positives:** Matches both Pakistan-based and international comparison searches.
+- **How to Apply in GSC:**
+  1. Open Search Console -> Performance -> **Search results**.
+  2. Click **+ New** at the top filter bar and choose **Query**.
+  3. Select **Custom (regex)** -> **Matches regex**.
+  4. Paste the regex above and click **Apply**.
+- **Metrics to Inspect:** High organic CTR, informational impressions, and comparison guide engagement.
+
+
+---
+
+### 🔍 Filter: International Inquiries & Cross-Border Access
+- **Dimension:** `Query`
+- **Filter Mode:** **Matches regex**
+- **RE2 Compatibility:** ✅ RE2 Validated
+- **Copy-Ready Regex:**
+```regex
+(?i)\b(international|abroad|overseas|outside pakistan|wise|swift|inquiry|global|worldwide)\b
+```
+- **What it Matches:** Queries from diaspora or international customers seeking cross-border ordering and quotes.
+- **What it Excludes:** Domestic PKR and Pakistani wallet queries.
+- **Example Matches:** `buy ai tools outside pakistan`, `international inquiry ai subscriptions`, `pay ai tools via wise`
+- **Example Excluded:** `easypaisa ai tools`, `jazzcash canva pro`, `lahore ai tools`
+- **Edge Cases & False Positives:** Ensures tracking of manual WhatsApp inquiry volume from non-PK searchers.
+- **How to Apply in GSC:**
+  1. Open Search Console -> Performance -> **Search results**.
+  2. Click **+ New** at the top filter bar and choose **Query**.
+  3. Select **Custom (regex)** -> **Matches regex**.
+  4. Paste the regex above and click **Apply**.
+- **Metrics to Inspect:** Inquiry conversions and international traffic to policies.html#payments.
+
+
+---
