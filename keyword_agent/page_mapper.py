@@ -50,6 +50,7 @@ TOOL_ALIASES: Dict[str, List[str]] = {
     "chatgpt": ["chatgpt", "chat gpt", "gpt-4o", "gpt 4o", "gpt-4", "gpt 4", "openai", "chatgpt plus", "chatgpt pro"],
     "canva": ["canva", "canva pro"],
     "capcut": ["capcut", "cap cut", "capcut pro"],
+    "claude": ["claude", "claude ai", "claude 3.5", "claude 3.5 sonnet", "anthropic"],
     "linkedin": ["linkedin", "linked in", "linkedin premium", "sales navigator"],
     "nordvpn": ["nordvpn", "nord vpn"],
     "surfshark": ["surfshark", "surf shark"],
@@ -72,9 +73,11 @@ TOOL_ALIASES: Dict[str, List[str]] = {
     "netflix": ["netflix", "netflix 4k", "netflix premium"],
     "youtube": ["youtube premium", "yt premium"],
     "windows": ["windows 11", "windows key", "windows 10", "ms office", "office 365"],
-    "allinone": ["all in one", "all-in-one", "ai pack", "mega pack"],
+    "allinone": ["all in one", "all-in-one", "ai pack", "mega pack", "ai bundle", "tools bundle"],
     "notion": ["notion", "notion ai"],
     "grok": ["grok", "grok ai", "x ai"],
+    "gamma": ["gamma", "gamma app", "gamma ai"],
+    "n8n": ["n8n", "n8n automation", "n8n workflow"],
 }
 
 
@@ -160,13 +163,16 @@ class PageMapper:
         return " ".join(sorted(tokens))
 
     def _matches_tool(self, slug: str, kw_lower: str) -> bool:
-        """Checks if a query contains the tool slug or any of its documented aliases."""
-        if slug in kw_lower:
-            return True
-        aliases = TOOL_ALIASES.get(slug, [])
-        for alias in aliases:
-            # Word-boundary check for short aliases
-            if re.search(rf"\b{re.escape(alias)}\b", kw_lower):
+        """Checks if a query contains the tool slug or any of its documented aliases using word boundaries."""
+        kw_clean = re.sub(r"[\-_./'\"]+", " ", kw_lower)
+        all_terms = [slug] + TOOL_ALIASES.get(slug, [])
+        for term in all_terms:
+            term_clean = re.sub(r"[\-_./'\"]+", " ", term.lower())
+            if re.search(rf"\b{re.escape(term_clean)}\b", kw_clean):
+                return True
+            # For multi-word terms like 'chat gpt' or 'nord vpn', also check compact version in kw_clean
+            compact = re.sub(r"\s+", "", term_clean)
+            if len(compact) >= 4 and re.search(rf"\b{re.escape(compact)}\b", kw_clean):
                 return True
         return False
 
@@ -198,17 +204,38 @@ class PageMapper:
 
             # If it's a global comparison without a dedicated global guide, route to relevant primary tool page or research
             if not is_pk_query:
+                kw_clean = re.sub(r"[\-_./'\"]+", " ", kw_lower)
+                comparison_candidates: List[Tuple[str, str, str, int]] = []
                 for tool_slug in ["canva", "chatgpt", "cursor", "midjourney", "replit", "claude", "gemini", "figma", "leonardo"]:
                     if self._matches_tool(tool_slug, kw_lower) and f"https://aitoolgems.tech/tools/{tool_slug}/" in self.routes:
-                        return PageMappingResult(
-                            keyword=keyword,
-                            intent=intent,
-                            best_url=f"https://aitoolgems.tech/tools/{tool_slug}/",
-                            relative_path=f"tools/{tool_slug}/index.html",
-                            mapping_confidence=0.80,
-                            action_type="MONITOR",
-                            rational_justification=f"Global comparison query for '{tool_slug}' mapped to existing tool page for monitoring; dedicated global guide requires genuine content proposal.",
-                        )
+                        p = kw_clean.find(tool_slug)
+                        if p == -1:
+                            for alias in TOOL_ALIASES.get(tool_slug, []):
+                                a_clean = re.sub(r"[\-_./'\"]+", " ", alias.lower())
+                                p_a = kw_clean.find(a_clean)
+                                if p_a != -1 and (p == -1 or p_a < p):
+                                    p = p_a
+                        if p == -1:
+                            p = 9999
+                        url = f"https://aitoolgems.tech/tools/{tool_slug}/"
+                        rel_p = f"tools/{tool_slug}/index.html"
+                        comparison_candidates.append((tool_slug, url, rel_p, p))
+
+                if comparison_candidates:
+                    comparison_candidates.sort(key=lambda c: c[3])
+                    primary_slug, primary_url, primary_rel_p, _ = comparison_candidates[0]
+                    competing = [c[1] for c in comparison_candidates]
+                    slug_list_str = ", ".join(c[0] for c in comparison_candidates)
+                    return PageMappingResult(
+                        keyword=keyword,
+                        intent=intent,
+                        best_url=primary_url,
+                        relative_path=primary_rel_p,
+                        mapping_confidence=0.80,
+                        action_type="MONITOR",
+                        competing_urls=competing,
+                        rational_justification=f"Global comparison query ({slug_list_str}) mapped to '{primary_slug}' for monitoring; dedicated global guide requires genuine content proposal.",
+                    )
 
         # B) Alternative queries (alternative, alternatives): maps to alternative guides
         if any(w in kw_lower for w in ["alternative", "alternatives"]):
@@ -245,16 +272,29 @@ class PageMapper:
                             )
 
         # 3. Direct Tool Matches (Buy, price, rate, subscription, local payment, aliases)
-        matching_tools: List[Tuple[str, str, str]] = []
+        kw_clean = re.sub(r"[\-_./'\"]+", " ", kw_lower)
+        matching_tools: List[Tuple[str, str, str, int]] = []
         for url, route in self.routes.items():
             if route.page_type == "tool":
                 slug = Path(route.relative_path).parent.name
                 if self._matches_tool(slug, kw_lower):
-                    matching_tools.append((slug, url, route.relative_path))
+                    p = kw_clean.find(slug)
+                    if p == -1:
+                        for alias in TOOL_ALIASES.get(slug, []):
+                            a_clean = re.sub(r"[\-_./'\"]+", " ", alias.lower())
+                            p_a = kw_clean.find(a_clean)
+                            if p_a != -1 and (p == -1 or p_a < p):
+                                p = p_a
+                    if p == -1:
+                        p = 9999
+                    matching_tools.append((slug, url, route.relative_path, p))
+
+        # Sort matching tools by first appearance in search query
+        matching_tools.sort(key=lambda m: m[3])
 
         # Exactly one tool matched -> clean unambiguous routing
         if len(matching_tools) == 1:
-            slug, url, rel_p = matching_tools[0]
+            slug, url, rel_p, _ = matching_tools[0]
             return PageMappingResult(
                 keyword=keyword,
                 intent=intent,
@@ -268,7 +308,7 @@ class PageMapper:
         # Multiple tools matched without explicit comparison -> flag ambiguous intent for manual review
         if len(matching_tools) > 1:
             competing = [m[1] for m in matching_tools]
-            primary_slug, primary_url, primary_rel_p = matching_tools[0]
+            primary_slug, primary_url, primary_rel_p, _ = matching_tools[0]
             return PageMappingResult(
                 keyword=keyword,
                 intent=intent,
