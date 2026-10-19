@@ -1102,26 +1102,7 @@ if (addBundleBtn) {
    INITIALIZATION
    -------------------------------------------------------------------------- */
 renderCategories();
-function scheduleInitialProductRender() {
-  const render = () => {
-    if (productsRendered) return;
-    renderProducts();
-  };
-  const section = document.getElementById('products');
-  if (!section || !('IntersectionObserver' in window)) {
-    if ('requestIdleCallback' in window) requestIdleCallback(render, { timeout: 1200 });
-    else setTimeout(render, 300);
-    return;
-  }
-  const observer = new IntersectionObserver(entries => {
-    if (entries.some(entry => entry.isIntersecting)) {
-      observer.disconnect();
-      render();
-    }
-  }, { rootMargin: '0px' });
-  observer.observe(section);
-}
-scheduleInitialProductRender();
+renderProducts();
 updateCart();
 updateCompare();
 updateCompare();
@@ -1226,7 +1207,6 @@ function initBundleCalculator() {
   updateTotals();
 }
 
-if ('requestIdleCallback' in window) requestIdleCallback(() => initBundleCalculator(), { timeout: 3000 });
-else setTimeout(initBundleCalculator, 1500);
+initBundleCalculator();
 
 
