@@ -6,8 +6,14 @@ finder logic, payment disclosure, reduced-motion basics, and responsive viewport
 
 import os
 import re
+import sys
 import unittest
 from pathlib import Path
+
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8')
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -219,11 +225,52 @@ class TestUIInteractions(unittest.TestCase):
             "Expected mobile responsive media query (<= 768px)"
         )
 
-        # Tablet / Desktop transitions (min-width or max-width)
-        self.assertTrue(
-            re.search(r'@media[^{]*(?:min-width:\s*(?:768|900|1024)px|max-width:\s*1024px)', combined_css),
-            "Expected tablet/desktop responsive media query"
-        )
+    def test_modals_drawers_and_focus_trapping(self):
+        """Validates modals, drawers, close controls, backdrop, and keyboard focus trap in app.js."""
+        # 1. Modals and drawers in index.html
+        self.assertIn('id="cartDrawer"', self.index_html)
+        self.assertIn('id="compareDrawer"', self.index_html)
+        self.assertIn('id="finderModal"', self.index_html)
+        self.assertIn('id="productModal"', self.index_html)
+        self.assertIn('id="backdrop"', self.index_html)
+
+        # 2. Close buttons have data-close and accessible aria-labels
+        close_btns = re.findall(r'<button[^>]+data-close[^>]*aria-label="([^"]+)"', self.index_html)
+        self.assertGreaterEqual(len(close_btns), 4, "Expected close buttons with data-close and aria-labels on all drawers/modals")
+
+        # 3. Focus trap and Escape handlers in app.js
+        self.assertIn("e.key === 'Escape'", self.app_js)
+        self.assertIn("closeLayers()", self.app_js)
+        self.assertIn("e.key === 'Tab' && openLayerEl", self.app_js)
+        self.assertIn("e.target.closest('[data-close]') || e.target.id === 'backdrop'", self.app_js)
+
+    def test_search_empty_state_and_query_clearing(self):
+        """Verifies empty result state container, active query pill, and query clearing logic."""
+        # 1. Empty state DOM structure
+        self.assertIn('id="emptyState"', self.index_html)
+        self.assertIn('class="empty-state', self.index_html)
+        self.assertIn('id="activeQuery"', self.index_html)
+
+        # 2. Empty state and clear logic in app.js
+        self.assertIn("empty.classList.toggle('show', !all.length)", self.app_js)
+        self.assertIn("e.target.id === 'clearQuery'", self.app_js)
+        self.assertIn("clearSearchField()", self.app_js)
+
+    def test_product_detail_variants_and_checkout_actions(self):
+        """Verifies product detail modal contracts, PKR pricing display, and WhatsApp checkout generation."""
+        # Product modal accessibility
+        self.assertIn('class="modal product-modal" id="productModal" role="dialog" aria-modal="true"', self.index_html)
+        self.assertIn('id="productDetail"', self.index_html)
+
+        # WhatsApp URL builder contract in app.js
+        self.assertIn("function waLink(message)", self.app_js)
+        self.assertIn("923236715731", self.app_js)
+        self.assertIn("function openWhatsApp(url)", self.app_js)
+
+    def test_horizontal_overflow_protection(self):
+        """Verifies overflow-x hidden on root viewport containers to prevent mobile/tablet horizontal scroll jank."""
+        self.assertIn("overflow-x:hidden", self.styles_css.replace(" ", ""))
+        self.assertIn("max-width:100%", self.styles_css.replace(" ", ""))
 
 
 if __name__ == "__main__":

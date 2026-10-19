@@ -151,6 +151,19 @@ class TestLinkGraphCheckerFixtures(unittest.TestCase):
         wa_errors = [i for i in report.errors if i.category == "INVALID_WHATSAPP_ACTION"]
         self.assertEqual(len(wa_errors), 1, "Expected INVALID_WHATSAPP_ACTION for unverified number")
 
+    def test_fixture_detects_broken_local_asset(self):
+        files = {
+            "index.html": '<!doctype html><html><body><img src="assets/missing-banner.png" alt="Missing"></body></html>',
+            "sitemap.xml": '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://aitoolgems.tech/</loc></url></urlset>',
+            "app.js": 'const products = []; const STATIC_TOOL_PAGES = new Set([]);'
+        }
+        workspace = self.create_mock_workspace(files)
+        checker = LinkGraphChecker(workspace)
+        report = checker.run_all_checks()
+        asset_errors = [i for i in report.errors if i.category == "BROKEN_ASSET"]
+        self.assertEqual(len(asset_errors), 1, "Expected BROKEN_ASSET error for missing local image")
+        self.assertEqual(asset_errors[0].target, "assets/missing-banner.png")
+
 
 if __name__ == "__main__":
     unittest.main()

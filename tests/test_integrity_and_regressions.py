@@ -335,6 +335,9 @@ class TestIntegrityAndRegressions(unittest.TestCase):
                     self.assertNotIn('Fast 15-minute delivery', content, f"Found 'Fast 15-minute delivery' in {os.path.relpath(fpath, REPO_ROOT)}")
                     self.assertNotIn('Instant 2-minute activation', content, f"Found 'Instant 2-minute activation' in {os.path.relpath(fpath, REPO_ROOT)}")
                     self.assertNotIn('Prompt verified delivery', content, f"Found 'Prompt verified delivery' in {os.path.relpath(fpath, REPO_ROOT)}")
+                    self.assertNotIn('instant local activation', content.lower(), f"Found 'instant local activation' in {os.path.relpath(fpath, REPO_ROOT)}")
+                    self.assertNotIn('instant whatsapp fulfillment', content.lower(), f"Found 'instant whatsapp fulfillment' in {os.path.relpath(fpath, REPO_ROOT)}")
+                    self.assertNotIn('order instantly via whatsapp', content.lower(), f"Found 'order instantly via whatsapp' in {os.path.relpath(fpath, REPO_ROOT)}")
 
     def test_phase6a_linkedin_and_chatgpt_snippet_optimization(self):
         """Phase 6A: Verifies high-intent snippet optimization, truthful plan naming, and intent routing."""

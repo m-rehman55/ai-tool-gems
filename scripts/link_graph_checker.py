@@ -56,6 +56,7 @@ class LinkGraphReport:
     total_internal_links: int
     total_fragments_checked: int
     total_sitemap_urls: int
+    total_assets_checked: int = 0
     issues: List[Issue] = field(default_factory=list)
 
     @property
@@ -528,6 +529,38 @@ class LinkGraphChecker:
 
         return issues
 
+    def check_asset_sources(self) -> Tuple[List[Issue], int]:
+        """Validates all local asset src attributes (images, scripts, media)."""
+        issues: List[Issue] = []
+        assets_checked = 0
+
+        for rel_p, html in self.html_files.items():
+            current_dir = os.path.dirname(rel_p)
+            srcs = re.findall(r'src=["\']([^"\']+)["\']', html)
+
+            for src in srcs:
+                if src.startswith(('http://', 'https://', 'data:', '//', 'blob:')):
+                    continue
+
+                assets_checked += 1
+                clean_src = src.split('?')[0].split('#')[0]
+                if clean_src.startswith('/'):
+                    target_file = clean_src.lstrip('/')
+                else:
+                    target_file = os.path.normpath(os.path.join(current_dir, clean_src)).replace('\\', '/')
+
+                full_target = self.repo_root / target_file
+                if not full_target.exists():
+                    issues.append(Issue(
+                        category="BROKEN_ASSET",
+                        severity="ERROR",
+                        file=rel_p,
+                        message=f"Local asset source '{src}' does not exist (resolved path: {target_file})",
+                        target=src
+                    ))
+
+        return issues, assets_checked
+
     def run_all_checks(self) -> LinkGraphReport:
         """Executes full diagnostic suite and returns unified report."""
         dest_issues, links_cnt, frags_cnt = self.check_link_destinations_and_fragments()
@@ -536,6 +569,7 @@ class LinkGraphChecker:
         sitemap_issues, sitemap_cnt = self.check_sitemap_integrity()
         breadcrumb_issues = self.check_breadcrumb_hierarchy()
         button_issues = self.check_critical_actions_and_buttons()
+        asset_issues, assets_cnt = self.check_asset_sources()
 
         all_issues = (
             dest_issues +
@@ -543,7 +577,8 @@ class LinkGraphChecker:
             catalog_issues +
             sitemap_issues +
             breadcrumb_issues +
-            button_issues
+            button_issues +
+            asset_issues
         )
 
         return LinkGraphReport(
@@ -551,6 +586,7 @@ class LinkGraphChecker:
             total_internal_links=links_cnt,
             total_fragments_checked=frags_cnt,
             total_sitemap_urls=sitemap_cnt,
+            total_assets_checked=assets_cnt,
             issues=all_issues
         )
 
@@ -570,6 +606,7 @@ def main():
     print(f"Total HTML files scanned:       {report.total_html_files}")
     print(f"Total internal links checked:   {report.total_internal_links}")
     print(f"Total fragment anchors checked: {report.total_fragments_checked}")
+    print(f"Total local assets verified:    {report.total_assets_checked}")
     print(f"Total sitemap URLs verified:    {report.total_sitemap_urls}")
     print("------------------------------------------------------------")
 
