@@ -143,7 +143,7 @@ function loadStoredCart() {
 let state = {
   category: 'All',
   query: '',
-  limit: 20,
+  limit: products.length,
   cart: loadStoredCart(),
   compare: [],
   finder: { intent: '', minBudget: 0, maxBudget: Infinity }
@@ -218,8 +218,11 @@ function filteredProducts() {
 const STATIC_TOOL_PAGES = new Set([
   'adobe', 'canva', 'capcut', 'chatgpt', 'elevenlabs', 'figma', 'gamma', 'gemini',
   'leonardo', 'linkedin', 'lovable', 'n8n', 'netflix', 'nordvpn', 'notion',
-  'replit', 'surfshark', 'veo', 'windows', 'youtube'
+  'replit', 'surfshark', 'veo', 'windows', 'youtube',
+  'claude', 'midjourney', 'cursor', 'perplexity', 'deepseek', 'grok',
+  'runway', 'heygen', 'grammarly', 'quillbot', 'semrush', 'allinone'
 ]);
+
 
 function card(p) {
   const inCart = state.cart.includes(p.id);
@@ -241,8 +244,9 @@ function card(p) {
       <h3>${STATIC_TOOL_PAGES.has(p.id) ? `<a class="product-page-link" href="tools/${p.id}/">${p.name}</a>` : `<a class="product-page-link" href="#productModal" data-detail="${p.id}">${p.name}</a>`}</h3>
       <p class="product-desc">${p.description}</p>
       <div class="tags">
-        ${p.bestFor.map(t => `<span>${t}</span>`).join('')}
+        ${p.bestFor.map(t => `<button type="button" class="tag-chip" data-tag="${safeCatalogText(t)}" title="Filter by ${safeCatalogText(t)}">${safeCatalogText(t)}</button>`).join('')}
       </div>
+
       <div class="product-specs">
         <span><i></i>${p.duration}</span>
         <span>${p.access} Plan</span>
@@ -499,7 +503,7 @@ function showSuggestions(q) {
 
 function applySearch(q) {
   state.query = q;
-  state.limit = 20;
+  state.limit = products.length;
   const sInput = $('#heroSearch');
   if (sInput) sInput.value = q;
   const box = $('#suggestions');
@@ -843,19 +847,51 @@ document.addEventListener('click', e => {
     setTimeout(() => openProduct(detail.dataset.detail), 50);
     return;
   }
-  const filter = e.target.closest('[data-filter]');
-  if (filter) {
-    state.category = filter.dataset.filter;
-    state.limit = 20;
+  const tag = e.target.closest('[data-tag]');
+  if (tag) {
+    e.preventDefault();
+    state.query = tag.dataset.tag;
+    state.category = 'All';
+    const sInput = $('#heroSearch');
+    if (sInput) sInput.value = state.query;
+    const activeQ = $('#activeQuery');
+    if (activeQ) {
+      activeQ.innerHTML = `Filter tag: <b>"${safeCatalogText(state.query)}"</b> <button type="button" id="clearTagFilter" style="margin-left:8px;text-decoration:underline;cursor:pointer;background:none;border:none;color:inherit;font:inherit;">Clear</button>`;
+      activeQ.classList.add('show');
+    }
+    renderProducts();
+    const pSec = $('#products');
+    if (pSec) pSec.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  if (e.target.closest('#clearTagFilter')) {
+    e.preventDefault();
+    state.query = '';
+    state.category = 'All';
+    const sInput = $('#heroSearch');
+    if (sInput) sInput.value = '';
+    const activeQ = $('#activeQuery');
+    if (activeQ) {
+      activeQ.innerHTML = '';
+      activeQ.classList.remove('show');
+    }
     renderProducts();
     return;
   }
+  const filter = e.target.closest('[data-filter]');
+  if (filter) {
+    state.category = filter.dataset.filter;
+    state.limit = products.length;
+    renderProducts();
+    return;
+  }
+
   const cat = e.target.closest('[data-category]');
   if (cat) {
     state.category = cat.dataset.category;
     state.query = '';
     clearSearchField();
-    state.limit = 20;
+    state.limit = products.length;
     renderProducts();
     $('#products').scrollIntoView({ behavior: 'smooth' });
     return;

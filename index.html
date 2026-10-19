@@ -2122,14 +2122,14 @@
           <div class="hero-orbit-system" id="heroOrbitSystem">
             <div class="orbit-3d orbit-primary">
               <span class="orbit-circuit-ring"></span>
-              <span class="orbit-node n1" title="AI Video Core"></span>
-              <span class="orbit-node n2" title="Language Models"></span>
-              <span class="orbit-node n3" title="Design Synthesis"></span>
+              <span class="orbit-node n1" title="AI Video Core" aria-hidden="true"></span>
+              <span class="orbit-node n2" title="Language Models" aria-hidden="true"></span>
+              <span class="orbit-node n3" title="Design Synthesis" aria-hidden="true"></span>
               <span class="orbit-spark s1"></span>
             </div>
             <div class="orbit-3d orbit-secondary">
               <span class="orbit-circuit-ring"></span>
-              <span class="orbit-node n4" title="Neural Voice"></span>
+              <span class="orbit-node n4" title="Neural Voice" aria-hidden="true"></span>
               <span class="orbit-spark s2"></span>
             </div>
           </div>
@@ -2147,10 +2147,10 @@
             </div>
           </div>
 
-          <div class="float-card float-chatgpt" data-depth="45" data-detail="chatgpt" role="button" tabindex="0"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="chatgpt favicon"><span><small>AI assistant</small>ChatGPT Plus</span></div>
-          <div class="float-card float-canva" data-depth="55" data-detail="canva" role="button" tabindex="0"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=canva.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="canva favicon"><span><small>Design</small>Canva Pro</span></div>
-          <div class="float-card float-capcut" data-depth="40" data-detail="capcut" role="button" tabindex="0"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="capcut favicon"><span><small>Video editing</small>CapCut Pro</span></div>
-          <div class="float-card float-figma" data-depth="50" data-detail="figma" role="button" tabindex="0"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=figma.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="figma favicon"><span><small>UI / UX</small>Figma Pro</span></div>
+          <a href="tools/chatgpt/" class="float-card float-chatgpt" data-depth="45" title="Explore ChatGPT Plus" aria-label="Explore ChatGPT Plus"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="chatgpt favicon"><span><small>AI assistant</small>ChatGPT Plus</span></a>
+          <a href="tools/canva/" class="float-card float-canva" data-depth="55" title="Explore Canva Pro" aria-label="Explore Canva Pro"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=canva.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="canva favicon"><span><small>Design</small>Canva Pro</span></a>
+          <a href="tools/capcut/" class="float-card float-capcut" data-depth="40" title="Explore CapCut Pro" aria-label="Explore CapCut Pro"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="capcut favicon"><span><small>Video editing</small>CapCut Pro</span></a>
+          <a href="tools/figma/" class="float-card float-figma" data-depth="50" title="Explore Figma Pro" aria-label="Explore Figma Pro"><img class="natural-logo" src="https://www.google.com/s2/favicons?domain=figma.com&amp;sz=128" width="128" height="128" loading="lazy" decoding="async" alt="figma favicon"><span><small>UI / UX</small>Figma Pro</span></a>
         </div>
       </div>
     </section>
@@ -2221,7 +2221,7 @@
         <div class="filter-row" id="filterRow"><button class="filter-chip active" data-filter="All" aria-pressed="true">All</button><button class="filter-chip" data-filter="AI Assistants" aria-pressed="false">AI Assistants</button><button class="filter-chip" data-filter="AI Video" aria-pressed="false">AI Video</button><button class="filter-chip" data-filter="Design" aria-pressed="false">Design</button><button class="filter-chip" data-filter="Development" aria-pressed="false">Development</button><button class="filter-chip" data-filter="Writing &amp; SEO" aria-pressed="false">Writing &amp; SEO</button><button class="filter-chip" data-filter="Productivity" aria-pressed="false">Productivity</button><button class="filter-chip" data-filter="VPN &amp; Security" aria-pressed="false">VPN &amp; Security</button><button class="filter-chip" data-filter="Entertainment" aria-pressed="false">Entertainment</button></div>
         <div class="active-query" id="activeQuery"></div>
         <div class="product-grid" id="productGrid">
-<article class="product-card" data-id="chatgpt">
+  <article class="product-card" data-id="chatgpt">
     <div class="product-media">
       <span class="product-badge">Best Seller</span>
       <button class="compare-toggle " data-compare="chatgpt" aria-label="Compare ChatGPT Plus">
@@ -2237,7 +2237,7 @@
       <h3><a class="product-page-link" href="tools/chatgpt/">ChatGPT Plus</a></h3>
       <p class="product-desc">Advanced writing, research, coding, image and creative assistance in one workspace.</p>
       <div class="tags">
-        <span>Writing</span><span>Coding</span><span>Study</span>
+        <button type="button" class="tag-chip" data-tag="Writing">Writing</button><button type="button" class="tag-chip" data-tag="Coding">Coding</button><button type="button" class="tag-chip" data-tag="Study">Study</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Month</span>
@@ -2252,14 +2252,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="chatgpt"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="chatgpt">View details</button>
+        <a class="detail-button" href="tools/chatgpt/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="chatgpt" aria-label="Add ChatGPT Plus to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="gemini">
     <div class="product-media">
       <span class="product-badge">Best Value</span>
@@ -2276,7 +2275,7 @@
       <h3><a class="product-page-link" href="tools/gemini/">Gemini Pro</a></h3>
       <p class="product-desc">Google’s multimodal AI for research, documents, code and everyday workflows.</p>
       <div class="tags">
-        <span>Research</span><span>Study</span><span>Google</span>
+        <button type="button" class="tag-chip" data-tag="Research">Research</button><button type="button" class="tag-chip" data-tag="Study">Study</button><button type="button" class="tag-chip" data-tag="Google">Google</button>
       </div>
       <div class="product-specs">
         <span><i></i>18 Months</span>
@@ -2291,14 +2290,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="gemini"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="gemini">View details</button>
+        <a class="detail-button" href="tools/gemini/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="gemini" aria-label="Add Gemini Pro to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="veo">
     <div class="product-media">
       <span class="product-badge">Trending</span>
@@ -2315,7 +2313,7 @@
       <h3><a class="product-page-link" href="tools/veo/">Veo 3 Ultra</a></h3>
       <p class="product-desc">Generate cinematic AI video with realistic motion and audio-capable workflows.</p>
       <div class="tags">
-        <span>Video</span><span>Ads</span><span>Creators</span>
+        <button type="button" class="tag-chip" data-tag="Video">Video</button><button type="button" class="tag-chip" data-tag="Ads">Ads</button><button type="button" class="tag-chip" data-tag="Creators">Creators</button>
       </div>
       <div class="product-specs">
         <span><i></i>Unlimited</span>
@@ -2330,14 +2328,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="veo"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="veo">View details</button>
+        <a class="detail-button" href="tools/veo/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="veo" aria-label="Add Veo 3 Ultra to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="leonardo">
     <div class="product-media">
       <span class="product-badge">For Creators</span>
@@ -2354,7 +2351,7 @@
       <h3><a class="product-page-link" href="tools/leonardo/">Leonardo AI Essential</a></h3>
       <p class="product-desc">Create production-ready digital art, marketing visuals, assets and concepts.</p>
       <div class="tags">
-        <span>Images</span><span>Assets</span><span>Concepts</span>
+        <button type="button" class="tag-chip" data-tag="Images">Images</button><button type="button" class="tag-chip" data-tag="Assets">Assets</button><button type="button" class="tag-chip" data-tag="Concepts">Concepts</button>
       </div>
       <div class="product-specs">
         <span><i></i>8,500 Credits</span>
@@ -2369,14 +2366,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="leonardo"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="leonardo">View details</button>
+        <a class="detail-button" href="tools/leonardo/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="leonardo" aria-label="Add Leonardo AI Essential to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="elevenlabs">
     <div class="product-media">
       <span class="product-badge">Premium</span>
@@ -2393,7 +2389,7 @@
       <h3><a class="product-page-link" href="tools/elevenlabs/">ElevenLabs</a></h3>
       <p class="product-desc">Realistic AI speech, dubbing and permitted voice-cloning workflows for media.</p>
       <div class="tags">
-        <span>Voice</span><span>Dubbing</span><span>Audio</span>
+        <button type="button" class="tag-chip" data-tag="Voice">Voice</button><button type="button" class="tag-chip" data-tag="Dubbing">Dubbing</button><button type="button" class="tag-chip" data-tag="Audio">Audio</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Month</span>
@@ -2408,14 +2404,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="elevenlabs"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="elevenlabs">View details</button>
+        <a class="detail-button" href="tools/elevenlabs/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="elevenlabs" aria-label="Add ElevenLabs to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="canva">
     <div class="product-media">
       <span class="product-badge">Best Seller</span>
@@ -2432,7 +2427,7 @@
       <h3><a class="product-page-link" href="tools/canva/">Canva Pro Edu</a></h3>
       <p class="product-desc">Design social media posts, pitch decks, presentations and branded assets.</p>
       <div class="tags">
-        <span>Design</span><span>Social</span><span>Students</span>
+        <button type="button" class="tag-chip" data-tag="Design">Design</button><button type="button" class="tag-chip" data-tag="Social">Social</button><button type="button" class="tag-chip" data-tag="Students">Students</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Year</span>
@@ -2447,14 +2442,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="canva"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="canva">View details</button>
+        <a class="detail-button" href="tools/canva/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="canva" aria-label="Add Canva Pro Edu to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="figma">
     <div class="product-media">
       <span class="product-badge">Long Term</span>
@@ -2471,7 +2465,7 @@
       <h3><a class="product-page-link" href="tools/figma/">Figma Pro Private</a></h3>
       <p class="product-desc">Professional interface design, prototyping and design system workspace.</p>
       <div class="tags">
-        <span>UI/UX</span><span>Teams</span><span>Web</span>
+        <button type="button" class="tag-chip" data-tag="UI/UX">UI/UX</button><button type="button" class="tag-chip" data-tag="Teams">Teams</button><button type="button" class="tag-chip" data-tag="Web">Web</button>
       </div>
       <div class="product-specs">
         <span><i></i>2 Years</span>
@@ -2486,14 +2480,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="figma"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="figma">View details</button>
+        <a class="detail-button" href="tools/figma/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="figma" aria-label="Add Figma Pro Private to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="capcut">
     <div class="product-media">
       <span class="product-badge">Popular</span>
@@ -2510,7 +2503,7 @@
       <h3><a class="product-page-link" href="tools/capcut/">CapCut Pro</a></h3>
       <p class="product-desc">Fast, intuitive editing suite for viral TikToks, Instagram Reels, and YouTube Shorts.</p>
       <div class="tags">
-        <span>Reels</span><span>Shorts</span><span>Editing</span>
+        <button type="button" class="tag-chip" data-tag="Reels">Reels</button><button type="button" class="tag-chip" data-tag="Shorts">Shorts</button><button type="button" class="tag-chip" data-tag="Editing">Editing</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Month</span>
@@ -2525,14 +2518,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="capcut"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="capcut">View details</button>
+        <a class="detail-button" href="tools/capcut/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="capcut" aria-label="Add CapCut Pro to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="adobe">
     <div class="product-media">
       <span class="product-badge">Pro Choice</span>
@@ -2549,7 +2541,7 @@
       <h3><a class="product-page-link" href="tools/adobe/">Adobe Creative Cloud</a></h3>
       <p class="product-desc">Complete suite of Photoshop, Illustrator, Premiere Pro, After Effects and Firefly.</p>
       <div class="tags">
-        <span>Creative</span><span>Photo</span><span>Video</span>
+        <button type="button" class="tag-chip" data-tag="Creative">Creative</button><button type="button" class="tag-chip" data-tag="Photo">Photo</button><button type="button" class="tag-chip" data-tag="Video">Video</button>
       </div>
       <div class="product-specs">
         <span><i></i>2 Months</span>
@@ -2564,14 +2556,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="adobe"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="adobe">View details</button>
+        <a class="detail-button" href="tools/adobe/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="adobe" aria-label="Add Adobe Creative Cloud to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="lovable">
     <div class="product-media">
       <span class="product-badge">For Builders</span>
@@ -2588,7 +2579,7 @@
       <h3><a class="product-page-link" href="tools/lovable/">Lovable Pro</a></h3>
       <p class="product-desc">Build, design and ship full-stack web applications and MVPs with natural language.</p>
       <div class="tags">
-        <span>Apps</span><span>Web</span><span>MVPs</span>
+        <button type="button" class="tag-chip" data-tag="Apps">Apps</button><button type="button" class="tag-chip" data-tag="Web">Web</button><button type="button" class="tag-chip" data-tag="MVPs">MVPs</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Month</span>
@@ -2603,14 +2594,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="lovable"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="lovable">View details</button>
+        <a class="detail-button" href="tools/lovable/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="lovable" aria-label="Add Lovable Pro to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="gamma">
     <div class="product-media">
       <span class="product-badge">Annual</span>
@@ -2627,7 +2617,7 @@
       <h3><a class="product-page-link" href="tools/gamma/">Gamma Pro</a></h3>
       <p class="product-desc">Turn raw ideas, briefs and outlines into interactive presentations, decks and docs.</p>
       <div class="tags">
-        <span>Slides</span><span>Pitching</span><span>Docs</span>
+        <button type="button" class="tag-chip" data-tag="Slides">Slides</button><button type="button" class="tag-chip" data-tag="Pitching">Pitching</button><button type="button" class="tag-chip" data-tag="Docs">Docs</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Year</span>
@@ -2642,14 +2632,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="gamma"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="gamma">View details</button>
+        <a class="detail-button" href="tools/gamma/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="gamma" aria-label="Add Gamma Pro to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="replit">
     <div class="product-media">
       <span class="product-badge">Developer Pick</span>
@@ -2666,7 +2655,7 @@
       <h3><a class="product-page-link" href="tools/replit/">Replit Core</a></h3>
       <p class="product-desc">Code, collaborate, host and scale web applications with autonomous AI agents.</p>
       <div class="tags">
-        <span>Coding</span><span>Apps</span><span>Deploy</span>
+        <button type="button" class="tag-chip" data-tag="Coding">Coding</button><button type="button" class="tag-chip" data-tag="Apps">Apps</button><button type="button" class="tag-chip" data-tag="Deploy">Deploy</button>
       </div>
       <div class="product-specs">
         <span><i></i>$40 Credits</span>
@@ -2681,14 +2670,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="replit"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="replit">View details</button>
+        <a class="detail-button" href="tools/replit/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="replit" aria-label="Add Replit Core to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="n8n">
     <div class="product-media">
       <span class="product-badge">Automation</span>
@@ -2705,7 +2693,7 @@
       <h3><a class="product-page-link" href="tools/n8n/">n8n Starter</a></h3>
       <p class="product-desc">Self-hosted or cloud visual workflow automation for AI agents, APIs and business logic.</p>
       <div class="tags">
-        <span>Workflow</span><span>Agents</span><span>Teams</span>
+        <button type="button" class="tag-chip" data-tag="Workflow">Workflow</button><button type="button" class="tag-chip" data-tag="Agents">Agents</button><button type="button" class="tag-chip" data-tag="Teams">Teams</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Year</span>
@@ -2720,14 +2708,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="n8n"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="n8n">View details</button>
+        <a class="detail-button" href="tools/n8n/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="n8n" aria-label="Add n8n Starter to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="notion">
     <div class="product-media">
       <span class="product-badge">Team Pick</span>
@@ -2744,7 +2731,7 @@
       <h3><a class="product-page-link" href="tools/notion/">Notion Business</a></h3>
       <p class="product-desc">All-in-one connected workspace for team knowledge, project boards, and AI summaries.</p>
       <div class="tags">
-        <span>Docs</span><span>Projects</span><span>Teams</span>
+        <button type="button" class="tag-chip" data-tag="Docs">Docs</button><button type="button" class="tag-chip" data-tag="Projects">Projects</button><button type="button" class="tag-chip" data-tag="Teams">Teams</button>
       </div>
       <div class="product-specs">
         <span><i></i>3 Months</span>
@@ -2759,14 +2746,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="notion"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="notion">View details</button>
+        <a class="detail-button" href="tools/notion/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="notion" aria-label="Add Notion Business to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="nordvpn">
     <div class="product-media">
       <span class="product-badge">Secure</span>
@@ -2783,7 +2769,7 @@
       <h3><a class="product-page-link" href="tools/nordvpn/">NordVPN</a></h3>
       <p class="product-desc">Military-grade encrypted browsing, high-speed servers, and threat protection.</p>
       <div class="tags">
-        <span>Privacy</span><span>Travel</span><span>Streaming</span>
+        <button type="button" class="tag-chip" data-tag="Privacy">Privacy</button><button type="button" class="tag-chip" data-tag="Travel">Travel</button><button type="button" class="tag-chip" data-tag="Streaming">Streaming</button>
       </div>
       <div class="product-specs">
         <span><i></i>3 Months</span>
@@ -2798,14 +2784,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="nordvpn"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="nordvpn">View details</button>
+        <a class="detail-button" href="tools/nordvpn/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="nordvpn" aria-label="Add NordVPN to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="surfshark">
     <div class="product-media">
       <span class="product-badge">Best Value</span>
@@ -2822,7 +2807,7 @@
       <h3><a class="product-page-link" href="tools/surfshark/">Surfshark VPN</a></h3>
       <p class="product-desc">Reliable everyday privacy, geo-unblocking, and unlimited device connections.</p>
       <div class="tags">
-        <span>Privacy</span><span>Devices</span><span>Travel</span>
+        <button type="button" class="tag-chip" data-tag="Privacy">Privacy</button><button type="button" class="tag-chip" data-tag="Devices">Devices</button><button type="button" class="tag-chip" data-tag="Travel">Travel</button>
       </div>
       <div class="product-specs">
         <span><i></i>2 Months</span>
@@ -2837,14 +2822,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="surfshark"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="surfshark">View details</button>
+        <a class="detail-button" href="tools/surfshark/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="surfshark" aria-label="Add Surfshark VPN to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="youtube">
     <div class="product-media">
       <span class="product-badge">Popular</span>
@@ -2861,7 +2845,7 @@
       <h3><a class="product-page-link" href="tools/youtube/">YouTube Premium</a></h3>
       <p class="product-desc">Ad-free videos, background play on mobile, offline downloads, and YouTube Music.</p>
       <div class="tags">
-        <span>Music</span><span>Video</span><span>Mobile</span>
+        <button type="button" class="tag-chip" data-tag="Music">Music</button><button type="button" class="tag-chip" data-tag="Video">Video</button><button type="button" class="tag-chip" data-tag="Mobile">Mobile</button>
       </div>
       <div class="product-specs">
         <span><i></i>3 Months</span>
@@ -2876,14 +2860,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="youtube"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="youtube">View details</button>
+        <a class="detail-button" href="tools/youtube/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="youtube" aria-label="Add YouTube Premium to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="netflix">
     <div class="product-media">
       <span class="product-badge">Quick Delivery</span>
@@ -2900,7 +2883,7 @@
       <h3><a class="product-page-link" href="tools/netflix/">Netflix Premium 4K</a></h3>
       <p class="product-desc">Stream global movies and series in crisp 4K Ultra HD with spatial audio.</p>
       <div class="tags">
-        <span>Movies</span><span>Series</span><span>4K</span>
+        <button type="button" class="tag-chip" data-tag="Movies">Movies</button><button type="button" class="tag-chip" data-tag="Series">Series</button><button type="button" class="tag-chip" data-tag="4K">4K</button>
       </div>
       <div class="product-specs">
         <span><i></i>1 Month</span>
@@ -2915,14 +2898,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="netflix"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="netflix">View details</button>
+        <a class="detail-button" href="tools/netflix/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="netflix" aria-label="Add Netflix Premium 4K to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="linkedin">
     <div class="product-media">
       <span class="product-badge">Career</span>
@@ -2939,7 +2921,7 @@
       <h3><a class="product-page-link" href="tools/linkedin/">LinkedIn Premium</a></h3>
       <p class="product-desc">Career insights, applicant tools and professional learning features.</p>
       <div class="tags">
-        <span>Jobs</span><span>Learning</span><span>Sales</span>
+        <button type="button" class="tag-chip" data-tag="Jobs">Jobs</button><button type="button" class="tag-chip" data-tag="Learning">Learning</button><button type="button" class="tag-chip" data-tag="Sales">Sales</button>
       </div>
       <div class="product-specs">
         <span><i></i>2 Months</span>
@@ -2954,14 +2936,13 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="linkedin"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="linkedin">View details</button>
+        <a class="detail-button" href="tools/linkedin/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="linkedin" aria-label="Add LinkedIn Premium to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
     </div>
   </article>
-
   <article class="product-card" data-id="windows">
     <div class="product-media">
       <span class="product-badge">License Key</span>
@@ -2978,7 +2959,7 @@
       <h3><a class="product-page-link" href="tools/windows/">Windows 11 Pro Key</a></h3>
       <p class="product-desc">Digital license key for Windows 11 Pro activation, subject to confirmed terms.</p>
       <div class="tags">
-        <span>PC</span><span>Work</span><span>Security</span>
+        <button type="button" class="tag-chip" data-tag="PC">PC</button><button type="button" class="tag-chip" data-tag="Work">Work</button><button type="button" class="tag-chip" data-tag="Security">Security</button>
       </div>
       <div class="product-specs">
         <span><i></i>Lifetime</span>
@@ -2993,8 +2974,464 @@
       </div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="windows"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
-        <button class="detail-button" data-detail="windows">View details</button>
+        <a class="detail-button" href="tools/windows/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
         <button class="add-button " data-add="windows" aria-label="Add Windows 11 Pro Key to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="claude">
+    <div class="product-media">
+      <span class="product-badge">Best Seller</span>
+      <button class="compare-toggle " data-compare="claude" aria-label="Compare Claude Pro (3.5 Sonnet)">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=anthropic.com&sz=128" width="128" height="128" loading="lazy" alt="Official Claude Pro (3.5 Sonnet) logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>AI Assistants</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/claude/">Claude Pro (3.5 Sonnet)</a></h3>
+      <p class="product-desc">Anthropic’s flagship AI for coding, deep analysis, technical writing, and live Artifacts rendering.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Coding">Coding</button><button type="button" class="tag-chip" data-tag="Artifacts">Artifacts</button><button type="button" class="tag-chip" data-tag="Logic">Logic</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 3,000</small>
+          <strong>Rs. 2,200</strong>
+        </div>
+        <span class="saving">Save 27%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="claude"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/claude/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="claude" aria-label="Add Claude Pro (3.5 Sonnet) to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="midjourney">
+    <div class="product-media">
+      <span class="product-badge">Trending</span>
+      <button class="compare-toggle " data-compare="midjourney" aria-label="Compare Midjourney v6.1 Pro">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=midjourney.com&sz=128" width="128" height="128" loading="lazy" alt="Official Midjourney v6.1 Pro logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>Design</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/midjourney/">Midjourney v6.1 Pro</a></h3>
+      <p class="product-desc">Industry-standard ultra-photorealistic AI image and art generation via Discord and Web portal.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Photorealism">Photorealism</button><button type="button" class="tag-chip" data-tag="Art">Art</button><button type="button" class="tag-chip" data-tag="Creatives">Creatives</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private / Discord Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 3,500</small>
+          <strong>Rs. 2,400</strong>
+        </div>
+        <span class="saving">Save 31%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="midjourney"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/midjourney/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="midjourney" aria-label="Add Midjourney v6.1 Pro to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="cursor">
+    <div class="product-media">
+      <span class="product-badge">Developer Pick</span>
+      <button class="compare-toggle " data-compare="cursor" aria-label="Compare Cursor AI Pro">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=cursor.com&sz=128" width="128" height="128" loading="lazy" alt="Official Cursor AI Pro logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>Development</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/cursor/">Cursor AI Pro</a></h3>
+      <p class="product-desc">The AI-first code editor built on VS Code with multi-file Composer, Claude 3.5 Sonnet & GPT-4o.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Coding">Coding</button><button type="button" class="tag-chip" data-tag="Engineers">Engineers</button><button type="button" class="tag-chip" data-tag="Fullstack">Fullstack</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 3,800</small>
+          <strong>Rs. 2,800</strong>
+        </div>
+        <span class="saving">Save 26%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="cursor"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/cursor/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="cursor" aria-label="Add Cursor AI Pro to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="perplexity">
+    <div class="product-media">
+      <span class="product-badge">Top Research</span>
+      <button class="compare-toggle " data-compare="perplexity" aria-label="Compare Perplexity Pro">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128" width="128" height="128" loading="lazy" alt="Official Perplexity Pro logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>AI Assistants</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/perplexity/">Perplexity Pro</a></h3>
+      <p class="product-desc">Real-time AI research engine with direct source citations, PDF deep search, and multi-model access.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Research">Research</button><button type="button" class="tag-chip" data-tag="Students">Students</button><button type="button" class="tag-chip" data-tag="Fact-Checking">Fact-Checking</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 2,200</small>
+          <strong>Rs. 1,400</strong>
+        </div>
+        <span class="saving">Save 36%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="perplexity"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/perplexity/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="perplexity" aria-label="Add Perplexity Pro to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="deepseek">
+    <div class="product-media">
+      <span class="product-badge">Viral AI</span>
+      <button class="compare-toggle " data-compare="deepseek" aria-label="Compare DeepSeek Unlimited">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=deepseek.com&sz=128" width="128" height="128" loading="lazy" alt="Official DeepSeek Unlimited logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>AI Assistants</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/deepseek/">DeepSeek Unlimited</a></h3>
+      <p class="product-desc">Cutting-edge DeepSeek R1 & V3 reasoning engine with chain-of-thought logic and instant math solving.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Math">Math</button><button type="button" class="tag-chip" data-tag="Logic">Logic</button><button type="button" class="tag-chip" data-tag="Reasoning">Reasoning</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Portal Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 1,800</small>
+          <strong>Rs. 1,100</strong>
+        </div>
+        <span class="saving">Save 39%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="deepseek"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/deepseek/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="deepseek" aria-label="Add DeepSeek Unlimited to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="grok">
+    <div class="product-media">
+      <span class="product-badge">X Premium</span>
+      <button class="compare-toggle " data-compare="grok" aria-label="Compare SuperGrok / Grok 2">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=x.ai&sz=128" width="128" height="128" loading="lazy" alt="Official SuperGrok / Grok 2 logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>AI Assistants</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/grok/">SuperGrok / Grok 2</a></h3>
+      <p class="product-desc">X Premium Grok 2 with real-time Twitter/X intelligence and uncensored Flux image generation.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Realtime X">Realtime X</button><button type="button" class="tag-chip" data-tag="Flux Art">Flux Art</button><button type="button" class="tag-chip" data-tag="News">News</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 2,600</small>
+          <strong>Rs. 1,800</strong>
+        </div>
+        <span class="saving">Save 31%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="grok"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/grok/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="grok" aria-label="Add SuperGrok / Grok 2 to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="runway">
+    <div class="product-media">
+      <span class="product-badge">Hollywood AI</span>
+      <button class="compare-toggle " data-compare="runway" aria-label="Compare Runway ML Gen-3 Pro">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=runwayml.com&sz=128" width="128" height="128" loading="lazy" alt="Official Runway ML Gen-3 Pro logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>AI Video</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/runway/">Runway ML Gen-3 Pro</a></h3>
+      <p class="product-desc">Hollywood-grade cinematic video generator with Gen-3 Alpha, Motion Brush, and multi-camera directing.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="VFX">VFX</button><button type="button" class="tag-chip" data-tag="Cinematics">Cinematics</button><button type="button" class="tag-chip" data-tag="Video Ads">Video Ads</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 4,800</small>
+          <strong>Rs. 3,500</strong>
+        </div>
+        <span class="saving">Save 27%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="runway"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/runway/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="runway" aria-label="Add Runway ML Gen-3 Pro to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="heygen">
+    <div class="product-media">
+      <span class="product-badge">Video Avatars</span>
+      <button class="compare-toggle " data-compare="heygen" aria-label="Compare HeyGen AI Avatar Pro">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=heygen.com&sz=128" width="128" height="128" loading="lazy" alt="Official HeyGen AI Avatar Pro logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>AI Video</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/heygen/">HeyGen AI Avatar Pro</a></h3>
+      <p class="product-desc">AI video creation platform with hyper-realistic human avatars, lip-syncing, and multi-language voiceovers.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Marketing">Marketing</button><button type="button" class="tag-chip" data-tag="TikTok Ads">TikTok Ads</button><button type="button" class="tag-chip" data-tag="Spokesperson">Spokesperson</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 5,800</small>
+          <strong>Rs. 4,200</strong>
+        </div>
+        <span class="saving">Save 28%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="heygen"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/heygen/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="heygen" aria-label="Add HeyGen AI Avatar Pro to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="grammarly">
+    <div class="product-media">
+      <span class="product-badge">Student Pick</span>
+      <button class="compare-toggle " data-compare="grammarly" aria-label="Compare Grammarly Premium">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=grammarly.com&sz=128" width="128" height="128" loading="lazy" alt="Official Grammarly Premium logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>Writing & SEO</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/grammarly/">Grammarly Premium</a></h3>
+      <p class="product-desc">AI writing assistant for error-free essays, grammar correction, vocabulary enhancement, and tone refinement.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Essays">Essays</button><button type="button" class="tag-chip" data-tag="Grammar">Grammar</button><button type="button" class="tag-chip" data-tag="Proposals">Proposals</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private / Shared Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 1,200</small>
+          <strong>Rs. 750</strong>
+        </div>
+        <span class="saving">Save 38%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="grammarly"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/grammarly/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="grammarly" aria-label="Add Grammarly Premium to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="quillbot">
+    <div class="product-media">
+      <span class="product-badge">Lowest Price</span>
+      <button class="compare-toggle " data-compare="quillbot" aria-label="Compare QuillBot Premium">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=quillbot.com&sz=128" width="128" height="128" loading="lazy" alt="Official QuillBot Premium logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>Writing & SEO</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/quillbot/">QuillBot Premium</a></h3>
+      <p class="product-desc">Fast AI paraphraser, summarizer, citation generator, and grammar checker for academic writing.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="Paraphrasing">Paraphrasing</button><button type="button" class="tag-chip" data-tag="Students">Students</button><button type="button" class="tag-chip" data-tag="Assignments">Assignments</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private / Shared Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 800</small>
+          <strong>Rs. 450</strong>
+        </div>
+        <span class="saving">Save 44%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="quillbot"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/quillbot/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="quillbot" aria-label="Add QuillBot Premium to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="semrush">
+    <div class="product-media">
+      <span class="product-badge">SEO Suite</span>
+      <button class="compare-toggle " data-compare="semrush" aria-label="Compare SEMrush Pro">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=semrush.com&sz=128" width="128" height="128" loading="lazy" alt="Official SEMrush Pro logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>Writing & SEO</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/semrush/">SEMrush Pro</a></h3>
+      <p class="product-desc">All-in-one SEO and digital marketing suite for keyword research, competitor analysis, and site audit.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="SEO">SEO</button><button type="button" class="tag-chip" data-tag="Keywords">Keywords</button><button type="button" class="tag-chip" data-tag="Agencies">Agencies</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Shared Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 2,500</small>
+          <strong>Rs. 1,500</strong>
+        </div>
+        <span class="saving">Save 40%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="semrush"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/semrush/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="semrush" aria-label="Add SEMrush Pro to cart" aria-pressed="false">
+          <svg><use href="#i-plus"></use></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+  <article class="product-card" data-id="allinone">
+    <div class="product-media">
+      <span class="product-badge">Best Value Deal</span>
+      <button class="compare-toggle " data-compare="allinone" aria-label="Compare All-in-One Mega AI Portal">
+        <svg><use href="#i-plus"></use></svg>
+      </button>
+      <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128" width="128" height="128" loading="lazy" alt="Official All-in-One Mega AI Portal logo" decoding="async" referrerpolicy="no-referrer">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span>AI Assistants</span>
+        <span class="rating">PKR pricing</span>
+      </div>
+      <h3><a class="product-page-link" href="tools/allinone/">All-in-One Mega AI Portal</a></h3>
+      <p class="product-desc">Unified AI workspace combining Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Perplexity Pro & DeepSeek in 1 login.</p>
+      <div class="tags">
+        <button type="button" class="tag-chip" data-tag="All Models">All Models</button><button type="button" class="tag-chip" data-tag="Full Power">Full Power</button><button type="button" class="tag-chip" data-tag="Cost Saver">Cost Saver</button>
+      </div>
+      <div class="product-specs">
+        <span><i></i>1 Month</span>
+        <span>Private Portal (LibreChat) Plan</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          <small>Rs. 4,500</small>
+          <strong>Rs. 1,999</strong>
+        </div>
+        <span class="saving">Save 56%</span>
+      </div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="allinone"><svg><use href="#i-whatsapp"></use></svg> Buy now</button>
+        <a class="detail-button" href="tools/allinone/" style="display:grid;place-items:center;text-decoration:none;">View details</a>
+        <button class="add-button " data-add="allinone" aria-label="Add All-in-One Mega AI Portal to cart" aria-pressed="false">
           <svg><use href="#i-plus"></use></svg>
         </button>
       </div>
@@ -3003,24 +3440,24 @@
         </div>
         <nav class="catalog-directory" aria-label="All product pages">
           <strong>Browse individual product pages:</strong>
-          <a href="tools/chatgpt/">ChatGPT Plus</a><a href="tools/gemini/">Gemini Pro</a><a href="tools/veo/">Veo 3 Ultra</a><a href="tools/leonardo/">Leonardo AI</a><a href="tools/elevenlabs/">ElevenLabs</a><a href="tools/canva/">Canva Pro</a><a href="tools/figma/">Figma Pro</a><a href="tools/capcut/">CapCut Pro</a><a href="tools/adobe/">Adobe Creative Cloud</a><a href="tools/lovable/">Lovable Pro</a><a href="tools/gamma/">Gamma Pro</a><a href="tools/replit/">Replit Core</a><a href="tools/n8n/">n8n</a><a href="tools/notion/">Notion Business</a><a href="tools/nordvpn/">NordVPN</a><a href="tools/surfshark/">Surfshark VPN</a><a href="tools/youtube/">YouTube Premium</a><a href="tools/netflix/">Netflix Premium</a><a href="tools/linkedin/">LinkedIn Premium</a><a href="tools/windows/">Windows 11 Pro</a>
+          <a href="tools/chatgpt/">ChatGPT Plus</a><a href="tools/gemini/">Gemini Pro</a><a href="tools/veo/">Veo 3 Ultra</a><a href="tools/leonardo/">Leonardo AI Essential</a><a href="tools/elevenlabs/">ElevenLabs</a><a href="tools/canva/">Canva Pro Edu</a><a href="tools/figma/">Figma Pro Private</a><a href="tools/capcut/">CapCut Pro</a><a href="tools/adobe/">Adobe Creative Cloud</a><a href="tools/lovable/">Lovable Pro</a><a href="tools/gamma/">Gamma Pro</a><a href="tools/replit/">Replit Core</a><a href="tools/n8n/">n8n Starter</a><a href="tools/notion/">Notion Business</a><a href="tools/nordvpn/">NordVPN</a><a href="tools/surfshark/">Surfshark VPN</a><a href="tools/youtube/">YouTube Premium</a><a href="tools/netflix/">Netflix Premium 4K</a><a href="tools/linkedin/">LinkedIn Premium</a><a href="tools/windows/">Windows 11 Pro Key</a><a href="tools/claude/">Claude Pro (3.5 Sonnet)</a><a href="tools/midjourney/">Midjourney v6.1 Pro</a><a href="tools/cursor/">Cursor AI Pro</a><a href="tools/perplexity/">Perplexity Pro</a><a href="tools/deepseek/">DeepSeek Unlimited</a><a href="tools/grok/">SuperGrok / Grok 2</a><a href="tools/runway/">Runway ML Gen-3 Pro</a><a href="tools/heygen/">HeyGen AI Avatar Pro</a><a href="tools/grammarly/">Grammarly Premium</a><a href="tools/quillbot/">QuillBot Premium</a><a href="tools/semrush/">SEMrush Pro</a><a href="tools/allinone/">All-in-One Mega AI Portal</a>
         </nav>
         <details class="price-directory">
           <summary>Quick PKR price table — popular AI tools &amp; subscriptions</summary>
           <div class="price-table-wrap"><table><caption>AI tools and digital subscription prices in Pakistan</caption><thead><tr><th scope="col">Tool</th><th scope="col">Category</th><th scope="col">Duration</th><th scope="col">Access</th><th scope="col">Price</th></tr></thead><tbody>
             <tr><th scope="row"><a href="tools/chatgpt/">ChatGPT Plus</a></th><td>AI Assistants</td><td>1 Month</td><td>Private</td><td>Rs. 2,300</td></tr>
-            <tr><th scope="row"><a href="#products">Claude Pro (3.5 Sonnet)</a></th><td>AI Assistants</td><td>1 Month</td><td>Private</td><td>Rs. 2,200</td></tr>
+            <tr><th scope="row"><a href="tools/claude/">Claude Pro (3.5 Sonnet)</a></th><td>AI Assistants</td><td>1 Month</td><td>Private</td><td>Rs. 2,200</td></tr>
             <tr><th scope="row"><a href="#products">All-in-One AI Bundle</a></th><td>AI Assistants</td><td>1 Month</td><td>Private Workspace</td><td>Rs. 1,999</td></tr>
-            <tr><th scope="row"><a href="#products">Cursor AI Pro</a></th><td>Development</td><td>1 Month</td><td>Private</td><td>Rs. 2,800</td></tr>
-            <tr><th scope="row"><a href="#products">Perplexity Pro</a></th><td>AI Assistants</td><td>1 Month</td><td>Private</td><td>Rs. 1,400</td></tr>
-            <tr><th scope="row"><a href="#products">DeepSeek Unlimited</a></th><td>AI Assistants</td><td>1 Month</td><td>Private Portal</td><td>Rs. 1,100</td></tr>
-            <tr><th scope="row"><a href="#products">SuperGrok / Grok 2</a></th><td>AI Assistants</td><td>1 Month</td><td>Private</td><td>Rs. 1,800</td></tr>
-            <tr><th scope="row"><a href="#products">Midjourney v6.1 Pro</a></th><td>Design</td><td>1 Month</td><td>Private</td><td>Rs. 2,400</td></tr>
-            <tr><th scope="row"><a href="#products">Runway ML Gen-3 Pro</a></th><td>AI Video</td><td>1 Month</td><td>Private</td><td>Rs. 3,500</td></tr>
-            <tr><th scope="row"><a href="#products">HeyGen AI Avatar Pro</a></th><td>AI Video</td><td>1 Month</td><td>Private</td><td>Rs. 4,200</td></tr>
-            <tr><th scope="row"><a href="#products">Grammarly Premium</a></th><td>Writing &amp; SEO</td><td>1 Month</td><td>Private</td><td>Rs. 750</td></tr>
-            <tr><th scope="row"><a href="#products">QuillBot Premium</a></th><td>Writing &amp; SEO</td><td>1 Month</td><td>Private</td><td>Rs. 450</td></tr>
-            <tr><th scope="row"><a href="#products">SEMrush Pro</a></th><td>Writing &amp; SEO</td><td>1 Month</td><td>Shared</td><td>Rs. 1,500</td></tr>
+            <tr><th scope="row"><a href="tools/cursor/">Cursor AI Pro</a></th><td>Development</td><td>1 Month</td><td>Private</td><td>Rs. 2,800</td></tr>
+            <tr><th scope="row"><a href="tools/perplexity/">Perplexity Pro</a></th><td>AI Assistants</td><td>1 Month</td><td>Private</td><td>Rs. 1,400</td></tr>
+            <tr><th scope="row"><a href="tools/deepseek/">DeepSeek Unlimited</a></th><td>AI Assistants</td><td>1 Month</td><td>Private Portal</td><td>Rs. 1,100</td></tr>
+            <tr><th scope="row"><a href="tools/grok/">SuperGrok / Grok 2</a></th><td>AI Assistants</td><td>1 Month</td><td>Private</td><td>Rs. 1,800</td></tr>
+            <tr><th scope="row"><a href="tools/midjourney/">Midjourney v6.1 Pro</a></th><td>Design</td><td>1 Month</td><td>Private</td><td>Rs. 2,400</td></tr>
+            <tr><th scope="row"><a href="tools/runway/">Runway ML Gen-3 Pro</a></th><td>AI Video</td><td>1 Month</td><td>Private</td><td>Rs. 3,500</td></tr>
+            <tr><th scope="row"><a href="tools/heygen/">HeyGen AI Avatar Pro</a></th><td>AI Video</td><td>1 Month</td><td>Private</td><td>Rs. 4,200</td></tr>
+            <tr><th scope="row"><a href="tools/grammarly/">Grammarly Premium</a></th><td>Writing &amp; SEO</td><td>1 Month</td><td>Private</td><td>Rs. 750</td></tr>
+            <tr><th scope="row"><a href="tools/quillbot/">QuillBot Premium</a></th><td>Writing &amp; SEO</td><td>1 Month</td><td>Private</td><td>Rs. 450</td></tr>
+            <tr><th scope="row"><a href="tools/semrush/">SEMrush Pro</a></th><td>Writing &amp; SEO</td><td>1 Month</td><td>Shared</td><td>Rs. 1,500</td></tr>
             <tr><th scope="row"><a href="tools/gemini/">Gemini Pro</a></th><td>AI Assistants</td><td>18 Months</td><td>Invitation</td><td>Rs. 800</td></tr>
             <tr><th scope="row"><a href="tools/veo/">Veo 3 Ultra</a></th><td>AI Video</td><td>Unlimited</td><td>Shared</td><td>Rs. 2,100</td></tr>
             <tr><th scope="row"><a href="tools/leonardo/">Leonardo AI Essential</a></th><td>Design</td><td>8,500 Credits</td><td>Private</td><td>Rs. 1,900</td></tr>
