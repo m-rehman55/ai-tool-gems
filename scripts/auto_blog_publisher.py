@@ -115,8 +115,7 @@ def validate_queue_candidate(item: dict, published_slugs: set[str] = None) -> tu
     # 2. Required fields
     required_keys = [
         "slug", "title", "meta_description", "primary_keyword",
-        "secondary_keywords", "primary_tool", "related_tools",
-        "pakistani_payment_support"
+        "secondary_keywords", "primary_tool", "related_tools"
     ]
     for rk in required_keys:
         if rk not in item or item[rk] is None:
@@ -147,13 +146,16 @@ def validate_queue_candidate(item: dict, published_slugs: set[str] = None) -> tu
     if not isinstance(sec_kws, list) or len(sec_kws) < 3:
         errors.append("Must provide at least 3 secondary keywords as a list.")
 
-    # 6. Pakistan market compliance
-    payments = item.get("pakistani_payment_support", [])
-    if not isinstance(payments, list) or not any(
-        p.lower() in ["easypaisa", "jazzcash", "sadapay", "nayapay", "bank ibft", "raast"]
-        for p in payments
-    ):
-        errors.append("Missing verified Pakistani domestic payment rail support (EasyPaisa/JazzCash).")
+    # 6. Contextual Pakistan payment rail compliance (only when payment support is specified/relevant)
+    payments = item.get("pakistani_payment_support")
+    if payments is not None:
+        if not isinstance(payments, list) or (
+            len(payments) > 0 and not any(
+                p.lower() in ["easypaisa", "jazzcash", "sadapay", "nayapay", "bank ibft", "raast"]
+                for p in payments
+            )
+        ):
+            errors.append("If specified, Pakistani domestic payment support must contain verified local rails (EasyPaisa/JazzCash/SadaPay/Bank IBFT/Raast).")
 
     return len(errors) == 0, errors
 
@@ -717,12 +719,26 @@ def run_publisher(dry_run: bool = True) -> str:
         map_file = BASE / "data" / "seo" / "keyword-map.json"
         if map_file.exists():
             k_data = json.loads(map_file.read_text(encoding="utf-8"))
+            matched = False
             for entry in k_data:
                 if entry["slug"] == candidate["slug"]:
                     entry["status"] = "published"
                     entry["published_url"] = new_loc
                     entry["published_date"] = datetime.date.today().isoformat()
                     entry["last_updated"] = datetime.date.today().isoformat()
+                    matched = True
+            if not matched:
+                k_data.append({
+                    "slug": candidate["slug"],
+                    "primary_keyword": candidate["primary_keyword"],
+                    "search_intent": "informational_commercial",
+                    "target_audience": candidate.get("target_audience", "Pakistani professionals"),
+                    "secondary_keywords": candidate.get("secondary_keywords", []),
+                    "status": "published",
+                    "published_url": new_loc,
+                    "published_date": datetime.date.today().isoformat(),
+                    "last_updated": datetime.date.today().isoformat()
+                })
             map_file.write_text(json.dumps(k_data, indent=2, ensure_ascii=False), encoding="utf-8")
             print(f"✅ Updated keyword-map.json status to 'published'")
 
