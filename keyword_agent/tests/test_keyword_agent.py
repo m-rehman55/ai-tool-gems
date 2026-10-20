@@ -355,6 +355,74 @@ class TestKeywordAgent(unittest.TestCase):
         r_precursor = mapper.find_best_url("precursor chemical list", "informational")
         self.assertNotEqual(r_precursor.best_url, "https://aitoolgems.tech/tools/cursor/")
 
+    def test_phase_6c_intent_safety_and_query_regressions(self):
+        """Phase 6C: Tests exact product match, bundle inclusion, tier distinction, and unstocked queries."""
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        mapper = PageMapper(project_dir=proj_dir)
+
+        # 1. Adobe exact suite vs sub-app bundle inclusion
+        r_full = mapper.find_best_url("adobe creative cloud all apps price in pakistan")
+        self.assertEqual(r_full.best_url, "https://aitoolgems.tech/tools/adobe/")
+        self.assertEqual(r_full.action_type, "OPTIMIZE_EXISTING")
+        self.assertEqual(r_full.mapping_confidence, 0.95)
+
+        r_ill = mapper.find_best_url("adobe illustrator price in pakistan")
+        self.assertEqual(r_ill.best_url, "https://aitoolgems.tech/tools/adobe/")
+        self.assertEqual(r_ill.mapping_confidence, 0.90)
+        self.assertIn("Bundle inclusion match", r_ill.rational_justification)
+
+        r_ps = mapper.find_best_url("adobe photoshop price in pakistan")
+        self.assertEqual(r_ps.best_url, "https://aitoolgems.tech/tools/adobe/")
+        self.assertEqual(r_ps.mapping_confidence, 0.90)
+        self.assertIn("Bundle inclusion match", r_ps.rational_justification)
+
+        # 2. ChatGPT Plus exact vs Pro distinction
+        r_plus = mapper.find_best_url("chatgpt plus price in pakistan")
+        self.assertEqual(r_plus.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+        self.assertEqual(r_plus.mapping_confidence, 0.95)
+
+        r_pro = mapper.find_best_url("chatgpt pro price in pakistan")
+        self.assertEqual(r_pro.best_url, "https://aitoolgems.tech/tools/chatgpt/")
+        self.assertEqual(r_pro.mapping_confidence, 0.90)
+        self.assertIn("Plan distinction match", r_pro.rational_justification)
+
+        # 3. CapCut Pro pricing and transactional buying queries
+        r_cap_price = mapper.find_best_url("capcut pro price in pakistan")
+        self.assertEqual(r_cap_price.best_url, "https://aitoolgems.tech/tools/capcut/")
+        self.assertEqual(r_cap_price.mapping_confidence, 0.95)
+
+        r_cap_buy = mapper.find_best_url("how to buy capcut pro in pakistan")
+        self.assertEqual(r_cap_buy.best_url, "https://aitoolgems.tech/tools/capcut/")
+        self.assertEqual(r_cap_buy.mapping_confidence, 0.95)
+
+        # 4. Ambiguous and multi-product searches
+        r_bundle = mapper.find_best_url("chatgpt canva bundle price in pakistan")
+        self.assertEqual(r_bundle.action_type, "MANUAL_REVIEW")
+        self.assertEqual(r_bundle.mapping_confidence, 0.75)
+        self.assertIn("https://aitoolgems.tech/tools/chatgpt/", r_bundle.competing_urls)
+        self.assertIn("https://aitoolgems.tech/tools/canva/", r_bundle.competing_urls)
+
+        # 5. Topical video editing category guide
+        r_video = mapper.find_best_url("best ai tools for video editing pakistan")
+        self.assertEqual(r_video.best_url, "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/")
+        self.assertEqual(r_video.action_type, "OPTIMIZE_EXISTING")
+        self.assertEqual(r_video.mapping_confidence, 0.92)
+
+        # 6. Global tool comparison without dedicated guide
+        r_adobe_cap = mapper.find_best_url("adobe vs capcut")
+        self.assertEqual(r_adobe_cap.best_url, "https://aitoolgems.tech/tools/adobe/")
+        self.assertEqual(r_adobe_cap.action_type, "MONITOR")
+        self.assertEqual(r_adobe_cap.mapping_confidence, 0.80)
+        self.assertIn("https://aitoolgems.tech/tools/adobe/", r_adobe_cap.competing_urls)
+        self.assertIn("https://aitoolgems.tech/tools/capcut/", r_adobe_cap.competing_urls)
+
+        # 7. Unstocked/unknown product query
+        r_unstocked = mapper.find_best_url("quantum ai bot subscription price in pakistan")
+        self.assertEqual(r_unstocked.best_url, "https://aitoolgems.tech/prices/")
+        self.assertEqual(r_unstocked.action_type, "MANUAL_REVIEW")
+        self.assertEqual(r_unstocked.mapping_confidence, 0.60)
+        self.assertIn("No catalog tool or recognized product matched", r_unstocked.rational_justification)
+
     # ── Content Optimizer Tests ──────────────────────────────────────────────
 
     def test_content_optimizer_live_extraction(self):

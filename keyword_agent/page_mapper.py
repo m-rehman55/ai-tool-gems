@@ -206,7 +206,12 @@ class PageMapper:
             if not is_pk_query:
                 kw_clean = re.sub(r"[\-_./'\"]+", " ", kw_lower)
                 comparison_candidates: List[Tuple[str, str, str, int]] = []
-                for tool_slug in ["canva", "chatgpt", "cursor", "midjourney", "replit", "claude", "gemini", "figma", "leonardo"]:
+                tool_slugs = [
+                    Path(route.relative_path).parent.name
+                    for route in self.routes.values()
+                    if route.page_type == "tool"
+                ]
+                for tool_slug in tool_slugs:
                     if self._matches_tool(tool_slug, kw_lower) and f"https://aitoolgems.tech/tools/{tool_slug}/" in self.routes:
                         p = kw_clean.find(tool_slug)
                         if p == -1:
@@ -271,7 +276,21 @@ class PageMapper:
                                 rational_justification=f"Audience workflow query aligns with dedicated persona guide: {slug}.",
                             )
 
-        # 3. Direct Tool Matches (Buy, price, rate, subscription, local payment, aliases)
+        # 3. Topical Category Guides (e.g. AI video generators / editors)
+        if any(w in kw_lower for w in ["video generator", "video generators", "video editing", "ai video"]):
+            video_guide_url = "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/"
+            if video_guide_url in self.routes:
+                return PageMappingResult(
+                    keyword=keyword,
+                    intent=intent,
+                    best_url=video_guide_url,
+                    relative_path="guides/best-ai-video-generators-pakistan/index.html",
+                    mapping_confidence=0.92,
+                    action_type="OPTIMIZE_EXISTING",
+                    rational_justification="Topical category query for AI video generation/editing in Pakistan aligns with dedicated guide: best-ai-video-generators-pakistan.",
+                )
+
+        # 4. Direct Tool Matches (Buy, price, rate, subscription, local payment, aliases)
         kw_clean = re.sub(r"[\-_./'\"]+", " ", kw_lower)
         matching_tools: List[Tuple[str, str, str, int]] = []
         for url, route in self.routes.items():
@@ -348,10 +367,21 @@ class PageMapper:
                 rational_justification=f"Query references multiple candidate tools ({', '.join([m[0] for m in matching_tools])}) without comparison keywords; flagged for manual intent review.",
             )
 
-        # 4. Check for general pricing queries across tools
-        if any(w in kw_lower for w in ["prices", "pricing", "rate", "rates", "cost"]):
+        # 5. Check for general pricing queries across tools or unstocked tool queries
+        if any(w in kw_lower for w in ["price", "prices", "pricing", "rate", "rates", "cost", "fee"]):
             prices_url = "https://aitoolgems.tech/prices/"
             if prices_url in self.routes:
+                # If specific transactional purchase terms exist without matching any catalog tool, flag for unstocked manual review
+                if any(w in kw_lower for w in ["buy", "subscription", "account", "key", "license"]) or not any(w in kw_lower for w in ["all", "compare", "tools", "list", "directory", "prices", "pricing"]):
+                    return PageMappingResult(
+                        keyword=keyword,
+                        intent=intent,
+                        best_url=prices_url,
+                        relative_path="prices/index.html",
+                        mapping_confidence=0.60,
+                        action_type="MANUAL_REVIEW",
+                        rational_justification="No catalog tool or recognized product matched the search query; mapped to prices directory with manual review flagged for unstocked tool demand.",
+                    )
                 return PageMappingResult(
                     keyword=keyword,
                     intent=intent,
