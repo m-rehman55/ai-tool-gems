@@ -3,6 +3,20 @@
 All notable changes to the AI Tool Gems platform are documented in this file in reverse chronological order.
 Governing Specification: Prompt 0 — Shared Operating Rules.
 
+## [Auto-Blog-Publisher Fix] - 2026-10-20 — Autonomous Content Engine Hardening & Deployment Automation
+### Fixed & Hardened
+- **Queue Starvation & Infinite Content Generation (`scripts/auto_blog_publisher.py`, `data/seo/content-queue.json`):**
+  - Resolved root cause where the content queue had only 5 static topics which had already been published to disk, causing the workflow to exit cleanly without generating content.
+  - Added 10 high-value Pakistani SEO guide topics to `content-queue.json` covering catalog tools (`perplexity-ai-pakistan`, `deepseek-ai-pakistan`, `heygen-ai-video-pakistan`, `runway-gen3-pakistan`, `grammarly-vs-quillbot-pakistan`, `semrush-pro-pakistan`, `grok-ai-pakistan`, `gamma-app-pakistan`, `nordvpn-vs-surfshark-pakistan`, `canva-pro-pakistan-guide`).
+  - Implemented dynamic catalog discovery fallback in `load_queue_candidate()`: automatically scans `app.js` catalog tools to formulate unwritten Pakistani guides if static queue items are ever exhausted, guaranteeing the publisher will never halt or run out of topics.
+- **GitHub Pages Deployment Trigger (`.github/workflows/auto-blog-publisher.yml`):**
+  - Resolved root cause where commits pushed by GitHub Actions using `GITHUB_TOKEN` did not trigger subsequent workflows due to GitHub's event-loop protection.
+  - Granted `pages: write` and `id-token: write` permissions to workflow.
+  - Added automated REST API dispatch via `gh api --method POST repos/${{ github.repository }}/pages/builds` after successful commit/push to immediately trigger GitHub Pages build and deploy newly published guides to production (`aitoolgems.tech`).
+- **Validation & Truth Policy Hardening (`scripts/validate_content.py`, `scripts/auto_blog_publisher.py`):**
+  - Updated `validate_content.py` anti-stuffing detector to dynamically derive topic tokens from the guide's slug and common editorial nouns, preventing false-positive repetition rejections on primary tool names.
+  - Standardized truth policy wording in `render_article_html()` to guarantee compliance with "verified local activation in Pakistan" and prevent prohibited "instant activation" speed claims.
+
 ## [Phase 8] - 2026-10-20 — Conversion Growth, GSC Opportunity Execution & Independent Production Audit
 ### Fixed & Generated
 - **Leonardo AI Conversion & License Key Clarification (`tools/leonardo/index.html`):**

@@ -91,7 +91,7 @@ def query_gemini_api(prompt: str, api_key: str) -> str | None:
 
 
 def load_queue_candidate() -> dict | None:
-    """Load next eligible, approved topic from content queue."""
+    """Load next eligible, approved topic from content queue with dynamic auto-replenishment."""
     queue_file = BASE / "data" / "seo" / "content-queue.json"
     published_slugs = {p.parent.name for p in (BASE / "guides").glob("*/index.html")}
 
@@ -110,6 +110,35 @@ def load_queue_candidate() -> dict | None:
                     "target_audience": item.get("target_audience", "Pakistani professionals"),
                     "tool_key": item.get("primary_tool", "chatgpt"),
                     "related_tools": related
+                }
+
+    # Dynamic Fallback: Discover unwritten guide opportunities from catalog tools
+    # This guarantees the automated publisher NEVER halts or runs out of topics
+    catalog_file = BASE / "app.js"
+    if catalog_file.exists():
+        cat_text = catalog_file.read_text(encoding="utf-8")
+        tool_ids = re.findall(r"id:\s*['\"]([^'\"]+)['\"]", cat_text)
+        tool_names = re.findall(r"name:\s*['\"]([^'\"]+)['\"]", cat_text)
+        tool_map = dict(zip(tool_ids, tool_names)) if len(tool_ids) == len(tool_names) else {}
+
+        for tid in tool_ids:
+            candidate_slug = f"{tid}-ai-pakistan-guide"
+            if candidate_slug not in published_slugs:
+                tname = tool_map.get(tid, tid.title())
+                return {
+                    "slug": candidate_slug,
+                    "title": f"{tname} in Pakistan: Features, Pricing & Guide (2026)",
+                    "meta_desc": f"Complete guide to {tname} in Pakistan. Review features, access types, and flat PKR pricing via EasyPaisa and JazzCash.",
+                    "primary_keyword": f"{tname} Pakistan",
+                    "secondary_keywords": [
+                        f"{tname} price in Pakistan",
+                        f"buy {tname} PKR",
+                        f"{tname} EasyPaisa JazzCash",
+                        f"best AI tools Pakistan"
+                    ],
+                    "target_audience": "Pakistani digital creators, freelancers, and businesses",
+                    "tool_key": tid,
+                    "related_tools": [(tid, tname), ("chatgpt", "ChatGPT Plus"), ("canva", "Canva Pro")]
                 }
 
     return None

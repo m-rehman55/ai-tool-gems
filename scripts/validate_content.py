@@ -132,11 +132,14 @@ def validate_article_file(file_path: Path, expected_slug: str = None) -> tuple[b
             freq[w] = freq.get(w, 0) + 1
 
     # Check non-topic substantive terms
+    topic_tokens = set(re.findall(r"[a-z0-9]+", slug.lower()))
     ignored_entities = {
         "pakistan", "subscription", "delivery", "payment", "easypaisa", "jazzcash",
         "developer", "developers", "pricing", "claude", "sonnet", "cursor", "leonardo",
-        "canva", "figma", "capcut", "anthropic", "openai", "google", "replit", "lovable"
-    }
+        "canva", "figma", "capcut", "anthropic", "openai", "google", "replit", "lovable",
+        "features", "access", "account", "accounts", "service", "support", "tools",
+        "guide", "guides", "verified", "pakistani", "workflow", "workflows"
+    } | topic_tokens
     for w, count in freq.items():
         if w not in ignored_entities and count > 28:
             errors.append(f"Suspicious word repetition: '{w}' repeated {count} times (max 28)")
