@@ -28,11 +28,24 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 BASE = Path(__file__).resolve().parent.parent
 
-# Import validator
+# Import validator and robust sitemap generator
 sys.path.insert(0, str(BASE / "scripts"))
 sys.path.insert(0, str(BASE))
 from validate_content import validate_article_file, check_cannibalization
 from submit_indexnow import submit_to_indexnow
+from generate_sitemap import build_sitemap, validate_sitemap_file
+import xml.etree.ElementTree as ET
+
+
+def write_github_output(key: str, value: str):
+    """Write an output parameter to the GitHub Actions output environment file if available."""
+    gh_out = os.environ.get("GITHUB_OUTPUT")
+    if gh_out:
+        try:
+            with open(gh_out, "a", encoding="utf-8") as f:
+                f.write(f"{key}={value}\n")
+        except Exception:
+            pass
 
 
 def send_telegram_alert(text: str) -> bool:
@@ -58,7 +71,6 @@ def query_gemini_api(prompt: str, api_key: str) -> str | None:
     if not keys:
         return None
 
-    # Cascade of available free-tier Google Gemini models from most advanced to fallback
     models_to_try = [
         ("gemini-2.0-flash", "Google Gemini 2.0 Flash (Next-Gen State of the Art)"),
         ("gemini-1.5-pro", "Google Gemini 1.5 Pro (Flagship Reasoning)"),
@@ -90,18 +102,87 @@ def query_gemini_api(prompt: str, api_key: str) -> str | None:
     return None
 
 
-def load_queue_candidate() -> dict | None:
-    """Load next eligible, approved topic from content queue with dynamic auto-replenishment."""
+def validate_queue_candidate(item: dict, published_slugs: set[str] = None) -> tuple[bool, list[str]]:
+    """Strictly validate a candidate topic entry from the content queue."""
+    errors = []
+    if not isinstance(item, dict):
+        return False, ["Item must be a JSON object dictionary."]
+
+    # 1. Explicit approval requirement (fail closed)
+    if item.get("approved_for_publishing") is not True:
+        errors.append("Item must have 'approved_for_publishing': true explicitly set.")
+
+    # 2. Required fields
+    required_keys = [
+        "slug", "title", "meta_description", "primary_keyword",
+        "secondary_keywords", "primary_tool", "related_tools"
+    ]
+    for rk in required_keys:
+        if rk not in item or item[rk] is None:
+            errors.append(f"Missing required metadata field: '{rk}'")
+
+    if errors:
+        return False, errors
+
+    # 3. Slug format and uniqueness
+    slug = str(item.get("slug", "")).strip()
+    if not re.match(r"^[a-z0-9]+(-[a-z0-9]+)*$", slug):
+        errors.append(f"Invalid slug format '{slug}'. Must be lowercase alphanumeric with single hyphens.")
+
+    if published_slugs and slug in published_slugs:
+        errors.append(f"Slug '{slug}' is already published on site.")
+
+    # 4. Title & Meta lengths
+    title = str(item.get("title", "")).strip()
+    if not (20 <= len(title) <= 70):
+        errors.append(f"Title length ({len(title)} chars) outside 20–70 bounds: '{title}'")
+
+    meta_desc = str(item.get("meta_description", "")).strip()
+    if not (70 <= len(meta_desc) <= 170):
+        errors.append(f"Meta description length ({len(meta_desc)} chars) outside 70–170 bounds: '{meta_desc}'")
+
+    # 5. Keywords
+    sec_kws = item.get("secondary_keywords", [])
+    if not isinstance(sec_kws, list) or len(sec_kws) < 3:
+        errors.append("Must provide at least 3 secondary keywords as a list.")
+
+    # 6. Contextual Pakistan payment rail compliance (only when payment support is specified/relevant)
+    payments = item.get("pakistani_payment_support")
+    if payments is not None:
+        if not isinstance(payments, list) or (
+            len(payments) > 0 and not any(
+                p.lower() in ["easypaisa", "jazzcash", "sadapay", "nayapay", "bank ibft", "raast"]
+                for p in payments
+            )
+        ):
+            errors.append("If specified, Pakistani domestic payment support must contain verified local rails (EasyPaisa/JazzCash/SadaPay/Bank IBFT/Raast).")
+
+    return len(errors) == 0, errors
+
+
+def load_queue_candidate() -> tuple[dict | None, str]:
+    """Load next eligible, approved topic from content queue with dynamic auto-replenishment.
+    Returns:
+        (candidate_dict, status_message)
+    """
     queue_file = BASE / "data" / "seo" / "content-queue.json"
     published_slugs = {p.parent.name for p in (BASE / "guides").glob("*/index.html")}
 
     if queue_file.exists():
-        queue_data = json.loads(queue_file.read_text(encoding="utf-8"))
-        for item in queue_data:
-            if item.get("approved_for_publishing", True) and item["slug"] not in published_slugs:
-                # Format to blueprint format
+        try:
+            queue_data = json.loads(queue_file.read_text(encoding="utf-8"))
+            for item in queue_data:
+                slug = item.get("slug", "")
+                if slug in published_slugs:
+                    continue
+
+                is_valid, validation_errors = validate_queue_candidate(item, published_slugs)
+                if not is_valid:
+                    print(f"⚠️ Skipping queue item '{slug}': {'; '.join(validation_errors)}")
+                    continue
+
                 related = [(t["slug"], t["name"]) for t in item.get("related_tools", [])]
-                return {
+                candidate = {
                     "slug": item["slug"],
                     "title": item["title"],
                     "meta_desc": item["meta_description"],
@@ -111,6 +192,9 @@ def load_queue_candidate() -> dict | None:
                     "tool_key": item.get("primary_tool", "chatgpt"),
                     "related_tools": related
                 }
+                return candidate, "CANDIDATE_FOUND"
+        except Exception as e:
+            print(f"⚠️ Error reading queue file: {e}")
 
     # Dynamic Fallback: Discover unwritten guide opportunities from catalog tools
     # This guarantees the automated publisher NEVER halts or runs out of topics
@@ -125,10 +209,10 @@ def load_queue_candidate() -> dict | None:
             candidate_slug = f"{tid}-ai-pakistan-guide"
             if candidate_slug not in published_slugs:
                 tname = tool_map.get(tid, tid.title())
-                return {
+                dyn_item = {
                     "slug": candidate_slug,
                     "title": f"{tname} in Pakistan: Features, Pricing & Guide (2026)",
-                    "meta_desc": f"Complete guide to {tname} in Pakistan. Review features, access types, and flat PKR pricing via EasyPaisa and JazzCash.",
+                    "meta_description": f"Complete guide to {tname} in Pakistan. Review features, access types, and flat PKR pricing via EasyPaisa and JazzCash.",
                     "primary_keyword": f"{tname} Pakistan",
                     "secondary_keywords": [
                         f"{tname} price in Pakistan",
@@ -137,18 +221,39 @@ def load_queue_candidate() -> dict | None:
                         f"best AI tools Pakistan"
                     ],
                     "target_audience": "Pakistani digital creators, freelancers, and businesses",
-                    "tool_key": tid,
-                    "related_tools": [(tid, tname), ("chatgpt", "ChatGPT Plus"), ("canva", "Canva Pro")]
+                    "primary_tool": tid,
+                    "related_tools": [
+                        {"slug": tid, "name": tname},
+                        {"slug": "chatgpt", "name": "ChatGPT Plus"},
+                        {"slug": "canva", "name": "Canva Pro"}
+                    ],
+                    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+                    "approved_for_publishing": True
                 }
 
-    return None
+                is_valid, validation_errors = validate_queue_candidate(dyn_item, published_slugs)
+                if is_valid:
+                    related = [(t["slug"], t["name"]) for t in dyn_item["related_tools"]]
+                    candidate = {
+                        "slug": dyn_item["slug"],
+                        "title": dyn_item["title"],
+                        "meta_desc": dyn_item["meta_description"],
+                        "primary_keyword": dyn_item["primary_keyword"],
+                        "secondary_keywords": dyn_item["secondary_keywords"],
+                        "target_audience": dyn_item["target_audience"],
+                        "tool_key": dyn_item["primary_tool"],
+                        "related_tools": related
+                    }
+                    return candidate, "CANDIDATE_FOUND"
+
+    return None, "NO_ELIGIBLE_TOPIC"
 
 
 def render_article_html(bp: dict) -> str:
     """Generates a complete 1,500+ word semantic HTML guide with full JSON-LD schema and dynamic organic keyword targeting."""
     slug = bp["slug"]
     title = bp["title"]
-    desc = bp["meta_desc"]
+    desc = bp.get("meta_desc") or bp.get("meta_description", "")
     pk = bp["primary_keyword"]
     sec_kws = bp.get("secondary_keywords", [])
     now_date = datetime.date.today().isoformat()
@@ -200,7 +305,7 @@ def render_article_html(bp: dict) -> str:
         },
         {
             "q": f"Can I {sec3} using EasyPaisa or JazzCash?",
-            "a": f"Yes! While international platforms require foreign credit cards that often face declines, AI Tool Gems enables instant local activation in Pakistan using EasyPaisa, JazzCash, SadaPay, NayaPay, or direct bank transfer."
+            "a": f"Yes! While international platforms require foreign credit cards that often face declines, AI Tool Gems enables verified local activation in Pakistan using EasyPaisa, JazzCash, SadaPay, NayaPay, or direct bank transfer after receipt verification."
         },
         {
             "q": f"Why is finding a reliable {sec2} crucial for Pakistani agencies?",
@@ -232,7 +337,13 @@ def render_article_html(bp: dict) -> str:
         </div>""")
     faq_accordion_html = "\n".join(faq_html_items)
 
-    related_links_html = "\n".join([f'          <li><a href="../../tools/{k}/">{name} in Pakistan</a></li>' for k, name in bp["related_tools"]])
+    rel_tools = []
+    for t in bp.get("related_tools", []):
+        if isinstance(t, dict):
+            rel_tools.append((t.get("slug", ""), t.get("name", "")))
+        elif isinstance(t, (list, tuple)) and len(t) >= 2:
+            rel_tools.append((t[0], t[1]))
+    related_links_html = "\n".join([f'          <li><a href="../../tools/{k}/">{name} in Pakistan</a></li>' for k, name in rel_tools])
 
     html = f"""<!doctype html><html lang="en-PK"><head>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style"
@@ -509,16 +620,17 @@ def render_article_html(bp: dict) -> str:
     return html
 
 
-def run_publisher(dry_run: bool = True):
+def run_publisher(dry_run: bool = True) -> str:
     print("=================================================================")
     print("🤖 AIToolGems Autonomous Daily Blog & Guide Publisher")
     print("=================================================================")
     print(f"Mode: {'DRY RUN (Preview Only)' if dry_run else 'LIVE PUBLISH'}")
 
-    candidate = load_queue_candidate()
+    candidate, status_code = load_queue_candidate()
     if not candidate:
-        print("ℹ️ All candidate topics from current queue are already published.")
-        return
+        print("ℹ️ STATUS: NO_ELIGIBLE_TOPIC - No approved, unwritten topics found in content queue.")
+        write_github_output("status", "NO_ELIGIBLE_TOPIC")
+        return "NO_ELIGIBLE_TOPIC"
 
     print(f"🎯 Selected Topic: {candidate['title']}")
     print(f"📂 Target Slug: /guides/{candidate['slug']}/")
@@ -528,7 +640,10 @@ def run_publisher(dry_run: bool = True):
     can_ok, can_msg = check_cannibalization(candidate["slug"], candidate["primary_keyword"])
     if not can_ok:
         print(f"❌ Cannibalization check failed: {can_msg}. Aborting.")
-        return
+        write_github_output("status", "CANNIBALIZATION_BLOCKED")
+        if not dry_run:
+            sys.exit(1)
+        return "CANNIBALIZATION_BLOCKED"
     print(f"✅ Anti-cannibalization check: {can_msg}")
 
     # 2. Render content
@@ -540,99 +655,148 @@ def run_publisher(dry_run: bool = True):
     temp_file = temp_dir / "index.html"
     temp_file.write_text(html_content, encoding="utf-8")
 
-    is_valid, issues = validate_article_file(temp_file, candidate["slug"])
-    if not is_valid:
-        print(f"❌ Pre-publish validation failed with {len(issues)} issue(s):")
-        for iss in issues:
-            print(f"  • {iss}")
+    try:
+        is_valid, issues = validate_article_file(temp_file, candidate["slug"])
+        if not is_valid:
+            print(f"❌ Pre-publish validation failed with {len(issues)} issue(s):")
+            for iss in issues:
+                print(f"  • {iss}")
+            temp_file.unlink(missing_ok=True)
+            if temp_dir.exists() and not any(temp_dir.iterdir()):
+                temp_dir.rmdir()
+            write_github_output("status", "VALIDATION_FAILED")
+            if not dry_run:
+                sys.exit(1)
+            return "VALIDATION_FAILED"
+
+        print("✅ Pre-publish content, SEO, link, and integrity checks PASSED.")
+
+        # 4. If dry run, clean up temp file and report
+        if dry_run:
+            temp_file.unlink(missing_ok=True)
+            if not any(temp_dir.iterdir()):
+                temp_dir.rmdir()
+            print("\n✨ Dry run complete. Validated topic is queued and ready for publication.")
+            write_github_output("status", "DRY_RUN")
+            write_github_output("slug", candidate["slug"])
+            return "DRY_RUN"
+
+        # 5. Live publish: sync sitemap, llms.txt, guides/index.html, keyword-map.json
+        print(f"\n🚀 Finalizing publication for: {temp_file}")
+        new_loc = f"https://aitoolgems.tech/guides/{candidate['slug']}/"
+
+        # Update llms.txt
+        llms_file = BASE / "llms.txt"
+        if llms_file.exists():
+            llms_txt = llms_file.read_text(encoding="utf-8")
+            if new_loc not in llms_txt:
+                entry = f"- [{candidate['title']}](https://aitoolgems.tech/guides/{candidate['slug']}/) — Pakistan-focused {candidate['primary_keyword']} guide\n"
+                llms_txt = llms_txt.replace("## Editorial Guides", f"## Editorial Guides\n\n{entry.strip()}")
+                llms_file.write_text(llms_txt, encoding="utf-8")
+                print(f"✅ Added {candidate['slug']} to llms.txt")
+
+        # Update guides/index.html card grid
+        guides_index = BASE / "guides" / "index.html"
+        if guides_index.exists():
+            g_txt = guides_index.read_text(encoding="utf-8")
+            if candidate["slug"] not in g_txt:
+                card_html = f"""      <article class="guide-card"><p class="eyebrow">EDITORIAL GUIDE</p><h2>{candidate['title']}</h2><p>{candidate['meta_desc']}</p><a href="{candidate['slug']}/">Read guide →</a></article>\n"""
+                g_txt = g_txt.replace('<section class="guide-grid" aria-label="Available guides">\n', '<section class="guide-grid" aria-label="Available guides">\n' + card_html)
+                guides_index.write_text(g_txt, encoding="utf-8")
+                print(f"✅ Injected new guide card into guides/index.html")
+
+        # Update blog/index.html articles grid
+        blog_index = BASE / "blog" / "index.html"
+        if blog_index.exists():
+            b_txt = blog_index.read_text(encoding="utf-8")
+            if candidate["slug"] not in b_txt and '<div class="blog-articles">\n' in b_txt:
+                b_card = f"""        <article style="background: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid rgba(43,91,74,0.12); margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);"><p style="font-size: 0.75rem; font-weight: 700; color: #2f9f88; text-transform: uppercase; margin-bottom: 6px;">EDITORIAL GUIDE</p><h3 style="font-size: 1.25rem; margin-bottom: 8px;"><a href="../guides/{candidate['slug']}/" style="color: #173c35; text-decoration: none; font-weight: 700;">{candidate['title']}</a></h3><p style="color: #61766e; font-size: 0.95rem; line-height: 1.5;">{candidate['meta_desc']}</p><a href="../guides/{candidate['slug']}/" style="display: inline-block; margin-top: 10px; color: #2f9f88; font-weight: 600; text-decoration: none;">Read article &rarr;</a></article>\n"""
+                b_txt = b_txt.replace('<div class="blog-articles">\n', '<div class="blog-articles">\n' + b_card)
+                blog_index.write_text(b_txt, encoding="utf-8")
+                print(f"✅ Injected new article link into blog/index.html")
+
+        # Update data/seo/keyword-map.json
+        map_file = BASE / "data" / "seo" / "keyword-map.json"
+        if map_file.exists():
+            k_data = json.loads(map_file.read_text(encoding="utf-8"))
+            matched = False
+            for entry in k_data:
+                if entry["slug"] == candidate["slug"]:
+                    entry["status"] = "published"
+                    entry["published_url"] = new_loc
+                    entry["published_date"] = datetime.date.today().isoformat()
+                    entry["last_updated"] = datetime.date.today().isoformat()
+                    matched = True
+            if not matched:
+                k_data.append({
+                    "slug": candidate["slug"],
+                    "primary_keyword": candidate["primary_keyword"],
+                    "search_intent": "informational_commercial",
+                    "target_audience": candidate.get("target_audience", "Pakistani professionals"),
+                    "secondary_keywords": candidate.get("secondary_keywords", []),
+                    "status": "published",
+                    "published_url": new_loc,
+                    "published_date": datetime.date.today().isoformat(),
+                    "last_updated": datetime.date.today().isoformat()
+                })
+            map_file.write_text(json.dumps(k_data, indent=2, ensure_ascii=False), encoding="utf-8")
+            print(f"✅ Updated keyword-map.json status to 'published'")
+
+        # Rebuild sitemap.xml with robust XML ElementTree generator
+        ok_sm, msg_sm, count_sm = build_sitemap(BASE)
+        if not ok_sm:
+            raise RuntimeError(f"Sitemap rebuild failed: {msg_sm}")
+        print(f"✅ Rebuilt sitemap.xml via ElementTree ({count_sm} canonical URLs).")
+
+        # Validate that new URL is present in sitemap.xml
+        tree = ET.parse(str(BASE / "sitemap.xml"))
+        locs = [el.text.strip() for el in tree.getroot().findall("{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
+        if new_loc not in locs:
+            raise RuntimeError(f"Published URL '{new_loc}' missing from rebuilt sitemap.xml")
+
+        # Submit URL to IndexNow
+        idx_status = "Skipped"
+        try:
+            idx_res = submit_to_indexnow([new_loc])
+            idx_status = str(idx_res.get("status", "submitted"))
+            print(f"⚡ IndexNow submission status: {idx_status}")
+        except Exception as e:
+            idx_status = f"Failed ({e})"
+            print(f"⚠️ IndexNow notice: {e}")
+
+        # Send Telegram alert to owner
+        tg_text = (
+            f"📰 *HERMES Content Agent: New Guide Published!*\n\n"
+            f"🎯 *Title:* {candidate['title']}\n"
+            f"🔗 *URL:* {new_loc}\n"
+            f"🇵🇰 *Focus:* {candidate['primary_keyword']}\n"
+            f"⚡ *IndexNow:* {idx_status}\n\n"
+            f"ℹ️ _Note: Search engine indexing is queued via sitemap and IndexNow; Google Search Console indexes separately based on crawl scheduling._"
+        )
+        send_telegram_alert(tg_text)
+
+        # Write output variables for CI
+        write_github_output("status", "PUBLISHED")
+        write_github_output("slug", candidate["slug"])
+        write_github_output("url", new_loc)
+        write_github_output("title", candidate["title"])
+
+        print("\n🎉 Article successfully published and synchronized across the entire site.")
+        return "PUBLISHED"
+
+    except Exception as e:
+        print(f"❌ Unexpected failure during publication: {e}")
+        # Clean up temp file on failure to prevent partial commits
         temp_file.unlink(missing_ok=True)
         if temp_dir.exists() and not any(temp_dir.iterdir()):
             temp_dir.rmdir()
+        write_github_output("status", "FAILED")
         if not dry_run:
             sys.exit(1)
-        return
-
-    print("✅ Pre-publish content, SEO, link, and integrity checks PASSED.")
-
-    # 4. If dry run, clean up temp file and report
-    if dry_run:
-        temp_file.unlink(missing_ok=True)
-        if not any(temp_dir.iterdir()):
-            temp_dir.rmdir()
-        print("\n✨ Dry run complete. Validated topic is queued and ready for publication.")
-        return
-
-    # 5. Live publish: sync sitemap, llms.txt, guides/index.html, keyword-map.json
-    print(f"\n🚀 Finalizing publication for: {temp_file}")
-
-    # Update sitemap.xml
-    sitemap_file = BASE / "sitemap.xml"
-    sitemap_txt = sitemap_file.read_text(encoding="utf-8")
-    new_loc = f"https://aitoolgems.tech/guides/{candidate['slug']}/"
-    if new_loc not in sitemap_txt:
-        today = datetime.date.today().isoformat()
-        new_entry = f"  <url><loc>{new_loc}</loc><lastmod>{today}</lastmod></url>\n</urlset>"
-        sitemap_txt = sitemap_txt.replace("</urlset>", new_entry)
-        sitemap_file.write_text(sitemap_txt, encoding="utf-8")
-        print(f"✅ Added {new_loc} to sitemap.xml")
-
-    # Update llms.txt
-    llms_file = BASE / "llms.txt"
-    if llms_file.exists():
-        llms_txt = llms_file.read_text(encoding="utf-8")
-        if new_loc not in llms_txt:
-            entry = f"- [{candidate['title']}](https://aitoolgems.tech/guides/{candidate['slug']}/) — Pakistan-focused {candidate['primary_keyword']} guide\n"
-            llms_txt = llms_txt.replace("## Editorial Guides", f"## Editorial Guides\n\n{entry.strip()}")
-            llms_file.write_text(llms_txt, encoding="utf-8")
-            print(f"✅ Added {candidate['slug']} to llms.txt")
-
-    # Update guides/index.html card grid
-    guides_index = BASE / "guides" / "index.html"
-    if guides_index.exists():
-        g_txt = guides_index.read_text(encoding="utf-8")
-        if candidate["slug"] not in g_txt:
-            card_html = f"""      <article class="guide-card"><p class="eyebrow">EDITORIAL GUIDE</p><h2>{candidate['title']}</h2><p>{candidate['meta_desc']}</p><a href="{candidate['slug']}/">Read guide →</a></article>\n"""
-            g_txt = g_txt.replace('<section class="guide-grid" aria-label="Available guides">\n', '<section class="guide-grid" aria-label="Available guides">\n' + card_html)
-            guides_index.write_text(g_txt, encoding="utf-8")
-            print(f"✅ Injected new guide card into guides/index.html")
-
-    # Update blog/index.html articles grid
-    blog_index = BASE / "blog" / "index.html"
-    if blog_index.exists():
-        b_txt = blog_index.read_text(encoding="utf-8")
-        if candidate["slug"] not in b_txt and '<div class="blog-articles">\n' in b_txt:
-            b_card = f"""        <article style="background: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid rgba(43,91,74,0.12); margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);"><p style="font-size: 0.75rem; font-weight: 700; color: #2f9f88; text-transform: uppercase; margin-bottom: 6px;">EDITORIAL GUIDE</p><h3 style="font-size: 1.25rem; margin-bottom: 8px;"><a href="../guides/{candidate['slug']}/" style="color: #173c35; text-decoration: none; font-weight: 700;">{candidate['title']}</a></h3><p style="color: #61766e; font-size: 0.95rem; line-height: 1.5;">{candidate['meta_desc']}</p><a href="../guides/{candidate['slug']}/" style="display: inline-block; margin-top: 10px; color: #2f9f88; font-weight: 600; text-decoration: none;">Read article &rarr;</a></article>\n"""
-            b_txt = b_txt.replace('<div class="blog-articles">\n', '<div class="blog-articles">\n' + b_card)
-            blog_index.write_text(b_txt, encoding="utf-8")
-            print(f"✅ Injected new article link into blog/index.html")
-
-    # Update data/seo/keyword-map.json
-    map_file = BASE / "data" / "seo" / "keyword-map.json"
-    if map_file.exists():
-        k_data = json.loads(map_file.read_text(encoding="utf-8"))
-        for entry in k_data:
-            if entry["slug"] == candidate["slug"]:
-                entry["status"] = "published"
-                entry["published_url"] = new_loc
-                entry["published_date"] = datetime.date.today().isoformat()
-                entry["last_updated"] = datetime.date.today().isoformat()
-        map_file.write_text(json.dumps(k_data, indent=2, ensure_ascii=False), encoding="utf-8")
-        print(f"✅ Updated keyword-map.json status to 'published'")
-
-    # Trigger IndexNow automatically for the new published article
-    try:
-        idx_res = submit_to_indexnow([new_loc])
-        print(f"⚡ IndexNow submission status: {idx_res.get('status')}")
-    except Exception as e:
-        print(f"⚠️ IndexNow notice: {e}")
-
-    # Dispatch Telegram alert to owner
-    msg = f"📰 *HERMES Content Agent: New Guide Published!*\n\n🎯 *Title:* {candidate['title']}\n🔗 *URL:* {new_loc}\n🇵🇰 *Focus:* {candidate['primary_keyword']}\n⚡ *Status:* Submitted to IndexNow & live on site."
-    send_telegram_alert(msg)
-
-    print("\n🎉 Article successfully published and synchronized across the entire site.")
+        raise
 
 
 if __name__ == "__main__":
     is_live = "--publish" in sys.argv
-    run_publisher(dry_run=not is_live)
+    res = run_publisher(dry_run=not is_live)
+
