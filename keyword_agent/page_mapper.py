@@ -84,8 +84,8 @@ TOOL_ALIASES: Dict[str, List[str]] = {
 class PageMapper:
     """Discovers real repository pages, maps search keywords, and guards against cannibalization."""
 
-    def __init__(self, project_dir: Path):
-        self.project_dir = project_dir
+    def __init__(self, project_dir: Union[Path, str]):
+        self.project_dir = Path(project_dir)
         self.routes: Dict[str, SiteRoute] = {}
         self.url_by_keyword_norm: Dict[str, List[str]] = {}
         self._discover_routes()

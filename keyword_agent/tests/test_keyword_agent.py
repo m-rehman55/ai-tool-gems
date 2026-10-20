@@ -423,6 +423,25 @@ class TestKeywordAgent(unittest.TestCase):
         self.assertEqual(r_unstocked.mapping_confidence, 0.60)
         self.assertIn("No catalog tool or recognized product matched", r_unstocked.rational_justification)
 
+    def test_phase_8_gsc_opportunity_mappings(self):
+        """Phase 8: Tests Leonardo license key and LinkedIn cost/price queries discovered from live GSC."""
+        proj_dir = Path(__file__).resolve().parent.parent.parent
+        # Verify both string and Path types are cleanly supported
+        mapper = PageMapper(project_dir=str(proj_dir))
+
+        r_leo_key = mapper.find_best_url('intitle:"leonardo ai" "license key"')
+        self.assertEqual(r_leo_key.best_url, "https://aitoolgems.tech/tools/leonardo/")
+        self.assertEqual(r_leo_key.action_type, "OPTIMIZE_EXISTING")
+
+        r_li_cost = mapper.find_best_url("linkedin premium cost in pakistan")
+        self.assertEqual(r_li_cost.best_url, "https://aitoolgems.tech/tools/linkedin/")
+        self.assertEqual(r_li_cost.action_type, "OPTIMIZE_EXISTING")
+
+        r_li_price = mapper.find_best_url("linkedin premium price in pakistan")
+        self.assertEqual(r_li_price.best_url, "https://aitoolgems.tech/tools/linkedin/")
+        self.assertEqual(r_li_price.action_type, "OPTIMIZE_EXISTING")
+
+
     # ── Content Optimizer Tests ──────────────────────────────────────────────
 
     def test_content_optimizer_live_extraction(self):
