@@ -133,5 +133,275 @@
     "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
     "approved_for_publishing": true,
     "priority": 5
+  },
+  {
+    "slug": "perplexity-ai-pakistan",
+    "title": "Perplexity AI Pro in Pakistan: Pricing, Search Features & Guide (2026)",
+    "meta_description": "Complete guide to Perplexity AI Pro in Pakistan. Compare Pro Search, Claude 3.5 & GPT-4o models in PKR with EasyPaisa, JazzCash, and SadaPay payment.",
+    "primary_keyword": "Perplexity AI Pro Pakistan",
+    "secondary_keywords": [
+      "Perplexity AI price in Pakistan",
+      "Perplexity Pro subscription PKR",
+      "Perplexity vs ChatGPT Pakistan",
+      "academic research AI Pakistan"
+    ],
+    "target_audience": "Pakistani researchers, university students, content writers, and digital analysts",
+    "primary_tool": "perplexity",
+    "related_tools": [
+      {"slug": "perplexity", "name": "Perplexity Pro"},
+      {"slug": "chatgpt", "name": "ChatGPT Plus"},
+      {"slug": "claude", "name": "Claude 3.5 Sonnet"},
+      {"slug": "gemini", "name": "Google Gemini Advanced"}
+    ],
+    "official_sources": [
+      "https://www.perplexity.ai/pro",
+      "https://www.perplexity.ai/hub/faq"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 6
+  },
+  {
+    "slug": "deepseek-ai-pakistan",
+    "title": "DeepSeek AI in Pakistan: Pricing, Local Access & Guide (2026)",
+    "meta_description": "How to access DeepSeek V3 and R1 reasoning models in Pakistan. Compare open-weights coding, local PKR pricing, and payment via EasyPaisa and JazzCash.",
+    "primary_keyword": "DeepSeek AI Pakistan",
+    "secondary_keywords": [
+      "DeepSeek price in Pakistan",
+      "DeepSeek R1 reasoning PKR",
+      "DeepSeek coding assistant Pakistan",
+      "open source AI Pakistan"
+    ],
+    "target_audience": "Pakistani software developers, computer science students, and AI researchers",
+    "primary_tool": "deepseek",
+    "related_tools": [
+      {"slug": "deepseek", "name": "DeepSeek AI"},
+      {"slug": "cursor", "name": "Cursor AI"},
+      {"slug": "chatgpt", "name": "ChatGPT Plus"},
+      {"slug": "claude", "name": "Claude 3.5 Sonnet"}
+    ],
+    "official_sources": [
+      "https://www.deepseek.com/",
+      "https://api-docs.deepseek.com/"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 7
+  },
+  {
+    "slug": "heygen-ai-video-pakistan",
+    "title": "HeyGen AI Video in Pakistan: Avatar Creation & Pricing Guide (2026)",
+    "meta_description": "Complete guide to HeyGen AI video avatars in Pakistan. Review video translation, digital twin generation, and flat PKR pricing via local wallets.",
+    "primary_keyword": "HeyGen AI video Pakistan",
+    "secondary_keywords": [
+      "HeyGen price in Pakistan",
+      "AI video avatar generator PKR",
+      "HeyGen video translation Urdu",
+      "faceless marketing avatars Pakistan"
+    ],
+    "target_audience": "Pakistani digital marketers, YouTube creators, corporate trainers, and e-commerce brands",
+    "primary_tool": "heygen",
+    "related_tools": [
+      {"slug": "heygen", "name": "HeyGen AI Video"},
+      {"slug": "capcut", "name": "CapCut Pro"},
+      {"slug": "elevenlabs", "name": "ElevenLabs Voice AI"},
+      {"slug": "veo", "name": "Veo 3 Ultra"}
+    ],
+    "official_sources": [
+      "https://www.heygen.com/pricing",
+      "https://www.heygen.com/features"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 8
+  },
+  {
+    "slug": "runway-gen3-pakistan",
+    "title": "Runway Gen-3 Alpha in Pakistan: AI Video Generator Guide (2026)",
+    "meta_description": "Explore Runway Gen-3 Alpha in Pakistan for high-definition AI cinematography. Compare monthly credits in PKR, camera controls, and local payment methods.",
+    "primary_keyword": "Runway Gen-3 Pakistan",
+    "secondary_keywords": [
+      "Runway Gen-3 price Pakistan",
+      "Runway AI video credits PKR",
+      "AI cinematography Pakistan",
+      "Runway vs Veo video"
+    ],
+    "target_audience": "Pakistani filmmakers, commercial video editors, 3D artists, and creative agencies",
+    "primary_tool": "runway",
+    "related_tools": [
+      {"slug": "runway", "name": "Runway Gen-3"},
+      {"slug": "veo", "name": "Veo 3 Ultra"},
+      {"slug": "capcut", "name": "CapCut Pro"},
+      {"slug": "leonardo", "name": "Leonardo AI Essential"}
+    ],
+    "official_sources": [
+      "https://runwayml.com/pricing",
+      "https://runwayml.com/research/gen-3-alpha"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 9
+  },
+  {
+    "slug": "grammarly-vs-quillbot-pakistan",
+    "title": "Grammarly vs QuillBot in Pakistan: Best AI Writing Tools (2026)",
+    "meta_description": "Compare Grammarly Premium vs QuillBot in Pakistan. Review grammar checks, paraphrasing, thesis writing workflows, and PKR pricing via EasyPaisa.",
+    "primary_keyword": "Grammarly vs QuillBot Pakistan",
+    "secondary_keywords": [
+      "Grammarly Premium price Pakistan",
+      "QuillBot Premium price PKR",
+      "AI paraphrasing tool Pakistan",
+      "academic proofreading Pakistan"
+    ],
+    "target_audience": "Pakistani university students, academic researchers, freelance content writers, and copywriters",
+    "primary_tool": "grammarly",
+    "related_tools": [
+      {"slug": "grammarly", "name": "Grammarly Premium"},
+      {"slug": "quillbot", "name": "QuillBot Premium"},
+      {"slug": "chatgpt", "name": "ChatGPT Plus"},
+      {"slug": "notion", "name": "Notion Business"}
+    ],
+    "official_sources": [
+      "https://www.grammarly.com/plans",
+      "https://quillbot.com/upgrade"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 10
+  },
+  {
+    "slug": "semrush-pro-pakistan",
+    "title": "Semrush Pro in Pakistan: SEO Agency Pricing & Local Guide (2026)",
+    "meta_description": "Complete guide to Semrush Pro in Pakistan for freelance SEOs and agencies. Review keyword research, backlink audits, and PKR pricing without bank forex tax.",
+    "primary_keyword": "Semrush Pro price in Pakistan",
+    "secondary_keywords": [
+      "Semrush price Pakistan",
+      "buy Semrush account PKR",
+      "SEO agency tools Pakistan",
+      "keyword research tool Pakistan"
+    ],
+    "target_audience": "Pakistani SEO specialists, digital marketing agencies, affiliate marketers, and webmasters",
+    "primary_tool": "semrush",
+    "related_tools": [
+      {"slug": "semrush", "name": "Semrush Pro"},
+      {"slug": "notion", "name": "Notion Business"},
+      {"slug": "chatgpt", "name": "ChatGPT Plus"},
+      {"slug": "allinone", "name": "All-in-One Mega Suite"}
+    ],
+    "official_sources": [
+      "https://www.semrush.com/prices/",
+      "https://www.semrush.com/features/"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 11
+  },
+  {
+    "slug": "grok-ai-pakistan",
+    "title": "Grok 2 AI in Pakistan: Features, X Premium & Local Access (2026)",
+    "meta_description": "How to use Grok 2 AI and Aurora image generation in Pakistan. Review real-time search capabilities, access options, and PKR rates via EasyPaisa.",
+    "primary_keyword": "Grok AI Pakistan",
+    "secondary_keywords": [
+      "Grok AI price in Pakistan",
+      "Grok 2 Aurora image generator",
+      "X Premium with Grok PKR",
+      "real time AI search Pakistan"
+    ],
+    "target_audience": "Pakistani tech enthusiasts, journalists, social media managers, and crypto researchers",
+    "primary_tool": "grok",
+    "related_tools": [
+      {"slug": "grok", "name": "Grok AI"},
+      {"slug": "chatgpt", "name": "ChatGPT Plus"},
+      {"slug": "claude", "name": "Claude 3.5 Sonnet"},
+      {"slug": "midjourney", "name": "Midjourney AI"}
+    ],
+    "official_sources": [
+      "https://x.ai/",
+      "https://help.twitter.com/en/using-x/x-premium"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 12
+  },
+  {
+    "slug": "gamma-app-pakistan",
+    "title": "Gamma App in Pakistan: AI Presentations & Pitch Decks Guide (2026)",
+    "meta_description": "How Pakistani professionals and agencies use Gamma App for AI presentations and pitch decks. Review Plus/Pro credits, exports, and PKR payment methods.",
+    "primary_keyword": "Gamma App Pakistan",
+    "secondary_keywords": [
+      "Gamma App price in Pakistan",
+      "AI presentation maker PKR",
+      "pitch deck AI Pakistan",
+      "Gamma vs PowerPoint"
+    ],
+    "target_audience": "Pakistani startup founders, business students, corporate managers, and agency consultants",
+    "primary_tool": "gamma",
+    "related_tools": [
+      {"slug": "gamma", "name": "Gamma App"},
+      {"slug": "canva", "name": "Canva Pro Edu"},
+      {"slug": "chatgpt", "name": "ChatGPT Plus"},
+      {"slug": "notion", "name": "Notion Business"}
+    ],
+    "official_sources": [
+      "https://gamma.app/pricing",
+      "https://gamma.app/docs"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 13
+  },
+  {
+    "slug": "nordvpn-vs-surfshark-pakistan",
+    "title": "NordVPN vs Surfshark in Pakistan: Best VPN for Freelancers (2026)",
+    "meta_description": "Compare NordVPN vs Surfshark in Pakistan for remote work security, banking access, and streaming. Review local PKR rates with EasyPaisa and JazzCash.",
+    "primary_keyword": "NordVPN vs Surfshark Pakistan",
+    "secondary_keywords": [
+      "NordVPN price in Pakistan",
+      "Surfshark price in Pakistan",
+      "best VPN for Pakistani freelancers",
+      "secure internet browsing PKR"
+    ],
+    "target_audience": "Pakistani remote workers, Upwork freelancers, crypto traders, and privacy-conscious users",
+    "primary_tool": "nordvpn",
+    "related_tools": [
+      {"slug": "nordvpn", "name": "NordVPN"},
+      {"slug": "surfshark", "name": "Surfshark VPN"},
+      {"slug": "windows", "name": "Windows 11 Pro"},
+      {"slug": "allinone", "name": "All-in-One Mega Suite"}
+    ],
+    "official_sources": [
+      "https://nordvpn.com/pricing/",
+      "https://surfshark.com/pricing"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 14
+  },
+  {
+    "slug": "canva-pro-pakistan-guide",
+    "title": "Canva Pro in Pakistan: Features, Team Invites & Pricing Guide (2026)",
+    "meta_description": "Complete guide to Canva Pro in Pakistan. Review Brand Kits, Magic Studio AI, Invitation vs Lifetime options in PKR, and local payment verification.",
+    "primary_keyword": "Canva Pro price in Pakistan",
+    "secondary_keywords": [
+      "Canva Pro lifetime deal Pakistan",
+      "buy Canva Pro EasyPaisa",
+      "Canva Magic Studio Pakistan",
+      "Canva Pro Edu invitation"
+    ],
+    "target_audience": "Pakistani social media managers, graphic designers, small business owners, and teachers",
+    "primary_tool": "canva",
+    "related_tools": [
+      {"slug": "canva", "name": "Canva Pro Edu"},
+      {"slug": "figma", "name": "Figma Pro"},
+      {"slug": "adobe", "name": "Adobe Creative Cloud"},
+      {"slug": "capcut", "name": "CapCut Pro"}
+    ],
+    "official_sources": [
+      "https://www.canva.com/pricing/",
+      "https://www.canva.com/pro/"
+    ],
+    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "approved_for_publishing": true,
+    "priority": 15
   }
 ]
