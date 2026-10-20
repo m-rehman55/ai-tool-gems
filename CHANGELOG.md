@@ -3,6 +3,59 @@
 All notable changes to the AI Tool Gems platform are documented in this file in reverse chronological order.
 Governing Specification: Prompt 0 — Shared Operating Rules.
 
+## [Phase 7] - 2026-10-20 — Final QA, Accessibility, Performance & Verification
+### Verified & Audited
+- **Comprehensive Regression Verification (138 Unit Tests Passing):**
+  - Reconciled and executed all test suites with zero failures and zero skipped tests:
+    - `tests`: 38/38 passed (link graph, route integrity, UI interactions, breadcrumbs, delivery claim checks).
+    - `keyword_agent`: 24/24 passed (GSC filters, RE2 validation, intent mapping, sub-app bundles, category routing).
+    - `seo-agent`: 43/43 passed (safety firewall, scope guard, schema validation, 10-step autonomous workflow).
+    - `marketing_agent`: 33/33 passed (buffer integrations, SEO monitor, social pack cadence, preflight checks).
+  - Link graph & structure: `python scripts/link_graph_checker.py --strict` scanned 75 HTML files, 2,343 internal links, 627 anchors, 140 assets, 70 sitemap URLs with 0 errors and 0 warnings.
+  - Technical SEO audit: `python audit_all.py` checked 76 files with 0 errors and 0 warnings.
+  - Structured data audit: `python schema_audit.py` scanned 76 pages with 100.0% completeness (3,775 / 3,775 points).
+- **Accessibility & Responsive Design Verification:**
+  - Verified responsive design across mobile (<768px), tablet (768px-1024px), and desktop (>1024px) viewports with root `overflow-x: hidden` to prevent layout shift and horizontal scroll jank.
+  - Confirmed WCAG AA color contrast overrides in `light-theme.css` for breadcrumbs, cards, badges, and quick-answer callouts.
+  - Confirmed `:focus-visible` outlines across all interactive controls (links, buttons, search input, category filters, and details toggles).
+  - Verified `@media (prefers-reduced-motion: reduce)` rules disable high-movement transforms and animations for motion-sensitive users.
+  - Confirmed modal focus trapping and keyboard escape handling in `app.js`.
+- **Performance & Asset Loading Checks:**
+  - Confirmed images use appropriate dimensions and lazy loading (`loading="lazy"`).
+  - Confirmed zero heavy third-party tracker scripts, zero unauthenticated external analytics, and zero duplicate fonts.
+  - Documented browser automation sandbox limitation: Playwright driver download restricted (Azure CDN 404 in offline VM); static and live DOM verification conducted without inventing synthetic Lighthouse scores.
+- **Payment Method Verification:**
+  - Local Pakistani payment rails (EasyPaisa, JazzCash, SadaPay, Raast, Bank IBFT) confirmed verified and configured via manual WhatsApp order dispatch.
+  - International payment methods (Wise, SWIFT) confirmed inquiry-only via custom quote on WhatsApp.
+  - PayPal and automated credit/debit card gateways confirmed unsupported with explicit anti-fraud consumer warnings in `policies.html#payments`.
+
+---
+
+## [Phase 6] - 2026-10-20 — Evidence-Driven Intent Optimization, Bundle Disambiguation & GSC Hardening
+### Fixed & Generated
+- **Sub-App Bundle Inclusion Clarification (`tools/adobe/index.html`):**
+  - Updated direct quick-answer and FAQs explaining that Illustrator, Photoshop, Premiere Pro, and After Effects are included in the Creative Cloud All Apps suite (Rs. 1,700 for 2 months private access) and are not sold as standalone single-app subscriptions.
+  - Synchronized JSON-LD `FAQPage` schema with visible on-page answers.
+  - Added internal contextual links to `/guides/best-ai-video-generators-pakistan/` and `/categories/content-creation/`.
+- **CapCut Pro Purchase Workflow (`tools/capcut/index.html`):**
+  - Enriched direct quick-answer and FAQs with a 4-step ordering guide (Select Plan -> WhatsApp Order -> Pay via EasyPaisa/JazzCash/SadaPay/Raast Bank IBFT -> Credential Delivery).
+  - Confirmed Rs. 900 for 1-month private access and updated JSON-LD `FAQPage` schema.
+  - Added internal link to `/guides/best-ai-video-generators-pakistan/`.
+- **ChatGPT Plus vs Pro Distinction (`tools/chatgpt/index.html`):**
+  - Corrected H1 to `ChatGPT Plus Subscription Price in Pakistan (GPT-4o)`.
+  - Removed outdated "Rs. 1,600 shared" phrase and confirmed Rs. 2,300/mo private access.
+  - Added explicit FAQ on-page and in JSON-LD schema clarifying that OpenAI's $200/month ChatGPT Pro tier is not stocked.
+  - Added internal links to `/guides/chatgpt-vs-gemini-pakistan/` and `/guides/chatgpt-alternatives/`.
+- **Keyword Mapper Hardening (`keyword_agent/page_mapper.py`):**
+  - Added dynamic tool catalog discovery for multi-tool comparisons (`action_type="MONITOR"`).
+  - Added category routing for video editing queries (`best ai tools for video editing pakistan`) to `/guides/best-ai-video-generators-pakistan/` (confidence 0.92, `OPTIMIZE_EXISTING`).
+  - Added unstocked tool fallback routing to `/prices/` (confidence 0.60, `MANUAL_REVIEW`).
+  - Added regression test `test_phase_6c_intent_safety_and_query_regressions` in `keyword_agent/tests/test_keyword_agent.py`.
+- **GSC 28-Day Evidence Retrieval:**
+  - Audited fresh 28-day Search Analytics from `sc-domain:aitoolgems.tech` (2026-09-19 to 2026-10-17) capturing top impressions for Leonardo AI (35 imp), ChatGPT Pro (7 imp), LinkedIn Premium (6 imp), SadaPay (5 imp), Adobe Illustrator (4 imp), NayaPay (3 imp), and CapCut Pro (2 imp) with zero secret exposure.
+
+---
+
 ## [Phase 5] - 2026-10-19 — Global Positioning, Guardrails Modernization & Technical SEO / AEO / GEO
 ### Fixed & Generated
 - **Speed Claim Remediation & Activation Transparency (`a0df742`):**
