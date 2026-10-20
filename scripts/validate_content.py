@@ -182,10 +182,17 @@ def validate_article_file(file_path: Path, expected_slug: str = None) -> tuple[b
             errors.append(f"Image tag missing alt text: {img}")
 
     # 8. Local Pakistan signals & foreign currency exclusion
-    if "pkr" not in plain and "rs." not in plain:
-        errors.append("Missing Pakistani currency (PKR/Rs.) pricing signal")
-    if "easypaisa" not in plain and "jazzcash" not in plain:
-        errors.append("Missing verified Pakistani payment route (EasyPaisa/JazzCash)")
+    if "pakistan" not in plain and "pakistani" not in plain:
+        errors.append("Missing Pakistani market localization signal ('Pakistan'/'Pakistani')")
+
+    has_commercial_intent = any(term in plain for term in ["price", "pricing", "buy", "order", "cost", "subscription", "rates", "fee"])
+    if has_commercial_intent and ("pkr" not in plain and "rs." not in plain):
+        errors.append("Commercial topic missing Pakistani currency (PKR/Rs.) pricing signal")
+
+    has_payment_discussion = any(term in plain for term in ["payment", "pay", "checkout", "mobile wallet"])
+    if has_payment_discussion and ("easypaisa" not in plain and "jazzcash" not in plain and "sadapay" not in plain and "bank transfer" not in plain):
+        errors.append("Payment-related topic missing verified Pakistani payment route (EasyPaisa/JazzCash/SadaPay/Bank)")
+
     if "¥" in html or "jpy" in plain or "tokyo" in plain:
         errors.append("Detected foreign currency/Japan contamination in Pakistani content")
 

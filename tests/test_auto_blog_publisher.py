@@ -84,8 +84,7 @@ class TestAutoBlogPublisherSafeguards(unittest.TestCase):
         """Reject queue items missing required fields."""
         required = [
             "slug", "title", "meta_description", "primary_keyword",
-            "secondary_keywords", "primary_tool", "related_tools",
-            "pakistani_payment_support"
+            "secondary_keywords", "primary_tool", "related_tools"
         ]
         for field in required:
             item = dict(self.valid_sample_candidate)
@@ -138,12 +137,19 @@ class TestAutoBlogPublisherSafeguards(unittest.TestCase):
         self.assertTrue(any("meta description length" in e.lower() for e in errs))
 
     def test_secondary_keywords_count_and_payment_rails(self):
-        """Require at least 3 secondary keywords and verified Pakistani payment rails."""
+        """Require at least 3 secondary keywords and validate payment rails contextually."""
         item_few_kws = dict(self.valid_sample_candidate, secondary_keywords=["kw1", "kw2"])
         ok, errs = validate_queue_candidate(item_few_kws)
         self.assertFalse(ok)
         self.assertTrue(any("secondary keywords" in e.lower() for e in errs))
 
+        # Informational topic without payment support should pass validation cleanly
+        item_informational = dict(self.valid_sample_candidate)
+        del item_informational["pakistani_payment_support"]
+        ok, errs = validate_queue_candidate(item_informational)
+        self.assertTrue(ok, f"Informational topic without payment support should be valid: {errs}")
+
+        # When payment support is provided, foreign-only unverified rails should fail
         item_no_pak_pay = dict(self.valid_sample_candidate, pakistani_payment_support=["Stripe", "PayPal"])
         ok, errs = validate_queue_candidate(item_no_pak_pay)
         self.assertFalse(ok)
