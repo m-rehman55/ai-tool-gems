@@ -3,19 +3,29 @@
 All notable changes to the AI Tool Gems platform are documented in this file in reverse chronological order.
 Governing Specification: Prompt 0 — Shared Operating Rules.
 
-## [Auto-Blog-Publisher Fix] - 2026-10-20 — Autonomous Content Engine Hardening & Deployment Automation
-### Fixed & Hardened
-- **Queue Starvation & Infinite Content Generation (`scripts/auto_blog_publisher.py`, `data/seo/content-queue.json`):**
-  - Resolved root cause where the content queue had only 5 static topics which had already been published to disk, causing the workflow to exit cleanly without generating content.
-  - Added 10 high-value Pakistani SEO guide topics to `content-queue.json` covering catalog tools (`perplexity-ai-pakistan`, `deepseek-ai-pakistan`, `heygen-ai-video-pakistan`, `runway-gen3-pakistan`, `grammarly-vs-quillbot-pakistan`, `semrush-pro-pakistan`, `grok-ai-pakistan`, `gamma-app-pakistan`, `nordvpn-vs-surfshark-pakistan`, `canva-pro-pakistan-guide`).
-  - Implemented dynamic catalog discovery fallback in `load_queue_candidate()`: automatically scans `app.js` catalog tools to formulate unwritten Pakistani guides if static queue items are ever exhausted, guaranteeing the publisher will never halt or run out of topics.
-- **GitHub Pages Deployment Trigger (`.github/workflows/auto-blog-publisher.yml`):**
-  - Resolved root cause where commits pushed by GitHub Actions using `GITHUB_TOKEN` did not trigger subsequent workflows due to GitHub's event-loop protection.
-  - Granted `pages: write` and `id-token: write` permissions to workflow.
-  - Added automated REST API dispatch via `gh api --method POST repos/${{ github.repository }}/pages/builds` after successful commit/push to immediately trigger GitHub Pages build and deploy newly published guides to production (`aitoolgems.tech`).
-- **Validation & Truth Policy Hardening (`scripts/validate_content.py`, `scripts/auto_blog_publisher.py`):**
-  - Updated `validate_content.py` anti-stuffing detector to dynamically derive topic tokens from the guide's slug and common editorial nouns, preventing false-positive repetition rejections on primary tool names.
-  - Standardized truth policy wording in `render_article_html()` to guarantee compliance with "verified local activation in Pakistan" and prevent prohibited "instant activation" speed claims.
+## [Auto-Blog-Publisher Hardening] - 2026-10-20 — Production Reliability, Safe Rebase, Strict Queue Validation & Live Verification
+### Fixed, Hardened & Automated
+- **Strict Queue Validation & Candidate Selection (`scripts/auto_blog_publisher.py`):**
+  - Enforced `approved_for_publishing: true` strictly as boolean True (fails closed on false, null, missing, string, or truthy integer values).
+  - Validated required fields (`slug`, `title`, `meta_description`, `primary_keyword`, `secondary_keywords`, `primary_tool`, `related_tools`, `pakistani_payment_support`).
+  - Added strict slug format validation (`^[a-z0-9]+(-[a-z0-9]+)*$`) and automatic duplicate rejection against published directory slugs.
+  - Implemented fail-safe cleanup: if article generation or validation fails, temporary files and directories are cleanly purged with zero leftover files and no partial metadata updates.
+  - Distinct reporting for empty queue: outputs `STATUS: NO_ELIGIBLE_TOPIC` distinctly from publication success, preventing false success reporting.
+- **Robust XML ElementTree Sitemap Engine (`scripts/generate_sitemap.py`):**
+  - Replaced fragile string manipulation with structured `xml.etree.ElementTree` serialization under `http://www.sitemaps.org/schemas/sitemap/0.9`.
+  - Dynamically extracts trustworthy modification dates from article metadata (`article:modified_time`), git commit history (`git log -1 --format=%as`), or filesystem mtime, completely eliminating hardcoded lastmod dates.
+  - Enforces strict canonical deduplication, domain bounds (`https://aitoolgems.tech/`), and strictly excludes administrative/noindex files (`404.html`, `admin.html`, `gsc_daily_checklist.html`, `privacy.html`, `terms.html`).
+- **Live Production Deployment Verifier (`scripts/verify_live_deployment.py`):**
+  - Created standalone deployment verification utility with bounded exponential backoff (up to 6 retries with initial 5s delay).
+  - Asserts live HTTP 200 OK, validates canonical tag matches target URL, checks indexable robots directives (no `noindex`), and verifies live `sitemap.xml` presence on `https://aitoolgems.tech/`.
+- **Hardened GitHub Actions Workflow (`.github/workflows/auto-blog-publisher.yml`):**
+  - Added workflow dispatch inputs (`force_publish`, `dry_run`) and concurrency locking (`auto-blog-publisher-state`).
+  - Integrated comprehensive preflight quality gates (unit test suites, link graph checker, technical audit, schema audit, sitemap audit).
+  - Removed destructive git conflict fallbacks (`|| true` and `-X ours`); replaced with strict rebase against `origin/main`.
+  - Added GitHub Pages build status polling and automated live deployment verification before generating a comprehensive `$GITHUB_STEP_SUMMARY`.
+  - Documented search engine indexing boundaries: IndexNow is dispatched immediately, while Google Search Console indexing occurs via independent sitemap crawling.
+- **Comprehensive Regression Test Suite (`tests/test_auto_blog_publisher.py`):**
+  - Added 10 dedicated unit tests covering queue approval validation, malformed entry detection, duplicate slug rejection, sitemap ElementTree generation, cleanup on failure, and no-eligible-topics handling (all passing).
 
 ## [Phase 8] - 2026-10-20 — Conversion Growth, GSC Opportunity Execution & Independent Production Audit
 ### Fixed & Generated

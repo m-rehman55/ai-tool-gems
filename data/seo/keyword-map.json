@@ -395,5 +395,41 @@
     "published_url": "https://aitoolgems.tech/guides/n8n-automation-pakistan/",
     "published_date": "2026-10-16",
     "last_updated": "2026-10-16"
+  },
+  {
+    "slug": "perplexity-ai-pakistan",
+    "primary_keyword": "Perplexity AI Pro Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani researchers, university students, content writers, and digital analysts",
+    "secondary_keywords": [
+      "Perplexity AI price in Pakistan",
+      "Perplexity Pro subscription PKR",
+      "Perplexity vs ChatGPT Pakistan",
+      "academic research AI Pakistan"
+    ],
+    "faq_opportunities": [
+      "What is the verified cost of Perplexity AI Pro in Pakistan?",
+      "How does Perplexity AI price in Pakistan compare for local creators and freelancers?",
+      "Can I pay for Perplexity Pro using EasyPaisa or JazzCash?",
+      "Why is finding a reliable Perplexity Pro subscription PKR crucial for Pakistani agencies?"
+    ],
+    "overlapping_pages": [
+      "/tools/perplexity/",
+      "/guides/chatgpt-alternatives/"
+    ],
+    "internal_link_targets": [
+      "/tools/perplexity/",
+      "/tools/chatgpt/",
+      "/tools/claude/",
+      "/tools/gemini/"
+    ],
+    "research_sources": [
+      "https://www.perplexity.ai/pro",
+      "Official Perplexity documentation"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/perplexity-ai-pakistan/",
+    "published_date": "2026-10-20",
+    "last_updated": "2026-10-20"
   }
 ]
