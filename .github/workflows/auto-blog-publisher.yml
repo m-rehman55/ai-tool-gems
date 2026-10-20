@@ -7,9 +7,14 @@ on:
   workflow_dispatch:
     inputs:
       force_publish:
-        description: "Force publish next approved queue candidate"
+        description: "Publish next eligible queue candidate"
         required: false
         default: true
+        type: boolean
+      dry_run:
+        description: "Dry run preview mode (no commit, push, or live deployment)"
+        required: false
+        default: false
         type: boolean
 
 permissions:
@@ -24,7 +29,7 @@ concurrency:
 jobs:
   publish-guide:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
@@ -52,11 +57,34 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r seo-agent/requirements.txt
 
-      - name: Run Autonomous Blog Publisher
+      - name: Run Pre-Publication Quality Gates & Regression Suite
         run: |
-          python scripts/auto_blog_publisher.py --publish
+          echo "🔍 Running pre-publication test suites..."
+          python -m unittest discover -s tests -v
+          python -m unittest discover -s keyword_agent/tests -v
+          echo "🌐 Checking link graph integrity..."
+          python scripts/link_graph_checker.py --strict
+          echo "📊 Running Technical & Schema Audits..."
+          python audit_all.py
+          python schema_audit.py
+          echo "🗺️ Validating sitemap integrity..."
+          python scripts/generate_sitemap.py --check
+
+      - name: Run Autonomous Blog Publisher
+        id: publisher
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "Mode: DRY RUN requested"
+            python scripts/auto_blog_publisher.py
+          else
+            echo "Mode: LIVE PUBLISH requested"
+            python scripts/auto_blog_publisher.py --publish
+          fi
 
       - name: Commit and Push Newly Published Guide
+        if: steps.publisher.outputs.status == 'PUBLISHED'
+        id: git_push
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -64,12 +92,78 @@ jobs:
           git config user.name "AI Tool Gems Content Bot"
           git config user.email "actions@users.noreply.github.com"
           git add guides/ blog/ sitemap.xml llms.txt data/seo/
+
           if git diff --cached --quiet; then
-            echo "ℹ️ No changes to commit (queue empty or topic already live)."
+            echo "ℹ️ No changes detected to commit."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git commit -m "feat(content): publish autonomous SEO guide via content engine"
-          git pull --rebase origin main || git pull --no-rebase origin main -X ours || true
+
+          git commit -m "feat(content): publish autonomous guide '${{ steps.publisher.outputs.slug }}' [skip ci]"
+          COMMIT_SHA=$(git rev-parse HEAD)
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+          echo "commit_sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
+
+          # Strict rebase against latest origin/main without destructive fallbacks
+          git fetch origin main
+          git rebase origin/main
           git push origin main
+          echo "✅ Successfully pushed commit $COMMIT_SHA to main."
+
+      - name: Trigger and Await GitHub Pages Deployment
+        if: steps.git_push.outputs.committed == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           echo "🚀 Triggering GitHub Pages build..."
-          gh api --method POST repos/${{ github.repository }}/pages/builds || echo "Pages build trigger notice"
+          BUILD_RESP=$(gh api --method POST repos/${{ github.repository }}/pages/builds)
+          echo "Pages API response: $BUILD_RESP"
+
+          echo "⏳ Waiting for GitHub Pages build to complete..."
+          for i in {1..30}; do
+            STATUS=$(gh api repos/${{ github.repository }}/pages/builds/latest --jq '.status' 2>/dev/null || echo "pending")
+            echo "Build status (check $i/30): $STATUS"
+            if [ "$STATUS" = "built" ]; then
+              echo "✅ GitHub Pages build completed successfully."
+              break
+            elif [ "$STATUS" = "errored" ]; then
+              echo "❌ GitHub Pages build reported an error."
+              exit 1
+            fi
+            sleep 10
+          done
+
+      - name: Verify Live Production Deployment
+        if: steps.git_push.outputs.committed == 'true'
+        shell: bash
+        run: |
+          python scripts/verify_live_deployment.py --url "${{ steps.publisher.outputs.url }}"
+
+      - name: Generate Job Summary
+        if: always()
+        shell: bash
+        run: |
+          STATUS="${{ steps.publisher.outputs.status }}"
+          SLUG="${{ steps.publisher.outputs.slug }}"
+          URL="${{ steps.publisher.outputs.url }}"
+          TITLE="${{ steps.publisher.outputs.title }}"
+          COMMITTED="${{ steps.git_push.outputs.committed }}"
+          SHA="${{ steps.git_push.outputs.commit_sha }}"
+
+          cat <<EOF >> "$GITHUB_STEP_SUMMARY"
+          # 🤖 AI Tool Gems Daily Blog Publisher Summary
+
+          | Metric | Value |
+          |---|---|
+          | **Execution Mode** | ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && 'Dry Run (Preview)' || 'Live Production' }} |
+          | **Publisher Status** | \`${STATUS:-SKIPPED_OR_FAILED}\` |
+          | **Candidate Slug** | \`${SLUG:-None}\` |
+          | **Candidate Title** | ${TITLE:-N/A} |
+          | **Published URL** | ${URL:-N/A} |
+          | **Git Commit** | \`${SHA:-N/A}\` |
+          | **Pages Deployment** | ${{ steps.git_push.outputs.committed == 'true' && 'Verified Built & Live' || 'Not Required / Skipped' }} |
+
+          > [!NOTE]
+          > **Indexing Transparency**: Newly published guides are immediately submitted to the IndexNow protocol (covering Bing, Yandex, Seznam). Google Search Console discovers new URLs via the live XML sitemap; search engine indexing occurs based on Google's independent crawl schedules.
+          EOF
