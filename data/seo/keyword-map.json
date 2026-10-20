@@ -431,5 +431,21 @@
     "published_url": "https://aitoolgems.tech/guides/perplexity-ai-pakistan/",
     "published_date": "2026-10-20",
     "last_updated": "2026-10-20"
+  },
+  {
+    "slug": "deepseek-ai-pakistan",
+    "primary_keyword": "DeepSeek AI Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani software developers, computer science students, and AI researchers",
+    "secondary_keywords": [
+      "DeepSeek price in Pakistan",
+      "DeepSeek R1 reasoning PKR",
+      "DeepSeek coding assistant Pakistan",
+      "open source AI Pakistan"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/deepseek-ai-pakistan/",
+    "published_date": "2026-10-20",
+    "last_updated": "2026-10-20"
   }
 ]
