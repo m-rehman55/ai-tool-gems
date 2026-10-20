@@ -561,6 +561,32 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('<loc>https://aitoolgems.tech/privacy-policy/</loc>', sm_content)
         self.assertIn('<loc>https://aitoolgems.tech/terms-of-service/</loc>', sm_content)
 
+    def test_phase8_leonardo_and_linkedin_conversion_optimization(self):
+        """Phase 8: Asserts Leonardo AI license key clarity and LinkedIn Premium cost/activation FAQs in visible HTML & schema."""
+        # 1. Leonardo AI Essential
+        leo_path = os.path.join(REPO_ROOT, 'tools', 'leonardo', 'index.html')
+        with open(leo_path, 'r', encoding='utf-8') as f:
+            leo_html = f.read()
+        self.assertIn('Does Leonardo AI Essential include a license key or private account access?', leo_html)
+        self.assertIn('Standalone retail license keys are not issued by Leonardo.Ai for this tier', leo_html)
+        self.assertIn('How do I buy Leonardo AI in Pakistan with local payment methods?', leo_html)
+        self.assertIn('policies.html#payments', leo_html)
+
+        # 2. LinkedIn Premium
+        li_path = os.path.join(REPO_ROOT, 'tools', 'linkedin', 'index.html')
+        with open(li_path, 'r', encoding='utf-8') as f:
+            li_html = f.read()
+        self.assertIn('What is the LinkedIn Premium price and cost in Pakistan?', li_html)
+        self.assertIn('How does LinkedIn Premium invitation activation work on an existing profile?', li_html)
+        self.assertIn('policies.html#payments', li_html)
+
+        # 3. Midjourney guide local payment routing
+        mj_path = os.path.join(REPO_ROOT, 'guides', 'midjourney-alternatives-pakistan', 'index.html')
+        with open(mj_path, 'r', encoding='utf-8') as f:
+            mj_html = f.read()
+        self.assertIn('How to Order via Local Pakistani Payments (EasyPaisa, JazzCash, SadaPay, Raast)', mj_html)
+        self.assertIn('policies.html#payments', mj_html)
+
 
 if __name__ == '__main__':
     unittest.main()

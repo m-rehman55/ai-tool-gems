@@ -3,6 +3,30 @@
 All notable changes to the AI Tool Gems platform are documented in this file in reverse chronological order.
 Governing Specification: Prompt 0 — Shared Operating Rules.
 
+## [Phase 8] - 2026-10-20 — Conversion Growth, GSC Opportunity Execution & Independent Production Audit
+### Fixed & Generated
+- **Leonardo AI Conversion & License Key Clarification (`tools/leonardo/index.html`):**
+  - Addressed high-impression GSC queries (`intitle:"leonardo ai" "license key"`: 35 impressions at pos 5.9; `intitle:"leonardo ai" "instant delivery"`: 4 impressions at pos 29.2).
+  - Explicitly clarified in direct quick-answer, visible HTML FAQs, and JSON-LD `FAQPage` schema that Leonardo AI Essential is delivered via private dedicated account credentials with 8,500 monthly credits (retail standalone license keys are not issued by Leonardo.Ai for this tier), with full commercial rights.
+  - Formatted clear 4-step local ordering process (EasyPaisa, JazzCash, SadaPay, Raast, Bank IBFT) and 7-day replacement warranty.
+- **LinkedIn Premium Pricing & Activation Clarification (`tools/linkedin/index.html`):**
+  - Addressed striking-distance GSC queries (`linkedin premium price in pakistan`: 6 imp at pos 11.0; `linkedin premium cost in pakistan`: 3 imp at pos 10.3; `linkedin premium pakistan price`: 1 imp at pos 8.0).
+  - Enriched visible FAQs and JSON-LD `FAQPage` schema answering exact price/cost (Rs. 1,500 for 2-Month invitation voucher) and clarifying password-free invitation activation directly on personal profiles.
+- **Local Mobile Wallet Search Intent Routing (`guides/midjourney-alternatives-pakistan/index.html`):**
+  - Addressed GSC impressions for `"sadapay"` (5 imp) and `"nayapay"` (3 imp) landing on the Midjourney alternatives guide.
+  - Updated section heading to `How to Order via Local Pakistani Payments (EasyPaisa, JazzCash, SadaPay, Raast)` and added direct contextual link to `policies.html#payments`.
+- **Keyword Mapper Robustness (`keyword_agent/page_mapper.py`):**
+  - Updated `PageMapper.__init__` to safely accept both `Path` and `str` types for `project_dir`.
+  - Added regression test `test_phase_8_gsc_opportunity_mappings` in `keyword_agent/tests/test_keyword_agent.py` covering Leonardo license key and LinkedIn cost/price intent mapping.
+  - Added regression test `test_phase8_leonardo_and_linkedin_conversion_optimization` in `tests/test_integrity_and_regressions.py`.
+- **Comprehensive Test Suite & Technical Verification:**
+  - 140 total automated unit tests passing across all packages (39 in `tests/`, 25 in `keyword_agent/`, 43 in `seo-agent/`, 33 in `marketing_agent/`).
+  - Strict link graph check (75 HTML files, 2,346 links, 630 anchors, 140 assets, 70 sitemap URLs) 100% clean.
+  - Technical SEO audit (76 HTML files) 100% clean (0 errors, 0 warnings).
+  - Schema completeness audit: 100.0% (3,775 / 3,775 points).
+
+---
+
 ## [Phase 7] - 2026-10-20 — Final QA, Accessibility, Performance & Verification
 ### Verified & Audited
 - **Comprehensive Regression Verification (138 Unit Tests Passing):**
