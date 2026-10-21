@@ -115,10 +115,21 @@ body {
   transform: translateX(3px);
 }
 
+html, body {
+  overflow-x: clip;
+}
+
 .site-header {
-  background: rgba(255, 255, 255, 0.9);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
   border-bottom-color: #dce7df;
-  box-shadow: 0 8px 28px rgba(41, 72, 60, 0.07);
+  box-shadow: 0 4px 20px rgba(41, 72, 60, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .brand { color: #173c35; }
 .brand-mark-3d {
@@ -332,14 +343,93 @@ body {
 .product-card { background: #fff; border-color: #dae5dd; box-shadow: 0 9px 26px rgba(42, 75, 62, 0.07); }
 .product-card:hover { border-color: #b9d0c1; box-shadow: 0 18px 38px rgba(42, 75, 62, 0.13); }
 .product-card::after { display: none; }
-.product-media { background: #eaf5ee; border-bottom-color: #dbe7df; }
+.product-media {
+  height: 132px;
+  background: #eaf5ee;
+  border-bottom-color: #dbe7df;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
 .product-card:nth-child(4n+2) .product-media { background: #f0ecfb; }
 .product-card:nth-child(4n+3) .product-media { background: #e7f2fb; }
 .product-card:nth-child(4n) .product-media { background: #fff0e6; }
-.product-media::after { border-color: rgba(44, 92, 74, 0.1); box-shadow: none; }
-.product-media .brand-logo { background: #fff; border-color: rgba(49, 91, 75, 0.11); box-shadow: 0 10px 24px rgba(42, 75, 62, 0.12); }
+.product-media::after {
+  content: "";
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 1px dashed rgba(44, 92, 74, 0.14);
+  box-shadow: none;
+  pointer-events: none;
+}
+.product-media .brand-logo {
+  width: 68px;
+  height: 68px;
+  padding: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(49, 91, 75, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(42, 75, 62, 0.10);
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.product-card:hover .product-media .brand-logo {
+  transform: scale(1.06);
+}
+.favorite-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #cfddd4;
+  color: #657870;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+.favorite-toggle:hover {
+  border-color: #d97706;
+  color: #d97706;
+  background: #ffffff;
+  transform: scale(1.08);
+}
+.favorite-toggle.active {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  color: #d97706;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
+}
+.favorite-toggle svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  transition: fill 0.2s ease, transform 0.2s ease;
+}
+.favorite-toggle.active svg {
+  fill: #f59e0b;
+  stroke: #d97706;
+}
+.favorite-toggle:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
 .compare-toggle { background: rgba(255,255,255,.88); border-color: #cfddd4; color: #31594e; }
 .compare-toggle.active { background: #b7ef59; color: #173c35; }
+.add-detail.added { background: #259e84 !important; color: #ffffff !important; border-color: #259e84 !important; }
 .product-badge { background: #b7ef59; color: #1a3b32; box-shadow: none; }
 .product-body { color: #173c35; }
 .product-meta { color: #52665b; }
@@ -1417,9 +1507,49 @@ a.category-card:focus-visible {
 .payment-disclosure-summary {
   list-style: none;
   cursor: pointer;
-  padding: 22px 24px;
+  padding: 16px 24px;
   user-select: none;
   display: block;
+  border-radius: 20px;
+  transition: background 0.2s ease;
+}
+
+.payment-disclosure-summary:hover {
+  background: rgba(240, 248, 244, 0.55);
+}
+
+.payment-disclosure-summary:focus-visible {
+  outline: 2px solid #259e84;
+  outline-offset: -2px;
+}
+
+.payment-disclosure[open] .payment-disclosure-summary {
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid rgba(43, 91, 74, 0.08);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.payment-disclosure[open] .payment-disclosure-body {
+  animation: paymentSlideDown 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes paymentSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .payment-disclosure[open] .payment-disclosure-body {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 .payment-disclosure-summary::-webkit-details-marker {

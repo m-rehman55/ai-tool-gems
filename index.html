@@ -2158,8 +2158,8 @@
     <!-- Payment Methods & Order Verification Disclosure -->
     <div class="shell">
       <div class="payment-disclosure-wrapper" id="payment-guide">
-        <details class="payment-disclosure" id="paymentMethodsDisclosure" open>
-          <summary class="payment-disclosure-summary" aria-label="Payment rails, local verification, and international inquiries">
+        <details class="payment-disclosure" id="paymentMethodsDisclosure">
+          <summary class="payment-disclosure-summary" aria-label="Payment rails, local verification, and international inquiries" id="paymentDisclosureToggle" aria-expanded="false" aria-controls="paymentDisclosureBody">
             <div class="payment-summary-header">
               <div class="payment-summary-title">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -2170,9 +2170,12 @@
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   Manual WhatsApp Verification
                 </span>
-                <span class="disclosure-toggle-hint">Details ▾</span>
+                <span class="disclosure-toggle-hint" aria-hidden="true">Details ▾</span>
               </div>
             </div>
+          </summary>
+
+          <div class="payment-disclosure-body" id="paymentDisclosureBody">
             <div class="payment-badges-row">
               <span class="payment-pill pill-easypaisa">
                 <span class="pill-dot dot-ep"></span>
@@ -2199,9 +2202,6 @@
                 <b>7–30 Days</b> Replacement Warranty
               </span>
             </div>
-          </summary>
-
-          <div class="payment-disclosure-body">
             <div class="payment-disclosure-grid">
               <div class="payment-disclosure-card verified-card">
                 <div class="payment-card-badge verified">Verified &amp; Configured</div>
@@ -2270,8 +2270,8 @@
   <article class="product-card" data-id="chatgpt">
     <div class="product-media">
       <span class="product-badge">Best Seller</span>
-      <button class="compare-toggle " data-compare="chatgpt" aria-label="Compare ChatGPT Plus">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="chatgpt" aria-label="Add ChatGPT Plus to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128" width="128" height="128" loading="lazy" alt="Official ChatGPT Plus logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2308,8 +2308,8 @@
   <article class="product-card" data-id="gemini">
     <div class="product-media">
       <span class="product-badge">Best Value</span>
-      <button class="compare-toggle " data-compare="gemini" aria-label="Compare Gemini Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="gemini" aria-label="Add Gemini Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=128" width="128" height="128" loading="lazy" alt="Official Gemini Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2346,8 +2346,8 @@
   <article class="product-card" data-id="veo">
     <div class="product-media">
       <span class="product-badge">Trending</span>
-      <button class="compare-toggle " data-compare="veo" aria-label="Compare Veo 3 Ultra">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="veo" aria-label="Add Veo 3 Ultra to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=deepmind.google&sz=128" width="128" height="128" loading="lazy" alt="Official Veo 3 Ultra logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2384,8 +2384,8 @@
   <article class="product-card" data-id="leonardo">
     <div class="product-media">
       <span class="product-badge">For Creators</span>
-      <button class="compare-toggle " data-compare="leonardo" aria-label="Compare Leonardo AI Essential">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="leonardo" aria-label="Add Leonardo AI Essential to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=leonardo.ai&sz=128" width="128" height="128" loading="lazy" alt="Official Leonardo AI Essential logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2422,8 +2422,8 @@
   <article class="product-card" data-id="elevenlabs">
     <div class="product-media">
       <span class="product-badge">Premium</span>
-      <button class="compare-toggle " data-compare="elevenlabs" aria-label="Compare ElevenLabs">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="elevenlabs" aria-label="Add ElevenLabs to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=128" width="128" height="128" loading="lazy" alt="Official ElevenLabs logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2460,8 +2460,8 @@
   <article class="product-card" data-id="canva">
     <div class="product-media">
       <span class="product-badge">Best Seller</span>
-      <button class="compare-toggle " data-compare="canva" aria-label="Compare Canva Pro Edu">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="canva" aria-label="Add Canva Pro Edu to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=canva.com&sz=128" width="128" height="128" loading="lazy" alt="Official Canva Pro Edu logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2498,8 +2498,8 @@
   <article class="product-card" data-id="figma">
     <div class="product-media">
       <span class="product-badge">Long Term</span>
-      <button class="compare-toggle " data-compare="figma" aria-label="Compare Figma Pro Private">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="figma" aria-label="Add Figma Pro Private to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=figma.com&sz=128" width="128" height="128" loading="lazy" alt="Official Figma Pro Private logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2536,8 +2536,8 @@
   <article class="product-card" data-id="capcut">
     <div class="product-media">
       <span class="product-badge">Popular</span>
-      <button class="compare-toggle " data-compare="capcut" aria-label="Compare CapCut Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="capcut" aria-label="Add CapCut Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=capcut.com&sz=128" width="128" height="128" loading="lazy" alt="Official CapCut Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2574,8 +2574,8 @@
   <article class="product-card" data-id="adobe">
     <div class="product-media">
       <span class="product-badge">Pro Choice</span>
-      <button class="compare-toggle " data-compare="adobe" aria-label="Compare Adobe Creative Cloud">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="adobe" aria-label="Add Adobe Creative Cloud to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=adobe.com&sz=128" width="128" height="128" loading="lazy" alt="Official Adobe Creative Cloud logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2612,8 +2612,8 @@
   <article class="product-card" data-id="lovable">
     <div class="product-media">
       <span class="product-badge">For Builders</span>
-      <button class="compare-toggle " data-compare="lovable" aria-label="Compare Lovable Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="lovable" aria-label="Add Lovable Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=lovable.dev&sz=128" width="128" height="128" loading="lazy" alt="Official Lovable Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2650,8 +2650,8 @@
   <article class="product-card" data-id="gamma">
     <div class="product-media">
       <span class="product-badge">Annual</span>
-      <button class="compare-toggle " data-compare="gamma" aria-label="Compare Gamma Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="gamma" aria-label="Add Gamma Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=gamma.app&sz=128" width="128" height="128" loading="lazy" alt="Official Gamma Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2688,8 +2688,8 @@
   <article class="product-card" data-id="replit">
     <div class="product-media">
       <span class="product-badge">Developer Pick</span>
-      <button class="compare-toggle " data-compare="replit" aria-label="Compare Replit Core">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="replit" aria-label="Add Replit Core to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=replit.com&sz=128" width="128" height="128" loading="lazy" alt="Official Replit Core logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2726,8 +2726,8 @@
   <article class="product-card" data-id="n8n">
     <div class="product-media">
       <span class="product-badge">Automation</span>
-      <button class="compare-toggle " data-compare="n8n" aria-label="Compare n8n Starter">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="n8n" aria-label="Add n8n Starter to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=n8n.io&sz=128" width="128" height="128" loading="lazy" alt="Official n8n Starter logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2764,8 +2764,8 @@
   <article class="product-card" data-id="notion">
     <div class="product-media">
       <span class="product-badge">Team Pick</span>
-      <button class="compare-toggle " data-compare="notion" aria-label="Compare Notion Business">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="notion" aria-label="Add Notion Business to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=notion.so&sz=128" width="128" height="128" loading="lazy" alt="Official Notion Business logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2802,8 +2802,8 @@
   <article class="product-card" data-id="nordvpn">
     <div class="product-media">
       <span class="product-badge">Secure</span>
-      <button class="compare-toggle " data-compare="nordvpn" aria-label="Compare NordVPN">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="nordvpn" aria-label="Add NordVPN to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=nordvpn.com&sz=128" width="128" height="128" loading="lazy" alt="Official NordVPN logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2840,8 +2840,8 @@
   <article class="product-card" data-id="surfshark">
     <div class="product-media">
       <span class="product-badge">Best Value</span>
-      <button class="compare-toggle " data-compare="surfshark" aria-label="Compare Surfshark VPN">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="surfshark" aria-label="Add Surfshark VPN to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=surfshark.com&sz=128" width="128" height="128" loading="lazy" alt="Official Surfshark VPN logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2878,8 +2878,8 @@
   <article class="product-card" data-id="youtube">
     <div class="product-media">
       <span class="product-badge">Popular</span>
-      <button class="compare-toggle " data-compare="youtube" aria-label="Compare YouTube Premium">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="youtube" aria-label="Add YouTube Premium to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=youtube.com&sz=128" width="128" height="128" loading="lazy" alt="Official YouTube Premium logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2916,8 +2916,8 @@
   <article class="product-card" data-id="netflix">
     <div class="product-media">
       <span class="product-badge">Quick Delivery</span>
-      <button class="compare-toggle " data-compare="netflix" aria-label="Compare Netflix Premium 4K">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="netflix" aria-label="Add Netflix Premium 4K to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=netflix.com&sz=128" width="128" height="128" loading="lazy" alt="Official Netflix Premium 4K logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2954,8 +2954,8 @@
   <article class="product-card" data-id="linkedin">
     <div class="product-media">
       <span class="product-badge">Career</span>
-      <button class="compare-toggle " data-compare="linkedin" aria-label="Compare LinkedIn Premium">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="linkedin" aria-label="Add LinkedIn Premium to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=linkedin.com&sz=128" width="128" height="128" loading="lazy" alt="Official LinkedIn Premium logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -2992,8 +2992,8 @@
   <article class="product-card" data-id="windows">
     <div class="product-media">
       <span class="product-badge">License Key</span>
-      <button class="compare-toggle " data-compare="windows" aria-label="Compare Windows 11 Pro Key">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="windows" aria-label="Add Windows 11 Pro Key to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=128" width="128" height="128" loading="lazy" alt="Official Windows 11 Pro Key logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3030,8 +3030,8 @@
   <article class="product-card" data-id="claude">
     <div class="product-media">
       <span class="product-badge">Best Seller</span>
-      <button class="compare-toggle " data-compare="claude" aria-label="Compare Claude Pro (3.5 Sonnet)">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="claude" aria-label="Add Claude Pro (3.5 Sonnet) to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=anthropic.com&sz=128" width="128" height="128" loading="lazy" alt="Official Claude Pro (3.5 Sonnet) logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3068,8 +3068,8 @@
   <article class="product-card" data-id="midjourney">
     <div class="product-media">
       <span class="product-badge">Trending</span>
-      <button class="compare-toggle " data-compare="midjourney" aria-label="Compare Midjourney v6.1 Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="midjourney" aria-label="Add Midjourney v6.1 Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=midjourney.com&sz=128" width="128" height="128" loading="lazy" alt="Official Midjourney v6.1 Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3106,8 +3106,8 @@
   <article class="product-card" data-id="cursor">
     <div class="product-media">
       <span class="product-badge">Developer Pick</span>
-      <button class="compare-toggle " data-compare="cursor" aria-label="Compare Cursor AI Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="cursor" aria-label="Add Cursor AI Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=cursor.com&sz=128" width="128" height="128" loading="lazy" alt="Official Cursor AI Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3144,8 +3144,8 @@
   <article class="product-card" data-id="perplexity">
     <div class="product-media">
       <span class="product-badge">Top Research</span>
-      <button class="compare-toggle " data-compare="perplexity" aria-label="Compare Perplexity Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="perplexity" aria-label="Add Perplexity Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128" width="128" height="128" loading="lazy" alt="Official Perplexity Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3182,8 +3182,8 @@
   <article class="product-card" data-id="deepseek">
     <div class="product-media">
       <span class="product-badge">Viral AI</span>
-      <button class="compare-toggle " data-compare="deepseek" aria-label="Compare DeepSeek Unlimited">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="deepseek" aria-label="Add DeepSeek Unlimited to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=deepseek.com&sz=128" width="128" height="128" loading="lazy" alt="Official DeepSeek Unlimited logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3220,8 +3220,8 @@
   <article class="product-card" data-id="grok">
     <div class="product-media">
       <span class="product-badge">X Premium</span>
-      <button class="compare-toggle " data-compare="grok" aria-label="Compare SuperGrok / Grok 2">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="grok" aria-label="Add SuperGrok / Grok 2 to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=x.ai&sz=128" width="128" height="128" loading="lazy" alt="Official SuperGrok / Grok 2 logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3258,8 +3258,8 @@
   <article class="product-card" data-id="runway">
     <div class="product-media">
       <span class="product-badge">Hollywood AI</span>
-      <button class="compare-toggle " data-compare="runway" aria-label="Compare Runway ML Gen-3 Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="runway" aria-label="Add Runway ML Gen-3 Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=runwayml.com&sz=128" width="128" height="128" loading="lazy" alt="Official Runway ML Gen-3 Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3296,8 +3296,8 @@
   <article class="product-card" data-id="heygen">
     <div class="product-media">
       <span class="product-badge">Video Avatars</span>
-      <button class="compare-toggle " data-compare="heygen" aria-label="Compare HeyGen AI Avatar Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="heygen" aria-label="Add HeyGen AI Avatar Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=heygen.com&sz=128" width="128" height="128" loading="lazy" alt="Official HeyGen AI Avatar Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3334,8 +3334,8 @@
   <article class="product-card" data-id="grammarly">
     <div class="product-media">
       <span class="product-badge">Student Pick</span>
-      <button class="compare-toggle " data-compare="grammarly" aria-label="Compare Grammarly Premium">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="grammarly" aria-label="Add Grammarly Premium to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=grammarly.com&sz=128" width="128" height="128" loading="lazy" alt="Official Grammarly Premium logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3372,8 +3372,8 @@
   <article class="product-card" data-id="quillbot">
     <div class="product-media">
       <span class="product-badge">Lowest Price</span>
-      <button class="compare-toggle " data-compare="quillbot" aria-label="Compare QuillBot Premium">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="quillbot" aria-label="Add QuillBot Premium to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=quillbot.com&sz=128" width="128" height="128" loading="lazy" alt="Official QuillBot Premium logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3410,8 +3410,8 @@
   <article class="product-card" data-id="semrush">
     <div class="product-media">
       <span class="product-badge">SEO Suite</span>
-      <button class="compare-toggle " data-compare="semrush" aria-label="Compare SEMrush Pro">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="semrush" aria-label="Add SEMrush Pro to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=semrush.com&sz=128" width="128" height="128" loading="lazy" alt="Official SEMrush Pro logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -3448,8 +3448,8 @@
   <article class="product-card" data-id="allinone">
     <div class="product-media">
       <span class="product-badge">Best Value Deal</span>
-      <button class="compare-toggle " data-compare="allinone" aria-label="Compare All-in-One Mega AI Portal">
-        <svg><use href="#i-plus"></use></svg>
+      <button class="favorite-toggle" data-favorite="allinone" aria-label="Add All-in-One Mega AI Portal to favorites" aria-pressed="false" title="Add to favorites">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128" width="128" height="128" loading="lazy" alt="Official All-in-One Mega AI Portal logo" decoding="async" referrerpolicy="no-referrer">
     </div>
