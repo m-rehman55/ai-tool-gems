@@ -164,7 +164,12 @@ class TestAutoBlogPublisherSafeguards(unittest.TestCase):
     def test_failed_validation_cleans_up_temporary_files(self):
         """If article validation fails, temporary directory and file are completely cleaned up."""
         test_slug = "unit-test-fail-cleanup"
-        mock_cand = dict(self.valid_sample_candidate, slug=test_slug)
+        mock_cand = dict(
+            self.valid_sample_candidate,
+            slug=test_slug,
+            title="Mock Unique Cleanup Title For Testing (2026)",
+            primary_keyword="Mock Unique Cleanup Keyword",
+        )
 
         with patch("scripts.auto_blog_publisher.load_queue_candidate", return_value=(mock_cand, "CANDIDATE_FOUND")):
             with patch("scripts.auto_blog_publisher.validate_article_file", return_value=(False, ["Mock validation failure"])):
