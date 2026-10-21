@@ -123,7 +123,7 @@ class TestUIInteractions(unittest.TestCase):
         self.assertGreaterEqual(len(detail_links), 20, "Expected direct product-page-link anchors on product cards")
 
         # 4. Buttons have accessible labels
-        self.assertIn('aria-label="Compare Gemini Pro"', self.index_html)
+        self.assertIn('aria-label="Add Gemini Pro to favorites"', self.index_html)
         self.assertIn('aria-label="Add Gemini Pro to cart"', self.index_html)
 
     def test_category_filter_buttons_and_accessibility(self):
@@ -164,11 +164,12 @@ class TestUIInteractions(unittest.TestCase):
 
     def test_payment_disclosure_component(self):
         """Validates paymentMethodsDisclosure details/summary, accessible labels, and policies anchor."""
-        # Details element
-        self.assertIn('<details class="payment-disclosure" id="paymentMethodsDisclosure" open>', self.index_html)
+        # Details element starts collapsed by default
+        self.assertIn('<details class="payment-disclosure" id="paymentMethodsDisclosure">', self.index_html)
+        self.assertNotIn('<details class="payment-disclosure" id="paymentMethodsDisclosure" open>', self.index_html)
 
         # Accessible summary
-        summary_m = re.search(r'<summary\s+class="payment-disclosure-summary"\s+aria-label="([^"]+)">', self.index_html)
+        summary_m = re.search(r'<summary\s+class="payment-disclosure-summary"[^>]*aria-label="([^"]+)"', self.index_html)
         self.assertIsNotNone(summary_m, "Expected summary with aria-label")
 
         # Payment rails represented
@@ -271,6 +272,43 @@ class TestUIInteractions(unittest.TestCase):
         """Verifies overflow-x hidden on root viewport containers to prevent mobile/tablet horizontal scroll jank."""
         self.assertIn("overflow-x:hidden", self.styles_css.replace(" ", ""))
         self.assertIn("max-width:100%", self.styles_css.replace(" ", ""))
+
+    def test_five_focused_improvements(self):
+        """Validates all five focused UI & functionality fixes requested."""
+        # 1. Payment container collapsed by default with accessible toggle
+        self.assertIn('<details class="payment-disclosure" id="paymentMethodsDisclosure">', self.index_html)
+        self.assertNotIn('<details class="payment-disclosure" id="paymentMethodsDisclosure" open>', self.index_html)
+        self.assertIn('id="paymentDisclosureToggle"', self.index_html)
+        self.assertIn('aria-expanded="false"', self.index_html)
+        self.assertIn('aria-controls="paymentDisclosureBody"', self.index_html)
+        self.assertIn('id="paymentDisclosureBody"', self.index_html)
+        self.assertIn('initPaymentDisclosure()', self.app_js)
+
+        # 2. Header fixed / sticky during scroll
+        self.assertIn('position:sticky', self.styles_css.replace(' ', ''))
+        self.assertIn('top:0', self.styles_css.replace(' ', ''))
+        self.assertIn('overflow-x:clip', self.styles_css.replace(' ', ''))
+        self.assertIn('overflow-x:clip', self.light_theme_css.replace(' ', ''))
+
+        # 3. Product logo presentation inside cards
+        self.assertIn('height:132px', self.styles_css.replace(' ', ''))
+        self.assertIn('width:68px', self.styles_css.replace(' ', ''))
+        self.assertIn('height:68px', self.styles_css.replace(' ', ''))
+        self.assertIn('object-fit:contain', self.styles_css.replace(' ', ''))
+
+        # 4. Favorites star feature replaces plus icon
+        self.assertIn('class="favorite-toggle"', self.index_html)
+        self.assertIn('data-favorite="chatgpt"', self.index_html)
+        self.assertIn('data-favorite="gemini"', self.index_html)
+        self.assertIn('aria-label="Add Gemini Pro to favorites"', self.index_html)
+        self.assertIn('function toggleFavorite(', self.app_js)
+        self.assertIn('atg-favorites', self.app_js)
+
+        # 5. One button, one action: Add to Cart never toggles off
+        self.assertIn('function addToCart(', self.app_js)
+        self.assertIn('function removeFromCart(', self.app_js)
+        self.assertIn("openLayer($('#cartDrawer'))", self.app_js)
+        self.assertNotIn('function toggleCart(', self.app_js)
 
 
 if __name__ == "__main__":

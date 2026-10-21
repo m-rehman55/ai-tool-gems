@@ -140,11 +140,22 @@ function loadStoredCart() {
   }
 }
 
+function loadStoredFavorites() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('atg-favorites') || '[]');
+    return Array.isArray(saved) ? saved.filter(id => products.some(p => p.id === id)) : [];
+  } catch {
+    localStorage.removeItem('atg-favorites');
+    return [];
+  }
+}
+
 let state = {
   category: 'All',
   query: '',
   limit: products.length,
   cart: loadStoredCart(),
+  favorites: loadStoredFavorites(),
   compare: [],
   finder: { intent: '', minBudget: 0, maxBudget: Infinity }
 };
@@ -192,16 +203,22 @@ function renderCategories() {
 }
 
 function renderFilters() {
-  const cats = ['All','AI Assistants','AI Video','Design','Development','Writing & SEO','Productivity','VPN & Security','Entertainment'];
+  const cats = ['All', 'Favorites', 'AI Assistants', 'AI Video', 'Design', 'Development', 'Writing & SEO', 'Productivity', 'VPN & Security', 'Entertainment'];
   const row = $('#filterRow');
   if (!row) return;
-  row.innerHTML = cats.map(c => `
-    <button class="filter-chip ${state.category === c ? 'active' : ''}" data-filter="${c}" aria-pressed="${state.category === c}">${c}</button>
-  `).join('');
+  row.innerHTML = cats.map(c => {
+    const label = c === 'Favorites' ? `★ Favorites${state.favorites.length ? ` (${state.favorites.length})` : ''}` : c;
+    return `<button class="filter-chip ${state.category === c ? 'active' : ''}" data-filter="${c}" aria-pressed="${state.category === c}">${label}</button>`;
+  }).join('');
 }
 
 function filteredProducts() {
-  let out = products.filter(p => state.category === 'All' || p.category === state.category);
+  let out;
+  if (state.category === 'Favorites') {
+    out = products.filter(p => state.favorites.includes(p.id));
+  } else {
+    out = products.filter(p => state.category === 'All' || p.category === state.category);
+  }
   const q = state.query.toLowerCase().trim();
   if (q === 'under 1000') {
     out = out.filter(p => p.price < 1000);
@@ -226,13 +243,13 @@ const STATIC_TOOL_PAGES = new Set([
 
 function card(p) {
   const inCart = state.cart.includes(p.id);
-  const comparing = state.compare.includes(p.id);
+  const isFav = state.favorites.includes(p.id);
   return `
   <article class="product-card" data-id="${p.id}">
     <div class="product-media">
       <span class="product-badge">${p.badge}</span>
-      <button class="compare-toggle ${comparing ? 'active' : ''}" data-compare="${p.id}" aria-label="Compare ${p.name}">
-        ${svg(comparing ? 'i-check' : 'i-plus')}
+      <button class="favorite-toggle ${isFav ? 'active' : ''}" data-favorite="${p.id}" aria-label="${isFav ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${isFav}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
+        <svg><use href="#i-star"></use></svg>
       </button>
       <img class="brand-logo" src="${p.logo}" width="128" height="128" loading="lazy" alt="Official ${p.name} logo" decoding="async" referrerpolicy="no-referrer">
     </div>
@@ -261,7 +278,7 @@ function card(p) {
       <div class="card-actions">
         <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} Buy now</button>
         <button class="detail-button" data-detail="${p.id}">View details</button>
-        <button class="add-button ${inCart ? 'added' : ''}" data-add="${p.id}" aria-label="${inCart ? 'Remove' : 'Add'} ${p.name} ${inCart ? 'from' : 'to'} cart" aria-pressed="${inCart}">
+        <button class="add-button ${inCart ? 'added' : ''}" data-add="${p.id}" aria-label="${inCart ? 'View ' + p.name + ' in cart' : 'Add ' + p.name + ' to cart'}" aria-pressed="${inCart}">
           ${svg(inCart ? 'i-check' : 'i-plus')}
         </button>
       </div>
@@ -338,14 +355,85 @@ function updateBundleButton() {
   button.innerHTML = isComplete ? `Stack in cart ${svg('i-check')}` : `Add creator stack ${svg('i-plus')}`;
 }
 
-function toggleCart(id) {
-  const wasInCart = state.cart.includes(id);
-  state.cart = state.cart.includes(id) ? state.cart.filter(x => x !== id) : [...state.cart, id];
+function addToCart(id) {
+  if (!id) return;
   const product = products.find(p => p.id === id);
-  if (product) trackEvent(wasInCart ? 'remove_from_cart' : 'add_to_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
+  if (!product) return;
+
+  if (!state.cart.includes(id)) {
+    state.cart = [...state.cart, id];
+    trackEvent('add_to_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
+    toast(`Added ${product.name} to your cart`);
+  } else {
+    toast(`${product.name} is already in your cart`);
+  }
   updateCart();
-  renderProducts();
-  toast(state.cart.includes(id) ? 'Added to your cart' : 'Removed from cart');
+  syncCartUI(id);
+}
+
+function removeFromCart(id) {
+  if (!id) return;
+  const product = products.find(p => p.id === id);
+  if (state.cart.includes(id)) {
+    state.cart = state.cart.filter(x => x !== id);
+    if (product) trackEvent('remove_from_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
+    toast(`Removed ${product ? product.name : 'item'} from cart`);
+  }
+  updateCart();
+  syncCartUI(id);
+}
+
+function syncCartUI(id) {
+  const inCart = state.cart.includes(id);
+  const cardBtns = document.querySelectorAll(`button.add-button[data-add="${id}"]`);
+  cardBtns.forEach(btn => {
+    btn.classList.toggle('added', inCart);
+    btn.setAttribute('aria-pressed', String(inCart));
+    const p = products.find(x => x.id === id);
+    const pName = p ? p.name : 'product';
+    btn.setAttribute('aria-label', inCart ? `View ${pName} in cart` : `Add ${pName} to cart`);
+    btn.innerHTML = svg(inCart ? 'i-check' : 'i-plus');
+  });
+
+  const modalBtn = document.querySelector(`.add-detail[data-add="${id}"]`);
+  if (modalBtn) {
+    modalBtn.classList.toggle('added', inCart);
+    modalBtn.textContent = inCart ? 'Added to cart' : 'Add to cart';
+  }
+}
+
+function toggleFavorite(id) {
+  if (!id) return;
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+  const wasFav = state.favorites.includes(id);
+  state.favorites = wasFav ? state.favorites.filter(x => x !== id) : [...state.favorites, id];
+  try {
+    localStorage.setItem('atg-favorites', JSON.stringify(state.favorites));
+  } catch (e) {}
+  syncFavoritesUI(id);
+  renderFilters();
+  if (state.category === 'Favorites') {
+    renderProducts();
+  }
+  toast(wasFav ? `Removed ${product.name} from favorites` : `Added ${product.name} to favorites`);
+}
+
+function syncFavoritesUI(id) {
+  const isFav = state.favorites.includes(id);
+  const p = products.find(x => x.id === id);
+  const pName = p ? p.name : 'tool';
+  const btns = document.querySelectorAll(`[data-favorite="${id}"]`);
+  btns.forEach(btn => {
+    btn.classList.toggle('active', isFav);
+    btn.setAttribute('aria-pressed', String(isFav));
+    btn.setAttribute('aria-label', isFav ? `Remove ${pName} from favorites` : `Add ${pName} to favorites`);
+    btn.setAttribute('title', isFav ? `Remove ${pName} from favorites` : `Add ${pName} to favorites`);
+  });
+}
+
+function syncAllFavorites() {
+  products.forEach(p => syncFavoritesUI(p.id));
 }
 
 function updateCompare() {
@@ -415,7 +503,12 @@ function openProduct(id) {
           <img class="brand-logo" src="${p.logo}" width="128" height="128" alt="Official ${p.name} logo">
         </div>
         <div class="detail-copy">
-          <span class="detail-category">${p.category} · ${p.badge}</span>
+          <div class="detail-header-row" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <span class="detail-category">${p.category} · ${p.badge}</span>
+            <button class="favorite-toggle ${state.favorites.includes(p.id) ? 'active' : ''}" data-favorite="${p.id}" style="position:static;" aria-label="${state.favorites.includes(p.id) ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${state.favorites.includes(p.id)}" title="${state.favorites.includes(p.id) ? 'Remove from favorites' : 'Add to favorites'}">
+              <svg><use href="#i-star"></use></svg>
+            </button>
+          </div>
           <h2 id="productDetailTitle">${p.name}</h2>
           <div class="detail-rating">Plan details confirmed before payment</div>
           <p>${p.description} Availability, access type, and delivery timing are confirmed directly on WhatsApp before payment.</p>
@@ -430,7 +523,7 @@ function openProduct(id) {
             ${p.features.map(f => `<span>${svg('i-check')}${f}</span>`).join('')}
           </div>
           <div class="detail-actions">
-            <button class="add-detail" data-add="${p.id}">${state.cart.includes(p.id) ? 'Added to cart' : 'Add to cart'}</button>
+            <button class="add-detail ${state.cart.includes(p.id) ? 'added' : ''}" data-add="${p.id}">${state.cart.includes(p.id) ? 'Added to cart' : 'Add to cart'}</button>
             <button class="order-now" data-order="${p.id}">${svg('i-whatsapp')} Order on WhatsApp</button>
           </div>
           ${STATIC_TOOL_PAGES.has(p.id) ? `<a class="full-details-link" href="tools/${p.id}/">Open full product page ${svg('i-arrow')}</a>` : ""}
@@ -846,15 +939,28 @@ function init3dCards() {
    GLOBAL EVENT DELEGATION
    -------------------------------------------------------------------------- */
 document.addEventListener('click', e => {
+  const fav = e.target.closest('[data-favorite]');
+  if (fav) {
+    e.stopPropagation();
+    e.preventDefault();
+    toggleFavorite(fav.dataset.favorite);
+    return;
+  }
   const add = e.target.closest('[data-add]');
   if (add) {
-    toggleCart(add.dataset.add);
-    if ($('#productModal').classList.contains('open')) openProduct(add.dataset.add);
+    e.stopPropagation();
+    const id = add.dataset.add;
+    if (state.cart.includes(id)) {
+      openLayer($('#cartDrawer'));
+    } else {
+      addToCart(id);
+    }
     return;
   }
   const remove = e.target.closest('[data-remove]');
   if (remove) {
-    toggleCart(remove.dataset.remove);
+    e.stopPropagation();
+    removeFromCart(remove.dataset.remove);
     return;
   }
   const comp = e.target.closest('[data-compare]');
@@ -1292,12 +1398,17 @@ initBundleCalculator();
 function initPaymentDisclosure() {
   const disclosure = document.getElementById('paymentMethodsDisclosure');
   if (!disclosure) return;
+  const summary = disclosure.querySelector('.payment-disclosure-summary');
   const hint = disclosure.querySelector('.disclosure-toggle-hint');
-  if (!hint) return;
-  disclosure.addEventListener('toggle', () => {
-    hint.textContent = disclosure.open ? 'Collapse ▴' : 'Details ▾';
-  });
+  const updateAria = () => {
+    const isOpen = disclosure.open;
+    if (summary) summary.setAttribute('aria-expanded', String(isOpen));
+    if (hint) hint.textContent = isOpen ? 'Collapse ▴' : 'Details ▾';
+  };
+  disclosure.addEventListener('toggle', updateAria);
+  updateAria();
 }
 initPaymentDisclosure();
+syncAllFavorites();
 
 
