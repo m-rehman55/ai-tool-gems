@@ -467,6 +467,13 @@ let focusBeforeLayer = null;
 
 function openLayer(el) {
   if (!el) return;
+  // Close any other open modal or drawer so layers never overlap
+  $$('.drawer.open, .modal.open').forEach(x => {
+    if (x !== el) {
+      x.classList.remove('open');
+      x.setAttribute('aria-hidden', 'true');
+    }
+  });
   focusBeforeLayer = document.activeElement;
   const backdrop = $('#backdrop');
   if (backdrop) backdrop.classList.add('show');
@@ -503,12 +510,7 @@ function openProduct(id) {
           <img class="brand-logo" src="${p.logo}" width="128" height="128" alt="Official ${p.name} logo">
         </div>
         <div class="detail-copy">
-          <div class="detail-header-row" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-            <span class="detail-category">${p.category} · ${p.badge}</span>
-            <button class="favorite-toggle ${state.favorites.includes(p.id) ? 'active' : ''}" data-favorite="${p.id}" style="position:static;" aria-label="${state.favorites.includes(p.id) ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${state.favorites.includes(p.id)}" title="${state.favorites.includes(p.id) ? 'Remove from favorites' : 'Add to favorites'}">
-              <svg><use href="#i-star"></use></svg>
-            </button>
-          </div>
+          <span class="detail-category">${p.category} · ${p.badge}</span>
           <h2 id="productDetailTitle">${p.name}</h2>
           <div class="detail-rating">Plan details confirmed before payment</div>
           <p>${p.description} Availability, access type, and delivery timing are confirmed directly on WhatsApp before payment.</p>
@@ -949,12 +951,7 @@ document.addEventListener('click', e => {
   const add = e.target.closest('[data-add]');
   if (add) {
     e.stopPropagation();
-    const id = add.dataset.add;
-    if (state.cart.includes(id)) {
-      openLayer($('#cartDrawer'));
-    } else {
-      addToCart(id);
-    }
+    addToCart(add.dataset.add);
     return;
   }
   const remove = e.target.closest('[data-remove]');
