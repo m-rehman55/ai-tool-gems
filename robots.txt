@@ -8,6 +8,18 @@ Disallow: /.seo-cache/
 Disallow: /reports/
 Disallow: /scratch/
 
+User-agent: bingbot
+User-agent: msnbot
+User-agent: BingPreview
+Allow: /
+Disallow: /admin.html
+Disallow: /marketing_agent/
+Disallow: /.env
+Disallow: /.env.example
+Disallow: /.seo-cache/
+Disallow: /reports/
+Disallow: /scratch/
+
 User-agent: GPTBot
 User-agent: ChatGPT-User
 User-agent: OAI-SearchBot
