@@ -1,5 +1,5 @@
 User-agent: *
-Allow: /
+Disallow: /index.html
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
@@ -7,11 +7,12 @@ Disallow: /.env.example
 Disallow: /.seo-cache/
 Disallow: /reports/
 Disallow: /scratch/
+Allow: /
 
 User-agent: bingbot
 User-agent: msnbot
 User-agent: BingPreview
-Allow: /
+Disallow: /index.html
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
@@ -19,6 +20,7 @@ Disallow: /.env.example
 Disallow: /.seo-cache/
 Disallow: /reports/
 Disallow: /scratch/
+Allow: /
 
 User-agent: GPTBot
 User-agent: ChatGPT-User
