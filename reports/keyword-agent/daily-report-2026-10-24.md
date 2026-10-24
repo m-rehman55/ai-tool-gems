@@ -4,50 +4,50 @@
 **Site URL:** `https://aitoolgems.tech`  
 **Primary Commercial Market:** Pakistan (PKR / EasyPaisa / JazzCash / SadaPay / Bank IBFT)  
 **Secondary Growth Market:** International / Global (Tool Comparisons, Student/Freelancer Workflows, WhatsApp Inquiries)  
-**Search Console Data Source:** `MANUAL_EXPORT`  
-**GSC Status:** Loaded 42 queries and 39 pages from manual GSC exports.  
+**Search Console Data Source:** `LIVE_API`  
+**GSC Status:** Retrieved 76 live queries and 49 pages via Google Search Console OAuth API.  
 
 ---
 
 ## 1. Executive Performance Baseline
-- **Total Clicks:** `21`
-- **Total Impressions:** `400`
-- **Average CTR:** `5.25%`
-- **Average Position:** `39.5`
-- **Active Query Count:** `42`
-- **Active Pages Tracked:** `39`
-- **Pakistan (#1 Market):** `15 clicks` / `213 impressions` (7.04% CTR, pos 11.4)
+- **Total Clicks:** `28`
+- **Total Impressions:** `626`
+- **Average CTR:** `4.47%`
+- **Average Position:** `32.5`
+- **Active Query Count:** `76`
+- **Active Pages Tracked:** `49`
+- Pakistan data loaded.
 
 ### 🌍 International Organic Footprint (GSC Measured)
 | Country / Territory | Clicks | Imp | CTR | Average Position |
 |---------------------|--------|-----|-----|------------------|
-| United States | 1 | 45 | 2.22% | 31.2 |
-| Brazil | 1 | 8 | 12.5% | 9.9 |
-| Algeria | 1 | 1 | 100.0% | 2.0 |
-| Italy | 1 | 1 | 100.0% | 3.0 |
-| Japan | 0 | 21 | 0.0% | 12.1 |
-| Spain | 0 | 21 | 0.0% | 16.9 |
-| India | 0 | 8 | 0.0% | 9.6 |
-| United Kingdom | 0 | 4 | 0.0% | 15.2 |
+| pak | 20 | 398 | 5.03% | 10.2 |
+| deu | 2 | 4 | 50.0% | 3.2 |
+| jpn | 1 | 32 | 3.12% | 14.7 |
+| bra | 1 | 10 | 10.0% | 18.9 |
+| dza | 1 | 1 | 100.0% | 2.0 |
+| ita | 1 | 1 | 100.0% | 3.0 |
+| usa | 0 | 46 | 0.0% | 38.9 |
+| esp | 0 | 23 | 0.0% | 15.7 |
 
 ### 📱 Device Breakdown
-- **Mobile:** `12 clicks` | `143 impressions` | `8.39% CTR` | `Pos: 8.0`
-- **Desktop:** `7 clicks` | `202 impressions` | `3.47% CTR` | `Pos: 18.8`
-- **Tablet:** `0 clicks` | `5 impressions` | `0.0% CTR` | `Pos: 9.4`
+- **MOBILE:** `16 clicks` | `219 impressions` | `7.31% CTR` | `Pos: 7.8`
+- **DESKTOP:** `10 clicks` | `349 impressions` | `2.87% CTR` | `Pos: 16.9`
+- **TABLET:** `0 clicks` | `6 impressions` | `0.0% CTR` | `Pos: 9.5`
 
 ---
 
 ## 2. Top Performing Landing Pages (Traffic Drivers)
 | Landing Page URL | Clicks | Imp | CTR | Average Position |
 |------------------|--------|-----|-----|------------------|
-| `https://aitoolgems.tech/` | 9 | 20 | 45.0% | 5.7 |
-| `https://aitoolgems.tech/guides/ai-tools-price-pakistan/` | 5 | 31 | 16.13% | 8.6 |
-| `https://aitoolgems.tech/tools/leonardo/` | 2 | 43 | 4.65% | 8.3 |
-| `https://aitoolgems.tech/tools/linkedin/` | 1 | 44 | 2.27% | 8.7 |
-| `https://aitoolgems.tech/tools/gemini/` | 1 | 21 | 4.76% | 7.9 |
-| `https://aitoolgems.tech/tools/veo/` | 1 | 17 | 5.88% | 6.2 |
-| `https://aitoolgems.tech/tools/gamma/` | 1 | 9 | 11.11% | 6.1 |
-| `https://aitoolgems.tech/tools/nordvpn/` | 1 | 6 | 16.67% | 46.3 |
+| `https://aitoolgems.tech/` | 7 | 34 | 20.59% | 6.0 |
+| `https://aitoolgems.tech/guides/ai-tools-price-pakistan/` | 5 | 36 | 13.89% | 10.8 |
+| `https://aitoolgems.tech/tools/gemini/` | 5 | 55 | 9.09% | 5.8 |
+| `https://aitoolgems.tech/tools/linkedin/` | 3 | 64 | 4.69% | 9.8 |
+| `https://aitoolgems.tech/guides/perplexity-ai-pakistan/` | 2 | 6 | 33.33% | 32.5 |
+| `https://aitoolgems.tech/jp/tools/gemini/` | 1 | 3 | 33.33% | 14.0 |
+| `https://aitoolgems.tech/tools/adobe/` | 1 | 19 | 5.26% | 26.5 |
+| `https://aitoolgems.tech/tools/gamma/` | 1 | 14 | 7.14% | 7.1 |
 
 ---
 
@@ -56,7 +56,7 @@ Queries where incremental metadata and direct-answer optimizations can drive imm
 
 | Target Query | Imp | Clicks | CTR | Pos | Cluster | Score | Action |
 |--------------|-----|--------|-----|-----|---------|-------|--------|
-| `linkedin premium price in pakistan` | 6 | 0 | 0.0% | 11.0 | `Tool: Linkedin` | 82.0 | `OPTIMIZE_EXISTING` |
+| _No urgent CTR gap queries found (import GSC CSV to populate)_ | - | - | - | - | - | - | - |
 
 ---
 
@@ -66,15 +66,15 @@ Authentic PKR pricing and domestic payment rails (EasyPaisa, JazzCash, SadaPay, 
 | Target Query | Intent | Cluster | Score | Recommended Action |
 |--------------|--------|---------|-------|--------------------|
 | `chatgpt pro price in pakistan` | `transactional` | `Tool: Chatgpt` | 78.0 | `OPTIMIZE_EXISTING` |
-| `adobe illustrator price in pakistan` | `transactional` | `Tool: Adobe` | 78.0 | `OPTIMIZE_EXISTING` |
 | `linkedin premium pakistan price` | `transactional` | `Tool: Linkedin` | 75.0 | `OPTIMIZE_EXISTING` |
-| `what is linkedin premium cost in pakistan` | `transactional` | `Tool: Linkedin` | 75.0 | `OPTIMIZE_EXISTING` |
 | `linkedin premium price pakistan` | `transactional` | `Tool: Linkedin` | 75.0 | `OPTIMIZE_EXISTING` |
+| `what is linkedin premium cost in pakistan` | `transactional` | `Tool: Linkedin` | 75.0 | `OPTIMIZE_EXISTING` |
 | `linkedin premium cost in pakistan` | `transactional` | `Tool: Linkedin` | 72.0 | `OPTIMIZE_EXISTING` |
-| `capcut pro price in pakistan` | `transactional` | `Tool: Capcut` | 68.0 | `MONITOR` |
-| `chatgpt price pakistan` | `transactional` | `Tool: Chatgpt` | 68.0 | `MONITOR` |
-| `nordvpn price in pakistan` | `transactional` | `Tool: Nordvpn` | 68.0 | `MONITOR` |
+| `linkedin premium price in pakistan` | `transactional` | `Tool: Linkedin` | 72.0 | `OPTIMIZE_EXISTING` |
 | `adobe creative cloud price in pakistan` | `transactional` | `Tool: Adobe` | 68.0 | `MONITOR` |
+| `adobe illustrator price in pakistan` | `transactional` | `Tool: Adobe` | 68.0 | `MONITOR` |
+| `capcut pro price in pakistan` | `transactional` | `Tool: Capcut` | 68.0 | `MONITOR` |
+| `chatgpt plus subscription price in pakistan` | `transactional` | `Tool: Chatgpt` | 68.0 | `MONITOR` |
 
 ---
 
@@ -92,13 +92,13 @@ Approved non-domestic opportunities targeting tool comparisons, alternatives, wo
 | `ChatGPT vs Claude for coding` | `International / Global` | `Suitable for an existing page` | `commercial` | `73.0` | `P1 - Immediate` | [/tools/claude/](https://aitoolgems.tech/tools/claude/) | Benchmark Claude 3.5 Sonnet vs ChatGPT GPT-4o code reasoning on the existing Claude tool page. | `OPTIMIZE_EXISTING` |
 | `ChatGPT alternatives with web browsing` | `International / Global` | `Suitable for an existing page` | `commercial` | `73.0` | `P1 - Immediate` | [/guides/chatgpt-alternatives/](https://aitoolgems.tech/guides/chatgpt-alternatives/) | Update the existing non-regional ChatGPT alternatives guide to compare Perplexity, DeepSeek, and Gemini for live search. | `OPTIMIZE_EXISTING` |
 | `Best AI video generators comparison` | `International / Global` | `Requires a genuinely distinct new page` | `commercial` | `73.0` | `P2 - Secondary` | `Proposed:` [/guides/best-ai-video-generators/](https://aitoolgems.tech/guides/best-ai-video-generators/) | Requires a distinct international comparison analyzing Veo, Runway Gen-3, and CapCut resolution, motion brush, and render limits in USD. | `PROPOSE_NEW_PAGE` |
+| `youtube13905` | `International / Global` | `Suitable for an existing page` | `informational` | `71.0` | `P1 - Immediate` | [/tools/youtube/](https://aitoolgems.tech/tools/youtube/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
+| `intitle:"nordvpn" "license key"` | `International / Global` | `Suitable for an existing page` | `transactional` | `70.0` | `P1 - Immediate` | [/tools/nordvpn/](https://aitoolgems.tech/tools/nordvpn/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
 | `International inquiry for AI software subscriptions` | `International / Global` | `Suitable for an existing page` | `commercial` | `68.0` | `P1 - Immediate` | [/policies.html#payments](https://aitoolgems.tech/policies.html#payments) | Detail manual WhatsApp inquiry routing for Wise and SWIFT international bank transfers on the policies page. | `OPTIMIZE_EXISTING` |
-| `intitle:"canva pro" -www.youtube.com -www.facebook.com -www.tiktok.com  -www.instagram.com -www.canva.com "license key"` | `International / Global` | `Research-only/not ready` | `transactional` | `66.0` | `P3 - Backlog` | [/tools/canva/](https://aitoolgems.tech/tools/canva/) | Monitor impressions and CTR trend in Google Search Console. | `MONITOR` |
+| `ai44649` | `International / Global` | `Research-only/not ready` | `informational` | `66.0` | `P1 - Immediate` | [/](https://aitoolgems.tech/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
+| `netflix lifetime subscription price` | `International / Global` | `Research-only/not ready` | `transactional` | `66.0` | `P3 - Backlog` | [/tools/netflix/](https://aitoolgems.tech/tools/netflix/) | Monitor impressions and CTR trend in Google Search Console. | `MONITOR` |
+| `veo3 pricing` | `International / Global` | `Research-only/not ready` | `transactional` | `66.0` | `P3 - Backlog` | [/tools/veo/](https://aitoolgems.tech/tools/veo/) | Monitor impressions and CTR trend in Google Search Console. | `MONITOR` |
 | `ElevenLabs voice AI setup and pricing` | `International / Global` | `Suitable for an existing page` | `informational` | `66.0` | `P2 - Secondary` | [/tools/elevenlabs/](https://aitoolgems.tech/tools/elevenlabs/) | Explain character allowances and commercial voice cloning tiers on the existing ElevenLabs tool page. | `OPTIMIZE_EXISTING` |
-| `leonardo essential` | `International / Global` | `Suitable for an existing page` | `informational` | `65.0` | `P1 - Immediate` | [/tools/leonardo/](https://aitoolgems.tech/tools/leonardo/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
-| `OpenAI Sora public access and pricing globally` | `International / Global` | `Research-only/not ready` | `informational` | `63.0` | `P3 - Backlog` | _Under Research_ | Search demand emerging but vendor access model not finalized; monitor official OpenAI announcements before proposing content. | `MONITOR` |
-| `youtube13905` | `International / Global` | `Suitable for an existing page` | `informational` | `61.0` | `P1 - Immediate` | [/tools/youtube/](https://aitoolgems.tech/tools/youtube/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
-| `youtube13901` | `International / Global` | `Suitable for an existing page` | `informational` | `61.0` | `P1 - Immediate` | [/tools/youtube/](https://aitoolgems.tech/tools/youtube/) | International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support. | `OPTIMIZE_EXISTING` |
 
 ---
 
