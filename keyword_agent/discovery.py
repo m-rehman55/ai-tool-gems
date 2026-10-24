@@ -60,11 +60,11 @@ class KeywordDiscoveryEngine:
 
     def __init__(self, catalog_tools: Optional[List[str]] = None):
         self.catalog_tools = catalog_tools or [
-            "adobe", "allinone", "canva", "capcut", "chatgpt", "claude", "cursor",
-            "deepseek", "elevenlabs", "figma", "gamma", "gemini", "grammarly", "grok",
-            "heygen", "leonardo", "linkedin", "lovable", "midjourney", "n8n", "netflix",
-            "nordvpn", "notion", "perplexity", "quillbot", "replit", "runway", "semrush",
-            "surfshark", "veo", "windows", "youtube"
+            "adobe", "allinone", "canva", "capcut", "chatgpt", "claude", "copilot", "cursor",
+            "deepseek", "elevenlabs", "figma", "freepik", "gamma", "gemini", "grammarly", "grok",
+            "heygen", "kling", "leonardo", "linkedin", "lovable", "midjourney", "n8n", "netflix",
+            "nordvpn", "notion", "office365", "perplexity", "quillbot", "replit", "runway", "semrush",
+            "spotify", "suno", "surfshark", "tradingview", "turnitin", "veo", "windows", "youtube"
         ]
 
     def classify_intent(self, keyword: str) -> str:

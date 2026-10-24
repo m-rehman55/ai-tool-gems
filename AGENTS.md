@@ -4,7 +4,7 @@
 
 ### Identity
 
-HERMES is the autonomous SEO Operating System for AIToolGems (aitoolgems.tech), an AI tools marketplace featuring localized payment solutions for Pakistan alongside international customer inquiry access.
+HERMES is the autonomous SEO & Market Domination Operating System for AIToolGems (aitoolgems.tech), governed by **HERMES-PRIME (Autonomous CEO Orchestrator)** overseeing 6 specialized agents across SEO, AEO/GEO, Google Merchant Center, Instant Ping, Keyword Intelligence, and Marketing.
 
 ### Master Loop
 
@@ -12,37 +12,52 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 ### Markets
 
-- **Pakistan** (Primary Core Market): Flat PKR pricing, verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast, Bank IBFT), English & localized Urdu search intent, sitemap.xml
-- **International** (Inquiry & Content Access): Manual WhatsApp inquiry & custom quotes (Wise, IBFT/SWIFT); transparent disclosure on `policies.html#payments`; no fake automated currency conversion or fabricated checkout gateways
+- **Pakistan** (Primary Core Fortress): Flat PKR pricing, verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast, Bank IBFT), English & localized Urdu search intent, sitemap.xml.
+- **Worldwide / International** (Global Hybrid Expansion): Fixed USD pricing, verified crypto rails (USDT TRC20/BEP20, Binance Pay), Wise/International Cards; transparent assisted WhatsApp delivery; dual schema offers.
 
 ### Repository
 
 - GitHub: <https://github.com/m-rehman55/ai-tool-gems/>
 - Branch: main
-- Static HTML site (74 pages, 32 products/tools, 42 tool variants)
-- `marketing_agent/` Python package for organic marketing & SEO automation
-- `seo-agent/` Autonomous SEO operating modules (69 modules, all syntax/runtime verified)
-- `keyword_agent/` Dedicated GSC filter engine, keyword intelligence & content optimization agent
+- Static HTML site (89 public pages, 40 tools, 100% Core Web Vitals, 0 link graph errors)
+- `marketing_agent/` Python package for organic marketing & social automation (33 unit tests)
+- `seo-agent/` Autonomous SEO & Safety operating modules (43 unit tests)
+- `keyword_agent/` Dedicated GSC filter engine, keyword intelligence & Top 10 competitor gap agent (25 unit tests)
+- `tests/` Full integrity & regression test suite (50 unit tests)
+- **Total Test Suite:** 151 / 151 passing tests (100% green)
+
+### Top 10 Monitored Competitors
+
+1. `aitoolspak.tech` (Pakistan)
+2. `paktools.store` (Pakistan)
+3. `digitaltools.com.pk` (Pakistan)
+4. `zippersells.com` (Pakistan)
+5. `groupseotoolz.com` (Pakistan / South Asia)
+6. `toolzbuy.com` (Worldwide / South Asia)
+7. `codesforever.com` (Worldwide / Global)
+8. `grouptoolz.com` (Worldwide / Global)
+9. `seotoolzbundle.com` (Worldwide & Pakistan)
+10. `toolwaly.com` (Pakistan & Global)
 
 ### Operational CLI Commands
 
 | Command | Purpose |
 | --------- | --------- |
-| `python scripts/link_graph_checker.py --strict` | Run 73-page internal link graph, fragment anchor, route & sitemap integrity audit |
-| `python -m unittest discover -s tests -v` | Run 32 link-graph, integrity, regression, and UI interaction unit tests |
+| `python scripts/link_graph_checker.py --strict` | Run 88-file internal link graph, fragment anchor, route & sitemap integrity audit |
+| `python -m unittest discover -s tests -v` | Run 50 link-graph, integrity, regression, and UI interaction unit tests |
 | `python -m keyword_agent audit` | Run full keyword discovery, GSC filter analysis, cannibalization check & report |
-| `python -m keyword_agent competitor-gap` | Run live competitor gap analysis against `aitoolspak.tech` & export matrix |
+| `python -m keyword_agent competitor-gap` | Run live competitor gap analysis against Top 10 competitors & export matrix |
 | `python -m keyword_agent regex-library` | Export verified copy-ready RE2 regex filters to `docs/GSC_REGEX_LIBRARY.md` |
 | `python -m keyword_agent gsc-setup` | Display instructions for Search Console OAuth & manual CSV import |
 | `python -m keyword_agent optimize-page <slug>` | Formulate AEO/GEO direct-answer brief for a tool page |
-| `python -m unittest discover -s keyword_agent/tests -v` | Run 18 Keyword Agent unit tests (GSC, RE2, scoring, page mapping, competitor gap) |
+| `python -m unittest discover -s keyword_agent/tests -v` | Run 25 Keyword Agent unit tests (GSC, RE2, scoring, page mapping, competitor gap) |
 | `python -m seo-agent.agent.main --mode audit --report` | HERMES 10-step autonomous offline/live SEO audit & daily report |
 | `python -m seo-agent.agent.main --mode propose` | Autonomous growth proposal & patch generation on dedicated branch |
 | `python -m unittest discover -s seo-agent/tests -v` | Run 43 Scope, Safety Firewall, Schema & Workflow unit tests |
 | `python -m marketing_agent seo-growth` | GSC live impression, click, CTR & ranking growth analyzer |
 | `python scripts/growth_seo_engine.py` | DOM, Pakistani transactional signals, & instant IndexNow ping |
-| `python audit_all.py` | Full 74-page Google/Bing Search Central technical audit |
-| `python schema_audit.py` | Complete JSON-LD Product, FAQ, & Breadcrumb completeness audit |
+| `python audit_all.py` | Full 89-page Google/Bing Search Central technical audit |
+| `python schema_audit.py` | Complete JSON-LD Product, FAQ, & Breadcrumb completeness audit (89 pages) |
 | `python -m marketing_agent seo-monitor --json` | Automated SEO/GEO integrity check (Target: 100/100) |
 | `python -m marketing_agent buffer-status` | Verify Buffer social channels connection |
 | `python -m unittest discover -s marketing_agent/tests -v` | Run 33 marketing agent tests |
