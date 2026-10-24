@@ -118,6 +118,8 @@ class CompetitorGapAnalyzer:
             "cursor vs github copilot": "https://aitoolgems.tech/guides/cursor-ai-pakistan/",
             "midjourney price in pakistan": "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/",
             "chatgpt plus vs gemini pro": "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/",
+            "chatgpt plus vs claude pro": "https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/",
+            "capcut pro vs runway ml": "https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/",
         }
 
         for comp in self.COMPETITOR_KEY_PAGES:
