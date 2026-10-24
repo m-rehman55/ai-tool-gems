@@ -181,6 +181,19 @@ class GSCClient:
         """Return recent indexing coverage errors (not available via read-only)."""
         return []
 
+    def get_sitemaps(self) -> list[dict[str, Any]]:
+        """Return submitted sitemaps and status from GSC."""
+        site_url = self.site_url.rstrip("/")
+        try:
+            res = self._gsc_get(f"webmasters/v3/sites/{quote(site_url + '/', safe='')}/sitemaps")
+            return res.get("sitemap", [])
+        except Exception:
+            try:
+                res = self._gsc_get(f"webmasters/v3/sites/{quote(site_url, safe='')}/sitemaps")
+                return res.get("sitemap", [])
+            except Exception:
+                return []
+
 
 # ── Bing Webmaster helpers ──────────────────────────────────────────────────────
 
@@ -209,8 +222,26 @@ class BingClient:
             return {"error": exc.code, "body": exc.read().decode("utf-8", errors="replace")}
 
     def site_info(self) -> dict[str, Any]:
-        """Get site ownership + crawl stats."""
-        return self._get("GetSite", {"siteUrl": self.site_url})
+        """Get site ownership + verification stats via Bing GetUserSites."""
+        res = self._get("GetUserSites")
+        sites = res.get("d", [])
+        clean_target = self.site_url.rstrip("/").lower()
+        for s in sites:
+            site_u = s.get("Url", "").rstrip("/").lower()
+            if site_u == clean_target:
+                return {
+                    "siteUrl": s.get("Url", self.site_url),
+                    "isVerified": s.get("IsVerified", True),
+                    "ownershipType": "Verified Site Owner" if s.get("IsVerified") else "Pending Verification",
+                }
+        if sites:
+            s0 = sites[0]
+            return {
+                "siteUrl": s0.get("Url", self.site_url),
+                "isVerified": s0.get("IsVerified", True),
+                "ownershipType": "Verified Site Owner" if s0.get("IsVerified") else "Pending Verification",
+            }
+        return {"siteUrl": self.site_url, "isVerified": False, "ownershipType": "Unverified"}
 
     def submit_sitemap(self, sitemap_url: str) -> dict[str, Any]:
         """Ask Bing to re-crawl a sitemap."""
@@ -242,7 +273,6 @@ def build_search_report(
         total_impressions = sum(int(r.get("impressions", 0)) for r in rows)
         total_clicks = sum(int(r.get("clicks", 0)) for r in rows)
         top_queries = sorted(rows, key=lambda r: int(r.get("impressions", 0)), reverse=True)[:5]
-        # GSC total from response metadata if available
         gsc_metadata = {"total_impressions": total_impressions, "total_clicks": total_clicks}
     except Exception as exc:
         top_queries = []
@@ -251,8 +281,7 @@ def build_search_report(
     # Bing data
     if bing:
         try:
-            site_info = bing.site_info()
-            bing_status = site_info.get("siteInfo", {})
+            bing_status = bing.site_info()
             bing_crawl = bing.crawl_stats()
             crawl_data = bing_crawl.get("d", [])
             bing_crawl_data = crawl_data[-1] if crawl_data else {}
@@ -263,11 +292,13 @@ def build_search_report(
         bing_status = {"status": "skipped", "message": "BING_API_KEY not configured"}
         bing_crawl_data = {}
 
-    # GSC site status
+    # GSC site status & sitemaps
     try:
         site_status = gsc.get_site_status()
+        sitemaps = gsc.get_sitemaps()
     except Exception as exc:
         site_status = {"error": str(exc)}
+        sitemaps = []
 
     return {
         "period": f"{start} → {end}",
@@ -275,6 +306,7 @@ def build_search_report(
             "metadata": gsc_metadata,
             "top_queries": top_queries,
             "site_status": site_status,
+            "sitemaps": sitemaps,
         },
         "bing": {
             "site_info": bing_status,
