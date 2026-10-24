@@ -1712,6 +1712,158 @@
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
         "metrics_checked_on": "2026-10-24"
       }
+    },
+    "2026-10-25": {
+      "morning:instagram": {
+        "post_id": "6add232d0b5343d070a23e00",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-10-25T05:00:00.000Z",
+        "slot": "morning",
+        "service": "instagram",
+        "audience": "creators",
+        "learning_mode": "metrics-winner",
+        "deal_ids": [
+          "gemini",
+          "canva",
+          "chatgpt"
+        ],
+        "media_type": "image",
+        "creative_concept": "orbit-drop",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-24T21:29:17+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-24T21:29:20+00:00"
+      },
+      "morning:facebook": {
+        "post_id": "6add232dbd33ce99c341d8d2",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-10-25T05:00:00.000Z",
+        "slot": "morning",
+        "service": "facebook",
+        "audience": "creators",
+        "learning_mode": "metrics-winner",
+        "deal_ids": [
+          "gemini",
+          "canva",
+          "chatgpt"
+        ],
+        "media_type": "image",
+        "creative_concept": "orbit-drop",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-24T21:29:17+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-24T21:29:20+00:00"
+      },
+      "morning:tiktok": {
+        "post_id": "6add232ee4be8a4d867aa1b9",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-10-25T04:00:00.000Z",
+        "slot": "morning",
+        "service": "tiktok",
+        "audience": "creators",
+        "learning_mode": "metrics-winner",
+        "deal_ids": [
+          "gemini",
+          "canva",
+          "chatgpt"
+        ],
+        "media_type": "image",
+        "creative_concept": "orbit-drop",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-24T21:29:18+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-24T21:29:20+00:00"
+      },
+      "evening:instagram": {
+        "post_id": "6add232e0b5343d070a23e56",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-10-25T16:00:00.000Z",
+        "slot": "evening",
+        "service": "instagram",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "veo",
+          "leonardo"
+        ],
+        "media_type": "video",
+        "creative_concept": "creator-portal",
+        "audio_theme": "creator-pop",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 12,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-24T21:29:18+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-24T21:29:20+00:00"
+      },
+      "evening:facebook": {
+        "post_id": "6add232f6887a2efc1d6f720",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-10-25T15:00:00.000Z",
+        "slot": "evening",
+        "service": "facebook",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "veo",
+          "leonardo"
+        ],
+        "media_type": "video",
+        "creative_concept": "creator-portal",
+        "audio_theme": "clean-cinematic",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 14,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-24T21:29:19+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-24T21:29:20+00:00"
+      },
+      "evening:tiktok": {
+        "post_id": "6add232fbd33ce99c341d93a",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-10-25T15:00:00.000Z",
+        "slot": "evening",
+        "service": "tiktok",
+        "audience": "creators",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "veo",
+          "leonardo"
+        ],
+        "media_type": "video",
+        "creative_concept": "creator-portal",
+        "audio_theme": "cinematic-trap",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 10,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-24T21:29:19+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-24T21:29:20+00:00"
+      }
     }
   }
 }
