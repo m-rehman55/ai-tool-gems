@@ -22,17 +22,17 @@ const products = [
   {id:'netflix',name:'Netflix Premium 4K',category:'Entertainment',description:'Stream global movies and series in crisp 4K Ultra HD with spatial audio.',price:400,oldPrice:650,duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.5,badge:'Quick Delivery',bestFor:['Movies','Series','4K'],logo:'https://cdn.simpleicons.org/netflix/FFFFFF',features:['4K Ultra HD & HDR resolution','Spatial audio support','Smart TV & laptop compatibility','Dedicated profile access'],intent:['entertainment','video','movies']},
   {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'Career insights, applicant tools and professional learning features.',price:1500,oldPrice:2400,duration:'2 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'7 Days',rating:4.6,badge:'Career',bestFor:['Jobs','Learning','Sales'],logo:'https://cdn.simpleicons.org/linkedin/FFFFFF',features:['InMail allowance subject to tier','Profile-viewer insights','Applicant comparison tools','LinkedIn Learning access'],intent:['business','jobs','study']},
   {id:'windows',name:'Windows 11 Pro Key',category:'Software',description:'Digital license key for Windows 11 Pro activation, subject to confirmed terms.',price:1900,oldPrice:2800,duration:'Lifetime',access:'License Key',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'License Key',bestFor:['PC','Work','Security'],logo:'https://cdn.simpleicons.org/windows11/FFFFFF',features:['Digital retail activation key','BitLocker drive encryption','Remote Desktop Host','Online activation instructions'],intent:['software','windows','business']},
-  {id:'claude',name:'Claude Pro (3.5 Sonnet)',category:'AI Assistants',description:'Anthropic’s flagship AI for coding, deep analysis, technical writing, and live Artifacts rendering.',price:2200,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Coding','Artifacts','Logic'],logo:'https://www.google.com/s2/favicons?domain=anthropic.com&sz=128',features:['Claude 3.5 Sonnet & Opus models','Interactive Artifacts visualizer','200K token deep context','Private access on your personal email'],intent:['claude','coding','code','writing','artifacts']},
-  {id:'midjourney',name:'Midjourney v6.1 Pro',category:'Design',description:'Industry-standard ultra-photorealistic AI image and art generation via Discord and Web portal.',price:2400,oldPrice:3500,duration:'1 Month',access:'Private / Discord',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Photorealism','Art','Creatives'],logo:'https://www.google.com/s2/favicons?domain=midjourney.com&sz=128',features:['Ultra-high resolution outputs','Fast GPU generation hours','Commercial reproduction rights','Web generator and Discord bot'],intent:['midjourney','images','art','design','photorealism']},
-  {id:'cursor',name:'Cursor AI Pro',category:'Development',description:'The AI-first code editor built on VS Code with multi-file Composer, Claude 3.5 Sonnet & GPT-4o.',price:2800,oldPrice:3800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Developer Pick',bestFor:['Coding','Engineers','Fullstack'],logo:'https://www.google.com/s2/favicons?domain=cursor.com&sz=128',features:['Composer multi-file AI editing','Unlimited fast tab completions','Claude 3.5 Sonnet & GPT-4o inside IDE','Private code indexing'],intent:['cursor','code','coding','editor','developer']},
-  {id:'perplexity',name:'Perplexity Pro',category:'AI Assistants',description:'Real-time AI research engine with direct source citations, PDF deep search, and multi-model access.',price:1400,oldPrice:2200,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Top Research',bestFor:['Research','Students','Fact-Checking'],logo:'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128',features:['Pro Search with cited links','Unlimited file & document uploads','Switch Claude 3.5, GPT-4o & Sonar','Included monthly API credits'],intent:['perplexity','research','study','search']},
-  {id:'deepseek',name:'DeepSeek Unlimited',category:'AI Assistants',description:'Cutting-edge DeepSeek R1 & V3 reasoning engine with chain-of-thought logic and instant math solving.',price:1100,oldPrice:1800,duration:'1 Month',access:'Private Portal',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Viral AI',bestFor:['Math','Logic','Reasoning'],logo:'https://www.google.com/s2/favicons?domain=deepseek.com&sz=128',features:['DeepSeek R1 full reasoning chain','Mathematical proof & coding engine','Zero queue peak-hour access','Fast web & mobile access'],intent:['deepseek','reasoning','math','code']},
-  {id:'grok',name:'SuperGrok / Grok 2',category:'AI Assistants',description:'X Premium Grok 2 with real-time Twitter/X intelligence and uncensored Flux image generation.',price:1800,oldPrice:2600,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'X Premium',bestFor:['Realtime X','Flux Art','News'],logo:'https://www.google.com/s2/favicons?domain=x.ai&sz=128',features:['Real-time news search on X','Flux-powered photorealistic images','Creative & uncensored mode','Direct X web access'],intent:['grok','supergrok','twitter','news']},
-  {id:'runway',name:'Runway ML Gen-3 Pro',category:'AI Video',description:'Hollywood-grade cinematic video generator with Gen-3 Alpha, Motion Brush, and multi-camera directing.',price:3500,oldPrice:4800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Hollywood AI',bestFor:['VFX','Cinematics','Video Ads'],logo:'https://www.google.com/s2/favicons?domain=runwayml.com&sz=128',features:['Gen-3 Alpha photorealistic video','Motion brush camera pathing','4K output upscaler','Commercial video license'],intent:['runway','video','vfx','animation']},
-  {id:'heygen',name:'HeyGen AI Avatar Pro',category:'AI Video',description:'AI video creation platform with hyper-realistic human avatars, lip-syncing, and multi-language voiceovers.',price:4200,oldPrice:5800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Video Avatars',bestFor:['Marketing','TikTok Ads','Spokesperson'],logo:'https://www.google.com/s2/favicons?domain=heygen.com&sz=128',features:['Studio-quality human avatars','Automatic 40+ language voice dubbing','Instant script-to-video generator','Custom personal avatar cloning'],intent:['heygen','avatar','video','marketing']},
-  {id:'grammarly',name:'Grammarly Premium',category:'Writing & SEO',description:'AI writing assistant for error-free essays, grammar correction, vocabulary enhancement, and tone refinement.',price:750,oldPrice:1200,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Student Pick',bestFor:['Essays','Grammar','Proposals'],logo:'https://www.google.com/s2/favicons?domain=grammarly.com&sz=128',features:['Full sentence rewrites & tone tuner','Built-in plagiarism detector','Browser extension & MS Word plugin','Vocabulary & clarity enhancement'],intent:['grammarly','writing','grammar','student','plagiarism']},
-  {id:'quillbot',name:'QuillBot Premium',category:'Writing & SEO',description:'Fast AI paraphraser, summarizer, citation generator, and grammar checker for academic writing.',price:450,oldPrice:800,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Lowest Price',bestFor:['Paraphrasing','Students','Assignments'],logo:'https://www.google.com/s2/favicons?domain=quillbot.com&sz=128',features:['Unlimited words in Paraphraser','All 8 custom paraphrasing modes','Freeze words terminology protection','Grammar & citation creator'],intent:['quillbot','paraphrase','writing','assignment']},
-  {id:'semrush',name:'SEMrush Pro',category:'Writing & SEO',description:'All-in-one SEO and digital marketing suite for keyword research, competitor analysis, and site audit.',price:1500,oldPrice:2500,duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'SEO Suite',bestFor:['SEO','Keywords','Agencies'],logo:'https://www.google.com/s2/favicons?domain=semrush.com&sz=128',features:['Keyword Magic tool with PKR metrics','Competitor organic search audit','Backlink analytics & link gaps','On-page SEO checker'],intent:['semrush','seo','keywords','backlinks','ranking']},
+  {id:'claude',name:'Claude Pro (3.5 Sonnet)',category:'AI Assistants',description:'Anthropic’s flagship AI for coding, deep analysis, technical writing, and live Artifacts rendering.',price:2200,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Coding','Artifacts','Logic'],logo:'assets/product-logos/claude.png',features:['Claude 3.5 Sonnet & Opus models','Interactive Artifacts visualizer','200K token deep context','Private access on your personal email'],intent:['claude','coding','code','writing','artifacts']},
+  {id:'midjourney',name:'Midjourney v6.1 Pro',category:'Design',description:'Industry-standard ultra-photorealistic AI image and art generation via Discord and Web portal.',price:2400,oldPrice:3500,duration:'1 Month',access:'Private / Discord',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Photorealism','Art','Creatives'],logo:'assets/product-logos/midjourney.png',features:['Ultra-high resolution outputs','Fast GPU generation hours','Commercial reproduction rights','Web generator and Discord bot'],intent:['midjourney','images','art','design','photorealism']},
+  {id:'cursor',name:'Cursor AI Pro',category:'Development',description:'The AI-first code editor built on VS Code with multi-file Composer, Claude 3.5 Sonnet & GPT-4o.',price:2800,oldPrice:3800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Developer Pick',bestFor:['Coding','Engineers','Fullstack'],logo:'assets/product-logos/cursor.png',features:['Composer multi-file AI editing','Unlimited fast tab completions','Claude 3.5 Sonnet & GPT-4o inside IDE','Private code indexing'],intent:['cursor','code','coding','editor','developer']},
+  {id:'perplexity',name:'Perplexity Pro',category:'AI Assistants',description:'Real-time AI research engine with direct source citations, PDF deep search, and multi-model access.',price:1400,oldPrice:2200,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Top Research',bestFor:['Research','Students','Fact-Checking'],logo:'assets/product-logos/perplexity.png',features:['Pro Search with cited links','Unlimited file & document uploads','Switch Claude 3.5, GPT-4o & Sonar','Included monthly API credits'],intent:['perplexity','research','study','search']},
+  {id:'deepseek',name:'DeepSeek Unlimited',category:'AI Assistants',description:'Cutting-edge DeepSeek R1 & V3 reasoning engine with chain-of-thought logic and instant math solving.',price:1100,oldPrice:1800,duration:'1 Month',access:'Private Portal',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Viral AI',bestFor:['Math','Logic','Reasoning'],logo:'assets/product-logos/deepseek.png',features:['DeepSeek R1 full reasoning chain','Mathematical proof & coding engine','Zero queue peak-hour access','Fast web & mobile access'],intent:['deepseek','reasoning','math','code']},
+  {id:'grok',name:'SuperGrok / Grok 2',category:'AI Assistants',description:'X Premium Grok 2 with real-time Twitter/X intelligence and uncensored Flux image generation.',price:1800,oldPrice:2600,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'X Premium',bestFor:['Realtime X','Flux Art','News'],logo:'assets/product-logos/grok.png',features:['Real-time news search on X','Flux-powered photorealistic images','Creative & uncensored mode','Direct X web access'],intent:['grok','supergrok','twitter','news']},
+  {id:'runway',name:'Runway ML Gen-3 Pro',category:'AI Video',description:'Hollywood-grade cinematic video generator with Gen-3 Alpha, Motion Brush, and multi-camera directing.',price:3500,oldPrice:4800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Hollywood AI',bestFor:['VFX','Cinematics','Video Ads'],logo:'assets/product-logos/runway.png',features:['Gen-3 Alpha photorealistic video','Motion brush camera pathing','4K output upscaler','Commercial video license'],intent:['runway','video','vfx','animation']},
+  {id:'heygen',name:'HeyGen AI Avatar Pro',category:'AI Video',description:'AI video creation platform with hyper-realistic human avatars, lip-syncing, and multi-language voiceovers.',price:4200,oldPrice:5800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Video Avatars',bestFor:['Marketing','TikTok Ads','Spokesperson'],logo:'assets/product-logos/heygen.png',features:['Studio-quality human avatars','Automatic 40+ language voice dubbing','Instant script-to-video generator','Custom personal avatar cloning'],intent:['heygen','avatar','video','marketing']},
+  {id:'grammarly',name:'Grammarly Premium',category:'Writing & SEO',description:'AI writing assistant for error-free essays, grammar correction, vocabulary enhancement, and tone refinement.',price:750,oldPrice:1200,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Student Pick',bestFor:['Essays','Grammar','Proposals'],logo:'assets/product-logos/grammarly.png',features:['Full sentence rewrites & tone tuner','Built-in plagiarism detector','Browser extension & MS Word plugin','Vocabulary & clarity enhancement'],intent:['grammarly','writing','grammar','student','plagiarism']},
+  {id:'quillbot',name:'QuillBot Premium',category:'Writing & SEO',description:'Fast AI paraphraser, summarizer, citation generator, and grammar checker for academic writing.',price:450,oldPrice:800,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Lowest Price',bestFor:['Paraphrasing','Students','Assignments'],logo:'assets/product-logos/quillbot.png',features:['Unlimited words in Paraphraser','All 8 custom paraphrasing modes','Freeze words terminology protection','Grammar & citation creator'],intent:['quillbot','paraphrase','writing','assignment']},
+  {id:'semrush',name:'SEMrush Pro',category:'Writing & SEO',description:'All-in-one SEO and digital marketing suite for keyword research, competitor analysis, and site audit.',price:1500,oldPrice:2500,duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'SEO Suite',bestFor:['SEO','Keywords','Agencies'],logo:'assets/product-logos/semrush.png',features:['Keyword Magic tool with PKR metrics','Competitor organic search audit','Backlink analytics & link gaps','On-page SEO checker'],intent:['semrush','seo','keywords','backlinks','ranking']},
   {id:'allinone',name:'All-in-One Mega AI Portal',category:'AI Assistants',description:'Unified AI workspace combining Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Perplexity Pro & DeepSeek in 1 login.',price:1999,oldPrice:4500,duration:'1 Month',access:'Private Portal (LibreChat)',delivery:'After payment confirmation',warranty:'30 Days',rating:4.98,badge:'Best Value Deal',bestFor:['All Models','Full Power','Cost Saver'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal','Single simple login on PC & Mobile','Zero VPN needed in Pakistan','Delivery after payment confirmation on WhatsApp'],intent:['allinone','portal','mega','claude','chatgpt','gemini','perplexity','deepseek']}
 ];
 
@@ -51,38 +51,38 @@ const categoryData = [
 ];
 
 const officialLogos = {
-  chatgpt: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128',
-  gemini: 'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=128',
-  veo: 'https://www.google.com/s2/favicons?domain=deepmind.google&sz=128',
-  leonardo: 'https://www.google.com/s2/favicons?domain=leonardo.ai&sz=128',
-  elevenlabs: 'https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=128',
-  canva: 'https://www.google.com/s2/favicons?domain=canva.com&sz=128',
-  figma: 'https://www.google.com/s2/favicons?domain=figma.com&sz=128',
-  capcut: 'https://www.google.com/s2/favicons?domain=capcut.com&sz=128',
-  adobe: 'https://www.google.com/s2/favicons?domain=adobe.com&sz=128',
-  lovable: 'https://www.google.com/s2/favicons?domain=lovable.dev&sz=128',
-  gamma: 'https://www.google.com/s2/favicons?domain=gamma.app&sz=128',
-  replit: 'https://www.google.com/s2/favicons?domain=replit.com&sz=128',
-  n8n: 'https://www.google.com/s2/favicons?domain=n8n.io&sz=128',
-  notion: 'https://www.google.com/s2/favicons?domain=notion.so&sz=128',
-  nordvpn: 'https://www.google.com/s2/favicons?domain=nordvpn.com&sz=128',
-  surfshark: 'https://www.google.com/s2/favicons?domain=surfshark.com&sz=128',
-  youtube: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=128',
-  netflix: 'https://www.google.com/s2/favicons?domain=netflix.com&sz=128',
-  linkedin: 'https://www.google.com/s2/favicons?domain=linkedin.com&sz=128',
-  windows: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=128',
-  claude: 'https://www.google.com/s2/favicons?domain=anthropic.com&sz=128',
-  midjourney: 'https://www.google.com/s2/favicons?domain=midjourney.com&sz=128',
-  cursor: 'https://www.google.com/s2/favicons?domain=cursor.com&sz=128',
-  perplexity: 'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128',
-  deepseek: 'https://www.google.com/s2/favicons?domain=deepseek.com&sz=128',
-  grok: 'https://www.google.com/s2/favicons?domain=x.ai&sz=128',
-  runway: 'https://www.google.com/s2/favicons?domain=runwayml.com&sz=128',
-  heygen: 'https://www.google.com/s2/favicons?domain=heygen.com&sz=128',
-  grammarly: 'https://www.google.com/s2/favicons?domain=grammarly.com&sz=128',
-  quillbot: 'https://www.google.com/s2/favicons?domain=quillbot.com&sz=128',
-  semrush: 'https://www.google.com/s2/favicons?domain=semrush.com&sz=128',
-  allinone: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128'
+  chatgpt: 'assets/product-logos/chatgpt.png',
+  gemini: 'assets/product-logos/gemini.png',
+  veo: 'assets/product-logos/veo.png',
+  leonardo: 'assets/product-logos/leonardo.png',
+  elevenlabs: 'assets/product-logos/elevenlabs.png',
+  canva: 'assets/product-logos/canva.png',
+  figma: 'assets/product-logos/figma.png',
+  capcut: 'assets/product-logos/capcut.png',
+  adobe: 'assets/product-logos/adobe.png',
+  lovable: 'assets/product-logos/lovable.png',
+  gamma: 'assets/product-logos/gamma.png',
+  replit: 'assets/product-logos/replit.png',
+  n8n: 'assets/product-logos/n8n.png',
+  notion: 'assets/product-logos/notion.png',
+  nordvpn: 'assets/product-logos/nordvpn.png',
+  surfshark: 'assets/product-logos/surfshark.png',
+  youtube: 'assets/product-logos/youtube.png',
+  netflix: 'assets/product-logos/netflix.png',
+  linkedin: 'assets/product-logos/linkedin.png',
+  windows: 'assets/product-logos/windows.png',
+  claude: 'assets/product-logos/claude.png',
+  midjourney: 'assets/product-logos/midjourney.png',
+  cursor: 'assets/product-logos/cursor.png',
+  perplexity: 'assets/product-logos/perplexity.png',
+  deepseek: 'assets/product-logos/deepseek.png',
+  grok: 'assets/product-logos/grok.png',
+  runway: 'assets/product-logos/runway.png',
+  heygen: 'assets/product-logos/heygen.png',
+  grammarly: 'assets/product-logos/grammarly.png',
+  quillbot: 'assets/product-logos/quillbot.png',
+  semrush: 'assets/product-logos/semrush.png',
+  allinone: 'assets/product-logos/chatgpt.png'
 };
 
 products.forEach(p => {
@@ -758,7 +758,7 @@ const finderPreviewPresets = {
     name: 'Veo 3 Ultra',
     desc: 'Unlimited cinematic video generation with photorealistic physics',
     price: 2100,
-    logo: 'https://www.google.com/s2/favicons?domain=deepmind.google&sz=128'
+    logo: 'assets/product-logos/veo.png'
   },
   image: {
     counter: '02 / 04',
@@ -767,7 +767,7 @@ const finderPreviewPresets = {
     name: 'Leonardo AI Essential',
     desc: 'Production-ready digital art, photorealistic assets & visuals',
     price: 1900,
-    logo: 'https://www.google.com/s2/favicons?domain=leonardo.ai&sz=128'
+    logo: 'assets/product-logos/leonardo.png'
   },
   writing: {
     counter: '03 / 04',
@@ -776,7 +776,7 @@ const finderPreviewPresets = {
     name: 'ChatGPT Plus',
     desc: 'Advanced research, coding, writing and creative assistance',
     price: 2300,
-    logo: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128'
+    logo: 'assets/product-logos/chatgpt.png'
   },
   code: {
     counter: '04 / 04',
@@ -785,7 +785,7 @@ const finderPreviewPresets = {
     name: 'Lovable Pro',
     desc: 'Build, design and ship full-stack web applications and MVPs',
     price: 1600,
-    logo: 'https://www.google.com/s2/favicons?domain=lovable.dev&sz=128'
+    logo: 'assets/product-logos/lovable.png'
   }
 };
 
