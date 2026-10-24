@@ -56,7 +56,7 @@ def audit_dom_and_markdown() -> dict:
     return {"scanned": scanned, "issues": issues}
 
 def audit_transactional_keywords() -> dict:
-    """Checks that all 20 Pakistan tool pages contain essential local search intent keywords."""
+    """Checks that all 40 tool pages contain essential local search intent keywords."""
     tools_dir = BASE / "tools"
     results = {}
     missing_keywords = []
@@ -141,7 +141,7 @@ def run_growth_audit():
         for m in kw_result['missing']:
             print(f"     - {m}")
     else:
-        print("  ✅ All 20 tool pages have 100% complete transactional signals (Buy, PKR, EasyPaisa, JazzCash, WhatsApp).")
+        print(f"  ✅ All {kw_result['total']} tool pages have 100% complete transactional signals (Buy, PKR, EasyPaisa, JazzCash, WhatsApp).")
         
     # 3. IndexNow Submission Pipeline
     is_live = os.environ.get("GITHUB_ACTIONS") == "true" or "--live" in sys.argv
