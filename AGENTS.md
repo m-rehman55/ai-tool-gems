@@ -23,11 +23,17 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 - `marketing_agent/` Python package for organic marketing & SEO automation
 - `seo-agent/` Autonomous SEO operating modules (69 modules, all syntax/runtime verified)
 - `keyword_agent/` Dedicated GSC filter engine, keyword intelligence & content optimization agent
+- `aio_agent/` Dedicated Google AI Overviews (AIO), RAG Grounding & Query Fan-Out Optimization Engine
 
 ### Operational CLI Commands
 
 | Command | Purpose |
 | --------- | --------- |
+| `python -m aio_agent audit` | Run site-wide Google AI Overviews (AIO) grounding & fan-out audit |
+| `python -m aio_agent score <path>` | Score page for Google AI Overviews RAG grounding readiness (0-100) |
+| `python -m aio_agent fan-out <path>` | Audit Google 5-branch query fan-out intent coverage on a page |
+| `python -m aio_agent sync-llms` | Synchronize machine knowledge bases (`llms.txt` & `llms-full.txt`) |
+| `python -m unittest discover -s aio_agent/tests -v` | Run 5 AIO Agent unit tests (Extractability, Fan-Out, Scoring, Sync) |
 | `python scripts/link_graph_checker.py --strict` | Run 73-page internal link graph, fragment anchor, route & sitemap integrity audit |
 | `python -m unittest discover -s tests -v` | Run 32 link-graph, integrity, regression, and UI interaction unit tests |
 | `python -m keyword_agent audit` | Run full keyword discovery, GSC filter analysis, cannibalization check & report |

@@ -96,3 +96,6 @@ Last reviewed: 2026-10-16
 - Independence: AI Tool Gems is an independent marketplace and is not affiliated with listed third-party software brands.
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
+
+- [CapCut Pro vs Runway ML in Pakistan: 2026 Comparison](https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/) — Compare CapCut Pro and Runway ML in Pakistan for video editing vs generative AI text-to-video. Review features, PKR pricing, and EasyPaisa payment.
+- [ChatGPT Plus vs Claude Pro in Pakistan: 2026 Comparison](https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/) — Compare ChatGPT Plus and Claude Pro in Pakistan by coding capabilities, reasoning, context limits, official vs PKR price and local EasyPaisa payment.
