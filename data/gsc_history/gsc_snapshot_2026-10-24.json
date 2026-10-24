@@ -1,0 +1,585 @@
+{
+  "source": "MANUAL_EXPORT",
+  "status_message": "Loaded 42 queries and 39 pages from manual GSC exports.",
+  "total_clicks": 21,
+  "total_impressions": 400,
+  "average_ctr": 5.25,
+  "average_position": 39.5,
+  "date_range": "Last 28 Days",
+  "retrieved_at": "2026-10-24T20:26:29.403856+00:00",
+  "queries_count": 42,
+  "pages_count": 39,
+  "countries_count": 27,
+  "devices_count": 3,
+  "queries": [
+    {
+      "query": "intitle:\"leonardo ai\" \"license key\"",
+      "clicks": 0,
+      "impressions": 35,
+      "ctr": 0.0,
+      "position": 6.09
+    },
+    {
+      "query": "chatgpt pro price in pakistan",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr": 0.0,
+      "position": 40.88
+    },
+    {
+      "query": "leonardo essential",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 3.83
+    },
+    {
+      "query": "linkedin premium price in pakistan",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 11.0
+    },
+    {
+      "query": "adobe illustrator price in pakistan",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 60.6
+    },
+    {
+      "query": "youtube13905",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "query": "intitle:\"leonardo ai\" \"instant delivery\"",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 29.25
+    },
+    {
+      "query": "linkedin premium cost in pakistan",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 10.33
+    },
+    {
+      "query": "\"nayapay\"",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 56.33
+    },
+    {
+      "query": "\"sadapay\"",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 63.33
+    },
+    {
+      "query": "intitle:\"nordvpn\" \"premium\" \"warranty\"",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 70.67
+    },
+    {
+      "query": "ai33905",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "intitle:\"canva pro\" -www.youtube.com -www.facebook.com -www.tiktok.com \n-www.instagram.com -www.canva.com \"license key\"",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 20.5
+    },
+    {
+      "query": "\"active international\"",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 64.5
+    },
+    {
+      "query": "capcut pro price in pakistan",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 70.0
+    },
+    {
+      "query": "leonardo.ai essential",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 3.0
+    },
+    {
+      "query": "ai33398",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 4.0
+    },
+    {
+      "query": "youtube13901",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 6.0
+    },
+    {
+      "query": "ai59098",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "query": "ai59884",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "query": "veo purchase",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "query": "ai54568",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "query": "linkedin premium pakistan price",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "query": "what is linkedin premium cost in pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "query": "ai10278",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai43878",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "linkedin premium price pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "youtube84070",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai36408",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai49087",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "leonardo ai essentials",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 11.0
+    },
+    {
+      "query": "netflix 4k",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 12.0
+    },
+    {
+      "query": "chatgpt pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 40.0
+    },
+    {
+      "query": "chatgpt price pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 40.0
+    },
+    {
+      "query": "nordvpn price in pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 57.0
+    },
+    {
+      "query": "netflix premium package",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 72.0
+    },
+    {
+      "query": "adobe creative cloud price in pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 77.0
+    },
+    {
+      "query": "replit \u6599\u91d1",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 80.0
+    },
+    {
+      "query": "adobe partner in pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 98.0
+    },
+    {
+      "query": "chatgpt plus subscription price in pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 127.0
+    },
+    {
+      "query": "\"manus\" -\"dark souls\" -\"kalameet\" -\"porsche\" -\"718\" -\"campus crowd\" \n-\"cricket\" -\"football\"",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 201.0
+    },
+    {
+      "query": "\"manus\"",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 205.0
+    }
+  ],
+  "pages": [
+    {
+      "page": "https://aitoolgems.tech/",
+      "clicks": 9,
+      "impressions": 20,
+      "ctr": 45.0,
+      "position": 5.7
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/ai-tools-price-pakistan/",
+      "clicks": 5,
+      "impressions": 31,
+      "ctr": 16.13,
+      "position": 8.58
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/leonardo/",
+      "clicks": 2,
+      "impressions": 43,
+      "ctr": 4.65,
+      "position": 8.35
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/linkedin/",
+      "clicks": 1,
+      "impressions": 44,
+      "ctr": 2.27,
+      "position": 8.66
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/gemini/",
+      "clicks": 1,
+      "impressions": 21,
+      "ctr": 4.76,
+      "position": 7.86
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/veo/",
+      "clicks": 1,
+      "impressions": 17,
+      "ctr": 5.88,
+      "position": 6.18
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/gamma/",
+      "clicks": 1,
+      "impressions": 9,
+      "ctr": 11.11,
+      "position": 6.11
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/nordvpn/",
+      "clicks": 1,
+      "impressions": 6,
+      "ctr": 16.67,
+      "position": 46.33
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/chatgpt/",
+      "clicks": 0,
+      "impressions": 41,
+      "ctr": 0.0,
+      "position": 19.68
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/replit/",
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0.0,
+      "position": 6.94
+    },
+    {
+      "page": "https://aitoolgems.tech/about.html",
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0.0,
+      "position": 4.21
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/notion/",
+      "clicks": 0,
+      "impressions": 11,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/capcut/",
+      "clicks": 0,
+      "impressions": 11,
+      "ctr": 0.0,
+      "position": 20.55
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/adobe/",
+      "clicks": 0,
+      "impressions": 11,
+      "ctr": 0.0,
+      "position": 45.82
+    },
+    {
+      "page": "https://aitoolgems.tech/deals/",
+      "clicks": 0,
+      "impressions": 9,
+      "ctr": 0.0,
+      "position": 7.44
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/youtube/",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr": 0.0,
+      "position": 7.25
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr": 0.0,
+      "position": 61.0
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/tools/leonardo/",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 4.71
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/elevenlabs/",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 7.86
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/lovable/",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 12.43
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/n8n/",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 6.83
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/figma/",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 8.5
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 3.6
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 4.2
+    },
+    {
+      "page": "https://aitoolgems.tech/contact.html",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "page": "https://aitoolgems.tech/how-we-review.html",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 5.0
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/guides/chatgpt-vs-gemini-japan/",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 9.25
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/surfshark/",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 9.75
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/canva/",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 24.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 3.5
+    },
+    {
+      "page": "https://aitoolgems.tech/policies.html",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 6.0
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/windows/",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 8.5
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/netflix/",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 44.0
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/tools/manus/",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 203.0
+    },
+    {
+      "page": "https://aitoolgems.tech/deals/?utm_source=instagram&utm_medium=organic_social&utm_campaign=twice_daily_3_deals&utm_content=in-gemini-chatgpt-veo-20260922-morning-students&utm_term=morning&deals=gemini,chatgpt,veo&slot=morning&src=in-gemini-chatgpt-veo-20260922-morning-students",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/tools/chatgpt/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/tools/netflix/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 12.0
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/tools/gemini/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 24.0
+    },
+    {
+      "page": "https://aitoolgems.tech/jp/tools/replit/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 80.0
+    }
+  ]
+}
