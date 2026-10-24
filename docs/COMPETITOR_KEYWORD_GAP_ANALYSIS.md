@@ -8,8 +8,8 @@
 
 ## 1. Executive Intelligence Summary
 - **Total Competitor Indexed URLs Crawled:** `140`
-- **Direct Catalog Head-to-Head Overlaps:** `27` (Tools where AIToolGems already has live dedicated URLs)
-- **High-Value Content & Catalog Gaps:** `9` (Queries and comparison topics competitor is actively targeting)
+- **Direct Catalog Head-to-Head Overlaps:** `28` (Tools where AIToolGems already has live dedicated URLs)
+- **High-Value Content & Catalog Gaps:** `8` (Queries and comparison topics competitor is actively targeting)
 - **Competitor Contact & Conversion Model:** WhatsApp Order flow (`+923714549245`), no automated checkout form, manual PKR quote confirmation.
 - **Competitor AdSense Status:** Active AdSense publisher ID (`ca-pub-9920624452359557`) indicating ad monetization in addition to tool sales.
 
@@ -27,6 +27,7 @@ On these core tools, AIToolGems already has dedicated pages. Our objective is to
 | `CapCut Pro` | [Competitor URL](https://aitoolspak.tech/capcut-pro-pakistan/) | [`https://aitoolgems.tech/tools/capcut/`](https://aitoolgems.tech/tools/capcut/) | `88.0` | Outrank competitor page by enriching 'https://aitoolgems.tech/tools/capcut/' with AEO direct answers, verified PKR rates, and EasyPaisa/JazzCash badges. |
 | `ElevenLabs Creator` | [Competitor URL](https://aitoolspak.tech/elevenlabs-creator-pakistan/) | [`https://aitoolgems.tech/tools/elevenlabs/`](https://aitoolgems.tech/tools/elevenlabs/) | `88.0` | Outrank competitor page by enriching 'https://aitoolgems.tech/tools/elevenlabs/' with AEO direct answers, verified PKR rates, and EasyPaisa/JazzCash badges. |
 | `Leonardo AI` | [Competitor URL](https://aitoolspak.tech/leonardo-ai-pakistan/) | [`https://aitoolgems.tech/tools/leonardo/`](https://aitoolgems.tech/tools/leonardo/) | `88.0` | Outrank competitor page by enriching 'https://aitoolgems.tech/tools/leonardo/' with AEO direct answers, verified PKR rates, and EasyPaisa/JazzCash badges. |
+| `Runway ML` | [Competitor URL](https://aitoolspak.tech/runway-ml-pakistan/) | [`https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/`](https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/) | `88.0` | Outrank competitor page by enriching 'https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/' with AEO direct answers, verified PKR rates, and EasyPaisa/JazzCash badges. |
 | `Figma Pro` | [Competitor URL](https://aitoolspak.tech/figma-pro-2-years-private-pakistan/) | [`https://aitoolgems.tech/tools/figma/`](https://aitoolgems.tech/tools/figma/) | `88.0` | Outrank competitor page by enriching 'https://aitoolgems.tech/tools/figma/' with AEO direct answers, verified PKR rates, and EasyPaisa/JazzCash badges. |
 | `Gamma Pro` | [Competitor URL](https://aitoolspak.tech/gamma-pro-1-year-pakistan/) | [`https://aitoolgems.tech/tools/gamma/`](https://aitoolgems.tech/tools/gamma/) | `88.0` | Outrank competitor page by enriching 'https://aitoolgems.tech/tools/gamma/' with AEO direct answers, verified PKR rates, and EasyPaisa/JazzCash badges. |
 | `Replit Core` | [Competitor URL](https://aitoolspak.tech/replit-core-1-year-pakistan/) | [`https://aitoolgems.tech/tools/replit/`](https://aitoolgems.tech/tools/replit/) | `88.0` | Outrank competitor page by enriching 'https://aitoolgems.tech/tools/replit/' with AEO direct answers, verified PKR rates, and EasyPaisa/JazzCash badges. |
@@ -55,7 +56,6 @@ These topics represent verified Pakistani search demand where competitor has cre
 
 | Untapped Keyword / Gap | Competitor URL | Search Intent | ICE Score | Strategic Action Proposal |
 |------------------------|----------------|---------------|-----------|---------------------------|
-| `Runway ML` | [Competitor URL](https://aitoolspak.tech/runway-ml-pakistan/) | `transactional` | `79.0` | High-intent content gap. Propose publishing a dedicated PKR guide or catalog entry to capture Pakistani search intent before competitor gains authority. |
 | `Grammarly Premium` | [Competitor URL](https://aitoolspak.tech/grammarly-premium-pakistan/) | `transactional` | `79.0` | High-intent content gap. Propose publishing a dedicated PKR guide or catalog entry to capture Pakistani search intent before competitor gains authority. |
 | `QuillBot Premium` | [Competitor URL](https://aitoolspak.tech/quillbot-premium-pakistan/) | `transactional` | `79.0` | High-intent content gap. Propose publishing a dedicated PKR guide or catalog entry to capture Pakistani search intent before competitor gains authority. |
 | `SEMrush Pro` | [Competitor URL](https://aitoolspak.tech/semrush-pro-pakistan/) | `transactional` | `79.0` | High-intent content gap. Propose publishing a dedicated PKR guide or catalog entry to capture Pakistani search intent before competitor gains authority. |
