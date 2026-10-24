@@ -228,3 +228,75 @@ A: Every listing on AI Tool Gems explicitly discloses access type: Private Accou
 
 **Q: What is the replacement warranty policy?**
 A: All tools come with a documented 7-day, 30-day, or active-period replacement warranty. If any issue arises during the covered period, the WhatsApp support team provides a replacement or fix within business hours.
+
+### 21. TradingView Pro (TradingView)
+- URL: https://aitoolgems.tech/tools/tradingview/
+- Listed Price: Rs. 3,500 PKR ($14.99 USD) / month (Regular: Rs. 5,000)
+- Duration: 1 Month
+- Access Type: Private Account (Dedicated credentials, full control)
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: 5 indicators per chart, Bar Replay backtesting, Volume Profile analysis, unlimited custom watchlists, 20 server-side price alerts.
+
+### 22. Kling AI (Kuaishou)
+- URL: https://aitoolgems.tech/tools/kling/
+- Listed Price: Rs. 4,800 PKR ($19.99 USD) / month (Regular: Rs. 6,500)
+- Duration: 1 Month
+- Access Type: Private Account
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: 1080p full HD video generation, 3D camera controls, physics-accurate motion simulation, zero watermark, full commercial rights.
+
+### 23. Freepik Premium (Freepik Company)
+- URL: https://aitoolgems.tech/tools/freepik/
+- Listed Price: Rs. 2,400 PKR ($9.99 USD) / month (Regular: Rs. 3,500)
+- Duration: 1 Month
+- Access Type: Private Account
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: 100 daily premium downloads, 150M+ vectors, PSD mockups, stock photos, Pikaso AI generator, commercial license without attribution.
+
+### 24. Spotify Premium (Spotify AB)
+- URL: https://aitoolgems.tech/tools/spotify/
+- Listed Price: Rs. 1,200 PKR ($5.99 USD) for 3 Months (Regular: Rs. 1,800)
+- Duration: 3 Months
+- Access Type: Private Account (Activated on your personal email)
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: 100% ad-free music and podcasts, 10,000 songs offline downloads, ultra-high 320kbps audio bitrate, unlimited skips.
+
+### 25. GitHub Copilot (GitHub / Microsoft)
+- URL: https://aitoolgems.tech/tools/copilot/
+- Listed Price: Rs. 2,500 PKR ($9.99 USD) / month (Regular: Rs. 3,800)
+- Duration: 1 Month
+- Access Type: Private Account (Direct activation on personal GitHub username)
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: Real-time code completions, Copilot Chat inside VS Code and JetBrains, unit test generation, multi-language context understanding.
+
+### 26. Suno AI (Suno, Inc.)
+- URL: https://aitoolgems.tech/tools/suno/
+- Listed Price: Rs. 3,200 PKR ($12.99 USD) / month (Regular: Rs. 4,500)
+- Duration: 1 Month Pro
+- Access Type: Private Account
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: 2,500 monthly generation credits (~500 songs), full studio vocals, custom lyrics mode, commercial monetization rights.
+
+### 27. Turnitin Student Account (Turnitin LLC)
+- URL: https://aitoolgems.tech/tools/turnitin/
+- Listed Price: Rs. 3,600 PKR ($14.99 USD) / month (Regular: Rs. 5,000)
+- Duration: 1 Month
+- Access Type: Private Account
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: Strict Non-Repository submission guarantee (zero self-plagiarism match), similarity index percentage report, AI writing detection percentage.
+
+### 28. Microsoft Office 365 (Microsoft Corporation)
+- URL: https://aitoolgems.tech/tools/office365/
+- Listed Price: Rs. 2,200 PKR ($8.99 USD) / year (Regular: Rs. 3,800)
+- Duration: 1 Year (12 Months)
+- Access Type: Private Account
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30-Day Replacement Warranty
+- Key Features: Full Word, Excel, PowerPoint & Outlook desktop apps, 1TB (1,000 GB) secure OneDrive cloud storage, 5 devices simultaneously.
