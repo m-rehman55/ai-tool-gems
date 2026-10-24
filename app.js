@@ -33,20 +33,28 @@ const products = [
   {id:'grammarly',name:'Grammarly Premium',category:'Writing & SEO',description:'AI writing assistant for error-free essays, grammar correction, vocabulary enhancement, and tone refinement.',price:750,oldPrice:1200,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Student Pick',bestFor:['Essays','Grammar','Proposals'],logo:'assets/product-logos/grammarly.png',features:['Full sentence rewrites & tone tuner','Built-in plagiarism detector','Browser extension & MS Word plugin','Vocabulary & clarity enhancement'],intent:['grammarly','writing','grammar','student','plagiarism']},
   {id:'quillbot',name:'QuillBot Premium',category:'Writing & SEO',description:'Fast AI paraphraser, summarizer, citation generator, and grammar checker for academic writing.',price:450,oldPrice:800,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Lowest Price',bestFor:['Paraphrasing','Students','Assignments'],logo:'assets/product-logos/quillbot.png',features:['Unlimited words in Paraphraser','All 8 custom paraphrasing modes','Freeze words terminology protection','Grammar & citation creator'],intent:['quillbot','paraphrase','writing','assignment']},
   {id:'semrush',name:'SEMrush Pro',category:'Writing & SEO',description:'All-in-one SEO and digital marketing suite for keyword research, competitor analysis, and site audit.',price:1500,oldPrice:2500,duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'SEO Suite',bestFor:['SEO','Keywords','Agencies'],logo:'assets/product-logos/semrush.png',features:['Keyword Magic tool with PKR metrics','Competitor organic search audit','Backlink analytics & link gaps','On-page SEO checker'],intent:['semrush','seo','keywords','backlinks','ranking']},
-  {id:'allinone',name:'All-in-One Mega AI Portal',category:'AI Assistants',description:'Unified AI workspace combining Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Perplexity Pro & DeepSeek in 1 login.',price:1999,oldPrice:4500,duration:'1 Month',access:'Private Portal (LibreChat)',delivery:'After payment confirmation',warranty:'30 Days',rating:4.98,badge:'Best Value Deal',bestFor:['All Models','Full Power','Cost Saver'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal','Single simple login on PC & Mobile','Zero VPN needed in Pakistan','Delivery after payment confirmation on WhatsApp'],intent:['allinone','portal','mega','claude','chatgpt','gemini','perplexity','deepseek']}
+  {id:'allinone',name:'All-in-One Mega AI Portal',category:'AI Assistants',description:'Unified AI workspace combining Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Perplexity Pro & DeepSeek in 1 login.',price:1999,oldPrice:4500,duration:'1 Month',access:'Private Portal (LibreChat)',delivery:'After payment confirmation',warranty:'30 Days',rating:4.98,badge:'Best Value Deal',bestFor:['All Models','Full Power','Cost Saver'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal','Single simple login on PC & Mobile','Zero VPN needed in Pakistan','Delivery after payment confirmation on WhatsApp'],intent:['allinone','portal','mega','claude','chatgpt','gemini','perplexity','deepseek']},
+  {id:'tradingview',name:'TradingView Pro',category:'Business',description:'Institutional-grade technical charting, custom Pine Script indicators, and real-time alerts.',price:3500,oldPrice:5000,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Pro Trader',bestFor:['Charts','Crypto','Stocks'],logo:'assets/product-logos/tradingview.png',features:['5 indicators per chart','Bar Replay backtesting','Volume Profile analysis','Server-side price alerts'],intent:['tradingview','trading','crypto','stocks','forex','finance']},
+  {id:'kling',name:'Kling AI',category:'AI Video',description:'Hollywood-grade physics simulation, cinematic camera motion, and hyper-realistic AI video generation.',price:4800,oldPrice:6500,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Ultra Realistic',bestFor:['Cinematic','Motion','VFX'],logo:'assets/product-logos/kling.png',features:['1080p Full HD video generation','Advanced 3D camera controls','Physics-accurate simulation','No watermark & commercial use'],intent:['kling','video','ai video','cinematic','animation','vfx']},
+  {id:'freepik',name:'Freepik Premium',category:'Design',description:'Millions of premium vector illustrations, high-res stock photos, PSD mockups, and AI Pikaso.',price:2400,oldPrice:3500,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Graphic Essential',bestFor:['Vectors','PSD','Mockups'],logo:'assets/product-logos/freepik.png',features:['100 daily premium downloads','Full commercial license & no attribution','Freepik Pikaso AI generator','Layered Photoshop PSD templates'],intent:['freepik','vectors','design','psd','mockup','stock','photos']},
+  {id:'spotify',name:'Spotify Premium',category:'Entertainment',description:'Ad-free music and podcasts, offline downloads, unlimited skips, and 320kbps extreme audio quality.',price:1200,oldPrice:1800,duration:'3 Months',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Ad-Free Audio',bestFor:['Music','Podcasts','Offline'],logo:'assets/product-logos/spotify.png',features:['100% ad-free streaming','Download up to 10,000 songs offline','Ultra-high 320kbps bitrate','Activate on your personal account'],intent:['spotify','music','songs','audio','streaming','podcast']},
+  {id:'copilot',name:'GitHub Copilot',category:'Development',description:'AI pair programmer for VS Code and JetBrains with real-time autocompletion and Copilot Chat.',price:2500,oldPrice:3800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Developer Pick',bestFor:['VS Code','Autocomplete','Fullstack'],logo:'assets/product-logos/copilot.png',features:['Real-time code completions','GitHub Copilot Chat inside IDE','Unit test generation & bug fixes','Private personal GitHub activation'],intent:['copilot','github','code','coding','developer','vscode','python']},
+  {id:'suno',name:'Suno AI',category:'AI Voice',description:'Generate studio-grade full vocal songs, catchy commercial jingles, and instrumental beats from text.',price:3200,oldPrice:4500,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'AI Music Hits',bestFor:['Songwriting','Vocals','Beats'],logo:'assets/product-logos/suno.png',features:['Full vocal songs in seconds','2,500 monthly generation credits','Commercial monetization rights','Custom lyrics & song continuation'],intent:['suno','music','audio','songs','voice','beats','creator']},
+  {id:'turnitin',name:'Turnitin Student Account',category:'Writing & SEO',description:'Non-repository academic similarity check and AI writing detection report for thesis and research.',price:3600,oldPrice:5000,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Academic Pick',bestFor:['Thesis','Assignments','AI Detection'],logo:'assets/product-logos/turnitin.png',features:['Strict Non-Repository guarantee','Similarity percentage index report','AI writing detection percentage','Downloadable highlighted PDF'],intent:['turnitin','plagiarism','similarity','student','thesis','research','academic']},
+  {id:'office365',name:'Microsoft Office 365 (1TB)',category:'Productivity',description:'Word, Excel, PowerPoint, Outlook desktop apps on 5 devices simultaneously with 1TB OneDrive cloud.',price:2200,oldPrice:3800,duration:'1 Year',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'1TB Cloud',bestFor:['Word/Excel','OneDrive','5 Devices'],logo:'assets/product-logos/office365.png',features:['Word, Excel & PowerPoint desktop apps','1TB (1,000 GB) secure OneDrive storage','Use on 5 devices simultaneously','Genuine digital retail activation'],intent:['office','office365','microsoft','word','excel','onedrive','cloud','productivity']}
 ];
 
 const categoryData = [
   ['AI Assistants','AI','7 tools'],
-  ['AI Video','▶','4 tools'],
-  ['Design','✦','5 tools'],
-  ['Development','</>','4 tools'],
-  ['Writing & SEO','✍','3 tools'],
-  ['Productivity','P','2 tools'],
-  ['AI Voice','∿','1 tool'],
+  ['AI Video','▶','5 tools'],
+  ['Design','✦','6 tools'],
+  ['Development','</>','5 tools'],
+  ['Writing & SEO','✍','4 tools'],
+  ['Productivity','P','3 tools'],
+  ['AI Voice','∿','2 tools'],
   ['VPN & Security','S','2 tools'],
-  ['Entertainment','E','2 tools'],
-  ['Business','B','1 tool'],
+  ['Entertainment','E','3 tools'],
+  ['Business','B','2 tools'],
   ['Software','W','1 tool']
 ];
 
@@ -82,7 +90,15 @@ const officialLogos = {
   grammarly: 'assets/product-logos/grammarly.png',
   quillbot: 'assets/product-logos/quillbot.png',
   semrush: 'assets/product-logos/semrush.png',
-  allinone: 'assets/product-logos/chatgpt.png'
+  allinone: 'assets/product-logos/chatgpt.png',
+  tradingview: 'assets/product-logos/tradingview.png',
+  kling: 'assets/product-logos/kling.png',
+  freepik: 'assets/product-logos/freepik.png',
+  spotify: 'assets/product-logos/spotify.png',
+  copilot: 'assets/product-logos/copilot.png',
+  suno: 'assets/product-logos/suno.png',
+  turnitin: 'assets/product-logos/turnitin.png',
+  office365: 'assets/product-logos/office365.png'
 };
 
 products.forEach(p => {

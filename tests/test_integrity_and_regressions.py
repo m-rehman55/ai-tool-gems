@@ -108,10 +108,10 @@ class TestIntegrityAndRegressions(unittest.TestCase):
 
     def test_phase1_breadcrumbs_and_contrast_integrity(self):
         """Phase 1: Verifies all static tool pages have clickable breadcrumbs and light-theme contrast overrides."""
-        # 1. Breadcrumbs check across all 32 tools
+        # 1. Breadcrumbs check across all 40 tools
         tools_dir = os.path.join(REPO_ROOT, 'tools')
         subdirs = [d for d in os.listdir(tools_dir) if os.path.isdir(os.path.join(tools_dir, d))]
-        self.assertEqual(len(subdirs), 32, "Expected exactly 32 tool directories in tools/")
+        self.assertEqual(len(subdirs), 40, "Expected exactly 40 tool directories in tools/")
         for d in subdirs:
 
             fp = os.path.join(tools_dir, d, 'index.html')
@@ -192,10 +192,10 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             "Expected <section> element with id='payments' in policies.html"
         )
 
-        # 2. All 32 tool pages have links to policies.html#payments and the section exists
+        # 2. All 40 tool pages have links to policies.html#payments and the section exists
         tools_dir = os.path.join(REPO_ROOT, 'tools')
         tool_dirs = [d for d in os.listdir(tools_dir) if os.path.isdir(os.path.join(tools_dir, d))]
-        self.assertEqual(len(tool_dirs), 32, "Expected 32 tool pages")
+        self.assertEqual(len(tool_dirs), 40, "Expected 40 tool pages")
         for td in tool_dirs:
             tfile = os.path.join(tools_dir, td, 'index.html')
             with open(tfile, 'r', encoding='utf-8') as f:
