@@ -1,439 +1,468 @@
 {
-  "total_dispatches": 3,
-  "last_dispatch": "2026-10-25T01:29:16.924529+00:00",
+  "total_dispatches": 5,
+  "last_dispatch": "2026-10-25T01:49:15.338649+00:00",
   "url_history": {
     "https://aitoolgems.tech/tools/test-sample/": {
-      "last_submitted": "2026-10-25T01:29:16.924529+00:00",
-      "submission_count": 2,
+      "last_submitted": "2026-10-25T01:49:01.568015+00:00",
+      "submission_count": 3,
       "last_status": "success"
     },
     "https://aitoolgems.tech/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/deals/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/prices/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/about.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/contact.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/correction-policy.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/how-we-price.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/how-we-review.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/how-we-source.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/policies.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/privacy-policy/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/product-verification.html": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/terms-of-service/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/ai-subscriptions-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/ai-tools-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/ai-tools-price-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/ai-tools-pricing/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/businesses/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/canva/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/capcut/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/chatgpt-alternatives/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/claude-ai-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/creators/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/cursor-ai-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/deepseek-ai-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/developers/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/gemini/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/grammarly-vs-quillbot-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/heygen-ai-video-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/n8n-automation-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/perplexity-ai-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/productivity/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/runway-gen3-pakistan/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/guides/students/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/adobe/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/allinone/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/canva/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/capcut/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/chatgpt/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/claude/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/cursor/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/deepseek/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/elevenlabs/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/figma/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/gamma/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/gemini/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/grammarly/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/grok/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/heygen/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/leonardo/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/linkedin/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/lovable/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/midjourney/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/n8n/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/netflix/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/nordvpn/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/notion/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/perplexity/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/quillbot/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/replit/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/runway/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/semrush/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/surfshark/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/veo/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/windows/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/youtube/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/blog/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/tradingview/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/kling/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/freepik/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/spotify/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/copilot/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/suno/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/turnitin/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     },
     "https://aitoolgems.tech/tools/office365/": {
-      "last_submitted": "2026-10-25T01:27:37.258777+00:00",
-      "submission_count": 1,
+      "last_submitted": "2026-10-25T01:49:15.338649+00:00",
+      "submission_count": 2,
       "last_status": "success"
     }
   },
   "recent_runs": [
+    {
+      "timestamp": "2026-10-25T01:49:15.338649+00:00",
+      "urls_count": 85,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200,
+          "success": true
+        },
+        "https://www.bing.com/indexnow": {
+          "status_code": 200,
+          "success": true
+        },
+        "https://yandex.com/indexnow": {
+          "error": "Remote end closed connection without response",
+          "success": false
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-25T01:49:01.568015+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
     {
       "timestamp": "2026-10-25T01:29:16.924529+00:00",
       "urls_count": 1,
