@@ -34,6 +34,11 @@ jobs:
       - name: Run technical SEO/GEO integrity audit
         run: python -m marketing_agent seo-monitor --json --send
 
+      - name: Run Google AI Overviews Grounding & Knowledge Base Audit
+        run: |
+          python -m aio_agent audit
+          python -m aio_agent sync-llms
+
       - name: Pull Google Search Console + Bing data and send report
         if: env.GSC_CLIENT_ID != '' && env.GSC_CLIENT_SECRET != ''
         run: python -m marketing_agent seo-api-report --send --days 7

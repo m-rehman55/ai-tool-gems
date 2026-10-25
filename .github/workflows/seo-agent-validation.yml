@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "seo-agent/**"
+      - "aio_agent/**"
+      - "keyword_agent/**"
+      - "marketing_agent/**"
       - "scripts/**"
       - "tests/**"
       - "*.html"
@@ -22,6 +25,9 @@ on:
       - main
     paths:
       - "seo-agent/**"
+      - "aio_agent/**"
+      - "keyword_agent/**"
+      - "marketing_agent/**"
       - "scripts/**"
       - "tests/**"
       - "*.html"
@@ -44,7 +50,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -77,6 +83,18 @@ jobs:
       - name: Run Scope, Safety, Schema & Technical Unit Tests
         run: |
           python -m unittest discover -s seo-agent/tests -v
+
+      - name: Run AIO Agent & Google RAG Grounding Unit Tests
+        run: |
+          python -m unittest discover -s aio_agent/tests -v
+
+      - name: Run Keyword Agent & GSC RE2 Unit Tests
+        run: |
+          python -m unittest discover -s keyword_agent/tests -v
+
+      - name: Run Marketing Agent & Social Unit Tests
+        run: |
+          python -m unittest discover -s marketing_agent/tests -v
 
       - name: Run Offline Repository Audit
         run: |
