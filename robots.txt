@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /index.html
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
@@ -12,7 +11,6 @@ Allow: /
 User-agent: bingbot
 User-agent: msnbot
 User-agent: BingPreview
-Disallow: /index.html
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
