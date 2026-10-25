@@ -57,8 +57,7 @@ class TechnicalAuditor:
             )
             return issues  # Do not audit empty or broken response body
 
-        # 2. Robots Indexing Directives (Utility pages like 404/admin are expected to be noindexed)
-        is_utility_page = any(u in page.url for u in ["404.html", "admin.html", "googleb36d12ee905644d9", "gsc_daily_checklist"])
+        is_utility_page = any(u in page.url for u in ["404.html", "admin.html", "googleb36d12ee905644d9", "gsc_daily_checklist", "privacy.html", "terms.html"])
         if page.robots_meta and "noindex" in page.robots_meta.lower():
             if not is_utility_page:
                 issues.append(

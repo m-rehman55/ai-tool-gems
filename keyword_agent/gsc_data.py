@@ -11,8 +11,9 @@ from __future__ import annotations
 import csv
 import json
 import logging
+import os
 from dataclasses import dataclass, field, asdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -339,13 +340,196 @@ class GSCDataEngine:
                 ))
         return rows
 
-    def load_dataset(self) -> GSCDataset:
+    def fetch_live_api(
+        self,
+        client_id: str = "",
+        client_secret: str = "",
+        refresh_token: str = "",
+        site_domain: str = "sc-domain:aitoolgems.tech",
+        days: int = 28,
+        save_csvs: bool = True,
+    ) -> Optional[GSCDataset]:
+        """
+        Fetches live search performance data directly from Google Search Console API via OAuth2.
+        Updates local CSVs and historical snapshots seamlessly.
+        """
+        import urllib.request
+        import urllib.parse
+
+        cid = client_id or os.getenv("GSC_CLIENT_ID", "").strip()
+        csec = client_secret or os.getenv("GSC_CLIENT_SECRET", "").strip()
+        rtoken = refresh_token or os.getenv("GSC_REFRESH_TOKEN", "").strip()
+
+        if not (cid and csec and rtoken):
+            return None
+
+        token_url = "https://oauth2.googleapis.com/token"
+        data = urllib.parse.urlencode({
+            "client_id": cid,
+            "client_secret": csec,
+            "refresh_token": rtoken,
+            "grant_type": "refresh_token",
+        }).encode("utf-8")
+
+        req = urllib.request.Request(token_url, data=data, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                res = json.loads(resp.read().decode("utf-8"))
+                access_token = res.get("access_token")
+        except Exception as e:
+            logger.warning(f"GSC OAuth token exchange failed: {e}")
+            return None
+
+        if not access_token:
+            return None
+
+        end_date = (datetime.now(timezone.utc) - timedelta(days=2)).strftime("%Y-%m-%d")
+        start_date = (datetime.now(timezone.utc) - timedelta(days=days + 2)).strftime("%Y-%m-%d")
+
+        site_enc = urllib.parse.quote(site_domain, safe="")
+        api_url = f"https://www.googleapis.com/webmasters/v3/sites/{site_enc}/searchAnalytics/query"
+        headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
+
+        def _query_dim(dim: str, limit: int = 500) -> List[Dict[str, Any]]:
+            payload = json.dumps({
+                "startDate": start_date,
+                "endDate": end_date,
+                "dimensions": [dim],
+                "rowLimit": limit,
+            }).encode("utf-8")
+            q_req = urllib.request.Request(api_url, data=payload, headers=headers, method="POST")
+            try:
+                with urllib.request.urlopen(q_req, timeout=20) as q_resp:
+                    data = json.loads(q_resp.read().decode("utf-8"))
+                    return data.get("rows", [])
+            except Exception as e:
+                logger.warning(f"Failed querying GSC dimension {dim}: {e}")
+                return []
+
+        q_rows = _query_dim("query", limit=500)
+        p_rows = _query_dim("page", limit=500)
+        c_rows = _query_dim("country", limit=100)
+        d_rows = _query_dim("device", limit=10)
+
+        queries = [
+            GSCQueryRow(
+                query=r["keys"][0],
+                clicks=int(r.get("clicks", 0)),
+                impressions=int(r.get("impressions", 0)),
+                ctr=round(float(r.get("ctr", 0.0)) * 100.0, 2),
+                position=round(float(r.get("position", 0.0)), 2),
+            )
+            for r in q_rows if r.get("keys")
+        ]
+
+        pages = [
+            GSCPageRow(
+                page=r["keys"][0],
+                clicks=int(r.get("clicks", 0)),
+                impressions=int(r.get("impressions", 0)),
+                ctr=round(float(r.get("ctr", 0.0)) * 100.0, 2),
+                position=round(float(r.get("position", 0.0)), 2),
+            )
+            for r in p_rows if r.get("keys")
+        ]
+
+        countries = [
+            GSCCountryRow(
+                country=r["keys"][0],
+                clicks=int(r.get("clicks", 0)),
+                impressions=int(r.get("impressions", 0)),
+                ctr=round(float(r.get("ctr", 0.0)) * 100.0, 2),
+                position=round(float(r.get("position", 0.0)), 2),
+            )
+            for r in c_rows if r.get("keys")
+        ]
+
+        devices = [
+            GSCDeviceRow(
+                device=r["keys"][0],
+                clicks=int(r.get("clicks", 0)),
+                impressions=int(r.get("impressions", 0)),
+                ctr=round(float(r.get("ctr", 0.0)) * 100.0, 2),
+                position=round(float(r.get("position", 0.0)), 2),
+            )
+            for r in d_rows if r.get("keys")
+        ]
+
+        if not queries and not pages:
+            return None
+
+        tot_clicks = max(sum(p.clicks for p in pages), sum(q.clicks for q in queries))
+        tot_imp = max(sum(p.impressions for p in pages), sum(q.impressions for q in queries))
+        avg_ctr = round((tot_clicks / tot_imp * 100.0), 2) if tot_imp > 0 else 0.0
+        avg_pos = round(sum(q.position for q in queries) / len(queries), 1) if queries else 0.0
+
+        dataset = GSCDataset(
+            source="LIVE_API",
+            status_message=f"Retrieved {len(queries)} live queries and {len(pages)} pages via Google Search Console OAuth API.",
+            queries=queries,
+            pages=pages,
+            countries=countries,
+            devices=devices,
+            total_clicks=tot_clicks,
+            total_impressions=tot_imp,
+            average_ctr=avg_ctr,
+            average_position=avg_pos,
+            date_range=f"{start_date} to {end_date}",
+        )
+
+        if save_csvs:
+            try:
+                q_csv = self.exports_dir / "Queries.csv"
+                with open(q_csv, "w", encoding="utf-8-sig", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow(["Top queries", "Clicks", "Impressions", "CTR", "Position"])
+                    for q in queries:
+                        writer.writerow([q.query, q.clicks, q.impressions, f"{q.ctr}%", q.position])
+
+                p_csv = self.exports_dir / "Pages.csv"
+                with open(p_csv, "w", encoding="utf-8-sig", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow(["Top pages", "Clicks", "Impressions", "CTR", "Position"])
+                    for p in pages:
+                        writer.writerow([p.page, p.clicks, p.impressions, f"{p.ctr}%", p.position])
+
+                if countries:
+                    c_csv = self.exports_dir / "Countries.csv"
+                    with open(c_csv, "w", encoding="utf-8-sig", newline="") as f:
+                        writer = csv.writer(f)
+                        writer.writerow(["Country", "Clicks", "Impressions", "CTR", "Position"])
+                        for c in countries:
+                            writer.writerow([c.country, c.clicks, c.impressions, f"{c.ctr}%", c.position])
+
+                if devices:
+                    d_csv = self.exports_dir / "Devices.csv"
+                    with open(d_csv, "w", encoding="utf-8-sig", newline="") as f:
+                        writer = csv.writer(f)
+                        writer.writerow(["Device", "Clicks", "Impressions", "CTR", "Position"])
+                        for d in devices:
+                            writer.writerow([d.device, d.clicks, d.impressions, f"{d.ctr}%", d.position])
+            except Exception as e:
+                logger.warning(f"Failed exporting live GSC data to CSV: {e}")
+
+        self.save_historical_snapshot(dataset)
+        return dataset
+
+    def load_dataset(self, allow_live: bool = False) -> GSCDataset:
         """
         Discovers and loads GSC data from:
-        1. Local manual export CSVs in `exports_dir`
-        2. Previous snapshots in `history_dir`
-        3. Returns explicit 'NO_DATA' status if none available, without fabricating numbers.
+        1. Live GSC API (if allow_live=True and OAuth credentials configured)
+        2. Local manual export CSVs in `exports_dir`
+        3. Previous snapshots in `history_dir`
+        4. Returns explicit 'NO_DATA' status if none available, without fabricating numbers.
         """
+        if allow_live:
+            try:
+                live_data = self.fetch_live_api()
+                if live_data:
+                    return live_data
+            except Exception as e:
+                logger.warning(f"Live GSC API load fallback to CSV: {e}")
+
         queries: List[GSCQueryRow] = []
         pages: List[GSCPageRow] = []
         countries: List[GSCCountryRow] = []

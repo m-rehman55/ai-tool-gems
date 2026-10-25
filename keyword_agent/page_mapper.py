@@ -72,12 +72,20 @@ TOOL_ALIASES: Dict[str, List[str]] = {
     "semrush": ["semrush", "sem rush"],
     "netflix": ["netflix", "netflix 4k", "netflix premium"],
     "youtube": ["youtube premium", "yt premium"],
-    "windows": ["windows 11", "windows key", "windows 10", "ms office", "office 365"],
+    "windows": ["windows 11", "windows key", "windows 10", "windows pro key"],
     "allinone": ["all in one", "all-in-one", "ai pack", "mega pack", "ai bundle", "tools bundle"],
     "notion": ["notion", "notion ai"],
     "grok": ["grok", "grok ai", "x ai"],
     "gamma": ["gamma", "gamma app", "gamma ai"],
     "n8n": ["n8n", "n8n automation", "n8n workflow"],
+    "copilot": ["copilot", "github copilot", "ms copilot", "copilot pro"],
+    "freepik": ["freepik", "freepik premium", "pikaso"],
+    "kling": ["kling", "kling ai", "kling video"],
+    "office365": ["office 365", "microsoft 365", "ms office 365", "office365"],
+    "spotify": ["spotify", "spotify premium"],
+    "suno": ["suno", "suno ai", "suno v3"],
+    "tradingview": ["tradingview", "trading view", "tradingview pro", "pine script"],
+    "turnitin": ["turnitin", "turnitin student", "turnitin instructor"],
 }
 
 

@@ -2,3 +2,47 @@
 @media(max-width:768px){.floating-whatsapp{right:14px;bottom:14px;height:46px;padding:0 16px;font-size:13px}body:has(.mobile-bottom) .floating-whatsapp{bottom:76px}}@media(max-width:480px){.floating-whatsapp{width:48px;height:48px;padding:0;justify-content:center;border-radius:50%}.floating-whatsapp span{display:none}}
 
 .favorite-toggle{position:absolute;top:10px;right:10px;z-index:4;width:32px;height:32px;border-radius:10px;background:rgba(11,18,35,0.85);border:1px solid var(--border-glass);color:var(--text-secondary);display:grid;place-items:center;cursor:pointer;transition:all 0.2s ease}.favorite-toggle:hover{border-color:#f59e0b;color:#f59e0b;transform:scale(1.08)}.favorite-toggle.active{background:rgba(245,158,11,0.18);border-color:#f59e0b;color:#f59e0b;box-shadow:0 0 12px rgba(245,158,11,0.35)}.favorite-toggle svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none}.favorite-toggle.active svg{fill:#f59e0b;stroke:#f59e0b}.add-detail.added{background:var(--neon-cyan);color:#030712}
+
+/* Multi-Currency Toggle */
+.currency-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 2px;
+  height: 42px;
+  box-sizing: border-box;
+}
+.currency-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 6px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+.currency-btn.active {
+  background: var(--neon-cyan);
+  color: #0b1120;
+  box-shadow: 0 0 10px var(--neon-cyan-glow);
+}
+.price-block strong .alt-currency {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  font-style: normal;
+}
+.detail-price .alt-currency {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 6px;
+  font-style: normal;
+}

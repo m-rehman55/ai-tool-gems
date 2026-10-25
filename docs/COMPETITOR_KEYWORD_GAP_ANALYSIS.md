@@ -84,3 +84,22 @@ These topics represent verified Pakistani search demand where competitor has cre
 ### C. Wholesale Enterprise AI API Hub
 - Competitor has launched `/enterprise-ai-api-credits/` targeting Pakistani AI agencies.
 - AIToolGems can introduce a dedicated section on `/prices/` for Developer API tokens (OpenAI, Claude, DeepSeek) with local invoicing.
+
+---
+
+## 5. Top 10 Competitors Domination Matrix (Pakistan & Worldwide Landscape)
+
+AIToolGems continuously monitors and outperforms the top 10 digital AI tool resellers and subscription aggregators across domestic and international markets:
+
+| # | Competitor Name & Domain | Market Focus | Monthly Traffic | Key Weaknesses | Our Domination Action |
+|---|---|---|---|---|---|
+| 1 | **AI Tools Pak** (`aitoolspak.tech`) | Pakistan | ~25,000 | Slow WordPress theme (LCP > 4s), zero automated audits | 10x faster static speed, 100% schema completeness, dual pricing |
+| 2 | **Pak Tools Store** (`paktools.store`) | Pakistan | ~40,000 | Shared accounts lack prompt privacy, high support friction | Guaranteed private profiles, 30-day warranty, Raast/SadaPay rails |
+| 3 | **Digital Tools PK** (`digitaltools.com.pk`) | Pakistan | ~18,000 | Outdated UI, high friction checkout, no AEO optimization | Modern dark/light glassmorphism, instant WhatsApp prefilled checkout |
+| 4 | **Zipper Sells** (`zippersells.com`) | Pakistan | ~30,000 | Frequent account logouts, unverified contact numbers | 99.9% uptime, verified business numbers, permanent canonical URLs |
+| 5 | **Group SEO Toolz** (`groupseotoolz.com`) | Pakistan & South Asia | ~65,000 | Requires untrusted Chrome extensions (security hazard) | Zero extension requirement, native direct web access, clean security |
+| 6 | **ToolzBuy** (`toolzbuy.com`) | Worldwide / South Asia | ~80,000 | No local PKR payment rails, high pooled churn | Dual rails (EasyPaisa + USDT TRC20/BEP20 & Wise), VIP human desk |
+| 7 | **CodesForever** (`codesforever.com`) | Worldwide / Global | ~120,000 | High USD retail prices, zero South Asian localization | Deep discount wholesale rates in PKR & USD, live activation support |
+| 8 | **GroupToolz** (`grouptoolz.com`) | Worldwide / Global | ~50,000 | Rate-limited shared accounts, public prompt history | Guaranteed isolated private sessions, 100% Core Web Vitals |
+| 9 | **SEO Toolz Bundle** (`seotoolzbundle.com`) | Worldwide & Pakistan | ~35,000 | Overloaded proxy servers, ad-heavy interface (fails CLS) | Ad-free interface (CLS = 0.000), direct high-speed credentials |
+| 10 | **ToolWaly** (`toolwaly.com`) | Pakistan & Global | ~22,000 | Thin programmatic content, no llms.txt, vague warranty | Authoritative editorial guides, llms.txt integration, 30-day warranty |

@@ -1,219 +1,439 @@
-# AI Tool Gems Pakistan — Complete Marketplace & AI Assistant Knowledge Base
+# AI Tool Gems — Complete Marketplace & AI Assistant Knowledge Base
 
 > Canonical URL: https://aitoolgems.tech/
-> Entity: AI Tool Gems Pakistan (Independent Digital Software Marketplace)
-> Target Market: Pakistan (100% exclusive)
-> Currency: Pakistani Rupee (PKR, Rs.)
-> Payment Methods Accepted: EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank Transfer (IBFT)
-> Fulfillment Method: WhatsApp Delivery After Payment Confirmation and Verification
+> Entity: AI Tool Gems (Independent Digital Software Marketplace)
+> Target Markets: Pakistan (Domestic Core) & Worldwide (Global Hybrid Expansion)
+> Currencies: Pakistani Rupee (PKR, Rs.) & US Dollar (USD, $)
+> Domestic Payment Methods: EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank Transfer (IBFT)
+> International Payment Methods: Cryptocurrency (USDT TRC20 / BEP20, Binance Pay), Wise (TransferWise)
+> Fulfillment Method: Digital delivery via WhatsApp after payment confirmation and verification
 > Customer Support: WhatsApp +92 323 6715731
 > Warranty: 7-day to 30-day replacement warranty on all listings
 
 ---
 
-## About AI Tool Gems Pakistan
-AI Tool Gems (aitoolgems.tech) is Pakistan's premier independent digital marketplace designed specifically for Pakistani students, freelancers, content creators, software engineers, and digital marketing agencies.
+## About AI Tool Gems
+AI Tool Gems (aitoolgems.tech) is an independent digital marketplace designed for freelancers, content creators, software engineers, digital marketing agencies, and global users.
 
-In Pakistan, most international AI platforms (such as OpenAI, Google One, Anthropic, Midjourney, Adobe, and ElevenLabs) require international credit or debit cards enabled for foreign e-commerce transactions. Pakistani bank cards regularly face payment declines, 10% to 15% advance income tax (withholding tax), high forex currency conversion markups, and strict banking restrictions.
+In Pakistan and many international jurisdictions, acquiring subscriptions to premier AI platforms (such as OpenAI, Google One, Anthropic, Midjourney, Adobe, and ElevenLabs) is hindered by credit card payment declines, withholding taxes, high currency conversion fees, and lack of localized payment options.
 
-AI Tool Gems solves this challenge by providing verified AI tool subscriptions, private account access, team invitation seats, and software license keys with upfront transparent pricing in PKR and instant local activation via EasyPaisa and JazzCash.
+AI Tool Gems solves this challenge by providing verified AI tool subscriptions, private account access, team invitation seats, and software license keys with upfront transparent pricing in PKR & USD, fast assisted WhatsApp delivery, and multi-rail payment support.
 
 ---
 
-## Complete Product Catalog & PKR Pricing (October 2026)
+## Complete Product Catalog & Multi-Currency Pricing (40 Verified Listings)
 
-### 1. ChatGPT Plus (OpenAI)
+### 1. ChatGPT Plus
 - URL: https://aitoolgems.tech/tools/chatgpt/
-- Listed Price: Rs. 2,300 PKR / month (Regular: Rs. 3,000)
+- Listed Price: Rs. 2,300 PKR / $8.99 USD
 - Duration: 1 Month
-- Access Type: Private Account (Dedicated credentials, exclusive usage)
+- Access Type: Private Access
 - Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: GPT-4o, GPT-4 Turbo, advanced coding assistance, DALL-E 3 image generation, file analysis, web browsing, custom GPTs.
+- Warranty: 7 Days Replacement Warranty
+- Key Features: GPT-4o, advanced coding, DALL-E 3 image generation, file analysis & custom GPTs.
 - Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20ChatGPT%20Plus
 
-### 2. Google Gemini Pro (Google DeepMind)
+### 2. Google Gemini Pro
 - URL: https://aitoolgems.tech/tools/gemini/
-- Listed Price: Rs. 800 PKR (Regular: Rs. 1,500)
+- Listed Price: Rs. 800 PKR / $3.99 USD
 - Duration: 18 Months
-- Access Type: Invitation Access (Direct Google Workspace / Google One Family seat)
+- Access Type: Invitation Access
 - Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: 2TB Google Drive cloud storage, multimodal 2M token context, Google Docs, Gmail, and Sheets AI integrations.
-- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Gemini%20Pro
+- Warranty: 30 Days Replacement Warranty
+- Key Features: 2TB Google Drive cloud storage, 2M token context, Docs & Gmail integrations.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Google%20Gemini%20Pro
 
-### 3. Leonardo AI Essential (Leonardo.Ai)
-- URL: https://aitoolgems.tech/tools/leonardo/
-- Listed Price: Rs. 1,900 PKR / month (Regular: Rs. 2,600)
-- Duration: 1 Month
-- Access Type: Private Account
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: 8,500 tokens/month, high-fidelity AI photorealism, marketing visuals, game asset generation, commercial use rights.
-
-### 4. ElevenLabs Voice AI (ElevenLabs)
-- URL: https://aitoolgems.tech/tools/elevenlabs/
-- Listed Price: Rs. 1,400 PKR / month (Regular: Rs. 2,000)
-- Duration: 1 Month
-- Access Type: Private Account
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: 30,000 characters/month, realistic text-to-speech, Urdu and English voice cloning, faceless YouTube audio narration.
-
-### 5. Canva Pro Edu (Canva)
-- URL: https://aitoolgems.tech/tools/canva/
-- Listed Price: Rs. 900 PKR / year (Regular: Rs. 1,500)
-- Duration: 1 Year (12 Months)
-- Access Type: Team Invitation Seat (Joined via your own personal email)
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: 100M+ premium stock assets, Magic Studio AI tools, brand kits, background remover, social media scheduler.
-
-### 6. Figma Pro Private (Figma)
-- URL: https://aitoolgems.tech/tools/figma/
-- Listed Price: Rs. 3,000 PKR / year (Regular: Rs. 4,500)
-- Duration: 1 Year (12 Months)
-- Access Type: Private Team Seat
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: Unlimited Figma files, shared team design systems, dev mode, advanced interactive prototyping.
-
-### 7. CapCut Pro VIP (ByteDance)
-- URL: https://aitoolgems.tech/tools/capcut/
-- Listed Price: Rs. 900 PKR / month (Regular: Rs. 1,400)
-- Duration: 1 Month
-- Access Type: Private Profile
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: 4K 60fps video export, auto-captions with Urdu support, premium speed curves, background removal for TikTok & Reels.
-
-### 8. Adobe Creative Cloud (Adobe)
-- URL: https://aitoolgems.tech/tools/adobe/
-- Listed Price: Rs. 1,700 PKR (2 Months access)
-- Duration: 2 Months
-- Access Type: Invitation / Private Seat
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: Full Active Period Warranty
-- Key Features: 20+ desktop creative apps including Photoshop, Illustrator, Premiere Pro, After Effects, and Adobe Firefly AI generative credits.
-
-### 9. Lovable Pro (Lovable.dev)
-- URL: https://aitoolgems.tech/tools/lovable/
-- Listed Price: Rs. 1,600 PKR / month (Regular: Rs. 2,400)
-- Duration: 1 Month
-- Access Type: Private Account
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: Full-stack AI web app builder, natural language prompt-to-app, Supabase database integration, one-click GitHub code export.
-
-### 10. Replit Core (Replit)
-- URL: https://aitoolgems.tech/tools/replit/
-- Listed Price: Rs. 1,800 PKR / month (Regular: Rs. 2,500)
-- Duration: 1 Month
-- Access Type: Private Account
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: Replit Agent fullstack software synthesis, unlimited private cloud workspaces, persistent hosting, GitHub sync.
-
-### 11. n8n Starter (n8n.io)
-- URL: https://aitoolgems.tech/tools/n8n/
-- Listed Price: Rs. 2,100 PKR / month (Regular: Rs. 3,200)
-- Duration: 1 Month
-- Access Type: Private Workspace
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: Workflow automation, 400+ API integrations, WhatsApp bot automation, replacing expensive Zapier setups.
-
-### 12. Gamma Pro (Gamma.app)
-- URL: https://aitoolgems.tech/tools/gamma/
-- Listed Price: Rs. 2,300 PKR / month (Regular: Rs. 3,200)
-- Duration: 1 Month
-- Access Type: Private Account
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: AI presentation decks, interactive slide generation, document storytelling, custom fonts, analytics export.
-
-### 13. Notion Business (Notion)
-- URL: https://aitoolgems.tech/tools/notion/
-- Listed Price: Rs. 2,200 PKR (3 Months access)
-- Duration: 3 Months
-- Access Type: Team Invitation
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: Notion AI assistant, connected team workspaces, project management databases, unlimited file uploads.
-
-### 14. NordVPN (Nord Security)
-- URL: https://aitoolgems.tech/tools/nordvpn/
-- Listed Price: Rs. 1,800 PKR / year (Regular: Rs. 3,500)
-- Duration: 1 Year (12 Months)
-- Access Type: Dedicated Profile
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: 6,000+ global high-speed servers, encrypted browsing, streaming bypass, Threat Protection.
-
-### 15. Surfshark VPN (Surfshark)
-- URL: https://aitoolgems.tech/tools/surfshark/
-- Listed Price: Rs. 1,500 PKR / year (Regular: Rs. 2,800)
-- Duration: 1 Year (12 Months)
-- Access Type: Dedicated Profile
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: Unlimited device connections, CleanWeb ad-blocker, MultiHop VPN, bypass geo-restrictions.
-
-### 16. YouTube Premium (Google / YouTube)
-- URL: https://aitoolgems.tech/tools/youtube/
-- Listed Price: Rs. 1,200 PKR / 6 Months (Regular: Rs. 2,000)
-- Duration: 6 Months
-- Access Type: Family Group Invitation (Linked to personal Gmail)
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: Ad-free YouTube, background audio playback, offline downloads, YouTube Music Premium included.
-
-### 17. Netflix Premium 4K (Netflix)
-- URL: https://aitoolgems.tech/tools/netflix/
-- Listed Price: Rs. 400 PKR / month (Regular: Rs. 650)
-- Duration: 1 Month
-- Access Type: Shared Account (Dedicated PIN-protected profile)
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: Ultra HD 4K streaming, HDR video, Dolby Atmos audio, Smart TV support.
-
-### 18. LinkedIn Premium Career & Business (LinkedIn)
-- URL: https://aitoolgems.tech/tools/linkedin/
-- Listed Price: Rs. 1,500 PKR / 6 Months (Regular: Rs. 3,500)
-- Duration: 6 Months
-- Access Type: Invitation / Voucher Activation
-- Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 30-Day Replacement Warranty
-- Key Features: InMail messages, profile viewers insights, LinkedIn Learning courses, job applicant ranking insights.
-
-### 19. Google Veo 3 Ultra (Google DeepMind)
+### 3. Veo 3 Ultra
 - URL: https://aitoolgems.tech/tools/veo/
-- Listed Price: Rs. 2,100 PKR / month (Regular: Rs. 3,500)
-- Duration: 1 Month
-- Access Type: Private Account
+- Listed Price: Rs. 2,100 PKR / $8.49 USD
+- Duration: Unlimited
+- Access Type: Shared Access
 - Delivery Time: Delivery after payment confirmation on WhatsApp
-- Warranty: 7-Day Replacement Warranty
-- Key Features: High-definition 1080p AI cinematic video generation, nuanced camera motions, prompt adherence.
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Text-to-video workflow, audio-capable generation, 1080p output & consistent motion.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Veo%203%20Ultra
 
-### 20. Windows 11 Pro Retail License Key (Microsoft)
+### 4. Leonardo AI Essential
+- URL: https://aitoolgems.tech/tools/leonardo/
+- Listed Price: Rs. 1,900 PKR / $7.49 USD
+- Duration: 8,500 Credits
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: PhotoReal & Alchemy pipeline, prompt enhancer, 8,500 credits & commercial use.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Leonardo%20AI%20Essential
+
+### 5. ElevenLabs Voice AI
+- URL: https://aitoolgems.tech/tools/elevenlabs/
+- Listed Price: Rs. 3,300 PKR / $12.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Multilingual voice synthesis, voice cloning, monthly credit allowance & audio dubbing.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20ElevenLabs%20Voice%20AI
+
+### 6. Canva Pro Edu
+- URL: https://aitoolgems.tech/tools/canva/
+- Listed Price: Rs. 900 PKR / $3.99 USD
+- Duration: 1 Year
+- Access Type: Invitation Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: 100M+ premium stock assets, Magic Studio AI tools, background removal & brand kits.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Canva%20Pro%20Edu
+
+### 7. Figma Pro Private
+- URL: https://aitoolgems.tech/tools/figma/
+- Listed Price: Rs. 3,000 PKR / $11.99 USD
+- Duration: 2 Years
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Unlimited version history, Dev Mode inspection, shared team libraries & prototypes.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Figma%20Pro%20Private
+
+### 8. CapCut Pro VIP
+- URL: https://aitoolgems.tech/tools/capcut/
+- Listed Price: Rs. 900 PKR / $3.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Pro transitions, auto speech-to-text captions, AI background removal & 4K export.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20CapCut%20Pro%20VIP
+
+### 9. Adobe Creative Cloud
+- URL: https://aitoolgems.tech/tools/adobe/
+- Listed Price: Rs. 1,700 PKR / $6.99 USD
+- Duration: 2 Months
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Photoshop, Illustrator, Premiere Pro, After Effects, Firefly credits & 100GB cloud.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Adobe%20Creative%20Cloud
+
+### 10. Lovable Pro
+- URL: https://aitoolgems.tech/tools/lovable/
+- Listed Price: Rs. 1,600 PKR / $6.49 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Full-stack AI web app builder, GitHub export, custom domains & natural language code.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Lovable%20Pro
+
+### 11. Gamma Pro
+- URL: https://aitoolgems.tech/tools/gamma/
+- Listed Price: Rs. 23,000 PKR / $89.99 USD
+- Duration: 1 Year
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Unlimited AI presentation cards, custom branding, deck analytics & PDF/PPT export.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Gamma%20Pro
+
+### 12. Replit Core
+- URL: https://aitoolgems.tech/tools/replit/
+- Listed Price: Rs. 3,200 PKR / $12.49 USD
+- Duration: $40 Credits
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Autonomous AI code agent, instant cloud IDE environments, hosting & $40 usage credits.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Replit%20Core
+
+### 13. n8n Starter
+- URL: https://aitoolgems.tech/tools/n8n/
+- Listed Price: Rs. 7,000 PKR / $26.99 USD
+- Duration: 1 Year
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Visual workflow builder, 400+ app integrations, LangChain AI nodes & custom JavaScript.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20n8n%20Starter
+
+### 14. Notion Business
+- URL: https://aitoolgems.tech/tools/notion/
+- Listed Price: Rs. 2,200 PKR / $8.99 USD
+- Duration: 3 Months
+- Access Type: Invitation Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Unlimited team blocks, Notion AI assistant, advanced project boards & custom databases.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Notion%20Business
+
+### 15. NordVPN Plus
+- URL: https://aitoolgems.tech/tools/nordvpn/
+- Listed Price: Rs. 1,800 PKR / $6.99 USD
+- Duration: 3 Months
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Ultra-fast 10Gbps encrypted servers, Threat Protection ad blocker & zero-logs policy.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20NordVPN%20Plus
+
+### 16. Surfshark VPN
+- URL: https://aitoolgems.tech/tools/surfshark/
+- Listed Price: Rs. 800 PKR / $3.49 USD
+- Duration: 2 Months
+- Access Type: Shared Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Unlimited device connections, CleanWeb blocker, global server locations & Bypasser.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Surfshark%20VPN
+
+### 17. YouTube Premium
+- URL: https://aitoolgems.tech/tools/youtube/
+- Listed Price: Rs. 1,200 PKR / $4.99 USD
+- Duration: 3 Months
+- Access Type: Invitation Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: 100% ad-free video, background playback, offline downloads & full YouTube Music.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20YouTube%20Premium
+
+### 18. Netflix Premium 4K
+- URL: https://aitoolgems.tech/tools/netflix/
+- Listed Price: Rs. 400 PKR / $1.99 USD
+- Duration: 1 Month
+- Access Type: Shared Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: 4K Ultra HD & HDR streaming, spatial audio, dedicated profile with PIN lock.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Netflix%20Premium%204K
+
+### 19. LinkedIn Premium
+- URL: https://aitoolgems.tech/tools/linkedin/
+- Listed Price: Rs. 1,500 PKR / $5.99 USD
+- Duration: 2 Months
+- Access Type: Invitation Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: InMail credits, profile viewer analytics, applicant insights & LinkedIn Learning.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20LinkedIn%20Premium
+
+### 20. Windows 11 Pro Key
 - URL: https://aitoolgems.tech/tools/windows/
-- Listed Price: Rs. 800 PKR (Lifetime digital key)
-- Duration: Lifetime Activation
-- Access Type: 25-Character Retail License Key
-- Delivery Time: Instant (5–10 minutes)
-- Warranty: Lifetime Activation Warranty
-- Key Features: Official Microsoft digital license, BitLocker encryption, Remote Desktop, Windows Sandbox.
+- Listed Price: Rs. 1,900 PKR / $7.99 USD
+- Duration: Lifetime
+- Access Type: License Key Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Genuine digital retail activation key, BitLocker encryption, Remote Desktop Host.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Windows%2011%20Pro%20Key
+
+### 21. Claude Pro (3.5 Sonnet)
+- URL: https://aitoolgems.tech/tools/claude/
+- Listed Price: Rs. 2,200 PKR / $8.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Claude 3.5 Sonnet & Opus, interactive Artifacts visualizer & 200K token deep context.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Claude%20Pro%20(3.5%20Sonnet)
+
+### 22. Midjourney v6.1 Pro
+- URL: https://aitoolgems.tech/tools/midjourney/
+- Listed Price: Rs. 2,400 PKR / $9.99 USD
+- Duration: 1 Month
+- Access Type: Private / Discord Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Photorealistic AI art, GPU generation hours, commercial rights & web/Discord access.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Midjourney%20v6.1%20Pro
+
+### 23. Cursor AI Pro
+- URL: https://aitoolgems.tech/tools/cursor/
+- Listed Price: Rs. 2,800 PKR / $10.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Composer multi-file AI editing, fast tab completions, Claude 3.5 Sonnet inside IDE.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Cursor%20AI%20Pro
+
+### 24. Perplexity Pro
+- URL: https://aitoolgems.tech/tools/perplexity/
+- Listed Price: Rs. 1,400 PKR / $5.49 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Pro Search with citations, unlimited document uploads, Claude 3.5 & GPT-4o switcher.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Perplexity%20Pro
+
+### 25. DeepSeek Unlimited
+- URL: https://aitoolgems.tech/tools/deepseek/
+- Listed Price: Rs. 1,100 PKR / $4.49 USD
+- Duration: 1 Month
+- Access Type: Private Portal Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: DeepSeek R1 full reasoning chain, mathematical proofs, logic solving & zero queue.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20DeepSeek%20Unlimited
+
+### 26. SuperGrok / Grok 2
+- URL: https://aitoolgems.tech/tools/grok/
+- Listed Price: Rs. 1,800 PKR / $6.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Real-time news search on X, Flux photorealistic image generator & creative modes.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20SuperGrok%20/%20Grok%202
+
+### 27. Runway ML Gen-3 Pro
+- URL: https://aitoolgems.tech/tools/runway/
+- Listed Price: Rs. 3,500 PKR / $13.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Gen-3 Alpha cinematic video generator, motion brush camera controls & 4K upscaler.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Runway%20ML%20Gen-3%20Pro
+
+### 28. HeyGen AI Avatar Pro
+- URL: https://aitoolgems.tech/tools/heygen/
+- Listed Price: Rs. 4,200 PKR / $16.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Studio-quality human avatars, 40+ language voice dubbing & script-to-video generator.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20HeyGen%20AI%20Avatar%20Pro
+
+### 29. Grammarly Premium
+- URL: https://aitoolgems.tech/tools/grammarly/
+- Listed Price: Rs. 750 PKR / $2.99 USD
+- Duration: 1 Month
+- Access Type: Private / Shared Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Full sentence rewrites, tone tuner, built-in plagiarism detector & browser extension.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Grammarly%20Premium
+
+### 30. QuillBot Premium
+- URL: https://aitoolgems.tech/tools/quillbot/
+- Listed Price: Rs. 450 PKR / $1.99 USD
+- Duration: 1 Month
+- Access Type: Private / Shared Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Unlimited paraphrasing words, 8 custom modes, freeze words & citation generator.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20QuillBot%20Premium
+
+### 31. SEMrush Pro
+- URL: https://aitoolgems.tech/tools/semrush/
+- Listed Price: Rs. 1,500 PKR / $5.99 USD
+- Duration: 1 Month
+- Access Type: Shared Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 7 Days Replacement Warranty
+- Key Features: Keyword Magic tool with PKR metrics, competitor organic audit & backlink analytics.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20SEMrush%20Pro
+
+### 32. All-in-One Mega AI Portal
+- URL: https://aitoolgems.tech/tools/allinone/
+- Listed Price: Rs. 1,999 PKR / $7.99 USD
+- Duration: 1 Month
+- Access Type: Private Portal Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal login. No VPN needed.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20All-in-One%20Mega%20AI%20Portal
+
+### 33. TradingView Pro
+- URL: https://aitoolgems.tech/tools/tradingview/
+- Listed Price: Rs. 3,500 PKR / $14.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Institutional-grade technical charts, custom Pine Script, volume profiles & alerts.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20TradingView%20Pro
+
+### 34. Kling AI
+- URL: https://aitoolgems.tech/tools/kling/
+- Listed Price: Rs. 4,800 PKR / $19.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: 1080p full HD cinematic video, 3D camera controls, physics simulation & commercial use.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Kling%20AI
+
+### 35. Freepik Premium
+- URL: https://aitoolgems.tech/tools/freepik/
+- Listed Price: Rs. 2,400 PKR / $9.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: 100 daily downloads, 150M+ vectors, PSD templates, stock photos & Pikaso AI.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Freepik%20Premium
+
+### 36. Spotify Premium
+- URL: https://aitoolgems.tech/tools/spotify/
+- Listed Price: Rs. 1,200 PKR / $4.99 USD
+- Duration: 3 Months
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: 100% ad-free music, 10,000 songs offline downloads, 320kbps audio & personal email setup.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Spotify%20Premium
+
+### 37. GitHub Copilot
+- URL: https://aitoolgems.tech/tools/copilot/
+- Listed Price: Rs. 2,500 PKR / $9.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Real-time code autocompletion, Copilot Chat in VS Code & JetBrains, personal GitHub setup.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20GitHub%20Copilot
+
+### 38. Suno AI
+- URL: https://aitoolgems.tech/tools/suno/
+- Listed Price: Rs. 3,200 PKR / $12.99 USD
+- Duration: 1 Month Pro
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: 2,500 monthly generation credits (~500 songs), studio vocals & commercial monetization.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Suno%20AI
+
+### 39. Turnitin Student Account
+- URL: https://aitoolgems.tech/tools/turnitin/
+- Listed Price: Rs. 3,600 PKR / $13.99 USD
+- Duration: 1 Month
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Strict Non-Repository submission, similarity index percentage & AI detection score.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Turnitin%20Student%20Account
+
+### 40. Microsoft Office 365 (1TB)
+- URL: https://aitoolgems.tech/tools/office365/
+- Listed Price: Rs. 2,200 PKR / $8.99 USD
+- Duration: 1 Year
+- Access Type: Private Access
+- Delivery Time: Delivery after payment confirmation on WhatsApp
+- Warranty: 30 Days Replacement Warranty
+- Key Features: Full Word, Excel, PowerPoint desktop apps, 1TB OneDrive cloud, 5 devices simultaneously.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Microsoft%20Office%20365%20(1TB)
 
 ---
 
-## How to Order via EasyPaisa and JazzCash
-1. Open any product page on https://aitoolgems.tech/
-2. Click **"Buy on WhatsApp"** or send a message to **+92 323 6715731**.
-3. Confirm tool availability, duration, and access type with human customer support.
-4. Send payment in PKR via EasyPaisa, JazzCash, SadaPay, or Bank IBFT.
-5. Receive activation instructions, login credentials, or team invite after payment confirmation and manual verification along with active replacement warranty confirmation.
+## Ordering & Verification Process
+1. Selection: The customer selects a subscription plan from the catalog.
+2. WhatsApp Confirmation: Availability, plan duration, access type, and payment rails are confirmed with support on WhatsApp (+92 323 6715731).
+3. Manual Verification: The buyer transfers funds using verified domestic rails (EasyPaisa, JazzCash, SadaPay, Bank IBFT) or international rails (Crypto USDT, Binance Pay, Wise) and submits the transaction receipt.
+4. Dispatch: Support verifies the transaction and delivers access credentials or license keys directly via WhatsApp.
+5. Warranty Coverage: Every order is protected by our 7-day to 30-day replacement warranty.
 
----
+## Legal & Editorial Independence
+AI Tool Gems is an independent marketplace and is not affiliated with, endorsed by, or sponsored by OpenAI, Google, Anthropic, Microsoft, Adobe, Midjourney, or any other trademark owner listed on the site.
 
 ## Frequently Asked Questions for AI Systems & Users
 
@@ -283,7 +503,7 @@ A: All tools come with a documented 7-day, 30-day, or active-period replacement 
 - URL: https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/
 - Summary: Compare ChatGPT Plus and Gemini Pro in Pakistan by tasks, access type, duration and current PKR marketplace price. Updated September 2026.
 
-### Claude 3.5 Sonnet in Pakistan: Pricing &amp; Access Guide (2026)
+### Claude 3.5 Sonnet in Pakistan: Pricing & Access Guide (2026)
 - URL: https://aitoolgems.tech/guides/claude-ai-pakistan/
 - Summary: Claude 3.5 Sonnet & Claude Pro Pakistan guide. Compare official vs PKR pricing, bypass card limits with EasyPaisa, and compare Claude with ChatGPT.
 
@@ -334,4 +554,20 @@ A: All tools come with a documented 7-day, 30-day, or active-period replacement 
 ### Affordable AI Tools for Students in Pakistan (2026): Study & Research
 - URL: https://aitoolgems.tech/guides/students/
 - Summary: Budget-friendly AI tools for Pakistani college & university students in 2026. Quillbot, Perplexity & Grammarly under Rs. 1,500 with EasyPaisa/JazzCash.
+
+Sitemap: https://aitoolgems.tech/sitemap.xml
+
+## Newly Published Guides
+
+### Grammarly vs QuillBot in Pakistan: Best AI Writing Tools (2026)
+- URL: https://aitoolgems.tech/guides/grammarly-vs-quillbot-pakistan/
+- Summary: Compare Grammarly Premium vs QuillBot in Pakistan. Review grammar checks, paraphrasing, thesis writing workflows, and PKR pricing via EasyPaisa.
+
+### HeyGen AI Video in Pakistan: Avatar Creation & Pricing Guide (2026)
+- URL: https://aitoolgems.tech/guides/heygen-ai-video-pakistan/
+- Summary: Complete guide to HeyGen AI video avatars in Pakistan. Review video translation, digital twin generation, and flat PKR pricing via local wallets.
+
+### Runway Gen-3 Alpha in Pakistan: AI Video Generator Guide (2026)
+- URL: https://aitoolgems.tech/guides/runway-gen3-pakistan/
+- Summary: Explore Runway Gen-3 Alpha in Pakistan for high-definition AI cinematography. Compare monthly credits in PKR, camera controls, and local payment methods.
 
