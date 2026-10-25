@@ -47,7 +47,7 @@ class ExtractabilityAuditor:
 
         # 2. Direct answer check
         qa_match = re.search(
-            r'<(?:p|div)[^>]*(?:class=["\'][^"\']*(?:quick-answer|answer)[^"\']*["\'])[^>]*>(.*?)</(?:p|div)>',
+            r'<(?:p|div|section)[^>]*(?:class=["\'][^"\']*(?:quick-answer|quick-summary|quick-answer-card|answer)[^"\']*["\'])[^>]*>(.*?)</(?:p|div|section)>',
             content,
             re.IGNORECASE | re.DOTALL,
         )
