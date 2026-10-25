@@ -1813,3 +1813,18 @@ a.category-card:focus-visible {
 }
 
 
+
+
+/* Light Theme Multi-Currency Toggle */
+.currency-toggle {
+  background: #ffffff;
+  border: 1px solid rgba(43, 91, 74, 0.18);
+}
+.currency-btn {
+  color: #61766e;
+}
+.currency-btn.active {
+  background: var(--neon-cyan);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(47, 159, 136, 0.25);
+}

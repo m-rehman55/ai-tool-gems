@@ -46,7 +46,8 @@ def run_audit(args: argparse.Namespace) -> int:
         history_dir=settings.history_dir,
         site_url=settings.site_url,
     )
-    dataset = gsc_engine.load_dataset()
+    allow_live = getattr(args, "live_gsc", False) or bool(settings.gsc_refresh_token)
+    dataset = gsc_engine.load_dataset(allow_live=allow_live)
     print(f"    GSC Source: {dataset.source} ({dataset.status_message})")
     print(f"    Impressions: {dataset.total_impressions} | Clicks: {dataset.total_clicks} | Active Queries: {len(dataset.queries)}")
 
@@ -215,6 +216,49 @@ def run_optimize_page(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_sync_gsc(args: argparse.Namespace) -> int:
+    """Explicitly fetches live Google Search Console data via OAuth API and updates local CSVs."""
+    settings = get_agent_settings()
+    print("[SYNC] AIToolGems Google Search Console Live OAuth Synchronizer")
+    print(f"       Site Domain: {settings.site_domain} | Target: {settings.site_url}")
+
+    if not (settings.gsc_client_id and settings.gsc_client_secret and settings.gsc_refresh_token):
+        print("[ERROR] GSC OAuth credentials missing. Ensure GSC_CLIENT_ID, GSC_CLIENT_SECRET, and GSC_REFRESH_TOKEN are set in .env or GitHub Secrets.")
+        return 1
+
+    engine = GSCDataEngine(
+        exports_dir=settings.exports_dir,
+        history_dir=settings.history_dir,
+        site_url=settings.site_url,
+    )
+    dataset = engine.fetch_live_api(
+        client_id=settings.gsc_client_id,
+        client_secret=settings.gsc_client_secret,
+        refresh_token=settings.gsc_refresh_token,
+        site_domain=settings.site_domain,
+        days=args.days if hasattr(args, "days") else 28,
+        save_csvs=True,
+    )
+
+    if not dataset:
+        print("[ERROR] Failed to retrieve live GSC data via API. Check internet connectivity or token expiration.")
+        return 1
+
+    print(f"[OK] Live GSC API Sync Complete!")
+    print(f"     Date Range: {dataset.date_range}")
+    print(f"     Total Queries: {len(dataset.queries)} | Total Pages: {len(dataset.pages)}")
+    print(f"     Total Impressions: {dataset.total_impressions} | Total Clicks: {dataset.total_clicks} | Avg CTR: {dataset.average_ctr}% | Avg Pos: {dataset.average_position}")
+    print("\n🏆 Top 10 Striking Distance Queries (Positions 4.0 - 15.0):")
+    striking = [q for q in dataset.queries if 4.0 <= q.position <= 15.0][:10]
+    for s in striking:
+        print(f"     • {s.query} (Imp: {s.impressions}, Clicks: {s.clicks}, CTR: {s.ctr}%, Pos: {s.position})")
+
+    print("\n📁 Exported fresh datasets to:")
+    print(f"     • {settings.exports_dir / 'Queries.csv'}")
+    print(f"     • {settings.exports_dir / 'Pages.csv'}")
+    return 0
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="python -m keyword_agent",
@@ -224,7 +268,13 @@ def main() -> None:
 
     # audit
     audit_parser = subparsers.add_parser("audit", help="Run full discovery, filter check, and daily report")
+    audit_parser.add_argument("--live-gsc", action="store_true", help="Force fetching live Google Search Console API data")
     audit_parser.set_defaults(func=run_audit)
+
+    # sync-gsc
+    sync_parser = subparsers.add_parser("sync-gsc", help="Fetch live Google Search Console API data and update CSVs")
+    sync_parser.add_argument("--days", type=int, default=28, help="Number of days to pull (default: 28)")
+    sync_parser.set_defaults(func=run_sync_gsc)
 
     # regex-library
     regex_parser = subparsers.add_parser("regex-library", help="Export Google Search Console RE2 regex library")

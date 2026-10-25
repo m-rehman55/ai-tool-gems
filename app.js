@@ -2,87 +2,103 @@ const DEFAULT_WA_NUMBER = '923236715731';
 const LEGACY_WA_NUMBER = ['923', '476', '242709'].join('');
 
 const products = [
-  {id:'chatgpt',name:'ChatGPT Plus',category:'AI Assistants',description:'Advanced writing, research, coding, image and creative assistance in one workspace.',price:2300,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Writing','Coding','Study'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Advanced AI models','Image generation','File analysis','Voice conversations'],intent:['writing','research','study','code','coding','content']},
-  {id:'gemini',name:'Gemini Pro',category:'AI Assistants',description:'Google’s multimodal AI for research, documents, code and everyday workflows.',price:800,oldPrice:1500,duration:'18 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Best Value',bestFor:['Research','Study','Google'],logo:'https://cdn.simpleicons.org/googlegemini/FFFFFF',features:['Long-context document analysis','Google service integrations','Multimodal reasoning','Research assistance'],intent:['writing','research','study','content']},
-  {id:'veo',name:'Veo 3 Ultra',category:'AI Video',description:'Generate cinematic AI video with realistic motion and audio-capable workflows.',price:2100,oldPrice:3000,duration:'Unlimited',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Video','Ads','Creators'],logo:'https://cdn.simpleicons.org/google/FFFFFF',features:['Text-to-video workflow','Audio-capable generation','Consistent motion tools','Plan allowance confirmed before payment'],intent:['video','videos','creator']},
-  {id:'leonardo',name:'Leonardo AI Essential',category:'Design',description:'Create production-ready digital art, marketing visuals, assets and concepts.',price:1900,oldPrice:2600,duration:'8,500 Credits',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'For Creators',bestFor:['Images','Assets','Concepts'],logo:'https://cdn.simpleicons.org/leonardoai/FFFFFF',features:['PhotoReal & Alchemy pipeline','Realtime canvas','Prompt enhancer','Commercial license'],intent:['image','images','design','creator']},
-  {id:'elevenlabs',name:'ElevenLabs',category:'AI Voice',description:'Realistic AI speech, dubbing and permitted voice-cloning workflows for media.',price:3300,oldPrice:4200,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Premium',bestFor:['Voice','Dubbing','Audio'],logo:'https://cdn.simpleicons.org/elevenlabs/FFFFFF',features:['Monthly voice credit allowance','Voice library tools','Multilingual speech','API access subject to plan'],intent:['voice','audio','video','creator']},
-  {id:'canva',name:'Canva Pro Edu',category:'Design',description:'Design social media posts, pitch decks, presentations and branded assets.',price:900,oldPrice:1800,duration:'1 Year',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Best Seller',bestFor:['Design','Social','Students'],logo:'https://cdn.simpleicons.org/canva/FFFFFF',features:['Premium templates and assets','Background-removal tools','Magic Studio AI tools','Brand management features'],intent:['image','images','design','presentation','study','creator','social']},
-  {id:'figma',name:'Figma Pro Private',category:'Design',description:'Professional interface design, prototyping and design system workspace.',price:3000,oldPrice:4800,duration:'2 Years',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Long Term',bestFor:['UI/UX','Teams','Web'],logo:'https://cdn.simpleicons.org/figma/FFFFFF',features:['Unlimited files & version history','Dev Mode inspection','Shared design libraries','Full prototype viewer'],intent:['design','code','coding','business']},
-  {id:'capcut',name:'CapCut Pro',category:'AI Video',description:'Fast, intuitive editing suite for viral TikToks, Instagram Reels, and YouTube Shorts.',price:900,oldPrice:1400,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'Popular',bestFor:['Reels','Shorts','Editing'],logo:'https://cdn.simpleicons.org/capcut/FFFFFF',features:['Pro video transitions & filters','Auto captions generator','AI background remover','Cloud draft sync'],intent:['video','videos','creator','social']},
-  {id:'adobe',name:'Adobe Creative Cloud',category:'Design',description:'Complete suite of Photoshop, Illustrator, Premiere Pro, After Effects and Firefly.',price:1700,oldPrice:2600,duration:'2 Months',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Pro Choice',bestFor:['Creative','Photo','Video'],logo:'https://cdn.simpleicons.org/adobecreativecloud/FFFFFF',features:['20+ desktop & web apps','Firefly generative credits','100GB Adobe Cloud storage','Adobe Fonts access'],intent:['image','images','design','video','creator']},
-  {id:'lovable',name:'Lovable Pro',category:'Development',description:'Build, design and ship full-stack web applications and MVPs with natural language.',price:1600,oldPrice:2200,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.6,badge:'For Builders',bestFor:['Apps','Web','MVPs'],logo:'https://cdn.simpleicons.org/lovable/FFFFFF',features:['AI full-stack code generator','Direct GitHub integration','Custom domains & deploy','Fast iterative edits'],intent:['code','coding','business','automation']},
-  {id:'gamma',name:'Gamma Pro',category:'Productivity',description:'Turn raw ideas, briefs and outlines into interactive presentations, decks and docs.',price:23000,oldPrice:28000,duration:'1 Year',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.6,badge:'Annual',bestFor:['Slides','Pitching','Docs'],logo:'https://cdn.simpleicons.org/gamma/FFFFFF',features:['Unlimited AI generation','Custom fonts & themes','Analytics & tracking','Export to PDF/PowerPoint'],intent:['presentation','content','business','study']},
-  {id:'replit',name:'Replit Core',category:'Development',description:'Code, collaborate, host and scale web applications with autonomous AI agents.',price:3200,oldPrice:4200,duration:'$40 Credits',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'Developer Pick',bestFor:['Coding','Apps','Deploy'],logo:'https://cdn.simpleicons.org/replit/FFFFFF',features:['Autonomous AI code agent','Instant cloud environments','Serverless hosting','$40 included usage credits'],intent:['code','coding','automation']},
-  {id:'n8n',name:'n8n Starter',category:'Development',description:'Self-hosted or cloud visual workflow automation for AI agents, APIs and business logic.',price:7000,oldPrice:9000,duration:'1 Year',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.7,badge:'Automation',bestFor:['Workflow','Agents','Teams'],logo:'https://cdn.simpleicons.org/n8n/FFFFFF',features:['Visual drag-and-drop builder','400+ native app integrations','LangChain AI nodes','Custom JavaScript execution'],intent:['code','coding','automation','business']},
-  {id:'notion',name:'Notion Business',category:'Productivity',description:'All-in-one connected workspace for team knowledge, project boards, and AI summaries.',price:2200,oldPrice:3000,duration:'3 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Team Pick',bestFor:['Docs','Projects','Teams'],logo:'https://cdn.simpleicons.org/notion/FFFFFF',features:['Unlimited team blocks','Integrated Notion AI assistant','Advanced team permissions','Custom database views'],intent:['writing','content','business','study']},
-  {id:'nordvpn',name:'NordVPN',category:'VPN & Security',description:'Military-grade encrypted browsing, high-speed servers, and threat protection.',price:1800,oldPrice:2400,duration:'3 Months',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'Secure',bestFor:['Privacy','Travel','Streaming'],logo:'https://cdn.simpleicons.org/nordvpn/FFFFFF',features:['Ultra-fast 10Gbps servers','Threat protection & ad blocker','6 simultaneous connections','Strict zero-logs policy'],intent:['vpn','security','privacy']},
-  {id:'surfshark',name:'Surfshark VPN',category:'VPN & Security',description:'Reliable everyday privacy, geo-unblocking, and unlimited device connections.',price:800,oldPrice:1200,duration:'2 Months',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.6,badge:'Best Value',bestFor:['Privacy','Devices','Travel'],logo:'https://cdn.simpleicons.org/surfshark/FFFFFF',features:['Unlimited device support','CleanWeb ad & tracker blocker','Global server locations','Bypasser split tunneling'],intent:['vpn','security','privacy']},
-  {id:'youtube',name:'YouTube Premium',category:'Entertainment',description:'Ad-free videos, background play on mobile, offline downloads, and YouTube Music.',price:1200,oldPrice:1700,duration:'3 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Popular',bestFor:['Music','Video','Mobile'],logo:'https://cdn.simpleicons.org/youtube/FFFFFF',features:['Zero video ads','Background & picture-in-picture','Offline smart downloads','Full YouTube Music access'],intent:['entertainment','video','music']},
-  {id:'netflix',name:'Netflix Premium 4K',category:'Entertainment',description:'Stream global movies and series in crisp 4K Ultra HD with spatial audio.',price:400,oldPrice:650,duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.5,badge:'Quick Delivery',bestFor:['Movies','Series','4K'],logo:'https://cdn.simpleicons.org/netflix/FFFFFF',features:['4K Ultra HD & HDR resolution','Spatial audio support','Smart TV & laptop compatibility','Dedicated profile access'],intent:['entertainment','video','movies']},
-  {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'Career insights, applicant tools and professional learning features.',price:1500,oldPrice:2400,duration:'2 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'7 Days',rating:4.6,badge:'Career',bestFor:['Jobs','Learning','Sales'],logo:'https://cdn.simpleicons.org/linkedin/FFFFFF',features:['InMail allowance subject to tier','Profile-viewer insights','Applicant comparison tools','LinkedIn Learning access'],intent:['business','jobs','study']},
-  {id:'windows',name:'Windows 11 Pro Key',category:'Software',description:'Digital license key for Windows 11 Pro activation, subject to confirmed terms.',price:1900,oldPrice:2800,duration:'Lifetime',access:'License Key',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'License Key',bestFor:['PC','Work','Security'],logo:'https://cdn.simpleicons.org/windows11/FFFFFF',features:['Digital retail activation key','BitLocker drive encryption','Remote Desktop Host','Online activation instructions'],intent:['software','windows','business']},
-  {id:'claude',name:'Claude Pro (3.5 Sonnet)',category:'AI Assistants',description:'Anthropic’s flagship AI for coding, deep analysis, technical writing, and live Artifacts rendering.',price:2200,oldPrice:3000,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Coding','Artifacts','Logic'],logo:'https://www.google.com/s2/favicons?domain=anthropic.com&sz=128',features:['Claude 3.5 Sonnet & Opus models','Interactive Artifacts visualizer','200K token deep context','Private access on your personal email'],intent:['claude','coding','code','writing','artifacts']},
-  {id:'midjourney',name:'Midjourney v6.1 Pro',category:'Design',description:'Industry-standard ultra-photorealistic AI image and art generation via Discord and Web portal.',price:2400,oldPrice:3500,duration:'1 Month',access:'Private / Discord',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Photorealism','Art','Creatives'],logo:'https://www.google.com/s2/favicons?domain=midjourney.com&sz=128',features:['Ultra-high resolution outputs','Fast GPU generation hours','Commercial reproduction rights','Web generator and Discord bot'],intent:['midjourney','images','art','design','photorealism']},
-  {id:'cursor',name:'Cursor AI Pro',category:'Development',description:'The AI-first code editor built on VS Code with multi-file Composer, Claude 3.5 Sonnet & GPT-4o.',price:2800,oldPrice:3800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Developer Pick',bestFor:['Coding','Engineers','Fullstack'],logo:'https://www.google.com/s2/favicons?domain=cursor.com&sz=128',features:['Composer multi-file AI editing','Unlimited fast tab completions','Claude 3.5 Sonnet & GPT-4o inside IDE','Private code indexing'],intent:['cursor','code','coding','editor','developer']},
-  {id:'perplexity',name:'Perplexity Pro',category:'AI Assistants',description:'Real-time AI research engine with direct source citations, PDF deep search, and multi-model access.',price:1400,oldPrice:2200,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Top Research',bestFor:['Research','Students','Fact-Checking'],logo:'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128',features:['Pro Search with cited links','Unlimited file & document uploads','Switch Claude 3.5, GPT-4o & Sonar','Included monthly API credits'],intent:['perplexity','research','study','search']},
-  {id:'deepseek',name:'DeepSeek Unlimited',category:'AI Assistants',description:'Cutting-edge DeepSeek R1 & V3 reasoning engine with chain-of-thought logic and instant math solving.',price:1100,oldPrice:1800,duration:'1 Month',access:'Private Portal',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Viral AI',bestFor:['Math','Logic','Reasoning'],logo:'https://www.google.com/s2/favicons?domain=deepseek.com&sz=128',features:['DeepSeek R1 full reasoning chain','Mathematical proof & coding engine','Zero queue peak-hour access','Fast web & mobile access'],intent:['deepseek','reasoning','math','code']},
-  {id:'grok',name:'SuperGrok / Grok 2',category:'AI Assistants',description:'X Premium Grok 2 with real-time Twitter/X intelligence and uncensored Flux image generation.',price:1800,oldPrice:2600,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'X Premium',bestFor:['Realtime X','Flux Art','News'],logo:'https://www.google.com/s2/favicons?domain=x.ai&sz=128',features:['Real-time news search on X','Flux-powered photorealistic images','Creative & uncensored mode','Direct X web access'],intent:['grok','supergrok','twitter','news']},
-  {id:'runway',name:'Runway ML Gen-3 Pro',category:'AI Video',description:'Hollywood-grade cinematic video generator with Gen-3 Alpha, Motion Brush, and multi-camera directing.',price:3500,oldPrice:4800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Hollywood AI',bestFor:['VFX','Cinematics','Video Ads'],logo:'https://www.google.com/s2/favicons?domain=runwayml.com&sz=128',features:['Gen-3 Alpha photorealistic video','Motion brush camera pathing','4K output upscaler','Commercial video license'],intent:['runway','video','vfx','animation']},
-  {id:'heygen',name:'HeyGen AI Avatar Pro',category:'AI Video',description:'AI video creation platform with hyper-realistic human avatars, lip-syncing, and multi-language voiceovers.',price:4200,oldPrice:5800,duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Video Avatars',bestFor:['Marketing','TikTok Ads','Spokesperson'],logo:'https://www.google.com/s2/favicons?domain=heygen.com&sz=128',features:['Studio-quality human avatars','Automatic 40+ language voice dubbing','Instant script-to-video generator','Custom personal avatar cloning'],intent:['heygen','avatar','video','marketing']},
-  {id:'grammarly',name:'Grammarly Premium',category:'Writing & SEO',description:'AI writing assistant for error-free essays, grammar correction, vocabulary enhancement, and tone refinement.',price:750,oldPrice:1200,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Student Pick',bestFor:['Essays','Grammar','Proposals'],logo:'https://www.google.com/s2/favicons?domain=grammarly.com&sz=128',features:['Full sentence rewrites & tone tuner','Built-in plagiarism detector','Browser extension & MS Word plugin','Vocabulary & clarity enhancement'],intent:['grammarly','writing','grammar','student','plagiarism']},
-  {id:'quillbot',name:'QuillBot Premium',category:'Writing & SEO',description:'Fast AI paraphraser, summarizer, citation generator, and grammar checker for academic writing.',price:450,oldPrice:800,duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Lowest Price',bestFor:['Paraphrasing','Students','Assignments'],logo:'https://www.google.com/s2/favicons?domain=quillbot.com&sz=128',features:['Unlimited words in Paraphraser','All 8 custom paraphrasing modes','Freeze words terminology protection','Grammar & citation creator'],intent:['quillbot','paraphrase','writing','assignment']},
-  {id:'semrush',name:'SEMrush Pro',category:'Writing & SEO',description:'All-in-one SEO and digital marketing suite for keyword research, competitor analysis, and site audit.',price:1500,oldPrice:2500,duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'SEO Suite',bestFor:['SEO','Keywords','Agencies'],logo:'https://www.google.com/s2/favicons?domain=semrush.com&sz=128',features:['Keyword Magic tool with PKR metrics','Competitor organic search audit','Backlink analytics & link gaps','On-page SEO checker'],intent:['semrush','seo','keywords','backlinks','ranking']},
-  {id:'allinone',name:'All-in-One Mega AI Portal',category:'AI Assistants',description:'Unified AI workspace combining Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Perplexity Pro & DeepSeek in 1 login.',price:1999,oldPrice:4500,duration:'1 Month',access:'Private Portal (LibreChat)',delivery:'After payment confirmation',warranty:'30 Days',rating:4.98,badge:'Best Value Deal',bestFor:['All Models','Full Power','Cost Saver'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal','Single simple login on PC & Mobile','Zero VPN needed in Pakistan','Delivery after payment confirmation on WhatsApp'],intent:['allinone','portal','mega','claude','chatgpt','gemini','perplexity','deepseek']}
+  {id:'chatgpt',name:'ChatGPT Plus',category:'AI Assistants',description:'Advanced writing, research, coding, image and creative assistance in one workspace.',price:2300,oldPrice:3000,usdPrice:'8.99',oldUsdPrice:'11.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Writing','Coding','Study'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Advanced AI models','Image generation','File analysis','Voice conversations'],intent:['writing','research','study','code','coding','content']},
+  {id:'gemini',name:'Gemini Pro',category:'AI Assistants',description:'Google’s multimodal AI for research, documents, code and everyday workflows.',price:800,oldPrice:1500,usdPrice:'3.99',oldUsdPrice:'5.99',duration:'18 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Best Value',bestFor:['Research','Study','Google'],logo:'https://cdn.simpleicons.org/googlegemini/FFFFFF',features:['Long-context document analysis','Google service integrations','Multimodal reasoning','Research assistance'],intent:['writing','research','study','content']},
+  {id:'veo',name:'Veo 3 Ultra',category:'AI Video',description:'Generate cinematic AI video with realistic motion and audio-capable workflows.',price:2100,oldPrice:3000,usdPrice:'8.49',oldUsdPrice:'11.99',duration:'Unlimited',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Video','Ads','Creators'],logo:'https://cdn.simpleicons.org/google/FFFFFF',features:['Text-to-video workflow','Audio-capable generation','Consistent motion tools','Plan allowance confirmed before payment'],intent:['video','videos','creator']},
+  {id:'leonardo',name:'Leonardo AI Essential',category:'Design',description:'Create production-ready digital art, marketing visuals, assets and concepts.',price:1900,oldPrice:2600,usdPrice:'7.49',oldUsdPrice:'10.49',duration:'8,500 Credits',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'For Creators',bestFor:['Images','Assets','Concepts'],logo:'https://cdn.simpleicons.org/leonardoai/FFFFFF',features:['PhotoReal & Alchemy pipeline','Realtime canvas','Prompt enhancer','Commercial license'],intent:['image','images','design','creator']},
+  {id:'elevenlabs',name:'ElevenLabs',category:'AI Voice',description:'Realistic AI speech, dubbing and permitted voice-cloning workflows for media.',price:3300,oldPrice:4200,usdPrice:'12.99',oldUsdPrice:'16.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Premium',bestFor:['Voice','Dubbing','Audio'],logo:'https://cdn.simpleicons.org/elevenlabs/FFFFFF',features:['Monthly voice credit allowance','Voice library tools','Multilingual speech','API access subject to plan'],intent:['voice','audio','video','creator']},
+  {id:'canva',name:'Canva Pro Edu',category:'Design',description:'Design social media posts, pitch decks, presentations and branded assets.',price:900,oldPrice:1800,usdPrice:'3.99',oldUsdPrice:'6.99',duration:'1 Year',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Best Seller',bestFor:['Design','Social','Students'],logo:'https://cdn.simpleicons.org/canva/FFFFFF',features:['Premium templates and assets','Background-removal tools','Magic Studio AI tools','Brand management features'],intent:['image','images','design','presentation','study','creator','social']},
+  {id:'figma',name:'Figma Pro Private',category:'Design',description:'Professional interface design, prototyping and design system workspace.',price:3000,oldPrice:4800,usdPrice:'11.99',oldUsdPrice:'18.99',duration:'2 Years',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Long Term',bestFor:['UI/UX','Teams','Web'],logo:'https://cdn.simpleicons.org/figma/FFFFFF',features:['Unlimited files & version history','Dev Mode inspection','Shared design libraries','Full prototype viewer'],intent:['design','code','coding','business']},
+  {id:'capcut',name:'CapCut Pro',category:'AI Video',description:'Fast, intuitive editing suite for viral TikToks, Instagram Reels, and YouTube Shorts.',price:900,oldPrice:1400,usdPrice:'3.99',oldUsdPrice:'5.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'Popular',bestFor:['Reels','Shorts','Editing'],logo:'https://cdn.simpleicons.org/capcut/FFFFFF',features:['Pro video transitions & filters','Auto captions generator','AI background remover','Cloud draft sync'],intent:['video','videos','creator','social']},
+  {id:'adobe',name:'Adobe Creative Cloud',category:'Design',description:'Complete suite of Photoshop, Illustrator, Premiere Pro, After Effects and Firefly.',price:1700,oldPrice:2600,usdPrice:'6.99',oldUsdPrice:'10.49',duration:'2 Months',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Pro Choice',bestFor:['Creative','Photo','Video'],logo:'https://cdn.simpleicons.org/adobecreativecloud/FFFFFF',features:['20+ desktop & web apps','Firefly generative credits','100GB Adobe Cloud storage','Adobe Fonts access'],intent:['image','images','design','video','creator']},
+  {id:'lovable',name:'Lovable Pro',category:'Development',description:'Build, design and ship full-stack web applications and MVPs with natural language.',price:1600,oldPrice:2200,usdPrice:'6.49',oldUsdPrice:'8.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.6,badge:'For Builders',bestFor:['Apps','Web','MVPs'],logo:'https://cdn.simpleicons.org/lovable/FFFFFF',features:['AI full-stack code generator','Direct GitHub integration','Custom domains & deploy','Fast iterative edits'],intent:['code','coding','business','automation']},
+  {id:'gamma',name:'Gamma Pro',category:'Productivity',description:'Turn raw ideas, briefs and outlines into interactive presentations, decks and docs.',price:23000,oldPrice:28000,usdPrice:'89.99',oldUsdPrice:'109.99',duration:'1 Year',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.6,badge:'Annual',bestFor:['Slides','Pitching','Docs'],logo:'https://cdn.simpleicons.org/gamma/FFFFFF',features:['Unlimited AI generation','Custom fonts & themes','Analytics & tracking','Export to PDF/PowerPoint'],intent:['presentation','content','business','study']},
+  {id:'replit',name:'Replit Core',category:'Development',description:'Code, collaborate, host and scale web applications with autonomous AI agents.',price:3200,oldPrice:4200,usdPrice:'12.49',oldUsdPrice:'16.49',duration:'$40 Credits',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'Developer Pick',bestFor:['Coding','Apps','Deploy'],logo:'https://cdn.simpleicons.org/replit/FFFFFF',features:['Autonomous AI code agent','Instant cloud environments','Serverless hosting','$40 included usage credits'],intent:['code','coding','automation']},
+  {id:'n8n',name:'n8n Starter',category:'Development',description:'Self-hosted or cloud visual workflow automation for AI agents, APIs and business logic.',price:7000,oldPrice:9000,usdPrice:'26.99',oldUsdPrice:'34.99',duration:'1 Year',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.7,badge:'Automation',bestFor:['Workflow','Agents','Teams'],logo:'https://cdn.simpleicons.org/n8n/FFFFFF',features:['Visual drag-and-drop builder','400+ native app integrations','LangChain AI nodes','Custom JavaScript execution'],intent:['code','coding','automation','business']},
+  {id:'notion',name:'Notion Business',category:'Productivity',description:'All-in-one connected workspace for team knowledge, project boards, and AI summaries.',price:2200,oldPrice:3000,usdPrice:'8.99',oldUsdPrice:'11.99',duration:'3 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Team Pick',bestFor:['Docs','Projects','Teams'],logo:'https://cdn.simpleicons.org/notion/FFFFFF',features:['Unlimited team blocks','Integrated Notion AI assistant','Advanced team permissions','Custom database views'],intent:['writing','content','business','study']},
+  {id:'nordvpn',name:'NordVPN',category:'VPN & Security',description:'Military-grade encrypted browsing, high-speed servers, and threat protection.',price:1800,oldPrice:2400,usdPrice:'6.99',oldUsdPrice:'9.49',duration:'3 Months',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'Secure',bestFor:['Privacy','Travel','Streaming'],logo:'https://cdn.simpleicons.org/nordvpn/FFFFFF',features:['Ultra-fast 10Gbps servers','Threat protection & ad blocker','6 simultaneous connections','Strict zero-logs policy'],intent:['vpn','security','privacy']},
+  {id:'surfshark',name:'Surfshark VPN',category:'VPN & Security',description:'Reliable everyday privacy, geo-unblocking, and unlimited device connections.',price:800,oldPrice:1200,usdPrice:'3.49',oldUsdPrice:'4.99',duration:'2 Months',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.6,badge:'Best Value',bestFor:['Privacy','Devices','Travel'],logo:'https://cdn.simpleicons.org/surfshark/FFFFFF',features:['Unlimited device support','CleanWeb ad & tracker blocker','Global server locations','Bypasser split tunneling'],intent:['vpn','security','privacy']},
+  {id:'youtube',name:'YouTube Premium',category:'Entertainment',description:'Ad-free videos, background play on mobile, offline downloads, and YouTube Music.',price:1200,oldPrice:1700,usdPrice:'4.99',oldUsdPrice:'6.99',duration:'3 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Popular',bestFor:['Music','Video','Mobile'],logo:'https://cdn.simpleicons.org/youtube/FFFFFF',features:['Zero video ads','Background & picture-in-picture','Offline smart downloads','Full YouTube Music access'],intent:['entertainment','video','music']},
+  {id:'netflix',name:'Netflix Premium 4K',category:'Entertainment',description:'Stream global movies and series in crisp 4K Ultra HD with spatial audio.',price:400,oldPrice:650,usdPrice:'1.99',oldUsdPrice:'2.99',duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.5,badge:'Quick Delivery',bestFor:['Movies','Series','4K'],logo:'https://cdn.simpleicons.org/netflix/FFFFFF',features:['4K Ultra HD & HDR resolution','Spatial audio support','Smart TV & laptop compatibility','Dedicated profile access'],intent:['entertainment','video','movies']},
+  {id:'linkedin',name:'LinkedIn Premium',category:'Business',description:'Career insights, applicant tools and professional learning features.',price:1500,oldPrice:2400,usdPrice:'5.99',oldUsdPrice:'9.49',duration:'2 Months',access:'Invitation',delivery:'After payment confirmation',warranty:'7 Days',rating:4.6,badge:'Career',bestFor:['Jobs','Learning','Sales'],logo:'https://cdn.simpleicons.org/linkedin/FFFFFF',features:['InMail allowance subject to tier','Profile-viewer insights','Applicant comparison tools','LinkedIn Learning access'],intent:['business','jobs','study']},
+  {id:'windows',name:'Windows 11 Pro Key',category:'Software',description:'Digital license key for Windows 11 Pro activation, subject to confirmed terms.',price:1900,oldPrice:2800,usdPrice:'7.99',oldUsdPrice:'10.99',duration:'Lifetime',access:'License Key',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'License Key',bestFor:['PC','Work','Security'],logo:'https://cdn.simpleicons.org/windows11/FFFFFF',features:['Digital retail activation key','BitLocker drive encryption','Remote Desktop Host','Online activation instructions'],intent:['software','windows','business']},
+  {id:'claude',name:'Claude Pro (3.5 Sonnet)',category:'AI Assistants',description:'Anthropic’s flagship AI for coding, deep analysis, technical writing, and live Artifacts rendering.',price:2200,oldPrice:3000,usdPrice:'8.99',oldUsdPrice:'11.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Best Seller',bestFor:['Coding','Artifacts','Logic'],logo:'assets/product-logos/claude.png',features:['Claude 3.5 Sonnet & Opus models','Interactive Artifacts visualizer','200K token deep context','Private access on your personal email'],intent:['claude','coding','code','writing','artifacts']},
+  {id:'midjourney',name:'Midjourney v6.1 Pro',category:'Design',description:'Industry-standard ultra-photorealistic AI image and art generation via Discord and Web portal.',price:2400,oldPrice:3500,usdPrice:'9.99',oldUsdPrice:'13.99',duration:'1 Month',access:'Private / Discord',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Trending',bestFor:['Photorealism','Art','Creatives'],logo:'assets/product-logos/midjourney.png',features:['Ultra-high resolution outputs','Fast GPU generation hours','Commercial reproduction rights','Web generator and Discord bot'],intent:['midjourney','images','art','design','photorealism']},
+  {id:'cursor',name:'Cursor AI Pro',category:'Development',description:'The AI-first code editor built on VS Code with multi-file Composer, Claude 3.5 Sonnet & GPT-4o.',price:2800,oldPrice:3800,usdPrice:'10.99',oldUsdPrice:'14.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.9,badge:'Developer Pick',bestFor:['Coding','Engineers','Fullstack'],logo:'assets/product-logos/cursor.png',features:['Composer multi-file AI editing','Unlimited fast tab completions','Claude 3.5 Sonnet & GPT-4o inside IDE','Private code indexing'],intent:['cursor','code','coding','editor','developer']},
+  {id:'perplexity',name:'Perplexity Pro',category:'AI Assistants',description:'Real-time AI research engine with direct source citations, PDF deep search, and multi-model access.',price:1400,oldPrice:2200,usdPrice:'5.49',oldUsdPrice:'8.49',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Top Research',bestFor:['Research','Students','Fact-Checking'],logo:'assets/product-logos/perplexity.png',features:['Pro Search with cited links','Unlimited file & document uploads','Switch Claude 3.5, GPT-4o & Sonar','Included monthly API credits'],intent:['perplexity','research','study','search']},
+  {id:'deepseek',name:'DeepSeek Unlimited',category:'AI Assistants',description:'Cutting-edge DeepSeek R1 & V3 reasoning engine with chain-of-thought logic and instant math solving.',price:1100,oldPrice:1800,usdPrice:'4.49',oldUsdPrice:'6.99',duration:'1 Month',access:'Private Portal',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Viral AI',bestFor:['Math','Logic','Reasoning'],logo:'assets/product-logos/deepseek.png',features:['DeepSeek R1 full reasoning chain','Mathematical proof & coding engine','Zero queue peak-hour access','Fast web & mobile access'],intent:['deepseek','reasoning','math','code']},
+  {id:'grok',name:'SuperGrok / Grok 2',category:'AI Assistants',description:'X Premium Grok 2 with real-time Twitter/X intelligence and uncensored Flux image generation.',price:1800,oldPrice:2600,usdPrice:'6.99',oldUsdPrice:'9.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'X Premium',bestFor:['Realtime X','Flux Art','News'],logo:'assets/product-logos/grok.png',features:['Real-time news search on X','Flux-powered photorealistic images','Creative & uncensored mode','Direct X web access'],intent:['grok','supergrok','twitter','news']},
+  {id:'runway',name:'Runway ML Gen-3 Pro',category:'AI Video',description:'Hollywood-grade cinematic video generator with Gen-3 Alpha, Motion Brush, and multi-camera directing.',price:3500,oldPrice:4800,usdPrice:'13.99',oldUsdPrice:'18.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Hollywood AI',bestFor:['VFX','Cinematics','Video Ads'],logo:'assets/product-logos/runway.png',features:['Gen-3 Alpha photorealistic video','Motion brush camera pathing','4K output upscaler','Commercial video license'],intent:['runway','video','vfx','animation']},
+  {id:'heygen',name:'HeyGen AI Avatar Pro',category:'AI Video',description:'AI video creation platform with hyper-realistic human avatars, lip-syncing, and multi-language voiceovers.',price:4200,oldPrice:5800,usdPrice:'16.99',oldUsdPrice:'22.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Video Avatars',bestFor:['Marketing','TikTok Ads','Spokesperson'],logo:'assets/product-logos/heygen.png',features:['Studio-quality human avatars','Automatic 40+ language voice dubbing','Instant script-to-video generator','Custom personal avatar cloning'],intent:['heygen','avatar','video','marketing']},
+  {id:'grammarly',name:'Grammarly Premium',category:'Writing & SEO',description:'AI writing assistant for error-free essays, grammar correction, vocabulary enhancement, and tone refinement.',price:750,oldPrice:1200,usdPrice:'2.99',oldUsdPrice:'4.99',duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Student Pick',bestFor:['Essays','Grammar','Proposals'],logo:'assets/product-logos/grammarly.png',features:['Full sentence rewrites & tone tuner','Built-in plagiarism detector','Browser extension & MS Word plugin','Vocabulary & clarity enhancement'],intent:['grammarly','writing','grammar','student','plagiarism']},
+  {id:'quillbot',name:'QuillBot Premium',category:'Writing & SEO',description:'Fast AI paraphraser, summarizer, citation generator, and grammar checker for academic writing.',price:450,oldPrice:800,usdPrice:'1.99',oldUsdPrice:'3.49',duration:'1 Month',access:'Private / Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.8,badge:'Lowest Price',bestFor:['Paraphrasing','Students','Assignments'],logo:'assets/product-logos/quillbot.png',features:['Unlimited words in Paraphraser','All 8 custom paraphrasing modes','Freeze words terminology protection','Grammar & citation creator'],intent:['quillbot','paraphrase','writing','assignment']},
+  {id:'semrush',name:'SEMrush Pro',category:'Writing & SEO',description:'All-in-one SEO and digital marketing suite for keyword research, competitor analysis, and site audit.',price:1500,oldPrice:2500,usdPrice:'5.99',oldUsdPrice:'9.99',duration:'1 Month',access:'Shared',delivery:'After payment confirmation',warranty:'7 Days',rating:4.7,badge:'SEO Suite',bestFor:['SEO','Keywords','Agencies'],logo:'assets/product-logos/semrush.png',features:['Keyword Magic tool with PKR metrics','Competitor organic search audit','Backlink analytics & link gaps','On-page SEO checker'],intent:['semrush','seo','keywords','backlinks','ranking']},
+  {id:'allinone',name:'All-in-One Mega AI Portal',category:'AI Assistants',description:'Unified AI workspace combining Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Perplexity Pro & DeepSeek in 1 login.',price:1999,oldPrice:4500,usdPrice:'7.99',oldUsdPrice:'15.99',duration:'1 Month',access:'Private Portal (LibreChat)',delivery:'After payment confirmation',warranty:'30 Days',rating:4.98,badge:'Best Value Deal',bestFor:['All Models','Full Power','Cost Saver'],logo:'https://cdn.simpleicons.org/openai/FFFFFF',features:['Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal','Single simple login on PC & Mobile','Zero VPN needed in Pakistan','Delivery after payment confirmation on WhatsApp'],intent:['allinone','portal','mega','claude','chatgpt','gemini','perplexity','deepseek']},
+  {id:'tradingview',name:'TradingView Pro',category:'Business',description:'Institutional-grade technical charting, custom Pine Script indicators, and real-time alerts.',price:3500,oldPrice:5000,usdPrice:'14.99',oldUsdPrice:'19.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Pro Trader',bestFor:['Charts','Crypto','Stocks'],logo:'assets/product-logos/tradingview.png',features:['5 indicators per chart','Bar Replay backtesting','Volume Profile analysis','Server-side price alerts'],intent:['tradingview','trading','crypto','stocks','forex','finance']},
+  {id:'kling',name:'Kling AI',category:'AI Video',description:'Hollywood-grade physics simulation, cinematic camera motion, and hyper-realistic AI video generation.',price:4800,oldPrice:6500,usdPrice:'19.99',oldUsdPrice:'25.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Ultra Realistic',bestFor:['Cinematic','Motion','VFX'],logo:'assets/product-logos/kling.png',features:['1080p Full HD video generation','Advanced 3D camera controls','Physics-accurate simulation','No watermark & commercial use'],intent:['kling','video','ai video','cinematic','animation','vfx']},
+  {id:'freepik',name:'Freepik Premium',category:'Design',description:'Millions of premium vector illustrations, high-res stock photos, PSD mockups, and AI Pikaso.',price:2400,oldPrice:3500,usdPrice:'9.99',oldUsdPrice:'13.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'Graphic Essential',bestFor:['Vectors','PSD','Mockups'],logo:'assets/product-logos/freepik.png',features:['100 daily premium downloads','Full commercial license & no attribution','Freepik Pikaso AI generator','Layered Photoshop PSD templates'],intent:['freepik','vectors','design','psd','mockup','stock','photos']},
+  {id:'spotify',name:'Spotify Premium',category:'Entertainment',description:'Ad-free music and podcasts, offline downloads, unlimited skips, and 320kbps extreme audio quality.',price:1200,oldPrice:1800,usdPrice:'4.99',oldUsdPrice:'7.49',duration:'3 Months',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Ad-Free Audio',bestFor:['Music','Podcasts','Offline'],logo:'assets/product-logos/spotify.png',features:['100% ad-free streaming','Download up to 10,000 songs offline','Ultra-high 320kbps bitrate','Activate on your personal account'],intent:['spotify','music','songs','audio','streaming','podcast']},
+  {id:'copilot',name:'GitHub Copilot',category:'Development',description:'AI pair programmer for VS Code and JetBrains with real-time autocompletion and Copilot Chat.',price:2500,oldPrice:3800,usdPrice:'9.99',oldUsdPrice:'14.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Developer Pick',bestFor:['VS Code','Autocomplete','Fullstack'],logo:'assets/product-logos/copilot.png',features:['Real-time code completions','GitHub Copilot Chat inside IDE','Unit test generation & bug fixes','Private personal GitHub activation'],intent:['copilot','github','code','coding','developer','vscode','python']},
+  {id:'suno',name:'Suno AI',category:'AI Voice',description:'Generate studio-grade full vocal songs, catchy commercial jingles, and instrumental beats from text.',price:3200,oldPrice:4500,usdPrice:'12.99',oldUsdPrice:'17.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.8,badge:'AI Music Hits',bestFor:['Songwriting','Vocals','Beats'],logo:'assets/product-logos/suno.png',features:['Full vocal songs in seconds','2,500 monthly generation credits','Commercial monetization rights','Custom lyrics & song continuation'],intent:['suno','music','audio','songs','voice','beats','creator']},
+  {id:'turnitin',name:'Turnitin Student Account',category:'Writing & SEO',description:'Non-repository academic similarity check and AI writing detection report for thesis and research.',price:3600,oldPrice:5000,usdPrice:'13.99',oldUsdPrice:'18.99',duration:'1 Month',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'Academic Pick',bestFor:['Thesis','Assignments','AI Detection'],logo:'assets/product-logos/turnitin.png',features:['Strict Non-Repository guarantee','Similarity percentage index report','AI writing detection percentage','Downloadable highlighted PDF'],intent:['turnitin','plagiarism','similarity','student','thesis','research','academic']},
+  {id:'office365',name:'Microsoft Office 365 (1TB)',category:'Productivity',description:'Word, Excel, PowerPoint, Outlook desktop apps on 5 devices simultaneously with 1TB OneDrive cloud.',price:2200,oldPrice:3800,usdPrice:'8.99',oldUsdPrice:'14.99',duration:'1 Year',access:'Private',delivery:'After payment confirmation',warranty:'30 Days',rating:4.9,badge:'1TB Cloud',bestFor:['Word/Excel','OneDrive','5 Devices'],logo:'assets/product-logos/office365.png',features:['Word, Excel & PowerPoint desktop apps','1TB (1,000 GB) secure OneDrive storage','Use on 5 devices simultaneously','Genuine digital retail activation'],intent:['office','office365','microsoft','word','excel','onedrive','cloud','productivity']}
 ];
 
 const categoryData = [
   ['AI Assistants','AI','7 tools'],
-  ['AI Video','▶','4 tools'],
-  ['Design','✦','5 tools'],
-  ['Development','</>','4 tools'],
-  ['Writing & SEO','✍','3 tools'],
-  ['Productivity','P','2 tools'],
-  ['AI Voice','∿','1 tool'],
+  ['AI Video','▶','5 tools'],
+  ['Design','✦','6 tools'],
+  ['Development','</>','5 tools'],
+  ['Writing & SEO','✍','4 tools'],
+  ['Productivity','P','3 tools'],
+  ['AI Voice','∿','2 tools'],
   ['VPN & Security','S','2 tools'],
-  ['Entertainment','E','2 tools'],
-  ['Business','B','1 tool'],
+  ['Entertainment','E','3 tools'],
+  ['Business','B','2 tools'],
   ['Software','W','1 tool']
 ];
 
 const officialLogos = {
-  chatgpt: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128',
-  gemini: 'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=128',
-  veo: 'https://www.google.com/s2/favicons?domain=deepmind.google&sz=128',
-  leonardo: 'https://www.google.com/s2/favicons?domain=leonardo.ai&sz=128',
-  elevenlabs: 'https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=128',
-  canva: 'https://www.google.com/s2/favicons?domain=canva.com&sz=128',
-  figma: 'https://www.google.com/s2/favicons?domain=figma.com&sz=128',
-  capcut: 'https://www.google.com/s2/favicons?domain=capcut.com&sz=128',
-  adobe: 'https://www.google.com/s2/favicons?domain=adobe.com&sz=128',
-  lovable: 'https://www.google.com/s2/favicons?domain=lovable.dev&sz=128',
-  gamma: 'https://www.google.com/s2/favicons?domain=gamma.app&sz=128',
-  replit: 'https://www.google.com/s2/favicons?domain=replit.com&sz=128',
-  n8n: 'https://www.google.com/s2/favicons?domain=n8n.io&sz=128',
-  notion: 'https://www.google.com/s2/favicons?domain=notion.so&sz=128',
-  nordvpn: 'https://www.google.com/s2/favicons?domain=nordvpn.com&sz=128',
-  surfshark: 'https://www.google.com/s2/favicons?domain=surfshark.com&sz=128',
-  youtube: 'https://www.google.com/s2/favicons?domain=youtube.com&sz=128',
-  netflix: 'https://www.google.com/s2/favicons?domain=netflix.com&sz=128',
-  linkedin: 'https://www.google.com/s2/favicons?domain=linkedin.com&sz=128',
-  windows: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=128',
-  claude: 'https://www.google.com/s2/favicons?domain=anthropic.com&sz=128',
-  midjourney: 'https://www.google.com/s2/favicons?domain=midjourney.com&sz=128',
-  cursor: 'https://www.google.com/s2/favicons?domain=cursor.com&sz=128',
-  perplexity: 'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128',
-  deepseek: 'https://www.google.com/s2/favicons?domain=deepseek.com&sz=128',
-  grok: 'https://www.google.com/s2/favicons?domain=x.ai&sz=128',
-  runway: 'https://www.google.com/s2/favicons?domain=runwayml.com&sz=128',
-  heygen: 'https://www.google.com/s2/favicons?domain=heygen.com&sz=128',
-  grammarly: 'https://www.google.com/s2/favicons?domain=grammarly.com&sz=128',
-  quillbot: 'https://www.google.com/s2/favicons?domain=quillbot.com&sz=128',
-  semrush: 'https://www.google.com/s2/favicons?domain=semrush.com&sz=128',
-  allinone: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128'
+  chatgpt: 'assets/product-logos/chatgpt.png',
+  gemini: 'assets/product-logos/gemini.png',
+  veo: 'assets/product-logos/veo.png',
+  leonardo: 'assets/product-logos/leonardo.png',
+  elevenlabs: 'assets/product-logos/elevenlabs.png',
+  canva: 'assets/product-logos/canva.png',
+  figma: 'assets/product-logos/figma.png',
+  capcut: 'assets/product-logos/capcut.png',
+  adobe: 'assets/product-logos/adobe.png',
+  lovable: 'assets/product-logos/lovable.png',
+  gamma: 'assets/product-logos/gamma.png',
+  replit: 'assets/product-logos/replit.png',
+  n8n: 'assets/product-logos/n8n.png',
+  notion: 'assets/product-logos/notion.png',
+  nordvpn: 'assets/product-logos/nordvpn.png',
+  surfshark: 'assets/product-logos/surfshark.png',
+  youtube: 'assets/product-logos/youtube.png',
+  netflix: 'assets/product-logos/netflix.png',
+  linkedin: 'assets/product-logos/linkedin.png',
+  windows: 'assets/product-logos/windows.png',
+  claude: 'assets/product-logos/claude.png',
+  midjourney: 'assets/product-logos/midjourney.png',
+  cursor: 'assets/product-logos/cursor.png',
+  perplexity: 'assets/product-logos/perplexity.png',
+  deepseek: 'assets/product-logos/deepseek.png',
+  grok: 'assets/product-logos/grok.png',
+  runway: 'assets/product-logos/runway.png',
+  heygen: 'assets/product-logos/heygen.png',
+  grammarly: 'assets/product-logos/grammarly.png',
+  quillbot: 'assets/product-logos/quillbot.png',
+  semrush: 'assets/product-logos/semrush.png',
+  allinone: 'assets/product-logos/chatgpt.png',
+  tradingview: 'assets/product-logos/tradingview.png',
+  kling: 'assets/product-logos/kling.png',
+  freepik: 'assets/product-logos/freepik.png',
+  spotify: 'assets/product-logos/spotify.png',
+  copilot: 'assets/product-logos/copilot.png',
+  suno: 'assets/product-logos/suno.png',
+  turnitin: 'assets/product-logos/turnitin.png',
+  office365: 'assets/product-logos/office365.png'
 };
 
 products.forEach(p => {
@@ -151,6 +167,7 @@ function loadStoredFavorites() {
 }
 
 let state = {
+  currency: localStorage.getItem('atg-currency') || 'PKR',
   category: 'All',
   query: '',
   limit: products.length,
@@ -163,7 +180,13 @@ let productsRendered = false;
 
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
-const money = n => 'Rs. ' + n.toLocaleString('en-PK');
+const money = (n, usd) => {
+  if (state.currency === 'USD') {
+    const val = usd !== undefined ? usd : (n / 280).toFixed(2);
+    return '$' + val;
+  }
+  return 'Rs. ' + n.toLocaleString('en-PK');
+};
 const discount = p => Math.round((1 - p.price / p.oldPrice) * 100);
 const svg = id => `<svg><use href="#${id}"></use></svg>`;
 const escapeHTML = value => String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
@@ -237,7 +260,8 @@ const STATIC_TOOL_PAGES = new Set([
   'leonardo', 'linkedin', 'lovable', 'n8n', 'netflix', 'nordvpn', 'notion',
   'replit', 'surfshark', 'veo', 'windows', 'youtube',
   'claude', 'midjourney', 'cursor', 'perplexity', 'deepseek', 'grok',
-  'runway', 'heygen', 'grammarly', 'quillbot', 'semrush', 'allinone'
+  'runway', 'heygen', 'grammarly', 'quillbot', 'semrush', 'allinone',
+  'tradingview', 'kling', 'freepik', 'spotify', 'copilot', 'suno', 'turnitin', 'office365'
 ]);
 
 
@@ -256,7 +280,7 @@ function card(p) {
     <div class="product-body">
       <div class="product-meta">
         <span>${p.category}</span>
-        <span class="rating">PKR pricing</span>
+        <span class="rating">${state.currency === 'USD' ? 'USD · Global' : 'PKR pricing'}</span>
       </div>
       <h3>${STATIC_TOOL_PAGES.has(p.id) ? `<a class="product-page-link" href="tools/${p.id}/">${p.name}</a>` : `<a class="product-page-link" href="#productModal" data-detail="${p.id}">${p.name}</a>`}</h3>
       <p class="product-desc">${p.description}</p>
@@ -270,8 +294,8 @@ function card(p) {
       </div>
       <div class="product-price">
         <div class="price-block">
-          <small>${money(p.oldPrice)}</small>
-          <strong>${money(p.price)}</strong>
+          <small>${money(p.oldPrice, p.oldUsdPrice)}</small>
+          <strong>${money(p.price, p.usdPrice)} <em class="alt-currency">(${state.currency === 'USD' ? 'Rs. ' + p.price.toLocaleString('en-PK') : '$' + (p.usdPrice || (p.price / 280).toFixed(2))})</em></strong>
         </div>
         <span class="saving">Save ${discount(p)}%</span>
       </div>
@@ -317,6 +341,7 @@ function updateCart() {
 
   const selected = state.cart.map(id => products.find(p => p.id === id)).filter(Boolean);
   const cartItems = $('#cartItems');
+  const isUsd = state.currency === 'USD';
   if (cartItems) {
     cartItems.innerHTML = selected.length ? selected.map(p => `
       <div class="cart-item">
@@ -324,7 +349,7 @@ function updateCart() {
         <span>
           <b>${p.name}</b>
           <small>${p.duration} · ${p.access} Plan</small>
-          <strong>${money(p.price)}</strong>
+          <strong>${money(p.price, p.usdPrice)}</strong>
         </span>
         <button class="remove-cart" data-remove="${p.id}" aria-label="Remove ${p.name}">×</button>
       </div>
@@ -338,7 +363,14 @@ function updateCart() {
   }
 
   const totalEl = $('#cartTotal');
-  if (totalEl) totalEl.textContent = money(selected.reduce((s, p) => s + p.price, 0));
+  if (totalEl) {
+    if (isUsd) {
+      const sumUsd = selected.reduce((s, p) => s + parseFloat(p.usdPrice || (p.price / 280)), 0);
+      totalEl.textContent = '$' + sumUsd.toFixed(2);
+    } else {
+      totalEl.textContent = money(selected.reduce((s, p) => s + p.price, 0));
+    }
+  }
   
   const footer = $('#cartFooter');
   if (footer) footer.style.display = selected.length ? 'block' : 'none';
@@ -514,7 +546,7 @@ function openProduct(id) {
           <h2 id="productDetailTitle">${p.name}</h2>
           <div class="detail-rating">Plan details confirmed before payment</div>
           <p>${p.description} Availability, access type, and delivery timing are confirmed directly on WhatsApp before payment.</p>
-          <div class="detail-price">${money(p.price)} <del>${money(p.oldPrice)}</del></div>
+          <div class="detail-price">${money(p.price, p.usdPrice)} <del>${money(p.oldPrice, p.oldUsdPrice)}</del> <em class="alt-currency">(${state.currency === 'USD' ? 'Rs. ' + p.price.toLocaleString('en-PK') : '$' + p.usdPrice})</em></div>
           <div class="detail-grid">
             <div class="detail-spec"><small>Plan duration</small><b>${p.duration}</b></div>
             <div class="detail-spec"><small>Access type</small><b>${p.access} Plan</b></div>
@@ -563,17 +595,41 @@ function openWhatsApp(url) {
 function orderProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
-  trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: p.price, currency: 'PKR' });
-  openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${money(p.price)}\n\nPlease confirm payment details and delivery time.`));
+  const isUsd = state.currency === 'USD';
+  const priceDisplay = isUsd ? `$${p.usdPrice} USD` : money(p.price);
+  const paymentInstructions = isUsd
+    ? '💳 Preferred Payment: USDT (TRC20 / BEP20) / Binance Pay / Wise\n\nPlease confirm availability, payment address, and delivery time.'
+    : '💳 Preferred Payment: EasyPaisa / JazzCash / SadaPay / Bank IBFT\n\nPlease confirm availability, payment account, and delivery time.';
+
+  trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: isUsd ? parseFloat(p.usdPrice) : p.price, currency: isUsd ? 'USD' : 'PKR' });
+  openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${priceDisplay}\n\n${paymentInstructions}`));
 }
 
 function checkout() {
   const selected = state.cart.map(id => products.find(p => p.id === id)).filter(Boolean);
   if (!selected.length) return;
-  const total = selected.reduce((s, p) => s + p.price, 0);
-  trackEvent('begin_checkout', { item_ids: selected.map(p => p.id), item_count: selected.length, value: total, currency: 'PKR', destination: 'whatsapp' });
-  const lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — ${money(p.price)}`).join('\n');
-  openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${money(total)}\n\nPlease confirm availability, the accepted payment route, and delivery time.`));
+  const isUsd = state.currency === 'USD';
+
+  let totalDisplay = '';
+  let lines = '';
+  if (isUsd) {
+    const totalUsd = selected.reduce((s, p) => s + parseFloat(p.usdPrice || (p.price / 280)), 0);
+    totalDisplay = `$${totalUsd.toFixed(2)} USD`;
+    lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — $${p.usdPrice || (p.price / 280).toFixed(2)}`).join('\n');
+  } else {
+    const totalPkr = selected.reduce((s, p) => s + p.price, 0);
+    totalDisplay = money(totalPkr);
+    lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — ${money(p.price)}`).join('\n');
+  }
+
+  const paymentInstructions = isUsd
+    ? '💳 Preferred Payment: USDT (TRC20 / BEP20) / Binance Pay / Wise\n\nPlease confirm availability, payment address, and delivery time.'
+    : '💳 Preferred Payment: EasyPaisa / JazzCash / SadaPay / Bank IBFT\n\nPlease confirm availability, payment account, and delivery time.';
+
+  const numVal = isUsd ? parseFloat(totalDisplay.replace(/[^0-9.]/g, '')) : selected.reduce((s, p) => s + p.price, 0);
+  trackEvent('begin_checkout', { item_ids: selected.map(p => p.id), item_count: selected.length, value: numVal, currency: isUsd ? 'USD' : 'PKR', destination: 'whatsapp' });
+
+  openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${totalDisplay}\n\n${paymentInstructions}`));
 }
 
 function showSuggestions(q) {
@@ -758,7 +814,7 @@ const finderPreviewPresets = {
     name: 'Veo 3 Ultra',
     desc: 'Unlimited cinematic video generation with photorealistic physics',
     price: 2100,
-    logo: 'https://www.google.com/s2/favicons?domain=deepmind.google&sz=128'
+    logo: 'assets/product-logos/veo.png'
   },
   image: {
     counter: '02 / 04',
@@ -767,7 +823,7 @@ const finderPreviewPresets = {
     name: 'Leonardo AI Essential',
     desc: 'Production-ready digital art, photorealistic assets & visuals',
     price: 1900,
-    logo: 'https://www.google.com/s2/favicons?domain=leonardo.ai&sz=128'
+    logo: 'assets/product-logos/leonardo.png'
   },
   writing: {
     counter: '03 / 04',
@@ -776,7 +832,7 @@ const finderPreviewPresets = {
     name: 'ChatGPT Plus',
     desc: 'Advanced research, coding, writing and creative assistance',
     price: 2300,
-    logo: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128'
+    logo: 'assets/product-logos/chatgpt.png'
   },
   code: {
     counter: '04 / 04',
@@ -785,7 +841,7 @@ const finderPreviewPresets = {
     name: 'Lovable Pro',
     desc: 'Build, design and ship full-stack web applications and MVPs',
     price: 1600,
-    logo: 'https://www.google.com/s2/favicons?domain=lovable.dev&sz=128'
+    logo: 'assets/product-logos/lovable.png'
   }
 };
 
@@ -1409,3 +1465,37 @@ initPaymentDisclosure();
 syncAllFavorites();
 
 
+
+function setCurrency(curr) {
+  state.currency = curr;
+  try {
+    localStorage.setItem('atg-currency', curr);
+  } catch (_) {}
+  document.querySelectorAll('.currency-btn').forEach(btn => {
+    const active = btn.dataset.currency === curr;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  renderProducts();
+  updateCart();
+}
+
+function initCurrencySwitcher() {
+  document.querySelectorAll('.currency-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const curr = btn.dataset.currency;
+      if (curr && curr !== state.currency) {
+        setCurrency(curr);
+      }
+    });
+  });
+  // Sync initial state
+  document.querySelectorAll('.currency-btn').forEach(btn => {
+    const active = btn.dataset.currency === state.currency;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+
+initCurrencySwitcher();

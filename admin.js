@@ -24,7 +24,7 @@ const productSeed = [
 ].map(([id,name,category,price,domain]) => ({
   id, name, category, price, domain,
   description: '',
-  logo: `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+  logo: `assets/product-logos/${id}.png`
 }));
 
 function readCatalog() {
