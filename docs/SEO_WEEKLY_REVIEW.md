@@ -1,8 +1,8 @@
 # 📊 AIToolGems Weekly SEO & GEO Consolidated Review
 
 **Review Date:** `2026-10-25`  
-**Pages Audited:** `91`  
-**Current Active Issues:** `0`
+**Pages Audited:** `89`  
+**Current Active Issues:** `0`  
 **AI Search Readiness:** `100/100`  
 (`llms.txt`: ✅, `llms-full.txt`: ✅)
 
@@ -11,7 +11,7 @@
 ## 1. High Impression, Low CTR Growth Opportunities
 | Search Query | Imp | Clicks | CTR | Pos | Strategic Recommendation |
 |--------------|-----|--------|-----|-----|--------------------------|
-| `ai44649` | 9 | 0 | 0.0% | 9.0 | Refine title/meta description for intent: 'ai44649' (Currently pos 9.0 with 9 impressions). |
+| `ai44649` | 10 | 0 | 0.0% | 9.0 | Refine title/meta description for intent: 'ai44649' (Currently pos 9.0 with 10 impressions). |
 
 ---
 
