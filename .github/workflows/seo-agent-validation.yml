@@ -7,6 +7,7 @@ on:
     paths:
       - "seo-agent/**"
       - "aio_agent/**"
+      - "ping_agent/**"
       - "keyword_agent/**"
       - "marketing_agent/**"
       - "scripts/**"
@@ -26,6 +27,7 @@ on:
     paths:
       - "seo-agent/**"
       - "aio_agent/**"
+      - "ping_agent/**"
       - "keyword_agent/**"
       - "marketing_agent/**"
       - "scripts/**"
@@ -96,6 +98,10 @@ jobs:
         run: |
           python -m unittest discover -s marketing_agent/tests -v
 
+      - name: Run Ping Agent & IndexNow Unit Tests
+        run: |
+          python -m unittest discover -s ping_agent/tests -v
+
       - name: Run Offline Repository Audit
         run: |
           python -m seo-agent.agent.main --mode audit
@@ -103,4 +109,4 @@ jobs:
       - name: Auto-Submit Updated URLs to IndexNow Protocol (Bing & Ahrefs)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          python scripts/submit_indexnow.py --all
+          python -m ping_agent ping --all
