@@ -306,13 +306,13 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertNotIn('Prompt Delivery After Payment Confirmation', index_html, "Prompt delivery must not be in hero trust")
         self.assertIn('WhatsApp Delivery After Payment Confirmation', index_html, "Expected WhatsApp Delivery After Payment Confirmation in hero trust")
 
-        # 7. terms.html
-        terms_path = os.path.join(REPO_ROOT, 'terms.html')
+        # 7. terms-of-service/index.html
+        terms_path = os.path.join(REPO_ROOT, 'terms-of-service', 'index.html')
         with open(terms_path, 'r', encoding='utf-8') as f:
             terms_html = f.read()
-        self.assertNotIn('15 to 60 minutes after payment confirmation', terms_html, "15 to 60 minutes must not be in terms.html")
-        self.assertNotIn('up to 2 hours', terms_html, "up to 2 hours must not be in terms.html")
-        self.assertIn('starts after payment confirmation and manual order verification on WhatsApp', terms_html, "Expected neutral verification wording in terms.html")
+        self.assertNotIn('15 to 60 minutes after payment confirmation', terms_html, "15 to 60 minutes must not be in terms-of-service")
+        self.assertNotIn('up to 2 hours', terms_html, "up to 2 hours must not be in terms-of-service")
+        self.assertIn('starts after payment confirmation and manual order verification on WhatsApp', terms_html, "Expected neutral verification wording in terms-of-service")
 
         # 8. llms.txt and llms-full.txt
         for lfile in ['llms.txt', 'llms-full.txt']:

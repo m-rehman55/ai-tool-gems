@@ -35,8 +35,6 @@ DOCUMENTED_ORPHAN_EXCEPTIONS = {
     "404.html",                   # HTTP 404 Error page (unlinked by design, noindex)
     "admin.html",                 # Private administrative desk (unlinked from public nav, noindex)
     "gsc_daily_checklist.html",   # Internal manual checklist (noindex)
-    "privacy.html",               # Legacy flat URL (redirects to canonical /privacy-policy/, noindex)
-    "terms.html",                 # Legacy flat URL (redirects to canonical /terms-of-service/, noindex)
 }
 
 # Domains considered internal
