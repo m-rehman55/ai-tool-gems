@@ -571,3 +571,10 @@ Sitemap: https://aitoolgems.tech/sitemap.xml
 - URL: https://aitoolgems.tech/guides/runway-gen3-pakistan/
 - Summary: Explore Runway Gen-3 Alpha in Pakistan for high-definition AI cinematography. Compare monthly credits in PKR, camera controls, and local payment methods.
 
+
+## Newly Published Guides
+
+### Semrush Pro in Pakistan: SEO Agency Pricing & Local Guide (2026)
+- URL: https://aitoolgems.tech/guides/semrush-pro-pakistan/
+- Summary: Complete guide to Semrush Pro in Pakistan for freelance SEOs and agencies. Review keyword research, backlink audits, and PKR pricing without bank forex tax.
+
