@@ -6,9 +6,9 @@
         "channel_id": "6aa53e99cd8b9c702c56ef62",
         "scheduled_for": "2026-09-12T12:32:18.000Z",
         "recorded_at": "2026-09-12T12:22:19+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "metrics_checked_on": "2026-10-27",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
         "metrics": {
           "reactions": 2,
           "comments": 3,
@@ -26,9 +26,9 @@
         "channel_id": "6aa53e17cd8b9c702c56ee0d",
         "scheduled_for": "2026-09-12T12:34:56.000Z",
         "recorded_at": "2026-09-12T12:24:56+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "metrics_checked_on": "2026-10-27",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -39,16 +39,16 @@
           "follows": 0,
           "reach": 1
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.031Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.033Z"
       },
       "facebook": {
         "post_id": "6aa544996b734df0253a0dd0",
         "channel_id": "6aa53debcd8b9c702c56ed78",
         "scheduled_for": "2026-09-12T12:34:56.000Z",
         "recorded_at": "2026-09-12T12:24:57+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "metrics_checked_on": "2026-10-27",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -78,8 +78,8 @@
         "audio_theme": "creator-pulse",
         "recorded_at": "2026-09-13T01:26:07+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -91,7 +91,7 @@
           "averageTimeWatched": 3.09,
           "reach": 2
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.014Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.009Z"
       },
       "morning:facebook": {
         "post_id": "6aa5fbafeba7bc56778968c9",
@@ -110,8 +110,8 @@
         "audio_theme": "creator-pulse",
         "recorded_at": "2026-09-13T01:26:08+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -139,8 +139,8 @@
         "audio_theme": "creator-pulse",
         "recorded_at": "2026-09-13T01:26:08+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 3,
           "comments": 0,
@@ -173,8 +173,8 @@
         "caption_version": 2,
         "repaired_at": "2026-09-13T15:54:22+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -186,7 +186,7 @@
           "averageTimeWatched": 3.67,
           "reach": 4
         },
-        "metrics_updated_at": "2026-10-25T22:31:43.976Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.014Z"
       },
       "evening:facebook": {
         "post_id": "6aa5fbb1e58a7c358372811c",
@@ -205,8 +205,8 @@
         "audio_theme": "creator-pulse",
         "recorded_at": "2026-09-13T01:26:09+00:00",
         "delivery_status": "error",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -234,8 +234,8 @@
         "audio_theme": "creator-pulse",
         "recorded_at": "2026-09-13T01:26:10+00:00",
         "delivery_status": "error",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -270,8 +270,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-14T07:37:37+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -282,7 +282,7 @@
           "follows": 0,
           "reach": 1
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.033Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.031Z"
       },
       "morning:facebook": {
         "post_id": "6aa7a441d36607a692206a96",
@@ -304,8 +304,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-14T07:37:38+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -336,8 +336,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-14T07:37:38+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 2,
           "comments": 0,
@@ -373,8 +373,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-14T07:37:42+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -386,7 +386,7 @@
           "averageTimeWatched": 2.12,
           "reach": 4
         },
-        "metrics_updated_at": "2026-10-25T22:31:43.985Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.028Z"
       },
       "evening:facebook": {
         "post_id": "6aa7a44b369387a9e2f88e13",
@@ -411,8 +411,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-14T07:37:47+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -446,8 +446,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-14T07:37:48+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -482,8 +482,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-19T04:24:09+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -494,7 +494,7 @@
           "follows": 0,
           "reach": 2
         },
-        "metrics_updated_at": "2026-10-25T22:31:43.980Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.990Z"
       },
       "morning:facebook": {
         "post_id": "6aae0e6924705c9044989e8f",
@@ -516,8 +516,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-19T04:24:09+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -548,8 +548,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-19T04:24:09+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -585,8 +585,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-19T04:24:11+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -598,7 +598,7 @@
           "averageTimeWatched": 1.95,
           "reach": 9
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.011Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.988Z"
       },
       "evening:facebook": {
         "post_id": "6aae0e6c560f708e814d0d74",
@@ -623,8 +623,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-19T04:24:13+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -658,8 +658,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-19T04:24:14+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 3,
           "comments": 2,
@@ -694,8 +694,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-20T01:41:29+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -706,7 +706,7 @@
           "follows": 0,
           "reach": 2
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.018Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.037Z"
       },
       "morning:facebook": {
         "post_id": "6aaf39c98d048c06b4f648c8",
@@ -728,8 +728,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-20T01:41:30+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -760,8 +760,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-20T01:41:30+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -797,8 +797,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-20T01:41:30+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -810,7 +810,7 @@
           "averageTimeWatched": 1.19,
           "reach": 4
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.016Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.025Z"
       },
       "evening:facebook": {
         "post_id": "6aaf39cb566e1a89bc201992",
@@ -835,8 +835,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-20T01:41:31+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -870,8 +870,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-20T01:41:31+00:00",
         "delivery_status": "error",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -906,8 +906,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-21T01:43:30+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -918,7 +918,7 @@
           "follows": 0,
           "reach": 1
         },
-        "metrics_updated_at": "2026-10-25T22:31:43.993Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.005Z"
       },
       "morning:facebook": {
         "post_id": "6ab08bc23649bbabeab9699d",
@@ -940,8 +940,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-21T01:43:30+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -972,8 +972,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-21T01:43:30+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -1009,8 +1009,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-21T01:43:32+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1022,7 +1022,7 @@
           "averageTimeWatched": 2.65,
           "reach": 1
         },
-        "metrics_updated_at": "2026-10-25T22:31:43.983Z"
+        "metrics_updated_at": "2026-10-26T22:31:55.001Z"
       },
       "evening:facebook": {
         "post_id": "6ab08bc49644849c89a71623",
@@ -1047,8 +1047,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-21T01:43:32+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -1082,8 +1082,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-21T01:43:33+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1118,8 +1118,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-22T01:54:48+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1130,7 +1130,7 @@
           "follows": 0,
           "reach": 1
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.013Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.976Z"
       },
       "morning:facebook": {
         "post_id": "6ab1dfe874424003bca54ffc",
@@ -1152,8 +1152,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-22T01:54:48+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1184,8 +1184,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-22T01:54:49+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1221,8 +1221,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-22T01:54:50+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1234,7 +1234,7 @@
           "averageTimeWatched": 0.93,
           "reach": 21
         },
-        "metrics_updated_at": "2026-10-25T22:31:43.996Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.981Z"
       },
       "evening:facebook": {
         "post_id": "6ab1dfea6ed20e9354f4520c",
@@ -1259,8 +1259,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-22T01:54:51+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1294,8 +1294,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-22T01:54:51+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -1330,8 +1330,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-23T01:49:34+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1342,7 +1342,7 @@
           "follows": 0,
           "reach": 1
         },
-        "metrics_updated_at": "2026-10-25T22:31:43.988Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.987Z"
       },
       "morning:facebook": {
         "post_id": "6ab3302f7f829c6680766239",
@@ -1364,8 +1364,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-23T01:49:35+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1396,8 +1396,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-23T01:49:35+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -1433,8 +1433,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-23T01:49:36+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1446,7 +1446,7 @@
           "averageTimeWatched": 0.92,
           "reach": 10
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.002Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.984Z"
       },
       "evening:facebook": {
         "post_id": "6ab330317f829c66807662b1",
@@ -1471,8 +1471,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-23T01:49:37+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 1,
           "comments": 0,
@@ -1506,8 +1506,8 @@
         "caption_version": 2,
         "recorded_at": "2026-09-23T01:49:38+00:00",
         "delivery_status": "error",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1542,8 +1542,8 @@
         "caption_version": 2,
         "recorded_at": "2026-10-06T03:22:20+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1554,7 +1554,7 @@
           "follows": 0,
           "reach": 0
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.005Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.997Z"
       },
       "morning:facebook": {
         "post_id": "6ac4696cacc08dcd5e9fd0b7",
@@ -1576,8 +1576,8 @@
         "caption_version": 2,
         "recorded_at": "2026-10-06T03:22:20+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1608,8 +1608,8 @@
         "caption_version": 2,
         "recorded_at": "2026-10-06T03:22:21+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1620,7 +1620,7 @@
           "totalTimeWatched": 2.8,
           "averageTimeWatched": 1.45
         },
-        "metrics_updated_at": "2026-10-25T16:18:40.497Z"
+        "metrics_updated_at": "2026-10-26T15:19:37.262Z"
       },
       "evening:instagram": {
         "post_id": "6ac4696db0e0485fb4695742",
@@ -1645,8 +1645,8 @@
         "caption_version": 2,
         "recorded_at": "2026-10-06T03:22:21+00:00",
         "delivery_status": "sent",
-        "delivery_checked_at": "2026-10-26T01:46:08+00:00",
-        "metrics_checked_on": "2026-10-26",
+        "delivery_checked_at": "2026-10-27T02:26:53+00:00",
+        "metrics_checked_on": "2026-10-27",
         "metrics": {
           "reactions": 0,
           "comments": 0,
@@ -1658,7 +1658,7 @@
           "averageTimeWatched": 0.65,
           "reach": 1
         },
-        "metrics_updated_at": "2026-10-25T22:31:44.009Z"
+        "metrics_updated_at": "2026-10-26T22:31:54.999Z"
       },
       "evening:facebook": {
         "post_id": "6ac4696e59057dd2e0d0f2ec",
@@ -1685,7 +1685,7 @@
         "delivery_status": "error",
         "delivery_checked_at": "2026-10-06T22:39:35+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       },
       "evening:tiktok": {
         "post_id": "6ac4696fae999c0b7ffb5d3f",
@@ -1710,7 +1710,7 @@
         "caption_version": 2,
         "recorded_at": "2026-10-06T03:22:24+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       }
     },
     "2026-10-25": {
@@ -1739,7 +1739,7 @@
         "delivery_status": "scheduled",
         "delivery_checked_at": "2026-10-24T21:29:20+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       },
       "morning:facebook": {
         "post_id": "6add232dbd33ce99c341d8d2",
@@ -1766,7 +1766,7 @@
         "delivery_status": "scheduled",
         "delivery_checked_at": "2026-10-24T21:29:20+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       },
       "morning:tiktok": {
         "post_id": "6add232ee4be8a4d867aa1b9",
@@ -1793,7 +1793,7 @@
         "delivery_status": "scheduled",
         "delivery_checked_at": "2026-10-24T21:29:20+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       },
       "evening:instagram": {
         "post_id": "6add232e0b5343d070a23e56",
@@ -1820,7 +1820,7 @@
         "delivery_status": "scheduled",
         "delivery_checked_at": "2026-10-24T21:29:20+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       },
       "evening:facebook": {
         "post_id": "6add232f6887a2efc1d6f720",
@@ -1847,7 +1847,7 @@
         "delivery_status": "scheduled",
         "delivery_checked_at": "2026-10-24T21:29:20+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       },
       "evening:tiktok": {
         "post_id": "6add232fbd33ce99c341d93a",
@@ -1874,7 +1874,7 @@
         "delivery_status": "scheduled",
         "delivery_checked_at": "2026-10-24T21:29:20+00:00",
         "metrics_error": "Buffer API HTTP 429: {\"errors\":[{\"message\":\"Too many requests from this client. Please try again later. Upgrade your Buffer plan for higher API limits: https://buffer.com/pricing\",\"extensions\":{\"code\":\"RATE_LIMIT_EXCEEDED\",\"window\":\"15m\"}}]}",
-        "metrics_checked_on": "2026-10-26"
+        "metrics_checked_on": "2026-10-27"
       }
     }
   }
