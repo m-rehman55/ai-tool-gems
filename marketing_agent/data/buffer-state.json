@@ -1953,6 +1953,158 @@
         },
         "metrics_updated_at": "2026-10-24T21:29:19.781Z"
       }
+    },
+    "2026-10-28": {
+      "morning:instagram": {
+        "post_id": "6ae1601ff74245164e7fd849",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-10-28T03:00:00.000Z",
+        "slot": "morning",
+        "service": "instagram",
+        "audience": "students",
+        "learning_mode": "metrics-winner",
+        "deal_ids": [
+          "gemini",
+          "windows",
+          "youtube"
+        ],
+        "media_type": "image",
+        "creative_concept": "glass-card-rush",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-28T02:38:23+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-28T02:38:26+00:00"
+      },
+      "morning:facebook": {
+        "post_id": "6ae1601ff74245164e7fd873",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-10-28T03:00:00.000Z",
+        "slot": "morning",
+        "service": "facebook",
+        "audience": "students",
+        "learning_mode": "metrics-winner",
+        "deal_ids": [
+          "gemini",
+          "windows",
+          "youtube"
+        ],
+        "media_type": "image",
+        "creative_concept": "glass-card-rush",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-28T02:38:24+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-28T02:38:26+00:00"
+      },
+      "morning:tiktok": {
+        "post_id": "6ae16020f74245164e7fd89d",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-10-28T03:23:24.000Z",
+        "slot": "morning",
+        "service": "tiktok",
+        "audience": "students",
+        "learning_mode": "metrics-winner",
+        "deal_ids": [
+          "gemini",
+          "windows",
+          "youtube"
+        ],
+        "media_type": "image",
+        "creative_concept": "glass-card-rush",
+        "audio_theme": null,
+        "audio_strategy": null,
+        "video_seconds": null,
+        "ai_disclosed": false,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-28T02:38:24+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-28T02:38:26+00:00"
+      },
+      "evening:instagram": {
+        "post_id": "6ae160202785e53975d02047",
+        "channel_id": "6aa53e17cd8b9c702c56ee0d",
+        "scheduled_for": "2026-10-28T13:00:00.000Z",
+        "slot": "evening",
+        "service": "instagram",
+        "audience": "career",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "linkedin",
+          "nordvpn"
+        ],
+        "media_type": "video",
+        "creative_concept": "three-gem-reveal",
+        "audio_theme": "creator-pop",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 12,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-28T02:38:24+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-28T02:38:26+00:00"
+      },
+      "evening:facebook": {
+        "post_id": "6ae16021f652e014d7a4b782",
+        "channel_id": "6aa53debcd8b9c702c56ed78",
+        "scheduled_for": "2026-10-28T13:00:00.000Z",
+        "slot": "evening",
+        "service": "facebook",
+        "audience": "career",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "linkedin",
+          "nordvpn"
+        ],
+        "media_type": "video",
+        "creative_concept": "three-gem-reveal",
+        "audio_theme": "clean-cinematic",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 14,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-28T02:38:25+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-28T02:38:26+00:00"
+      },
+      "evening:tiktok": {
+        "post_id": "6ae160214ee0f35758d8718a",
+        "channel_id": "6aa53e99cd8b9c702c56ef62",
+        "scheduled_for": "2026-10-28T17:00:00.000Z",
+        "slot": "evening",
+        "service": "tiktok",
+        "audience": "career",
+        "learning_mode": "single-relevant-audience",
+        "deal_ids": [
+          "gemini",
+          "linkedin",
+          "nordvpn"
+        ],
+        "media_type": "video",
+        "creative_concept": "three-gem-reveal",
+        "audio_theme": "cinematic-trap",
+        "audio_strategy": "platform-shaped-original-commercial-safe",
+        "video_seconds": 10,
+        "ai_disclosed": true,
+        "contact_number": "923236715731",
+        "caption_version": 2,
+        "recorded_at": "2026-10-28T02:38:25+00:00",
+        "delivery_status": "scheduled",
+        "delivery_checked_at": "2026-10-28T02:38:26+00:00"
+      }
     }
   }
 }
