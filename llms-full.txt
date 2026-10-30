@@ -599,3 +599,10 @@ Sitemap: https://aitoolgems.tech/sitemap.xml
 - URL: https://aitoolgems.tech/guides/nordvpn-vs-surfshark-pakistan/
 - Summary: Compare NordVPN vs Surfshark in Pakistan for remote work security, banking access, and streaming. Review local PKR rates with EasyPaisa and JazzCash.
 
+
+## Newly Published Guides
+
+### Canva Pro in Pakistan: Features, Team Invites & Pricing Guide (2026)
+- URL: https://aitoolgems.tech/guides/canva-pro-pakistan-guide/
+- Summary: Complete guide to Canva Pro in Pakistan. Review Brand Kits, Magic Studio AI, Invitation vs Lifetime options in PKR, and local payment verification.
+
