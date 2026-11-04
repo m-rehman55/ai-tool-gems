@@ -27,7 +27,7 @@ SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
 EXCLUDED_DIRS = {
     ".git", ".github", ".seo-cache", "reports", "scratch",
-    "node_modules", "tests", ".gemini", "coverage", "__pycache__"
+    "node_modules", "tests", ".gemini", "coverage", "__pycache__", "jp"
 }
 
 EXCLUDED_FILES = {
@@ -118,6 +118,10 @@ def collect_indexable_pages(base_dir: Path = None) -> list[dict]:
 
         # Enforce canonical URL standards
         if not canonical_url.startswith("https://aitoolgems.tech/"):
+            continue
+
+        # Strict scope guard: permanently exclude Japan routes from sitemap
+        if "/jp/" in canonical_url or canonical_url.rstrip("/").endswith("/jp"):
             continue
 
         if canonical_url in seen_canonicals:
