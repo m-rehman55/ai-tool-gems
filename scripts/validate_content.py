@@ -193,7 +193,7 @@ def validate_article_file(file_path: Path, expected_slug: str = None) -> tuple[b
     if has_payment_discussion and ("easypaisa" not in plain and "jazzcash" not in plain and "sadapay" not in plain and "bank transfer" not in plain):
         errors.append("Payment-related topic missing verified Pakistani payment route (EasyPaisa/JazzCash/SadaPay/Bank)")
 
-    if "¥" in html or "jpy" in plain or "tokyo" in plain:
+    if any(tok in plain for tok in ["japan", "japanese", "tokyo", "osaka", "kyoto", "jpy", "/jp/"]) or "¥" in html:
         errors.append("Detected foreign currency/Japan contamination in Pakistani content")
 
     is_valid = len(errors) == 0

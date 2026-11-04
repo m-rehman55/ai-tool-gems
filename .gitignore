@@ -29,3 +29,5 @@ test-results/
 seo-agent/reports/*/
 seo-agent/reports/daily-report-*.md
 !seo-agent/reports/daily-report-2026-10-12.md
+scratch/
+

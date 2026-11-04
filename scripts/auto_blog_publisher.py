@@ -146,6 +146,12 @@ def validate_queue_candidate(item: dict, published_slugs: set[str] = None) -> tu
     if not isinstance(sec_kws, list) or len(sec_kws) < 3:
         errors.append("Must provide at least 3 secondary keywords as a list.")
 
+    # 7. Strict Pakistan-Only Scope Guard: Permanently block any Japan/JP market content
+    candidate_tokens = f"{slug} {title} {meta_desc} {item.get('primary_keyword', '')} {' '.join(str(x) for x in sec_kws)}".lower()
+    for forbidden in ["japan", "japanese", "tokyo", "osaka", "kyoto", "/jp/", "-jp-", "jpy", "¥"]:
+        if forbidden in candidate_tokens:
+            errors.append(f"Foreign scope violation: Japan token '{forbidden}' is strictly prohibited.")
+
     # 6. Contextual Pakistan payment rail compliance (only when payment support is specified/relevant)
     payments = item.get("pakistani_payment_support")
     if payments is not None:
