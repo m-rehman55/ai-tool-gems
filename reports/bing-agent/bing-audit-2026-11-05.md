@@ -16,11 +16,11 @@
 | `ai tools bundle subscription pakistan` | 2 | 0 | 6.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
 | `replit price in pakistan` | 1 | 0 | 6.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
 | `ai tools bundle subscription pakistani price` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
-| `replit price in pakistan` | 2 | 0 | 8.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
 | `gemini pro pricing in pakistan` | 2 | 0 | 10.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
+| `replit price in pakistan` | 2 | 0 | 8.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
 | `ai tools bundle subscription pakistan price` | 1 | 0 | 2.0 | `BING_BREAKTHROUGH` | Ranking #2 on Bing! Protect snippet and add target anchor links. |
-| `ai tools bundle subscription pakistan price does home depot cut wood for yourself` | 1 | 0 | 4.0 | `BING_BREAKTHROUGH` | Ranking #4 on Bing! Protect snippet and add target anchor links. |
 | `windows 11 pro activation key price in pk` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
+| `ai tools bundle subscription pakistan price does home depot cut wood for yourself` | 1 | 0 | 4.0 | `BING_BREAKTHROUGH` | Ranking #4 on Bing! Protect snippet and add target anchor links. |
 | `kinkdhin premium pakistan` | 1 | 0 | 2.0 | `BING_BREAKTHROUGH` | Ranking #2 on Bing! Protect snippet and add target anchor links. |
 | `linkedin premium sales pakistan` | 1 | 0 | 2.0 | `BING_BREAKTHROUGH` | Ranking #2 on Bing! Protect snippet and add target anchor links. |
 | `linkedin premium cost pakistan` | 1 | 0 | 7.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
