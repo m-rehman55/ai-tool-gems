@@ -111,3 +111,4 @@ class TechnicalAuditSummary:
     technical_health_score: float = 100.0  # 0 to 100
     critical_issues: List[Dict[str, Any]] = field(default_factory=list)
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+

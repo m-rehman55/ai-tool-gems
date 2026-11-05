@@ -31,6 +31,10 @@ from keyword_agent.content_optimizer import ContentOptimizer
 from keyword_agent.safe_executor import SafeExecutor
 from keyword_agent.reporting import KeywordReportGenerator
 from keyword_agent.competitor_gap import CompetitorGapAnalyzer
+from keyword_agent.intent import IntentClassifier
+from keyword_agent.external_providers import MultiSourceKeywordEngine
+from keyword_agent.declining_keywords import DecliningKeywordsEngine
+
 
 
 def run_audit(args: argparse.Namespace) -> int:
@@ -259,12 +263,108 @@ def run_sync_gsc(args: argparse.Namespace) -> int:
     return 0
 
 
+
+def run_intent(args: argparse.Namespace) -> int:
+    """Classifies a target query across the 8 HERMES search intents."""
+    query = args.query.strip()
+    res = IntentClassifier.classify(query)
+    print(f"\n🎯 8-Way Intent Classification for: '{query}'")
+    print(f"   Primary Intent:   {res.primary_intent.value.upper()}")
+    print(f"   Secondary Intents: {[i.value for i in res.secondary_intents] if res.secondary_intents else 'None'}")
+    print(f"   Confidence:       {res.confidence:.2f}")
+    print(f"   Pakistan Local:   {'Yes 🇵🇰' if res.is_pakistan_local else 'No (Global)'}")
+    print(f"   Commercial/Trans: {'Yes 💰' if res.is_commercial_or_transactional else 'No'}")
+    print(f"   Matched Patterns: {res.matched_patterns}\n")
+    return 0
+
+
+def run_providers(args: argparse.Namespace) -> int:
+    """Inspects and displays readiness/authorization across all 10 keyword intelligence data providers."""
+    settings = get_agent_settings()
+    engine = MultiSourceKeywordEngine()
+    matrix = engine.get_provider_status_matrix()
+    print("\n🌐 Multi-Source Keyword Intelligence Data Providers:")
+    print("=" * 75)
+    print(f"{'Provider Name':<35} | {'Authorized':<10} | {'Status'}")
+    print("-" * 75)
+    for key, info in matrix.items():
+        auth_sym = "✅ Yes" if info["authorized"] else "❌ No"
+        print(f"{info['name']:<35} | {auth_sym:<10} | {info['status']}")
+    print("=" * 75)
+    print("ℹ️ Note: Unconfigured providers strictly display 'UNAVAILABLE' without fabricating metrics.\n")
+    return 0
+
+
+def run_declining(args: argparse.Namespace) -> int:
+    """Detects declining queries and traffic dropouts by comparing GSC historical datasets."""
+    settings = get_agent_settings()
+    gsc_engine = GSCDataEngine(exports_dir=settings.exports_dir, history_dir=settings.history_dir, auto_extract=False)
+    curr = gsc_engine.load_dataset(allow_live=False)
+    prev = gsc_engine.get_latest_historical_snapshot()
+    if not prev:
+        print("[INFO] No previous historical snapshot available yet for period comparison.")
+        return 0
+
+    engine = DecliningKeywordsEngine(current_dataset=curr, previous_dataset=prev)
+    declines = engine.analyze()
+    print(f"\n📉 Declining Keywords Analysis ({len(declines)} tracked queries evaluated):")
+    critical = [d for d in declines if d.severity in ('CRITICAL_DECLINE', 'DROPOUT')]
+    if not critical:
+        print("   ✅ No critical query drops detected! All primary positions stable or growing.")
+    else:
+        for d in critical[:10]:
+            print(f"   ⚠️ [{d.severity}] '{d.query}': Clicks {d.previous_clicks}->{d.current_clicks} (Pos {d.previous_position}->{d.current_position}) - {d.recommended_action}")
+    print()
+    return 0
+
+
+def run_gaps(args: argparse.Namespace) -> int:
+    """Detects missing landing pages and on-page content gaps across repository."""
+    settings = get_agent_settings()
+    gsc_engine = GSCDataEngine(exports_dir=settings.exports_dir, history_dir=settings.history_dir, auto_extract=False)
+    dataset = gsc_engine.load_dataset(allow_live=False)
+    disc = KeywordDiscoveryEngine()
+    candidates = disc.process_gsc_queries(dataset) if dataset.queries else disc.generate_seed_discovery_clusters()
+    candidates += disc.generate_international_discovery_clusters()
+
+    mapper = PageMapper(project_dir=settings.project_dir)
+    missing = mapper.detect_missing_landing_pages(candidates)
+    content_gaps = mapper.detect_content_gaps(candidates)
+
+    print(f"\n🔍 Gap Analysis Results:")
+    print(f"   • Missing Dedicated Landing Pages: {len(missing)}")
+    for m in missing[:5]:
+        print(f"     - [{m.target_intent.upper()}] '{m.topic}': Suggested URL -> {m.suggested_url}")
+
+    print(f"\n   • On-Page Content & Intent Gaps: {len(content_gaps)}")
+    for g in content_gaps[:5]:
+        print(f"     - [{g.urgency}] {g.relative_path}: {g.missing_aspect} -> {g.recommended_addition}")
+    print()
+    return 0
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="python -m keyword_agent",
         description="Autonomous Keyword Intelligence, GSC Filter Engine & Content Optimization for AIToolGems Pakistan",
     )
     subparsers = parser.add_subparsers(dest="command", help="Operational commands")
+
+    # intent
+    intent_parser = subparsers.add_parser("intent", help="Classify a query across 8 HERMES search intents")
+    intent_parser.add_argument("query", help="Search query string to classify")
+    intent_parser.set_defaults(func=run_intent)
+
+    # providers
+    providers_parser = subparsers.add_parser("providers", help="Display readiness of 10 external keyword data sources")
+    providers_parser.set_defaults(func=run_providers)
+
+    # declining
+    declining_parser = subparsers.add_parser("declining", help="Detect declining keywords and rankings from GSC history")
+    declining_parser.set_defaults(func=run_declining)
+
+    # gaps
+    gaps_parser = subparsers.add_parser("gaps", help="Detect missing landing pages and on-page content gaps")
+    gaps_parser.set_defaults(func=run_gaps)
 
     # audit
     audit_parser = subparsers.add_parser("audit", help="Run full discovery, filter check, and daily report")

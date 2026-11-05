@@ -184,3 +184,4 @@ class TechnicalSEOAnalyzer:
             technical_health_score=score,
             critical_issues=critical_issues,
         )
+

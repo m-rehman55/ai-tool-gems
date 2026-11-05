@@ -1,25 +1,30 @@
 """
-discovery.py - Multi-Source Keyword Discovery, Clustering & Explainable Opportunity Scoring.
+discovery.py - Multi-Source Keyword Discovery, 8-Way Intent Clustering & Explainable Opportunity Scoring.
+
 Synthesizes:
 1. Source A: Search Console query analytics (real clicks, impressions, positions, CTR)
 2. Source B: Free public research & Pakistani search intent (PKR, EasyPaisa, JazzCash, Roman Urdu)
-3. Source C: Competitor & catalog gap analysis (missing topics across 20 tools)
+3. Source C: Competitor & catalog gap analysis (missing topics across 40 tools)
 4. Source D: Semantic & long-tail intent expansion (troubleshooting, pricing, workflows)
+5. Source E: Multi-source external providers (Google Trends, Bing, Ads Planner, Ahrefs, Semrush, Site Search)
 """
 
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field, asdict
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, Tuple
 from keyword_agent.gsc_data import GSCQueryRow, GSCDataset
+from keyword_agent.intent import IntentClassifier, SearchIntentType, IntentClassificationResult
 
 
 @dataclass
 class KeywordCandidate:
     keyword: str
     cluster: str
-    intent: str  # "transactional", "commercial", "informational", "navigational"
+    intent: str  # "transactional", "commercial", "informational", "navigational" (or 8-way)
+    primary_intent: str = ""  # 8-way intent: informational, commercial_investigation, transactional, navigational, local, comparison, brand, question
+    secondary_intents: List[str] = field(default_factory=list)
     market: str = "PK"  # "PK" or "GLOBAL"
     country_market: str = "Pakistan"  # "Pakistan" or "International / Global"
     impressions: int = 0
@@ -32,9 +37,28 @@ class KeywordCandidate:
     recommended_page: str = ""
     content_gap: str = ""
     priority: str = "P2"  # "P1 - Immediate", "P2 - Secondary", "P3 - Backlog"
-    action_type: str = "OPTIMIZE_EXISTING"  # "OPTIMIZE_EXISTING", "MONITOR", "PROPOSE_NEW_PAGE"
+    action_type: str = "OPTIMIZE_EXISTING"  # "OPTIMIZE_EXISTING", "MONITOR", "PROPOSE_NEW_PAGE", "PROTECT_WINNER"
     pakistan_relevance: bool = True
-    strategic_classification: str = "Pakistan-specific"  # "Pakistan-specific", "International/global", "Suitable for an existing page", "Requires a genuinely distinct new page", "Research-only/not ready"
+    strategic_classification: str = "Pakistan-specific"
+    search_volume: Optional[int] = None
+    search_volume_display: str = "UNAVAILABLE"
+    keyword_difficulty: Optional[float] = None
+    keyword_difficulty_display: str = "UNAVAILABLE"
+    search_trend: str = "UNAVAILABLE"
+    serp_competition: str = "UNAVAILABLE"
+    ranking_potential: str = "UNRANKED"
+    conversion_potential: str = "MEDIUM"
+    confidence: float = 1.0
+    effort: str = "LOW"
+    risk: str = "MINIMAL"
+
+    def __post_init__(self):
+        if not self.primary_intent:
+            self.primary_intent = self.intent
+        if self.search_volume is not None and self.search_volume_display == "UNAVAILABLE":
+            self.search_volume_display = str(self.search_volume)
+        if self.keyword_difficulty is not None and self.keyword_difficulty_display == "UNAVAILABLE":
+            self.keyword_difficulty_display = f"{self.keyword_difficulty:.1f}"
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -47,10 +71,10 @@ class KeywordDiscoveryEngine:
     PK_TRANSACTIONAL_MODIFIERS = [
         "price in pakistan", "in pakistan pkr", "easypaisa", "jazzcash", "sadapay",
         "buy in pakistan", "cheap subscription", "lifetime access", "student discount",
-        "official license key", "rates in rupees",
+        "official license key", "rates in rupees", "nayapay", "raast", "karachi", "lahore", "islamabad",
     ]
 
-    # Intent classification patterns
+    # Intent classification patterns (legacy fallback)
     INTENT_PATTERNS = [
         ("transactional", r"(?i)\b(buy|price|pricing|cost|subscribe|subscription|purchase|pkr|rs|rupees|easypaisa|jazzcash|license|key|account)\b"),
         ("commercial", r"(?i)\b(vs|versus|alternative|alternatives|compare|comparison|review|reviews|best|top|cheap|deal|discount|workflow)\b"),
@@ -67,13 +91,29 @@ class KeywordDiscoveryEngine:
             "spotify", "suno", "surfshark", "tradingview", "turnitin", "veo", "windows", "youtube"
         ]
 
-    def classify_intent(self, keyword: str) -> str:
-        """Classifies search intent strictly based on lexical markers."""
+    def classify_intent(self, keyword: str, legacy: bool = True) -> str:
+        """
+        Classifies search intent.
+        If legacy=True (default), preserves the 4 standard intents: transactional, commercial, informational, navigational.
+        If legacy=False, returns the exact 8-way intent.
+        """
+        if not legacy:
+            return self.classify_intent_8way(keyword)
+
         kw_lower = keyword.lower()
         for intent, pattern in self.INTENT_PATTERNS:
             if re.search(pattern, kw_lower):
                 return intent
         return "informational"
+
+    def classify_intent_8way(self, keyword: str) -> str:
+        """Classifies search intent strictly into one of the 8 canonical HERMES intents."""
+        result = IntentClassifier.classify(keyword)
+        return result.primary_intent.value
+
+    def classify_full_intent(self, keyword: str) -> IntentClassificationResult:
+        """Returns the full multi-label intent analysis."""
+        return IntentClassifier.classify(keyword)
 
     def assign_cluster(self, keyword: str) -> str:
         """Assigns the keyword to the most relevant product or topical cluster."""
@@ -150,12 +190,14 @@ class KeywordDiscoveryEngine:
         breakdown["ctr_gap"] = ctr_gap_score
 
         # 4. Commercial / Transactional Intent
-        if intent == "transactional":
+        if intent in ("transactional", SearchIntentType.TRANSACTIONAL.value):
             comm_score = 20.0
-        elif intent == "commercial":
+        elif intent in ("commercial", SearchIntentType.COMMERCIAL_INVESTIGATION.value, SearchIntentType.COMPARISON.value):
             comm_score = 15.0
-        elif intent == "informational":
+        elif intent in ("informational", SearchIntentType.INFORMATIONAL.value, SearchIntentType.QUESTION.value):
             comm_score = 8.0
+        elif intent in ("local", SearchIntentType.LOCAL.value):
+            comm_score = 18.0
         else:
             comm_score = 5.0
         breakdown["commercial_value"] = comm_score
@@ -178,9 +220,11 @@ class KeywordDiscoveryEngine:
         """Converts raw GSC query data into scored, clustered keyword candidates segmented by market."""
         candidates: List[KeywordCandidate] = []
         for q in gsc_dataset.queries:
-            intent = self.classify_intent(q.query)
+            intent_res = self.classify_full_intent(q.query)
+            legacy_intent = self.classify_intent(q.query, legacy=True)
+            primary_intent = intent_res.primary_intent.value
             cluster = self.assign_cluster(q.query)
-            is_pk = bool(re.search(r"(?i)(pakistan|pakistani|pkr|rs\.?|rupees?|easypaisa|jazzcash|sadapay|nayapay|lahore|karachi|islamabad|rawalpindi|faisalabad)", q.query))
+            is_pk = intent_res.is_pakistan_local or bool(re.search(r"(?i)(pakistan|pakistani|pkr|rs\.?|rupees?|easypaisa|jazzcash|sadapay|nayapay|lahore|karachi|islamabad|rawalpindi|faisalabad)", q.query))
             market = "PK" if is_pk else "GLOBAL"
             country_market = "Pakistan" if is_pk else "International / Global"
 
@@ -190,7 +234,7 @@ class KeywordDiscoveryEngine:
                 clicks=q.clicks,
                 ctr=q.ctr,
                 position=q.position,
-                intent=intent,
+                intent=legacy_intent,
                 is_pakistan=is_pk,
             )
 
@@ -199,17 +243,35 @@ class KeywordDiscoveryEngine:
                 action = "PROTECT_WINNER"
                 priority = "P1 - Immediate"
                 gap = "Rank #1-3 achieved. Protect SERP snippet, refresh direct answers and maintain high CTR."
+                ranking_potential = "DOMINATING"
             elif q.is_low_ctr_opportunity or q.is_striking_distance:
                 action = "OPTIMIZE_EXISTING"
                 priority = "P1 - Immediate"
+                ranking_potential = "HIGH_STRIKING_DISTANCE"
                 if is_pk:
                     gap = "High impression query in striking distance. Highlight PKR pricing and domestic payment rails in visible intro."
                 else:
                     gap = "International query in striking distance. Highlight tool comparison features and international WhatsApp inquiry support."
+            elif q.position <= 20.0:
+                action = "OPTIMIZE_EXISTING"
+                priority = "P2 - Secondary"
+                ranking_potential = "MODERATE"
+                gap = "Position 10-20. Elevate topical depth and add structured FAQ answers."
             else:
                 action = "MONITOR"
                 priority = "P2 - Secondary" if q.impressions >= 5 else "P3 - Backlog"
+                ranking_potential = "LONG_TERM"
                 gap = "Monitor impressions and CTR trend in Google Search Console."
+
+            # Conversion potential
+            if primary_intent in ("transactional", "local") and is_pk:
+                conv_potential = "VERY_HIGH"
+            elif primary_intent in ("commercial_investigation", "comparison"):
+                conv_potential = "HIGH"
+            elif primary_intent == "question":
+                conv_potential = "MEDIUM"
+            else:
+                conv_potential = "LOW"
 
             # Resolve best canonical URL if tool matches or generic
             rec_page = "https://aitoolgems.tech/"
@@ -229,7 +291,9 @@ class KeywordDiscoveryEngine:
             candidates.append(KeywordCandidate(
                 keyword=q.query,
                 cluster=cluster,
-                intent=intent,
+                intent=legacy_intent,
+                primary_intent=primary_intent,
+                secondary_intents=[i.value for i in intent_res.secondary_intents],
                 market=market,
                 country_market=country_market,
                 impressions=q.impressions,
@@ -245,12 +309,21 @@ class KeywordDiscoveryEngine:
                 action_type=action,
                 pakistan_relevance=is_pk,
                 strategic_classification=strat_class,
+                search_volume=q.impressions,
+                search_volume_display=str(q.impressions),
+                keyword_difficulty=None,
+                keyword_difficulty_display="UNAVAILABLE",
+                ranking_potential=ranking_potential,
+                conversion_potential=conv_potential,
+                confidence=1.0,
+                effort="LOW" if rec_page != "https://aitoolgems.tech/" else "MEDIUM",
+                risk="MINIMAL",
             ))
         return candidates
 
     def generate_seed_discovery_clusters(self) -> List[KeywordCandidate]:
         """
-        Generates baseline Pakistani search clusters for all 32 verified tools in catalog,
+        Generates baseline Pakistani search clusters for all tools in catalog,
         ensuring comprehensive target universe even when GSC data is awaiting import.
         """
         seed_candidates: List[KeywordCandidate] = []
@@ -262,6 +335,8 @@ class KeywordDiscoveryEngine:
                 keyword=p1,
                 cluster=f"Tool: {tool.title()}",
                 intent="transactional",
+                primary_intent="transactional",
+                secondary_intents=["local"],
                 market="PK",
                 country_market="Pakistan",
                 source="CATALOG_GAP",
@@ -272,6 +347,8 @@ class KeywordDiscoveryEngine:
                 priority="P1 - Immediate",
                 action_type="OPTIMIZE_EXISTING",
                 pakistan_relevance=True,
+                ranking_potential="UNRANKED",
+                conversion_potential="VERY_HIGH",
             ))
 
             # 2. Local Payment
@@ -281,6 +358,8 @@ class KeywordDiscoveryEngine:
                 keyword=p2,
                 cluster=f"Tool: {tool.title()}",
                 intent="transactional",
+                primary_intent="transactional",
+                secondary_intents=["local"],
                 market="PK",
                 country_market="Pakistan",
                 source="CATALOG_GAP",
@@ -291,6 +370,8 @@ class KeywordDiscoveryEngine:
                 priority="P1 - Immediate",
                 action_type="OPTIMIZE_EXISTING",
                 pakistan_relevance=True,
+                ranking_potential="UNRANKED",
+                conversion_potential="VERY_HIGH",
             ))
 
             # 3. AEO Question
@@ -300,6 +381,8 @@ class KeywordDiscoveryEngine:
                 keyword=p3,
                 cluster=f"Tool: {tool.title()}",
                 intent="informational",
+                primary_intent="question",
+                secondary_intents=["local", "informational"],
                 market="PK",
                 country_market="Pakistan",
                 source="PUBLIC_RESEARCH",
@@ -310,6 +393,8 @@ class KeywordDiscoveryEngine:
                 priority="P2 - Secondary",
                 action_type="OPTIMIZE_EXISTING",
                 pakistan_relevance=True,
+                ranking_potential="UNRANKED",
+                conversion_potential="HIGH",
             ))
 
         return seed_candidates
@@ -418,10 +503,13 @@ class KeywordDiscoveryEngine:
 
         for kw, intent, cluster, target_url, gap, strat, action, prio in existing_page_opps:
             score, breakdown = self.calculate_opportunity_score(kw, 15, 1, 6.7, 7.5, intent, is_pakistan=False)
+            intent_res = self.classify_full_intent(kw)
             intl_candidates.append(KeywordCandidate(
                 keyword=kw,
                 cluster=cluster,
                 intent=intent,
+                primary_intent=intent_res.primary_intent.value,
+                secondary_intents=[i.value for i in intent_res.secondary_intents],
                 market="GLOBAL",
                 country_market="International / Global",
                 impressions=15,
@@ -437,6 +525,10 @@ class KeywordDiscoveryEngine:
                 action_type=action,
                 pakistan_relevance=False,
                 strategic_classification=strat,
+                search_volume=15,
+                search_volume_display="15",
+                ranking_potential="HIGH_STRIKING_DISTANCE",
+                conversion_potential="HIGH",
             ))
 
         # 2. Opportunities requiring genuinely distinct new non-regional content
@@ -485,10 +577,13 @@ class KeywordDiscoveryEngine:
 
         for kw, intent, cluster, target_url, gap, strat, action, prio in distinct_page_opps:
             score, breakdown = self.calculate_opportunity_score(kw, 20, 1, 5.0, 8.0, intent, is_pakistan=False)
+            intent_res = self.classify_full_intent(kw)
             intl_candidates.append(KeywordCandidate(
                 keyword=kw,
                 cluster=cluster,
                 intent=intent,
+                primary_intent=intent_res.primary_intent.value,
+                secondary_intents=[i.value for i in intent_res.secondary_intents],
                 market="GLOBAL",
                 country_market="International / Global",
                 impressions=20,
@@ -504,6 +599,10 @@ class KeywordDiscoveryEngine:
                 action_type=action,
                 pakistan_relevance=False,
                 strategic_classification=strat,
+                search_volume=20,
+                search_volume_display="20",
+                ranking_potential="HIGH_STRIKING_DISTANCE",
+                conversion_potential="HIGH",
             ))
 
         # 3. Research-only / Early-stage opportunities
@@ -532,10 +631,13 @@ class KeywordDiscoveryEngine:
 
         for kw, intent, cluster, target_url, gap, strat, action, prio in research_opps:
             score, breakdown = self.calculate_opportunity_score(kw, 5, 0, 0.0, 15.0, intent, is_pakistan=False)
+            intent_res = self.classify_full_intent(kw)
             intl_candidates.append(KeywordCandidate(
                 keyword=kw,
                 cluster=cluster,
                 intent=intent,
+                primary_intent=intent_res.primary_intent.value,
+                secondary_intents=[i.value for i in intent_res.secondary_intents],
                 market="GLOBAL",
                 country_market="International / Global",
                 impressions=5,
@@ -551,6 +653,10 @@ class KeywordDiscoveryEngine:
                 action_type=action,
                 pakistan_relevance=False,
                 strategic_classification=strat,
+                search_volume=5,
+                search_volume_display="5",
+                ranking_potential="MODERATE",
+                conversion_potential="LOW",
             ))
 
         return intl_candidates

@@ -83,3 +83,4 @@ class URLInventoryDatabase:
 
     def get_by_state(self, state: URLCrawlState) -> List[CrawlRecord]:
         return [r for r in self.records.values() if r.state == state]
+

@@ -33,6 +33,28 @@ class CannibalizationCollision:
 
 
 @dataclass
+class MissingLandingPageInsight:
+    topic: str
+    target_intent: str
+    sample_queries: List[str]
+    suggested_url: str
+    page_type: str  # "tool", "guide", "comparison"
+    market: str  # "PK" or "GLOBAL"
+    business_justification: str
+    confidence: float
+
+
+@dataclass
+class ContentGapInsight:
+    url: str
+    relative_path: str
+    query: str
+    missing_aspect: str
+    recommended_addition: str
+    urgency: str  # "HIGH", "MEDIUM", "LOW"
+
+
+@dataclass
 class PageMappingResult:
     keyword: str
     intent: str
@@ -451,3 +473,101 @@ class PageMapper:
                     ),
                 ))
         return collisions
+
+    def detect_missing_landing_pages(self, candidates: List[Any]) -> List[MissingLandingPageInsight]:
+        """Identifies search topics with clear demand where no dedicated page or route exists."""
+        missing: List[MissingLandingPageInsight] = []
+        seen_topics: Set[str] = set()
+
+        for c in candidates:
+            action = getattr(c, "action_type", "")
+            kw = getattr(c, "keyword", "")
+            strat = getattr(c, "strategic_classification", "")
+            target_url = getattr(c, "recommended_page", "")
+            score = getattr(c, "opportunity_score", 0.0)
+
+            if action == "PROPOSE_NEW_PAGE" or "Requires a genuinely distinct new page" in strat or "Proposed:" in target_url:
+                topic = getattr(c, "cluster", kw)
+                if topic not in seen_topics:
+                    seen_topics.add(topic)
+                    market = getattr(c, "market", "PK")
+                    intent = getattr(c, "intent", "commercial")
+                    gap_desc = getattr(c, "content_gap", "")
+                    clean_url = target_url.replace("Proposed: ", "").strip()
+                    missing.append(MissingLandingPageInsight(
+                        topic=topic,
+                        target_intent=intent,
+                        sample_queries=[kw],
+                        suggested_url=clean_url,
+                        page_type="guide" if "/guides/" in clean_url else "tool",
+                        market=market,
+                        business_justification=gap_desc or f"High-intent demand for {topic} (Score: {score}) lacks dedicated canonical route.",
+                        confidence=0.85,
+                    ))
+        return missing
+
+    def detect_content_gaps(self, candidates: List[Any]) -> List[ContentGapInsight]:
+        """
+        Inspects mapped pages in the repository to verify if specific keyword intent
+        elements (e.g. EasyPaisa, PKR price, comparison table) are actually present in the HTML.
+        """
+        gaps: List[ContentGapInsight] = []
+        page_cache: Dict[str, str] = {}
+
+        for c in candidates:
+            rec_url = getattr(c, "recommended_page", "")
+            kw = getattr(c, "keyword", "").lower()
+            if not rec_url or rec_url not in self.routes:
+                continue
+
+            route = self.routes[rec_url]
+            file_path = self.project_dir / route.relative_path
+            if not file_path.exists():
+                continue
+
+            if route.relative_path not in page_cache:
+                try:
+                    page_cache[route.relative_path] = file_path.read_text(encoding="utf-8", errors="ignore").lower()
+                except Exception:
+                    continue
+
+            html = page_cache[route.relative_path]
+
+            # Check 1: Domestic payment intent in query vs page HTML
+            for rail in ["easypaisa", "jazzcash", "sadapay", "nayapay", "raast"]:
+                if rail in kw and rail not in html:
+                    gaps.append(ContentGapInsight(
+                        url=rec_url,
+                        relative_path=route.relative_path,
+                        query=c.keyword,
+                        missing_aspect=f"Domestic payment method '{rail.title()}' mentioned in query is missing from page HTML.",
+                        recommended_addition=f"Add verified {rail.title()} payment badge and instructions to the pricing section.",
+                        urgency="HIGH",
+                    ))
+                    break
+
+            # Check 2: Pricing intent in query vs PKR currency on page
+            if any(p in kw for p in ["price", "cost", "pkr", "rate"]) and "pkr" not in html and "rs" not in html:
+                gaps.append(ContentGapInsight(
+                    url=rec_url,
+                    relative_path=route.relative_path,
+                    query=c.keyword,
+                    missing_aspect="Pricing query mapped to page without explicit PKR pricing indicators.",
+                    recommended_addition="Include flat PKR rate and billing duration in hero summary.",
+                    urgency="HIGH",
+                ))
+
+            # Check 3: Student / Freelancer intent in query vs page HTML
+            for audience in ["student", "freelancer", "creator"]:
+                if audience in kw and audience not in html:
+                    gaps.append(ContentGapInsight(
+                        url=rec_url,
+                        relative_path=route.relative_path,
+                        query=c.keyword,
+                        missing_aspect=f"Audience term '{audience}' in query is not addressed on target page.",
+                        recommended_addition=f"Add a dedicated {audience.title()} use-case section or FAQ item.",
+                        urgency="MEDIUM",
+                    ))
+                    break
+
+        return gaps

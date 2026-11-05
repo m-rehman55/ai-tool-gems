@@ -181,3 +181,4 @@ class GSCOpportunityEngine:
             "target_url": opportunity.target_url,
             "components": opportunity.affected_components,
         }
+
