@@ -1,9 +1,9 @@
-name: AIToolGems Autonomous Daily Blog Publisher
+name: AIToolGems Autonomous Bi-Daily Blog Publisher (Every 2 Days)
 
 on:
   schedule:
-    # Runs daily at 09:00 PKT (04:00 UTC)
-    - cron: "0 4 * * *"
+    # Runs every 2 days at 09:00 PKT (04:00 UTC)
+    - cron: "0 4 */2 * *"
   workflow_dispatch:
     inputs:
       force_publish:
