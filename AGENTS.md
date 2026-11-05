@@ -21,12 +21,15 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 - Branch: main
 - Static HTML site (91 public pages, 40 tools, 100% Core Web Vitals, 0 link graph errors)
 - `aio_agent/` Dedicated Google AI Overviews (AIO), RAG Grounding & Query Fan-Out Optimization Engine (5 unit tests)
+- `bing_agent/` Dedicated Bing Webmaster Tools & Durable IndexNow Intelligence Agent (8 unit tests)
+- `crawler_agent/` Dedicated Technical SEO, Deep Crawling & Parity Diff Agent (5 unit tests)
+- `gsc_agent/` Dedicated Google Search Console Live OAuth & Inspection Agent (9 unit tests)
+- `keyword_agent/` Dedicated 8-Way Search Intent, GSC Filters, & Multi-Source Intelligence Agent (34 unit tests)
 - `ping_agent/` Dedicated Instant Ping & Search Engine Indexing Agent (6 unit tests)
-- `keyword_agent/` Dedicated GSC filter engine, keyword intelligence & Top 10 competitor gap agent (25 unit tests)
 - `seo-agent/` Autonomous SEO & Safety operating modules (43 unit tests)
 - `marketing_agent/` Python package for organic marketing & social automation (33 unit tests)
-- `tests/` Full integrity & regression test suite (50 unit tests)
-- **Total Test Suite:** 162 / 162 passing tests (100% green)
+- `tests/` Full integrity & regression test suite (58 unit tests)
+- **Total Test Suite:** 201 / 201 passing tests (100% green)
 
 ### Top 10 Monitored Competitors
 
@@ -50,6 +53,14 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 | `python -m aio_agent fan-out <path>` | Audit Google 5-branch query fan-out intent coverage on a page |
 | `python -m aio_agent sync-llms` | Synchronize machine knowledge bases (`llms.txt` & `llms-full.txt`) |
 | `python -m unittest discover -s aio_agent/tests -v` | Run 5 AIO Agent unit tests (Extractability, Fan-Out, Scoring, Sync) |
+| `python -m bing_agent status` | Check Bing API authorization, site verification, quota & key files |
+| `python -m bing_agent crawl-stats` | Inspect Bing crawl statistics, error codes, and in-index progression |
+| `python -m bing_agent query-stats` | Inspect empirical Bing search queries, impressions, and rankings |
+| `python -m bing_agent submit-deltas` | Detect modified/new URLs and dispatch delta batch to IndexNow |
+| `python -m bing_agent audit` | Run full Bing Webmaster intelligence audit & cross-engine diagnostics |
+| `python -m unittest discover -s bing_agent/tests -v` | Run 8 Bing Webmaster & IndexNow Agent unit tests |
+| `python -m unittest discover -s gsc_agent/tests -v` | Run 9 GSC Agent unit tests |
+| `python -m unittest discover -s crawler_agent/tests -v` | Run 5 Technical SEO Crawler Agent unit tests |
 | `python -m ping_agent ping --all` | Instant IndexNow dispatch to Bing, Yandex, Seznam & IndexNow.org |
 | `python -m ping_agent verify` | Verify local & remote IndexNow key infrastructure |
 | `python -m ping_agent status` | View recent ping submissions & indexing history |
