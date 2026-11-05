@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-11-05T12:01:39.868963+00:00",
-  "task_count": 34,
+  "updated_at": "2026-11-05T16:08:12.795235+00:00",
+  "task_count": 43,
   "tasks": {
     "TASK-01-8BB7C7": {
       "task_id": "TASK-01-8BB7C7",
@@ -954,6 +954,258 @@
       "status": "VERIFIED",
       "created_at": "2026-11-05T12:01:34.170597+00:00",
       "updated_at": "2026-11-05T12:01:34.170597+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-263A58": {
+      "task_id": "TASK-15-263A58",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 795,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-05T16:05:31.491187+00:00",
+      "updated_at": "2026-11-05T16:05:31.491187+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-02-E3455B": {
+      "task_id": "TASK-02-E3455B",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-02-CRAWLER",
+      "objective": "Crawl local repository and discover link graph health",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Crawl graph discovered"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "",
+      "dependencies": [],
+      "verification_evidence": {
+        "error": "Crawler execution error: 'TechnicalAuditSummary' object has no attribute 'broken_links'"
+      },
+      "status": "FAILED",
+      "created_at": "2026-11-05T16:05:35.674008+00:00",
+      "updated_at": "2026-11-05T16:05:35.674008+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-07-8B7827": {
+      "task_id": "TASK-07-8B7827",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-07-PAGESPEED",
+      "objective": "Audit representative URLs for Core Web Vitals health",
+      "scope": "templates",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "PageSpeed evaluation"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "",
+      "dependencies": [],
+      "verification_evidence": {
+        "error": "'WindowsPath' object has no attribute 'audit_url'"
+      },
+      "status": "FAILED",
+      "created_at": "2026-11-05T16:05:38.416363+00:00",
+      "updated_at": "2026-11-05T16:05:38.416363+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-13-669D1C": {
+      "task_id": "TASK-13-669D1C",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-13-MERCHANT",
+      "objective": "Generate Google Merchant Center feeds and audit schema parity",
+      "scope": "catalog",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Merchant feed generation"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "",
+      "dependencies": [],
+      "verification_evidence": {
+        "products_in_feed": 20,
+        "xml_exists": true,
+        "tsv_exists": true,
+        "timestamp": 1793894738.5750637
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-05T16:05:38.480088+00:00",
+      "updated_at": "2026-11-05T16:05:38.480088+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-14-6F0F93": {
+      "task_id": "TASK-14-6F0F93",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-14-CONVERSION",
+      "objective": "Run conversion journey and trust audit across catalog",
+      "scope": "site-wide",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Catalog conversion analysis"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Catalog Conversion Journey Audit Complete: 92.9/100 score",
+      "dependencies": [],
+      "verification_evidence": {
+        "total_pages_audited": 43,
+        "average_journey_score": 92.9,
+        "high_friction_pages_count": 0,
+        "high_friction_pages": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-05T16:05:38.580658+00:00",
+      "updated_at": "2026-11-05T16:05:38.580658+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-08-3D7610": {
+      "task_id": "TASK-08-3D7610",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-08-GEO-AEO",
+      "objective": "Audit AI answer readiness and search platform visibility",
+      "scope": "index.html",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "AI visibility evaluation"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "",
+      "dependencies": [],
+      "verification_evidence": {
+        "audited_pages": 2,
+        "pakistan_visibility_score": 100.0,
+        "evidence_status": "EMPIRICAL_VERIFIED_CITATIONS",
+        "timestamp": 1793894738.895513
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-05T16:05:38.776387+00:00",
+      "updated_at": "2026-11-05T16:05:38.776387+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-11-3AC7C6": {
+      "task_id": "TASK-11-3AC7C6",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-11-COMPETITORS",
+      "objective": "Audit competitor price leaders and SERP overlap",
+      "scope": "pakistan-serp",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Competitor audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "",
+      "dependencies": [],
+      "verification_evidence": {
+        "error": "'WindowsPath' object has no attribute 'save_snapshot'"
+      },
+      "status": "FAILED",
+      "created_at": "2026-11-05T16:05:38.895513+00:00",
+      "updated_at": "2026-11-05T16:05:38.895513+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-C01C37": {
+      "task_id": "TASK-15-C01C37",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 795,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-05T16:06:11.996298+00:00",
+      "updated_at": "2026-11-05T16:06:11.996298+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-79CFA3": {
+      "task_id": "TASK-15-79CFA3",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 795,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-05T16:08:07.258197+00:00",
+      "updated_at": "2026-11-05T16:08:07.258197+00:00",
       "assigned_budget_seconds": 300,
       "execution_time_seconds": 0.0,
       "error_message": null

@@ -14,24 +14,24 @@
 | `buy linkedin premium pakistan 2026` | 1 | 1 | 1.0 | `BING_BREAKTHROUGH` | Ranking #1 on Bing! Protect snippet and add target anchor links. |
 | `buy linkedin premium pakistan` | 1 | 0 | 4.0 | `BING_BREAKTHROUGH` | Ranking #4 on Bing! Protect snippet and add target anchor links. |
 | `ai tools bundle subscription pakistan` | 2 | 0 | 6.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
-| `ai tools bundle subscription pakistani price` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
 | `replit price in pakistan` | 1 | 0 | 6.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
+| `ai tools bundle subscription pakistani price` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
 | `replit price in pakistan` | 2 | 0 | 8.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
 | `gemini pro pricing in pakistan` | 2 | 0 | 10.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
 | `ai tools bundle subscription pakistan price` | 1 | 0 | 2.0 | `BING_BREAKTHROUGH` | Ranking #2 on Bing! Protect snippet and add target anchor links. |
-| `windows 11 pro activation key price in pk` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
 | `ai tools bundle subscription pakistan price does home depot cut wood for yourself` | 1 | 0 | 4.0 | `BING_BREAKTHROUGH` | Ranking #4 on Bing! Protect snippet and add target anchor links. |
-| `linkedin premium sales pakistan` | 1 | 0 | 2.0 | `BING_BREAKTHROUGH` | Ranking #2 on Bing! Protect snippet and add target anchor links. |
+| `windows 11 pro activation key price in pk` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
 | `kinkdhin premium pakistan` | 1 | 0 | 2.0 | `BING_BREAKTHROUGH` | Ranking #2 on Bing! Protect snippet and add target anchor links. |
-| `gamma account pakistan` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
+| `linkedin premium sales pakistan` | 1 | 0 | 2.0 | `BING_BREAKTHROUGH` | Ranking #2 on Bing! Protect snippet and add target anchor links. |
 | `linkedin premium cost pakistan` | 1 | 0 | 7.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
+| `gamma account pakistan` | 1 | 0 | 5.0 | `BING_BREAKTHROUGH` | Ranking #5 on Bing! Protect snippet and add target anchor links. |
 | `paid claude version pkr` | 2 | 0 | 8.0 | `CROSS_ENGINE_WINNER` | Healthy cross-engine discovery. |
 
 ---
 
 ## 💡 Actionable Strategic Recommendations
 - Bing has 48 pages in its active index. Dispatch newly updated tool pages via IndexNow queue to accelerate Bing index expansion.
-- Bing reported 22 crawl errors over the past 7 days. Inspect 4xx/5xx responses in server logs.
+- Bing reported 23 crawl errors over the past 7 days. Inspect 4xx/5xx responses in server logs.
 - Capitalize on 12 Bing breakthrough queries (e.g. 'buy linkedin premium pakistan 2026') where Bing ranks in Top 5.
 
 ---
