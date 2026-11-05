@@ -40,3 +40,4 @@ To activate all blocked external capabilities, the user can provide the followin
 4. **`BUFFER_API_KEY`**: To test live Buffer publishing queue and rate-limit backoff locally in `.env`.
 5. **`META_ACCESS_TOKEN`**: For Instagram/Facebook page insights and campaign verification.
 6. **`AHREFS_API_KEY` / `SEMRUSH_API_KEY`**: For live backlink profile monitoring and domain authority audits.
+

@@ -86,3 +86,4 @@
 - **File**: `ping_agent/cli.py`, `ping_agent/dispatcher.py`
 - **Problem**: `cmd_ping --all` dispatches all 96 URLs every run.
 - **Required Fix**: Maintain persistent state cache of URL hashes; dispatch only modified, new, or deleted URLs.
+

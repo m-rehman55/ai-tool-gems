@@ -61,3 +61,4 @@ No foreign checkout gateway (such as Stripe, PayPal, or foreign merchant portals
 1. **Japan Market Exclusion**: Permanent prohibition of Japanese commercial targeting, yen (`¥`, `JPY`), Japanese cities, and Japanese language meta tags.
 2. **Preservation of Historical Safeguards**: Existing Japan unit tests (`tests/test_japan_safeguards.py`, `seo-agent/tests/test_scope_guard.py`) are immutable and must continue to pass 100%.
 3. **No Unrelated Homepage Redirects**: Historical URLs must be evaluated individually for search traffic and canonical mapping before any redirect is applied.
+

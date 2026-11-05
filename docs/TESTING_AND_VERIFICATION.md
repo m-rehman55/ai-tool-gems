@@ -39,3 +39,4 @@ python -m unittest discover -s marketing_agent/tests -v
 1. Tests must never use mock objects to simulate passing of safety firewalls or scope guards.
 2. Every bug fix must be accompanied by a regression test that fails before the fix and passes after.
 3. Test assertions must inspect real HTML, real XML, or real network responses.
+

@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-11-05T09:07:36.884222+00:00",
+  "task_count": 1,
+  "tasks": {
+    "TASK-01-8BB7C7": {
+      "task_id": "TASK-01-8BB7C7",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-01-GSC",
+      "objective": "Inspect live indexation status for ChatGPT product page",
+      "scope": "https://aitoolgems.tech/tools/chatgpt/",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Check coverageState",
+        "Check userCanonical vs googleCanonical",
+        "Verify rich results"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "",
+      "dependencies": [],
+      "verification_evidence": {
+        "verdict": "PASS",
+        "coverage_state": "Submitted and indexed",
+        "indexing_state": "INDEXING_ALLOWED",
+        "google_canonical": "https://aitoolgems.tech/tools/chatgpt/",
+        "user_canonical": "https://aitoolgems.tech/tools/chatgpt/",
+        "canonical_mismatch": false,
+        "rich_results": [
+          "Product snippets",
+          "Merchant listings",
+          "Breadcrumbs",
+          "Review snippets"
+        ],
+        "last_crawl_time": "2026-11-02T09:52:31Z",
+        "tests": {
+          "live_api_call_status": 200,
+          "passed": true
+        },
+        "verification": {
+          "ceo_verified": true
+        }
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-05T09:07:36.841951+00:00",
+      "updated_at": "2026-11-05T09:07:36.884222+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    }
+  }
+}

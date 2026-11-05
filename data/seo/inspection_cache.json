@@ -1,0 +1,31 @@
+{
+  "https://aitoolgems.tech/tools/chatgpt/": {
+    "url": "https://aitoolgems.tech/tools/chatgpt/",
+    "verdict": "PASS",
+    "coverage_state": "Submitted and indexed",
+    "indexing_state": "INDEXING_ALLOWED",
+    "robots_txt_state": "ALLOWED",
+    "page_fetch_state": "SUCCESSFUL",
+    "google_canonical": "https://aitoolgems.tech/tools/chatgpt/",
+    "user_canonical": "https://aitoolgems.tech/tools/chatgpt/",
+    "last_crawl_time": "2026-11-02T09:52:31Z",
+    "crawled_as": "MOBILE",
+    "referring_urls": [
+      "https://aitoolgems.tech/tools/gemini/"
+    ],
+    "sitemap": [
+      "https://aitoolgems.tech/sitemap.xml"
+    ],
+    "rich_results_verdict": "PASS",
+    "rich_results_items": [
+      "Product snippets",
+      "Merchant listings",
+      "Breadcrumbs",
+      "Review snippets"
+    ],
+    "canonical_mismatch": false,
+    "is_indexed": true,
+    "requires_remediation": false,
+    "inspected_at": "2026-11-05T09:06:45.028469+00:00"
+  }
+}
