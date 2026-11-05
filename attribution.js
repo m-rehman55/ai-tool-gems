@@ -125,11 +125,14 @@
     return { type: 'content', path: path };
   }
 
-  // Event tracking wrapper
+  // Event tracking wrapper (GA4 & PostHog dual-dispatch)
   function trackEvent(eventName, params) {
     params = params || {};
     if (typeof window.gtag === 'function') {
       window.gtag('event', eventName, params);
+    }
+    if (window.posthog && typeof window.posthog.capture === 'function') {
+      window.posthog.capture(eventName, params);
     }
   }
 
@@ -270,6 +273,37 @@
       return;
     }
   });
+
+  // ── Behavioural Intelligence: Rage Click & Dead Click Detection ──────────
+  var recentClicks = [];
+  document.addEventListener('click', function (e) {
+    if (!e.target) return;
+    var now = Date.now();
+    recentClicks.push({ target: e.target, time: now });
+    recentClicks = recentClicks.filter(function (c) { return now - c.time <= 1000; });
+    var sameClicks = recentClicks.filter(function (c) { return c.target === e.target; });
+    if (sameClicks.length === 3) {
+      var tag = (e.target.tagName || 'ELEMENT').toLowerCase();
+      var cls = e.target.className && typeof e.target.className === 'string' ? '.' + e.target.className.trim().split(/\s+/)[0] : '';
+      trackEvent('rage_click', {
+        target_selector: (tag + cls).slice(0, 60),
+        click_count: sameClicks.length,
+        time_window_ms: 1000,
+        page_url: window.location.pathname
+      });
+    }
+
+    if (!e.target.closest('a, button, input, select, textarea, [role="button"], [tabindex]')) {
+      var style = window.getComputedStyle ? window.getComputedStyle(e.target) : null;
+      if (style && style.cursor === 'pointer') {
+        trackEvent('dead_click', {
+          target_selector: (e.target.tagName || 'ELEMENT').toLowerCase(),
+          text_content: (e.target.textContent || '').trim().slice(0, 40),
+          page_url: window.location.pathname
+        });
+      }
+    }
+  }, { passive: true });
 
   // Track page view for SPA-like navigation
   if (window.history && window.history.pushState) {
