@@ -120,41 +120,27 @@ class BufferClient:
         if self._transport:
             payload = self._transport(query)
         else:
-            request = Request(
-                API_URL,
-                data=json.dumps({"query": query}).encode("utf-8"),
-                headers={
-                    "Authorization": f"Bearer {self.api_key}",
-                    "Content-Type": "application/json",
-                    "User-Agent": "AI-Tool-Gems-Marketing-Agent/1.0",
-                },
-                method="POST",
-            )
-            try:
+            from .retry_handler import execute_with_durable_retry
+
+            def _send_buffer_request():
+                request = Request(
+                    API_URL,
+                    data=json.dumps({"query": query}).encode("utf-8"),
+                    headers={
+                        "Authorization": f"Bearer {self.api_key}",
+                        "Content-Type": "application/json",
+                        "User-Agent": "AI-Tool-Gems-Marketing-Agent/1.0",
+                    },
+                    method="POST",
+                )
                 with urlopen(request, timeout=30) as response:
-                    payload = json.loads(response.read().decode("utf-8"))
-            except HTTPError as exc:
-                detail = exc.read().decode("utf-8", errors="replace")
-                if exc.code == 429:
-                    time.sleep(5)
-                    try:
-                        with urlopen(request, timeout=30) as response:
-                            payload = json.loads(response.read().decode("utf-8"))
-                    except HTTPError as exc2:
-                        if exc2.code == 429:
-                            time.sleep(15)
-                            try:
-                                with urlopen(request, timeout=30) as response:
-                                    payload = json.loads(response.read().decode("utf-8"))
-                            except HTTPError as exc3:
-                                detail3 = exc3.read().decode("utf-8", errors="replace")
-                                raise BufferError(f"Buffer API HTTP {exc3.code}: {detail3[:300]}") from exc3
-                        else:
-                            raise BufferError(f"Buffer API HTTP {exc2.code}: {detail[:300]}") from exc2
-                else:
-                    raise BufferError(f"Buffer API HTTP {exc.code}: {detail[:300]}") from exc
-            except (URLError, TimeoutError) as exc:
-                raise BufferError(f"Buffer API connection failed: {exc}") from exc
+                    return json.loads(response.read().decode("utf-8"))
+
+            try:
+                # Durable retry with Retry-After header parsing and exponential jittered backoff (Defect 13 Fix)
+                payload = execute_with_durable_retry("BufferGraphQLQuery", _send_buffer_request, max_attempts=4)
+            except Exception as exc:
+                raise BufferError(f"Buffer API request failed after durable retries: {exc}") from exc
         if payload.get("errors"):
             message = "; ".join(error.get("message", "Unknown GraphQL error") for error in payload["errors"])
             raise BufferError(message)
