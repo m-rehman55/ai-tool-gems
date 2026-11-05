@@ -1,0 +1,1012 @@
+{
+  "https://aitoolgems.tech/404.html": {
+    "url": "https://aitoolgems.tech/404.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "50281bfccff3327346c7c5a742b139e4add634500b4d37e99f9dfc27bd876177",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/about.html": {
+    "url": "https://aitoolgems.tech/about.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "a9781bd6b38bf79be5ca40d0200220487aaf3e24179e6ab8b3277ce90121441b",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/admin.html": {
+    "url": "https://aitoolgems.tech/admin.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "7284d7ca4211369443e90ffd0b5dfe6e01d6b947922f2841bf906121d557f5ab",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/contact.html": {
+    "url": "https://aitoolgems.tech/contact.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "bbd41a20429c255d9a6dea95517740fd16b663014583d9f7423fef1edebf96ba",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/correction-policy.html": {
+    "url": "https://aitoolgems.tech/correction-policy.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "81c54a8683b9e71d1e0ff17804a1394132025e2f2c1ff0d015b12e5a89184837",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/googleb36d12ee905644d9.html": {
+    "url": "https://aitoolgems.tech/googleb36d12ee905644d9.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "8536de6784a1d4830c5f9d461a3536bed6817bb90b6ab3c7f5ac74518b422e07",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/gsc_daily_checklist.html": {
+    "url": "https://aitoolgems.tech/gsc_daily_checklist.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "da4562bea030c6b64cc8779d840afd6074a82775049d2bff42846cefa830f94d",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/how-we-price.html": {
+    "url": "https://aitoolgems.tech/how-we-price.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "57adff42c947c1a8d272c5f875670efe0d10985f7cdea778f046c8c8781505bc",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/how-we-review.html": {
+    "url": "https://aitoolgems.tech/how-we-review.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "4e0f2f9b9f44b1d1b94bd8c9f7b6db95ca7567c80219d1af9639d20b4abc8338",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/how-we-source.html": {
+    "url": "https://aitoolgems.tech/how-we-source.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "e55ae94eec106085982df195313004dfaa3140dcfc7be828a76dffa9213b00cf",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/": {
+    "url": "https://aitoolgems.tech/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "d785c5e335b3e028aae678ce7cae167132626c80f35e0eb3427873ea98283e13",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/policies.html": {
+    "url": "https://aitoolgems.tech/policies.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "2abcc7f5d9fd73357ef45aff761db96f55454fae48b8edf8212a8d9264330dcd",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/product-verification.html": {
+    "url": "https://aitoolgems.tech/product-verification.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "f7ee6a1fd1b55d99ac583a61bca0c9aa4fb8fc2760678fefff5ed1b53beb893c",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/.seo-cache/sxo-homepage.html": {
+    "url": "https://aitoolgems.tech/.seo-cache/sxo-homepage.html",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "7ab8ef9178d0770b2419d28949c34245527a13c20c4420a5ac52edd17edf2be8",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/blog/": {
+    "url": "https://aitoolgems.tech/blog/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "7d43541398f0c8fcf4196f7eed654fb32572e48c23ac125e9dc9d660a2c9a45e",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/deals/": {
+    "url": "https://aitoolgems.tech/deals/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "e062d53f8bf9bb02eb86ac90d9ff5bc2d016b607aed83f11a2b51f6bd7332c21",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/": {
+    "url": "https://aitoolgems.tech/guides/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "9e46f255d6d3bb577fd57d45ab5b1368528d254e68df2c07db456aa96b399e46",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/prices/": {
+    "url": "https://aitoolgems.tech/prices/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "52868235e502a5bf15a0bafa64c44186b67edf10db42ad408829e9466a2a9eb1",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/privacy-policy/": {
+    "url": "https://aitoolgems.tech/privacy-policy/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "caf298c90f36928934be175b2a7e042c2cf42269d0d96acedaabe7a4ce410106",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/terms-of-service/": {
+    "url": "https://aitoolgems.tech/terms-of-service/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "a907fc3314c8540f0e6ba4d5712b4e7fb99d0dabb8f362604c1c935d9321c5aa",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/tools/": {
+    "url": "https://aitoolgems.tech/tools/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "dd2f8a8af3f1dfd063eddcbb732843d2a53e7839f550ebdaedac1e415288f7a4",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/ai-subscriptions-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/ai-subscriptions-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "f997651398f867b933dfcfc94390115a42ba8c3b54a981edc391b69a329f2d96",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/ai-tools-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/ai-tools-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "09ec1e3df70aa76df30f6fc8c4e2900619a418323f72332cf95343d02b9b0d57",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/ai-tools-price-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/ai-tools-price-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "2aa1ab34cd4c2e59f13c289da66f888bccf2650f3d6351955d12593e72d4a1c9",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/ai-tools-pricing/": {
+    "url": "https://aitoolgems.tech/guides/ai-tools-pricing/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "f9c97d8c78a53816442838efc8e13a467d0794032ba32e1128e269af8e2b5815",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1be0959cea3724b9dbf65dfcd7947f50f83e863ca84f7f45b86df57660a8fd42",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/businesses/": {
+    "url": "https://aitoolgems.tech/guides/businesses/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "7dbfd7c121c4077775a7dfc7ca49273b9c3b554128369cb96bdc0072d1cbfbfc",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/canva/": {
+    "url": "https://aitoolgems.tech/guides/canva/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1868ed8f3f6f58fbbbd53bac93ee610c03f7baf5239846c2f1ce92f3c8182d29",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/canva-ai-pakistan-guide/": {
+    "url": "https://aitoolgems.tech/guides/canva-ai-pakistan-guide/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "b8f2b4e95c65502598b1b46c20db5d7895231f69dfebc2a96737982cd6debd20",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/canva-pro-pakistan-guide/": {
+    "url": "https://aitoolgems.tech/guides/canva-pro-pakistan-guide/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "a17281f41b3bfe128b038722dc1a63d2e1d9d3a4419172a918e9bdedcf07b83b",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1e716baaec78cccd229c22ead62e6b8ec9c5678a363847f8305ea8c84a96c7f3",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/capcut/": {
+    "url": "https://aitoolgems.tech/guides/capcut/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "783daa2b4eb3538975a874103186fa265e1024d24e7823ab1e53c0b9d761ea32",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "d50143dfc171b74e2c6ef0bb399bd99998815482d4c9b3e7eab80150c5ac4c19",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/chatgpt-ai-pakistan-guide/": {
+    "url": "https://aitoolgems.tech/guides/chatgpt-ai-pakistan-guide/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "9c3d4ac21cd167ee401af6b8f2e92615d48bd1b0dbe8ff91a851f64b92ecd747",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/chatgpt-alternatives/": {
+    "url": "https://aitoolgems.tech/guides/chatgpt-alternatives/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "2d0c8f61f9bbba45d2cde244fa2036697653739ffb41ee24ed1f24890185a79e",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1fa795a2e598383b5e7d7ee098472470dce752aa1a4e8baa281c15183ec5d287",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "e75c6e6085c82f22fa58a2febaeffbc2e316cd06590849cac2072c5dc306e70f",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/claude-ai-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/claude-ai-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "f284ea272e7b297f7f18aaca232df8acb7123221bcf0754069b870adef421ce4",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/creators/": {
+    "url": "https://aitoolgems.tech/guides/creators/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1041bdbec991a25ed5b080636806f2329d94587e6f82c3ecb303f6730a6e9e48",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/cursor-ai-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/cursor-ai-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "d1acf5aec81b9b336c35334bc58a72a6383580c35080794cbf3fd535257d574a",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/deepseek-ai-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/deepseek-ai-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "ea9a469b4d916bc95b14203307436afe939f0c609d835b543cc4be00f6885b08",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/developers/": {
+    "url": "https://aitoolgems.tech/guides/developers/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1b6a16612ee74b80107d9af0189631e81e583da1e6fa58b6ac67704efee4cc59",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/elevenlabs-ai-pakistan-guide/": {
+    "url": "https://aitoolgems.tech/guides/elevenlabs-ai-pakistan-guide/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "823b8718de9abc29d41fece58586ece88f533a7269a204320e4589d68dd2849e",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "b5abe8709f76938eda39ff76747a511116b0b4cea8dc457f04a0a9ced0480836",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/gamma-app-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/gamma-app-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "04449f88a1c8fc21e6f2fd47647410b9c32513c66c8fafcef9753e5042ab33ba",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/gemini/": {
+    "url": "https://aitoolgems.tech/guides/gemini/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "a9bcab01bd522613ab482fdbd4a6f7f8ffead2323e362f1964fe1614c4a5feff",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/gemini-ai-pakistan-guide/": {
+    "url": "https://aitoolgems.tech/guides/gemini-ai-pakistan-guide/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "d6e799910045f09eca2dcd5bfd135ee25094e1f512366ba23b162cd828b6f61d",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/grammarly-vs-quillbot-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/grammarly-vs-quillbot-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "a8f2ef41239fea9774da098a94adad904a4adacdd637ad15a40720e466a6a8cf",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/grok-ai-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/grok-ai-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "a5438433896131390076646d6b7c62c773c05ff4c09d58d7ddba172f52439d02",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/heygen-ai-video-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/heygen-ai-video-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1941460d0ea52bc3671358259c0158069115c5fe2e209243406db737ce9665a6",
+    "submission_attempts": 1,
+    "status": "SUBMITTED",
+    "last_submitted": "2026-11-05T09:55:12.989024+00:00",
+    "last_http_status": 200
+  },
+  "https://aitoolgems.tech/guides/leonardo-ai-pakistan-guide/": {
+    "url": "https://aitoolgems.tech/guides/leonardo-ai-pakistan-guide/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "d24ac91bf73f4da40aecb84ced7e3a243911d383923422a534caaf429a9e0c65",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "553e1f6720fda347217659e6e42503121f3f4d58949fbb4ba14f68c312fc295d",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "2686d201f6448342adf1eb3d97d8bd7f4e5c49aae2ea09df76d64295f2ca4c8a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/n8n-automation-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/n8n-automation-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "4c0e164dd78c7dc13bb2e214d40ad10cb67ff0fe2001f9da8861a789eaa7d100",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/nordvpn-vs-surfshark-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/nordvpn-vs-surfshark-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "04e237802c4d0b781b64ef75fe1886d65d60bc44c601c2e5feaea0d5258393ae",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/perplexity-ai-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/perplexity-ai-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "cdbf3dbab34868bf2272156bf9528c30bda43f2b4066440531e08dde9cff5aec",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/productivity/": {
+    "url": "https://aitoolgems.tech/guides/productivity/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "31a8ebd6d5e486b106778e1b095ab17bcfcde03234f1579ce5c3e504dcec1be3",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/runway-gen3-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/runway-gen3-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "43c36e83b080f9408eb7e502b3aba85853c73f82d7168710d861cfc5353ae42a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/semrush-pro-pakistan/": {
+    "url": "https://aitoolgems.tech/guides/semrush-pro-pakistan/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "681effbcf2f73bd0935ddedcade98d36a9ca7ed51e13bb9a0821e3f74b29accc",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/students/": {
+    "url": "https://aitoolgems.tech/guides/students/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "92f6d0ffbaac6c4c9e4e6566a7a6aaa7629f28bb95b6b19d00be7145e65f2c87",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/guides/veo-ai-pakistan-guide/": {
+    "url": "https://aitoolgems.tech/guides/veo-ai-pakistan-guide/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "fc73c1aaa042d2d86e7ea523782fbb33adcaba29029ff76e14a71b85a166ed44",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/adobe/": {
+    "url": "https://aitoolgems.tech/tools/adobe/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "ec5f10ca878dab54a878a1dfc22ad1666d06272503b107465ecda025e992af80",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/allinone/": {
+    "url": "https://aitoolgems.tech/tools/allinone/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "df27e509536f05f230687f204500541a5ba569ba5504968ee9a1cf663187b052",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/canva/": {
+    "url": "https://aitoolgems.tech/tools/canva/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "e4ae7fb64967e3d67d3ea33618be190416752aa13bfbb67adff56fd54fc99fb5",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/capcut/": {
+    "url": "https://aitoolgems.tech/tools/capcut/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "6de088c7221475e2462debc95b8ee8df4f94e0dd4ebcae147137aed0ae0f79fc",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/chatgpt/": {
+    "url": "https://aitoolgems.tech/tools/chatgpt/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "7990ff9f48337418f1797a6faaa987f87c3578e697d802c37e752c004f8bccc2",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/claude/": {
+    "url": "https://aitoolgems.tech/tools/claude/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "9aeec5b24c23107dd07c9e48d2421ca94fc1fa5a500b68dd282357bb6b433e90",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/copilot/": {
+    "url": "https://aitoolgems.tech/tools/copilot/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "3bd0fbbeb698719d4a451b3f6faf414dd982cdf64c62faa65c18d8480012f274",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/cursor/": {
+    "url": "https://aitoolgems.tech/tools/cursor/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "788df7dcfba7bf1db0dbbc9178eb04f4db5c7fb448c2732f872c292c7f96cb9f",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/deepseek/": {
+    "url": "https://aitoolgems.tech/tools/deepseek/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "aec971f05473d84804ecc43b3d32fb15efb9f58aba64772633c17a1f090414f6",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/elevenlabs/": {
+    "url": "https://aitoolgems.tech/tools/elevenlabs/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "cd2f6ae59618a970876f068bbd18a014d80e9f022bda1c58f89546bf0c328bf1",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/figma/": {
+    "url": "https://aitoolgems.tech/tools/figma/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1ba98490510fcdcc980854a765557992ba82960cab0a9e2d295dc0e948ade15a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/freepik/": {
+    "url": "https://aitoolgems.tech/tools/freepik/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "f2d61cfa3d778dbce251118c735473e196d750914b21e604a572143cc40fc122",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/gamma/": {
+    "url": "https://aitoolgems.tech/tools/gamma/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "979b8e8974902dbd58375e875daf2709cd1a9559dc53d1f6e446cff708a266f6",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/gemini/": {
+    "url": "https://aitoolgems.tech/tools/gemini/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "6423e3528e74e7ee0d3c349cfc2c655b98f0be7a384e4ca5295c8b9506bcae33",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/grammarly/": {
+    "url": "https://aitoolgems.tech/tools/grammarly/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "8c1755d20e91ae1643828192f5ec5702bacf9f9ee93ec3a9b5966c028d022fbc",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/grok/": {
+    "url": "https://aitoolgems.tech/tools/grok/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "44b06f4a16feac7a54b68d27638fa6cf72daf8e5867a51f00813aa88a026371a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/heygen/": {
+    "url": "https://aitoolgems.tech/tools/heygen/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "2f9c9129073a129bf1a80bfeedeb4d065dcce7f748f08cca6ff9bd5e59f42068",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/kling/": {
+    "url": "https://aitoolgems.tech/tools/kling/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "08c45b2c5d9364654b6d9b84cd04f04d6f8f476ab13b935e2b119756db683227",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/leonardo/": {
+    "url": "https://aitoolgems.tech/tools/leonardo/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "fecf119dae09ce7816b2d9bf8075f2479904b4315e25aa96264163622103b984",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/linkedin/": {
+    "url": "https://aitoolgems.tech/tools/linkedin/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "7cd745ca0cd6f4d47aa2a99b15e0cacfb55d518ba4584b9ea5754d6df4ef2bea",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/lovable/": {
+    "url": "https://aitoolgems.tech/tools/lovable/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "914b9d7b605a828a9f0de09cbd0c197088e82d36c3b2184f3cb76ef67b8d932b",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/midjourney/": {
+    "url": "https://aitoolgems.tech/tools/midjourney/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "4b2b7b5d957cd548a9a416ebfafce9dc5c7c5a9b42bb227b98331baadd4e2e4a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/n8n/": {
+    "url": "https://aitoolgems.tech/tools/n8n/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "1f1ccb154bdc4345fe05a2f27e1c5084e35431546ac32bbcb4e0b75264f426ed",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/netflix/": {
+    "url": "https://aitoolgems.tech/tools/netflix/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "852a643e1041cdd77edf33bb4edf63016a7c06dc84ca90d366366f0a4281f576",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/nordvpn/": {
+    "url": "https://aitoolgems.tech/tools/nordvpn/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "8b9252f437a6780b30b094d964914bc79d16e0ff1ddf78784cef97fe52677fe2",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/notion/": {
+    "url": "https://aitoolgems.tech/tools/notion/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "546bb42ed8c129c3a5e31bcd7a8a82126d1ded6b19cc2944c999c05ec54e680a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/office365/": {
+    "url": "https://aitoolgems.tech/tools/office365/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "83ab3e0beca640bbfadffe59c6607a5c91af7dbf8f99b44726858c38ffb3946a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/perplexity/": {
+    "url": "https://aitoolgems.tech/tools/perplexity/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "28e407513d91099ed07edcb3afc3a770913b8c7fbbff39820b2e20c6d2a784be",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/quillbot/": {
+    "url": "https://aitoolgems.tech/tools/quillbot/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "76a38027e599bec1463b8fbd125a0de032b1302ddcface5de479acc11449ebd0",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/replit/": {
+    "url": "https://aitoolgems.tech/tools/replit/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "6d78087a94bd9ec60a73df9339633d65fa7f143a787d1bda64e4698e5e875f87",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/runway/": {
+    "url": "https://aitoolgems.tech/tools/runway/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "8795fd171574d524e39d7f29eeec24cc66c718e9349c6159ee6925daece801e1",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/semrush/": {
+    "url": "https://aitoolgems.tech/tools/semrush/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "acafdec0932eab38ff86fc86034fdedf9065f8670acdf5ed30f79132418cad8b",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/spotify/": {
+    "url": "https://aitoolgems.tech/tools/spotify/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "b9c5a83911987f9e4c6418e935dc5d3752a65d2bce900b70a4a0d7eb297ee8ef",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/suno/": {
+    "url": "https://aitoolgems.tech/tools/suno/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "a6bdbc2c6e3b4fcf5fb2d785389a5f9673dfc1f1a4dfceba8ef6b16e87581255",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/surfshark/": {
+    "url": "https://aitoolgems.tech/tools/surfshark/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "905212e58fbc1904da2539ff3846020e4329255898a8d19a03a2ee76df30b71a",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/tradingview/": {
+    "url": "https://aitoolgems.tech/tools/tradingview/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "d00682a9afbb97c60768944d29660f661d1aa4f95cb045a5aef56ac160468bc5",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/turnitin/": {
+    "url": "https://aitoolgems.tech/tools/turnitin/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "8f7648915300380a17fc223fc1915437d04f825ae7ffab619974e9cf9aa4c807",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/veo/": {
+    "url": "https://aitoolgems.tech/tools/veo/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "ed65657e88ec77485faf3dbcfc479ac7c02734cfdc1b607d0502af142fc5f013",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/windows/": {
+    "url": "https://aitoolgems.tech/tools/windows/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "e2a54d328452d5bb3a70e4740686eae51a75f8434d14fa44bef49cc9ebbaba44",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  },
+  "https://aitoolgems.tech/tools/youtube/": {
+    "url": "https://aitoolgems.tech/tools/youtube/",
+    "reason": "NEW_URL",
+    "discovered_at": "2026-11-05T09:55:12.777152+00:00",
+    "content_hash": "8cd99468c28f518682bab2a5b35f9b586f62a5d9f36b76cea2c73f4d9ecd867e",
+    "submission_attempts": 0,
+    "status": "QUEUED",
+    "last_submitted": null,
+    "last_http_status": null
+  }
+}
