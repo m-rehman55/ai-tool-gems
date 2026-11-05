@@ -1,0 +1,965 @@
+{
+  "dimensionHeaders": [
+    {
+      "name": "pagePath"
+    }
+  ],
+  "metricHeaders": [
+    {
+      "name": "sessions",
+      "type": "TYPE_INTEGER"
+    },
+    {
+      "name": "activeUsers",
+      "type": "TYPE_INTEGER"
+    },
+    {
+      "name": "userEngagementDuration",
+      "type": "TYPE_SECONDS"
+    }
+  ],
+  "rows": [
+    {
+      "dimensionValues": [
+        {
+          "value": "/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "218"
+        },
+        {
+          "value": "93"
+        },
+        {
+          "value": "9139"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/blog/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "23"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "256"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "17"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "601"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/veo/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "12"
+        },
+        {
+          "value": "9"
+        },
+        {
+          "value": "406"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/gemini/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "9"
+        },
+        {
+          "value": "9"
+        },
+        {
+          "value": "245"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/deals/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "8"
+        },
+        {
+          "value": "5"
+        },
+        {
+          "value": "189"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/chatgpt/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "7"
+        },
+        {
+          "value": "7"
+        },
+        {
+          "value": "208"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/ai-tools-price-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "6"
+        },
+        {
+          "value": "6"
+        },
+        {
+          "value": "83"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/claude/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "6"
+        },
+        {
+          "value": "6"
+        },
+        {
+          "value": "104"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/deepseek-ai-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "5"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "81"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/n8n-automation-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "5"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "39"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "5"
+        },
+        {
+          "value": "5"
+        },
+        {
+          "value": "131"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/elevenlabs-voice-ai-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "4"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "341"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/how-we-review.html"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "4"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "32"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/linkedin/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "4"
+        },
+        {
+          "value": "4"
+        },
+        {
+          "value": "116"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/replit/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "4"
+        },
+        {
+          "value": "3"
+        },
+        {
+          "value": "38"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/best-ai-video-generators-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "3"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "11"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/lovable-vs-replit-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "3"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "6"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/perplexity-ai-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "3"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "9"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/jp/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "3"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "20"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/deepseek/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "3"
+        },
+        {
+          "value": "3"
+        },
+        {
+          "value": "128"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/tradingview/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "3"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "40"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/claude-ai-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/grammarly-vs-quillbot-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/midjourney-alternatives-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "18"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/policies.html"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "17"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/adobe/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "14"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/cursor/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "52"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/figma/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "27"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/midjourney/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "52"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/nordvpn/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/runway/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/suno/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "2"
+        },
+        {
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/404.html"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "3"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/contact"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/contact.html"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/chatgpt-ai-pakistan-guide/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "27"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/heygen-ai-video-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/runway-gen3-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/semrush-pro-pakistan/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/canva/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "20"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/capcut/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/elevenlabs/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "70"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/gamma/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/grok/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/heygen/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "43"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/leonardo/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "13"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/n8n/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/netflix/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "26"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/notion/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "5"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/surfshark/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/tools/youtube/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "19"
+        }
+      ]
+    }
+  ],
+  "rowCount": 52,
+  "metadata": {
+    "currencyCode": "PKR",
+    "timeZone": "Asia/Karachi"
+  },
+  "kind": "analyticsData#runReport"
+}
