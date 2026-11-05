@@ -6,3 +6,4 @@ stores historical runs, and detects performance regressions.
 """
 
 __version__ = "1.0.0"
+

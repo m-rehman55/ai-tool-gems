@@ -109,3 +109,4 @@ def detect_regressions(
         incidents=incidents,
         recommendations=recommendations,
     )
+

@@ -96,3 +96,4 @@ class SnapshotManager:
                 else:
                     raise ValueError(f"Snapshot integrity corrupted for {rel_str}")
         return True
+

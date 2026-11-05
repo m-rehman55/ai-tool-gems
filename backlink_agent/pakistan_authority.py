@@ -85,3 +85,4 @@ def get_pakistan_authority_opportunities() -> List[LinkOpportunity]:
         if is_safe:
             opportunities.append(opp)
     return opportunities
+

@@ -83,3 +83,4 @@ class ContentQueueManager:
             self.save_queue(queue)
             return True, f"Candidate '{slug}' approved for publication by {approved_by}."
         return False, f"Slug '{slug}' not found in queue."
+

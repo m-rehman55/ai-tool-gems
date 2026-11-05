@@ -52,3 +52,4 @@ class GSCHermesAgent:
             task.status = TaskStatus.FAILED
             task.verification_evidence = {"error": f"GSC execution error: {str(e)}"}
             return task
+

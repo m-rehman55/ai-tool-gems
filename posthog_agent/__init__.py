@@ -5,3 +5,4 @@ and privacy-safe session replays without compromising PII or payment data.
 """
 
 __version__ = "1.0.0"
+

@@ -168,3 +168,4 @@ class BingWebmasterAnalyzer:
             cross_engine_insights=cross_insights[:20],
             recommendations=recommendations,
         )
+

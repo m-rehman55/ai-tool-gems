@@ -132,3 +132,4 @@ class PublishingQueueManager:
         if found:
             self.save_queue(queue)
         return found
+

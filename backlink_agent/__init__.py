@@ -6,3 +6,4 @@ Enforces strict anti-spam policy: Zero PBNs, zero paid links, zero comment spam.
 """
 
 __version__ = "1.0.0"
+

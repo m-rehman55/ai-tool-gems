@@ -1,0 +1,40 @@
+[
+  {
+    "transaction_id": "TXN-2026-PK-001",
+    "verified_at": "2026-11-01T10:30:00Z",
+    "order_timestamp": "2026-11-01T10:30:00Z",
+    "tool_slug": "chatgpt",
+    "tool_name": "ChatGPT Plus",
+    "plan_duration_months": 1,
+    "pkr_amount": 2500,
+    "payment_rail": "EasyPaisa",
+    "payment_method": "EasyPaisa",
+    "payment_reference": "EP-8932718",
+    "customer_phone_hash": "sha256_0328****293",
+    "customer_city": "Lahore",
+    "client_id": "1092837461.1698765432",
+    "ga4_client_id": "1092837461.1698765432",
+    "is_imported_to_ga4": true,
+    "imported_at": "2026-11-01T11:00:00Z",
+    "attribution_source": "ig-chatgpt-morning"
+  },
+  {
+    "transaction_id": "TXN-2026-PK-002",
+    "verified_at": "2026-11-02T14:15:00Z",
+    "order_timestamp": "2026-11-02T14:15:00Z",
+    "tool_slug": "claude",
+    "tool_name": "Claude Pro",
+    "plan_duration_months": 1,
+    "pkr_amount": 3500,
+    "payment_rail": "JazzCash",
+    "payment_method": "JazzCash",
+    "payment_reference": "JC-5491023",
+    "customer_phone_hash": "sha256_0300****123",
+    "customer_city": "Karachi",
+    "client_id": "2039485716.1698765433",
+    "ga4_client_id": "2039485716.1698765433",
+    "is_imported_to_ga4": true,
+    "imported_at": "2026-11-02T14:45:00Z",
+    "attribution_source": "fb-claude-deal"
+  }
+]

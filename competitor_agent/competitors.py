@@ -138,3 +138,4 @@ TOP_10_COMPETITORS: List[CompetitorProfile] = [
 
 def get_top_10_competitors() -> List[CompetitorProfile]:
     return TOP_10_COMPETITORS
+

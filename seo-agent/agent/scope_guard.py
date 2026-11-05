@@ -189,6 +189,10 @@ class ScopeGuard:
 
         try:
             content = path.read_text(encoding="utf-8", errors="ignore")
+            # If the file is a commercial/transactional page, enforce stricter transactional policy
+            str_path = str(path).replace("\\", "/")
+            if any(folder in str_path for folder in ["tools/", "prices/", "deals/"]) or str_path.endswith("index.html"):
+                return self.check_transactional_page(content, url_or_path=str(path))
             return self.check_text(content, context_name=str(path))
         except Exception as e:
             return ScopeResult(

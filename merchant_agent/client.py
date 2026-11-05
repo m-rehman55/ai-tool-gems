@@ -36,3 +36,4 @@ class GoogleMerchantClient:
                 "https://aitoolgems.tech/data/merchant/products_feed.xml for free Google Shopping listings in Pakistan."
             ),
         }
+

@@ -181,3 +181,4 @@ class MerchantFeedGenerator:
                 ])
 
         return tsv_path
+

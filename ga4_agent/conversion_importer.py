@@ -48,13 +48,13 @@ class ConversionImporter:
             return [
                 OfflineVerifiedOrder(
                     transaction_id=item["transaction_id"],
-                    tool_slug=item["tool_slug"],
-                    tool_name=item["tool_name"],
-                    pkr_amount=float(item["pkr_amount"]),
-                    payment_rail=item["payment_rail"],
-                    verified_at=item["verified_at"],
-                    customer_phone_hash=item["customer_phone_hash"],
-                    client_id=item.get("client_id"),
+                    tool_slug=item.get("tool_slug", ""),
+                    tool_name=item.get("tool_name", ""),
+                    pkr_amount=float(item.get("pkr_amount", 0.0)),
+                    payment_rail=item.get("payment_rail") or item.get("payment_method", "Bank IBFT"),
+                    verified_at=item.get("verified_at") or item.get("order_timestamp", datetime.now(timezone.utc).isoformat()),
+                    customer_phone_hash=item.get("customer_phone_hash", ""),
+                    client_id=item.get("client_id") or item.get("ga4_client_id"),
                     is_imported_to_ga4=bool(item.get("is_imported_to_ga4", False)),
                     imported_at=item.get("imported_at"),
                 )
@@ -218,3 +218,4 @@ class ConversionImporter:
                 log_data = []
         log_data.extend(entries)
         self.import_log_file.write_text(json.dumps(log_data[-200:], indent=2), encoding="utf-8")
+

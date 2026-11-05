@@ -12,25 +12,33 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 ### Markets
 
-- **Pakistan** (Primary Core Fortress): Flat PKR pricing, verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast, Bank IBFT), English & localized Urdu search intent, sitemap.xml.
-- **Worldwide / International** (Global Hybrid Expansion): Fixed USD pricing, verified crypto rails (USDT TRC20/BEP20, Binance Pay), Wise/International Cards; transparent assisted WhatsApp delivery; dual schema offers.
+- **Pakistan** (Primary Exclusive Fortress): Flat PKR pricing, verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank IBFT), English & localized Urdu search intent, sitemap.xml. Zero foreign currency displays, zero unverified local foreign gateways.
 
 ### Repository
 
 - GitHub: <https://github.com/m-rehman55/ai-tool-gems/>
 - Branch: main
-- Static HTML site (91 public pages, 40 tools, 100% Core Web Vitals, 0 link graph errors)
-- `aio_agent/` Dedicated Google AI Overviews (AIO), RAG Grounding & Query Fan-Out Optimization Engine (5 unit tests)
-- `bing_agent/` Dedicated Bing Webmaster Tools & Durable IndexNow Intelligence Agent (8 unit tests)
-- `crawler_agent/` Dedicated Technical SEO, Deep Crawling & Parity Diff Agent (5 unit tests)
-- `ga4_agent/` Dedicated Google Analytics 4, Conversion Intelligence & Offline WhatsApp Order Verification Agent (8 unit tests)
-- `gsc_agent/` Dedicated Google Search Console Live OAuth & Inspection Agent (9 unit tests)
-- `keyword_agent/` Dedicated 8-Way Search Intent, GSC Filters, & Multi-Source Intelligence Agent (34 unit tests)
+- Static HTML site (100 public pages, 40 tools, 100% Core Web Vitals, 0 link graph errors)
+- `hermes_core/` Central Executive Orchestrator (HERMES-CEO), Task Contracts, and Operations Dashboard
+- `gsc_agent/` Agent 1: Google Search Console Live OAuth & Deep Inspection Agent (9 unit tests)
+- `crawler_agent/` Agent 2: Technical SEO, Deep Crawling & Local-Prod Parity Diff Agent (5 unit tests)
+- `keyword_agent/` Agent 3: 8-Way Search Intent, GSC Filters, Declining Keywords & Competitor Gap Agent (34 unit tests)
+- `bing_agent/` Agent 4: Bing Webmaster Tools & Durable IndexNow Queue Agent (8 unit tests)
+- `ga4_agent/` Agent 5: GA4 Dual-Dispatch, Conversion Funnel & Offline WhatsApp Order Verification Agent (8 unit tests)
+- `posthog_agent/` Agent 6: PostHog Product, Behavioral Intelligence & Privacy-Safe Funnels Agent (8 unit tests)
+- `pagespeed_agent/` Agent 7: Google PageSpeed Insights & Core Web Vitals Regression Guard Agent (6 unit tests)
+- `aio_agent/` Agent 8: Google AI Overviews (AIO), RAG Grounding & Query Fan-Out Optimization Engine (10 unit tests)
+- `content_agent/` Agent 9: Content Research, Automated Editorial Gate & Queue Manager Agent (7 unit tests)
+- `backlink_agent/` Agent 10: Backlink Profile, Toxicity Analyzer & Pakistan Authority Agent (6 unit tests)
+- `competitor_agent/` Agent 11: Top 10 Pakistan Competitor Radar & Pricing Intelligence Agent (5 unit tests)
+- `marketing_agent/` Agent 12: Organic Marketing, Buffer Automation & Campaign Profitability Agent (40 unit tests)
+- `merchant_agent/` Agent 13: Google Merchant Center Product Feed & Policy Parity Agent (5 unit tests)
+- `conversion_agent/` Agent 14: Conversion Journey, Trust Signals & Friction Detector Agent (6 unit tests)
+- `security_agent/` Agent 15: Security, Secrets Scanner, HTML Safety & Snapshot Rollback Agent (8 unit tests)
 - `ping_agent/` Dedicated Instant Ping & Search Engine Indexing Agent (6 unit tests)
 - `seo-agent/` Autonomous SEO & Safety operating modules (43 unit tests)
-- `marketing_agent/` Python package for organic marketing & social automation (33 unit tests)
-- `tests/` Full integrity & regression test suite (58 unit tests)
-- **Total Test Suite:** 209 / 209 passing tests (100% green)
+- `tests/` Core link-graph, structural integrity, regression, and UI interaction test suite (60 unit tests)
+- **Total Test Suite:** 274 / 274 passing tests (100% green)
 
 ### Top 10 Monitored Competitors
 

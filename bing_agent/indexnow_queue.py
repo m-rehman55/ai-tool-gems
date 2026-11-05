@@ -324,3 +324,4 @@ class IndexNowQueueEngine:
 
         # Keep last 100 records
         self.history_file.write_text(json.dumps(history[:100], indent=2), encoding="utf-8")
+

@@ -137,3 +137,4 @@ class TrustAuditor:
             )
         content = file_path.read_text(encoding="utf-8", errors="replace")
         return self.audit_html(content, identifier=str(file_path))
+

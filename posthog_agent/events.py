@@ -204,3 +204,4 @@ def make_web_vitals_event(
             "page_url": page_url,
         },
     )
+

@@ -34,3 +34,4 @@ REPRESENTATIVE_TEMPLATES: List[Dict[str, str]] = [
 
 def get_representative_urls() -> List[str]:
     return [t["url"] for t in REPRESENTATIVE_TEMPLATES]
+

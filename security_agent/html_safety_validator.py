@@ -130,3 +130,4 @@ class HtmlSafetyValidator:
             )
         content = file_path.read_text(encoding="utf-8", errors="replace")
         return self.validate_html(content, target=str(file_path))
+

@@ -57,15 +57,18 @@ class CampaignProfitabilityEngine:
             if o.get("attribution_source") == campaign_code or o.get("tool_slug") == tool_id
         ]
 
-        leads_count = max(len(matching_orders) * 2, int(clicks * 0.12))
-        confirmed_count = len(matching_orders) if matching_orders else max(1, int(leads_count * 0.4))
-        gross_revenue = sum(o.get("pkr_amount", 0) for o in matching_orders)
-        if gross_revenue == 0:
-            # Baseline estimation from standard product price
-            gross_revenue = confirmed_count * 3500
+        if matching_orders:
+            leads_count = max(len(matching_orders), int(clicks * 0.10)) if clicks > 0 else len(matching_orders)
+            confirmed_count = len(matching_orders)
+            gross_revenue = sum(o.get("pkr_amount", 0) for o in matching_orders)
+        else:
+            # Empirical benchmark estimation for prospective campaigns without recorded orders
+            leads_count = max(1, int(clicks * 0.10)) if clicks > 0 else 0
+            confirmed_count = max(1, int(clicks * 0.02)) if clicks > 0 else 0
+            gross_revenue = confirmed_count * 2500
 
         net_profit = gross_revenue - ad_spend_pkr
-        roi = ((net_profit / ad_spend_pkr) * 100.0) if ad_spend_pkr > 0 else 100.0
+        roi = ((net_profit / ad_spend_pkr) * 100.0) if ad_spend_pkr > 0 else (100.0 if gross_revenue > 0 else 0.0)
 
         return CampaignOutcome(
             campaign_code=campaign_code,
@@ -79,3 +82,4 @@ class CampaignProfitabilityEngine:
             net_profit_pkr=net_profit,
             roi_pct=round(roi, 1),
         )
+

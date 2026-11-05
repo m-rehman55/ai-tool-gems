@@ -166,3 +166,4 @@ class GA4Analyzer:
             funnel=funnel,
             recommendations=recommendations,
         )
+

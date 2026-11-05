@@ -104,7 +104,7 @@ class CustomerJourneyAnalyzer:
             "high_friction_pages": [r.identifier for r in reports if r.overall_readiness_score < 75.0],
             "reports_summary": [
                 {
-                    "identifier": Path(r.identifier).name if "/" in r.identifier or "\\" in r.identifier else r.identifier,
+                    "identifier": str(Path(r.identifier).relative_to(self.repo_root).as_posix()) if self.repo_root in Path(r.identifier).parents or Path(r.identifier).is_relative_to(self.repo_root) else Path(r.identifier).name,
                     "overall_score": r.overall_readiness_score,
                     "trust_score": r.trust_audit.trust_score,
                     "friction_score": r.friction_audit.friction_score,
@@ -113,3 +113,4 @@ class CustomerJourneyAnalyzer:
                 for r in reports
             ]
         }
+
