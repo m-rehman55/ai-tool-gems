@@ -247,3 +247,4 @@ class GSCClient:
         }
         res = self._make_request(endpoint, method="POST", payload=payload)
         return res.get("inspectionResult", {})
+

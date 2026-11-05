@@ -500,3 +500,4 @@ class CrawlerEngine:
             "discrepancies": diffs,
             "checked_at": datetime.now(timezone.utc).isoformat(),
         }
+

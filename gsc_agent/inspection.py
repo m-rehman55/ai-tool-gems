@@ -178,3 +178,4 @@ class GSCInspectionManager:
                 time.sleep(rate_limit_pause_seconds)
 
         return results
+

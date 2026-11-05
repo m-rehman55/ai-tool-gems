@@ -301,3 +301,4 @@ class GSCPerformanceAnalyzer:
             "top_gaining": gaining[:10],
             "top_declining": declining[:10],
         }
+
