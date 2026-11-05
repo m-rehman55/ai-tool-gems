@@ -55,3 +55,40 @@
    - Live Search Console API calls executed and verified:
      - 28-day Pakistan performance: 492 impressions, 146 unique queries, 26 active pages, 3 striking distance opportunities.
      - Live URL Inspection: `https://aitoolgems.tech/tools/chatgpt/` confirmed submitted and indexed with passing product and merchant rich results.
+
+## [Section 3.3: Technical SEO & Web Crawling Agent (Agent 2)] — 2026-11-05
+### Components Built:
+1. **`crawler_agent/models.py`**:
+   - `URLCrawlState` state machine enum: `DISCOVERED -> CRAWLED -> ANALYZED -> FIX_REQUIRED -> APPROVED -> DEPLOYED -> VERIFIED`.
+   - `CrawlRecord` tracking redirect chains, crawl depth, canonical, user canonical, heading hierarchy, images (missing alt, modern formats), mixed content, trailing slash, word count, and HTML content hash.
+   - `TechnicalAuditSummary` tracking 30+ technical SEO indicators and calculating the Technical Health Score.
+2. **`crawler_agent/engine.py`**:
+   - Full multi-page recursive live HTTP crawler (`crawl_live_production`) with rate limiting, timeouts, exponential backoff, and user-agent `HERMES-Crawler-Agent/2.0`.
+   - Local repository offline crawler (`crawl_local_repository`) scanning 100% of static workspace HTML.
+   - Live vs Local comparison engine (`compare_live_vs_local`) verifying parity between live production (`https://aitoolgems.tech/`) and local repo (verified 50 sampled pages at 100% parity).
+   - Sitemap extractor and robots.txt analyzer.
+3. **`crawler_agent/analyzer.py`**:
+   - Deep 30+ point technical SEO analyzer:
+     - Broken link detection (4xx/5xx).
+     - Inbound link graph and orphan page detection.
+     - Duplicate title and duplicate meta description detection.
+     - Missing H1 & heading hierarchy violations (no skipped heading tiers).
+     - Image alt-text verification and modern format analysis.
+     - Mixed-content detection (HTTP assets on HTTPS).
+     - Trailing slash consistency.
+     - Thin content detection (< 200 words).
+     - Crawl budget waste analysis (redirect chains, slow responses > 2500ms).
+4. **`crawler_agent/inventory.py`**:
+   - Persistent URL Inventory Database at `data/seo/url_inventory_db.json` tracking state machine transitions and issues detected.
+5. **`crawler_agent/cli.py`**:
+   - `python -m crawler_agent crawl --live`
+   - `python -m crawler_agent crawl --local`
+   - `python -m crawler_agent diff`
+   - `python -m crawler_agent audit`
+6. **Defect Repairs in Core Orchestrator**:
+   - Repaired **Defect 4 & 5**: Added `crawl_live_site()` to `seo-agent/agent/crawler.py` and updated `orchestrator.py` to crawl multi-page live site instead of a single homepage.
+   - Repaired **Defect 6 & 8**: Enforced Safety Firewall and Scope Guard as mandatory gates in Step 7.
+   - Repaired **Defect 7**: Enforced safety immutability checks on files affected before PR preparation.
+7. **Testing & Verification**:
+   - `crawler_agent/tests/test_crawler_agent.py`: 5 tests passing (hierarchy, media alts, audit scores, state machine, orphan detection).
+   - **Total Workspace Test Suite: 184 / 184 passing tests (100% Green)**.

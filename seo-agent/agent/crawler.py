@@ -353,6 +353,32 @@ class Crawler:
 
         return crawled
 
+    def crawl_live_site(self, max_pages: Optional[int] = None) -> List[CrawledPage]:
+        """Performs multi-page live crawl starting from sitemap and seed URL."""
+        limit = max_pages or self.max_pages
+        sitemap_url = f"{self.base_url}/sitemap.xml"
+        urls_to_crawl: List[str] = [f"{self.base_url}/"]
+
+        # Attempt sitemap extraction
+        try:
+            req = urllib.request.Request(sitemap_url, headers={"User-Agent": self.user_agent})
+            with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                xml_text = resp.read().decode("utf-8", errors="ignore")
+                found = re.findall(r"<loc>(https?://[^<]+)</loc>", xml_text)
+                for u in found:
+                    if u not in urls_to_crawl:
+                        urls_to_crawl.append(u)
+        except Exception:
+            pass
+
+        crawled: List[CrawledPage] = []
+        for url in urls_to_crawl[:limit]:
+            page = self.fetch_live_page(url)
+            crawled.append(page)
+            time.sleep(self.delay)
+
+        return crawled
+
     def fetch_live_page(self, url: str) -> CrawledPage:
         """Politely fetches a live page over HTTP with retry and timeout."""
         if not is_allowed_domain(url, urllib.parse.urlparse(self.base_url).netloc):
