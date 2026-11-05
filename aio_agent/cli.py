@@ -14,6 +14,8 @@ from aio_agent.extractability import ExtractabilityAuditor
 from aio_agent.query_fanout import QueryFanOutAnalyzer
 from aio_agent.grounding_scorer import GroundingScorer
 from aio_agent.llms_sync import LLMsSyncEngine
+from aio_agent.ai_visibility import AIVisibilityTracker
+from aio_agent.answer_readiness import AnswerReadinessEvaluator
 
 
 def main(args: list[str] | None = None) -> int:
@@ -37,6 +39,13 @@ def main(args: list[str] | None = None) -> int:
     # 4. Fan-out
     fanout_parser = subparsers.add_parser("fan-out", help="Check Query Fan-Out intent coverage for a page")
     fanout_parser.add_argument("path", help="Relative or absolute path to HTML file")
+
+    # 5. AI Search Visibility
+    subparsers.add_parser("visibility", help="Track verified search visibility and citations across AI platforms")
+
+    # 6. Answer Readiness (11 GEO Criteria)
+    readiness_parser = subparsers.add_parser("readiness", help="Evaluate 11 on-page direct answer readiness criteria")
+    readiness_parser.add_argument("path", help="Relative or absolute path to HTML file")
 
     parsed = parser.parse_args(args)
     project_dir = Path.cwd()
@@ -121,6 +130,50 @@ def main(args: list[str] | None = None) -> int:
             print(f"* {branch.description}: {status}")
             if branch.matched_snippet:
                 print(f"  Snippet: \"{branch.matched_snippet}\"")
+        print("=" * 65)
+        return 0
+
+    elif parsed.command == "visibility":
+        tracker = AIVisibilityTracker()
+        summary = tracker.compute_visibility_summary()
+        status = tracker.get_provider_status()
+        print("=" * 65)
+        print("[AIO AGENT] AI Search Platform Visibility and Citations")
+        print("=" * 65)
+        print(f"Provider Status:           {status['status']}")
+        print(f"Evidence Registry:         {summary.evidence_status}")
+        print(f"Total Queries Audited:     {summary.total_queries_audited}")
+        print(f"Brand Mention Rate:        {summary.brand_mention_rate_pct}%")
+        print(f"Citation Frequency:        {summary.citation_frequency_pct}%")
+        print(f"Pakistan Visibility Score: {summary.pakistan_visibility_score} / 100")
+        print("-" * 65)
+        print("Top Cited URLs:")
+        for u in summary.top_cited_urls:
+            print(f"  * {u['url']} ({u['citations']} citations)")
+        print("=" * 65)
+        return 0
+
+    elif parsed.command == "readiness":
+        target = Path(parsed.path)
+        if not target.is_absolute():
+            target = project_dir / target
+        if not target.exists():
+            print(f"Error: File not found at {target}", file=sys.stderr)
+            return 1
+        evaluator = AnswerReadinessEvaluator()
+        rep = evaluator.evaluate_file(target)
+        print("=" * 65)
+        print(f"AEO/GEO Answer Readiness: {rep.url_slug} ({rep.total_score:.1f}/100 [{rep.grade}])")
+        print("=" * 65)
+        for c in rep.criteria:
+            res_str = "[PASS]" if c.passed else "[FAIL]"
+            print(f"{res_str} {c.name:<28} ({c.score:.1f}/{c.weight:.1f} pts)")
+            print(f"     Evidence: {c.evidence}")
+        if rep.recommendations:
+            print("-" * 65)
+            print("Advisory Recommendations:")
+            for r in rep.recommendations:
+                print(f"  • {r}")
         print("=" * 65)
         return 0
 
