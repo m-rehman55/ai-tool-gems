@@ -90,3 +90,4 @@ class ToxicityScanner:
                     disavowed_domains.add(domain)
 
         return "\n".join(lines)
+

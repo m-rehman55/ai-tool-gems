@@ -6,3 +6,4 @@ and editorial quality gates to prevent generic AI filler.
 """
 
 __version__ = "1.0.0"
+

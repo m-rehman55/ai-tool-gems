@@ -287,3 +287,4 @@ class PageSpeedClient:
                 return json.load(f)
         except Exception:
             return []
+

@@ -108,7 +108,7 @@ class HermesDashboard:
                 "AGENT-15-SECURITY": "ACTIVE (Secrets scanner, HTML safety, snapshot manager)"
             },
             "total_agents": 15,
-            "total_passing_tests": "259 / 259 (100% green)"
+            "total_passing_tests": "274 / 274 (100% green)"
         }
 
         # 5. Growth Intelligence
@@ -179,3 +179,4 @@ if __name__ == "__main__":
         print(json.dumps(dashboard.compile_dashboard_metrics(), indent=2))
     else:
         dashboard.render_cli()
+

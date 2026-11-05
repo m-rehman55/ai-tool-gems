@@ -178,3 +178,4 @@ class IntentClassifier:
             is_pakistan_local=is_pakistan,
             is_commercial_or_transactional=is_commercial,
         )
+

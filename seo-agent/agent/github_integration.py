@@ -43,6 +43,16 @@ class GitHubIntegration:
         date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d-%H%M")
         return f"{self.branch_prefix}{date_str}"
 
+    def get_current_commit_sha(self) -> str:
+        """Retrieves actual commit SHA from git rev-parse HEAD."""
+        try:
+            res = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=5)
+            if res.returncode == 0 and res.stdout.strip():
+                return res.stdout.strip()
+        except Exception:
+            pass
+        return "UNKNOWN_COMMIT_SHA"
+
     def build_pr_body(
         self,
         summary_title: str,
@@ -50,9 +60,11 @@ class GitHubIntegration:
         files_affected: List[str],
         risk_level: str,
         test_results: str,
+        commit_sha: Optional[str] = None,
     ) -> str:
-        """Formats comprehensive, production-conscious PR description."""
+        """Formats comprehensive, production-conscious PR description with real commit SHA and test artifacts."""
         files_list_md = "\n".join(f"- `{f}`" for f in files_affected) or "- None"
+        actual_sha = commit_sha or self.get_current_commit_sha()
         
         body = f"""## 🚀 HERMES Growth Proposal: {summary_title}
 
@@ -63,11 +75,12 @@ class GitHubIntegration:
 {files_list_md}
 
 ### 🛡️ Safety & Risk Assessment
+- **Commit SHA:** `{actual_sha}`
 - **Risk Level:** `{risk_level}`
 - **Firewall Check:** Passed (zero secret exposure, zero foreign currency, zero price tampering)
 - **Pakistan Exclusive Scope:** Verified (PKR currency & local payment routes preserved)
 
-### 🧪 Automated Test Verification
+### 🧪 Automated Test Verification (Real Test Artifacts)
 ```text
 {test_results}
 ```
@@ -76,7 +89,7 @@ class GitHubIntegration:
 To safely revert this proposed change if unexpected side effects occur:
 ```bash
 git checkout {self.target_branch}
-git revert <MERGE_COMMIT_HASH> -m 1
+git revert {actual_sha} -m 1
 git push origin {self.target_branch}
 ```
 

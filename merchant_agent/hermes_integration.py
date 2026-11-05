@@ -96,3 +96,4 @@ class MerchantHermesAgent:
             "timestamp": time.time(),
         }
         return task
+

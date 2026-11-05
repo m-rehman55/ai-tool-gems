@@ -103,3 +103,4 @@ def compute_share_of_voice() -> Dict[str, Any]:
         "share_of_voice_pct": sov_percentages,
         "market_leader": max(sov_percentages.items(), key=lambda x: x[1])[0] if sov_percentages else "None",
     }
+

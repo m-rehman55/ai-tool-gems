@@ -122,3 +122,4 @@ class MerchantValidator:
                 "review_schema_errors": sum(1 for i in issues if i.issue_type == "FAKE_REVIEW_ERROR"),
             },
         )
+

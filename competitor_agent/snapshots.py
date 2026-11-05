@@ -75,3 +75,4 @@ class CompetitorSnapshotManager:
             "new_pages_detected": [],
             "comparison_time": time.time(),
         }
+

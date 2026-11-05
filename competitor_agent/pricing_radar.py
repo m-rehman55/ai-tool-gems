@@ -84,3 +84,4 @@ BENCHMARK_PRICES: List[ToolPriceComparison] = [
 
 def get_pricing_radar_report() -> List[ToolPriceComparison]:
     return BENCHMARK_PRICES
+

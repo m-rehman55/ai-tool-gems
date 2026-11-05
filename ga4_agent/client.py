@@ -159,3 +159,4 @@ class GA4DataClient:
             "rows": [],
             "rowCount": 0,
         }
+

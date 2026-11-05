@@ -158,3 +158,4 @@ class DecliningKeywordsEngine:
         priority_order = {"CRITICAL_DECLINE": 0, "DROPOUT": 1, "MODERATE_DECLINE": 2, "STABLE": 3, "GROWING": 4}
         results.sort(key=lambda x: (priority_order.get(x.severity, 99), -abs(x.clicks_delta)))
         return results
+

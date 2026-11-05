@@ -203,3 +203,4 @@ class PostHogClient:
         """Persist verified funnel stage counts to local snapshot."""
         with open(self.offline_snapshot_path, "w", encoding="utf-8") as f:
             json.dump(counts, f, indent=2)
+

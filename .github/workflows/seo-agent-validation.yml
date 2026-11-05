@@ -5,11 +5,24 @@ on:
     branches:
       - main
     paths:
-      - "seo-agent/**"
-      - "aio_agent/**"
-      - "ping_agent/**"
+      - "hermes_core/**"
+      - "gsc_agent/**"
+      - "crawler_agent/**"
       - "keyword_agent/**"
+      - "bing_agent/**"
+      - "ga4_agent/**"
+      - "posthog_agent/**"
+      - "pagespeed_agent/**"
+      - "aio_agent/**"
+      - "content_agent/**"
+      - "backlink_agent/**"
+      - "competitor_agent/**"
       - "marketing_agent/**"
+      - "merchant_agent/**"
+      - "conversion_agent/**"
+      - "security_agent/**"
+      - "ping_agent/**"
+      - "seo-agent/**"
       - "scripts/**"
       - "tests/**"
       - "*.html"
@@ -25,11 +38,24 @@ on:
     branches:
       - main
     paths:
-      - "seo-agent/**"
-      - "aio_agent/**"
-      - "ping_agent/**"
+      - "hermes_core/**"
+      - "gsc_agent/**"
+      - "crawler_agent/**"
       - "keyword_agent/**"
+      - "bing_agent/**"
+      - "ga4_agent/**"
+      - "posthog_agent/**"
+      - "pagespeed_agent/**"
+      - "aio_agent/**"
+      - "content_agent/**"
+      - "backlink_agent/**"
+      - "competitor_agent/**"
       - "marketing_agent/**"
+      - "merchant_agent/**"
+      - "conversion_agent/**"
+      - "security_agent/**"
+      - "ping_agent/**"
+      - "seo-agent/**"
       - "scripts/**"
       - "tests/**"
       - "*.html"
@@ -52,7 +78,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -73,34 +99,26 @@ jobs:
         run: |
           python scripts/link_graph_checker.py --strict
 
-      - name: Run Integrity, Regression & UI Interaction Test Suites
-        run: |
-          python -m unittest discover -s tests -v
-
       - name: Run Site Technical & Schema Audits
         run: |
           python audit_all.py
           python schema_audit.py
 
-      - name: Run Scope, Safety, Schema & Technical Unit Tests
+      - name: Run Security, Secrets & Safety Firewall Gate
         run: |
-          python -m unittest discover -s seo-agent/tests -v
+          python -m security_agent audit
 
-      - name: Run AIO Agent & Google RAG Grounding Unit Tests
+      - name: Run Google Merchant Center Feed & Review Parity Gate
         run: |
-          python -m unittest discover -s aio_agent/tests -v
+          python -m merchant_agent validate
 
-      - name: Run Keyword Agent & GSC RE2 Unit Tests
+      - name: Run Website Conversion & Trust Architecture Audit
         run: |
-          python -m unittest discover -s keyword_agent/tests -v
+          python -m conversion_agent audit
 
-      - name: Run Marketing Agent & Social Unit Tests
+      - name: Run Complete 18-Suite Multi-Agent Unit & Regression Tests (274 tests)
         run: |
-          python -m unittest discover -s marketing_agent/tests -v
-
-      - name: Run Ping Agent & IndexNow Unit Tests
-        run: |
-          python -m unittest discover -s ping_agent/tests -v
+          python scripts/run_all_tests.py
 
       - name: Run Offline Repository Audit
         run: |

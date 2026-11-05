@@ -128,3 +128,4 @@ class FrictionDetector:
             issues=issues,
             metrics=metrics
         )
+

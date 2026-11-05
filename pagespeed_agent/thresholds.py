@@ -44,3 +44,4 @@ def classify_metric(metric_name: str, value: float) -> Rating:
         return Rating.NEEDS_IMPROVEMENT
     else:
         return Rating.POOR
+

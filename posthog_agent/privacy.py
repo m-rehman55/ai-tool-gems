@@ -93,3 +93,4 @@ def get_privacy_replay_config() -> Dict[str, Any]:
         "record_cross_origin_iframes": False,
         "record_canvas": False,
     }
+

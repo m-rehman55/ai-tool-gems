@@ -11,3 +11,4 @@ Analyzes the journey from search impression to verified purchase:
 """
 
 __version__ = "1.0.0"
+

@@ -6,3 +6,4 @@ Enforces zero unauthorized private scraping.
 """
 
 __version__ = "1.0.0"
+

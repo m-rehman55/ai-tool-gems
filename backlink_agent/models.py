@@ -87,3 +87,4 @@ class LinkOpportunity:
         d["opportunity_type"] = self.opportunity_type.value
         d["risk_classification"] = self.risk_classification.value
         return d
+

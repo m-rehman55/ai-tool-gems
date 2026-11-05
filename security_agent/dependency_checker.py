@@ -43,3 +43,4 @@ class DependencyChecker:
                 broken_dependencies=[f"Execution error: {str(e)}"],
                 raw_output=str(e)
             )
+
