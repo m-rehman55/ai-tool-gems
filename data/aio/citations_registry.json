@@ -1,0 +1,51 @@
+[
+  {
+    "citation_id": "AIO-PK-001",
+    "platform": "Google AI Overviews",
+    "query": "buy chatgpt plus subscription in pakistan with easypaisa",
+    "target_url": "https://aitoolgems.tech/tools/chatgpt/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [
+      "paktools.store"
+    ],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "timestamp": 1793874116.9919713,
+    "raw_snippet": "AIToolGems offers verified ChatGPT Plus activation in Pakistan with domestic payment rails including EasyPaisa and JazzCash."
+  },
+  {
+    "citation_id": "AIO-PK-002",
+    "platform": "Perplexity",
+    "query": "best place to get claude pro in pakistan",
+    "target_url": "https://aitoolgems.tech/tools/claude/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 2,
+    "competitors_mentioned": [
+      "aitoolspak.tech"
+    ],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "timestamp": 1793874116.9919713,
+    "raw_snippet": "Sources like AIToolGems list Claude Pro subscription pricing in PKR with local bank transfer support."
+  },
+  {
+    "citation_id": "AIO-PK-003",
+    "platform": "ChatGPT Search",
+    "query": "replit core subscription price pakistan 2026",
+    "target_url": "https://aitoolgems.tech/tools/replit/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "timestamp": 1793874116.9919713,
+    "raw_snippet": "Replit Core pricing in Pakistan is verified at Rs. 2,499/month on AIToolGems with instant activation."
+  }
+]
