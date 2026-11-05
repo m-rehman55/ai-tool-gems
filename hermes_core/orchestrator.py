@@ -379,3 +379,9 @@ class HermesCEO:
         report_file = self.reports_dir / f"executive_daily_{today_str}.json"
         report_file.write_text(json.dumps(report, indent=2), encoding="utf-8")
         return report
+
+
+if __name__ == "__main__":
+    ceo = HermesCEO()
+    res = ceo.run_master_audit_cycle()
+    print("\n[HERMES-CEO] Master audit cycle completed successfully!")

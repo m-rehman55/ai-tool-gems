@@ -34,3 +34,8 @@ scratch/
 
 data/gsc_history/raw_responses/
 data/reports/
+# Google Cloud Service Account & Private Keys
+config/*service_account*.json
+config/*.json
+*service_account*.json
+*credentials*.json

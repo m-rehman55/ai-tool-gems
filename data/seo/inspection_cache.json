@@ -27,5 +27,32 @@
     "is_indexed": true,
     "requires_remediation": false,
     "inspected_at": "2026-11-05T09:06:45.028469+00:00"
+  },
+  "https://aitoolgems.tech/": {
+    "url": "https://aitoolgems.tech/",
+    "verdict": "PASS",
+    "coverage_state": "Submitted and indexed",
+    "indexing_state": "INDEXING_ALLOWED",
+    "robots_txt_state": "ALLOWED",
+    "page_fetch_state": "SUCCESSFUL",
+    "google_canonical": "https://aitoolgems.tech/",
+    "user_canonical": "https://aitoolgems.tech/",
+    "last_crawl_time": "2026-11-03T03:51:29Z",
+    "crawled_as": "MOBILE",
+    "referring_urls": [
+      "https://www.aitoolgems.tech/",
+      "https://aitoolgems.tech/tools/gemini/"
+    ],
+    "sitemap": null,
+    "rich_results_verdict": "PASS",
+    "rich_results_items": [
+      "Product snippets",
+      "Merchant listings",
+      "Review snippets"
+    ],
+    "canonical_mismatch": false,
+    "is_indexed": true,
+    "requires_remediation": false,
+    "inspected_at": "2026-11-05T16:01:01.822191+00:00"
   }
 }

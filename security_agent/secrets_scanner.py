@@ -53,7 +53,8 @@ class SecretsScanner:
         ".bin", ".lock", ".trace.json", ".devtoolslog.json"
     }
     EXCLUDE_FILENAMES = {
-        ".env", ".env.local", ".env.production", ".env.development"
+        ".env", ".env.local", ".env.production", ".env.development",
+        "gsc_service_account.json", "service_account.json", "credentials.json"
     }
     MAX_FILE_SIZE_BYTES = 500_000  # 500 KB
 
