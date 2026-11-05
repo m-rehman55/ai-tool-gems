@@ -54,3 +54,4 @@ In compliance with Google's March 2024 Spam Update:
 1. **No Scaled Content Abuse**: No mass programmatic generation of hundreds of thin pages using string interpolation without distinct, high-value editorial analysis.
 2. **No Doorway Pages**: Every page must have a distinct value proposition and address unique search intent.
 3. **No Hidden Text / Cloaking**: Content served to Googlebot must be 100% identical to content rendered for visitors.
+

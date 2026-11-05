@@ -16,3 +16,4 @@
 - **Google Search Console**: Subject to quota limits on Search Analytics and URL Inspection (2,000 queries per day per property).
 - **IndexNow**: Subject to rate limits (maximum 10,000 URLs per key per day).
 - **Google Gemini API**: Free tier subject to 15 RPM.
+

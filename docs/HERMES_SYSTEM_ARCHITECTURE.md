@@ -116,3 +116,4 @@ Every action in the HERMES ecosystem operates under a structured task lifecycle:
 ```
 
 No task is marked `DONE` or completed without verified evidence artifacts.
+

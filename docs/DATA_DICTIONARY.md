@@ -52,3 +52,4 @@ $$\text{DISCOVERED} \to \text{CRAWLED} \to \text{ANALYZED} \to \text{FIX\_REQUIR
 | `secondary_keywords`| Array[String]| Related supporting search queries |
 | `monthly_volume_pk`| Integer | Measured or estimated Pakistan search volume |
 | `serp_competitors` | Array[String]| Competing domains ranking for the cluster |
+

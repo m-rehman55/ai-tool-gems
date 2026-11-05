@@ -36,3 +36,4 @@ The following integrations are currently in state `BLOCKED_PENDING_CREDENTIALS`.
 - **Variables**: `AHREFS_API_KEY` or `SEMRUSH_API_KEY`.
 - **Purpose**: Live backlink profile tracking, referring domain growth, and competitor backlink gap matrix.
 - **Where to acquire**: Ahrefs or Semrush Developer Portal.
+

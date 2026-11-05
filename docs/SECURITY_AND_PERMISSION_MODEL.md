@@ -36,3 +36,4 @@
    - Must be sanitized using HTML character entities before inclusion in website templates.
 2. **Path Traversal Protection**: Slugs and filenames must match `^[a-z0-9]+(-[a-z0-9]+)*$` and resolve strictly within target subdirectories.
 3. **Fail-Closed Execution**: If any security assertion or Scope Guard rule encounters an exception or ambiguous input, the execution terminates immediately (`ABORTED`).
+

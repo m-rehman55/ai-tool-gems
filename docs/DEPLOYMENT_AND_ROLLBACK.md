@@ -86,3 +86,4 @@ If a production defect or regression is detected on `https://aitoolgems.tech/`:
 2. **Await GitHub Pages Deployment**: Monitor `gh api repos/:owner/:repo/pages/builds/latest` until status is `built`.
 3. **Verify Reversion Live**: Confirm live endpoint returns the previous stable state or clean 404/redirect.
 4. **IndexNow Purge / Update**: If a defective URL was removed, dispatch an IndexNow ping with the deleted/updated URL to ensure search engines purge the defective state immediately.
+
