@@ -23,13 +23,14 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 - `aio_agent/` Dedicated Google AI Overviews (AIO), RAG Grounding & Query Fan-Out Optimization Engine (5 unit tests)
 - `bing_agent/` Dedicated Bing Webmaster Tools & Durable IndexNow Intelligence Agent (8 unit tests)
 - `crawler_agent/` Dedicated Technical SEO, Deep Crawling & Parity Diff Agent (5 unit tests)
+- `ga4_agent/` Dedicated Google Analytics 4, Conversion Intelligence & Offline WhatsApp Order Verification Agent (8 unit tests)
 - `gsc_agent/` Dedicated Google Search Console Live OAuth & Inspection Agent (9 unit tests)
 - `keyword_agent/` Dedicated 8-Way Search Intent, GSC Filters, & Multi-Source Intelligence Agent (34 unit tests)
 - `ping_agent/` Dedicated Instant Ping & Search Engine Indexing Agent (6 unit tests)
 - `seo-agent/` Autonomous SEO & Safety operating modules (43 unit tests)
 - `marketing_agent/` Python package for organic marketing & social automation (33 unit tests)
 - `tests/` Full integrity & regression test suite (58 unit tests)
-- **Total Test Suite:** 201 / 201 passing tests (100% green)
+- **Total Test Suite:** 209 / 209 passing tests (100% green)
 
 ### Top 10 Monitored Competitors
 
@@ -53,6 +54,12 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 | `python -m aio_agent fan-out <path>` | Audit Google 5-branch query fan-out intent coverage on a page |
 | `python -m aio_agent sync-llms` | Synchronize machine knowledge bases (`llms.txt` & `llms-full.txt`) |
 | `python -m unittest discover -s aio_agent/tests -v` | Run 5 AIO Agent unit tests (Extractability, Fan-Out, Scoring, Sync) |
+| `python -m ga4_agent status` | Check GA4 Property ID, Measurement ID, live API authorization & orders |
+| `python -m ga4_agent funnel` | Inspect ecommerce conversion funnel (view_item -> begin_checkout -> purchase) |
+| `python -m ga4_agent record-order` | Record offline verified WhatsApp order with domestic payment proof |
+| `python -m ga4_agent import-conversions` | Dispatch verified purchases to GA4 Measurement Protocol (/mp/collect) |
+| `python -m ga4_agent audit` | Run full GA4 conversion intelligence audit & export reports |
+| `python -m unittest discover -s ga4_agent/tests -v` | Run 8 GA4 Analytics & Conversion Agent unit tests |
 | `python -m bing_agent status` | Check Bing API authorization, site verification, quota & key files |
 | `python -m bing_agent crawl-stats` | Inspect Bing crawl statistics, error codes, and in-index progression |
 | `python -m bing_agent query-stats` | Inspect empirical Bing search queries, impressions, and rankings |
