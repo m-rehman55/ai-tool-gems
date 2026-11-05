@@ -138,3 +138,14 @@ def execute_keyword_task(contract: TaskContract, project_dir: Optional[Path] = N
         contract.status = TaskStatus.FAILED
 
     return contract
+
+
+class KeywordHermesAgent:
+    """Class wrapper for AGENT-03-KEYWORD task execution."""
+    AGENT_ID = "AGENT-03-KEYWORD"
+
+    def __init__(self, repo_root: Optional[Path] = None):
+        self.repo_root = repo_root or Path(__file__).resolve().parent.parent
+
+    def execute_task(self, task: TaskContract) -> TaskContract:
+        return execute_keyword_task(task, project_dir=self.repo_root)

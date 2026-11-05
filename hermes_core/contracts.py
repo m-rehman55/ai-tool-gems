@@ -151,6 +151,16 @@ class TaskRegistry:
         self.save()
         return task
 
+    def update_task_status(self, task_id: str, status: TaskStatus, verification_evidence: Optional[Dict[str, Any]] = None) -> Optional[TaskContract]:
+        task = self.tasks.get(task_id)
+        if not task:
+            return None
+        task.status = status
+        if verification_evidence:
+            task.verification_evidence = verification_evidence
+        self.save()
+        return task
+
     def get_task(self, task_id: str) -> Optional[TaskContract]:
         if task_id not in self.tasks:
             self.load()

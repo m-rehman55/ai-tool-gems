@@ -152,6 +152,29 @@ class TestHermesCoreContracts(unittest.TestCase):
         valid_after, _ = self.ceo.validate_task_evidence(task.task_id)
         self.assertTrue(valid_after)
 
+    def test_hermes_ceo_agent_dispatch_and_execution(self):
+        real_ceo = HermesCEO()
+        task = real_ceo.delegate_task(
+            responsible_agent="AGENT-15-SECURITY",
+            objective="Perform complete security and safety audit",
+            scope="repository",
+            risk=RiskClassification.READ_ONLY,
+            approval=ApprovalRequirement.AUTONOMOUS_APPROVED,
+            criteria=["Valid security audit report"]
+        )
+        completed = real_ceo.execute_task_contract(task)
+        self.assertEqual(completed.status, TaskStatus.VERIFIED)
+        self.assertTrue(completed.verification_evidence["secrets_clean"])
+
+    def test_hermes_dashboard_compilation(self):
+        from hermes_core.dashboard import HermesDashboard
+        dash = HermesDashboard()
+        data = dash.compile_dashboard_metrics()
+        self.assertIn("dashboard_title", data)
+        self.assertEqual(data["target_fortress"], "PAKISTAN (PKR Pricing, Domestic Rails)")
+        self.assertIn("agent_health", data)
+        self.assertEqual(data["agent_health"]["total_agents"], 15)
+
 
 if __name__ == "__main__":
     unittest.main()

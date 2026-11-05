@@ -128,3 +128,14 @@ def execute_bing_task(contract: TaskContract, project_dir: Optional[Path] = None
         contract.status = TaskStatus.FAILED
 
     return contract
+
+
+class BingHermesAgent:
+    """Class wrapper for AGENT-04-BING task execution."""
+    AGENT_ID = "AGENT-04-BING"
+
+    def __init__(self, repo_root: Optional[Path] = None):
+        self.repo_root = repo_root or Path(__file__).resolve().parent.parent
+
+    def execute_task(self, task: TaskContract) -> TaskContract:
+        return execute_bing_task(task, project_dir=self.repo_root)
