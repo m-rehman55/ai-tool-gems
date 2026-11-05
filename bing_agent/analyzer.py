@@ -78,9 +78,26 @@ class BingWebmasterAnalyzer:
         self.client = client
 
     def run_audit(self, gsc_dataset: Optional[Any] = None) -> BingAuditSummary:
-        """Runs complete Bing Webmaster audit using live API data."""
+        """Runs complete Bing Webmaster audit using live API data or safe offline baseline."""
         now_iso = datetime.now(timezone.utc).isoformat()
         site_url = self.client.default_site_url
+
+        if not self.client.is_authorized:
+            return BingAuditSummary(
+                timestamp=now_iso,
+                site_url=site_url,
+                is_verified=False,
+                daily_quota=0,
+                monthly_quota=0,
+                total_bing_queries=0,
+                total_bing_impressions=0,
+                total_bing_clicks=0,
+                average_bing_position=0.0,
+                current_pages_in_index=0,
+                crawl_errors_count=0,
+                cross_engine_insights=[],
+                recommendations=["BING_API_KEY missing in environment. Set BING_API_KEY to retrieve live Bing Webmaster data."],
+            )
 
         # 1. Verification & Quota
         sites = self.client.get_user_sites()
