@@ -131,7 +131,7 @@ class GrowthOrchestrator:
         # STEP 2: Collect Evidence (Crawl)
         print(f"--> STEP 2: Collecting Evidence (Live Crawl: {self.live_crawl})...")
         if self.live_crawl:
-            crawled_pages = [self.crawler.fetch_live_page(self.crawler.base_url + "/")]
+            crawled_pages = self.crawler.crawl_live_site(max_pages=self.config.get("agent", {}).get("max_pages_per_run", 50))
         else:
             crawled_pages = self.crawler.crawl_local_repository(self.base_dir)
         print(f"    Crawled {len(crawled_pages)} pages.")
@@ -229,8 +229,26 @@ class GrowthOrchestrator:
             if not res.passed:
                 scope_res.passed = False
                 scope_res.violations.extend(res.violations)
+            # Strict transactional check on commercial product tool pages
+            if "/tools/" in page.url and page.url.rstrip("/") != f"{self.crawler.base_url}/tools":
+                t_res = self.scope_guard.check_transactional_page(page.raw_html, url_or_path=page.url)
+                if not t_res.passed:
+                    scope_res.passed = False
+                    scope_res.violations.extend(t_res.violations)
 
         print(f"    Scope Guard Passed: {scope_res.passed} (Violations: {len(scope_res.violations)})")
+
+        # Mandatory Safety Firewall gate
+        firewall_clean = True
+        for opp in ranked_opportunities:
+            for text_chunk in [opp.title, opp.evidence, opp.recommended_action]:
+                scan_res = self.firewall.scan_untrusted_text(text_chunk)
+                if not scan_res.allowed:
+                    firewall_clean = False
+                    print(f"    [FIREWALL] Flagged opportunity {opp.id}: {scan_res.flags}")
+
+        if not scope_res.passed or not firewall_clean:
+            print(f"    [WARN] Safety gates flagged violations (Scope: {len(scope_res.violations)})")
 
         # STEP 8: Prepare Changes (Git branch / PR)
         print("--> STEP 8: Preparing Changes...")
@@ -238,6 +256,10 @@ class GrowthOrchestrator:
         if self.mode == "PR" and ranked_opportunities:
             top_opp = ranked_opportunities[0]
             if top_opp.tier == ActionTier.PROPOSE_PR:
+                # Enforce safety immutability on files affected
+                if not self.learning_loop.verify_safety_immutability(top_opp.files_affected):
+                    print(f"    [HALT] Blocked PR: target files touch protected safety rules.")
+                    return {"status": "BLOCKED_BY_SAFETY_FIREWALL", "reason": "Protected rule violation"}
                 branch = self.github.generate_branch_name()
                 pr_body = self.github.build_pr_body(
                     summary_title=top_opp.title,
