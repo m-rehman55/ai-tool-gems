@@ -99,23 +99,41 @@ class BingWebmasterAnalyzer:
                 recommendations=["BING_API_KEY missing in environment. Set BING_API_KEY to retrieve live Bing Webmaster data."],
             )
 
-        # 1. Verification & Quota
-        sites = self.client.get_user_sites()
-        is_verified = any(s.is_verified for s in sites if s.url.rstrip("/") == site_url.rstrip("/"))
-        quota = self.client.get_submission_quota()
+        # 1. Verification & Quota & Crawl Stats with resilience
+        try:
+            sites = self.client.get_user_sites()
+            is_verified = any(s.is_verified for s in sites if s.url.rstrip("/") == site_url.rstrip("/"))
+            quota = self.client.get_submission_quota()
 
-        # 2. Crawl Stats
-        crawl_stats = self.client.get_crawl_stats()
-        latest_crawl = crawl_stats[-1] if crawl_stats else None
-        in_index = latest_crawl.in_index if latest_crawl else 0
-        total_crawl_errors = sum(c.crawl_errors for c in crawl_stats[-7:]) if crawl_stats else 0
+            # 2. Crawl Stats
+            crawl_stats = self.client.get_crawl_stats()
+            latest_crawl = crawl_stats[-1] if crawl_stats else None
+            in_index = latest_crawl.in_index if latest_crawl else 0
+            total_crawl_errors = sum(c.crawl_errors for c in crawl_stats[-7:]) if crawl_stats else 0
 
-        # 3. Query Performance
-        query_stats = self.client.get_query_stats()
-        tot_imp = sum(q.impressions for q in query_stats)
-        tot_clicks = sum(q.clicks for q in query_stats)
-        valid_pos = [q.avg_impression_position for q in query_stats if q.avg_impression_position > 0]
-        avg_pos = sum(valid_pos) / len(valid_pos) if valid_pos else 0.0
+            # 3. Query Performance
+            query_stats = self.client.get_query_stats()
+            tot_imp = sum(q.impressions for q in query_stats)
+            tot_clicks = sum(q.clicks for q in query_stats)
+            valid_pos = [q.avg_impression_position for q in query_stats if q.avg_impression_position > 0]
+            avg_pos = sum(valid_pos) / len(valid_pos) if valid_pos else 0.0
+        except Exception as e:
+            logger.warning(f"Bing Webmaster live API query failed: {e}. Falling back to safe offline audit summary.")
+            return BingAuditSummary(
+                timestamp=now_iso,
+                site_url=site_url,
+                is_verified=False,
+                daily_quota=0,
+                monthly_quota=0,
+                total_bing_queries=0,
+                total_bing_impressions=0,
+                total_bing_clicks=0,
+                average_bing_position=0.0,
+                current_pages_in_index=0,
+                crawl_errors_count=0,
+                cross_engine_insights=[],
+                recommendations=[f"Live Bing API unavailable ({e}). Continuing with offline baseline telemetry."],
+            )
 
         # 4. Cross-Engine Analysis (Bing vs GSC)
         cross_insights: List[CrossEngineQueryInsight] = []
