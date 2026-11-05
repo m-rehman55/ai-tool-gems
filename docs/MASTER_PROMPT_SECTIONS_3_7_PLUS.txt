@@ -1,0 +1,1174 @@
+3.7 AGENT 6 — POSTHOG PRODUCT AND BEHAVIOURAL INTELLIGENCE
+
+Install and configure PostHog correctly.
+
+Verify the project ID, API host, environment and event ingestion.
+
+Track:
+
+- Pageviews.
+- Product views.
+- Search interactions.
+- Product finder usage.
+- Comparison interactions.
+- Cart actions.
+- WhatsApp order initiation.
+- Support interactions.
+- Checkout abandonment.
+- Form errors.
+- Rage clicks.
+- Dead clicks.
+- Session behaviour.
+- Web Vitals.
+- Conversion funnels.
+- Retention.
+- Cohorts.
+- Experiments.
+
+Configure privacy-safe session replay.
+
+Mask sensitive information, personal data, payment information and private customer communication.
+
+Do not record credentials, OTPs, payment receipts or confidential messages.
+
+Build funnels for:
+
+Landing Page → Product View → Product Selection → WhatsApp Order → Payment Confirmation.
+
+Measure actual drop-off.
+
+Create controlled A/B experiments only when sufficient traffic and valid measurement exist.
+
+Do not run experiments that mislead users or expose customers to inconsistent commercial terms.
+
+## 3.8 AGENT 7 — PAGE SPEED AND CORE WEB VITALS
+
+Build a dedicated performance intelligence agent.
+
+Integrate:
+
+- Google PageSpeed Insights API.
+- Chrome UX Report API.
+- Lighthouse.
+- Real-user Web Vitals.
+- Approved performance monitoring sources.
+
+Track:
+
+- LCP.
+- INP.
+- CLS.
+- FCP.
+- TTFB.
+- Speed Index.
+- Total Blocking Time.
+- JavaScript execution.
+- Render-blocking resources.
+- Image loading.
+- Font loading.
+- Cache performance.
+- Mobile and desktop differences.
+
+Monitor important templates and representative URLs.
+
+Store historical measurements.
+
+Detect regressions.
+
+Use Google's current Core Web Vitals thresholds and current documentation.
+
+Never confuse Lighthouse lab scores with real-user field data.
+
+Never report an accelerated proxy score as a live production score.
+
+Generate specific source-level recommendations.
+
+Only apply optimizations after reviewing functional consequences.
+
+## 3.9 AGENT 8 — GEO, AEO AND AI SEARCH VISIBILITY
+
+Build an advanced Generative Engine Optimization and Answer Engine Optimization agent.
+
+Monitor real search visibility across supported AI search platforms.
+
+Potential providers include:
+
+- Promptwatch.
+- Approved AI search visibility platforms.
+- Search result APIs.
+- Official AI platform APIs where available.
+- Carefully controlled manual research.
+
+Track:
+
+- Brand mentions.
+- Citation frequency.
+- Cited URLs.
+- Competitor mentions.
+- Source attribution.
+- Query coverage.
+- Product recommendations.
+- Answer accuracy.
+- Sentiment.
+- Citation changes.
+- Country-specific visibility.
+
+Do not fabricate AI citations.
+
+Separate on-page answer readiness from measured AI visibility.
+
+Evaluate:
+
+- Clear product information.
+- Verifiable claims.
+- Helpful comparisons.
+- Original research.
+- Clear author and publisher identity.
+- Source references.
+- Updated content.
+- Crawlability.
+- Structured data consistency.
+- Strong entity relationships.
+- Trust signals.
+
+Do not add meaningless schema or keyword stuffing in an attempt to manipulate AI answers.
+
+## 3.10 AGENT 9 — CONTENT RESEARCH AND EDITORIAL INTELLIGENCE
+
+Create an advanced content research and quality agent.
+
+Research through:
+
+- Official documentation.
+- Trusted websites.
+- Competitor pages.
+- Relevant YouTube channels.
+- Search results.
+- Community discussions where appropriate.
+- Product documentation.
+- First-party analytics.
+- Search Console opportunities.
+
+Every article must have a research record.
+
+Required article evidence:
+
+- Target audience.
+- Search intent.
+- Primary keyword.
+- Secondary keywords.
+- Competitor research.
+- Verified product facts.
+- Source references.
+- Pricing verification.
+- Pakistan relevance.
+- Content outline.
+- Internal link targets.
+- Structured-data requirements.
+- Editorial quality score.
+- Originality checks.
+- Publication approval.
+
+Content must provide real value rather than merely reaching a word count.
+
+Never publish generic AI-generated filler.
+
+Never self-approve.
+
+If generation fails, create a draft or report the failure.
+
+A missing API response must never trigger an automatic approval.
+
+Validate facts, HTML, links, pricing, product features and third-party terms.
+
+Use an editorial approval queue.
+
+## 3.11 AGENT 10 — BACKLINK AND DIGITAL AUTHORITY INTELLIGENCE
+
+Create a specialist backlink agent.
+
+Use authorized Ahrefs, Semrush, Bing and other legitimate backlink data providers.
+
+Investigate:
+
+- Referring domains.
+- Referring pages.
+- Link growth.
+- Lost links.
+- New links.
+- Anchor text.
+- Follow/nofollow.
+- Domain relevance.
+- Topical authority.
+- Link quality.
+- Competitor backlink gaps.
+- Broken backlink opportunities.
+- Unlinked brand mentions.
+- Link reclamation.
+- Relevant Pakistan business directories.
+- Legitimate industry publications.
+- Editorial opportunities.
+
+Do not buy spam links.
+
+Do not generate automated comment spam.
+
+Do not create private blog networks.
+
+Do not mass-submit to low-quality directories.
+
+Never promise that a backlink will improve rankings.
+
+Every link-building opportunity must have a relevance assessment, acquisition method, risk classification and evidence.
+
+Create a natural authority-building strategy.
+
+## 3.12 AGENT 11 — COMPETITOR INTELLIGENCE
+
+Build a competitive intelligence system.
+
+Identify competitors using actual Pakistan SERPs and commercial overlap.
+
+Track:
+
+- Competitor rankings.
+- Keywords.
+- Content changes.
+- New landing pages.
+- Pricing changes.
+- SERP features.
+- Backlinks.
+- Brand mentions.
+- Technical changes.
+- Product positioning.
+- Internal link structures.
+- Content gaps.
+
+Never assume that a competitor's page is authoritative merely because it ranks.
+
+Do not scrape private data or bypass access controls.
+
+Save historical snapshots and compare meaningful changes.
+
+## 3.13 AGENT 12 — SOCIAL AND MARKETING INTELLIGENCE
+
+Upgrade the existing Marketing Agent.
+
+Integrate authorized APIs for:
+
+- Buffer.
+- Instagram.
+- Facebook.
+- TikTok.
+- LinkedIn.
+- Other supported channels.
+
+Implement:
+
+- Persistent publishing queues.
+- Rate-limit-aware retry.
+- Retry-After handling.
+- Exponential backoff with jitter.
+- Idempotency.
+- Duplicate prevention.
+- Delivery verification.
+- Campaign tracking.
+- UTM generation.
+- Engagement analysis.
+- Click attribution.
+- Conversion attribution.
+- Campaign profitability where revenue data exists.
+
+A scheduled post is not a delivered post.
+
+A delivered post is not a successful campaign.
+
+Measure actual outcomes.
+
+## 3.14 AGENT 13 — GOOGLE MERCHANT CENTER AND PRODUCT FEED
+
+Build a dedicated product feed agent.
+
+Connect through authorized Google Merchant Center APIs.
+
+Monitor:
+
+- Product feed health.
+- Disapprovals.
+- Missing attributes.
+- Price mismatches.
+- Availability mismatches.
+- Product identifiers.
+- Image requirements.
+- Landing-page consistency.
+- Shipping and return policies.
+- Destination eligibility.
+- Product-level performance.
+
+Do not claim Merchant Center eligibility until verified.
+
+Do not submit fabricated product information.
+
+## 3.15 AGENT 14 — WEBSITE CONVERSION AND CUSTOMER JOURNEY
+
+Build a conversion intelligence agent.
+
+Analyze the journey from search impression to verified purchase.
+
+Investigate:
+
+- Landing page clarity.
+- Product trust.
+- Pricing transparency.
+- Product comparison.
+- Mobile UX.
+- WhatsApp visibility.
+- Cart friction.
+- Checkout friction.
+- Support questions.
+- Refund and replacement information.
+- User confusion.
+- Missing information.
+
+Recommend improvements supported by data.
+
+Never make commercial policy changes without approval.
+
+## 3.16 AGENT 15 — SECURITY, COMPLIANCE AND RELIABILITY
+
+Build a security and governance agent.
+
+Inspect:
+
+- Secrets exposure.
+- Token permissions.
+- API scope.
+- OAuth expiry.
+- Dependency vulnerabilities.
+- Supply-chain risk.
+- Prompt injection.
+- Unsafe generated HTML.
+- Untrusted external instructions.
+- SSRF risks.
+- Path traversal.
+- Data leakage.
+- PII handling.
+- Authentication.
+- Authorization.
+- Rate limits.
+- Logging.
+- Backups.
+- Recovery.
+- Audit trails.
+
+Never place API keys in source code, frontend JavaScript, logs, reports or commits.
+
+Use a secrets manager or encrypted environment configuration.
+
+Use the minimum permissions needed.
+
+Support token revocation and rotation.
+
+Separate read-only, draft, publishing and administrative credentials.
+
+# 4. ADD ANY OTHER AGENT THE ARCHITECT IDENTIFIES AS NECESSARY
+
+Do not stop at the agents listed above.
+
+Research and identify additional important functions.
+
+Consider dedicated agents for:
+
+- Sitemap and indexation intelligence.
+- Schema and structured data.
+- Internal link graph.
+- Image SEO.
+- Video SEO and YouTube research.
+- Local Pakistan entity intelligence.
+- Reputation and review monitoring.
+- Product catalogue integrity.
+- Website uptime and incident response.
+- Accessibility.
+- Legal and policy consistency.
+- Content freshness.
+- Search algorithm volatility.
+- Experimentation.
+- Data quality.
+- Forecasting.
+
+Avoid creating agents merely for the sake of agent count.
+
+Every agent must have a distinct purpose, measurable outputs and documented ownership.
+
+# 5. THE INTER-AGENT COMMUNICATION SYSTEM
+
+Agents must work together rather than as isolated scripts.
+
+Build a reliable shared intelligence layer.
+
+Use an appropriate combination of:
+
+- PostgreSQL or an equivalent durable database.
+- A job queue.
+- Redis where useful.
+- Object storage for raw evidence.
+- A vector index only when justified.
+- A shared task registry.
+- An event bus.
+- Structured JSON contracts.
+- API adapters.
+- Versioned data schemas.
+
+Do not introduce unnecessary infrastructure.
+
+The architecture must remain maintainable for the actual project.
+
+Create an authoritative shared knowledge layer containing:
+
+1. Business policy.
+2. Website URL inventory.
+3. Product catalogue.
+4. Verified prices.
+5. Customer policies.
+6. Search performance history.
+7. Analytics history.
+8. Indexing history.
+9. Crawl history.
+10. Competitor intelligence.
+11. Content research.
+12. Backlink intelligence.
+13. Agent execution records.
+14. Approved changes.
+15. Deployment records.
+16. Historical outcomes.
+
+Every data record must have:
+
+- Source.
+- Retrieval time.
+- Relevant date range.
+- Property/account.
+- Scope.
+- Freshness.
+- Confidence.
+- Validation status.
+
+Use clear contracts for agent-to-agent communication.
+
+Example:
+
+Search Console Agent discovers a high-impression query with poor CTR.
+
+It creates an opportunity.
+
+Keyword Agent verifies the query intent.
+
+Technical SEO Agent inspects the target page.
+
+Content Agent proposes a title and content improvement.
+
+Conversion Agent checks whether the page's commercial information is correct.
+
+Security Agent validates the change.
+
+CEO Agent prioritizes it.
+
+A human reviewer approves the production change.
+
+Deployment agent creates the reviewed release.
+
+Search Console Agent monitors the result after sufficient time.
+
+CEO Agent evaluates whether the change actually improved performance.
+
+This workflow must be implemented as a real task dependency graph, not merely described in documentation.
+
+# 6. ACCESS, API KEYS AND TOOL PERMISSIONS
+
+Build an integration management layer.
+
+For each provider, create:
+
+- Provider name.
+- Authentication type.
+- OAuth scopes.
+- Credential status.
+- Expiration.
+- Permission level.
+- Rate limit.
+- Available API endpoints.
+- Supported operations.
+- Last successful request.
+- Last failed request.
+- Health status.
+
+Use official documentation for every integration.
+
+Do not invent API endpoints or permissions.
+
+Do not assume that an integration exposes every UI feature.
+
+For each provider, create a capability matrix:
+
+CAPABILITY | API AVAILABLE | ACCOUNT ACCESS | IMPLEMENTED | TESTED | VERIFIED
+
+Integrations to investigate include:
+
+Google Search Console.
+Google Analytics 4.
+Google PageSpeed Insights.
+Chrome UX Report.
+Google Trends.
+Google Merchant Center.
+Google Ads Keyword Planner.
+Bing Webmaster Tools.
+IndexNow.
+Ahrefs.
+Semrush.
+SEOcrawl.
+Promptwatch.
+PostHog.
+Windsor.ai.
+Buffer.
+Cloudflare.
+Microsoft Clarity.
+YouTube Data API.
+Google Search APIs where legitimately available.
+
+For each integration, research its actual official documentation, limitations, authentication and quotas.
+
+When credentials are missing:
+
+1. Build the adapter.
+2. Document the exact credential needed.
+3. Explain the minimum required scopes.
+4. Provide a secure connection procedure.
+5. Mark it BLOCKED_PENDING_CREDENTIALS.
+6. Continue other independent work.
+
+Never substitute fake data for missing credentials.
+
+Never silently skip an agent because an API is unavailable.
+
+Do not ask the user to paste secret tokens into chat.
+
+Use secure credential entry or the designated secrets manager.
+
+# 7. REAL-TIME RESEARCH AND TOOL USAGE
+
+Every specialist agent must use the best tools available for its task.
+
+Agents should inspect provider interfaces and APIs as deeply as the granted permissions allow.
+
+Where APIs cannot expose a specific setting, use an authorized browser workflow or clearly mark the capability unavailable.
+
+Do not use browser automation to bypass security, CAPTCHAs, MFA or account access restrictions.
+
+Use official APIs first, browser workflows second, and manual research as a documented fallback.
+
+Record every important action.
+
+A result must be traceable to:
+
+- Provider.
+- Account.
+- Property.
+- API endpoint or UI workflow.
+- Request parameters.
+- Retrieval timestamp.
+- Response status.
+- Raw evidence reference.
+- Interpretation.
+
+The system must distinguish:
+
+LIVE API DATA
+LIVE BROWSER OBSERVATION
+CACHED DATA
+HISTORICAL DATA
+ESTIMATE
+MODEL INFERENCE
+UNVERIFIED CLAIM
+
+Never present model inference as measured fact.
+
+# 8. ADVANCED SEO AND SEARCH QUALITY REQUIREMENTS
+
+All work must follow current official search-engine documentation.
+
+Research current Google Search Central guidance and relevant Bing guidance.
+
+Cover:
+
+- Crawlability.
+- Indexability.
+- Canonicalization.
+- Internal links.
+- Sitemap quality.
+- Structured data.
+- Helpful content.
+- Originality.
+- Page experience.
+- Core Web Vitals.
+- Mobile usability.
+- Search intent.
+- Entity consistency.
+- Product information.
+- Image optimization.
+- JavaScript rendering.
+- International targeting safeguards.
+- Spam policies.
+- Scaled content abuse policies.
+- Link spam policies.
+
+Do not use outdated SEO myths.
+
+Do not promise special AI Overview schema.
+
+Do not create doorway pages.
+
+Do not mass-produce thin city or keyword pages.
+
+Do not keyword stuff.
+
+Do not create fake FAQs merely to obtain rich results.
+
+Do not use fabricated review markup.
+
+Do not misrepresent AI-generated content as human research.
+
+# 9. ADVANCED PRIORITIZATION AND DECISION ENGINE
+
+Create an evidence-driven prioritization engine.
+
+Every proposed task should be scored using:
+
+- Search opportunity.
+- Actual traffic impact.
+- Business value.
+- Conversion potential.
+- Technical severity.
+- User impact.
+- Confidence.
+- Implementation cost.
+- Risk.
+- Reversibility.
+- Dependencies.
+
+Provide a transparent scoring breakdown.
+
+Do not treat a high heuristic score as a measured outcome.
+
+Use confidence levels:
+
+HIGH — directly supported by verified data.
+
+MEDIUM — supported by multiple partial sources.
+
+LOW — hypothesis requiring research.
+
+UNKNOWN — insufficient evidence.
+
+If confidence is low, gather more data before taking risky action.
+
+# 10. AUTONOMOUS EXECUTION AND APPROVAL POLICY
+
+The system should be autonomous in research, diagnosis, monitoring, preparation, testing and reversible low-risk work.
+
+But autonomy must have explicit boundaries.
+
+### May execute automatically within an approved scope
+
+- Read-only API queries.
+- Website crawls.
+- Performance measurements.
+- Data normalization.
+- Internal analysis.
+- Draft generation.
+- Test execution.
+- Local validation.
+- Duplicate detection.
+- Report generation.
+- Safe cache refreshes.
+- Non-destructive monitoring.
+
+### Requires a reviewed pull request
+
+- Content changes.
+- Title and metadata changes.
+- Internal linking changes.
+- Schema changes.
+- Frontend changes.
+- Performance optimizations.
+- Configuration changes.
+- Agent source changes.
+- Sitemap modifications.
+
+### Requires explicit human approval
+
+- Production deployment.
+- Publication of new commercial content.
+- Product pricing changes.
+- Warranty and refund changes.
+- Redirects affecting existing URLs.
+- Page deletion.
+- Search Console removal requests.
+- Account permission changes.
+- Credential changes.
+- Bulk publishing.
+- External communications.
+- Advertising spend.
+- Financial transactions.
+
+Never weaken these approval rules to achieve greater autonomy.
+
+# 11. REPAIR THE KNOWN EXISTING DEFECTS FIRST
+
+The following issues have already been identified and must be independently rechecked against the current repository before implementation.
+
+Do not assume they have already been fixed.
+
+1. Pakistan-only market enforcement is incomplete.
+2. Homepage metadata and H1 contain worldwide positioning.
+3. Scope Guard does not consistently enforce the stricter transactional policy.
+4. Orchestrator live crawl checks only the homepage.
+5. Regular scheduled audits rely on local crawling.
+6. Firewall validation is not consistently enforced.
+7. Safety immutability checks receive an empty list.
+8. Schema and content-quality checks are not mandatory gates.
+9. Blog publisher fallback can self-approve.
+10. Gemini failure can lead to template-based content publication.
+11. Blog publisher writes directly to main.
+12. AIO workflow writes directly to main.
+13. Social workflow requires durable rate-limit-aware retry.
+14. GSC data retrieval needs pagination.
+15. GSC data needs explicit Pakistan filtering.
+16. Marketing conversion event classification is too broad.
+17. PostHog has no confirmed website event ingestion.
+18. Product review structured data must match visible, genuine reviews.
+19. Product return-policy structured data must match the actual policy.
+20. Product provisioning and resale claims need third-party terms verification.
+21. PageSpeed performance must be measured on the real production site.
+22. Branch protection and required CI checks are not enabled.
+23. Agent PR reports must use real test artifacts and actual commit SHAs.
+24. IndexNow must submit changed URLs rather than indiscriminately resubmitting every URL.
+
+For every defect:
+
+- Reproduce it.
+- Identify the exact source.
+- Record the evidence.
+- Implement a fix.
+- Add a regression test.
+- Execute the test.
+- Verify the result.
+- Record the commit and deployment status.
+
+Do not silently mark any defect resolved.
+
+# 12. DATA QUALITY, MEMORY AND CONTINUOUS LEARNING
+
+Build persistent agent memory that stores verified facts, previous decisions, failed approaches and measured outcomes.
+
+Separate:
+
+- Business knowledge.
+- Technical knowledge.
+- Provider documentation.
+- Historical measurements.
+- Agent working memory.
+- Task state.
+- User-approved policy.
+- Unverified hypotheses.
+
+Do not allow an agent to permanently learn a false claim from another agent.
+
+Use source references and confidence.
+
+Implement:
+
+- Data freshness rules.
+- Schema versioning.
+- Data validation.
+- Duplicate prevention.
+- Idempotent jobs.
+- Historical snapshots.
+- Backup and recovery.
+- Retention policies.
+- Data deletion procedures.
+
+The learning engine must compare predicted and actual outcomes.
+
+Example:
+
+Predicted CTR improvement: 15%.
+
+Actual CTR improvement after a suitable observation period: 2%.
+
+The engine must record the difference and adjust its future prioritization.
+
+Do not attribute ranking or traffic changes to an agent without sufficient evidence and appropriate controls.
+
+# 13. MONITORING AND EXECUTIVE DASHBOARD
+
+Build a unified HERMES dashboard.
+
+It must show:
+
+### Business performance
+
+- Pakistan organic sessions.
+- Search clicks.
+- Search impressions.
+- CTR.
+- Rankings where reliable data exists.
+- Product engagement.
+- WhatsApp order initiations.
+- Confirmed orders.
+- Revenue.
+- Conversion rate.
+
+### Search health
+
+- Indexed URLs.
+- Indexing problems.
+- Crawl errors.
+- Canonical problems.
+- Broken links.
+- Sitemap status.
+- Important page coverage.
+- Content freshness.
+
+### Technical health
+
+- LCP.
+- INP.
+- CLS.
+- Mobile performance.
+- Desktop performance.
+- Uptime.
+- HTTP errors.
+- JavaScript errors.
+- Performance regressions.
+
+### Agent health
+
+- Agent status.
+- Last successful run.
+- Last failure.
+- Execution time.
+- API usage.
+- Rate-limit errors.
+- Queue backlog.
+- Pending approvals.
+- Completed tasks.
+- Verification failures.
+
+### Growth intelligence
+
+- Keyword opportunities.
+- Competitor changes.
+- Backlink opportunities.
+- Content opportunities.
+- AI citations.
+- Campaign performance.
+- Conversion experiments.
+
+Every metric must display its source, reporting period and freshness.
+
+Use UNKNOWN when data is unavailable.
+
+Do not display invented 100% scores.
+
+# 14. IMPLEMENTATION PROCESS — DO NOT SKIP STEPS
+
+Work in controlled engineering phases.
+
+## PHASE A — Discovery and architecture
+
+- Inspect the complete repository.
+- Inspect the live website.
+- Inspect current workflows.
+- Inspect every agent.
+- Inspect all available integration tools.
+- Inspect current credentials without exposing their values.
+- Build the capability matrix.
+- Document defects.
+- Design the target architecture.
+
+Deliver an evidence-backed discovery report.
+
+## PHASE B — Foundation and safety
+
+- Shared market policy.
+- Agent task contracts.
+- Shared data layer.
+- Central task registry.
+- Audit logging.
+- Permission model.
+- Secret management.
+- Mandatory safety gateway.
+- Approval workflow.
+- Branch protection.
+- Durable queue.
+- Agent health monitoring.
+
+## PHASE C — Repair current agents
+
+Repair all verified defects.
+
+Do not rewrite working modules unnecessarily.
+
+Maintain compatibility where possible.
+
+Add tests for each change.
+
+## PHASE D — Integrations
+
+Implement real adapters and authorization for each provider.
+
+For every provider, test:
+
+- Authentication.
+- Permissions.
+- API connectivity.
+- Pagination.
+- Rate limits.
+- Error handling.
+- Data freshness.
+- Response normalization.
+- Evidence storage.
+- Token expiry.
+
+Never use simulated API success.
+
+## PHASE E — Agent collaboration
+
+Implement real inter-agent task delegation.
+
+Run a complete end-to-end workflow using actual available data.
+
+Verify every handoff.
+
+## PHASE F — Dashboard and reporting
+
+Build the operational dashboard and reports.
+
+## PHASE G — Testing and security
+
+Execute all existing tests.
+
+Add unit tests.
+
+Add integration tests.
+
+Add contract tests.
+
+Add security tests.
+
+Add end-to-end workflow tests.
+
+Add failure-recovery tests.
+
+Add permission tests.
+
+Add Pakistan market-policy tests.
+
+Add regression tests for all repaired defects.
+
+Test unavailable credentials and provider outages.
+
+Test rate limiting.
+
+Test duplicate jobs.
+
+Test partial API responses.
+
+Test stale data.
+
+Test interrupted workflows.
+
+## PHASE H — Controlled release
+
+- Create a dedicated feature branch.
+- Never work directly on main.
+- Commit coherent changes.
+- Run all required tests.
+- Attach actual test results.
+- Create a draft PR.
+- Review the diff.
+- Verify the preview deployment where available.
+- Obtain approval before production deployment.
+- Verify production after approval.
+- Record rollback instructions.
+
+# 15. RESEARCH REQUIREMENTS
+
+Research using current, trustworthy sources.
+
+Prioritize:
+
+1. Official provider documentation.
+2. Official API references.
+3. Official search-engine documentation.
+4. Technical engineering documentation.
+5. Credible industry research.
+6. Experienced practitioner case studies.
+7. Relevant YouTube technical demonstrations.
+8. Community discussions for supplementary evidence.
+
+For YouTube research, identify the creator, publication date, specific technical subject and whether the advice is independently verifiable.
+
+Do not accept outdated tutorials without checking current documentation.
+
+Do not implement a tool simply because a video recommends it.
+
+Research each proposed integration's real functionality and limitations.
+
+# 16. REQUIRED DELIVERABLES
+
+Create and maintain these project documents:
+
+- `docs/HERMES_SYSTEM_ARCHITECTURE.md`
+- `docs/AGENT_REGISTRY.md`
+- `docs/INTEGRATION_CAPABILITY_MATRIX.md`
+- `docs/SECURITY_AND_PERMISSION_MODEL.md`
+- `docs/DATA_DICTIONARY.md`
+- `docs/AGENT_COMMUNICATION_CONTRACTS.md`
+- `docs/SEO_OPERATING_STANDARDS.md`
+- `docs/PAKISTAN_MARKET_POLICY.md`
+- `docs/CONTENT_APPROVAL_POLICY.md`
+- `docs/DEPLOYMENT_AND_ROLLBACK.md`
+- `docs/TESTING_AND_VERIFICATION.md`
+- `docs/IMPLEMENTATION_CHANGELOG.md`
+- `docs/BLOCKED_INTEGRATIONS.md`
+- `docs/KNOWN_LIMITATIONS.md`
+
+Create a task registry that records every requested change.
+
+Each task must have one of these statuses:
+
+NOT_STARTED
+IN_PROGRESS
+BLOCKED_PENDING_CREDENTIALS
+BLOCKED_PENDING_APPROVAL
+IMPLEMENTED
+TESTED
+VERIFIED
+DEPLOYED
+FAILED
+
+Do not use DONE as a substitute for evidence.
+
+# 17. STRICT ANTI-FAKE-WORK RULES
+
+These rules are mandatory.
+
+1. Never claim to have accessed a provider without an actual successful authenticated request.
+2. Never claim to have inspected a setting if it was not inspected.
+3. Never invent data.
+4. Never fabricate API responses.
+5. Never fabricate tests.
+6. Never report a test as passed if it was not executed.
+7. Never claim an indexing request guarantees indexing.
+8. Never claim an IndexNow submission guarantees indexing.
+9. Never claim a deployment succeeded without production verification.
+10. Never claim a page is ranking without real ranking evidence.
+11. Never treat a cached report as current live data.
+12. Never confuse local crawling with production crawling.
+13. Never hide errors.
+14. Never silently skip blocked tasks.
+15. Never replace a failed API call with invented success.
+16. Never self-approve generated commercial content.
+17. Never publish without the required approval.
+18. Never weaken security or market policy to make a test pass.
+19. Never remove an existing safeguard simply because it blocks an unsafe operation.
+20. Never close a task without evidence.
+
+If something is unavailable, document exactly why and what credential, permission, API scope or user action is needed.
+
+If something cannot be verified, say so.
+
+# 18. WORKING STYLE
+
+Do not ask me to repeat information already present in the repository or connected integrations.
+
+Do not stop after writing an architecture document.
+
+Do not produce an enormous list of future suggestions while leaving existing defects untouched.
+
+Do not implement a superficial prototype and call it production-ready.
+
+Do not skip tests because the task is large.
+
+Work through the phases and continue with every independent task that can be completed safely.
+
+When blocked, record the blocker and continue with independent work.
+
+At the end of each phase, report:
+
+- Files inspected.
+- Files changed.
+- New files created.
+- Integrations actually connected.
+- API calls actually tested.
+- Tests actually executed.
+- Test results.
+- Remaining failures.
+- Pending credentials.
+- Pending approvals.
+- Commit SHA.
+- Deployment status.
+- Production verification evidence.
+
+Maintain a persistent implementation changelog so that work can resume without repeating previous phases.
+
+# 19. FIRST EXECUTION COMMAND
+
+START NOW.
+
+First inspect the entire existing repository and live website.
+
+Then produce the actual evidence-backed inventory and identify the highest-risk defects.
+
+Immediately begin Phase B and Phase C where safe.
+
+Do not wait for all external credentials before repairing existing code.
+
+Create a dedicated feature branch.
+
+Fix the known safety, Pakistan-only, publishing, analytics and data-quality defects.
+
+Add regression tests.
+
+Then continue into integration adapters and agent collaboration.
+
+Do not deploy to production without explicit approval.
+
+Your standard is not how many agents exist, how long the reports are, or how impressive the architecture diagram looks.
+
+Your standard is:
+
+**REAL DATA → CORRECT ANALYSIS → VERIFIED DECISION → CONTROLLED EXECUTION → SUCCESSFUL TEST → VERIFIED PRODUCTION RESULT → MEASURED BUSINESS OUTCOME.**
+
+Build HERMES to that standard.
+
+
+understand whole prompt and its all working and each and everything and i give u its parts then you satrt your work deeply okay.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-11-05T13:32:00+05:00.
+
+The user's current state is as follows:
+Active Document: d:\Desktop\AI Tools Aura\tests\test_japan_safeguards.py (LANGUAGE_UNSPECIFIED)
+Cursor is on line: 12
+Other open documents:
+- d:\Desktop\AI Tools Aura\IDEA.md (LANGUAGE_UNSPECIFIED)
+- d:\Desktop\AI Tools Aura\scratch\inspect_target_pages_detail.py (LANGUAGE_UNSPECIFIED)
+- d:\Desktop\AI Tools Aura\scratch\inspect_baseline.py (LANGUAGE_UNSPECIFIED)
+- d:\Desktop\AI Tools Aura\scripts\exchange_gsc_token.py (LANGUAGE_UNSPECIFIED)
+- d:\Desktop\AI Tools Aura\scripts\get_gsc_refresh_token.py (LANGUAGE_UNSPECIFIED)
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Gemini 3.8 Flash (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
