@@ -1,0 +1,38 @@
+[
+  {
+    "source_url": "https://github.com/m-rehman55/ai-tool-gems",
+    "target_url": "https://aitoolgems.tech/",
+    "anchor_text": "AI Tool Gems",
+    "is_follow": true,
+    "domain_authority": 96.0,
+    "toxicity_score": 0.0,
+    "first_seen": 1791282836.7615387,
+    "last_seen": 1793874836.7615387,
+    "status": "ACTIVE",
+    "notes": "Official repository attribution link"
+  },
+  {
+    "source_url": "https://pasha.org.pk/member-directory/",
+    "target_url": "https://aitoolgems.tech/",
+    "anchor_text": "AIToolGems Pakistan",
+    "is_follow": true,
+    "domain_authority": 48.0,
+    "toxicity_score": 0.0,
+    "first_seen": 1792665236.7615387,
+    "last_seen": 1793874836.7615387,
+    "status": "ACTIVE",
+    "notes": "Verified domestic Pakistan software and tech member citation"
+  },
+  {
+    "source_url": "https://techjuice.pk/pakistan-freelancer-ai-tools-guide-2026/",
+    "target_url": "https://aitoolgems.tech/tools/chatgpt/",
+    "anchor_text": "ChatGPT Plus pricing in Pakistan",
+    "is_follow": true,
+    "domain_authority": 54.0,
+    "toxicity_score": 0.0,
+    "first_seen": 1793270036.7615387,
+    "last_seen": 1793874836.7615387,
+    "status": "ACTIVE",
+    "notes": "Tech journalism citation covering local PKR pricing"
+  }
+]
