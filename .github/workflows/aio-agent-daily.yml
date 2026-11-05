@@ -40,8 +40,10 @@ jobs:
         run: |
           python -m aio_agent sync-llms
 
-      - name: Commit & Push Knowledge Base Updates if Changed
+      - name: Commit & Propose Knowledge Base Updates via Pull Request
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if git diff --quiet -- llms.txt llms-full.txt; then
             echo "Machine knowledge bases are up to date."
@@ -49,6 +51,13 @@ jobs:
           fi
           git config user.name "AIToolGems AIO Agent"
           git config user.email "actions@users.noreply.github.com"
+          BRANCH_NAME="aio/sync-llms-${{ github.run_id }}"
+          git checkout -b "$BRANCH_NAME"
           git add llms.txt llms-full.txt
           git commit -m "chore(aio): auto-sync llms.txt knowledge bases for AI crawlers"
-          git push
+          git push -u origin "$BRANCH_NAME"
+          gh pr create \
+            --title "chore(aio): auto-sync llms.txt knowledge bases" \
+            --body "Automated daily synchronization of \`llms.txt\` and \`llms-full.txt\` with verified routes." \
+            --base main \
+            --head "$BRANCH_NAME" || true

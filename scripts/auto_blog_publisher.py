@@ -234,24 +234,20 @@ def load_queue_candidate() -> tuple[dict | None, str]:
                         {"slug": "canva", "name": "Canva Pro"}
                     ],
                     "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
-                    "approved_for_publishing": True
+                    "approved_for_publishing": False  # FIX DEFECT 9: Strictly False. Self-approval is blocked.
                 }
 
-                is_valid, validation_errors = validate_queue_candidate(dyn_item, published_slugs)
-                if is_valid:
-                    related = [(t["slug"], t["name"]) for t in dyn_item["related_tools"]]
-                    candidate = {
-                        "slug": dyn_item["slug"],
-                        "title": dyn_item["title"],
-                        "meta_desc": dyn_item["meta_description"],
-                        "primary_keyword": dyn_item["primary_keyword"],
-                        "secondary_keywords": dyn_item["secondary_keywords"],
-                        "target_audience": dyn_item["target_audience"],
-                        "tool_key": dyn_item["primary_tool"],
-                        "related_tools": related
-                    }
-                    return candidate, "CANDIDATE_FOUND"
+                # Discovered candidate is queued for editorial review rather than self-approved
+                try:
+                    q_items = json.loads(queue_file.read_text(encoding="utf-8")) if queue_file.exists() else []
+                    if not any(item.get("slug") == candidate_slug for item in q_items):
+                        q_items.append(dyn_item)
+                        queue_file.write_text(json.dumps(q_items, indent=2), encoding="utf-8")
+                        print(f"ℹ️ Enqueued unwritten guide opportunity '{candidate_slug}' (pending human editorial approval).")
+                except Exception as ex:
+                    print(f"⚠️ Notice enqueuing discovered topic: {ex}")
 
+    # Never self-approve or publish without explicit prior human approval
     return None, "NO_ELIGIBLE_TOPIC"
 
 
@@ -298,6 +294,13 @@ def render_article_html(bp: dict) -> str:
         <h2>In-Depth Technical Analysis &amp; Creator Insights</h2>
         {clean_resp}
       </section>"""
+        else:
+            # FIX DEFECT 10: Abort template publication when Gemini generation fails
+            print("❌ Gemini generation returned empty/quota reached. Template publication aborted to prevent generic AI filler.")
+            drafts_dir = BASE / "data" / "content" / "drafts"
+            drafts_dir.mkdir(parents=True, exist_ok=True)
+            (drafts_dir / f"{slug}.html").write_text(f"<!-- DRAFT_PENDING_REVIEW: Generation failed for {slug} -->", encoding="utf-8")
+            return None
 
     # Dynamic FAQ data targeting organic search queries
     faq_data = [
@@ -654,6 +657,12 @@ def run_publisher(dry_run: bool = True) -> str:
 
     # 2. Render content
     html_content = render_article_html(candidate)
+    if not html_content:
+        print("❌ Article rendering failed or returned unapproved draft. Aborting publication.")
+        write_github_output("status", "GENERATION_FAILED")
+        if not dry_run:
+            sys.exit(1)
+        return "GENERATION_FAILED"
 
     # 3. Write temp file and run full validation
     temp_dir = BASE / "guides" / candidate["slug"]
