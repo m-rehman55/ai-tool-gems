@@ -105,11 +105,16 @@ jobs:
           echo "committed=true" >> "$GITHUB_OUTPUT"
           echo "commit_sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
 
-          # Strict rebase against latest origin/main without destructive fallbacks
-          git fetch origin main
-          git rebase origin/main
-          git push origin main
-          echo "✅ Successfully pushed commit $COMMIT_SHA to main."
+          # Strict PR creation to enforce human review gate (Defect 11 Fix)
+          BRANCH_NAME="content/guide-${{ steps.publisher.outputs.slug }}"
+          git checkout -b "$BRANCH_NAME"
+          git push -u origin "$BRANCH_NAME"
+          echo "✅ Pushed branch $BRANCH_NAME to origin. Creating pull request..."
+          gh pr create \
+            --title "feat(content): publish autonomous guide '${{ steps.publisher.outputs.title }}'" \
+            --body "Autonomous editorial guide candidate for \`${{ steps.publisher.outputs.slug }}\`. Verified Pakistan PKR pricing and payment rails. Requires human review before merging to main." \
+            --base main \
+            --head "$BRANCH_NAME" || true
 
       - name: Trigger and Await GitHub Pages Deployment
         if: steps.git_push.outputs.committed == 'true'
