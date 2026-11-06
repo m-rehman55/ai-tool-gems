@@ -29,7 +29,7 @@ from ga4_agent.conversion_importer import (
     MEASUREMENT_ID,
 )
 from ga4_agent.hermes_integration import execute_ga4_task
-from ga4_agent.models import GA4EcommerceFunnel, OfflineVerifiedOrder
+from ga4_agent.models import GA4EcommerceFunnel, OfflineRefund, OfflineVerifiedOrder
 
 
 class TestGA4Agent(unittest.TestCase):
@@ -151,6 +151,54 @@ class TestGA4Agent(unittest.TestCase):
         self.assertEqual(event["params"]["transaction_id"], "ATG-MP-001")
         self.assertEqual(event["params"]["payment_type"], "SadaPay")
         self.assertEqual(event["params"]["items"][0]["item_id"], "cursor")
+
+    def test_refund_recording_and_deduplication(self):
+        """Verifies recording and deduplication of verified refund records."""
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        ok1, msg1 = importer.record_verified_refund(
+            transaction_id="ATG-MP-001",
+            refund_id="REF-20261106-001",
+            tool_slug="cursor",
+            tool_name="Cursor AI Pro",
+            pkr_amount=5500.0,
+            reason="service_incompatibility",
+        )
+        self.assertTrue(ok1)
+        self.assertIn("successfully recorded", msg1)
+
+        # Duplicate refund ID rejected
+        ok2, msg2 = importer.record_verified_refund(
+            transaction_id="ATG-MP-001",
+            refund_id="REF-20261106-001",
+            tool_slug="cursor",
+            tool_name="Cursor AI Pro",
+            pkr_amount=5500.0,
+            reason="duplicate",
+        )
+        self.assertFalse(ok2)
+        self.assertIn("Duplicate", msg2)
+
+    def test_refund_measurement_protocol_payload(self):
+        """Verifies GA4 Measurement Protocol refund event structure and PKR currency."""
+        refund = OfflineRefund.create(
+            transaction_id="ATG-REF-001",
+            refund_id="REF-20261106-002",
+            tool_slug="canva",
+            tool_name="Canva Pro",
+            pkr_amount=1500.0,
+            reason="customer_request",
+        )
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        payload = importer.build_refund_payload(refund)
+
+        self.assertIn("client_id", payload)
+        self.assertEqual(len(payload["events"]), 1)
+        event = payload["events"][0]
+        self.assertEqual(event["name"], "refund")
+        self.assertEqual(event["params"]["currency"], "PKR")
+        self.assertEqual(event["params"]["value"], 1500.0)
+        self.assertEqual(event["params"]["transaction_id"], "ATG-REF-001")
+        self.assertEqual(event["params"]["items"][0]["item_id"], "canva")
 
     # ── 4. Funnel Metrics Calculation Tests ───────────────────────────────────
 

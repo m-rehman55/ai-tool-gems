@@ -394,7 +394,7 @@ function addToCart(id) {
 
   if (!state.cart.includes(id)) {
     state.cart = [...state.cart, id];
-    trackEvent('add_to_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
+    trackEvent('add_to_cart', { currency: 'PKR', value: product.price, items: [{ item_id: product.id, item_name: product.name, item_category: product.category || 'AI Tool Subscription', price: product.price, quantity: 1 }] });
     toast(`Added ${product.name} to your cart`);
   } else {
     toast(`${product.name} is already in your cart`);
@@ -408,7 +408,7 @@ function removeFromCart(id) {
   const product = products.find(p => p.id === id);
   if (state.cart.includes(id)) {
     state.cart = state.cart.filter(x => x !== id);
-    if (product) trackEvent('remove_from_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
+    if (product) trackEvent('remove_from_cart', { currency: 'PKR', value: product.price, items: [{ item_id: product.id, item_name: product.name, item_category: product.category || 'AI Tool Subscription', price: product.price, quantity: 1 }] });
     toast(`Removed ${product ? product.name : 'item'} from cart`);
   }
   updateCart();
@@ -533,7 +533,11 @@ function closeLayers() {
 function openProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
-  trackEvent('view_item', { item_id: p.id, item_name: p.name, item_category: p.category, value: p.price, currency: 'PKR' });
+  trackEvent('select_item', {
+    item_list_name: 'Catalogue Grid',
+    items: [{ item_id: p.id, item_name: p.name, item_category: p.category || 'AI Tool Subscription', price: p.price, quantity: 1 }]
+  });
+  trackEvent('view_item', { currency: 'PKR', value: p.price, items: [{ item_id: p.id, item_name: p.name, item_category: p.category || 'AI Tool Subscription', price: p.price, quantity: 1 }] });
   const detail = $('#productDetail');
   if (detail) {
     detail.innerHTML = `
@@ -601,7 +605,20 @@ function orderProduct(id) {
     ? '💳 Preferred Payment: USDT (TRC20 / BEP20) / Binance Pay / Wise\n\nPlease confirm availability, payment address, and delivery time.'
     : '💳 Preferred Payment: EasyPaisa / JazzCash / SadaPay / Bank IBFT\n\nPlease confirm availability, payment account, and delivery time.';
 
-  trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: isUsd ? parseFloat(p.usdPrice) : p.price, currency: isUsd ? 'USD' : 'PKR' });
+  const orderVal = isUsd ? parseFloat(p.usdPrice) : p.price;
+  trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: orderVal, currency: isUsd ? 'USD' : 'PKR' });
+  trackEvent('begin_checkout', {
+    currency: isUsd ? 'USD' : 'PKR',
+    value: orderVal,
+    destination: 'whatsapp',
+    items: [{ item_id: p.id, item_name: p.name, item_category: p.category || 'AI Tool Subscription', price: orderVal, quantity: 1 }]
+  });
+  trackEvent('generate_lead', {
+    currency: isUsd ? 'USD' : 'PKR',
+    value: orderVal,
+    lead_type: 'direct_whatsapp_order_inquiry',
+    item_name: p.name
+  });
   openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${priceDisplay}\n\n${paymentInstructions}`));
 }
 
@@ -627,7 +644,24 @@ function checkout() {
     : '💳 Preferred Payment: EasyPaisa / JazzCash / SadaPay / Bank IBFT\n\nPlease confirm availability, payment account, and delivery time.';
 
   const numVal = isUsd ? parseFloat(totalDisplay.replace(/[^0-9.]/g, '')) : selected.reduce((s, p) => s + p.price, 0);
-  trackEvent('begin_checkout', { item_ids: selected.map(p => p.id), item_count: selected.length, value: numVal, currency: isUsd ? 'USD' : 'PKR', destination: 'whatsapp' });
+  trackEvent('begin_checkout', {
+    currency: isUsd ? 'USD' : 'PKR',
+    value: numVal,
+    destination: 'whatsapp',
+    items: selected.map(p => ({
+      item_id: p.id,
+      item_name: p.name,
+      item_category: p.category || 'AI Tool Subscription',
+      price: isUsd ? parseFloat(p.usdPrice || (p.price / 280).toFixed(2)) : p.price,
+      quantity: 1
+    }))
+  });
+  trackEvent('generate_lead', {
+    currency: isUsd ? 'USD' : 'PKR',
+    value: numVal,
+    lead_type: 'cart_whatsapp_checkout',
+    item_count: selected.length
+  });
 
   openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${totalDisplay}\n\n${paymentInstructions}`));
 }

@@ -112,3 +112,40 @@ class OfflineVerifiedOrder:
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
 
+
+@dataclass
+class OfflineRefund:
+    transaction_id: str  # Original purchase transaction_id e.g. "ATG-20261105-001"
+    refund_id: str       # Unique refund identifier e.g. "REF-20261106-001"
+    tool_slug: str
+    tool_name: str
+    pkr_amount: float
+    reason: str
+    verified_at: str
+    is_imported_to_ga4: bool = False
+    imported_at: Optional[str] = None
+
+    @classmethod
+    def create(
+        cls,
+        transaction_id: str,
+        refund_id: str,
+        tool_slug: str,
+        tool_name: str,
+        pkr_amount: float,
+        reason: str = "customer_request"
+    ) -> OfflineRefund:
+        now_iso = datetime.now(timezone.utc).isoformat()
+        return cls(
+            transaction_id=transaction_id.strip(),
+            refund_id=refund_id.strip(),
+            tool_slug=tool_slug.strip().lower(),
+            tool_name=tool_name.strip(),
+            pkr_amount=float(pkr_amount),
+            reason=reason.strip(),
+            verified_at=now_iso,
+        )
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+

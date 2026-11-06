@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from ga4_agent.models import OfflineVerifiedOrder
+from ga4_agent.models import OfflineRefund, OfflineVerifiedOrder
 
 logger = logging.getLogger("ga4_agent.conversion_importer")
 
@@ -37,6 +37,7 @@ class ConversionImporter:
         self.data_dir = data_dir or (base_dir / "data" / "orders")
         self.data_dir.mkdir(parents=True, exist_ok=True)
         self.orders_file = self.data_dir / "verified_orders.json"
+        self.refunds_file = self.data_dir / "verified_refunds.json"
         self.import_log_file = self.data_dir / "ga4_import_log.json"
 
     def load_orders(self) -> List[OfflineVerifiedOrder]:
@@ -218,4 +219,164 @@ class ConversionImporter:
                 log_data = []
         log_data.extend(entries)
         self.import_log_file.write_text(json.dumps(log_data[-200:], indent=2), encoding="utf-8")
+
+    def load_refunds(self) -> List[OfflineRefund]:
+        """Loads verified refund records from persistent storage."""
+        if not self.refunds_file.exists():
+            return []
+        try:
+            raw = json.loads(self.refunds_file.read_text(encoding="utf-8"))
+            return [
+                OfflineRefund(
+                    transaction_id=item["transaction_id"],
+                    refund_id=item["refund_id"],
+                    tool_slug=item.get("tool_slug", ""),
+                    tool_name=item.get("tool_name", ""),
+                    pkr_amount=float(item.get("pkr_amount", 0.0)),
+                    reason=item.get("reason", "customer_request"),
+                    verified_at=item.get("verified_at", datetime.now(timezone.utc).isoformat()),
+                    is_imported_to_ga4=bool(item.get("is_imported_to_ga4", False)),
+                    imported_at=item.get("imported_at"),
+                )
+                for item in raw
+            ]
+        except Exception as e:
+            logger.warning(f"Failed loading verified refunds: {e}")
+            return []
+
+    def record_verified_refund(
+        self,
+        transaction_id: str,
+        refund_id: str,
+        tool_slug: str,
+        tool_name: str,
+        pkr_amount: float,
+        reason: str = "customer_request",
+    ) -> Tuple[bool, str]:
+        """
+        Records a confirmed refund for an existing transaction.
+        Enforces refund_id uniqueness and validates positive amount.
+        """
+        rid = refund_id.strip()
+        tid = transaction_id.strip()
+        if not rid:
+            return False, "Refund ID cannot be empty."
+        if not tid:
+            return False, "Transaction ID cannot be empty."
+        if pkr_amount <= 0:
+            return False, "Refund amount in PKR must be greater than zero."
+
+        refunds = self.load_refunds()
+        if any(r.refund_id == rid for r in refunds):
+            return False, f"Duplicate refund ID '{rid}' rejected."
+
+        new_refund = OfflineRefund.create(
+            transaction_id=tid,
+            refund_id=rid,
+            tool_slug=tool_slug,
+            tool_name=tool_name,
+            pkr_amount=pkr_amount,
+            reason=reason,
+        )
+        refunds.append(new_refund)
+
+        self.refunds_file.write_text(
+            json.dumps([r.to_dict() for r in refunds], indent=2),
+            encoding="utf-8",
+        )
+        return True, f"Verified refund {rid} for transaction {tid} successfully recorded."
+
+    def build_refund_payload(self, refund: OfflineRefund, client_id: Optional[str] = None) -> Dict[str, Any]:
+        """Formats the official GA4 Measurement Protocol refund payload."""
+        c_id = client_id or f"refund_{refund.refund_id}"
+        return {
+            "client_id": c_id,
+            "non_personalized_ads": False,
+            "events": [
+                {
+                    "name": "refund",
+                    "params": {
+                        "transaction_id": refund.transaction_id,
+                        "value": refund.pkr_amount,
+                        "currency": "PKR",
+                        "items": [
+                            {
+                                "item_id": refund.tool_slug,
+                                "item_name": refund.tool_name,
+                                "item_category": "AI Tool Subscription",
+                                "price": refund.pkr_amount,
+                                "quantity": 1,
+                            }
+                        ],
+                    },
+                }
+            ],
+        }
+
+    def dispatch_offline_refunds(self, dry_run: bool = False) -> Dict[str, Any]:
+        """
+        Dispatches all unimported verified refunds to GA4 Measurement Protocol.
+        Marks refunds as imported upon successful HTTP 204 or dry run.
+        """
+        api_secret = os.getenv("GA4_API_SECRET", "").strip()
+        refunds = self.load_refunds()
+        pending = [r for r in refunds if not r.is_imported_to_ga4]
+
+        if not pending:
+            return {
+                "status": "noop",
+                "message": "Zero pending verified refunds awaiting GA4 import.",
+                "imported_count": 0,
+            }
+
+        imported_count = 0
+        now_iso = datetime.now(timezone.utc).isoformat()
+        results: List[Dict[str, Any]] = []
+
+        for r in pending:
+            payload = self.build_refund_payload(r)
+            if dry_run or not api_secret:
+                r.is_imported_to_ga4 = True
+                r.imported_at = now_iso
+                imported_count += 1
+                results.append({
+                    "refund_id": r.refund_id,
+                    "transaction_id": r.transaction_id,
+                    "status": "dry_run" if dry_run else "simulated_no_api_secret",
+                    "pkr_amount": r.pkr_amount,
+                    "payload": payload,
+                })
+            else:
+                endpoint = f"{GA4_MP_ENDPOINT}?measurement_id={MEASUREMENT_ID}&api_secret={api_secret}"
+                data_bytes = json.dumps(payload).encode("utf-8")
+                req = urllib.request.Request(
+                    endpoint,
+                    data=data_bytes,
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                try:
+                    with urllib.request.urlopen(req, timeout=10) as resp:
+                        if resp.status in (200, 204):
+                            r.is_imported_to_ga4 = True
+                            r.imported_at = now_iso
+                            imported_count += 1
+                            results.append({"refund_id": r.refund_id, "status": "sent", "http_code": resp.status})
+                except Exception as e:
+                    logger.error(f"Failed dispatching offline refund {r.refund_id}: {e}")
+                    results.append({"refund_id": r.refund_id, "status": "error", "error": str(e)})
+
+        # Persist updated state
+        self.refunds_file.write_text(
+            json.dumps([r.to_dict() for r in refunds], indent=2),
+            encoding="utf-8",
+        )
+        self._append_log(results)
+
+        return {
+            "status": "success",
+            "imported_count": imported_count,
+            "pending_remaining": len(refunds) - imported_count,
+            "results": results,
+        }
 

@@ -67,8 +67,21 @@
   // third-party download until the browser is idle so it cannot compete with LCP.
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+  // Google Consent Mode v2: privacy-first defaults before tag evaluation
+  window.gtag('consent', 'default', {
+    'analytics_storage': 'granted',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update': 500
+  });
+
   window.gtag('js', new Date());
-  window.gtag('config', MEASUREMENT_ID, { send_page_view: true });
+  window.gtag('config', MEASUREMENT_ID, { 
+    send_page_view: true,
+    anonymize_ip: true
+  });
   function loadAnalytics() {
     if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}"]`)) return;
     const analyticsScript = document.createElement('script');
@@ -88,7 +101,8 @@
     return originalPush(entry);
   };
 
-  window.ATGAttribution = { current, label, appendToMessage };
+  function updateConsent(settings) { if (typeof window.gtag === 'function') window.gtag('consent', 'update', settings); }
+  window.ATGAttribution = { current, label, appendToMessage, updateConsent };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', decorateWhatsAppLinks, { once: true });
   } else {
@@ -233,15 +247,15 @@
                     href.indexOf('interested in') !== -1;
 
       if (isChannel) {
-        trackEvent('whatsapp_channel_click', { link_url: href });
+        trackEvent('whatsapp_channel_click', { destination: 'whatsapp_channel' });
       } else if (isOrder) {
         // Order Initiation (begin_checkout & qualified lead generation)
         var h1 = document.querySelector('h1');
         var itemName = h1 ? h1.textContent.trim() : 'AI Tool Subscription';
-        trackEvent('whatsapp_order_click', { link_url: href, item_name: itemName });
+        trackEvent('whatsapp_order_click', { destination: 'whatsapp_order', item_name: itemName });
         trackEvent('begin_checkout', {
           currency: 'PKR',
-          items: [{ item_name: itemName, currency: 'PKR' }]
+          items: [{ item_name: itemName, currency: 'PKR', quantity: 1 }]
         });
         trackEvent('generate_lead', {
           currency: 'PKR',
@@ -250,7 +264,7 @@
         });
       } else {
         // Support Inquiry
-        trackEvent('whatsapp_support_click', { link_url: href });
+        trackEvent('whatsapp_support_click', { destination: 'whatsapp_support' });
       }
       return;
     }
