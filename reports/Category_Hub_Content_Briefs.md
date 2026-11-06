@@ -1,145 +1,345 @@
-# Category Hub Content Briefs (13 Planned Categories)
-**Architecture Policy:** Category hubs provide distinct selection methodologies, comparative criteria, and verified parent tool directories. Each hub remains **unindexed until its content quality gate passes**.
+# Category Hub Content Briefs & Architecture Spec (13 Planned Categories)
+**Architecture Policy:** Category hubs provide distinct selection methodologies, comparative criteria, and verified parent tool directories.
+**Quality Gate Rule:** In compliance with Google Search Essentials and master execution prompt directives, category hubs remain **unindexed (`UNINDEXED_PENDING_EDITORIAL_REVIEW`)** until full standalone interactive templates with over 1,200 words of original analytical selection criteria are compiled.
 
 ---
 
-## Category 1: AI Chatbots, LLMs & Reasoning
-- **Route Slug:** `/category/ai-chatbots/`
-- **Primary Search Intent:** Commercial Investigation (*"Best AI chatbots in Pakistan"*, *"ChatGPT vs Claude vs Gemini price comparison"*)
-- **Target Audience:** Developers, researchers, writers, university students in Pakistan.
-- **Selection Criteria:** Model reasoning benchmark, context window size, multi-modal vision, domestic PKR cost.
-- **Included Verified Tools:** ChatGPT / OpenAI, Claude, Google Gemini Advanced, xAI Grok, DeepSeek AI, Perplexity AI.
-- **AEO Direct Answer:** "AI Chatbots in Pakistan provide natural language reasoning, code synthesis, and automated writing starting from Rs. 800 to Rs. 2,800 PKR per month with domestic EasyPaisa/JazzCash activation."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-01: AI Chatbots, LLMs & Multi-Modal Intelligence
+- **Workbook Slug:** `/category/ai-chatbots-llms-multi-modal-intelligence/`
+- **Canonical Short Slug:** `/category/ai-chatbots/`
+- **Mapped Live Tools in Repo:** [`/tools/chatgpt/`](https://aitoolgems.tech/tools/chatgpt/), [`/tools/claude/`](https://aitoolgems.tech/tools/claude/), [`/tools/gemini/`](https://aitoolgems.tech/tools/gemini/), [`/tools/grok/`](https://aitoolgems.tech/tools/grok/), [`/tools/deepseek/`](https://aitoolgems.tech/tools/deepseek/), [`/tools/perplexity/`](https://aitoolgems.tech/tools/perplexity/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Context Window Capacity (e.g. Gemini 1M+ vs Claude 200K vs GPT-4o 128K)
+  • Reasoning vs Generation Speed (o1 & Claude 3.5 Sonnet benchmark vs Haiku/mini)
+  • Live Web Browsing & Search Integration (Perplexity & Gemini vs native chat)
+  • Pakistani Payment Compatibility (Flat PKR pricing via EasyPaisa/JazzCash/SadaPay)
+
+### 2. Category Introductory Content
+> AI Chatbots and Large Language Models (LLMs) have revolutionized computational research, programming, and automated document synthesis. For Pakistani researchers, university students, and software engineers, choosing the right assistant depends on token capacity, code generation fidelity, and frictionless domestic payment rails without international credit card hurdles.
+
+### 3. Category FAQs
+**Q: Which AI chatbot has the largest context window for long documents in Pakistan?**  
+*A: Google Gemini Advanced offers a 1,000,000+ token context window, allowing users to process multi-hundred-page research PDFs and video lectures directly.*
+
+**Q: Can I pay for ChatGPT Plus and Claude Pro using EasyPaisa or JazzCash?**  
+*A: Yes. AI Tool Gems verifies domestic PKR transactions via EasyPaisa, JazzCash, and SadaPay, providing private and invitation access with full warranty.*
+
+### 4. Contextual Related Guides
+- [/guides/chatgpt-vs-gemini-pakistan/](https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/)
+- [/guides/chatgpt-vs-claude-pakistan/](https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/)
+- [/guides/claude-ai-pakistan/](https://aitoolgems.tech/guides/claude-ai-pakistan/)
 
 ---
 
-## Category 2: Generative AI Video, Avatars & Animation
-- **Route Slug:** `/category/ai-video/`
-- **Primary Search Intent:** Commercial & Transactional (*"AI video generator Pakistan"*, *"Runway Gen-3 Kling Veo pricing"*)
-- **Target Audience:** Content creators, video production houses, digital marketing agencies.
-- **Selection Criteria:** 1080p/4K render fidelity, motion consistency, generation speed, credit cost per second.
-- **Included Verified Tools:** OpenAI Sora, Google Veo, Runway AI, Pika Labs, Luma Dream Machine, Kling AI, MiniMax Hailuo, HeyGen.
-- **AEO Direct Answer:** "Generative AI Video tools convert text prompts and images into high-definition cinematic video clips. Subscriptions in Pakistan range from Rs. 1,500 to Rs. 4,500 PKR with zero international card requirements."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-02: Generative AI Video, Avatars & Animation
+- **Workbook Slug:** `/category/generative-ai-video-avatars-animation/`
+- **Canonical Short Slug:** `/category/ai-video/`
+- **Mapped Live Tools in Repo:** [`/tools/veo/`](https://aitoolgems.tech/tools/veo/), [`/tools/runway/`](https://aitoolgems.tech/tools/runway/), [`/tools/kling/`](https://aitoolgems.tech/tools/kling/), [`/tools/heygen/`](https://aitoolgems.tech/tools/heygen/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • 1080p Full HD & 4K Output Fidelity
+  • Temporal Physical Consistency across articulated motion
+  • Camera Control Direction (Drone shots, tracking, panning)
+  • Commercial asset licensing and watermark policies
+
+### 2. Category Introductory Content
+> Generative AI video modeling enables directors, advertising agencies, and short-form creators to synthesize cinematic footage and photorealistic human avatars from natural language prompts. Our selection benchmarks video engines on motion stability, prompt adherence, and computational rendering cost.
+
+### 3. Category FAQs
+**Q: What is the difference between Google Veo and Runway Gen-3?**  
+*A: Google DeepMind Veo specializes in cinematic camera controls and physical consistency, while Runway Gen-3 excels in motion brush manipulation and director camera controls.*
+
+**Q: How are video generations fulfilled in Pakistan?**  
+*A: Access is activated on dedicated platform quotas or shared enterprise render pools with human WhatsApp setup support.*
+
+### 4. Contextual Related Guides
+- [/guides/best-ai-video-generators-pakistan/](https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/)
+- [/guides/runway-gen3-pakistan/](https://aitoolgems.tech/guides/runway-gen3-pakistan/)
+- [/guides/heygen-ai-video-pakistan/](https://aitoolgems.tech/guides/heygen-ai-video-pakistan/)
 
 ---
 
-## Category 3: Video Editing, Motion Graphics & Creative Footage
-- **Route Slug:** `/category/video-editing/`
-- **Primary Search Intent:** Commercial Investigation (*"CapCut Pro Pakistan price"*, *"Wondershare Filmora license EasyPaisa"*)
-- **Target Audience:** TikTok creators, YouTubers, freelance video editors.
-- **Selection Criteria:** AI auto-captions, 4K export, background removal, template libraries.
-- **Included Verified Tools:** CapCut Pro/Teams, Wondershare Filmora, Descript, Artlist.io Max, Motion Array, Meitu.
-- **AEO Direct Answer:** "Video editing software provides professional timeline editing, AI smart cutouts, and royalty-free footage. CapCut Pro and Filmora are available in Pakistan with instant activation."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-03: Video Editing, Motion Graphics & Creative Footage
+- **Workbook Slug:** `/category/video-editing-motion-graphics-creative-footage/`
+- **Canonical Short Slug:** `/category/video-editing/`
+- **Mapped Live Tools in Repo:** [`/tools/capcut/`](https://aitoolgems.tech/tools/capcut/), [`/tools/adobe/`](https://aitoolgems.tech/tools/adobe/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • AI Auto-Captioning accuracy for Urdu, Hindi, and English
+  • Hardware performance on entry-level PC workstations
+  • Timeline multi-track video and audio editing flexibility
+  • Royalty-free visual and sound effect asset libraries
+
+### 2. Category Introductory Content
+> Modern video post-production requires rapid timeline assembly, automated multilingual subtitles, and visual effects. We benchmark top post-production software for Pakistani YouTubers, TikTok editors, and creative studios.
+
+### 3. Category FAQs
+**Q: Is CapCut Pro available on PC in Pakistan?**  
+*A: Yes, CapCut Pro activates all desktop features including auto-captions, 4K 60fps export, and AI smart cutouts.*
+
+**Q: Can I buy Adobe Premiere Pro separately from Creative Cloud?**  
+*A: On AI Tool Gems, Adobe Premiere Pro is provided as part of the full Creative Cloud All Apps bundle.*
+
+### 4. Contextual Related Guides
+- [/guides/capcut-vs-runway-pakistan/](https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/)
+- [/guides/canva-vs-figma-pakistan/](https://aitoolgems.tech/guides/canva-vs-figma-pakistan/)
 
 ---
 
-## Category 4: AI Image Generation, Digital Art & Graphic Design
-- **Route Slug:** `/category/ai-design/`
-- **Primary Search Intent:** Commercial Investigation (*"Midjourney price in Pakistan"*, *"Canva Pro 1 year invite EasyPaisa"*)
-- **Target Audience:** Graphic designers, social media managers, thumbnail creators, UI/UX designers.
-- **Selection Criteria:** Prompt adherence, photorealism, vector export, team brand kit collaboration.
-- **Included Verified Tools:** Midjourney, Canva Pro, Adobe Creative Cloud, Figma Pro, Freepik Premium, Envato Elements, Leonardo.Ai.
-- **AEO Direct Answer:** "AI design and image generation tools enable photorealistic art creation, background removal, and vector graphics. Subscriptions in Pakistan start from Rs. 450 PKR."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-04: AI Image Generation, Digital Art & Graphic Design
+- **Workbook Slug:** `/category/ai-image-generation-digital-art-graphic-design/`
+- **Canonical Short Slug:** `/category/ai-design/`
+- **Mapped Live Tools in Repo:** [`/tools/midjourney/`](https://aitoolgems.tech/tools/midjourney/), [`/tools/leonardo/`](https://aitoolgems.tech/tools/leonardo/), [`/tools/canva/`](https://aitoolgems.tech/tools/canva/), [`/tools/figma/`](https://aitoolgems.tech/tools/figma/), [`/tools/freepik/`](https://aitoolgems.tech/tools/freepik/), [`/tools/adobe/`](https://aitoolgems.tech/tools/adobe/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Photorealism & Human Anatomy Rendering
+  • Vector Graphic Export vs Raster Image Output
+  • Commercial Reproduction and Intellectual Property Rights
+  • Inpainting, Outpainting, and Canvas Layering Tools
+
+### 2. Category Introductory Content
+> AI design platforms range from prompt-driven generative art engines like Midjourney and Leonardo.Ai to collaborative vector systems like Figma and Adobe Illustrator. We evaluate tools based on creative freedom, prompt fidelity, and production export standards.
+
+### 3. Category FAQs
+**Q: What is the best alternative to Midjourney in Pakistan?**  
+*A: Leonardo.Ai is the top web-based alternative with 8,500 monthly credits and Realtime Canvas sketching.*
+
+**Q: Can I use generated AI art for commercial client projects?**  
+*A: Paid tiers on Midjourney, Leonardo.Ai, and Adobe Firefly grant commercial usage rights for created assets.*
+
+### 4. Contextual Related Guides
+- [/guides/midjourney-alternatives-pakistan/](https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/)
+- [/guides/canva-vs-figma-pakistan/](https://aitoolgems.tech/guides/canva-vs-figma-pakistan/)
 
 ---
 
-## Category 5: AI Voice Cloning, Audio Synthesis & Music
-- **Route Slug:** `/category/ai-voice/`
-- **Primary Search Intent:** Transactional & Commercial (*"ElevenLabs price Pakistan"*, *"Suno AI music generator PKR"*)
-- **Target Audience:** Podcasters, audiobook creators, video dubbers, music producers.
-- **Selection Criteria:** Voice realism, latency, emotion control, multilingual accent support.
-- **Included Verified Tools:** ElevenLabs, Suno AI, Udio AI, Brain.fm, Voice.ai, LALAL.AI, Murf AI, Speechify.
-- **AEO Direct Answer:** "AI voice cloning and music tools generate human-grade spoken dialogue and full musical compositions from text prompts with instant domestic delivery."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-05: AI Voice Cloning, Audio Synthesis & Music
+- **Workbook Slug:** `/category/ai-voice-cloning-audio-synthesis-music/`
+- **Canonical Short Slug:** `/category/ai-voice/`
+- **Mapped Live Tools in Repo:** [`/tools/elevenlabs/`](https://aitoolgems.tech/tools/elevenlabs/), [`/tools/suno/`](https://aitoolgems.tech/tools/suno/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Voice Naturalness, Latency, and Emotion Inflection
+  • Multilingual & Regional Accent Support (Urdu, Pashto, Punjabi)
+  • Commercial Music Streaming Monetization Rights (Spotify/Apple)
+  • Stem Audio Track Separation (Isolated vocals & instruments)
+
+### 2. Category Introductory Content
+> Generative audio transforms digital storytelling, dubbing, and commercial music production. From hyper-realistic AI voice cloning with ElevenLabs to full-length song generation on Suno AI, we benchmark sound engines for creative fidelity and licensing transparency.
+
+### 3. Category FAQs
+**Q: Does ElevenLabs support Urdu text-to-speech in Pakistan?**  
+*A: Yes, ElevenLabs Multilingual v2 model natively speaks Urdu with natural cadence and realistic emotion.*
+
+**Q: Can I monetize Suno AI music on YouTube and Spotify?**  
+*A: Tracks generated under an active Suno Pro subscription include full commercial rights for streaming monetization.*
+
+### 4. Contextual Related Guides
+- [/guides/elevenlabs-voice-ai-pakistan/](https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/)
 
 ---
 
-## Category 6: Developer Tools, AI Coding Editors & Cloud Infrastructure
-- **Route Slug:** `/category/developer-tools/`
-- **Primary Search Intent:** Commercial & Transactional (*"Cursor AI Pro Pakistan price"*, *"Lovable AI web builder PKR"*)
-- **Target Audience:** Software engineers, full-stack developers, tech agency owners.
-- **Selection Criteria:** Composer multi-file edit, speed of code suggestions, Claude 3.5 Sonnet integration, cloud runner specs.
-- **Included Verified Tools:** Cursor AI, Lovable.dev, v0 by Vercel, Bolt.new, Replit Core, Windsurf Editor, JetBrains, GitHub Copilot.
-- **AEO Direct Answer:** "AI developer tools accelerate coding and full-stack web application development via natural language prompts, available in Pakistan with dedicated developer warranty."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-06: Developer Tools, AI Coding Editors & Cloud Infrastructure
+- **Workbook Slug:** `/category/developer-tools-ai-coding-editors-cloud-infrastructure/`
+- **Canonical Short Slug:** `/category/developer-tools/`
+- **Mapped Live Tools in Repo:** [`/tools/cursor/`](https://aitoolgems.tech/tools/cursor/), [`/tools/replit/`](https://aitoolgems.tech/tools/replit/), [`/tools/lovable/`](https://aitoolgems.tech/tools/lovable/), [`/tools/copilot/`](https://aitoolgems.tech/tools/copilot/), [`/tools/n8n/`](https://aitoolgems.tech/tools/n8n/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Multi-File Agentic Refactoring (Composer vs single-file chat)
+  • Cloud Deployment Automation & Serverless Hosting
+  • VS Code Extension Compatibility and Semantic Repo Indexing
+  • Fast Premium Model Allowances (Claude 3.5 Sonnet / GPT-4o)
+
+### 2. Category Introductory Content
+> AI-first developer environments dramatically accelerate full-stack programming, automated unit testing, and production deployment. We evaluate developer tools on multi-file comprehension, prompt latency, and developer ergonomics.
+
+### 3. Category FAQs
+**Q: Why is Cursor AI preferred over standard GitHub Copilot?**  
+*A: Cursor offers Composer, an agent capable of modifying and creating files across your entire codebase simultaneously with Claude 3.5 Sonnet.*
+
+**Q: Can I host live apps on Replit Core from Pakistan?**  
+*A: Yes, Replit Core includes zero-config production deployments, automatic SSL, and custom domain routing.*
+
+### 4. Contextual Related Guides
+- [/guides/cursor-ai-pakistan/](https://aitoolgems.tech/guides/cursor-ai-pakistan/)
+- [/guides/lovable-vs-replit-pakistan/](https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/)
 
 ---
 
-## Category 7: SEO, Web Analytics & Market Intelligence
-- **Route Slug:** `/category/seo-marketing/`
-- **Primary Search Intent:** Commercial Investigation (*"Semrush Pro Pakistan price"*, *"Ahrefs group buy vs private account"*)
-- **Target Audience:** SEO specialists, digital marketing agencies, affiliate bloggers.
-- **Selection Criteria:** Database freshness, keyword crawl accuracy, backlink index size, daily query limits.
-- **Included Verified Tools:** Semrush Pro/Guru, Ahrefs Standard, Moz Pro, Ubersuggest, Similarweb, vidIQ Boost, PostHog.
-- **AEO Direct Answer:** "SEO intelligence tools provide organic keyword tracking, competitor backlink auditing, and SERP ranking analytics for businesses in Pakistan."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-07: SEO, Web Analytics & Market Intelligence
+- **Workbook Slug:** `/category/seo-web-analytics-market-intelligence/`
+- **Canonical Short Slug:** `/category/seo-marketing/`
+- **Mapped Live Tools in Repo:** [`/tools/semrush/`](https://aitoolgems.tech/tools/semrush/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • SERP Index Freshness & Pakistan Local Database Depth
+  • Backlink Crawl Frequency and Toxicity Auditing
+  • Daily Keyword Query Allowances for Agencies
+  • Automated Technical Site Crawling & Core Web Vitals Tracking
+
+### 2. Category Introductory Content
+> Search engine optimization and competitive analytics tools provide empirical ranking data, keyword gap discovery, and backlink telemetry. We review market intelligence suites for agency workflow efficiency in Pakistan.
+
+### 3. Category FAQs
+**Q: Is Semrush Pro suitable for Pakistani digital marketing agencies?**  
+*A: Semrush Pro provides comprehensive Pakistan database keyword research, competitor domain auditing, and position tracking.*
+
+### 4. Contextual Related Guides
+- [/guides/semrush-pro-pakistan/](https://aitoolgems.tech/guides/semrush-pro-pakistan/)
 
 ---
 
-## Category 8: AI Writing, Paraphrasing & Detection Bypassing
-- **Route Slug:** `/category/ai-writing/`
-- **Primary Search Intent:** Commercial (*"QuillBot Premium price Pakistan"*, *"Turnitin plagiarism check student"*)
-- **Target Audience:** Academic students, content writers, copywriters, university faculty.
-- **Selection Criteria:** Paraphrasing fluency, grammar accuracy, AI detection defense, academic integrity similarity.
-- **Included Verified Tools:** Gamma AI, QuillBot Premium, Grammarly Premium, Turnitin, Jasper AI, Copy.ai, ZeroGPT, Undetectable AI.
-- **AEO Direct Answer:** "AI writing and academic tools assist with thesis proofreading, grammar correction, and document summarization at accessible Pakistani student rates."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-08: AI Writing, Paraphrasing & Detection Bypassing
+- **Workbook Slug:** `/category/ai-writing-paraphrasing-detection-bypassing/`
+- **Canonical Short Slug:** `/category/ai-writing/`
+- **Mapped Live Tools in Repo:** [`/tools/grammarly/`](https://aitoolgems.tech/tools/grammarly/), [`/tools/quillbot/`](https://aitoolgems.tech/tools/quillbot/), [`/tools/gamma/`](https://aitoolgems.tech/tools/gamma/), [`/tools/turnitin/`](https://aitoolgems.tech/tools/turnitin/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Grammar Correction Precision and Vocabulary Enhancement
+  • Paraphrasing Fluency and Academic Style Customization
+  • AI Content Similarity & Academic Integrity Verification
+  • Slide Deck & Presentation Formatting Automation
+
+### 2. Category Introductory Content
+> Academic and professional writing tools streamline research synthesis, thesis editing, and executive presentation drafting. We evaluate writing assistants on stylistic naturalness and plagiarism integrity.
+
+### 3. Category FAQs
+**Q: What is the difference between Grammarly and QuillBot?**  
+*A: Grammarly focuses on tone, clarity, and grammatical correctness, whereas QuillBot excels at paraphrasing and rephrasing sentences.*
+
+### 4. Contextual Related Guides
+- [/guides/grammarly-vs-quillbot-pakistan/](https://aitoolgems.tech/guides/grammarly-vs-quillbot-pakistan/)
+- [/guides/gamma-app-pakistan/](https://aitoolgems.tech/guides/gamma-app-pakistan/)
 
 ---
 
-## Category 9: Office Suites, Operating Systems & Team Productivity
-- **Route Slug:** `/category/office-productivity/`
-- **Primary Search Intent:** Transactional (*"Microsoft 365 1TB OneDrive Pakistan"*, *"Windows 11 Pro original key PKR"*)
-- **Target Audience:** Corporate teams, remote workers, home offices, students.
-- **Selection Criteria:** Cloud storage capacity, multi-device license, real-time collaboration, PDF OCR conversion.
-- **Included Verified Tools:** Microsoft 365, Windows 10/11 Pro, Zoom Pro, Slack Pro, Trello, ClickUp, iLovePDF, Miro.
-- **AEO Direct Answer:** "Official office suites and operating systems provide secure document editing and cloud backup with permanent online activation keys."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-09: Office Suites, Operating Systems & Team Productivity
+- **Workbook Slug:** `/category/office-suites-operating-systems-team-productivity/`
+- **Canonical Short Slug:** `/category/office-productivity/`
+- **Mapped Live Tools in Repo:** [`/tools/office365/`](https://aitoolgems.tech/tools/office365/), [`/tools/windows/`](https://aitoolgems.tech/tools/windows/), [`/tools/notion/`](https://aitoolgems.tech/tools/notion/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Cloud Storage Quotas (1TB OneDrive vs local storage)
+  • Cross-Platform License Activation (Windows, Mac, iOS, Android)
+  • Team Workspace Database Relational Linking
+  • Security Patch Updates & Genuine Microsoft Digital Entitlement
+
+### 2. Category Introductory Content
+> Operating systems and productivity suites provide the fundamental digital infrastructure for corporate teams, freelance workstations, and educational institutions in Pakistan.
+
+### 3. Category FAQs
+**Q: Is Windows 11 Pro activated online with a genuine digital key?**  
+*A: Yes, Windows 11 Pro keys on AI Tool Gems activate permanently via official Microsoft servers.*
+
+### 4. Contextual Related Guides
+- [/guides/businesses/](https://aitoolgems.tech/guides/businesses/)
+- [/guides/productivity/](https://aitoolgems.tech/guides/productivity/)
 
 ---
 
-## Category 10: Education, Academics, Languages & Courses
-- **Route Slug:** `/category/education/`
-- **Primary Search Intent:** Commercial (*"Duolingo Super price Pakistan"*, *"Coursera Plus subscription EasyPaisa"*)
-- **Target Audience:** Lifelong learners, job seekers, university students.
-- **Selection Criteria:** Accredited certificates, offline lesson sync, interactive quiz grading.
-- **Included Verified Tools:** Duolingo Super, Coursera Plus, Skillshare, Quizlet Plus, Scribd, Chegg, Udemy, DataCamp.
-- **AEO Direct Answer:** "Online education platforms offer accredited university certificates and gamified language lessons accessible in Pakistan via local bank transfers."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-10: Education, Academics, Languages & Courses
+- **Workbook Slug:** `/category/education-academics-languages-courses/`
+- **Canonical Short Slug:** `/category/education/`
+- **Mapped Live Tools in Repo:** [`/tools/turnitin/`](https://aitoolgems.tech/tools/turnitin/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Accredited University Certificate Credentials
+  • Interactive Exercise Grading and Skill Tracking
+  • Academic Research Database Depth
+  • Affordable Pakistani Student Payment Options
+
+### 2. Category Introductory Content
+> Online education platforms provide accredited certifications, gamified language acquisition, and academic research tools for Pakistani students and professionals.
+
+### 3. Category FAQs
+**Q: How do students in Pakistan access educational tools without credit cards?**  
+*A: AI Tool Gems accepts EasyPaisa, JazzCash, and SadaPay for verified student subscriptions.*
+
+### 4. Contextual Related Guides
+- [/guides/students/](https://aitoolgems.tech/guides/students/)
 
 ---
 
-## Category 11: VPNs, Privacy & Cybersecurity
-- **Route Slug:** `/category/vpn-security/`
-- **Primary Search Intent:** Transactional (*"NordVPN price in Pakistan"*, *"Surfshark VPN unlimited devices EasyPaisa"*)
-- **Target Audience:** Freelancers, remote workers, privacy-conscious consumers.
-- **Selection Criteria:** Zero-logs audit, WireGuard protocol speed, server network size, simultaneous device limit.
-- **Included Verified Tools:** ExpressVPN, NordVPN, Surfshark VPN, Proton VPN, HMA, PureVPN, CyberGhost, AdGuard.
-- **AEO Direct Answer:** "Virtual Private Networks encrypt internet traffic and bypass regional content restrictions with verified high-speed servers in Pakistan."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-11: VPNs, Privacy & Cybersecurity
+- **Workbook Slug:** `/category/vpns-privacy-cybersecurity/`
+- **Canonical Short Slug:** `/category/vpn-security/`
+- **Mapped Live Tools in Repo:** [`/tools/nordvpn/`](https://aitoolgems.tech/tools/nordvpn/), [`/tools/surfshark/`](https://aitoolgems.tech/tools/surfshark/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Independently Audited Zero-Logs Policies
+  • WireGuard / NordLynx Protocol Connection Speed
+  • Simultaneous Multi-Device Connection Caps
+  • Streaming Platform & Pakistani Banking Geo-Unblocking
+
+### 2. Category Introductory Content
+> Virtual Private Networks safeguard personal data on public Wi-Fi networks and bypass regional ISP routing restrictions for freelance contractors and remote agency teams.
+
+### 3. Category FAQs
+**Q: Which VPN is better in Pakistan: NordVPN or Surfshark?**  
+*A: NordVPN provides faster server speeds and specialized obfuscated servers, while Surfshark supports unlimited simultaneous devices on a single account.*
+
+### 4. Contextual Related Guides
+- [/guides/nordvpn-vs-surfshark-pakistan/](https://aitoolgems.tech/guides/nordvpn-vs-surfshark-pakistan/)
 
 ---
 
-## Category 12: Streaming Entertainment, Music & Video OTT
-- **Route Slug:** `/category/entertainment/`
-- **Primary Search Intent:** Transactional (*"Spotify Premium Pakistan price"*, *"YouTube Premium family slot PKR"*)
-- **Target Audience:** Music listeners, movie and series binge-watchers, families.
-- **Selection Criteria:** 4K UHD HDR streaming, ad-free listening, offline downloads, multi-screen concurrency.
-- **Included Verified Tools:** Spotify Premium, Apple Music, YouTube Premium, Netflix 4K, Amazon Prime Video, Disney+, Crunchyroll.
-- **AEO Direct Answer:** "Streaming subscriptions provide ad-free high-definition entertainment across smart TVs, mobile phones, and computers with replacement warranty."
-- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW`
+## CAT-HUB-12: Streaming Entertainment, Music & Video OTT
+- **Workbook Slug:** `/category/streaming-entertainment-music-video-ott/`
+- **Canonical Short Slug:** `/category/entertainment/`
+- **Mapped Live Tools in Repo:** [`/tools/netflix/`](https://aitoolgems.tech/tools/netflix/), [`/tools/youtube/`](https://aitoolgems.tech/tools/youtube/), [`/tools/spotify/`](https://aitoolgems.tech/tools/spotify/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • 4K Ultra HD & Dolby Atmos Streaming Quality
+  • Multi-Screen Concurrent Family Viewing Profiles
+  • Ad-Free Background Audio Playback & Offline Caching
+  • Account Security & 30-Day Replacement Warranty
+
+### 2. Category Introductory Content
+> On-demand streaming services deliver ad-free music, television series, and cinematic blockbusters across mobile devices, smart televisions, and personal computers.
+
+### 3. Category FAQs
+**Q: How are Netflix and YouTube Premium subscriptions delivered in Pakistan?**  
+*A: Accounts are delivered with private profiles and verified payment confirmation via WhatsApp support.*
+
+### 4. Contextual Related Guides
+- [/deals/](https://aitoolgems.tech/deals/)
+- [/prices/](https://aitoolgems.tech/prices/)
 
 ---
 
-## Category 13: Social Networks, Gaming, Identity & Infrastructure
-- **Route Slug:** `/category/social-gaming/`
-- **Primary Search Intent:** Informational & Policy-Gated (*"Discord Nitro price Pakistan"*, *"LinkedIn Premium Career 3 months"*)
-- **Target Audience:** Professional job seekers, gamers, community moderators.
-- **Selection Criteria:** InMail credits, profile enhancements, server boost capacity.
-- **Included Verified Tools:** LinkedIn Premium, Discord Nitro, Xbox Game Pass, Steam Wallet, Apple Gift Cards.
-- **Policy Risk Guard:** Sub-services like OTP numbers, aged accounts, and social clones are strictly **HOLD / BLOCKED** from public display.
-- **Indexing Status:** `UNINDEXED_PENDING_POLICY_REVIEW`
+## CAT-HUB-13: Social Networks, Gaming, Identity & Infrastructure
+- **Workbook Slug:** `/category/social-networks-gaming-identity-infrastructure/`
+- **Canonical Short Slug:** `/category/social-gaming/`
+- **Mapped Live Tools in Repo:** [`/tools/linkedin/`](https://aitoolgems.tech/tools/linkedin/)
+- **Indexing Status:** `UNINDEXED_PENDING_EDITORIAL_REVIEW` (Protected against thin doorway page penalties)
+
+### 1. Genuine Category Selection Criteria
+  • Direct InMail Executive Recruiter Outreach
+  • Profile Visibility Analytics & Skill Credentialing
+  • Strict Policy Compliance (Zero OTP / Zero Virtual Numbers)
+  • Genuine Invitation Vouchers and Gift Entitlements
+
+### 2. Category Introductory Content
+> Professional career platforms and gaming networks enhance executive visibility and digital community engagement. High-risk sub-services (OTPs, aged accounts) are permanently blocked.
+
+### 3. Category FAQs
+**Q: Is LinkedIn Premium delivered as a voucher or login?**  
+*A: AI Tool Gems provides LinkedIn Premium via official 2-month invitation vouchers activated on your own personal profile.*
+
+### 4. Contextual Related Guides
+- [/guides/businesses/](https://aitoolgems.tech/guides/businesses/)
+
+---
