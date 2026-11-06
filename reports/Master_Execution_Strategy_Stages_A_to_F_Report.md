@@ -155,3 +155,4 @@ python -c "from security_agent.snapshot_manager import SnapshotManager; Snapshot
 # Restore specific modified components from git history:
 git checkout origin/main -- index.html app.js sitemap.xml
 ```
+

@@ -292,5 +292,47 @@
       "market": "PK",
       "currency": "PKR"
     }
+  },
+  {
+    "event": "$pageview",
+    "distinct_id": "test-usr",
+    "timestamp": 1793988225.768305,
+    "properties": {
+      "$current_url": "https://aitoolgems.tech/",
+      "title": "Home",
+      "$referrer": "",
+      "$lib": "hermes_posthog_agent",
+      "$lib_version": "1.0.0",
+      "market": "PK",
+      "currency": "PKR"
+    }
+  },
+  {
+    "event": "$pageview",
+    "distinct_id": "test-usr",
+    "timestamp": 1793988396.6547763,
+    "properties": {
+      "$current_url": "https://aitoolgems.tech/",
+      "title": "Home",
+      "$referrer": "",
+      "$lib": "hermes_posthog_agent",
+      "$lib_version": "1.0.0",
+      "market": "PK",
+      "currency": "PKR"
+    }
+  },
+  {
+    "event": "$pageview",
+    "distinct_id": "test-usr",
+    "timestamp": 1793988473.6525161,
+    "properties": {
+      "$current_url": "https://aitoolgems.tech/",
+      "title": "Home",
+      "$referrer": "",
+      "$lib": "hermes_posthog_agent",
+      "$lib_version": "1.0.0",
+      "market": "PK",
+      "currency": "PKR"
+    }
   }
 ]
