@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-05T16:35:45.040795+00:00",
+  "timestamp": "2026-11-06T14:07:14.925625+00:00",
   "site_url": "https://aitoolgems.tech/",
   "is_verified": true,
-  "daily_quota": 100,
-  "monthly_quota": 2600,
+  "daily_quota": 97,
+  "monthly_quota": 2497,
   "total_bing_queries": 24,
   "total_bing_impressions": 28,
   "total_bing_clicks": 1,
@@ -45,17 +45,6 @@
       "recommendation": "Healthy cross-engine discovery."
     },
     {
-      "query": "replit price in pakistan",
-      "bing_impressions": 1,
-      "bing_clicks": 0,
-      "bing_position": 6.0,
-      "gsc_impressions": 0,
-      "gsc_clicks": 0,
-      "gsc_position": 0.0,
-      "opportunity_type": "CROSS_ENGINE_WINNER",
-      "recommendation": "Healthy cross-engine discovery."
-    },
-    {
       "query": "ai tools bundle subscription pakistani price",
       "bing_impressions": 1,
       "bing_clicks": 0,
@@ -67,10 +56,10 @@
       "recommendation": "Ranking #5 on Bing! Protect snippet and add target anchor links."
     },
     {
-      "query": "gemini pro pricing in pakistan",
-      "bing_impressions": 2,
+      "query": "replit price in pakistan",
+      "bing_impressions": 1,
       "bing_clicks": 0,
-      "bing_position": 10.0,
+      "bing_position": 6.0,
       "gsc_impressions": 0,
       "gsc_clicks": 0,
       "gsc_position": 0.0,
@@ -89,6 +78,17 @@
       "recommendation": "Healthy cross-engine discovery."
     },
     {
+      "query": "gemini pro pricing in pakistan",
+      "bing_impressions": 2,
+      "bing_clicks": 0,
+      "bing_position": 10.0,
+      "gsc_impressions": 0,
+      "gsc_clicks": 0,
+      "gsc_position": 0.0,
+      "opportunity_type": "CROSS_ENGINE_WINNER",
+      "recommendation": "Healthy cross-engine discovery."
+    },
+    {
       "query": "ai tools bundle subscription pakistan price",
       "bing_impressions": 1,
       "bing_clicks": 0,
@@ -98,6 +98,17 @@
       "gsc_position": 0.0,
       "opportunity_type": "BING_BREAKTHROUGH",
       "recommendation": "Ranking #2 on Bing! Protect snippet and add target anchor links."
+    },
+    {
+      "query": "ai tools bundle subscription pakistan price does home depot cut wood for yourself",
+      "bing_impressions": 1,
+      "bing_clicks": 0,
+      "bing_position": 4.0,
+      "gsc_impressions": 0,
+      "gsc_clicks": 0,
+      "gsc_position": 0.0,
+      "opportunity_type": "BING_BREAKTHROUGH",
+      "recommendation": "Ranking #4 on Bing! Protect snippet and add target anchor links."
     },
     {
       "query": "windows 11 pro activation key price in pk",
@@ -111,15 +122,15 @@
       "recommendation": "Ranking #5 on Bing! Protect snippet and add target anchor links."
     },
     {
-      "query": "ai tools bundle subscription pakistan price does home depot cut wood for yourself",
+      "query": "linkedin premium cost pakistan",
       "bing_impressions": 1,
       "bing_clicks": 0,
-      "bing_position": 4.0,
+      "bing_position": 7.0,
       "gsc_impressions": 0,
       "gsc_clicks": 0,
       "gsc_position": 0.0,
-      "opportunity_type": "BING_BREAKTHROUGH",
-      "recommendation": "Ranking #4 on Bing! Protect snippet and add target anchor links."
+      "opportunity_type": "CROSS_ENGINE_WINNER",
+      "recommendation": "Healthy cross-engine discovery."
     },
     {
       "query": "kinkdhin premium pakistan",
@@ -142,17 +153,6 @@
       "gsc_position": 0.0,
       "opportunity_type": "BING_BREAKTHROUGH",
       "recommendation": "Ranking #2 on Bing! Protect snippet and add target anchor links."
-    },
-    {
-      "query": "linkedin premium cost pakistan",
-      "bing_impressions": 1,
-      "bing_clicks": 0,
-      "bing_position": 7.0,
-      "gsc_impressions": 0,
-      "gsc_clicks": 0,
-      "gsc_position": 0.0,
-      "opportunity_type": "CROSS_ENGINE_WINNER",
-      "recommendation": "Healthy cross-engine discovery."
     },
     {
       "query": "gamma account pakistan",
@@ -188,32 +188,10 @@
       "recommendation": "Healthy cross-engine discovery."
     },
     {
-      "query": "linkedin premium cost in pakistan",
+      "query": "gemini pro subscription pakistan",
       "bing_impressions": 1,
       "bing_clicks": 0,
-      "bing_position": 3.0,
-      "gsc_impressions": 0,
-      "gsc_clicks": 0,
-      "gsc_position": 0.0,
-      "opportunity_type": "BING_BREAKTHROUGH",
-      "recommendation": "Ranking #3 on Bing! Protect snippet and add target anchor links."
-    },
-    {
-      "query": "whatsapp video generation tools with ai pricing in pakistan",
-      "bing_impressions": 1,
-      "bing_clicks": 0,
-      "bing_position": 5.0,
-      "gsc_impressions": 0,
-      "gsc_clicks": 0,
-      "gsc_position": 0.0,
-      "opportunity_type": "BING_BREAKTHROUGH",
-      "recommendation": "Ranking #5 on Bing! Protect snippet and add target anchor links."
-    },
-    {
-      "query": "gwmmni pro price in pakistan 2026",
-      "bing_impressions": 1,
-      "bing_clicks": 0,
-      "bing_position": 9.0,
+      "bing_position": 6.0,
       "gsc_impressions": 0,
       "gsc_clicks": 0,
       "gsc_position": 0.0,
@@ -230,6 +208,28 @@
       "gsc_position": 0.0,
       "opportunity_type": "CROSS_ENGINE_WINNER",
       "recommendation": "Healthy cross-engine discovery."
+    },
+    {
+      "query": "gwmmni pro price in pakistan 2026",
+      "bing_impressions": 1,
+      "bing_clicks": 0,
+      "bing_position": 9.0,
+      "gsc_impressions": 0,
+      "gsc_clicks": 0,
+      "gsc_position": 0.0,
+      "opportunity_type": "CROSS_ENGINE_WINNER",
+      "recommendation": "Healthy cross-engine discovery."
+    },
+    {
+      "query": "loveable ai price in pakistan",
+      "bing_impressions": 1,
+      "bing_clicks": 0,
+      "bing_position": 5.0,
+      "gsc_impressions": 0,
+      "gsc_clicks": 0,
+      "gsc_position": 0.0,
+      "opportunity_type": "BING_BREAKTHROUGH",
+      "recommendation": "Ranking #5 on Bing! Protect snippet and add target anchor links."
     }
   ],
   "recommendations": [

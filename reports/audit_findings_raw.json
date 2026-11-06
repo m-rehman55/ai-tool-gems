@@ -1,0 +1,13 @@
+{
+  "issues": [
+    {
+      "issue": "Zero category hub pages in sitemap and repository",
+      "affected": "Site Architecture / Category Hubs",
+      "severity": "High",
+      "evidence": "0 /category/ URLs exist in sitemap.xml despite 13 planned master categories",
+      "fix": "Develop 13 structured category hubs with unique value before indexing"
+    }
+  ],
+  "fake_reviews": [],
+  "shipping_issues": []
+}
