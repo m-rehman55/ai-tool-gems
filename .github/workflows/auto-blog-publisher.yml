@@ -118,36 +118,6 @@ jobs:
             --base main \
             --head "$BRANCH_NAME" || true
 
-      - name: Trigger and Await GitHub Pages Deployment
-        if: steps.git_push.outputs.committed == 'true' && github.ref == 'refs/heads/main'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "🚀 Triggering GitHub Pages build..."
-          BUILD_RESP=$(gh api --method POST repos/${{ github.repository }}/pages/builds)
-          echo "Pages API response: $BUILD_RESP"
-
-          echo "⏳ Waiting for GitHub Pages build to complete..."
-          for i in {1..30}; do
-            STATUS=$(gh api repos/${{ github.repository }}/pages/builds/latest --jq '.status' 2>/dev/null || echo "pending")
-            echo "Build status (check $i/30): $STATUS"
-            if [ "$STATUS" = "built" ]; then
-              echo "✅ GitHub Pages build completed successfully."
-              break
-            elif [ "$STATUS" = "errored" ]; then
-              echo "❌ GitHub Pages build reported an error."
-              exit 1
-            fi
-            sleep 10
-          done
-
-      - name: Verify Live Production Deployment
-        if: steps.git_push.outputs.committed == 'true' && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          python scripts/verify_live_deployment.py --url "${{ steps.publisher.outputs.url }}"
-
       - name: Generate Job Summary
         if: always()
         shell: bash
@@ -164,14 +134,14 @@ jobs:
 
           | Metric | Value |
           |---|---|
-          | **Execution Mode** | ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && 'Dry Run (Preview)' || 'Live Production' }} |
+          | **Execution Mode** | ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && 'Dry Run (Preview)' || 'Candidate Generation' }} |
           | **Publisher Status** | \`${STATUS:-SKIPPED_OR_FAILED}\` |
           | **Candidate Slug** | \`${SLUG:-None}\` |
           | **Candidate Title** | ${TITLE:-N/A} |
-          | **Published URL** | ${URL:-N/A} |
+          | **Staged URL** | ${URL:-N/A} |
           | **Git Commit** | \`${SHA:-N/A}\` |
-          | **Pages Deployment** | ${{ steps.git_push.outputs.committed == 'true' && 'Verified Built & Live' || 'Not Required / Skipped' }} |
+          | **Deployment Status** | Candidate Staged in PR for Human Review (Not Deployed) |
 
-          > [!NOTE]
-          > **Indexing Transparency**: Newly published guides are immediately submitted to the IndexNow protocol (covering Bing, Yandex, Seznam). Google Search Console discovers new URLs via the live XML sitemap; search engine indexing occurs based on Google's independent crawl schedules.
+          > [!IMPORTANT]
+          > **Human Review Gate**: This candidate guide is staged on a dedicated branch and pull request. It is NOT deployed to production or published to GitHub Pages until explicitly reviewed, approved, and merged by the repository owner.
           EOF
