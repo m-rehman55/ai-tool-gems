@@ -34,11 +34,11 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 - `marketing_agent/` Agent 12: Organic Marketing, Buffer Automation & Campaign Profitability Agent (40 unit tests)
 - `merchant_agent/` Agent 13: Google Merchant Center Product Feed & Policy Parity Agent (5 unit tests)
 - `conversion_agent/` Agent 14: Conversion Journey, Trust Signals & Friction Detector Agent (6 unit tests)
-- `security_agent/` Agent 15: Security, Secrets Scanner, HTML Safety & Snapshot Rollback Agent (8 unit tests)
+- `security_agent/` Agent 15: Security, Secrets Scanner, HTML Safety & Snapshot Rollback Agent (19 unit tests)
 - `ping_agent/` Dedicated Instant Ping & Search Engine Indexing Agent (6 unit tests)
 - `seo-agent/` Autonomous SEO & Safety operating modules (43 unit tests)
-- `tests/` Core link-graph, structural integrity, regression, and UI interaction test suite (60 unit tests)
-- **Total Test Suite:** 274 / 274 passing tests (100% green)
+- `tests/` Core link-graph, structural integrity, regression, and UI interaction test suite (70 unit tests)
+- **Total Test Suite:** 295 / 295 passing tests (100% green)
 
 ### Top 10 Monitored Competitors
 
@@ -80,8 +80,11 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 | `python -m ping_agent verify` | Verify local & remote IndexNow key infrastructure |
 | `python -m ping_agent status` | View recent ping submissions & indexing history |
 | `python -m unittest discover -s ping_agent/tests -v` | Run 6 Ping Agent unit tests (Verifier, Dispatcher, History) |
+| `python -m security_agent scan-catalogue` | Audit catalogue for special risk domains, cautionary IDs 158-175 & storefront isolation |
+| `python -m security_agent audit` | Run full security, secret, HTML safety & catalogue risk audit |
+| `python -m unittest discover -s security_agent/tests -v` | Run 19 Security, Compliance & Safety Firewall Agent unit tests |
 | `python scripts/link_graph_checker.py --strict` | Run 90+ file internal link graph, fragment anchor, route & sitemap integrity audit |
-| `python -m unittest discover -s tests -v` | Run 50 link-graph, integrity, regression, and UI interaction unit tests |
+| `python -m unittest discover -s tests -v` | Run 70 link-graph, integrity, regression, and UI interaction unit tests |
 | `python -m keyword_agent audit` | Run full keyword discovery, GSC filter analysis, cannibalization check & report |
 | `python -m keyword_agent competitor-gap` | Run live competitor gap analysis against Top 10 competitors & export matrix |
 | `python -m keyword_agent regex-library` | Export verified copy-ready RE2 regex filters to `docs/GSC_REGEX_LIBRARY.md` |

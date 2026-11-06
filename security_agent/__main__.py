@@ -15,6 +15,7 @@ from security_agent.secrets_scanner import SecretsScanner
 from security_agent.html_safety_validator import HtmlSafetyValidator
 from security_agent.dependency_checker import DependencyChecker
 from security_agent.snapshot_manager import SnapshotManager
+from security_agent.catalogue_risk_scanner import CatalogueRiskScanner
 
 
 def main():
@@ -34,6 +35,10 @@ def main():
 
     # snapshot
     subparsers.add_parser("snapshot", help="Create an atomic pre-change rollback snapshot")
+
+    # scan-catalogue
+    cat_parser = subparsers.add_parser("scan-catalogue", help="Audit catalogue for special risk domains and cautionary IDs 158-175")
+    cat_parser.add_argument("--json", action="store_true", help="Output risk audit in JSON")
 
     # audit
     audit_parser = subparsers.add_parser("audit", help="Run complete security & compliance audit")
@@ -87,32 +92,55 @@ def main():
         print(f"          Files archived: {snap.files_count}")
         print(f"          Directory: {snap.snapshot_dir}")
 
+    elif args.command == "scan-catalogue":
+        scanner = CatalogueRiskScanner(repo_root)
+        res = scanner.run_comprehensive_risk_audit()
+        if args.json:
+            print(json.dumps(res.to_dict(), indent=2))
+        else:
+            print("=================================================================")
+            print("HERMES AGENT 15 -- SPECIAL CATALOGUE RISK & COMPLIANCE SCAN")
+            print("=================================================================")
+            print(f"Cautionary Entries Audited: {res.cautionary_entries_audited}")
+            print(f"Storefront Isolation:       {'[PASS] CLEAN' if len(res.active_storefront_violations) == 0 else f'[FAIL] {len(res.active_storefront_violations)} VIOLATIONS'}")
+            print(f"Sitemap Isolation:          {'[PASS] CLEAN' if len(res.sitemap_violations) == 0 else f'[FAIL] {len(res.sitemap_violations)} VIOLATIONS'}")
+            print(f"Wholesale Inventory:        {'[PASS] CLEAN' if len(res.wholesale_violations) == 0 else f'[FAIL] {len(res.wholesale_violations)} VIOLATIONS'}")
+            print(f"Status Enforcement:         {'[PASS] CLEAN' if len(res.unresolved_status_violations) == 0 else f'[FAIL] {len(res.unresolved_status_violations)} VIOLATIONS'}")
+            print(f"Overall Compliance Gate:    {'[PASS] APPROVED' if res.is_clean else '[BLOCKED]'}")
+            if not res.is_clean:
+                for v in res.active_storefront_violations + res.sitemap_violations + res.unresolved_status_violations:
+                    print(f"  * {v}")
+
     elif args.command == "audit":
         scanner = SecretsScanner()
         validator = HtmlSafetyValidator()
         checker = DependencyChecker()
+        risk_scanner = CatalogueRiskScanner(repo_root)
 
         sec_rep = scanner.scan_directory(repo_root)
         html_rep = validator.validate_file(repo_root / "index.html")
         dep_rep = checker.check_dependencies()
+        risk_rep = risk_scanner.run_comprehensive_risk_audit()
 
-        all_clean = sec_rep.clean and html_rep.is_safe and dep_rep.clean
+        all_clean = sec_rep.clean and html_rep.is_safe and dep_rep.clean and risk_rep.is_clean
 
         if args.json:
             print(json.dumps({
                 "overall_clean": all_clean,
                 "secrets": {"scanned": sec_rep.total_files_scanned, "clean": sec_rep.clean, "count": len(sec_rep.findings)},
                 "html": {"is_safe": html_rep.is_safe, "violations": len(html_rep.violations)},
-                "dependencies": {"clean": dep_rep.clean, "broken": dep_rep.broken_dependencies}
+                "dependencies": {"clean": dep_rep.clean, "broken": dep_rep.broken_dependencies},
+                "catalogue_risk": risk_rep.to_dict()
             }, indent=2))
         else:
             print("=================================================================")
             print("HERMES AGENT 15 -- SECURITY, COMPLIANCE & SAFETY FIREWALL AUDIT")
             print("=================================================================")
-            print(f"Secrets Scanning:    {'[PASS] CLEAN' if sec_rep.clean else f'[FAIL] {len(sec_rep.findings)} FINDINGS'}")
-            print(f"HTML Safety Guard:   {'[PASS] SAFE' if html_rep.is_safe else f'[FAIL] {len(html_rep.violations)} VIOLATIONS'}")
-            print(f"Dependencies Status: {'[PASS] CLEAN' if dep_rep.clean else f'[FAIL] {len(dep_rep.broken_dependencies)} ISSUES'}")
-            print(f"Overall Gate Status: {'[PASS] APPROVED' if all_clean else '[BLOCKED]'}")
+            print(f"Secrets Scanning:        {'[PASS] CLEAN' if sec_rep.clean else f'[FAIL] {len(sec_rep.findings)} FINDINGS'}")
+            print(f"HTML Safety Guard:       {'[PASS] SAFE' if html_rep.is_safe else f'[FAIL] {len(html_rep.violations)} VIOLATIONS'}")
+            print(f"Dependencies Status:     {'[PASS] CLEAN' if dep_rep.clean else f'[FAIL] {len(dep_rep.broken_dependencies)} ISSUES'}")
+            print(f"Special Catalogue Risk:  {'[PASS] CLEAN (0 LEAKS)' if risk_rep.is_clean else '[FAIL] VIOLATIONS DETECTED'}")
+            print(f"Overall Gate Status:     {'[PASS] APPROVED' if all_clean else '[BLOCKED]'}")
     else:
         parser.print_help()
 
