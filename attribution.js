@@ -235,13 +235,18 @@
       if (isChannel) {
         trackEvent('whatsapp_channel_click', { link_url: href });
       } else if (isOrder) {
-        // Order Initiation (begin_checkout)
+        // Order Initiation (begin_checkout & qualified lead generation)
         var h1 = document.querySelector('h1');
         var itemName = h1 ? h1.textContent.trim() : 'AI Tool Subscription';
         trackEvent('whatsapp_order_click', { link_url: href, item_name: itemName });
         trackEvent('begin_checkout', {
           currency: 'PKR',
           items: [{ item_name: itemName, currency: 'PKR' }]
+        });
+        trackEvent('generate_lead', {
+          currency: 'PKR',
+          lead_type: 'whatsapp_order_inquiry',
+          item_name: itemName
         });
       } else {
         // Support Inquiry

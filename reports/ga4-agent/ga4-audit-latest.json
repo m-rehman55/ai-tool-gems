@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-05T16:08:36.565746+00:00",
+  "timestamp": "2026-11-06T14:07:20.930073+00:00",
   "property_id": "555306283",
   "is_authorized": true,
   "pakistan_sessions": 265,
@@ -8,23 +8,23 @@
   "channels": [
     {
       "channel": "Organic Search",
-      "sessions": 97,
-      "users": 35,
-      "engagement_rate": 54.6,
+      "sessions": 98,
+      "users": 36,
+      "engagement_rate": 54.1,
       "conversions": 0
     },
     {
       "channel": "Direct",
-      "sessions": 80,
-      "users": 62,
-      "engagement_rate": 38.8,
+      "sessions": 76,
+      "users": 61,
+      "engagement_rate": 39.5,
       "conversions": 0
     },
     {
       "channel": "AI Assistant",
-      "sessions": 67,
+      "sessions": 69,
       "users": 24,
-      "engagement_rate": 64.2,
+      "engagement_rate": 63.8,
       "conversions": 0
     },
     {
@@ -35,17 +35,17 @@
       "conversions": 0
     },
     {
+      "channel": "Unassigned",
+      "sessions": 2,
+      "users": 1,
+      "engagement_rate": 50.0,
+      "conversions": 0
+    },
+    {
       "channel": "Organic Social",
       "sessions": 1,
       "users": 1,
       "engagement_rate": 0.0,
-      "conversions": 0
-    },
-    {
-      "channel": "Unassigned",
-      "sessions": 1,
-      "users": 1,
-      "engagement_rate": 100.0,
       "conversions": 0
     }
   ],
@@ -53,17 +53,17 @@
     {
       "path": "/",
       "page_type": "homepage",
-      "sessions": 218,
+      "sessions": 216,
       "active_users": 93,
-      "avg_engagement_time_sec": 41.9,
+      "avg_engagement_time_sec": 42.8,
       "order_clicks": 0
     },
     {
       "path": "/blog/",
       "page_type": "content",
-      "sessions": 23,
+      "sessions": 24,
       "active_users": 2,
-      "avg_engagement_time_sec": 11.1,
+      "avg_engagement_time_sec": 10.9,
       "order_clicks": 0
     },
     {
@@ -101,9 +101,9 @@
     {
       "path": "/tools/chatgpt/",
       "page_type": "product",
-      "sessions": 7,
-      "active_users": 7,
-      "avg_engagement_time_sec": 29.7,
+      "sessions": 8,
+      "active_users": 8,
+      "avg_engagement_time_sec": 27.8,
       "order_clicks": 0
     },
     {
@@ -135,15 +135,15 @@
     "period": "Last 28 Days",
     "product_views": 120,
     "product_selections": 60,
-    "order_initiations": 19,
+    "order_initiations": 20,
     "verified_purchases": 2,
     "currency": "PKR",
     "total_revenue_pkr": 6000.0,
-    "checkout_dropoff_pct": 89.5,
+    "checkout_dropoff_pct": 90.0,
     "overall_conversion_rate_pct": 1.67
   },
   "recommendations": [
-    "Checkout drop-off is 89.5%. Pre-fill WhatsApp message with selected tool and PKR pricing to reduce friction.",
+    "Checkout drop-off is 90.0%. Pre-fill WhatsApp message with selected tool and PKR pricing to reduce friction.",
     "Pakistan accounts for the majority of active sessions. Prioritize EasyPaisa, JazzCash, and SadaPay in visible conversion flows.",
     "Event taxonomy clean: Homepage events separated from product view_item events."
   ]
