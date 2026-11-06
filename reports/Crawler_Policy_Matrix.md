@@ -138,3 +138,43 @@ Allow: /
 - `Claude-SearchBot`: Public Canonical Pages: **ALLOWED** | Internal Admin/Data/Scripts: **DISALLOWED** (PASS)
 - `Claude-User`: Public Canonical Pages: **ALLOWED** | Internal Admin/Data/Scripts: **DISALLOWED** (PASS)
 - `Google-Extended`: Public Canonical Pages: **ALLOWED** | Internal Admin/Data/Scripts: **DISALLOWED** (PASS)
+
+---
+
+## 6. Mandatory Project Distinctions (Standard Operating Model)
+
+In accordance with project governance rules, this Crawler Policy Matrix explicitly distinguishes:
+
+### 1. Verified Facts
+- `robots.txt` explicitly designates 9 separate AI crawler user-agents (`OAI-SearchBot`, `GPTBot`, `ChatGPT-User`, `ClaudeBot`, `Claude-SearchBot`, `Claude-User`, `PerplexityBot`, `Perplexity-User`, `Google-Extended`).
+- All `Disallow:` directives are ordered before `Allow: /` in `robots.txt`, complying with RFC 9309 and ensuring deterministic parsing across standard Python `urllib.robotparser` and search engine engines.
+- Internal administrative directories (`/admin.html`, `/data/`, `/scripts/`, `/reports/`, `/.env*`) are 100% blocked from all crawlers.
+- All public product tools, buyer guides, and sitemaps are verified accessible to search and real-time retrieval bots.
+
+### 2. Historical Baseline Data
+- Prior to Phase 8, `robots.txt` contained an unstructured block where `Allow: /` was listed before specific `Disallow` rules, creating parsing ambiguity in older robots.txt interpreters.
+- AI search crawlers (`OAI-SearchBot`, `Claude-SearchBot`, `PerplexityBot`) were not differentiated from general training scrapers (`GPTBot`, `ClaudeBot`).
+
+### 3. New Observations
+- Search engine AI overviews and answer engines (ChatGPT Search, Perplexity, Claude Search) rely on dedicated search bots (`OAI-SearchBot`, `Claude-SearchBot`, `PerplexityBot`). Blocking them cuts off direct AI search citation traffic.
+- User-directed fetch bots (`ChatGPT-User`, `Claude-User`, `Perplexity-User`) only activate when an individual human user enters a prompt involving the website. Blocking them causes immediate "Unable to load page" errors for users.
+
+### 4. Hypotheses
+- Keeping AI search and user bots allowed while retaining full technical crawling access will expand organic citations in generative answer cards (Perplexity and ChatGPT Search) by 20–35%.
+- Machine-readable files (`llms.txt` and `llms-full.txt`) synchronized with active canonical URLs will accelerate zero-shot LLM grounding accuracy for Pakistani pricing queries.
+
+### 5. Unavailable Data
+- Server access log analysis for exact crawler hit frequency by IP range is currently limited due to static hosting CDN edge aggregation.
+- Official breakdown of referral traffic generated specifically by ChatGPT Search citations vs general web browsing is not yet segmented in standard GA4 dimensions.
+
+### 6. Work Completed
+- Hardened `robots.txt` with strict directive ordering and explicit separation of 9 AI crawler user-agents.
+- Verified parsing determinism using an automated Python unit test suite against `urllib.robotparser`.
+- Created live machine-readable files [`llms.txt`](file:///d:/Desktop/AI%20Tools%20Aura/llms.txt) and [`llms-full.txt`](file:///d:/Desktop/AI%20Tools%20Aura/llms-full.txt) matching public canonical inventory.
+
+### 7. Work Blocked
+- None. All crawler directives and parser validations are fully operational and verified.
+
+### 8. Owner Decisions Required
+- AI Model Training Opt-Out Choice: The owner must decide whether to retain `Allow: /` for training bots (`GPTBot`, `ClaudeBot`, `Google-Extended`) or flip them to `Disallow: /` to prevent website copy from being included in future AI foundation model training datasets.
+

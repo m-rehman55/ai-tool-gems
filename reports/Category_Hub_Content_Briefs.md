@@ -343,3 +343,43 @@
 - [/guides/businesses/](https://aitoolgems.tech/guides/businesses/)
 
 ---
+
+## 14. Mandatory Project Distinctions (Standard Operating Model)
+
+In accordance with project governance rules, this Category Hub specification explicitly distinguishes:
+
+### 1. Verified Facts
+- 13 distinct category taxonomy hubs have been designed, covering 100% of the 175 catalogue tools.
+- Active public storefront exposes 40 leaf tool pages, 40 buyers guides, and 16 comparison matrices.
+- Category hub URLs currently remain unindexed (`UNINDEXED_PENDING_EDITORIAL_REVIEW`) to strictly prevent thin or doorway page quality penalties from search engines until each hub contains ≥1,200 words of original, empirical comparative analysis.
+- Every category hub brief contains distinct, non-templated selection criteria, introductory summaries, specific localized FAQs, and contextual internal links.
+
+### 2. Historical Baseline Data
+- Prior to Phase 6, category taxonomy was loosely organized in flat JavaScript arrays without standalone editorial briefs.
+- Previous category navigation linked into URL fragments (e.g. `/#products`) rather than structured canonical hub paths.
+
+### 3. New Observations
+- Search intent analysis in Pakistan indicates that commercial searchers rarely search for broad abstract categories (e.g. "software directory"); instead, they search for problem-specific categories (e.g. "best ai video generator in pakistan", "cheap vpn for pakistan").
+- Grouping tools into 13 high-intent categories enables topical authority clustering and direct internal linking from leaf tools back to authority hubs.
+
+### 4. Hypotheses
+- Publishing dedicated, fully-written category hubs with interactive filtering and Pakistani PKR pricing tables will capture high-volume transactional category search volume and increase organic impressions by 30–50%.
+- Linking leaf product pages up to their parent category hub will distribute PageRank and strengthen semantic entity association for Google AI Overviews.
+
+### 5. Unavailable Data
+- Live Search Console impressions and click-through rates specifically for `/category/*` URLs are currently unavailable because the hubs have not yet been indexed in production.
+- Category-level bounce rates and average session duration on dedicated hubs will only be measurable once production templates are deployed.
+
+### 6. Work Completed
+- Authored detailed editorial specifications and content briefs for all 13 category hubs.
+- Established rigorous editorial selection criteria for each category (context capacity, render fidelity, security, licensing, domestic payment compatibility).
+- Documented localized FAQs for every category addressing Pakistani consumer concerns (EasyPaisa, JazzCash, delivery times, warranty).
+- Mapped all live tool pages and related guides into reciprocal internal linking relationships.
+
+### 7. Work Blocked
+- Production HTML generation and sitemap indexation of `/category/*` URLs is intentionally gated until full-length (1,200+ words) editorial copy and interactive tool comparison filters are compiled and reviewed by human editorial staff.
+
+### 8. Owner Decisions Required
+- Editorial prioritization: Which 3 of the 13 category hubs should be selected for full HTML template generation and publication first (recommended: CAT-HUB-01 AI Chatbots, CAT-HUB-02 AI Video, CAT-HUB-03 Design & Graphics).
+- Pricing display policy on category hubs: Whether to show starting PKR prices directly in category comparison tables or link to `/prices/`.
+
