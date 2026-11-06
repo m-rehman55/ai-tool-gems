@@ -43,7 +43,7 @@ const productSeed = [
   ['office365','Microsoft Office 365 (1TB)','Productivity',2200,'microsoft.com']
 ].map(([id,name,category,price,domain]) => ({
   id, name, category, price, domain,
-  status: 'Verified Available',
+  status: 'Seed Fixture (Sandbox)',
   description: '',
   logo: `assets/product-logos/${id}.png`
 }));
@@ -71,7 +71,7 @@ function renderAdminProducts() {
       <td><div class="product-cell"><img src="${product.logo || 'assets/brand-logo-light.webp'}" width="128" height="128" loading="lazy" alt="${escapeHTML(product.name)} logo"><span><b>${escapeHTML(product.name)}</b><small>Verified Subscription</small></span></div></td>
       <td>${escapeHTML(product.category)}</td>
       <td><b>${money(product.price)}</b></td>
-      <td><span class="status" style="font-size:12px;padding:3px 8px;border-radius:6px;background:rgba(16,185,129,0.15);color:#10b981;font-weight:600;">Verified Available</span></td>
+      <td><span class="status" style="font-size:12px;padding:3px 8px;border-radius:6px;background:rgba(100,116,139,0.15);color:#475569;font-weight:600;">Sandbox Fixture</span></td>
       <td><button class="edit" data-edit-product="${escapeHTML(product.id)}" aria-label="Edit ${escapeHTML(product.name)}">Edit</button></td>
     </tr>
   `).join('');
