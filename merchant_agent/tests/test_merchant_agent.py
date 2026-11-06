@@ -1,5 +1,6 @@
 """Unit tests for Google Merchant Center & Product Feed Agent (AGENT-13)."""
 
+import json
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
@@ -128,6 +129,77 @@ class TestMerchantAgent(unittest.TestCase):
         self.assertEqual(completed.status, TaskStatus.VERIFIED)
         self.assertIn("xml_exists", completed.verification_evidence)
         self.assertTrue(completed.verification_evidence["xml_exists"])
+
+    def test_offer_level_assessment_separates_merchant_and_ads(self):
+        """Verifies offer-level assessment evaluates parameters and separates Merchant vs Ads."""
+        assessment = self.gen.evaluate_offer({
+            "slug": "chatgpt",
+            "name": "ChatGPT Plus",
+            "duration": "1 Month",
+            "access": "Private",
+            "price": 2300,
+        })
+        self.assertEqual(assessment.slug, "chatgpt")
+        self.assertEqual(assessment.duration, "1 Month")
+        self.assertEqual(assessment.total_cost_pkr, 2300)
+        self.assertIn("Prepaid flat upfront", assessment.payment_model)
+        self.assertIn("Manual renewal", assessment.renewal_conditions)
+        self.assertEqual(assessment.merchant_center_status, "HOLD_TERM_INSUFFICIENT")
+        self.assertEqual(assessment.google_ads_search_status, "ELIGIBLE_WITH_DISCLOSURES")
+        self.assertIn("minimum prepaid term of 12 months", assessment.merchant_center_reason)
+
+    def test_shared_accounts_and_turnitin_marked_hold(self):
+        """Verifies shared accounts and academic cheating tools are blocked under Google policies."""
+        shared_assessment = self.gen.evaluate_offer({
+            "slug": "netflix",
+            "name": "Netflix Premium 4K",
+            "duration": "1 Month",
+            "access": "Shared",
+            "price": 400,
+        })
+        self.assertEqual(shared_assessment.merchant_center_status, "HOLD_POLICY_VIOLATION")
+        self.assertEqual(shared_assessment.google_ads_search_status, "HOLD_HIGH_RISK")
+
+        turnitin_assessment = self.gen.evaluate_offer({
+            "slug": "turnitin",
+            "name": "Turnitin Student Account",
+            "duration": "1 Month",
+            "access": "Private",
+            "price": 3600,
+        })
+        self.assertEqual(turnitin_assessment.merchant_center_status, "HOLD_POLICY_VIOLATION")
+        self.assertEqual(turnitin_assessment.google_ads_search_status, "HOLD_PROHIBITED")
+
+    def test_export_eligibility_registers(self):
+        """Verifies export of durable JSON hold registers and ads matrix."""
+        hold_p, ads_p = self.gen.export_eligibility_registers()
+        self.assertTrue(hold_p.exists())
+        self.assertTrue(ads_p.exists())
+
+        hold_data = json.loads(hold_p.read_text(encoding="utf-8"))
+        ads_data = json.loads(ads_p.read_text(encoding="utf-8"))
+
+        self.assertGreater(len(hold_data), 0)
+        self.assertGreater(len(ads_data), 0)
+        # Verify hold register contains policy reasons
+        self.assertTrue(all("merchant_center_reason" in item for item in hold_data))
+
+    def test_validator_blocks_ineligible_items_in_feed(self):
+        """Verifies validator detects prohibited items submitted in Merchant feed."""
+        ineligible_item = MerchantProductItem(
+            sku_id="atg-turnitin",
+            title="Turnitin Student Account",
+            description="Testing academic tool",
+            link="https://aitoolgems.tech/tools/turnitin/",
+            image_link="https://aitoolgems.tech/assets/turnitin.png",
+            availability="in_stock",
+            price_pkr=3600,
+            brand="Turnitin",
+        )
+        report = self.val.validate_feed_items([ineligible_item])
+        self.assertFalse(report.is_feed_compliant)
+        issue_types = [i.issue_type for i in report.issues]
+        self.assertIn("INELIGIBLE_FEED_ITEM", issue_types)
 
 
 if __name__ == "__main__":

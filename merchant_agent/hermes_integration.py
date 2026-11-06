@@ -40,14 +40,18 @@ class MerchantHermesAgent:
             return task
 
     def _run_feed_generation(self, task: TaskContract) -> TaskContract:
-        items = self.feed_generator.extract_catalog_items()
+        # Strictly enforce eligibility gate: do not submit every catalogue item to Merchant Center
+        items = self.feed_generator.extract_catalog_items(eligible_only=True)
         xml_path = self.feed_generator.generate_xml_feed(items)
         tsv_path = self.feed_generator.generate_tsv_feed(items)
+        hold_path, ads_path = self.feed_generator.export_eligibility_registers()
 
         task.actual_output = {
-            "items_count": len(items),
+            "eligible_items_count": len(items),
             "xml_feed_path": str(xml_path),
             "tsv_feed_path": str(tsv_path),
+            "hold_register_path": str(hold_path),
+            "ads_matrix_path": str(ads_path),
             "currency": "PKR",
             "country": "PK",
         }
@@ -61,7 +65,7 @@ class MerchantHermesAgent:
         return task
 
     def _run_schema_parity(self, task: TaskContract) -> TaskContract:
-        items = self.feed_generator.extract_catalog_items()
+        items = self.feed_generator.extract_catalog_items(eligible_only=False)
         report = self.validator.validate_feed_items(items)
 
         task.actual_output = {
