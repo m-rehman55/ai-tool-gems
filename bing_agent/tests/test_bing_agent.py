@@ -243,6 +243,31 @@ class TestBingAgent(unittest.TestCase):
         self.assertIn("markdown_report", completed.verification_evidence)
         self.assertTrue(Path(completed.verification_evidence["markdown_report"]).exists())
 
+    def test_invalid_api_key_handled_as_blocked_without_crashing_or_fabricating_pass(self):
+        """CRITICAL: Bing InvalidApiKey must be handled as BLOCKED without crashing or fabricating pass."""
+        import io
+        import urllib.error
+        from unittest.mock import patch
+
+        client = BingWebmasterClient(api_key="mock_invalid_key_123")
+        analyzer = BingWebmasterAnalyzer(client=client)
+
+        err_fp = io.BytesIO(b'{"ErrorCode": 2, "Message": "Invalid Api Key"}')
+        http_err = urllib.error.HTTPError("https://ssl.bing.com", 400, "Bad Request", {}, err_fp)
+
+        with patch("urllib.request.urlopen", side_effect=http_err):
+            # 1. Direct call raises PermissionError indicating BLOCKED
+            with self.assertRaises(PermissionError) as ctx:
+                client.get_user_sites()
+            self.assertIn("InvalidApiKey", str(ctx.exception))
+            self.assertIn("BLOCKED", str(ctx.exception))
+
+            # 2. Analyzer returns honest BLOCKED audit summary rather than crashing or faking pass
+            summary = analyzer.run_audit()
+            self.assertFalse(summary.is_verified)
+            self.assertEqual(summary.total_bing_queries, 0)
+            self.assertTrue(any("BLOCKED (InvalidApiKey)" in rec for rec in summary.recommendations))
+
 
 if __name__ == "__main__":
     unittest.main()

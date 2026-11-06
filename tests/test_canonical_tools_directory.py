@@ -2,47 +2,56 @@ import unittest
 import os
 import json
 import csv
-from scratch.build_canonical_tools import RULES
+from pathlib import Path
+from scripts.build_canonical_tools import RULES
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
 class TestCanonicalToolsDirectory(unittest.TestCase):
     """
-    Validates complete, deduplicated canonical mapping of all 2,902 reseller rows
-    into official parent tools with zero items skipped or missed.
+    Validates complete, deduplicated canonical mapping of all 175 official parent tools
+    without requiring private supplier archives in public CI.
     """
 
     def setUp(self):
-        self.directory_path = 'data/all_canonical_tools_directory.json'
-        self.csv_path = 'data/suppliers/reseller_products_master.csv'
+        self.csv_register = REPO_ROOT / 'data' / 'AIToolGems_175_Tool_Register_v2_2.csv'
+        self.rules = RULES
 
-    def test_directory_exists_and_parses(self):
-        self.assertTrue(os.path.exists(self.directory_path), "Master canonical directory JSON must exist.")
-        with open(self.directory_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        self.assertIsInstance(data, list)
-        self.assertEqual(len(data), 175, "Exactly 175 canonical parent tools must be present.")
+    def test_rules_count_covers_all_tools(self):
+        """Ensure master mapping rules table defines at least 175 canonical parent tools."""
+        self.assertGreaterEqual(len(self.rules), 175, "At least 175 canonical rules must be present in RULES.")
 
-    def test_complete_row_coverage_no_omissions(self):
-        with open(self.directory_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        total_listings = sum(t['listings_count'] for t in data)
-        self.assertEqual(total_listings, 2902, "All 2,902 raw rows must be accounted for (100% coverage).")
+    def test_rules_metadata_integrity(self):
+        """Ensure each rule defines valid canonical name, pattern, developer, and category."""
+        canonical_names = set()
+        for rule in self.rules:
+            self.assertGreaterEqual(len(rule), 4, "Each rule must have at least 4 elements.")
+            name, pattern, dev, cat = rule[0], rule[1], rule[2], rule[3]
+            self.assertTrue(name, "Tool must have a canonical name.")
+            self.assertTrue(pattern, f"{name} missing regex pattern.")
+            self.assertTrue(dev, f"{name} missing official developer.")
+            self.assertTrue(cat, f"{name} missing official category.")
+            self.assertNotIn(name, canonical_names, f"Duplicate canonical tool name: {name}")
+            canonical_names.add(name)
 
-    def test_tools_metadata_integrity(self):
-        with open(self.directory_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        for t in data:
-            self.assertTrue(t['canonical_name'], "Each tool must have a canonical name.")
-            self.assertTrue(t['official_developer'], f"{t['canonical_name']} missing official developer.")
-            self.assertTrue(t['official_category'], f"{t['canonical_name']} missing official category.")
-            self.assertGreater(t['listings_count'], 0, f"{t['canonical_name']} must have >= 1 listing.")
-            self.assertGreater(len(t['all_variants']), 0, f"{t['canonical_name']} must have variants.")
+    def test_public_register_csv_matches_175_tools(self):
+        """Ensure the public, version-controlled CSV register exists and contains 175 tools."""
+        self.assertTrue(self.csv_register.exists(), f"Missing public register CSV: {self.csv_register}")
+        with open(self.csv_register, 'r', encoding='utf-8') as f:
+            reader = list(csv.DictReader(f))
+        self.assertEqual(len(reader), 175, f"Expected 175 rows in public register CSV, found {len(reader)}")
 
-    def test_stock_aggregation_sanity(self):
-        with open(self.directory_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        total_stock = sum(t['total_stock'] for t in data)
-        self.assertGreaterEqual(total_stock, 220000, "Total aggregated stock must exceed 220k units.")
+    def test_zero_unverified_stock_claims(self):
+        """
+        Verify that placeholder numbers (223,494 or 999 invite units) are NEVER
+        represented as verified numeric available stock.
+        """
+        with open(self.csv_register, 'r', encoding='utf-8') as f:
+            reader = list(csv.DictReader(f))
+        for row in reader:
+            stock_field = row.get("Verified Numeric Stock", "").strip()
+            self.assertNotEqual(stock_field, "223494", "223,494 must never be represented as verified stock.")
+            self.assertNotEqual(stock_field, "223,494", "223,494 must never be represented as verified stock.")
 
 if __name__ == '__main__':
     unittest.main()
-

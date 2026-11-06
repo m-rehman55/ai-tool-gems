@@ -244,6 +244,142 @@ class TestGA4Agent(unittest.TestCase):
         self.assertIn("verified_revenue_pkr", completed.verification_evidence)
         self.assertTrue(Path(completed.verification_evidence["markdown_report"]).exists())
 
+    # ── 6. State Mutation & Data-Loss Protection Tests ───────────────────────
+
+    def test_dry_run_strictly_never_mutates_order_or_refund_state(self):
+        """CRITICAL: Dry-run must generate payload preview without setting is_imported_to_ga4."""
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="SYNTH-DRYRUN-001",
+            tool_slug="chatgpt",
+            tool_name="ChatGPT Plus",
+            pkr_amount=2300.0,
+            payment_rail="EasyPaisa",
+            raw_phone="+923001112233",
+        )
+        importer.record_verified_refund(
+            transaction_id="SYNTH-DRYRUN-001",
+            refund_id="REF-DRYRUN-001",
+            tool_slug="chatgpt",
+            tool_name="ChatGPT Plus",
+            pkr_amount=2300.0,
+            reason="test_dry_run",
+        )
+
+        # Execute dry runs
+        res_order = importer.import_verified_orders(dry_run=True)
+        self.assertEqual(res_order["status"], "dry_run")
+        self.assertEqual(res_order["imported_count"], 0)
+
+        res_refund = importer.dispatch_offline_refunds(dry_run=True)
+        self.assertEqual(res_refund["status"], "dry_run")
+        self.assertEqual(res_refund["imported_count"], 0)
+
+        # Reload from disk and assert records remain NOT imported
+        orders = importer.load_orders()
+        self.assertEqual(len(orders), 1)
+        self.assertFalse(orders[0].is_imported_to_ga4, "Dry run must NOT mark order as imported")
+        self.assertIsNone(orders[0].imported_at, "Dry run must NOT set imported_at")
+
+        refunds = importer.load_refunds()
+        self.assertEqual(len(refunds), 1)
+        self.assertFalse(refunds[0].is_imported_to_ga4, "Dry run must NOT mark refund as imported")
+        self.assertIsNone(refunds[0].imported_at, "Dry run must NOT set imported_at")
+
+    def test_missing_secret_returns_blocked_and_preserves_orders_and_refunds(self):
+        """CRITICAL: Missing API secret must return BLOCKED_MISSING_API_SECRET and leave orders pending."""
+        import os
+        old_sec1 = os.environ.pop("GA4_API_SECRET", None)
+        old_sec2 = os.environ.pop("GA4_MEASUREMENT_SECRET", None)
+        try:
+            importer = ConversionImporter(data_dir=self.orders_dir)
+            importer.record_verified_payment(
+                transaction_id="SYNTH-NOSECRET-001",
+                tool_slug="claude",
+                tool_name="Claude Pro",
+                pkr_amount=2600.0,
+                payment_rail="JazzCash",
+                raw_phone="+923009998877",
+            )
+            importer.record_verified_refund(
+                transaction_id="SYNTH-NOSECRET-001",
+                refund_id="REF-NOSECRET-001",
+                tool_slug="claude",
+                tool_name="Claude Pro",
+                pkr_amount=2600.0,
+                reason="test_no_secret",
+            )
+
+            res_order = importer.import_verified_orders(dry_run=False)
+            self.assertEqual(res_order["status"], "BLOCKED_MISSING_API_SECRET")
+            self.assertEqual(res_order["imported_count"], 0)
+
+            res_refund = importer.dispatch_offline_refunds(dry_run=False)
+            self.assertEqual(res_refund["status"], "BLOCKED_MISSING_API_SECRET")
+            self.assertEqual(res_refund["imported_count"], 0)
+
+            # Assert order and refund remain pending
+            orders = importer.load_orders()
+            self.assertFalse(orders[0].is_imported_to_ga4)
+
+            refunds = importer.load_refunds()
+            self.assertFalse(refunds[0].is_imported_to_ga4)
+        finally:
+            if old_sec1:
+                os.environ["GA4_API_SECRET"] = old_sec1
+            if old_sec2:
+                os.environ["GA4_MEASUREMENT_SECRET"] = old_sec2
+
+    def test_failed_network_request_leaves_order_pending(self):
+        """CRITICAL: Network failure must leave order pending for retry."""
+        import os
+        from unittest.mock import patch
+        import urllib.error
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="SYNTH-NETFAIL-001",
+            tool_slug="gemini",
+            tool_name="Gemini Advanced",
+            pkr_amount=800.0,
+            payment_rail="EasyPaisa",
+            raw_phone="+923005554433",
+        )
+
+        with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("Connection refused")), \
+             patch.dict(os.environ, {"GA4_API_SECRET": "mock_secret_test"}):
+            res = importer.import_verified_orders(dry_run=False)
+            self.assertEqual(res["imported_count"], 0)
+
+        orders = importer.load_orders()
+        self.assertFalse(orders[0].is_imported_to_ga4, "Order must remain pending after network failure")
+
+    def test_successful_http_response_marks_order_imported(self):
+        """CRITICAL: HTTP 204 from GA4 MP marks order imported and sets timestamp."""
+        import os
+        from unittest.mock import MagicMock, patch
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="SYNTH-SUCCESS-001",
+            tool_slug="midjourney",
+            tool_name="Midjourney Standard",
+            pkr_amount=3500.0,
+            payment_rail="SadaPay",
+            raw_phone="+923004443322",
+        )
+
+        mock_resp = MagicMock()
+        mock_resp.status = 204
+        mock_resp.__enter__.return_value = mock_resp
+
+        with patch("urllib.request.urlopen", return_value=mock_resp), \
+             patch.dict(os.environ, {"GA4_API_SECRET": "mock_secret_test"}):
+            res = importer.import_verified_orders(dry_run=False)
+            self.assertEqual(res["imported_count"], 1)
+
+        orders = importer.load_orders()
+        self.assertTrue(orders[0].is_imported_to_ga4, "Order must be marked imported on HTTP 204")
+        self.assertIsNotNone(orders[0].imported_at)
+
 
 if __name__ == "__main__":
     unittest.main()

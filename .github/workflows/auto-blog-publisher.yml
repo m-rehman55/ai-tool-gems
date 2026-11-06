@@ -112,12 +112,14 @@ jobs:
           echo "✅ Pushed branch $BRANCH_NAME to origin. Creating pull request..."
           gh pr create \
             --title "feat(content): publish autonomous guide '${{ steps.publisher.outputs.title }}'" \
-            --body "Autonomous editorial guide candidate for \`${{ steps.publisher.outputs.slug }}\`. Verified Pakistan PKR pricing and payment rails. Requires human review before merging to main." \
+            --body "Autonomous editorial guide candidate for \`${{ steps.publisher.outputs.slug }}\`. Verified Pakistan PKR pricing and payment rails. 
+
+⚠️ Release Gate: Requires human review and approval before merging to main. Production Pages deployment will execute automatically only after this PR is merged to main." \
             --base main \
             --head "$BRANCH_NAME" || true
 
       - name: Trigger and Await GitHub Pages Deployment
-        if: steps.git_push.outputs.committed == 'true'
+        if: steps.git_push.outputs.committed == 'true' && github.ref == 'refs/heads/main'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -141,7 +143,7 @@ jobs:
           done
 
       - name: Verify Live Production Deployment
-        if: steps.git_push.outputs.committed == 'true'
+        if: steps.git_push.outputs.committed == 'true' && github.ref == 'refs/heads/main'
         shell: bash
         run: |
           python scripts/verify_live_deployment.py --url "${{ steps.publisher.outputs.url }}"

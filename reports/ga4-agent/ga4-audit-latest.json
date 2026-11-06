@@ -1,30 +1,30 @@
 {
-  "timestamp": "2026-11-06T18:14:27.833616+00:00",
+  "timestamp": "2026-11-06T20:38:44.667403+00:00",
   "property_id": "555306283",
   "is_authorized": true,
-  "pakistan_sessions": 266,
-  "total_sessions": 266,
+  "pakistan_sessions": 256,
+  "total_sessions": 256,
   "pakistan_traffic_ratio_pct": 100.0,
   "channels": [
     {
       "channel": "Organic Search",
-      "sessions": 98,
+      "sessions": 97,
       "users": 36,
-      "engagement_rate": 54.1,
+      "engagement_rate": 54.6,
       "conversions": 0
     },
     {
       "channel": "Direct",
-      "sessions": 76,
-      "users": 61,
-      "engagement_rate": 39.5,
+      "sessions": 69,
+      "users": 59,
+      "engagement_rate": 37.7,
       "conversions": 0
     },
     {
       "channel": "AI Assistant",
-      "sessions": 70,
-      "users": 24,
-      "engagement_rate": 62.9,
+      "sessions": 68,
+      "users": 22,
+      "engagement_rate": 61.8,
       "conversions": 0
     },
     {
@@ -53,9 +53,9 @@
     {
       "path": "/",
       "page_type": "homepage",
-      "sessions": 216,
-      "active_users": 93,
-      "avg_engagement_time_sec": 42.8,
+      "sessions": 207,
+      "active_users": 90,
+      "avg_engagement_time_sec": 41.1,
       "order_clicks": 0
     },
     {
@@ -91,19 +91,19 @@
       "order_clicks": 0
     },
     {
-      "path": "/deals/",
-      "page_type": "deals",
-      "sessions": 8,
-      "active_users": 5,
-      "avg_engagement_time_sec": 23.6,
-      "order_clicks": 0
-    },
-    {
       "path": "/tools/chatgpt/",
       "page_type": "product",
       "sessions": 8,
       "active_users": 8,
       "avg_engagement_time_sec": 27.8,
+      "order_clicks": 0
+    },
+    {
+      "path": "/deals/",
+      "page_type": "deals",
+      "sessions": 7,
+      "active_users": 4,
+      "avg_engagement_time_sec": 19.4,
       "order_clicks": 0
     },
     {

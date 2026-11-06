@@ -43,4 +43,8 @@ config/*.json
 # Sensitive Supplier Inventory & Excel Registers
 data/suppliers/
 data/snapshots/
+data/orders/
+data/wholesale_inventory.json
+data/wholesale_cost_reference.json
+data/all_canonical_tools_directory.json
 *.xlsx

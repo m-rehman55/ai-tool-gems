@@ -143,9 +143,9 @@ class ConversionImporter:
     def dispatch_offline_conversions(self, dry_run: bool = False) -> Dict[str, Any]:
         """
         Dispatches all unimported verified orders to GA4 Measurement Protocol.
-        Marks orders as imported upon successful HTTP 204 or dry run.
+        Marks orders as imported ONLY upon successful HTTP 200/204 response from GA4.
+        Dry-run or missing API secret strictly NEVER mutates order imported state.
         """
-        api_secret = (os.getenv("GA4_API_SECRET") or os.getenv("GA4_MEASUREMENT_SECRET") or "").strip()
         orders = self.load_orders()
         pending = [o for o in orders if not o.is_imported_to_ga4]
 
@@ -156,58 +156,82 @@ class ConversionImporter:
                 "imported_count": 0,
             }
 
-        imported_count = 0
-        now_iso = datetime.now(timezone.utc).isoformat()
-        results: List[Dict[str, Any]] = []
-
-        for o in pending:
-            payload = self.build_measurement_protocol_payload(o)
-            if dry_run or not api_secret:
-                o.is_imported_to_ga4 = True
-                o.imported_at = now_iso
-                imported_count += 1
+        # Case A: Dry run (Generate payload preview, DO NOT mutate state, DO NOT persist)
+        if dry_run:
+            results = []
+            for o in pending:
+                payload = self.build_measurement_protocol_payload(o)
                 results.append({
                     "transaction_id": o.transaction_id,
-                    "status": "dry_run" if dry_run else "simulated_no_api_secret",
+                    "status": "dry_run",
                     "pkr_amount": o.pkr_amount,
                     "payload": payload,
                 })
-            else:
-                endpoint = f"{GA4_MP_ENDPOINT}?measurement_id={MEASUREMENT_ID}&api_secret={api_secret}"
-                data_bytes = json.dumps(payload).encode("utf-8")
-                req = urllib.request.Request(
-                    endpoint,
-                    data=data_bytes,
-                    headers={"Content-Type": "application/json"},
-                    method="POST",
-                )
-                try:
-                    with urllib.request.urlopen(req, timeout=10) as resp:
-                        # GA4 MP returns HTTP 204 No Content on success
-                        if resp.status in (200, 204):
-                            o.is_imported_to_ga4 = True
-                            o.imported_at = now_iso
-                            imported_count += 1
-                            results.append({"transaction_id": o.transaction_id, "status": "sent", "http_code": resp.status})
-                except Exception as e:
-                    logger.error(f"Failed dispatching offline conversion {o.transaction_id}: {e}")
-                    results.append({"transaction_id": o.transaction_id, "status": "error", "error": str(e)})
+            return {
+                "status": "dry_run",
+                "imported_count": 0,
+                "pending_remaining": len(pending),
+                "results": results,
+            }
 
-        # Persist updated state
-        self.orders_file.write_text(
-            json.dumps([o.to_dict() for o in orders], indent=2),
-            encoding="utf-8",
-        )
+        # Case B: Missing API secret (Return BLOCKED_MISSING_API_SECRET, preserve pending records unchanged)
+        api_secret = (os.getenv("GA4_API_SECRET") or os.getenv("GA4_MEASUREMENT_SECRET") or "").strip()
+        if not api_secret:
+            logger.warning("GA4 import blocked: GA4_API_SECRET / GA4_MEASUREMENT_SECRET is missing.")
+            return {
+                "status": "BLOCKED_MISSING_API_SECRET",
+                "message": "GA4 import blocked: Missing API secret. Order records remain pending.",
+                "imported_count": 0,
+                "pending_remaining": len(pending),
+            }
 
-        # Append to import log
-        self._append_log(results)
+        # Case C: Real request (Send to GA4 MP, mark imported ONLY on successful HTTP 200/204)
+        imported_count = 0
+        now_iso = datetime.now(timezone.utc).isoformat()
+        results: List[Dict[str, Any]] = []
+        endpoint = f"{GA4_MP_ENDPOINT}?measurement_id={MEASUREMENT_ID}&api_secret={api_secret}"
+
+        for o in pending:
+            payload = self.build_measurement_protocol_payload(o)
+            data_bytes = json.dumps(payload).encode("utf-8")
+            req = urllib.request.Request(
+                endpoint,
+                data=data_bytes,
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    # GA4 MP returns HTTP 204 No Content on success
+                    if resp.status in (200, 204):
+                        o.is_imported_to_ga4 = True
+                        o.imported_at = now_iso
+                        imported_count += 1
+                        results.append({"transaction_id": o.transaction_id, "status": "sent", "http_code": resp.status})
+                    else:
+                        results.append({"transaction_id": o.transaction_id, "status": "failed_http", "http_code": resp.status})
+            except Exception as e:
+                sanitized_err = str(e).replace(api_secret, "***") if api_secret else str(e)
+                logger.error(f"Failed dispatching offline conversion {o.transaction_id}: {sanitized_err}")
+                results.append({"transaction_id": o.transaction_id, "status": "error", "error": sanitized_err})
+
+        # Only persist updated state if at least one order was imported
+        if imported_count > 0:
+            self.orders_file.write_text(
+                json.dumps([o.to_dict() for o in orders], indent=2),
+                encoding="utf-8",
+            )
+            self._append_log(results)
 
         return {
-            "status": "success",
+            "status": "success" if imported_count > 0 else "dispatch_failed",
             "imported_count": imported_count,
-            "pending_remaining": len(orders) - imported_count,
+            "pending_remaining": len(orders) - sum(1 for o in orders if o.is_imported_to_ga4),
             "results": results,
         }
+
+    # Backward compatibility and prompt convenience alias
+    import_verified_orders = dispatch_offline_conversions
 
     def _append_log(self, entries: List[Dict[str, Any]]) -> None:
         """Appends to durable GA4 import log."""
@@ -316,9 +340,9 @@ class ConversionImporter:
     def dispatch_offline_refunds(self, dry_run: bool = False) -> Dict[str, Any]:
         """
         Dispatches all unimported verified refunds to GA4 Measurement Protocol.
-        Marks refunds as imported upon successful HTTP 204 or dry run.
+        Marks refunds as imported ONLY upon successful HTTP 200/204 response from GA4.
+        Dry-run or missing API secret strictly NEVER mutates refund imported state.
         """
-        api_secret = (os.getenv("GA4_API_SECRET") or os.getenv("GA4_MEASUREMENT_SECRET") or "").strip()
         refunds = self.load_refunds()
         pending = [r for r in refunds if not r.is_imported_to_ga4]
 
@@ -329,54 +353,77 @@ class ConversionImporter:
                 "imported_count": 0,
             }
 
-        imported_count = 0
-        now_iso = datetime.now(timezone.utc).isoformat()
-        results: List[Dict[str, Any]] = []
-
-        for r in pending:
-            payload = self.build_refund_payload(r)
-            if dry_run or not api_secret:
-                r.is_imported_to_ga4 = True
-                r.imported_at = now_iso
-                imported_count += 1
+        # Case A: Dry run (Generate payload preview, DO NOT mutate state, DO NOT persist)
+        if dry_run:
+            results = []
+            for r in pending:
+                payload = self.build_refund_payload(r)
                 results.append({
                     "refund_id": r.refund_id,
                     "transaction_id": r.transaction_id,
-                    "status": "dry_run" if dry_run else "simulated_no_api_secret",
+                    "status": "dry_run",
                     "pkr_amount": r.pkr_amount,
                     "payload": payload,
                 })
-            else:
-                endpoint = f"{GA4_MP_ENDPOINT}?measurement_id={MEASUREMENT_ID}&api_secret={api_secret}"
-                data_bytes = json.dumps(payload).encode("utf-8")
-                req = urllib.request.Request(
-                    endpoint,
-                    data=data_bytes,
-                    headers={"Content-Type": "application/json"},
-                    method="POST",
-                )
-                try:
-                    with urllib.request.urlopen(req, timeout=10) as resp:
-                        if resp.status in (200, 204):
-                            r.is_imported_to_ga4 = True
-                            r.imported_at = now_iso
-                            imported_count += 1
-                            results.append({"refund_id": r.refund_id, "status": "sent", "http_code": resp.status})
-                except Exception as e:
-                    logger.error(f"Failed dispatching offline refund {r.refund_id}: {e}")
-                    results.append({"refund_id": r.refund_id, "status": "error", "error": str(e)})
+            return {
+                "status": "dry_run",
+                "imported_count": 0,
+                "pending_remaining": len(pending),
+                "results": results,
+            }
 
-        # Persist updated state
-        self.refunds_file.write_text(
-            json.dumps([r.to_dict() for r in refunds], indent=2),
-            encoding="utf-8",
-        )
-        self._append_log(results)
+        # Case B: Missing API secret (Return BLOCKED_MISSING_API_SECRET, preserve pending records unchanged)
+        api_secret = (os.getenv("GA4_API_SECRET") or os.getenv("GA4_MEASUREMENT_SECRET") or "").strip()
+        if not api_secret:
+            logger.warning("GA4 refund dispatch blocked: GA4_API_SECRET / GA4_MEASUREMENT_SECRET is missing.")
+            return {
+                "status": "BLOCKED_MISSING_API_SECRET",
+                "message": "GA4 refund dispatch blocked: Missing API secret. Refund records remain pending.",
+                "imported_count": 0,
+                "pending_remaining": len(pending),
+            }
+
+        # Case C: Real request (Send to GA4 MP, mark imported ONLY on successful HTTP 200/204)
+        imported_count = 0
+        now_iso = datetime.now(timezone.utc).isoformat()
+        results: List[Dict[str, Any]] = []
+        endpoint = f"{GA4_MP_ENDPOINT}?measurement_id={MEASUREMENT_ID}&api_secret={api_secret}"
+
+        for r in pending:
+            payload = self.build_refund_payload(r)
+            data_bytes = json.dumps(payload).encode("utf-8")
+            req = urllib.request.Request(
+                endpoint,
+                data=data_bytes,
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    if resp.status in (200, 204):
+                        r.is_imported_to_ga4 = True
+                        r.imported_at = now_iso
+                        imported_count += 1
+                        results.append({"refund_id": r.refund_id, "status": "sent", "http_code": resp.status})
+                    else:
+                        results.append({"refund_id": r.refund_id, "status": "failed_http", "http_code": resp.status})
+            except Exception as e:
+                sanitized_err = str(e).replace(api_secret, "***") if api_secret else str(e)
+                logger.error(f"Failed dispatching offline refund {r.refund_id}: {sanitized_err}")
+                results.append({"refund_id": r.refund_id, "status": "error", "error": sanitized_err})
+
+        # Only persist updated state if at least one refund was imported
+        if imported_count > 0:
+            self.refunds_file.write_text(
+                json.dumps([r.to_dict() for r in refunds], indent=2),
+                encoding="utf-8",
+            )
+            self._append_log(results)
 
         return {
-            "status": "success",
+            "status": "success" if imported_count > 0 else "dispatch_failed",
             "imported_count": imported_count,
-            "pending_remaining": len(refunds) - imported_count,
+            "pending_remaining": len(refunds) - sum(1 for r in refunds if r.is_imported_to_ga4),
             "results": results,
         }
 
