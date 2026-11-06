@@ -84,7 +84,7 @@ class LinkGraphChecker:
 
     def _load_html_files(self):
         """Scans all public HTML files in the repository."""
-        skip_dirs = {'.git', 'node_modules', '.gemini', '.seo-cache', 'seo-agent', 'reports'}
+        skip_dirs = {'.git', 'node_modules', '.gemini', '.seo-cache', 'seo-agent', 'reports', 'data', 'public-site', 'scratch', 'dist'}
         for root, dirs, files in os.walk(self.repo_root):
             # Prune skipped dirs
             dirs[:] = [d for d in dirs if d not in skip_dirs]

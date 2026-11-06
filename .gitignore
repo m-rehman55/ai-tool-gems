@@ -31,3 +31,30 @@ seo-agent/reports/daily-report-*.md
 !seo-agent/reports/daily-report-2026-10-12.md
 scratch/
 
+# Credentials and Service Accounts
+config/
+*.service_account.json
+credentials*.json
+client_secrets*.json
+
+# Public Build Artifacts
+public-site/
+dist/
+
+# Private Operational & Supplier Data Quarantine
+data/orders/
+data/wholesale_inventory.json
+data/wholesale_cost_reference.json
+data/suppliers/
+data/snapshots/
+data/gsc_history/raw_responses/
+data/reports/
+data/analytics/
+data/tasks/
+data/posthog/
+data/backlinks/
+data/aio/
+data/bing/
+data/merchant/
+
+

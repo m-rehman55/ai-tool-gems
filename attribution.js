@@ -67,8 +67,21 @@
   // third-party download until the browser is idle so it cannot compete with LCP.
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+  // Google Consent Mode v2: privacy-first defaults before tag evaluation
+  window.gtag('consent', 'default', {
+    'analytics_storage': 'granted',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update': 500
+  });
+
   window.gtag('js', new Date());
-  window.gtag('config', MEASUREMENT_ID, { send_page_view: true });
+  window.gtag('config', MEASUREMENT_ID, { 
+    send_page_view: true,
+    anonymize_ip: true
+  });
   function loadAnalytics() {
     if (document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}"]`)) return;
     const analyticsScript = document.createElement('script');
@@ -88,101 +101,228 @@
     return originalPush(entry);
   };
 
-  window.ATGAttribution = { current, label, appendToMessage };
+  function updateConsent(settings) { if (typeof window.gtag === 'function') window.gtag('consent', 'update', settings); }
+  window.ATGAttribution = { current, label, appendToMessage, updateConsent };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', decorateWhatsAppLinks, { once: true });
   } else {
     decorateWhatsAppLinks();
   }
 
-  // Event tracking for SEO analytics
+  // ── Explicit Page Type Detection & Clean Ecommerce Event Taxonomy ────────
+  function getPageMetadata() {
+    var path = window.location.pathname.toLowerCase();
+    var metaType = (document.querySelector('meta[name="page-type"]') || {}).content;
+
+    if (metaType) {
+      return { type: metaType, path: path };
+    }
+
+    if (path === '/' || path === '/index.html' || path === '') {
+      return { type: 'homepage', path: path };
+    }
+    if (path.indexOf('/tools/') !== -1) {
+      var parts = path.split('/tools/')[1].split('/').filter(Boolean);
+      var slug = parts[0] || 'tool';
+      return { type: 'product', slug: slug, path: path };
+    }
+    if (path.indexOf('/guides/') !== -1) {
+      var isComparison = path.indexOf('-vs-') !== -1 || path.indexOf('compare') !== -1;
+      return { type: isComparison ? 'comparison' : 'guide', path: path };
+    }
+    if (path.indexOf('/prices/') !== -1) {
+      return { type: 'prices', path: path };
+    }
+    if (path.indexOf('/deals/') !== -1) {
+      return { type: 'deals', path: path };
+    }
+    return { type: 'content', path: path };
+  }
+
+  // Event tracking wrapper (GA4 & PostHog dual-dispatch)
   function trackEvent(eventName, params) {
     params = params || {};
     if (typeof window.gtag === 'function') {
       window.gtag('event', eventName, params);
     }
-  }
-
-  // view_item - product page views
-  function trackViewItem() {
-    var productName = document.querySelector('h1');
-    if (productName) {
-      var name = productName.textContent.trim();
-      if (name) {
-        trackEvent('view_item', {
-          items: [{
-            item_id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
-            item_name: name,
-            item_category: 'AI Tool'
-          }]
-        });
-      }
+    if (window.posthog && typeof window.posthog.capture === 'function') {
+      window.posthog.capture(eventName, params);
     }
   }
 
-  // select_item - product selection
+  // Track initial page load according to clean taxonomy
+  function trackPageLoad() {
+    var meta = getPageMetadata();
+
+    // 1. Product page view (view_item) - Only fired on actual /tools/ routes
+    if (meta.type === 'product') {
+      var h1 = document.querySelector('h1');
+      var name = h1 ? h1.textContent.trim() : (meta.slug || 'AI Tool');
+      var priceElem = document.querySelector('.price-pkr, [data-price-pkr], .price, .product-price');
+      var priceMatch = priceElem ? String(priceElem.textContent).replace(/[^0-9]/g, '') : '';
+      var priceVal = priceMatch ? parseInt(priceMatch, 10) : undefined;
+
+      trackEvent('view_item', {
+        currency: 'PKR',
+        value: priceVal,
+        items: [{
+          item_id: meta.slug || name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+          item_name: name,
+          item_category: 'AI Tool',
+          price: priceVal,
+          currency: 'PKR'
+        }]
+      });
+      return;
+    }
+
+    // 2. Comparison page view (view_comparison) - Only fired on actual /guides/*-vs-* routes
+    if (meta.type === 'comparison') {
+      trackEvent('view_comparison', {
+        page_type: 'comparison',
+        page_path: meta.path
+      });
+      return;
+    }
+
+    // 3. Editorial Guide page view (view_guide) - Only fired on actual /guides/ routes
+    if (meta.type === 'guide') {
+      trackEvent('view_guide', {
+        page_type: 'guide',
+        page_path: meta.path
+      });
+      return;
+    }
+
+    // 4. Prices directory view
+    if (meta.type === 'prices') {
+      trackEvent('view_item_list', {
+        item_list_name: 'Pakistan AI Tools Pricing Directory',
+        item_list_id: 'prices-directory'
+      });
+      return;
+    }
+
+    // 5. Deals catalog view
+    if (meta.type === 'deals') {
+      trackEvent('view_item_list', {
+        item_list_name: 'AIToolGems Deals Catalog',
+        item_list_id: 'deals-catalog'
+      });
+      return;
+    }
+
+    // Homepage and standard pages DO NOT trigger view_item or view_guide!
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', trackPageLoad, { once: true });
+  } else {
+    trackPageLoad();
+  }
+
+  // ── Interactions & Clicks ──────────────────────────────────────────────────
   document.addEventListener('click', function(e) {
-    var link = e.target.closest('a[href*="/tools/"], a[href*="/product/"]');
-    if (link) {
+    // A) Product selection / Navigation to tool page
+    var toolLink = e.target.closest('a[href*="/tools/"]');
+    if (toolLink && !toolLink.closest('.floating-whatsapp')) {
+      var slug = toolLink.href.split('/tools/')[1] ? toolLink.href.split('/tools/')[1].split('/')[0] : 'unknown';
       trackEvent('select_item', {
         items: [{
-          item_id: link.href.split('/').filter(Boolean).pop() || 'unknown',
-          item_name: (link.textContent || '').trim() || 'unknown',
+          item_id: slug,
+          item_name: (toolLink.textContent || slug).trim(),
           item_category: 'AI Tool'
         }]
       });
     }
-  });
 
-  // click_whatsapp - WhatsApp links
-  document.addEventListener('click', function(e) {
-    var waLink = e.target.closest('a[href*="wa.me"], a[href*="whatsapp"], button[data-order], .buy-now-card, .order-now, [data-step-action="whatsapp"], [data-whatsapp]');
+    // B) WhatsApp Interactions: Distinguish Order vs Support vs Channel
+    var waLink = e.target.closest('a[href*="wa.me"], a[href*="whatsapp.com"], [data-whatsapp]');
     if (waLink) {
-      trackEvent('click_whatsapp', { link_url: waLink.href || 'https://wa.me/923236715731' });
-    }
-  });
+      var href = waLink.href || '';
+      var text = (waLink.textContent || '').toLowerCase();
+      var isChannel = href.indexOf('whatsapp.com/channel') !== -1;
+      var isOrder = waLink.closest('button[data-order], .buy-now-card, .order-now, [data-step-action="whatsapp"]') ||
+                    text.indexOf('buy') !== -1 || text.indexOf('order') !== -1 || text.indexOf('get access') !== -1 ||
+                    href.indexOf('interested in') !== -1;
 
-  // click_order - order intent
-  document.addEventListener('click', function(e) {
-    var orderLink = e.target.closest('a[href*="buy"], a[href*="order"], a[href*="subscription"], a[href*="purchase"]');
-    if (orderLink) {
-      trackEvent('click_order', { link_url: orderLink.href });
+      if (isChannel) {
+        trackEvent('whatsapp_channel_click', { destination: 'whatsapp_channel' });
+      } else if (isOrder) {
+        // Order Initiation (begin_checkout & qualified lead generation)
+        var h1 = document.querySelector('h1');
+        var itemName = h1 ? h1.textContent.trim() : 'AI Tool Subscription';
+        trackEvent('whatsapp_order_click', { destination: 'whatsapp_order', item_name: itemName });
+        trackEvent('begin_checkout', {
+          currency: 'PKR',
+          items: [{ item_name: itemName, currency: 'PKR', quantity: 1 }]
+        });
+        trackEvent('generate_lead', {
+          currency: 'PKR',
+          lead_type: 'whatsapp_order_inquiry',
+          item_name: itemName
+        });
+      } else {
+        // Support Inquiry
+        trackEvent('whatsapp_support_click', { destination: 'whatsapp_support' });
+      }
+      return;
     }
-  });
 
-  // click_affiliate - affiliate links
-  document.addEventListener('click', function(e) {
+    // C) Proof Image opens
+    var proofElem = e.target.closest('img.proof-image, [data-proof], .payment-proof, .proof-screenshot');
+    if (proofElem) {
+      trackEvent('proof_image_open', {
+        proof_src: proofElem.src || proofElem.dataset.proof || 'proof'
+      });
+      return;
+    }
+
+    // D) Affiliate Link Clicks
     var affLink = e.target.closest('a[href*="affiliate"], a[href*="ref="], a[href*="click="]');
     if (affLink) {
       trackEvent('click_affiliate', { link_url: affLink.href });
+      return;
     }
-  });
 
-  // view_comparison - comparison pages
-  if (document.querySelector('[class*="comparison"], [id*="comparison"], .comparison, #comparison')) {
-    trackEvent('view_comparison', { page_type: 'comparison' });
-  }
-
-  // view_guide - guide pages
-  if (document.querySelector('[class*="guide"], [id*="guide"], .guide, #guide, [class*="article"], [id*="article"]')) {
-    trackEvent('view_guide', { page_type: 'guide' });
-  }
-
-  // language_switch - language switching
-  document.addEventListener('click', function(e) {
-    var langLink = e.target.closest('a[href*="/en/"], a[href*="lang="], a[href*="language="]');
-    if (langLink) {
-      trackEvent('language_switch', { link_url: langLink.href });
-    }
-  });
-
-  // market_switch - market switching
-  document.addEventListener('click', function(e) {
+    // E) Market & Language switches
     var marketLink = e.target.closest('a[href*="/pk/"], a[href*="market="], a[href*="country="]');
     if (marketLink) {
       trackEvent('market_switch', { link_url: marketLink.href });
+      return;
     }
   });
+
+  // ── Behavioural Intelligence: Rage Click & Dead Click Detection ──────────
+  var recentClicks = [];
+  document.addEventListener('click', function (e) {
+    if (!e.target) return;
+    var now = Date.now();
+    recentClicks.push({ target: e.target, time: now });
+    recentClicks = recentClicks.filter(function (c) { return now - c.time <= 1000; });
+    var sameClicks = recentClicks.filter(function (c) { return c.target === e.target; });
+    if (sameClicks.length === 3) {
+      var tag = (e.target.tagName || 'ELEMENT').toLowerCase();
+      var cls = e.target.className && typeof e.target.className === 'string' ? '.' + e.target.className.trim().split(/\s+/)[0] : '';
+      trackEvent('rage_click', {
+        target_selector: (tag + cls).slice(0, 60),
+        click_count: sameClicks.length,
+        time_window_ms: 1000,
+        page_url: window.location.pathname
+      });
+    }
+
+    if (!e.target.closest('a, button, input, select, textarea, [role="button"], [tabindex]')) {
+      var style = window.getComputedStyle ? window.getComputedStyle(e.target) : null;
+      if (style && style.cursor === 'pointer') {
+        trackEvent('dead_click', {
+          target_selector: (e.target.tagName || 'ELEMENT').toLowerCase(),
+          text_content: (e.target.textContent || '').trim().slice(0, 40),
+          page_url: window.location.pathname
+        });
+      }
+    }
+  }, { passive: true });
 
   // Track page view for SPA-like navigation
   if (window.history && window.history.pushState) {
@@ -191,11 +331,6 @@
       originalPushState.apply(this, arguments);
       trackEvent('page_view', { page_path: window.location.pathname });
     };
-  }
-
-  // Track view_item on product pages
-  if (document.querySelector('[class*="product"], [id*="product"], .product, #product')) {
-    trackViewItem();
   }
 
 // Global floating WhatsApp button (ensures WhatsApp +923236715731 is accessible site-wide)

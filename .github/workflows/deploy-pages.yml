@@ -1,0 +1,77 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Sanitized Public Artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build Sanitized Public Site
+        run: |
+          python scripts/build_public_site.py --out-dir public-site
+
+      - name: Security & Custom Domain Assertion Guard
+        run: |
+          echo "Running post-build security assertions on public-site/..."
+          
+          # Assert CNAME custom domain
+          if [ ! -f "public-site/CNAME" ]; then
+            echo "ERROR: CNAME file missing from public-site!"
+            exit 1
+          fi
+          CNAME_VAL=$(cat public-site/CNAME | tr -d '[:space:]')
+          if [ "$CNAME_VAL" != "aitoolgems.tech" ]; then
+            echo "ERROR: CNAME contains unexpected domain: $CNAME_VAL"
+            exit 1
+          fi
+          
+          # Assert no private directories or operational files leaked
+          for forbidden in data reports admin.html admin.js admin.css; do
+            if [ -e "public-site/$forbidden" ]; then
+              echo "CRITICAL SECURITY LEAK: $forbidden found in public-site artifact!"
+              exit 1
+            fi
+          done
+          
+          echo "All security and CNAME checks passed successfully."
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

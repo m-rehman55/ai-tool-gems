@@ -69,9 +69,13 @@
     <a class="store-link" href="./">← View 3D storefront</a>
   </aside>
   <main>
+    <div class="demo-warning-banner" role="alert" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:12px 16px;border-radius:8px;margin:16px 24px 8px 24px;font-size:13px;line-height:1.5;">
+      <strong>⚠️ Developer Offline Demo — Not Connected to Live Production Backend</strong><br>
+      This dashboard is an unrouted developer-only UI prototype and local-storage sandbox. It does not process live transactions, access live customer databases, or reflect real-time supplier stock levels.
+    </div>
     <header>
       <div>
-        <small>STORE OPERATIONS</small>
+        <small>STORE OPERATIONS (DEVELOPER DEMO)</small>
         <h1>Welcome back, Admin.</h1>
       </div>
       <div class="admin-user">
@@ -83,22 +87,22 @@
       <article>
         <span>Today’s sales</span>
         <b>Rs. 0</b>
-        <small>Direct WhatsApp conversion active</small>
+        <small>Local sandbox fixture — No backend</small>
       </article>
       <article>
-        <span>Total verified tools</span>
-        <b id="adminProductCount">20</b>
-        <small class="up">↑ Catalog 3D ready</small>
+        <span>Catalog tools</span>
+        <b id="adminProductCount">40</b>
+        <small class="up">Local seed fixture</small>
       </article>
       <article>
-        <span>WhatsApp clicks</span>
-        <b>Active</b>
-        <small class="up">Instant order link ready</small>
+        <span>Order routing</span>
+        <b>WhatsApp</b>
+        <small class="up">Manual enquiry &amp; offline verification</small>
       </article>
       <article>
-        <span>Verification status</span>
-        <b>100%</b>
-        <small class="up">Warranties &amp; delivery clear</small>
+        <span>Portal mode</span>
+        <b>Dev-Only</b>
+        <small class="up">Unrouted prototype</small>
       </article>
     </section>
     <section class="content-grid" id="adminContent">
@@ -116,8 +120,8 @@
               <tr>
                 <th>Product</th>
                 <th>Category</th>
-                <th>Price</th>
-                <th>Status</th>
+                <th>Retail (PKR)</th>
+                <th>Availability</th>
                 <th></th>
               </tr>
             </thead>
