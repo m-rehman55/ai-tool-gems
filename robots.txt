@@ -39,7 +39,6 @@ User-agent: Claude-User
 User-agent: PerplexityBot
 User-agent: Perplexity-User
 User-agent: Google-Extended
-Allow: /
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
@@ -52,6 +51,7 @@ Disallow: /tests/
 Disallow: /scripts/
 Disallow: /hermes_core/
 Disallow: /seo-agent/
+Allow: /
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
 
