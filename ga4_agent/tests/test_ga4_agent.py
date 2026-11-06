@@ -11,10 +11,13 @@ Tests:
 """
 
 import json
+import os
 import shutil
 import tempfile
 import unittest
+import urllib.error
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 
 from hermes_core.contracts import (
     ApprovalRequirement,
@@ -130,7 +133,7 @@ class TestGA4Agent(unittest.TestCase):
     # ── 3. Measurement Protocol Payload & PKR Currency Tests ──────────────────
 
     def test_measurement_protocol_payload_structure(self):
-        """Verifies compliance of GA4 server-side purchase payload."""
+        """Verifies compliance of GA4 server-side purchase payload with legitimate client_id."""
         order = OfflineVerifiedOrder.create(
             transaction_id="ATG-MP-001",
             tool_slug="cursor",
@@ -138,11 +141,13 @@ class TestGA4Agent(unittest.TestCase):
             pkr_amount=5500.0,
             payment_rail="SadaPay",
             raw_phone="+923129876543",
+            client_id="123456789.987654321",
         )
         importer = ConversionImporter(data_dir=self.orders_dir)
         payload = importer.build_measurement_protocol_payload(order)
 
-        self.assertIn("client_id", payload)
+        self.assertIsNotNone(payload)
+        self.assertEqual(payload["client_id"], "123456789.987654321")
         self.assertEqual(len(payload["events"]), 1)
         event = payload["events"][0]
         self.assertEqual(event["name"], "purchase")
@@ -151,6 +156,21 @@ class TestGA4Agent(unittest.TestCase):
         self.assertEqual(event["params"]["transaction_id"], "ATG-MP-001")
         self.assertEqual(event["params"]["payment_type"], "SadaPay")
         self.assertEqual(event["params"]["items"][0]["item_id"], "cursor")
+
+    def test_measurement_protocol_payload_rejects_missing_client_id_without_pii_derivation(self):
+        """Verifies order without client_id returns None rather than deriving from phone or PII."""
+        order = OfflineVerifiedOrder.create(
+            transaction_id="ATG-MP-NOCID",
+            tool_slug="cursor",
+            tool_name="Cursor AI Pro",
+            pkr_amount=5500.0,
+            payment_rail="SadaPay",
+            raw_phone="+923129876543",
+            client_id=None,
+        )
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        payload = importer.build_measurement_protocol_payload(order)
+        self.assertIsNone(payload, "Payload must be None when legitimate client_id is missing")
 
     def test_refund_recording_and_deduplication(self):
         """Verifies recording and deduplication of verified refund records."""
@@ -189,9 +209,10 @@ class TestGA4Agent(unittest.TestCase):
             reason="customer_request",
         )
         importer = ConversionImporter(data_dir=self.orders_dir)
-        payload = importer.build_refund_payload(refund)
+        payload = importer.build_refund_payload(refund, client_id="123456789.987654321")
 
-        self.assertIn("client_id", payload)
+        self.assertIsNotNone(payload)
+        self.assertEqual(payload["client_id"], "123456789.987654321")
         self.assertEqual(len(payload["events"]), 1)
         event = payload["events"][0]
         self.assertEqual(event["name"], "refund")
@@ -199,6 +220,20 @@ class TestGA4Agent(unittest.TestCase):
         self.assertEqual(event["params"]["value"], 1500.0)
         self.assertEqual(event["params"]["transaction_id"], "ATG-REF-001")
         self.assertEqual(event["params"]["items"][0]["item_id"], "canva")
+
+    def test_refund_measurement_protocol_rejects_missing_client_id(self):
+        """Verifies refund without client_id returns None rather than fabricating an identifier."""
+        refund = OfflineRefund.create(
+            transaction_id="ATG-REF-001",
+            refund_id="REF-20261106-003",
+            tool_slug="canva",
+            tool_name="Canva Pro",
+            pkr_amount=1500.0,
+            reason="customer_request",
+        )
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        payload = importer.build_refund_payload(refund, client_id=None)
+        self.assertIsNone(payload, "Refund payload must be None when client_id is missing")
 
     # ── 4. Funnel Metrics Calculation Tests ───────────────────────────────────
 
@@ -343,6 +378,7 @@ class TestGA4Agent(unittest.TestCase):
             pkr_amount=800.0,
             payment_rail="EasyPaisa",
             raw_phone="+923005554433",
+            client_id="client.netfail.001",
         )
 
         with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("Connection refused")), \
@@ -352,6 +388,28 @@ class TestGA4Agent(unittest.TestCase):
 
         orders = importer.load_orders()
         self.assertFalse(orders[0].is_imported_to_ga4, "Order must remain pending after network failure")
+
+    def test_order_missing_client_id_skips_dispatch_and_remains_pending(self):
+        """Verifies order lacking client_id is safely skipped and not marked imported."""
+        import os
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="SYNTH-SKIP-001",
+            tool_slug="gemini",
+            tool_name="Gemini Advanced",
+            pkr_amount=800.0,
+            payment_rail="EasyPaisa",
+            raw_phone="+923005554433",
+            client_id=None,
+        )
+
+        with patch.dict(os.environ, {"GA4_API_SECRET": "mock_secret_test"}):
+            res = importer.import_verified_orders(dry_run=False)
+            self.assertEqual(res["imported_count"], 0)
+            self.assertEqual(res["results"][0]["status"], "skipped_missing_legitimate_client_id")
+
+        orders = importer.load_orders()
+        self.assertFalse(orders[0].is_imported_to_ga4)
 
     def test_successful_http_response_marks_order_imported(self):
         """CRITICAL: HTTP 204 from GA4 MP marks order imported and sets timestamp."""
@@ -365,6 +423,7 @@ class TestGA4Agent(unittest.TestCase):
             pkr_amount=3500.0,
             payment_rail="SadaPay",
             raw_phone="+923004443322",
+            client_id="client.success.001",
         )
 
         mock_resp = MagicMock()
@@ -379,6 +438,104 @@ class TestGA4Agent(unittest.TestCase):
         orders = importer.load_orders()
         self.assertTrue(orders[0].is_imported_to_ga4, "Order must be marked imported on HTTP 204")
         self.assertIsNotNone(orders[0].imported_at)
+
+    def test_failed_network_request_leaves_refund_pending(self):
+        """CRITICAL: Symmetrical network failure for refund must leave refund pending."""
+        import os
+        from unittest.mock import patch
+        import urllib.error
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="SYNTH-REF-FAIL-001",
+            tool_slug="midjourney",
+            tool_name="Midjourney Standard",
+            pkr_amount=3500.0,
+            payment_rail="SadaPay",
+            raw_phone="+923004443322",
+            client_id="client.refund.fail.001",
+        )
+        importer.record_verified_refund(
+            transaction_id="SYNTH-REF-FAIL-001",
+            refund_id="REF-FAIL-001",
+            tool_slug="midjourney",
+            tool_name="Midjourney Standard",
+            pkr_amount=3500.0,
+            reason="service_cancellation",
+        )
+
+        with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("Connection reset")), \
+             patch.dict(os.environ, {"GA4_API_SECRET": "mock_secret_test"}):
+            res = importer.dispatch_offline_refunds(dry_run=False)
+            self.assertEqual(res["imported_count"], 0)
+
+        refunds = importer.load_refunds()
+        self.assertFalse(refunds[0].is_imported_to_ga4, "Refund must remain pending after network failure")
+
+    def test_successful_http_response_marks_refund_imported(self):
+        """CRITICAL: Symmetrical HTTP 204 from GA4 MP marks refund imported and sets timestamp."""
+        import os
+        from unittest.mock import MagicMock, patch
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="SYNTH-REF-OK-001",
+            tool_slug="midjourney",
+            tool_name="Midjourney Standard",
+            pkr_amount=3500.0,
+            payment_rail="SadaPay",
+            raw_phone="+923004443322",
+            client_id="client.refund.ok.001",
+        )
+        importer.record_verified_refund(
+            transaction_id="SYNTH-REF-OK-001",
+            refund_id="REF-OK-001",
+            tool_slug="midjourney",
+            tool_name="Midjourney Standard",
+            pkr_amount=3500.0,
+            reason="service_cancellation",
+        )
+
+        mock_resp = MagicMock()
+        mock_resp.status = 204
+        mock_resp.__enter__.return_value = mock_resp
+
+        with patch("urllib.request.urlopen", return_value=mock_resp), \
+             patch.dict(os.environ, {"GA4_API_SECRET": "mock_secret_test"}):
+            res = importer.dispatch_offline_refunds(dry_run=False)
+            self.assertEqual(res["imported_count"], 1)
+
+        refunds = importer.load_refunds()
+        self.assertTrue(refunds[0].is_imported_to_ga4, "Refund must be marked imported on HTTP 204")
+        self.assertIsNotNone(refunds[0].imported_at)
+
+    def test_refund_missing_client_id_skips_dispatch_and_remains_pending(self):
+        """Verifies refund whose parent order lacks client_id is safely skipped without fabricating ID."""
+        import os
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="SYNTH-REF-NOCID-001",
+            tool_slug="midjourney",
+            tool_name="Midjourney Standard",
+            pkr_amount=3500.0,
+            payment_rail="SadaPay",
+            raw_phone="+923004443322",
+            client_id=None,
+        )
+        importer.record_verified_refund(
+            transaction_id="SYNTH-REF-NOCID-001",
+            refund_id="REF-NOCID-001",
+            tool_slug="midjourney",
+            tool_name="Midjourney Standard",
+            pkr_amount=3500.0,
+            reason="customer_request",
+        )
+
+        with patch.dict(os.environ, {"GA4_API_SECRET": "mock_secret_test"}):
+            res = importer.dispatch_offline_refunds(dry_run=False)
+            self.assertEqual(res["imported_count"], 0)
+            self.assertEqual(res["results"][0]["status"], "skipped_missing_legitimate_client_id")
+
+        refunds = importer.load_refunds()
+        self.assertFalse(refunds[0].is_imported_to_ga4, "Refund must remain pending when client_id is missing")
 
 
 if __name__ == "__main__":

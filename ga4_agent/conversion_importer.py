@@ -111,9 +111,15 @@ class ConversionImporter:
         )
         return True, f"Verified payment {tid} successfully recorded."
 
-    def build_measurement_protocol_payload(self, order: OfflineVerifiedOrder) -> Dict[str, Any]:
+    def build_measurement_protocol_payload(self, order: OfflineVerifiedOrder) -> Optional[Dict[str, Any]]:
         """Formats the official GA4 Measurement Protocol purchase payload."""
-        c_id = order.client_id or f"offline_{order.customer_phone_hash}"
+        c_id = order.client_id
+        if not c_id:
+            logger.warning(
+                f"Order {order.transaction_id} lacks a legitimately collected GA4 client_id. "
+                "Deriving client_id from customer phone hash or PII is strictly prohibited."
+            )
+            return None
 
         return {
             "client_id": c_id,
@@ -193,6 +199,14 @@ class ConversionImporter:
 
         for o in pending:
             payload = self.build_measurement_protocol_payload(o)
+            if not payload:
+                results.append({
+                    "transaction_id": o.transaction_id,
+                    "status": "skipped_missing_legitimate_client_id",
+                    "message": "Order lacks legitimately collected client_id. Prohibited from deriving identifier from phone or PII.",
+                })
+                continue
+
             data_bytes = json.dumps(payload).encode("utf-8")
             req = urllib.request.Request(
                 endpoint,
@@ -310,9 +324,16 @@ class ConversionImporter:
         )
         return True, f"Verified refund {rid} for transaction {tid} successfully recorded."
 
-    def build_refund_payload(self, refund: OfflineRefund, client_id: Optional[str] = None) -> Dict[str, Any]:
+    def build_refund_payload(self, refund: OfflineRefund, client_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """Formats the official GA4 Measurement Protocol refund payload."""
-        c_id = client_id or f"refund_{refund.refund_id}"
+        c_id = client_id
+        if not c_id:
+            logger.warning(
+                f"Refund {refund.refund_id} lacks a legitimately collected GA4 client_id. "
+                "Deriving client_id or fabricating identifier is strictly prohibited."
+            )
+            return None
+
         return {
             "client_id": c_id,
             "non_personalized_ads": False,
@@ -353,11 +374,15 @@ class ConversionImporter:
                 "imported_count": 0,
             }
 
+        # Lookup legitimate client_id from recorded orders
+        orders_map = {o.transaction_id: o.client_id for o in self.load_orders() if o.client_id}
+
         # Case A: Dry run (Generate payload preview, DO NOT mutate state, DO NOT persist)
         if dry_run:
             results = []
             for r in pending:
-                payload = self.build_refund_payload(r)
+                c_id = orders_map.get(r.transaction_id)
+                payload = self.build_refund_payload(r, client_id=c_id)
                 results.append({
                     "refund_id": r.refund_id,
                     "transaction_id": r.transaction_id,
@@ -390,7 +415,17 @@ class ConversionImporter:
         endpoint = f"{GA4_MP_ENDPOINT}?measurement_id={MEASUREMENT_ID}&api_secret={api_secret}"
 
         for r in pending:
-            payload = self.build_refund_payload(r)
+            c_id = orders_map.get(r.transaction_id)
+            payload = self.build_refund_payload(r, client_id=c_id)
+            if not payload:
+                results.append({
+                    "refund_id": r.refund_id,
+                    "transaction_id": r.transaction_id,
+                    "status": "skipped_missing_legitimate_client_id",
+                    "message": "Refund lacks legitimately collected client_id. Prohibited from fabricating identifier.",
+                })
+                continue
+
             data_bytes = json.dumps(payload).encode("utf-8")
             req = urllib.request.Request(
                 endpoint,
