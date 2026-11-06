@@ -1,15 +1,15 @@
 {
   "source": "LIVE_API",
-  "status_message": "Retrieved 173 live queries and 83 pages via Google Search Console OAuth API.",
-  "total_clicks": 39,
-  "total_impressions": 1245,
-  "average_ctr": 3.13,
-  "average_position": 20.8,
+  "status_message": "Retrieved 178 live queries and 83 pages via Google Search Console OAuth API.",
+  "total_clicks": 40,
+  "total_impressions": 1282,
+  "average_ctr": 3.12,
+  "average_position": 21.8,
   "date_range": "2026-10-07 to 2026-11-04",
-  "retrieved_at": "2026-11-06T15:34:39.918808+00:00",
-  "queries_count": 173,
+  "retrieved_at": "2026-11-06T16:54:56.555752+00:00",
+  "queries_count": 178,
   "pages_count": 83,
-  "countries_count": 38,
+  "countries_count": 39,
   "devices_count": 3,
   "queries": [
     {
@@ -67,6 +67,27 @@
       "impressions": 1,
       "ctr": 0.0,
       "position": 85.0
+    },
+    {
+      "query": "adobe cloud cost",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 76.0
+    },
+    {
+      "query": "adobe creative cloud cost",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 79.0
+    },
+    {
+      "query": "adobe creative cloud price",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 82.0
     },
     {
       "query": "adobe creative cloud price in pakistan",
@@ -195,11 +216,18 @@
       "position": 10.0
     },
     {
+      "query": "ai36551",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
       "query": "ai36583",
       "clicks": 0,
-      "impressions": 15,
+      "impressions": 16,
       "ctr": 0.0,
-      "position": 9.07
+      "position": 9.12
     },
     {
       "query": "ai36851",
@@ -260,16 +288,16 @@
     {
       "query": "ai44472",
       "clicks": 0,
-      "impressions": 17,
+      "impressions": 19,
       "ctr": 0.0,
-      "position": 6.71
+      "position": 6.74
     },
     {
       "query": "ai44475",
       "clicks": 0,
-      "impressions": 7,
+      "impressions": 8,
       "ctr": 0.0,
-      "position": 7.0
+      "position": 7.12
     },
     {
       "query": "ai44478",
@@ -295,16 +323,16 @@
     {
       "query": "ai44583",
       "clicks": 0,
-      "impressions": 1,
+      "impressions": 2,
       "ctr": 0.0,
       "position": 7.0
     },
     {
       "query": "ai44584",
       "clicks": 0,
-      "impressions": 12,
+      "impressions": 14,
       "ctr": 0.0,
-      "position": 9.08
+      "position": 8.79
     },
     {
       "query": "ai44599",
@@ -617,9 +645,9 @@
     {
       "query": "ai73643",
       "clicks": 0,
-      "impressions": 8,
+      "impressions": 9,
       "ctr": 0.0,
-      "position": 8.5
+      "position": 8.44
     },
     {
       "query": "ai73645",
@@ -683,34 +711,6 @@
       "impressions": 2,
       "ctr": 0.0,
       "position": 8.0
-    },
-    {
-      "query": "ai84478",
-      "clicks": 0,
-      "impressions": 3,
-      "ctr": 0.0,
-      "position": 9.0
-    },
-    {
-      "query": "ai86589",
-      "clicks": 0,
-      "impressions": 14,
-      "ctr": 0.0,
-      "position": 9.79
-    },
-    {
-      "query": "ai86629",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 10.0
-    },
-    {
-      "query": "ai86665",
-      "clicks": 0,
-      "impressions": 2,
-      "ctr": 0.0,
-      "position": 9.0
     }
   ],
   "pages": [
@@ -780,9 +780,9 @@
     {
       "page": "https://aitoolgems.tech/guides/claude-ai-pakistan/",
       "clicks": 1,
-      "impressions": 51,
-      "ctr": 1.96,
-      "position": 11.57
+      "impressions": 53,
+      "ctr": 1.89,
+      "position": 11.43
     },
     {
       "page": "https://aitoolgems.tech/jp/tools/gemini/",
@@ -794,16 +794,23 @@
     {
       "page": "https://aitoolgems.tech/tools/adobe/",
       "clicks": 1,
-      "impressions": 21,
-      "ctr": 4.76,
-      "position": 25.76
+      "impressions": 24,
+      "ctr": 4.17,
+      "position": 32.42
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/deepseek/",
+      "clicks": 1,
+      "impressions": 15,
+      "ctr": 6.67,
+      "position": 10.53
     },
     {
       "page": "https://aitoolgems.tech/tools/gamma/",
       "clicks": 1,
-      "impressions": 12,
-      "ctr": 8.33,
-      "position": 6.83
+      "impressions": 13,
+      "ctr": 7.69,
+      "position": 7.0
     },
     {
       "page": "https://aitoolgems.tech/tools/grok/",
@@ -815,9 +822,9 @@
     {
       "page": "https://aitoolgems.tech/tools/nordvpn/",
       "clicks": 1,
-      "impressions": 12,
-      "ctr": 8.33,
-      "position": 26.75
+      "impressions": 14,
+      "ctr": 7.14,
+      "position": 31.36
     },
     {
       "page": "https://aitoolgems.tech/tools/runway/",
@@ -934,9 +941,9 @@
     {
       "page": "https://aitoolgems.tech/guides/deepseek-ai-pakistan/",
       "clicks": 0,
-      "impressions": 21,
+      "impressions": 24,
       "ctr": 0.0,
-      "position": 8.14
+      "position": 7.71
     },
     {
       "page": "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/",
@@ -1056,13 +1063,6 @@
       "impressions": 5,
       "ctr": 0.0,
       "position": 5.8
-    },
-    {
-      "page": "https://aitoolgems.tech/jp/tools/netflix/",
-      "clicks": 0,
-      "impressions": 1,
-      "ctr": 0.0,
-      "position": 12.0
     }
   ]
 }

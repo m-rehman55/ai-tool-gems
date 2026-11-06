@@ -29,6 +29,7 @@ class ArticleResearchRecord:
     structured_data_requirements: List[str]      # ["Article", "FAQPage", "BreadcrumbList"]
     editorial_quality_score: float       # 0 to 100
     originality_checks: Dict[str, Any]   # {"has_unique_insights": True, "zero_generic_filler": True}
+    existing_url_to_improve: Optional[str] = None  # Anti-cannibalization: Path or slug of existing URL to improve
     approved_for_publishing: bool = False # STRICTLY False by default; cannot self-approve
     approved_by: Optional[str] = None
     approval_timestamp: Optional[float] = None

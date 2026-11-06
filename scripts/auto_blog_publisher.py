@@ -202,52 +202,9 @@ def load_queue_candidate() -> tuple[dict | None, str]:
         except Exception as e:
             print(f"⚠️ Error reading queue file: {e}")
 
-    # Dynamic Fallback: Discover unwritten guide opportunities from catalog tools
-    # This guarantees the automated publisher NEVER halts or runs out of topics
-    catalog_file = BASE / "app.js"
-    if catalog_file.exists():
-        cat_text = catalog_file.read_text(encoding="utf-8")
-        tool_ids = re.findall(r"id:\s*['\"]([^'\"]+)['\"]", cat_text)
-        tool_names = re.findall(r"name:\s*['\"]([^'\"]+)['\"]", cat_text)
-        tool_map = dict(zip(tool_ids, tool_names)) if len(tool_ids) == len(tool_names) else {}
-
-        for tid in tool_ids:
-            candidate_slug = f"{tid}-ai-pakistan-guide"
-            if candidate_slug not in published_slugs:
-                tname = tool_map.get(tid, tid.title())
-                dyn_item = {
-                    "slug": candidate_slug,
-                    "title": f"{tname} in Pakistan: Features, Pricing & Guide (2026)",
-                    "meta_description": f"Complete guide to {tname} in Pakistan. Review features, access types, and flat PKR pricing via EasyPaisa and JazzCash.",
-                    "primary_keyword": f"{tname} Pakistan",
-                    "secondary_keywords": [
-                        f"{tname} price in Pakistan",
-                        f"buy {tname} PKR",
-                        f"{tname} EasyPaisa JazzCash",
-                        f"best AI tools Pakistan"
-                    ],
-                    "target_audience": "Pakistani digital creators, freelancers, and businesses",
-                    "primary_tool": tid,
-                    "related_tools": [
-                        {"slug": tid, "name": tname},
-                        {"slug": "chatgpt", "name": "ChatGPT Plus"},
-                        {"slug": "canva", "name": "Canva Pro"}
-                    ],
-                    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
-                    "approved_for_publishing": False  # FIX DEFECT 9: Strictly False. Self-approval is blocked.
-                }
-
-                # Discovered candidate is queued for editorial review rather than self-approved
-                try:
-                    q_items = json.loads(queue_file.read_text(encoding="utf-8")) if queue_file.exists() else []
-                    if not any(item.get("slug") == candidate_slug for item in q_items):
-                        q_items.append(dyn_item)
-                        queue_file.write_text(json.dumps(q_items, indent=2), encoding="utf-8")
-                        print(f"ℹ️ Enqueued unwritten guide opportunity '{candidate_slug}' (pending human editorial approval).")
-                except Exception as ex:
-                    print(f"⚠️ Notice enqueuing discovered topic: {ex}")
-
-    # Never self-approve or publish without explicit prior human approval
+    # Phase 13 Mandate: Do not publish a daily article merely to satisfy a schedule.
+    # If no approved, validated topic is in the content queue, cleanly halt with NO_ELIGIBLE_TOPIC.
+    print("ℹ️ STATUS: NO_ELIGIBLE_TOPIC - No approved, unwritten topics found in content queue. Preserving editorial quality; daily publishing halted.")
     return None, "NO_ELIGIBLE_TOPIC"
 
 
@@ -353,6 +310,12 @@ def render_article_html(bp: dict) -> str:
         elif isinstance(t, (list, tuple)) and len(t) >= 2:
             rel_tools.append((t[0], t[1]))
     related_links_html = "\n".join([f'          <li><a href="../../tools/{k}/">{name} in Pakistan</a></li>' for k, name in rel_tools])
+
+    official_sources = bp.get("official_sources", [])
+    if not official_sources:
+        official_sources = [f"https://aitoolgems.tech/tools/{bp.get('tool_key', 'chatgpt')}/"]
+    sources_items = [f'          <li><a href="{s}" rel="noopener">{s}</a></li>' for s in official_sources]
+    sources_html = "\n".join(sources_items)
 
     html = f"""<!doctype html><html lang="en-PK"><head>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style"
@@ -480,7 +443,7 @@ def render_article_html(bp: dict) -> str:
         <h1>{title}</h1>
         <div class="byline">
           <span>By AI Tool Gems Editorial Team</span>
-          <span>Updated {now_date}</span>
+          <span>Last reviewed &amp; verified: {now_date}</span>
           <span>Verified Pakistan Pricing (PKR)</span>
         </div>
       </header>
@@ -601,6 +564,15 @@ def render_article_html(bp: dict) -> str:
         <p>If you are creating digital assets for international clients or building a local brand in Pakistan, avoiding high bank deductions and unverified seller accounts is essential. Review your monthly generation requirements, verify the access model that fits your team, and confirm delivery timelines with our support team on WhatsApp before ordering.</p>
       </section>
 
+      <section class="content-section official-sources">
+        <h2>Official Documentation &amp; Verification Sources</h2>
+        <p>Our editorial analysis and pricing references are verified against first-party provider documentation:</p>
+        <ul>
+{sources_html}
+          <li><a href="../../how-we-review.html">AI Tool Gems Independent Review &amp; Testing Methodology</a></li>
+        </ul>
+      </section>
+
       <section class="content-section">
         <h2>Related AI Tools &amp; Local Guides</h2>
         <p>Explore complementary tools in the Pakistani digital creator stack:</p>
@@ -608,6 +580,7 @@ def render_article_html(bp: dict) -> str:
 {related_links_html}
           <li><a href="../ai-tools-price-pakistan/">AI Tools Price Guide for Pakistan (PKR Table)</a></li>
           <li><a href="../../deals/">Current Verified Deals &amp; Discounts</a></li>
+          <li><a href="../../#categories">Browse AI Tools by Category</a></li>
           <li><a href="../../policies.html#warranty">Verified 7-Day Warranty Policy</a></li>
         </ul>
       </section>

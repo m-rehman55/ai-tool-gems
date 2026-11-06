@@ -120,6 +120,23 @@ class TestContentAgent(unittest.TestCase):
         self.assertIn("Status: DRAFT_PENDING_REVIEW", content)
         self.assertIn("Self-Approval: BLOCKED", content)
 
+    def test_editorial_gate_rejects_cannibalization_when_existing_url_exists(self):
+        valid_sample = "<article><h1>Test Title</h1>" + " ".join(["word"] * 700) + " Rs. 3000 EasyPaisa <script type='application/ld+json'>{}</script></article>"
+        # When an existing URL covers this intent and not in update mode -> rejected
+        is_val, errors = self.gate.validate_article_html(
+            valid_sample,
+            {"existing_url_to_improve": "/guides/chatgpt-vs-claude-pakistan/", "is_update_mode": False}
+        )
+        self.assertFalse(is_val)
+        self.assertTrue(any("CANNIBALIZATION_RISK" in e for e in errors))
+
+        # When update mode is explicitly True -> passes
+        is_val2, errors2 = self.gate.validate_article_html(
+            valid_sample,
+            {"existing_url_to_improve": "/guides/chatgpt-vs-claude-pakistan/", "is_update_mode": True}
+        )
+        self.assertTrue(is_val2)
+
     def test_hermes_integration_tasks(self):
         agent = ContentHermesAgent()
         task = TaskContract(
