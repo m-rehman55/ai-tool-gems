@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-11-05T16:08:12.795235+00:00",
-  "task_count": 43,
+  "updated_at": "2026-11-06T15:34:33.067089+00:00",
+  "task_count": 55,
   "tasks": {
     "TASK-01-8BB7C7": {
       "task_id": "TASK-01-8BB7C7",
@@ -1206,6 +1206,378 @@
       "status": "VERIFIED",
       "created_at": "2026-11-05T16:08:07.258197+00:00",
       "updated_at": "2026-11-05T16:08:07.258197+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-B62290": {
+      "task_id": "TASK-15-B62290",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 795,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T09:26:45.978568+00:00",
+      "updated_at": "2026-11-06T09:26:45.978568+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-01EED7": {
+      "task_id": "TASK-15-01EED7",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 800,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T09:35:14.715058+00:00",
+      "updated_at": "2026-11-06T09:35:14.715687+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-B9764D": {
+      "task_id": "TASK-15-B9764D",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 800,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T09:35:42.733699+00:00",
+      "updated_at": "2026-11-06T09:35:42.733699+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-41FB9A": {
+      "task_id": "TASK-15-41FB9A",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 820,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T09:50:01.087004+00:00",
+      "updated_at": "2026-11-06T09:50:01.087004+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-69BBB9": {
+      "task_id": "TASK-15-69BBB9",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 822,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T10:18:31.624197+00:00",
+      "updated_at": "2026-11-06T10:18:31.624197+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-79E508": {
+      "task_id": "TASK-15-79E508",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 836,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T14:06:48.762535+00:00",
+      "updated_at": "2026-11-06T14:06:48.762535+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-419C3F": {
+      "task_id": "TASK-15-419C3F",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 837,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T14:17:20.904712+00:00",
+      "updated_at": "2026-11-06T14:17:20.904712+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-8BFBB0": {
+      "task_id": "TASK-15-8BFBB0",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 838,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T14:40:56.949339+00:00",
+      "updated_at": "2026-11-06T14:40:56.949339+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-BAA6FE": {
+      "task_id": "TASK-15-BAA6FE",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 840,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T14:50:47.854949+00:00",
+      "updated_at": "2026-11-06T14:50:47.854949+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-A1DBE0": {
+      "task_id": "TASK-15-A1DBE0",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 845,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T15:12:50.148170+00:00",
+      "updated_at": "2026-11-06T15:12:50.148170+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-839CCA": {
+      "task_id": "TASK-15-839CCA",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 845,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T15:32:29.417073+00:00",
+      "updated_at": "2026-11-06T15:32:29.417073+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-1BD5A4": {
+      "task_id": "TASK-15-1BD5A4",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 845,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T15:34:31.453458+00:00",
+      "updated_at": "2026-11-06T15:34:31.453458+00:00",
       "assigned_budget_seconds": 300,
       "execution_time_seconds": 0.0,
       "error_message": null

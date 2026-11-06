@@ -76,3 +76,4 @@ Cross-supplier analysis revealed massive redundancy and pricing conflict across 
 2. **Access Model Separation:** Reseller access mechanisms (Shared cookie, Edu invite link, Private login, Token API) must remain explicitly separate from consumer brand editions.
 3. **Quarantine Unresolved Offers:** All supplier offers remain in **`HOLD`** until manual procurement verification is conducted.
 4. **Safety Block on High-Risk Items:** High-risk supplier products (`CAT-158` to `CAT-175`: phone OTPs, aged accounts, virtual numbers) are permanently classified as **`BLOCKED`**.
+

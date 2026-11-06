@@ -27,13 +27,13 @@
       ],
       "metricValues": [
         {
-          "value": "218"
+          "value": "216"
         },
         {
           "value": "93"
         },
         {
-          "value": "9139"
+          "value": "9244"
         }
       ]
     },
@@ -45,13 +45,13 @@
       ],
       "metricValues": [
         {
-          "value": "23"
+          "value": "24"
         },
         {
           "value": "2"
         },
         {
-          "value": "256"
+          "value": "262"
         }
       ]
     },
@@ -135,13 +135,13 @@
       ],
       "metricValues": [
         {
-          "value": "7"
+          "value": "8"
         },
         {
-          "value": "7"
+          "value": "8"
         },
         {
-          "value": "208"
+          "value": "222"
         }
       ]
     },
@@ -328,6 +328,24 @@
     {
       "dimensionValues": [
         {
+          "value": "/guides/canva-pro-pakistan-guide/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "3"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
           "value": "/guides/lovable-vs-replit-pakistan/"
         }
       ],
@@ -364,24 +382,6 @@
     {
       "dimensionValues": [
         {
-          "value": "/jp/"
-        }
-      ],
-      "metricValues": [
-        {
-          "value": "3"
-        },
-        {
-          "value": "1"
-        },
-        {
-          "value": "20"
-        }
-      ]
-    },
-    {
-      "dimensionValues": [
-        {
           "value": "/tools/deepseek/"
         }
       ],
@@ -412,6 +412,24 @@
         },
         {
           "value": "40"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/chatgpt-ai-pakistan-guide/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "2"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "29"
         }
       ]
     },
@@ -670,7 +688,7 @@
     {
       "dimensionValues": [
         {
-          "value": "/guides/chatgpt-ai-pakistan-guide/"
+          "value": "/guides/canva-ai-pakistan-guide/"
         }
       ],
       "metricValues": [
@@ -681,7 +699,43 @@
           "value": "1"
         },
         {
-          "value": "27"
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/elevenlabs-ai-pakistan-guide/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/gemini-ai-pakistan-guide/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "2"
         }
       ]
     },
@@ -700,6 +754,24 @@
         },
         {
           "value": "1"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/leonardo-ai-pakistan-guide/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "23"
         }
       ]
     },
@@ -736,6 +808,42 @@
         },
         {
           "value": "2"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/guides/veo-ai-pakistan-guide/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/jp/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "1"
+        },
+        {
+          "value": "1"
+        },
+        {
+          "value": "20"
         }
       ]
     },
@@ -956,7 +1064,7 @@
       ]
     }
   ],
-  "rowCount": 52,
+  "rowCount": 58,
   "metadata": {
     "currencyCode": "PKR",
     "timeZone": "Asia/Karachi"

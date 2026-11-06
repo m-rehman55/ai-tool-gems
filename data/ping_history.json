@@ -1,10 +1,10 @@
 {
-  "total_dispatches": 20,
-  "last_dispatch": "2026-11-05T16:08:55.435134+00:00",
+  "total_dispatches": 29,
+  "last_dispatch": "2026-11-06T15:34:57.338875+00:00",
   "url_history": {
     "https://aitoolgems.tech/tools/test-sample/": {
-      "last_submitted": "2026-11-05T16:08:55.435134+00:00",
-      "submission_count": 12,
+      "last_submitted": "2026-11-06T15:34:57.338875+00:00",
+      "submission_count": 21,
       "last_status": "success"
     },
     "https://aitoolgems.tech/": {
@@ -489,6 +489,96 @@
     }
   },
   "recent_runs": [
+    {
+      "timestamp": "2026-11-06T15:34:57.338875+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T15:32:54.430958+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T15:13:20.790673+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T14:51:25.157455+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T14:41:21.695173+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T14:18:11.936685+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T14:07:42.025514+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T10:19:02.780401+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-06T09:36:09.416956+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
     {
       "timestamp": "2026-11-05T16:08:55.435134+00:00",
       "urls_count": 1,

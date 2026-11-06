@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-06T14:07:20.930073+00:00",
+  "timestamp": "2026-11-06T15:34:45.122839+00:00",
   "property_id": "555306283",
   "is_authorized": true,
-  "pakistan_sessions": 265,
-  "total_sessions": 265,
+  "pakistan_sessions": 266,
+  "total_sessions": 266,
   "pakistan_traffic_ratio_pct": 100.0,
   "channels": [
     {
@@ -22,9 +22,9 @@
     },
     {
       "channel": "AI Assistant",
-      "sessions": 69,
+      "sessions": 70,
       "users": 24,
-      "engagement_rate": 63.8,
+      "engagement_rate": 62.9,
       "conversions": 0
     },
     {

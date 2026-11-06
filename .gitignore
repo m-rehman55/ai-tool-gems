@@ -39,3 +39,7 @@ config/*service_account*.json
 config/*.json
 *service_account*.json
 *credentials*.json
+
+# Sensitive Supplier Inventory & Excel Registers
+data/suppliers/
+*.xlsx
