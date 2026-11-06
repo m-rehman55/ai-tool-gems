@@ -12,7 +12,8 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 
 ### Markets
 
-- **Pakistan** (Primary Exclusive Fortress): Flat PKR pricing, verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank IBFT), English & localized Urdu search intent, sitemap.xml. Zero foreign currency displays, zero unverified local foreign gateways.
+- **Pakistan** (Primary Commercial Fortress): Flat PKR pricing, verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank IBFT), English & localized Urdu search intent, sitemap.xml. Zero foreign currency displays on storefront, zero unverified local foreign gateways.
+- **Worldwide / International** (Organic Growth Market): High-intent global informational & commercial SEO, canonical English architecture, manual WhatsApp quotes for international buyers. Zero fabricated localized checkout gateways; zero thin doorway pages. Respects explicit user directive against Japan-specific commercial targeting while maintaining legitimate worldwide organic search reach.
 
 ### Repository
 
@@ -37,8 +38,8 @@ DISCOVER → INSPECT → ANALYZE → PRIORITIZE → IMPLEMENT → TEST → COMMI
 - `security_agent/` Agent 15: Security, Secrets Scanner, HTML Safety & Snapshot Rollback Agent (25 unit tests)
 - `ping_agent/` Dedicated Instant Ping & Search Engine Indexing Agent (6 unit tests)
 - `seo-agent/` Autonomous SEO & Safety operating modules (43 unit tests)
-- `tests/` Core link-graph, structural integrity, regression, and UI interaction test suite (84 unit tests)
-- **Total Test Suite:** 322 / 322 passing tests (100% green)
+- `tests/` Core link-graph, structural integrity, regression, and UI interaction test suite (83 unit tests)
+- **Total Test Suite:** 326 / 326 passing tests (100% green)
 
 ### Top 10 Monitored Competitors
 

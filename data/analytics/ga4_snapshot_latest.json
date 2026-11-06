@@ -27,13 +27,13 @@
       ],
       "metricValues": [
         {
-          "value": "216"
+          "value": "207"
         },
         {
-          "value": "93"
+          "value": "90"
         },
         {
-          "value": "9244"
+          "value": "8503"
         }
       ]
     },
@@ -112,24 +112,6 @@
     {
       "dimensionValues": [
         {
-          "value": "/deals/"
-        }
-      ],
-      "metricValues": [
-        {
-          "value": "8"
-        },
-        {
-          "value": "5"
-        },
-        {
-          "value": "189"
-        }
-      ]
-    },
-    {
-      "dimensionValues": [
-        {
           "value": "/tools/chatgpt/"
         }
       ],
@@ -142,6 +124,24 @@
         },
         {
           "value": "222"
+        }
+      ]
+    },
+    {
+      "dimensionValues": [
+        {
+          "value": "/deals/"
+        }
+      ],
+      "metricValues": [
+        {
+          "value": "7"
+        },
+        {
+          "value": "4"
+        },
+        {
+          "value": "136"
         }
       ]
     },
@@ -832,24 +832,6 @@
     {
       "dimensionValues": [
         {
-          "value": "/jp/"
-        }
-      ],
-      "metricValues": [
-        {
-          "value": "1"
-        },
-        {
-          "value": "1"
-        },
-        {
-          "value": "20"
-        }
-      ]
-    },
-    {
-      "dimensionValues": [
-        {
           "value": "/tools/canva/"
         }
       ],
@@ -1064,7 +1046,7 @@
       ]
     }
   ],
-  "rowCount": 58,
+  "rowCount": 57,
   "metadata": {
     "currencyCode": "PKR",
     "timeZone": "Asia/Karachi"

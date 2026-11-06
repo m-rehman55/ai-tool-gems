@@ -117,9 +117,9 @@ Submitting ineligible subscription offers to Google Merchant Center results in i
 ### 5.2. Mandatory Copywriting Safeguards
 When drafting Google Search Ads:
 - **Headline:** Focus on service capability and flat PKR pricing.  
-  *Example:* `ChatGPT Plus in Pakistan | Rs. 2,300 Flat PKR | Instant Activation`
+  *Example:* `ChatGPT Plus in Pakistan | Rs. 2,300 Flat PKR | 15-60 Min Delivery`
 - **Description:** Include explicit third-party reseller disclosure.  
-  *Example:* `Independent digital subscription provider. Instant setup via EasyPaisa or JazzCash with 30-day replacement warranty. Not affiliated with OpenAI.`
+  *Example:* `Independent digital subscription provider. Fast setup via EasyPaisa or JazzCash with 30-day replacement warranty. Not affiliated with OpenAI.`
 - **Landing Page Parity:** Ensure the linked page displays the identical price, delivery timeline, and warranty.
 
 ---

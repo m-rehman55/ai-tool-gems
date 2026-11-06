@@ -117,6 +117,23 @@ class BingWebmasterAnalyzer:
             tot_clicks = sum(q.clicks for q in query_stats)
             valid_pos = [q.avg_impression_position for q in query_stats if q.avg_impression_position > 0]
             avg_pos = sum(valid_pos) / len(valid_pos) if valid_pos else 0.0
+        except PermissionError as e:
+            logger.warning(f"Bing Webmaster live API BLOCKED (InvalidApiKey): {e}.")
+            return BingAuditSummary(
+                timestamp=now_iso,
+                site_url=site_url,
+                is_verified=False,
+                daily_quota=0,
+                monthly_quota=0,
+                total_bing_queries=0,
+                total_bing_impressions=0,
+                total_bing_clicks=0,
+                average_bing_position=0.0,
+                current_pages_in_index=0,
+                crawl_errors_count=0,
+                cross_engine_insights=[],
+                recommendations=["Bing Webmaster API status: BLOCKED (InvalidApiKey). Key requires renewal by owner."],
+            )
         except Exception as e:
             logger.warning(f"Bing Webmaster live API query failed: {e}. Falling back to safe offline audit summary.")
             return BingAuditSummary(

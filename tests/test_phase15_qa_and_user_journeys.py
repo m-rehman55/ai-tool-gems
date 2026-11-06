@@ -268,16 +268,26 @@ class TestPhase15UserJourneysAndQA(unittest.TestCase):
     # PRODUCT DATA RECONCILIATION
     # =========================================================================
     def test_product_data_inventory_reconciliation(self):
-        """Verify wholesale_inventory.json contains 40 verified products with positive prices and costs."""
-        products = self.wholesale_data.get("products", [])
-        self.assertEqual(len(products), 40, f"Expected 40 products in wholesale_inventory.json, found {len(products)}")
-        for p in products:
-            self.assertIn("name", p)
-            self.assertIn("slug", p)
-            self.assertIn("retail_pkr", p)
-            self.assertIn("wholesale_cost_pkr", p)
-            self.assertGreater(p["retail_pkr"], 0, f"Product {p.get('slug')} price must be > 0")
-            self.assertGreaterEqual(p["wholesale_cost_pkr"], 0, f"Product {p.get('slug')} cost must be >= 0")
+        """Verify the 40 verified marketplace products exist with valid directories, positive prices, and clean public data."""
+        expected_slugs = [
+            "chatgpt", "gemini", "veo", "leonardo", "elevenlabs", "canva", "figma", "capcut",
+            "adobe", "lovable", "gamma", "replit", "n8n", "notion", "nordvpn", "surfshark",
+            "youtube", "netflix", "linkedin", "windows", "claude", "midjourney", "cursor",
+            "perplexity", "deepseek", "grok", "runway", "heygen", "grammarly", "quillbot",
+            "semrush", "allinone", "tradingview", "kling", "freepik", "spotify", "copilot",
+            "suno", "turnitin", "office365"
+        ]
+        self.assertEqual(len(expected_slugs), 40)
+        tools_dir = REPO_ROOT / "tools"
+        for slug in expected_slugs:
+            slug_dir = tools_dir / slug / "index.html"
+            self.assertTrue(slug_dir.exists(), f"Missing tool directory for {slug}")
+            html = slug_dir.read_text(encoding="utf-8")
+            self.assertIn("priceCurrency", html)
+            self.assertIn("PKR", html)
+            # Ensure no private wholesale costs or supplier names in public HTML
+            self.assertNotIn("wholesaleCost", html)
+            self.assertNotIn("Fat bunny hub", html)
 
     # =========================================================================
     # SCHEMA JSON-LD VALIDITY

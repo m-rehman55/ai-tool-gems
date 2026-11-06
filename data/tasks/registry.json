@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-11-06T18:06:52.142964+00:00",
-  "task_count": 68,
+  "updated_at": "2026-11-06T20:38:32.389834+00:00",
+  "task_count": 70,
   "tasks": {
     "TASK-01-8BB7C7": {
       "task_id": "TASK-01-8BB7C7",
@@ -1981,6 +1981,68 @@
       "status": "VERIFIED",
       "created_at": "2026-11-06T18:06:50.308791+00:00",
       "updated_at": "2026-11-06T18:06:50.308791+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-A31C8D": {
+      "task_id": "TASK-15-A31C8D",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 867,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T20:32:06.566252+00:00",
+      "updated_at": "2026-11-06T20:32:06.566252+00:00",
+      "assigned_budget_seconds": 300,
+      "execution_time_seconds": 0.0,
+      "error_message": null
+    },
+    "TASK-15-35BC2B": {
+      "task_id": "TASK-15-35BC2B",
+      "requesting_agent": "HERMES-CEO",
+      "responsible_agent": "AGENT-15-SECURITY",
+      "objective": "Perform complete security and safety audit",
+      "scope": "repository",
+      "risk_classification": "READ_ONLY",
+      "approval_requirement": "AUTONOMOUS_APPROVED",
+      "completion_criteria": [
+        "Valid security audit report"
+      ],
+      "input_evidence": {},
+      "required_tools": [],
+      "expected_output": "Security Audit Complete: Secrets=CLEAN, HTML=SAFE, Deps=CLEAN",
+      "dependencies": [],
+      "verification_evidence": {
+        "secrets_clean": true,
+        "files_scanned_for_secrets": 867,
+        "exposed_secrets_count": 0,
+        "html_safe": true,
+        "html_violations_count": 0,
+        "dependencies_clean": true,
+        "broken_dependencies": []
+      },
+      "status": "VERIFIED",
+      "created_at": "2026-11-06T20:38:30.719716+00:00",
+      "updated_at": "2026-11-06T20:38:30.719716+00:00",
       "assigned_budget_seconds": 300,
       "execution_time_seconds": 0.0,
       "error_message": null

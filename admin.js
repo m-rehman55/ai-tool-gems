@@ -1,48 +1,49 @@
 const DEFAULT_WHATSAPP = '923236715731';
 const LEGACY_WHATSAPP = ['923', '476', '242709'].join('');
 const productSeed = [
-  ['chatgpt','ChatGPT Plus','AI Assistants',2300,'chatgpt.com',28868,0.08,'Fat bunny hub'],
-  ['gemini','Gemini Pro','AI Assistants',800,'gemini.google.com',9902,0.75,'OxygenPremium Store'],
-  ['veo','Veo 3 Ultra','AI Video',2100,'deepmind.google',18051,2.5,'Ai tools premium'],
-  ['leonardo','Leonardo AI Essential','Design',1900,'leonardo.com',4,0.77,'Fat bunny hub'],
-  ['elevenlabs','ElevenLabs Voice AI','AI Voice',3300,'elevenlabs.io',5372,1.2,'GET digital tools'],
-  ['canva','Canva Pro Edu','Design',900,'canva.com',8263,0.04,'Fat bunny hub'],
-  ['figma','Figma Pro Private','Design',3000,'figma.com',271,2.5,'MediaHubMarketplace_bot'],
-  ['capcut','CapCut Pro VIP','AI Video',900,'capcut.com',1293,0.04,'Fat bunny hub'],
-  ['adobe','Adobe Creative Cloud','Design',1700,'adobe.com',1521,0.63,'AI Toolify Studio'],
-  ['lovable','Lovable Pro','Development',1600,'lovable.dev',1717,0.98,'GET digital tools'],
-  ['gamma','Gamma Pro','Productivity',23000,'gamma.app',9558,4.22,'Fat bunny hub'],
-  ['replit','Replit Core','Development',3200,'replit.com',82,6.0,'Premium tools'],
-  ['n8n','n8n Starter','Development',7000,'n8n.io',76,15.0,'Premium tools'],
-  ['notion','Notion Business','Productivity',2200,'notion.so',10925,0.99,'AI Toolify Studio'],
-  ['nordvpn','NordVPN','VPN & Security',1800,'nordvpn.com',1198,0.58,'Fat bunny hub'],
-  ['surfshark','Surfshark VPN','VPN & Security',800,'surfshark.com',418,0.47,'Fat bunny hub'],
-  ['youtube','YouTube Premium','Entertainment',1200,'youtube.com',4688,0.58,'Fat bunny hub'],
-  ['netflix','Netflix Premium 4K','Entertainment',400,'netflix.com',3109,2.0,'GET digital tools'],
-  ['linkedin','LinkedIn Premium','Business',1500,'linkedin.com',8185,0.5,'Premium tools'],
-  ['windows','Windows 11 Pro Key','Software',1900,'microsoft.com',77,2.98,'GET digital tools'],
-  ['claude','Claude Pro (3.5 Sonnet)','AI Assistants',2200,'claude.com',9112,0.97,'Hitmeow shop'],
-  ['midjourney','Midjourney v6.1 Pro','Design',2400,'midjourney.com',16,11.99,'GET digital tools'],
-  ['cursor','Cursor AI Pro','Development',2800,'cursor.com',2114,7.77,'Fat bunny hub'],
-  ['perplexity','Perplexity Pro','AI Assistants',1400,'perplexity.com',121,3.39,'Fat bunny hub'],
-  ['deepseek','DeepSeek Unlimited','AI Assistants',1100,'deepseek.com',918,1.12,'Hitmeow shop'],
-  ['grok','SuperGrok / Grok 2','AI Assistants',1800,'grok.com',2774,1.12,'Hitmeow shop'],
-  ['runway','Runway ML Gen-3 Pro','AI Video',3500,'runway.com',74,1.9,'GET digital tools'],
-  ['heygen','HeyGen AI Avatar Pro','AI Video',4200,'heygen.com',1026,15.24,'Fat bunny hub'],
-  ['grammarly','Grammarly Premium','Writing & SEO',750,'grammarly.com',36,0.39,'Fat bunny hub'],
-  ['quillbot','QuillBot Premium','Writing & SEO',450,'quillbot.com',1998,3.05,'Fat bunny hub'],
-  ['semrush','SEMrush Pro','Writing & SEO',1500,'semrush.com',20,3.5,'MediaHubMarketplace_bot'],
-  ['allinone','All-in-One Mega AI Portal','AI Assistants',1999,'allinone.com',40,4.2,'AIToolGems Direct Domestic'],
-  ['tradingview','TradingView Pro','Business',3500,'tradingview.com',999,1.91,'Fat bunny hub'],
-  ['kling','Kling AI','AI Video',4800,'kling.com',840,0.08,'Fat bunny hub'],
-  ['freepik','Freepik Premium','Design',2400,'freepik.com',210,2.67,'Fat bunny hub'],
-  ['spotify','Spotify Premium','Entertainment',1200,'spotify.com',733,0.3,'AI Toolify Studio'],
-  ['copilot','GitHub Copilot','Development',2500,'github.com',54,2.48,'Fat bunny hub'],
-  ['suno','Suno AI','AI Voice',3200,'suno.com',10,3.81,'Hitmeow shop'],
-  ['turnitin','Turnitin Student Account','Writing & SEO',3600,'turnitin.com',32,2.2,'GET digital tools'],
-  ['office365','Microsoft Office 365 (1TB)','Productivity',2200,'microsoft.com',2077,0.96,'Fat bunny hub']
-].map(([id,name,category,price,domain,stock,wholesaleCost,supplier]) => ({
-  id, name, category, price, domain, stock: stock || 15, wholesaleCost: wholesaleCost || 0, supplier: supplier || 'AIToolGems Direct',
+  ['chatgpt','ChatGPT Plus','AI Assistants',2300,'chatgpt.com'],
+  ['gemini','Gemini Pro','AI Assistants',800,'gemini.google.com'],
+  ['veo','Veo 3 Ultra','AI Video',2100,'deepmind.google'],
+  ['leonardo','Leonardo AI Essential','Design',1900,'leonardo.com'],
+  ['elevenlabs','ElevenLabs Voice AI','AI Voice',3300,'elevenlabs.io'],
+  ['canva','Canva Pro Edu','Design',900,'canva.com'],
+  ['figma','Figma Pro Private','Design',3000,'figma.com'],
+  ['capcut','CapCut Pro VIP','AI Video',900,'capcut.com'],
+  ['adobe','Adobe Creative Cloud','Design',1700,'adobe.com'],
+  ['lovable','Lovable Pro','Development',1600,'lovable.dev'],
+  ['gamma','Gamma Pro','Productivity',23000,'gamma.app'],
+  ['replit','Replit Core','Development',3200,'replit.com'],
+  ['n8n','n8n Starter','Development',7000,'n8n.io'],
+  ['notion','Notion Business','Productivity',2200,'notion.so'],
+  ['nordvpn','NordVPN','VPN & Security',1800,'nordvpn.com'],
+  ['surfshark','Surfshark VPN','VPN & Security',800,'surfshark.com'],
+  ['youtube','YouTube Premium','Entertainment',1200,'youtube.com'],
+  ['netflix','Netflix Premium 4K','Entertainment',400,'netflix.com'],
+  ['linkedin','LinkedIn Premium','Business',1500,'linkedin.com'],
+  ['windows','Windows 11 Pro Key','Software',1900,'microsoft.com'],
+  ['claude','Claude Pro (3.5 Sonnet)','AI Assistants',2200,'claude.com'],
+  ['midjourney','Midjourney v6.1 Pro','Design',2400,'midjourney.com'],
+  ['cursor','Cursor AI Pro','Development',2800,'cursor.com'],
+  ['perplexity','Perplexity Pro','AI Assistants',1400,'perplexity.com'],
+  ['deepseek','DeepSeek Unlimited','AI Assistants',1100,'deepseek.com'],
+  ['grok','SuperGrok / Grok 2','AI Assistants',1800,'grok.com'],
+  ['runway','Runway ML Gen-3 Pro','AI Video',3500,'runway.com'],
+  ['heygen','HeyGen AI Avatar Pro','AI Video',4200,'heygen.com'],
+  ['grammarly','Grammarly Premium','Writing & SEO',750,'grammarly.com'],
+  ['quillbot','QuillBot Premium','Writing & SEO',450,'quillbot.com'],
+  ['semrush','SEMrush Pro','Writing & SEO',1500,'semrush.com'],
+  ['allinone','All-in-One Mega AI Portal','AI Assistants',1999,'allinone.com'],
+  ['tradingview','TradingView Pro','Business',3500,'tradingview.com'],
+  ['kling','Kling AI','AI Video',4800,'kling.com'],
+  ['freepik','Freepik Premium','Design',2400,'freepik.com'],
+  ['spotify','Spotify Premium','Entertainment',1200,'spotify.com'],
+  ['copilot','GitHub Copilot','Development',2500,'github.com'],
+  ['suno','Suno AI','AI Voice',3200,'suno.com'],
+  ['turnitin','Turnitin Student Account','Writing & SEO',3600,'turnitin.com'],
+  ['office365','Microsoft Office 365 (1TB)','Productivity',2200,'microsoft.com']
+].map(([id,name,category,price,domain]) => ({
+  id, name, category, price, domain,
+  status: 'Verified Available',
   description: '',
   logo: `assets/product-logos/${id}.png`
 }));
@@ -67,10 +68,10 @@ const escapeHTML = value => String(value || '').replace(/[&<>'"]/g, char => ({ '
 function renderAdminProducts() {
   $('#adminProducts').innerHTML = adminProducts.map(product => `
     <tr>
-      <td><div class="product-cell"><img src="${product.logo || 'assets/brand-logo-light.webp'}" width="128" height="128" loading="lazy" alt="${escapeHTML(product.name)} logo"><span><b>${escapeHTML(product.name)}</b><small>Saved in this browser</small></span></div></td>
+      <td><div class="product-cell"><img src="${product.logo || 'assets/brand-logo-light.webp'}" width="128" height="128" loading="lazy" alt="${escapeHTML(product.name)} logo"><span><b>${escapeHTML(product.name)}</b><small>Verified Subscription</small></span></div></td>
       <td>${escapeHTML(product.category)}</td>
       <td><b>${money(product.price)}</b></td>
-      <td><span class="status" style="font-size:12px;padding:3px 8px;border-radius:6px;background:${product.stock > 5 ? "rgba(16,185,129,0.15)" : "rgba(245,158,11,0.15)"};color:${product.stock > 5 ? "#10b981" : "#f59e0b"};font-weight:600;">${product.stock || 15} in stock</span><br><small style="opacity:0.65;font-size:11px;">Cost: $${product.wholesaleCost || 0} (${escapeHTML(product.supplier || "Supplier")})</small></td>
+      <td><span class="status" style="font-size:12px;padding:3px 8px;border-radius:6px;background:rgba(16,185,129,0.15);color:#10b981;font-weight:600;">Verified Available</span></td>
       <td><button class="edit" data-edit-product="${escapeHTML(product.id)}" aria-label="Edit ${escapeHTML(product.name)}">Edit</button></td>
     </tr>
   `).join('');

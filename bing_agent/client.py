@@ -110,7 +110,11 @@ class BingWebmasterClient:
         except urllib.error.HTTPError as e:
             err_body = e.read().decode("utf-8", errors="ignore")
             logger.error(f"Bing Webmaster API HTTP Error {e.code} on {endpoint}: {err_body}")
+            if "invalid" in err_body.lower() or "key" in err_body.lower() or e.code in (400, 401, 403):
+                raise PermissionError(f"Bing API {endpoint} BLOCKED (HTTP {e.code}): InvalidApiKey - {err_body}")
             raise RuntimeError(f"Bing API {endpoint} failed (HTTP {e.code}): {e.reason} - {err_body}")
+        except PermissionError:
+            raise
         except Exception as e:
             logger.error(f"Bing Webmaster API Connection Error on {endpoint}: {e}")
             raise
