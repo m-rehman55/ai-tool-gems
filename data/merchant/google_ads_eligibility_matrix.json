@@ -11,14 +11,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/chatgpt/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "gemini",
@@ -32,14 +32,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/gemini/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (18 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_UNAUTHORIZED_DISTRIBUTION",
     "merchant_center_reason": "Google Merchant Center Digital Goods Policy: Third-party educational or team workspace invitation slots lack authorized OEM distribution certificates.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "veo",
@@ -53,7 +53,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/veo/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (Unlimited); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -74,14 +74,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/leonardo/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (8,500 Credits); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 8,500 Credits.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "elevenlabs",
@@ -95,14 +95,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/elevenlabs/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "canva",
@@ -116,14 +116,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/canva/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Year); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_UNAUTHORIZED_DISTRIBUTION",
     "merchant_center_reason": "Google Merchant Center Digital Goods Policy: Third-party educational or team workspace invitation slots lack authorized OEM distribution certificates.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "figma",
@@ -137,14 +137,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/figma/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (2 Years); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_RESELLER_AUTHORIZATION_PENDING",
     "merchant_center_reason": "Google Merchant Center Software Subscription Policy: Annual prepaid plan exists, but official OEM authorized reseller documentation is required before Shopping submission.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "capcut",
@@ -158,14 +158,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/capcut/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "adobe",
@@ -179,14 +179,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/adobe/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (2 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 2 Months.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "lovable",
@@ -200,14 +200,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/lovable/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "gamma",
@@ -221,14 +221,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/gamma/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Year); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_RESELLER_AUTHORIZATION_PENDING",
     "merchant_center_reason": "Google Merchant Center Software Subscription Policy: Annual prepaid plan exists, but official OEM authorized reseller documentation is required before Shopping submission.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "replit",
@@ -242,14 +242,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/replit/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity ($40 Credits); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is $40 Credits.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "n8n",
@@ -263,14 +263,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/n8n/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Year); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_RESELLER_AUTHORIZATION_PENDING",
     "merchant_center_reason": "Google Merchant Center Software Subscription Policy: Annual prepaid plan exists, but official OEM authorized reseller documentation is required before Shopping submission.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "notion",
@@ -284,14 +284,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/notion/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (3 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 3 Months.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "nordvpn",
@@ -305,14 +305,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/nordvpn/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (3 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 3 Months.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "surfshark",
@@ -326,7 +326,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/surfshark/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (2 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -347,14 +347,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/youtube/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (3 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 3 Months.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "netflix",
@@ -368,7 +368,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/netflix/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -389,14 +389,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/linkedin/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (2 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 2 Months.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "windows",
@@ -410,7 +410,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/windows/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (Lifetime); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -431,14 +431,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/claude/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "midjourney",
@@ -452,14 +452,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/midjourney/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "cursor",
@@ -473,14 +473,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/cursor/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "perplexity",
@@ -494,14 +494,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/perplexity/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "deepseek",
@@ -515,14 +515,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/deepseek/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "grok",
@@ -536,14 +536,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/grok/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "runway",
@@ -557,14 +557,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/runway/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "heygen",
@@ -578,14 +578,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/heygen/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "grammarly",
@@ -599,7 +599,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/grammarly/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -620,7 +620,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/quillbot/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -641,7 +641,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/semrush/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -662,14 +662,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/allinone/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "tradingview",
@@ -683,14 +683,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/tradingview/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "kling",
@@ -704,14 +704,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/kling/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "freepik",
@@ -725,14 +725,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/freepik/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "spotify",
@@ -746,14 +746,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/spotify/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (3 Months); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 3 Months.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "copilot",
@@ -767,14 +767,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/copilot/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "suno",
@@ -788,14 +788,14 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/suno/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
     "merchant_center_status": "HOLD_TERM_INSUFFICIENT",
     "merchant_center_reason": "Google Merchant Center Software Subscriptions Policy: Requires a minimum prepaid term of 12 months; current offer duration is 1 Month.",
-    "google_ads_search_status": "ELIGIBLE_WITH_DISCLOSURES",
-    "google_ads_search_reason": "Permitted under Google Ads Third-Party Reseller Policy. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
+    "google_ads_search_status": "PRELIMINARY_POLICY_REVIEW",
+    "google_ads_search_reason": "Preliminary policy review under Google Ads Third-Party Reseller Policy. Remains on HOLD pending explicit human owner review. Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); 2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
   },
   {
     "slug": "turnitin",
@@ -809,7 +809,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/turnitin/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Month); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",
@@ -830,7 +830,7 @@
     "resale_rights": "Independent digital subscription procurement & setup assistance; no direct OEM partnership.",
     "landing_page_url": "https://aitoolgems.tech/tools/office365/",
     "landing_page_exists": true,
-    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping.",
+    "delivery_method": "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping.",
     "warranty": "Full replacement warranty during active validity (1 Year); 24/7 WhatsApp helpdesk.",
     "refund_policy": "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours.",
     "brand_representation": "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page.",

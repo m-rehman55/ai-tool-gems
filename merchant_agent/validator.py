@@ -153,5 +153,5 @@ class MerchantValidator:
             "merchant_center_breakdown": mc_summary,
             "google_ads_search_breakdown": gads_summary,
             "all_merchant_items_on_hold": all(a.merchant_center_status != "ELIGIBLE" for a in assessments),
-            "google_ads_search_eligible_count": gads_summary.get("ELIGIBLE_WITH_DISCLOSURES", 0),
+            "google_ads_search_eligible_count": gads_summary.get("PRELIMINARY_POLICY_REVIEW", 0),
         }

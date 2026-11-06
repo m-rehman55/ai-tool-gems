@@ -40,7 +40,7 @@ class OfferPolicyAssessment:
     brand_representation: str
     merchant_center_status: str  # HOLD_TERM_INSUFFICIENT, HOLD_POLICY_VIOLATION, HOLD_UNAUTHORIZED_DISTRIBUTION, HOLD_UNVERIFIED_AUTHORIZATION, HOLD_RESELLER_AUTHORIZATION_PENDING, ELIGIBLE
     merchant_center_reason: str
-    google_ads_search_status: str  # ELIGIBLE_WITH_DISCLOSURES, HOLD_HIGH_RISK, HOLD_TRADEMARK_RISK, HOLD_PROHIBITED
+    google_ads_search_status: str  # PRELIMINARY_POLICY_REVIEW, HOLD_HIGH_RISK, HOLD_TRADEMARK_RISK, HOLD_PROHIBITED
     google_ads_search_reason: str
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,11 +79,15 @@ class MerchantFeedGenerator:
         """Audits a single offer across all 13 parameters mandated by Google Merchant & Ads policies."""
         slug = product_data.get("slug") or product_data.get("id", "unknown")
         name = product_data.get("name", "Unknown Tool")
-        duration = product_data.get("duration", "1 Month")
-        access = product_data.get("access", "Private")
+        duration = product_data.get("duration") or "UNVERIFIED"
+        access = product_data.get("access") or "UNVERIFIED"
         price_pkr = int(product_data.get("price") or product_data.get("retail_pkr", 0))
 
-        exact_plan = f"{name} ({duration}, {access})"
+        if duration == "UNVERIFIED" or access == "UNVERIFIED":
+            exact_plan = f"{name} (UNVERIFIED terms)"
+        else:
+            exact_plan = f"{name} ({duration}, {access})"
+
         payment_model = "Prepaid flat upfront payment in PKR; zero automatic debit or hidden recurring fee."
         renewal_conditions = "Manual renewal initiated via WhatsApp; no automatic card debits."
         resale_rights = "Independent digital subscription procurement & setup assistance; no direct OEM partnership."
@@ -92,8 +96,8 @@ class MerchantFeedGenerator:
         tool_page = self.project_dir / "tools" / slug / "index.html"
         landing_page_exists = tool_page.exists()
 
-        delivery_method = "Direct digital delivery via encrypted WhatsApp / email within 1-2 hours; zero physical shipping."
-        warranty = f"Full replacement warranty during active validity ({duration}); 24/7 WhatsApp helpdesk."
+        delivery_method = "Direct digital delivery via encrypted WhatsApp / email (15-60 min delivery SLA); zero physical shipping."
+        warranty = f"Full replacement warranty during active validity ({duration}); 24/7 WhatsApp helpdesk." if duration != "UNVERIFIED" else "Full replacement warranty during active validity; 24/7 WhatsApp helpdesk."
         refund_policy = "Instant credential replacement first; full PKR refund if service cannot be restored within 24 hours."
         brand_rep = "Independent Digital Subscription Provider; explicit non-affiliation disclaimer on landing page."
 
@@ -106,7 +110,10 @@ class MerchantFeedGenerator:
         mc_status = "HOLD_INELIGIBLE"
         mc_reason = ""
 
-        if "shared" in access.lower():
+        if duration == "UNVERIFIED" or access == "UNVERIFIED":
+            mc_status = "HOLD_UNVERIFIED_TERMS"
+            mc_reason = "Google Merchant Center Policy: Incomplete or unverified subscription term and access model."
+        elif "shared" in access.lower():
             mc_status = "HOLD_POLICY_VIOLATION"
             mc_reason = (
                 "Google Merchant Center Misrepresentation & Enabling Dishonest Behavior: "
@@ -145,13 +152,17 @@ class MerchantFeedGenerator:
             )
 
         # ── 2. Google Ads (Search Text Ads) Policy Assessment ──────────────────────
-        # Third-Party Reseller Policy: Allowed if clear non-affiliation disclaimer and transparent pricing.
+        # Third-Party Reseller Policy: Requires prominent non-affiliation disclaimer and transparent pricing.
         # Enabling Dishonest Behavior: Shared accounts are high risk for disapproval.
         # Academic Dishonesty: Turnitin is strictly banned.
-        gads_status = "ELIGIBLE_WITH_DISCLOSURES"
+        # Owner Gate: Remains under preliminary review and BLOCKED until explicit owner approval.
+        gads_status = "PRELIMINARY_POLICY_REVIEW"
         gads_reason = ""
 
-        if slug == "turnitin":
+        if duration == "UNVERIFIED" or access == "UNVERIFIED":
+            gads_status = "HOLD_UNVERIFIED_TERMS"
+            gads_reason = "Google Ads Policy: Incomplete or unverified offer terms, duration, or access model."
+        elif slug == "turnitin":
             gads_status = "HOLD_PROHIBITED"
             gads_reason = (
                 "Google Ads Academic Dishonesty Policy: "
@@ -170,9 +181,10 @@ class MerchantFeedGenerator:
                 "Microsoft actively restricts brand terms in Search ad copy without Partner Network proof."
             )
         else:
-            gads_status = "ELIGIBLE_WITH_DISCLOSURES"
+            gads_status = "PRELIMINARY_POLICY_REVIEW"
             gads_reason = (
-                "Permitted under Google Ads Third-Party Reseller Policy. "
+                "Preliminary policy review under Google Ads Third-Party Reseller Policy. "
+                "Remains on HOLD pending explicit human owner review. "
                 "Mandatory conditions: 1) Prominent non-affiliation disclaimer ('Independent Subscription Provider'); "
                 "2) Exact PKR price and plan duration in ad copy; 3) No official brand impersonation."
             )
@@ -279,7 +291,7 @@ class MerchantFeedGenerator:
             items.append(MerchantProductItem(
                 sku_id=f"atg-{a.slug}",
                 title=f"{a.name} {a.duration} Subscription (Pakistan)",
-                description=f"Verified {a.name} subscription in Pakistan. Includes instant WhatsApp activation, full replacement warranty, and domestic EasyPaisa/JazzCash checkout.",
+                description=f"Verified {a.name} subscription in Pakistan. Includes verified digital delivery via WhatsApp (15-60 min delivery SLA), replacement warranty, and domestic EasyPaisa/JazzCash checkout.",
                 link=a.landing_page_url,
                 image_link=f"https://aitoolgems.tech/assets/product-logos/{a.slug}.png",
                 availability="in_stock",
@@ -307,7 +319,7 @@ class MerchantFeedGenerator:
         link.text = "https://aitoolgems.tech/"
         desc = ET.SubElement(channel, "description")
         desc.text = (
-            "Verified premium AI tool subscriptions in Pakistan with flat PKR pricing and instant domestic activation. "
+            "Verified premium AI tool subscriptions in Pakistan with flat PKR pricing and verified digital delivery via WhatsApp (15-60 min delivery SLA). "
             "Policy enforcement: Offers failing Merchant Center 12-month prepaid terms or authorized reseller distribution "
             "are held in merchant_hold_register.json."
         )

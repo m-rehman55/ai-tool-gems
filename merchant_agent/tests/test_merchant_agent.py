@@ -145,8 +145,20 @@ class TestMerchantAgent(unittest.TestCase):
         self.assertIn("Prepaid flat upfront", assessment.payment_model)
         self.assertIn("Manual renewal", assessment.renewal_conditions)
         self.assertEqual(assessment.merchant_center_status, "HOLD_TERM_INSUFFICIENT")
-        self.assertEqual(assessment.google_ads_search_status, "ELIGIBLE_WITH_DISCLOSURES")
+        self.assertEqual(assessment.google_ads_search_status, "PRELIMINARY_POLICY_REVIEW")
         self.assertIn("minimum prepaid term of 12 months", assessment.merchant_center_reason)
+
+    def test_missing_offer_terms_marked_unverified_never_fabricated(self):
+        """Verifies missing duration or access model is flagged UNVERIFIED rather than fabricated."""
+        assessment = self.gen.evaluate_offer({
+            "slug": "custom-ai",
+            "name": "Custom AI Tool",
+            "price": 1500,
+        })
+        self.assertEqual(assessment.duration, "UNVERIFIED")
+        self.assertEqual(assessment.access_model, "UNVERIFIED")
+        self.assertEqual(assessment.merchant_center_status, "HOLD_UNVERIFIED_TERMS")
+        self.assertEqual(assessment.google_ads_search_status, "HOLD_UNVERIFIED_TERMS")
 
     def test_shared_accounts_and_turnitin_marked_hold(self):
         """Verifies shared accounts and academic cheating tools are blocked under Google policies."""
