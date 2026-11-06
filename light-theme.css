@@ -1565,6 +1565,7 @@ a.category-card:focus-visible {
 }
 
 .payment-summary-title {
+  margin: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1692,7 +1693,8 @@ a.category-card:focus-visible {
   flex-direction: column;
 }
 
-.payment-disclosure-card h4 {
+.payment-disclosure-card h3, .payment-disclosure-card h4 {
+  font-weight: 700;
   margin: 8px 0 8px;
   font-size: 15px;
   color: var(--text-primary);
@@ -1789,6 +1791,7 @@ a.category-card:focus-visible {
     padding: 16px 18px;
   }
   .payment-summary-title {
+  margin: 0;
     font-size: 15px;
   }
   .payment-disclosure-body {
