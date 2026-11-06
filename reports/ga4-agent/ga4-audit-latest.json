@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-06T20:38:44.667403+00:00",
+  "timestamp": "2026-11-06T21:37:44.263759+00:00",
   "property_id": "555306283",
   "is_authorized": true,
   "pakistan_sessions": 256,
@@ -136,14 +136,14 @@
     "product_views": 120,
     "product_selections": 60,
     "order_initiations": 20,
-    "verified_purchases": 2,
+    "verified_purchases": 0,
     "currency": "PKR",
-    "total_revenue_pkr": 6000.0,
-    "checkout_dropoff_pct": 90.0,
-    "overall_conversion_rate_pct": 1.67
+    "total_revenue_pkr": 0,
+    "checkout_dropoff_pct": 100.0,
+    "overall_conversion_rate_pct": 0.0
   },
   "recommendations": [
-    "Checkout drop-off is 90.0%. Pre-fill WhatsApp message with selected tool and PKR pricing to reduce friction.",
+    "Checkout drop-off is 100.0%. Pre-fill WhatsApp message with selected tool and PKR pricing to reduce friction.",
     "Pakistan accounts for the majority of active sessions. Prioritize EasyPaisa, JazzCash, and SadaPay in visible conversion flows.",
     "Event taxonomy clean: Homepage events separated from product view_item events."
   ]

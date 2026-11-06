@@ -317,9 +317,9 @@ class LinkGraphChecker:
         static_m = re.search(r"STATIC_TOOL_PAGES\s*=\s*new\s*Set\(\[\s*([^\]]+)\]\)", app_js)
         static_set = set([s.strip().strip("'\"") for s in static_m.group(1).split(",") if s.strip()]) if static_m else set()
 
-        # 3. Check physical directory routes under tools/
+        # 3. Check physical directory routes under tools/ (excluding categories/ hub directory)
         tools_dir = self.repo_root / "tools"
-        tool_dirs = [d.name for d in tools_dir.iterdir() if d.is_dir()] if tools_dir.exists() else []
+        tool_dirs = [d.name for d in tools_dir.iterdir() if d.is_dir() and d.name != "categories"] if tools_dir.exists() else []
 
         # All static set items must have a corresponding route
         for sid in static_set:
