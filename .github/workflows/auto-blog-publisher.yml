@@ -110,11 +110,10 @@ jobs:
           git checkout -b "$BRANCH_NAME"
           git push -u origin "$BRANCH_NAME"
           echo "✅ Pushed branch $BRANCH_NAME to origin. Creating pull request..."
+          PR_BODY="Autonomous editorial guide candidate for \`${{ steps.publisher.outputs.slug }}\`. Verified Pakistan PKR pricing and payment rails. Release Gate: Requires human review and approval before merging to main. Production Pages deployment will execute automatically only after this PR is merged to main."
           gh pr create \
             --title "feat(content): publish autonomous guide '${{ steps.publisher.outputs.title }}'" \
-            --body "Autonomous editorial guide candidate for \`${{ steps.publisher.outputs.slug }}\`. Verified Pakistan PKR pricing and payment rails. 
-
-⚠️ Release Gate: Requires human review and approval before merging to main. Production Pages deployment will execute automatically only after this PR is merged to main." \
+            --body "$PR_BODY" \
             --base main \
             --head "$BRANCH_NAME" || true
 
