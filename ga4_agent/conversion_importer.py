@@ -145,7 +145,7 @@ class ConversionImporter:
         Dispatches all unimported verified orders to GA4 Measurement Protocol.
         Marks orders as imported upon successful HTTP 204 or dry run.
         """
-        api_secret = os.getenv("GA4_API_SECRET", "").strip()
+        api_secret = (os.getenv("GA4_API_SECRET") or os.getenv("GA4_MEASUREMENT_SECRET") or "").strip()
         orders = self.load_orders()
         pending = [o for o in orders if not o.is_imported_to_ga4]
 
@@ -318,7 +318,7 @@ class ConversionImporter:
         Dispatches all unimported verified refunds to GA4 Measurement Protocol.
         Marks refunds as imported upon successful HTTP 204 or dry run.
         """
-        api_secret = os.getenv("GA4_API_SECRET", "").strip()
+        api_secret = (os.getenv("GA4_API_SECRET") or os.getenv("GA4_MEASUREMENT_SECRET") or "").strip()
         refunds = self.load_refunds()
         pending = [r for r in refunds if not r.is_imported_to_ga4]
 
