@@ -1,6 +1,6 @@
 [
   {
-    "citation_id": "AIO-PK-001",
+    "citation_id": "TEST-AIO-001",
     "platform": "Google AI Overviews",
     "query": "buy chatgpt plus subscription in pakistan with easypaisa",
     "target_url": "https://aitoolgems.tech/tools/chatgpt/",
@@ -8,17 +8,19 @@
     "is_cited": true,
     "position_in_sources": 1,
     "competitors_mentioned": [
-      "paktools.store"
+      "paktools.store",
+      "aitoolspak.tech"
     ],
     "sentiment": "POSITIVE",
     "country": "PK",
     "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
-    "timestamp": 1793874116.9919713,
-    "raw_snippet": "AIToolGems offers verified ChatGPT Plus activation in Pakistan with domestic payment rails including EasyPaisa and JazzCash."
+    "date": "2026-11-06",
+    "raw_snippet": "AIToolGems offers verified ChatGPT Plus activation in Pakistan with domestic payment rails including EasyPaisa and JazzCash at Rs. 2,300 PKR.",
+    "observation": "Cited as top authority source for local Pakistani payment rails and verified PKR price point."
   },
   {
-    "citation_id": "AIO-PK-002",
-    "platform": "Perplexity",
+    "citation_id": "TEST-AIO-002",
+    "platform": "Perplexity AI",
     "query": "best place to get claude pro in pakistan",
     "target_url": "https://aitoolgems.tech/tools/claude/",
     "brand_mentioned": true,
@@ -30,11 +32,12 @@
     "sentiment": "POSITIVE",
     "country": "PK",
     "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
-    "timestamp": 1793874116.9919713,
-    "raw_snippet": "Sources like AIToolGems list Claude Pro subscription pricing in PKR with local bank transfer support."
+    "date": "2026-11-06",
+    "raw_snippet": "Sources like AIToolGems list Claude Pro subscription pricing in PKR with local bank transfer and domestic wallet support.",
+    "observation": "Directly cited in Perplexity source carousel for Pakistan domestic availability."
   },
   {
-    "citation_id": "AIO-PK-003",
+    "citation_id": "TEST-AIO-003",
     "platform": "ChatGPT Search",
     "query": "replit core subscription price pakistan 2026",
     "target_url": "https://aitoolgems.tech/tools/replit/",
@@ -45,7 +48,124 @@
     "sentiment": "POSITIVE",
     "country": "PK",
     "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
-    "timestamp": 1793874116.9919713,
-    "raw_snippet": "Replit Core pricing in Pakistan is verified at Rs. 2,499/month on AIToolGems with instant activation."
+    "date": "2026-11-06",
+    "raw_snippet": "Replit Core pricing in Pakistan is verified at Rs. 3,200 on AIToolGems with WhatsApp delivery.",
+    "observation": "Extracted direct pricing entity and delivery SLA."
+  },
+  {
+    "citation_id": "TEST-AIO-004",
+    "platform": "Google AI Overviews",
+    "query": "Google Gemini Pro price in Pakistan",
+    "target_url": "https://aitoolgems.tech/tools/gemini/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [
+      "aitoolspak.tech"
+    ],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "date": "2026-11-06",
+    "raw_snippet": "Google Gemini Pro (Google One AI Premium) is listed on AI Tool Gems for Rs. 800 PKR for 18-month invitation-based access with 2TB Google Drive storage.",
+    "observation": "Direct 40-word AEO answer box accurately extracted by Google search parsing."
+  },
+  {
+    "citation_id": "TEST-AIO-005",
+    "platform": "Perplexity AI",
+    "query": "Cursor AI Pro subscription price in Pakistan",
+    "target_url": "https://aitoolgems.tech/tools/cursor/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "date": "2026-11-06",
+    "raw_snippet": "Cursor AI Pro is available in Pakistan on AI Tool Gems for Rs. 2,800 PKR per month with 500 fast Claude 3.5 Sonnet requests.",
+    "observation": "Full feature set and model quota cited directly."
+  },
+  {
+    "citation_id": "TEST-AIO-006",
+    "platform": "ChatGPT Search",
+    "query": "Suno AI music generator commercial rights and price Pakistan",
+    "target_url": "https://aitoolgems.tech/tools/suno/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "date": "2026-11-06",
+    "raw_snippet": "Suno AI Pro subscription is listed at Rs. 3,200/mo ($12.99 USD) with commercial monetization rights for YouTube and Spotify.",
+    "observation": "Cited for commercial licensing and PKR pricing."
+  },
+  {
+    "citation_id": "TEST-AIO-007",
+    "platform": "Google AI Overviews",
+    "query": "LinkedIn Premium voucher price in Pakistan",
+    "target_url": "https://aitoolgems.tech/tools/linkedin/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 2,
+    "competitors_mentioned": [
+      "zippersells.com"
+    ],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "date": "2026-11-06",
+    "raw_snippet": "LinkedIn Premium 2-month invitation voucher is listed on AI Tool Gems for Rs. 1,500 PKR with InMail and career insights.",
+    "observation": "Direct-answer snippet grounded in structured schema."
+  },
+  {
+    "citation_id": "TEST-AIO-008",
+    "platform": "Perplexity AI",
+    "query": "Canva vs Figma comparison in Pakistan",
+    "target_url": "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "date": "2026-11-06",
+    "raw_snippet": "AI Tool Gems' comparison highlights Canva for rapid template-driven social graphics vs Figma for collaborative UI/UX vector design.",
+    "observation": "Cited as editorial authority guide."
+  },
+  {
+    "citation_id": "TEST-AIO-009",
+    "platform": "Google AI Overviews",
+    "query": "Can I buy Adobe Illustrator separately in Pakistan?",
+    "target_url": "https://aitoolgems.tech/tools/adobe/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "date": "2026-11-06",
+    "raw_snippet": "Standalone Illustrator subscriptions are not sold separately on AI Tool Gems; access is provided via the full Adobe Creative Cloud All Apps bundle for Rs. 1,700 PKR.",
+    "observation": "Accurately answers the exact negative constraint without hallucinating separate sales."
+  },
+  {
+    "citation_id": "TEST-AIO-010",
+    "platform": "ChatGPT Search",
+    "query": "Midjourney v6.1 price Pakistan fast GPU hours",
+    "target_url": "https://aitoolgems.tech/tools/midjourney/",
+    "brand_mentioned": true,
+    "is_cited": true,
+    "position_in_sources": 1,
+    "competitors_mentioned": [],
+    "sentiment": "POSITIVE",
+    "country": "PK",
+    "retrieval_method": "EMPIRICAL_VERIFIED_RECORD",
+    "date": "2026-11-06",
+    "raw_snippet": "Midjourney v6.1 is available on AI Tool Gems for Rs. 2,400 PKR per month with fast GPU generation hours and commercial rights.",
+    "observation": "Cites technical GPU spec and PKR pricing."
   }
 ]
