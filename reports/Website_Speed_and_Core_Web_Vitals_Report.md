@@ -159,3 +159,4 @@ Ran 6 tests in 1.059s — OK (100% green)
 ```
 
 Core repository integrity tests: **70 / 70 PASS**. Full link graph integrity: **100% clean** across 99 HTML pages and 3,247 internal links.
+

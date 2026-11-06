@@ -196,32 +196,82 @@ def validate_article_file(file_path: Path, expected_slug: str = None) -> tuple[b
     if any(tok in plain for tok in ["japan", "japanese", "tokyo", "osaka", "kyoto", "jpy", "/jp/"]) or "¥" in html:
         errors.append("Detected foreign currency/Japan contamination in Pakistani content")
 
+    # 9. AI Cliché & Filler Filter (Phase 13 Quality Standard)
+    forbidden_cliches = [
+        "in today's fast-paced digital landscape",
+        "in today's fast-paced world",
+        "delve into the world of",
+        "it is important to remember that",
+        "testament to the power of",
+        "game changer in the realm of",
+        "revolutionizing the way we",
+        "rich tapestry of",
+        "beacon of innovation",
+    ]
+    for c in forbidden_cliches:
+        if c in plain:
+            errors.append(f"AI_FILLER_DETECTED: Generic AI cliché found: '{c}'. Must be rewritten with substantive analysis.")
+
+    # 10. Visible Review / Verification Date Gate
+    has_date = bool(re.search(r"(updated|verified|review\s*date|last\s*reviewed|published)\s*[:•\-&;a-z\s]*(\d{1,2}\s+[A-Za-z]+\s+202[4-6]|[A-Za-z]+\s+\d{1,2},\s*202[4-6]|202[4-6][-\d]*)", html, re.I))
+    if not has_date:
+        errors.append("MISSING_REVIEW_DATE: Article missing visible review or verification date (e.g., 'Last reviewed & updated: 2026-XX-XX')")
+
+    # 11. Sources & Documentation Citations Gate
+    has_sources = bool(re.search(r"(official\s+sources|references|documentation|official\s+provider|data\s+sources|https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})", html, re.I))
+    if not has_sources:
+        errors.append("MISSING_SOURCES: Article missing visible official documentation sources or outbound citations")
+
+    # 12. Canonical Product or Category Link Gate
+    has_canonical_link = any(
+        re.search(r"(\.\./\.\./tools/[a-z0-9-]+/|/tools/[a-z0-9-]+/|\.\./\.\./#products|\.\./\.\./#categories|/categories/[a-z0-9-]+/)", l)
+        for l in parser.links
+    )
+    if not has_canonical_link:
+        errors.append("MISSING_CANONICAL_LINK: Article must contain contextual link to canonical product (/tools/) or category hub")
+
     is_valid = len(errors) == 0
     return is_valid, errors
 
 
 def check_cannibalization(new_slug: str, new_keyword: str) -> tuple[bool, str]:
-    """Check against data/seo/keyword-map.json to avoid cannibalization."""
+    """Check against data/seo/keyword-map.json and existing guides to avoid cannibalization
+    and ensure existing URLs are improved instead of creating duplicate thin URLs.
+    """
     map_file = BASE / "data" / "seo" / "keyword-map.json"
-    if not map_file.exists():
-        return True, "No keyword map found; skipping"
+    guides_dir = BASE / "guides"
 
-    kw_data = json.loads(map_file.read_text(encoding="utf-8"))
-    norm_new = re.sub(r"[^a-z0-9]", "", new_keyword.lower())
+    # 1. Check existing guides directory to prevent thin duplicate URLs
+    if guides_dir.exists():
+        existing_guide_slugs = {p.parent.name for p in guides_dir.glob("*/index.html")}
+        if new_slug in existing_guide_slugs:
+            return False, f"Guide slug '{new_slug}' is already published. Check whether existing URL should be improved instead of creating a new one."
 
-    for entry in kw_data:
-        if entry["slug"] == new_slug:
-            continue
-        existing_kw = entry.get("primary_keyword", "")
-        norm_exist = re.sub(r"[^a-z0-9]", "", existing_kw.lower())
+        # Detect near-identical tool guide variations (e.g. {tool}-ai-pakistan-guide when {tool} exists)
+        norm_new_base = re.sub(r"-(ai|pro|guide|pakistan)+", "", new_slug).strip("-")
+        for exist_slug in existing_guide_slugs:
+            norm_exist_base = re.sub(r"-(ai|pro|guide|pakistan)+", "", exist_slug).strip("-")
+            if norm_new_base and norm_new_base == norm_exist_base and norm_new_base not in ["ai", "best", "unit"]:
+                return False, f"Search intent for '{norm_new_base}' is already served by '/guides/{exist_slug}/'. Improve existing URL rather than creating duplicate '{new_slug}'."
 
-        if norm_new == norm_exist:
-            return False, f"Exact primary keyword collision with existing entry '{entry['slug']}': '{existing_kw}'"
+    # 2. Check keyword map
+    if map_file.exists():
+        kw_data = json.loads(map_file.read_text(encoding="utf-8"))
+        norm_new = re.sub(r"[^a-z0-9]", "", new_keyword.lower())
 
-        # Check secondary keywords
-        for sec in entry.get("secondary_keywords", []):
-            if norm_new == re.sub(r"[^a-z0-9]", "", sec.lower()):
-                return False, f"Keyword conflicts with secondary target in '{entry['slug']}': '{sec}'"
+        for entry in kw_data:
+            if entry["slug"] == new_slug:
+                continue
+            existing_kw = entry.get("primary_keyword", "")
+            norm_exist = re.sub(r"[^a-z0-9]", "", existing_kw.lower())
+
+            if norm_new == norm_exist:
+                return False, f"Exact primary keyword collision with existing entry '{entry['slug']}': '{existing_kw}'. Improve existing URL '/guides/{entry['slug']}/'."
+
+            # Check secondary keywords
+            for sec in entry.get("secondary_keywords", []):
+                if norm_new == re.sub(r"[^a-z0-9]", "", sec.lower()):
+                    return False, f"Keyword conflicts with secondary target in '{entry['slug']}': '{sec}'. Improve existing URL."
 
     return True, "Passed anti-cannibalization check"
 

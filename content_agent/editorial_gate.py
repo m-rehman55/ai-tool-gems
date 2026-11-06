@@ -69,9 +69,14 @@ class EditorialQualityGate:
             errors.append("MISSING_PKR_PRICING: Article must display verified flat Pakistani Rupee (PKR) pricing.")
 
         # 6. Structured Data
-        has_schema = '<script type="application/ld+json">' in html_content
+        has_schema = 'application/ld+json' in html_content
         if not has_schema:
             errors.append("MISSING_SCHEMA: JSON-LD Article or FAQPage structured data is mandatory.")
+
+        # 7. Existing URL Improvement Gate
+        existing_url = metadata.get("existing_url_to_improve")
+        if existing_url and not metadata.get("is_update_mode"):
+            errors.append(f"CANNIBALIZATION_RISK: Existing URL '{existing_url}' already serves this intent cluster. Improve existing URL rather than publishing duplicate.")
 
         is_valid = len(errors) == 0
         return is_valid, errors
