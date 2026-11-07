@@ -174,11 +174,29 @@ try {
 function loadStoredCart() {
   try {
     const saved = JSON.parse(localStorage.getItem('atg-cart') || '[]');
-    return Array.isArray(saved) ? saved.filter(id => products.some(p => p.id === id)) : [];
+    if (!Array.isArray(saved)) return [];
+    return saved.map(item => {
+      if (typeof item === 'string') return { id: item, qty: 1 };
+      if (item && item.id) return { id: item.id, qty: Math.max(1, parseInt(item.qty, 10) || 1) };
+      return null;
+    }).filter(item => item && products.some(p => p.id === item.id && p.commercialStatus !== 'DIRECTORY_ONLY' && !p.isExternal));
   } catch {
     localStorage.removeItem('atg-cart');
     return [];
   }
+}
+
+function isItemInCart(id) {
+  return state.cart.some(item => (typeof item === 'string' ? item === id : item.id === id));
+}
+
+function getCartItems() {
+  return state.cart.map(item => {
+    const id = typeof item === 'string' ? item : item.id;
+    const qty = (typeof item === 'object' && item.qty) ? Math.max(1, parseInt(item.qty, 10) || 1) : 1;
+    const product = products.find(p => p.id === id && p.commercialStatus !== 'DIRECTORY_ONLY' && !p.isExternal);
+    return product ? { p: product, qty } : null;
+  }).filter(Boolean);
 }
 
 function loadStoredFavorites() {
@@ -206,9 +224,9 @@ let productsRendered = false;
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const money = (n, usd) => {
+  if (n === null || n === undefined) return 'N/A';
   if (state.currency === 'USD') {
-    const val = usd !== undefined ? usd : (n / 280).toFixed(2);
-    return '$' + val;
+    return usd !== undefined ? '$' + usd + ' USD (Ref)' : 'Quote on Inquiry';
   }
   return 'Rs. ' + n.toLocaleString('en-PK');
 };
@@ -294,18 +312,18 @@ const STATIC_TOOL_PAGES = new Set([
 
 
 function card(p) {
-  const inCart = state.cart.includes(p.id);
+  const inCart = isItemInCart(p.id);
   const isFav = state.favorites.includes(p.id);
 
   if (p.commercialStatus === 'DIRECTORY_ONLY' || p.isExternal) {
     return `
   <article class="product-card directory-card" data-id="${p.id}">
     <div class="product-media">
-      <span class="product-badge directory-badge">Directory</span>
+      <span class="product-badge directory-badge">Directory Reference</span>
       <button class="favorite-toggle ${isFav ? 'active' : ''}" data-favorite="${p.id}" aria-label="${isFav ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${isFav}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
         <svg><use href="#i-star"></use></svg>
       </button>
-      <img class="brand-logo" src="${p.logo}" width="128" height="128" loading="lazy" alt="Official ${p.name} logo" decoding="async" referrerpolicy="no-referrer">
+      <img class="brand-logo" src="${p.logo}" width="128" height="128" loading="lazy" alt="Official ${p.name} logo" decoding="async" onerror="this.onerror=null;this.src='assets/logo-transparent.webp';">
     </div>
     <div class="product-body">
       <div class="product-meta">
@@ -319,14 +337,14 @@ function card(p) {
       </div>
       <div class="product-specs directory-specs">
         <span><i></i>Developer: ${p.developer || 'Official'}</span>
-        <span>${p.freePlan ? 'Free Tier Available' : 'Paid Subscription'}</span>
+        <span>${p.freePlan ? 'Free Tier Available' : 'Subscription'}</span>
       </div>
       <div class="product-price directory-price">
         <div class="price-block">
           <small>Official Vendor Pricing</small>
           <strong>${p.officialPricing || 'See Official Plans'}</strong>
         </div>
-        <span class="directory-status-tag">Directory Reference</span>
+        <span class="directory-status-tag">Reference Profile</span>
       </div>
       <div class="card-actions directory-actions">
         <a class="view-tool-card-btn" href="tools/${p.id}/">Explore Tool Profile &rarr;</a>
@@ -343,14 +361,14 @@ function card(p) {
       <button class="favorite-toggle ${isFav ? 'active' : ''}" data-favorite="${p.id}" aria-label="${isFav ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${isFav}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
         <svg><use href="#i-star"></use></svg>
       </button>
-      <img class="brand-logo" src="${p.logo}" width="128" height="128" loading="lazy" alt="Official ${p.name} logo" decoding="async" referrerpolicy="no-referrer">
+      <img class="brand-logo" src="${p.logo}" width="128" height="128" loading="lazy" alt="Official ${p.name} logo" decoding="async" onerror="this.onerror=null;this.src='assets/logo-transparent.webp';">
     </div>
     <div class="product-body">
       <div class="product-meta">
         <span>${p.category}</span>
-        <span class="rating">${state.currency === 'USD' ? 'USD · Global' : 'PKR pricing'}</span>
+        <span class="rating">Verified PKR Pricing</span>
       </div>
-      <h3>${STATIC_TOOL_PAGES.has(p.id) ? `<a class="product-page-link" href="tools/${p.id}/">${p.name}</a>` : `<a class="product-page-link" href="#productModal" data-detail="${p.id}">${p.name}</a>`}</h3>
+      <h3><a class="product-page-link" href="tools/${p.id}/">${p.name}</a></h3>
       <p class="product-desc">${p.description}</p>
       <div class="tags">
         ${p.bestFor.map(t => `<button type="button" class="tag-chip" data-tag="${safeCatalogText(t)}" title="Filter by ${safeCatalogText(t)}">${safeCatalogText(t)}</button>`).join('')}
@@ -358,21 +376,27 @@ function card(p) {
 
       <div class="product-specs">
         <span><i></i>${p.duration}</span>
-        <span>${p.access} Plan</span>
+        <span>${p.access} Access</span>
+        <span>🛡️ ${p.warranty || '7-Day'} Warranty</span>
       </div>
       <div class="product-price">
         <div class="price-block">
-          <small>${money(p.oldPrice, p.oldUsdPrice)}</small>
-          <strong>${money(p.price, p.usdPrice)} <em class="alt-currency">(${state.currency === 'USD' ? 'Rs. ' + p.price.toLocaleString('en-PK') : '$' + (p.usdPrice || (p.price / 280).toFixed(2))})</em></strong>
+          ${p.oldPrice && p.oldPrice > p.price ? `<small>Rs. ${p.oldPrice.toLocaleString('en-PK')}</small>` : ''}
+          <strong>Rs. ${p.price.toLocaleString('en-PK')}</strong>
         </div>
-        <span class="saving">Save ${discount(p)}%</span>
+        ${p.oldPrice && p.oldPrice > p.price ? `<span class="saving">Save ${discount(p)}%</span>` : ''}
       </div>
+      <div class="product-delivery-note">⚡ Verified WhatsApp Delivery · After Payment Confirmation</div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} Buy now</button>
-        <button class="detail-button" data-detail="${p.id}">View details</button>
+        <a class="detail-button" href="tools/${p.id}/">View details</a>
         <button class="add-button ${inCart ? 'added' : ''}" data-add="${p.id}" aria-label="${inCart ? 'View ' + p.name + ' in cart' : 'Add ' + p.name + ' to cart'}" aria-pressed="${inCart}">
           ${svg(inCart ? 'i-check' : 'i-plus')}
         </button>
+      </div>
+    </div>
+  </article>`;
+}
       </div>
     </div>
   </article>`;
@@ -401,47 +425,53 @@ function renderProducts() {
    CART & COMPARE LOGIC
    -------------------------------------------------------------------------- */
 function updateCart() {
-  localStorage.setItem('atg-cart', JSON.stringify(state.cart));
+  try {
+    localStorage.setItem('atg-cart', JSON.stringify(state.cart));
+  } catch (_) {}
+
+  const items = getCartItems();
+  const totalCount = items.reduce((sum, item) => sum + item.qty, 0);
+
   const cCount = $('#cartCount');
   const mCount = $('#mobileCartCount');
-  if (cCount) cCount.textContent = state.cart.length;
-  if (mCount) mCount.textContent = state.cart.length;
+  if (cCount) cCount.textContent = totalCount;
+  if (mCount) mCount.textContent = totalCount;
 
-  const selected = state.cart.map(id => products.find(p => p.id === id)).filter(Boolean);
   const cartItems = $('#cartItems');
-  const isUsd = state.currency === 'USD';
   if (cartItems) {
-    cartItems.innerHTML = selected.length ? selected.map(p => `
-      <div class="cart-item">
-        <img src="${p.logo}" width="128" height="128" loading="lazy" alt="${p.name}">
-        <span>
+    cartItems.innerHTML = items.length ? items.map(({ p, qty }) => `
+      <div class="cart-item" data-cart-id="${p.id}">
+        <img src="${p.logo}" width="56" height="56" loading="lazy" alt="${p.name}" onerror="this.onerror=null;this.src='assets/logo-transparent.webp';">
+        <div class="cart-item-details">
           <b>${p.name}</b>
-          <small>${p.duration} · ${p.access} Plan</small>
-          <strong>${money(p.price, p.usdPrice)}</strong>
-        </span>
-        <button class="remove-cart" data-remove="${p.id}" aria-label="Remove ${p.name}">×</button>
+          <small>${p.duration} · ${p.access} Access</small>
+          <div class="cart-qty-row">
+            <button type="button" class="cart-qty-btn minus" data-qty-change="${p.id}" data-delta="-1" aria-label="Decrease quantity for ${p.name}">−</button>
+            <span class="cart-qty-val">${qty}</span>
+            <button type="button" class="cart-qty-btn plus" data-qty-change="${p.id}" data-delta="1" aria-label="Increase quantity for ${p.name}">+</button>
+            <strong class="cart-line-price">Rs. ${(p.price * qty).toLocaleString('en-PK')}</strong>
+          </div>
+        </div>
+        <button type="button" class="remove-cart" data-remove="${p.id}" aria-label="Remove ${p.name}">×</button>
       </div>
     `).join('') : `
       <div class="cart-empty">
-        <img src="assets/logo-transparent.webp" width="1024" height="1024" loading="lazy" class="empty-state-logo" alt="AI Tool Gems Diamond">
+        <img src="assets/logo-transparent.webp" width="80" height="80" loading="lazy" class="empty-state-logo" alt="AI Tool Gems Diamond">
         <h3>Your cart is empty</h3>
-        <p>Explore the 3D marketplace and add tools here.</p>
+        <p>Explore verified AI subscriptions and add them to your cart.</p>
+        <a href="#products" class="cart-empty-browse-btn" onclick="closeLayer($('#cartDrawer'))">Browse Subscriptions &darr;</a>
       </div>
     `;
   }
 
+  const subtotalPkr = items.reduce((sum, { p, qty }) => sum + (p.price * qty), 0);
   const totalEl = $('#cartTotal');
   if (totalEl) {
-    if (isUsd) {
-      const sumUsd = selected.reduce((s, p) => s + parseFloat(p.usdPrice || (p.price / 280)), 0);
-      totalEl.textContent = '$' + sumUsd.toFixed(2);
-    } else {
-      totalEl.textContent = money(selected.reduce((s, p) => s + p.price, 0));
-    }
+    totalEl.textContent = 'Rs. ' + subtotalPkr.toLocaleString('en-PK');
   }
   
   const footer = $('#cartFooter');
-  if (footer) footer.style.display = selected.length ? 'block' : 'none';
+  if (footer) footer.style.display = items.length ? 'block' : 'none';
   updateBundleButton();
 }
 
@@ -449,42 +479,85 @@ function updateBundleButton() {
   const button = $('#addBundle');
   if (!button) return;
   const bundleIds = ['chatgpt', 'canva', 'capcut', 'elevenlabs'];
-  const isComplete = bundleIds.every(id => state.cart.includes(id));
+  const isComplete = bundleIds.every(id => isItemInCart(id));
   button.classList.toggle('added', isComplete);
   button.setAttribute('aria-pressed', String(isComplete));
   button.innerHTML = isComplete ? `Stack in cart ${svg('i-check')}` : `Add creator stack ${svg('i-plus')}`;
 }
 
-function addToCart(id) {
+function addToCart(id, qty = 1) {
   if (!id) return;
   const product = products.find(p => p.id === id);
   if (!product) return;
 
-  if (!state.cart.includes(id)) {
-    state.cart = [...state.cart, id];
+  if (product.commercialStatus === 'DIRECTORY_ONLY' || product.isExternal) {
+    toast(`${product.name} is a directory listing and cannot be ordered through cart.`);
+    return;
+  }
+
+  const existing = state.cart.find(item => (typeof item === 'string' ? item === id : item.id === id));
+  if (existing) {
+    if (typeof existing === 'string') {
+      const idx = state.cart.indexOf(existing);
+      state.cart[idx] = { id, qty: Math.min(10, 1 + qty) };
+    } else {
+      existing.qty = Math.min(10, (existing.qty || 1) + qty);
+    }
+    toast(`Updated quantity for ${product.name}`);
+  } else {
+    state.cart.push({ id, qty: Math.max(1, qty) });
     trackEvent('add_to_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
     toast(`Added ${product.name} to your cart`);
-  } else {
-    toast(`${product.name} is already in your cart`);
   }
   updateCart();
   syncCartUI(id);
+}
+
+function updateCartQty(id, delta) {
+  const existing = state.cart.find(item => (typeof item === 'string' ? item === id : item.id === id));
+  if (!existing) return;
+  if (typeof existing === 'string') {
+    const idx = state.cart.indexOf(existing);
+    const newQty = 1 + delta;
+    if (newQty <= 0) {
+      removeFromCart(id);
+      return;
+    }
+    state.cart[idx] = { id, qty: newQty };
+  } else {
+    existing.qty = (existing.qty || 1) + delta;
+    if (existing.qty <= 0) {
+      removeFromCart(id);
+      return;
+    }
+  }
+  updateCart();
+  syncCartUI(id);
+}
+
+function clearCart() {
+  if (!state.cart.length) return;
+  state.cart = [];
+  try {
+    localStorage.removeItem('atg-cart');
+  } catch (_) {}
+  updateCart();
+  products.forEach(p => syncCartUI(p.id));
+  toast('Cart cleared');
 }
 
 function removeFromCart(id) {
   if (!id) return;
   const product = products.find(p => p.id === id);
-  if (state.cart.includes(id)) {
-    state.cart = state.cart.filter(x => x !== id);
-    if (product) trackEvent('remove_from_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
-    toast(`Removed ${product ? product.name : 'item'} from cart`);
-  }
+  state.cart = state.cart.filter(item => (typeof item === 'string' ? item !== id : item.id !== id));
+  if (product) trackEvent('remove_from_cart', { item_id: product.id, item_name: product.name, value: product.price, currency: 'PKR' });
+  toast(`Removed ${product ? product.name : 'item'} from cart`);
   updateCart();
   syncCartUI(id);
 }
 
 function syncCartUI(id) {
-  const inCart = state.cart.includes(id);
+  const inCart = isItemInCart(id);
   const cardBtns = document.querySelectorAll(`button.add-button[data-add="${id}"]`);
   cardBtns.forEach(btn => {
     btn.classList.toggle('added', inCart);
@@ -601,37 +674,67 @@ function closeLayers() {
 function openProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
-  trackEvent('view_item', { item_id: p.id, item_name: p.name, item_category: p.category, value: p.price, currency: 'PKR' });
+  trackEvent('view_item', { item_id: p.id, item_name: p.name, item_category: p.category, value: p.price || 0, currency: 'PKR' });
   const detail = $('#productDetail');
   if (detail) {
-    detail.innerHTML = `
-      <div class="product-detail">
-        <div class="detail-media">
-          <img class="brand-logo" src="${p.logo}" width="128" height="128" alt="Official ${p.name} logo">
+    if (p.commercialStatus === 'DIRECTORY_ONLY') {
+      detail.innerHTML = `
+        <div class="product-detail directory-detail">
+          <div class="detail-media">
+            <img class="brand-logo" src="${p.logo}" width="128" height="128" alt="Official ${p.name} logo" onerror="this.onerror=null;this.src='assets/logo-transparent.webp';">
+          </div>
+          <div class="detail-copy">
+            <span class="detail-category">${p.category} · Directory Profile</span>
+            <h2 id="productDetailTitle">${p.name}</h2>
+            <div class="detail-rating">Reference & Research Listing</div>
+            <p>${p.description}</p>
+            <div class="product-delivery-note">Directory Listing: This profile is provided for research and workflow evaluation. It is not available for direct purchase or automated checkout.</div>
+            <div class="feature-list">
+              ${p.features.map(f => `<span>${svg('i-check')}${f}</span>`).join('')}
+            </div>
+            <div class="detail-actions">
+              ${STATIC_TOOL_PAGES.has(p.id) ? `<a class="open-details-btn directory-btn" href="tools/${p.id}/">Open Full Tool Profile ${svg('i-arrow')}</a>` : ""}
+            </div>
+          </div>
         </div>
-        <div class="detail-copy">
-          <span class="detail-category">${p.category} · ${p.badge}</span>
-          <h2 id="productDetailTitle">${p.name}</h2>
-          <div class="detail-rating">Plan details confirmed before payment</div>
-          <p>${p.description} Availability, access type, and delivery timing are confirmed directly on WhatsApp before payment.</p>
-          <div class="detail-price">${money(p.price, p.usdPrice)} <del>${money(p.oldPrice, p.oldUsdPrice)}</del> <em class="alt-currency">(${state.currency === 'USD' ? 'Rs. ' + p.price.toLocaleString('en-PK') : '$' + p.usdPrice})</em></div>
-          <div class="detail-grid">
-            <div class="detail-spec"><small>Plan duration</small><b>${p.duration}</b></div>
-            <div class="detail-spec"><small>Access type</small><b>${p.access} Plan</b></div>
-            <div class="detail-spec"><small>Delivery speed</small><b>${p.delivery}</b></div>
-            <div class="detail-spec"><small>Warranty</small><b>${p.warranty}</b></div>
+      `;
+    } else {
+      const isUsd = state.currency === 'USD';
+      const priceHtml = isUsd && p.usdPrice
+        ? `<strong>$${p.usdPrice} USD (Reference Inquiry)</strong> <em class="alt-currency">(Domestic: Rs. ${p.price.toLocaleString('en-PK')})</em>`
+        : `<strong>Rs. ${p.price.toLocaleString('en-PK')}</strong> ${p.oldPrice ? `<del>Rs. ${p.oldPrice.toLocaleString('en-PK')}</del>` : ''} ${p.usdPrice ? `<em class="alt-currency">(USD Ref: $${p.usdPrice})</em>` : ''}`;
+      
+      const inCart = isItemInCart(p.id);
+      detail.innerHTML = `
+        <div class="product-detail">
+          <div class="detail-media">
+            <img class="brand-logo" src="${p.logo}" width="128" height="128" alt="Official ${p.name} logo" onerror="this.onerror=null;this.src='assets/logo-transparent.webp';">
           </div>
-          <div class="feature-list">
-            ${p.features.map(f => `<span>${svg('i-check')}${f}</span>`).join('')}
+          <div class="detail-copy">
+            <span class="detail-category">${p.category} · ${p.badge}</span>
+            <h2 id="productDetailTitle">${p.name}</h2>
+            <div class="detail-rating">Plan details confirmed before payment</div>
+            <p>${p.description} Availability, access type, and delivery timing are confirmed directly on WhatsApp before payment.</p>
+            <div class="detail-price">${priceHtml}</div>
+            <div class="detail-grid">
+              <div class="detail-spec"><small>Plan duration</small><b>${p.duration}</b></div>
+              <div class="detail-spec"><small>Access type</small><b>${p.access} Plan</b></div>
+              <div class="detail-spec"><small>Delivery speed</small><b>${p.delivery}</b></div>
+              <div class="detail-spec"><small>Warranty</small><b>${p.warranty}</b></div>
+            </div>
+            <div class="feature-list">
+              ${p.features.map(f => `<span>${svg('i-check')}${f}</span>`).join('')}
+            </div>
+            <div class="detail-actions">
+              <button class="add-detail ${inCart ? 'added' : ''}" data-add="${p.id}">${inCart ? 'Added to cart' : 'Add to cart'}</button>
+              <button class="order-now" data-order="${p.id}">${svg('i-whatsapp')} Order on WhatsApp</button>
+            </div>
+            <div class="product-delivery-note">Verified WhatsApp delivery · Access details confirmed prior to payment.</div>
+            ${STATIC_TOOL_PAGES.has(p.id) ? `<a class="full-details-link" href="tools/${p.id}/">Open full product page ${svg('i-arrow')}</a>` : ""}
           </div>
-          <div class="detail-actions">
-            <button class="add-detail ${state.cart.includes(p.id) ? 'added' : ''}" data-add="${p.id}">${state.cart.includes(p.id) ? 'Added to cart' : 'Add to cart'}</button>
-            <button class="order-now" data-order="${p.id}">${svg('i-whatsapp')} Order on WhatsApp</button>
-          </div>
-          ${STATIC_TOOL_PAGES.has(p.id) ? `<a class="full-details-link" href="tools/${p.id}/">Open full product page ${svg('i-arrow')}</a>` : ""}
         </div>
-      </div>
-    `;
+      `;
+    }
   }
   openLayer($('#productModal'));
 }
@@ -663,39 +766,34 @@ function openWhatsApp(url) {
 function orderProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
+  if (p.commercialStatus === 'DIRECTORY_ONLY') {
+    showToast('This tool is a directory reference profile and is not available for purchase.');
+    return;
+  }
   const isUsd = state.currency === 'USD';
-  const priceDisplay = isUsd ? `$${p.usdPrice} USD` : money(p.price);
+  const priceDisplay = isUsd && p.usdPrice ? `$${p.usdPrice} USD (Reference Inquiry)` : `Rs. ${p.price.toLocaleString('en-PK')}`;
   const paymentInstructions = isUsd
-    ? '💳 Preferred Payment: USDT (TRC20 / BEP20) / Binance Pay / Wise\n\nPlease confirm availability, payment address, and delivery time.'
+    ? '💳 Preferred Payment: USDT (TRC20 / BEP20) / Binance Pay / Wise (International Quote Upon Inquiry)\n\nPlease confirm availability, payment address, and delivery time.'
     : '💳 Preferred Payment: EasyPaisa / JazzCash / SadaPay / Bank IBFT\n\nPlease confirm availability, payment account, and delivery time.';
 
-  trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: isUsd ? parseFloat(p.usdPrice) : p.price, currency: isUsd ? 'USD' : 'PKR' });
+  trackEvent('whatsapp_checkout', { item_id: p.id, item_name: p.name, value: isUsd && p.usdPrice ? parseFloat(p.usdPrice) : (p.price || 0), currency: isUsd ? 'USD' : 'PKR' });
   openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI would like to order:\n\n💎 Product: ${p.name}\n⏱️ Duration: ${p.duration}\n🔑 Access: ${p.access}\n💰 Price: ${priceDisplay}\n\n${paymentInstructions}`));
 }
 
 function checkout() {
-  const selected = state.cart.map(id => products.find(p => p.id === id)).filter(Boolean);
-  if (!selected.length) return;
-  const isUsd = state.currency === 'USD';
-
-  let totalDisplay = '';
-  let lines = '';
-  if (isUsd) {
-    const totalUsd = selected.reduce((s, p) => s + parseFloat(p.usdPrice || (p.price / 280)), 0);
-    totalDisplay = `$${totalUsd.toFixed(2)} USD`;
-    lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — $${p.usdPrice || (p.price / 280).toFixed(2)}`).join('\n');
-  } else {
-    const totalPkr = selected.reduce((s, p) => s + p.price, 0);
-    totalDisplay = money(totalPkr);
-    lines = selected.map((p, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access}) — ${money(p.price)}`).join('\n');
+  const items = getCartItems();
+  if (!items.length) {
+    toast('Your cart is empty. Please add items to proceed.');
+    return;
   }
 
-  const paymentInstructions = isUsd
-    ? '💳 Preferred Payment: USDT (TRC20 / BEP20) / Binance Pay / Wise\n\nPlease confirm availability, payment address, and delivery time.'
-    : '💳 Preferred Payment: EasyPaisa / JazzCash / SadaPay / Bank IBFT\n\nPlease confirm availability, payment account, and delivery time.';
+  const subtotalPkr = items.reduce((sum, { p, qty }) => sum + (p.price * qty), 0);
+  const totalDisplay = 'Rs. ' + subtotalPkr.toLocaleString('en-PK') + ' PKR';
+  const lines = items.map(({ p, qty }, i) => `${i + 1}. ${p.name} (${p.duration}, ${p.access} Access) — Qty: ${qty} — Rs. ${(p.price * qty).toLocaleString('en-PK')}`).join('\n');
 
-  const numVal = isUsd ? parseFloat(totalDisplay.replace(/[^0-9.]/g, '')) : selected.reduce((s, p) => s + p.price, 0);
-  trackEvent('begin_checkout', { item_ids: selected.map(p => p.id), item_count: selected.length, value: numVal, currency: isUsd ? 'USD' : 'PKR', destination: 'whatsapp' });
+  const paymentInstructions = '💳 Domestic Payment: EasyPaisa / JazzCash / SadaPay / Bank IBFT\n🌍 International Inquiry: USDT / Wise\n\nPlease confirm availability, payment account, and delivery time.';
+
+  trackEvent('begin_checkout', { item_ids: items.map(x => x.p.id), item_count: items.reduce((s, x) => s + x.qty, 0), value: subtotalPkr, currency: 'PKR', destination: 'whatsapp' });
 
   openWhatsApp(waLink(`Hello AI Tool Gems 👋\n\nI want to place an order for my cart:\n\n${lines}\n\n💎 Total: ${totalDisplay}\n\n${paymentInstructions}`));
 }
@@ -712,7 +810,7 @@ function showSuggestions(q) {
     <button type="button" class="suggestion" data-suggest="${p.id}">
       <img src="${p.logo}" width="128" height="128" loading="lazy" alt="${p.name}">
       <span>${p.name}</span>
-      <small>${money(p.price)}</small>
+      <small>${p.commercialStatus === 'DIRECTORY_ONLY' ? 'Directory' : money(p.price)}</small>
     </button>
   `).join('') : `
     <div class="suggestion"><span>No matching tools found</span></div>
@@ -752,11 +850,11 @@ function renderCompare() {
       </thead>
       <tbody>
         ${[
-          ['Price', p => money(p.price)],
-          ['Duration', p => p.duration],
-          ['Access Type', p => p.access],
-          ['Delivery', p => p.delivery],
-          ['Warranty', p => p.warranty],
+          ['Price', p => p.commercialStatus === 'DIRECTORY_ONLY' ? 'Directory Profile' : money(p.price)],
+          ['Duration', p => p.commercialStatus === 'DIRECTORY_ONLY' ? 'Reference' : p.duration],
+          ['Access Type', p => p.commercialStatus === 'DIRECTORY_ONLY' ? 'Reference Profile' : p.access],
+          ['Delivery', p => p.commercialStatus === 'DIRECTORY_ONLY' ? 'Reference Profile' : p.delivery],
+          ['Warranty', p => p.commercialStatus === 'DIRECTORY_ONLY' ? 'Reference Profile' : p.warranty],
           ['Best For', p => p.bestFor.join(', ')]
         ].map(r => `
           <tr>
@@ -1082,6 +1180,20 @@ document.addEventListener('click', e => {
   if (remove) {
     e.stopPropagation();
     removeFromCart(remove.dataset.remove);
+    return;
+  }
+  const qtyChange = e.target.closest('[data-qty-change]');
+  if (qtyChange) {
+    e.stopPropagation();
+    const id = qtyChange.dataset.qtyChange;
+    const delta = parseInt(qtyChange.dataset.delta, 10) || 0;
+    updateCartQty(id, delta);
+    return;
+  }
+  const clearBtn = e.target.closest('#clearCartBtn');
+  if (clearBtn) {
+    e.stopPropagation();
+    clearCart();
     return;
   }
   const comp = e.target.closest('[data-compare]');
