@@ -98,7 +98,7 @@ class TestCatalogueConsistency(unittest.TestCase):
             with open(p, "r", encoding="utf-8") as tool_f:
                 tool_html = tool_f.read()
             self.assertTrue(
-                "api.whatsapp.com" in tool_html or "whatsapp" in tool_html.lower(),
+                bool(re.search(r'https://wa\.me/\d+', tool_html)),
                 f"Assisted tool {slug} must preserve WhatsApp purchase flow"
             )
 
