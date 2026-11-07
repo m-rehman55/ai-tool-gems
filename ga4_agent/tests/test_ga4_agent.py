@@ -148,6 +148,20 @@ class TestGA4Agent(unittest.TestCase):
         self.assertIn("analytics_storage === 'granted'", content)
         self.assertIn("initPostHog", content)
 
+    def test_attribution_js_ai_referral_detection(self):
+        """Phase J: Verifies attribution.js detects AI assistant referrers (ChatGPT, Perplexity, Claude, Gemini, Copilot)."""
+        attr_file = self.project_dir / "attribution.js"
+        content = attr_file.read_text(encoding="utf-8")
+
+        self.assertIn("detectReferrer()", content)
+        self.assertIn("chatgpt.com", content)
+        self.assertIn("perplexity.ai", content)
+        self.assertIn("claude.ai", content)
+        self.assertIn("gemini.google.com", content)
+        self.assertIn("copilot.microsoft.com", content)
+        self.assertIn("utm_medium: 'ai_referral'", content)
+        self.assertIn("utm_campaign: 'ai_citation'", content)
+
     # ── 2. Offline Conversion & Deduplication Tests ───────────────────────────
 
     def test_phone_number_pii_masking(self):

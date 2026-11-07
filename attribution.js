@@ -27,6 +27,30 @@
     }
   }
 
+  function detectReferrer() {
+    try {
+      const ref = document.referrer;
+      if (!ref) return null;
+      const refHost = new URL(ref).hostname.toLowerCase();
+      if (refHost.includes('chatgpt.com') || refHost.includes('openai.com')) {
+        return { utm_source: 'chatgpt', utm_medium: 'ai_referral', utm_campaign: 'ai_citation' };
+      }
+      if (refHost.includes('perplexity.ai')) {
+        return { utm_source: 'perplexity', utm_medium: 'ai_referral', utm_campaign: 'ai_citation' };
+      }
+      if (refHost.includes('claude.ai') || refHost.includes('anthropic.com')) {
+        return { utm_source: 'claude', utm_medium: 'ai_referral', utm_campaign: 'ai_citation' };
+      }
+      if (refHost.includes('gemini.google.com')) {
+        return { utm_source: 'gemini', utm_medium: 'ai_referral', utm_campaign: 'ai_citation' };
+      }
+      if (refHost.includes('copilot.microsoft.com')) {
+        return { utm_source: 'copilot', utm_medium: 'ai_referral', utm_campaign: 'ai_citation' };
+      }
+    } catch (_) {}
+    return null;
+  }
+
   function current() {
     const incoming = readFromUrl();
     if (Object.keys(incoming).length) {
@@ -34,7 +58,15 @@
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(incoming)); } catch (_) {}
       return incoming;
     }
-    return stored();
+    const existing = stored();
+    if (Object.keys(existing).length) return existing;
+    const aiRef = detectReferrer();
+    if (aiRef) {
+      aiRef.recorded_at = new Date().toISOString();
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(aiRef)); } catch (_) {}
+      return aiRef;
+    }
+    return {};
   }
 
   function label() {
