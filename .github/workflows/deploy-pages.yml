@@ -1,0 +1,93 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build & Validate Public Artifact
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build Sanitized Public Site
+        run: |
+          python scripts/build_public_site.py --out-dir public-site
+
+      - name: Security & Custom Domain Assertion Guard
+        run: |
+          echo "Running post-build security assertions on public-site/..."
+          
+          # 1. Assert CNAME custom domain
+          if [ ! -f "public-site/CNAME" ]; then
+            echo "CRITICAL: CNAME file missing from public-site!"
+            exit 1
+          fi
+          CNAME_VAL=$(cat public-site/CNAME | tr -d '[:space:]')
+          if [ "$CNAME_VAL" != "aitoolgems.tech" ]; then
+            echo "CRITICAL: CNAME contains unexpected domain: $CNAME_VAL (expected aitoolgems.tech)"
+            exit 1
+          fi
+          
+          # 2. Assert manifest generation
+          if [ ! -f "public-site/manifest-public-build.json" ]; then
+            echo "CRITICAL: manifest-public-build.json missing!"
+            exit 1
+          fi
+
+          # 3. Assert zero private directories or operational files leaked
+          for forbidden in data reports config tests scripts scratch admin.html admin.js admin.css; do
+            if [ -e "public-site/$forbidden" ]; then
+              echo "CRITICAL SECURITY LEAK: $forbidden found in public-site artifact!"
+              exit 1
+            fi
+          done
+          
+          echo "All security, CNAME, and manifest assertions passed successfully."
+
+      - name: Upload Pages Artifact
+        # Only upload pages artifact on main branch push/dispatch to prevent unnecessary artifact creation on PRs
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    # HARD GATE: Deploy job ONLY executes when triggered on main branch
+    # Feature branches and workflow_dispatch from non-main branches NEVER deploy to production
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

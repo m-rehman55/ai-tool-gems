@@ -1,9 +1,9 @@
-name: AIToolGems Autonomous Daily Blog Publisher
+name: AIToolGems Autonomous Bi-Daily Blog Publisher (Every 2 Days)
 
 on:
   schedule:
-    # Runs daily at 09:00 PKT (04:00 UTC)
-    - cron: "0 4 * * *"
+    # Runs every 2 days at 09:00 PKT (04:00 UTC)
+    - cron: "0 4 */2 * *"
   workflow_dispatch:
     inputs:
       force_publish:
@@ -105,41 +105,17 @@ jobs:
           echo "committed=true" >> "$GITHUB_OUTPUT"
           echo "commit_sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
 
-          # Strict rebase against latest origin/main without destructive fallbacks
-          git fetch origin main
-          git rebase origin/main
-          git push origin main
-          echo "✅ Successfully pushed commit $COMMIT_SHA to main."
-
-      - name: Trigger and Await GitHub Pages Deployment
-        if: steps.git_push.outputs.committed == 'true'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "🚀 Triggering GitHub Pages build..."
-          BUILD_RESP=$(gh api --method POST repos/${{ github.repository }}/pages/builds)
-          echo "Pages API response: $BUILD_RESP"
-
-          echo "⏳ Waiting for GitHub Pages build to complete..."
-          for i in {1..30}; do
-            STATUS=$(gh api repos/${{ github.repository }}/pages/builds/latest --jq '.status' 2>/dev/null || echo "pending")
-            echo "Build status (check $i/30): $STATUS"
-            if [ "$STATUS" = "built" ]; then
-              echo "✅ GitHub Pages build completed successfully."
-              break
-            elif [ "$STATUS" = "errored" ]; then
-              echo "❌ GitHub Pages build reported an error."
-              exit 1
-            fi
-            sleep 10
-          done
-
-      - name: Verify Live Production Deployment
-        if: steps.git_push.outputs.committed == 'true'
-        shell: bash
-        run: |
-          python scripts/verify_live_deployment.py --url "${{ steps.publisher.outputs.url }}"
+          # Strict PR creation to enforce human review gate (Defect 11 Fix)
+          BRANCH_NAME="content/guide-${{ steps.publisher.outputs.slug }}"
+          git checkout -b "$BRANCH_NAME"
+          git push -u origin "$BRANCH_NAME"
+          echo "✅ Pushed branch $BRANCH_NAME to origin. Creating pull request..."
+          PR_BODY="Autonomous editorial guide candidate for \`${{ steps.publisher.outputs.slug }}\`. Verified Pakistan PKR pricing and payment rails. Release Gate: Requires human review and approval before merging to main. Production Pages deployment will execute automatically only after this PR is merged to main."
+          gh pr create \
+            --title "feat(content): publish autonomous guide '${{ steps.publisher.outputs.title }}'" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH_NAME" || true
 
       - name: Generate Job Summary
         if: always()
@@ -157,14 +133,14 @@ jobs:
 
           | Metric | Value |
           |---|---|
-          | **Execution Mode** | ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && 'Dry Run (Preview)' || 'Live Production' }} |
+          | **Execution Mode** | ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && 'Dry Run (Preview)' || 'Candidate Generation' }} |
           | **Publisher Status** | \`${STATUS:-SKIPPED_OR_FAILED}\` |
           | **Candidate Slug** | \`${SLUG:-None}\` |
           | **Candidate Title** | ${TITLE:-N/A} |
-          | **Published URL** | ${URL:-N/A} |
+          | **Staged URL** | ${URL:-N/A} |
           | **Git Commit** | \`${SHA:-N/A}\` |
-          | **Pages Deployment** | ${{ steps.git_push.outputs.committed == 'true' && 'Verified Built & Live' || 'Not Required / Skipped' }} |
+          | **Deployment Status** | Candidate Staged in PR for Human Review (Not Deployed) |
 
-          > [!NOTE]
-          > **Indexing Transparency**: Newly published guides are immediately submitted to the IndexNow protocol (covering Bing, Yandex, Seznam). Google Search Console discovers new URLs via the live XML sitemap; search engine indexing occurs based on Google's independent crawl schedules.
+          > [!IMPORTANT]
+          > **Human Review Gate**: This candidate guide is staged on a dedicated branch and pull request. It is NOT deployed to production or published to GitHub Pages until explicitly reviewed, approved, and merged by the repository owner.
           EOF

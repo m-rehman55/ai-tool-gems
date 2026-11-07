@@ -4,11 +4,11 @@ const productSeed = [
   ['chatgpt','ChatGPT Plus','AI Assistants',2300,'chatgpt.com'],
   ['gemini','Gemini Pro','AI Assistants',800,'gemini.google.com'],
   ['veo','Veo 3 Ultra','AI Video',2100,'deepmind.google'],
-  ['leonardo','Leonardo AI Essential','Design',1900,'leonardo.ai'],
-  ['elevenlabs','ElevenLabs','AI Voice',3300,'elevenlabs.io'],
+  ['leonardo','Leonardo AI Essential','Design',1900,'leonardo.com'],
+  ['elevenlabs','ElevenLabs Voice AI','AI Voice',3300,'elevenlabs.io'],
   ['canva','Canva Pro Edu','Design',900,'canva.com'],
   ['figma','Figma Pro Private','Design',3000,'figma.com'],
-  ['capcut','CapCut Pro','AI Video',900,'capcut.com'],
+  ['capcut','CapCut Pro VIP','AI Video',900,'capcut.com'],
   ['adobe','Adobe Creative Cloud','Design',1700,'adobe.com'],
   ['lovable','Lovable Pro','Development',1600,'lovable.dev'],
   ['gamma','Gamma Pro','Productivity',23000,'gamma.app'],
@@ -20,9 +20,30 @@ const productSeed = [
   ['youtube','YouTube Premium','Entertainment',1200,'youtube.com'],
   ['netflix','Netflix Premium 4K','Entertainment',400,'netflix.com'],
   ['linkedin','LinkedIn Premium','Business',1500,'linkedin.com'],
-  ['windows','Windows 11 Pro Key','Software',1900,'microsoft.com']
+  ['windows','Windows 11 Pro Key','Software',1900,'microsoft.com'],
+  ['claude','Claude Pro (3.5 Sonnet)','AI Assistants',2200,'claude.com'],
+  ['midjourney','Midjourney v6.1 Pro','Design',2400,'midjourney.com'],
+  ['cursor','Cursor AI Pro','Development',2800,'cursor.com'],
+  ['perplexity','Perplexity Pro','AI Assistants',1400,'perplexity.com'],
+  ['deepseek','DeepSeek Unlimited','AI Assistants',1100,'deepseek.com'],
+  ['grok','SuperGrok / Grok 2','AI Assistants',1800,'grok.com'],
+  ['runway','Runway ML Gen-3 Pro','AI Video',3500,'runway.com'],
+  ['heygen','HeyGen AI Avatar Pro','AI Video',4200,'heygen.com'],
+  ['grammarly','Grammarly Premium','Writing & SEO',750,'grammarly.com'],
+  ['quillbot','QuillBot Premium','Writing & SEO',450,'quillbot.com'],
+  ['semrush','SEMrush Pro','Writing & SEO',1500,'semrush.com'],
+  ['allinone','All-in-One Mega AI Portal','AI Assistants',1999,'allinone.com'],
+  ['tradingview','TradingView Pro','Business',3500,'tradingview.com'],
+  ['kling','Kling AI','AI Video',4800,'kling.com'],
+  ['freepik','Freepik Premium','Design',2400,'freepik.com'],
+  ['spotify','Spotify Premium','Entertainment',1200,'spotify.com'],
+  ['copilot','GitHub Copilot','Development',2500,'github.com'],
+  ['suno','Suno AI','AI Voice',3200,'suno.com'],
+  ['turnitin','Turnitin Student Account','Writing & SEO',3600,'turnitin.com'],
+  ['office365','Microsoft Office 365 (1TB)','Productivity',2200,'microsoft.com']
 ].map(([id,name,category,price,domain]) => ({
   id, name, category, price, domain,
+  status: 'Seed Fixture (Sandbox)',
   description: '',
   logo: `assets/product-logos/${id}.png`
 }));
@@ -47,10 +68,10 @@ const escapeHTML = value => String(value || '').replace(/[&<>'"]/g, char => ({ '
 function renderAdminProducts() {
   $('#adminProducts').innerHTML = adminProducts.map(product => `
     <tr>
-      <td><div class="product-cell"><img src="${product.logo || 'assets/brand-logo-light.webp'}" width="128" height="128" loading="lazy" alt="${escapeHTML(product.name)} logo"><span><b>${escapeHTML(product.name)}</b><small>Saved in this browser</small></span></div></td>
+      <td><div class="product-cell"><img src="${product.logo || 'assets/brand-logo-light.webp'}" width="128" height="128" loading="lazy" alt="${escapeHTML(product.name)} logo"><span><b>${escapeHTML(product.name)}</b><small>Verified Subscription</small></span></div></td>
       <td>${escapeHTML(product.category)}</td>
       <td><b>${money(product.price)}</b></td>
-      <td><span class="status">In stock</span></td>
+      <td><span class="status" style="font-size:12px;padding:3px 8px;border-radius:6px;background:rgba(100,116,139,0.15);color:#475569;font-weight:600;">Sandbox Fixture</span></td>
       <td><button class="edit" data-edit-product="${escapeHTML(product.id)}" aria-label="Edit ${escapeHTML(product.name)}">Edit</button></td>
     </tr>
   `).join('');
