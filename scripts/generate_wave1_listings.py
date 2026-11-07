@@ -399,7 +399,7 @@ def render_tool_page(t):
 
   <main class="tool-main-content">
     <div class="breadcrumb-nav">
-      <a href="/">Home</a> &raquo; <a href="/">Tools</a> &raquo; <span>{t['name']}</span>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../../">Home</a><span>/</span><a href="../../tools/">AI tools</a><span>/</span><span aria-current="page">{t['name']}</span></nav>
     </div>
 
     <article class="tool-profile-card">
@@ -482,7 +482,7 @@ def render_tool_page(t):
         <div class="availability-box">
           <p><strong>Status:</strong> {t['pakistan_availability']}</p>
           <div class="important-notice">
-            <p><strong>Important Commercial Disclosure:</strong> AI Tool Gems is an independent informational directory. We do not sell accounts, shared seats, or subscriptions for {t['name']}. Purchases must be completed directly with the official provider.</p>
+            <p><strong>Important Commercial Disclosure:</strong> AI Tool Gems is an independent informational directory. We do not sell accounts, shared seats, or subscriptions for {t['name']}. Purchases must be completed directly with the official provider. Learn more about our <a href="../../policies.html#payments">payment and directory verification policies</a>.</p>
           </div>
         </div>
       </section>
