@@ -1,4 +1,4 @@
 # AIToolGems Autonomous Worldwide SEO & AI Search Growth Agent
 # Core dependencies (compatible with standard Python 3.10+)
 
-pyyaml>=6.0.1
+pyyaml>=6.0.3
