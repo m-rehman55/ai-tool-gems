@@ -16,7 +16,7 @@
 All code modifications, test suites, repository boundaries, and security remediations for HERMES Phase 2.3 have been completed, verified, and audited.
 
 1. **Working Tree & Tracked Git Index:** **PASS.** All legacy diagnostic reports (`reports/architecture/`, `reports/keyword-agent/`, `reports/seo/`) have been untracked from Git. Zero customer order files, zero credentials, zero wholesale supplier price lists, and zero internal diagnostic logs are tracked in Git.
-2. **Automated Testing & Security Analysis:** **PASS.** All **213 unique unit tests** across all 8 test suites pass with zero failures (221 test executions in CI). CodeQL AST security scans for JavaScript/TypeScript and Python pass with zero alerts. The strict link graph audit passes with zero broken links across 102 HTML files.
+2. **Automated Testing & Security Analysis:** **PASS (LOCAL) / PENDING (REMOTE CI).** Locally, all **213 unique unit tests** across all 8 test suites pass with zero failures (in 67.55s). In CI, all 8 suites are configured in `.github/workflows/seo-agent-validation.yml`, with remote CI verification pending execution on the updated PR head commit. CodeQL AST security scans for JavaScript/TypeScript and Python pass with zero alerts. The strict link graph audit passes with zero broken links across 102 HTML files.
 3. **GitHub Pages Publishing Source:** **BLOCKED_OWNER.** GitHub Pages is currently configured to build via `legacy` mode from branch `main` at path `/`. The repository owner must switch the Pages source to **GitHub Actions** in the GitHub Web UI before merging PR #16.
 4. **Branch Protection:** **BLOCKED_OWNER.** Branch protection on `main` is currently not active (API returned HTTP 404). The owner must enable the recommended ruleset in repository settings.
 5. **Historical Commit Cache Exposure:** **BLOCKED_OWNER.** Historical commits and raw blobs from earlier closed PRs (#13, #14, #15) remain cached in GitHub's internal refstore (returning HTTP 200). A complete, unredacted escalation package has been placed in the owner's private local storage (`data/reports/PRIVATE_GITHUB_SUPPORT_ESCALATION.md`) for submission to GitHub Support.
@@ -30,10 +30,10 @@ All code modifications, test suites, repository boundaries, and security remedia
 | :--- | :---: | :--- | :--- |
 | **Workstream A: Pages Publishing Source** | **BLOCKED_OWNER** | Live API reports `build_type: "legacy"`. Must be switched to `GitHub Actions` to enable workflow deployment from allowlisted `public-site/`. | Repository Owner |
 | **Workstream B: Tracked File Boundaries** | **PASS** | 16 legacy reports untracked via `git rm --cached`. Prohibited prefixes strictly enforced by `tests/test_public_repository_boundary.py`. | Engineering |
-| **Workstream C: Historical Git Objects** | **BLOCKED_OWNER** | Commit `d9cdef4` and blob `477ca0e9` return HTTP 200 on GitHub. Private escalation package drafted in `data/reports/`. | Repository Owner |
-| **Workstream D: CI Test Accounting** | **PASS** | Exactly 213 unique unit tests (221 CI executions) pass 100% green across 8 test suites. 0 failures. | Engineering |
+| **Workstream C: Historical Git Objects** | **BLOCKED_OWNER** | Historical closed PR commits and raw blobs remain cached in GitHub refstore. Detailed inventory and private escalation package drafted in local gitignored `data/reports/`. | Repository Owner |
+| **Workstream D: CI Test Accounting** | **PASS** | Exactly 213 unique unit tests verified locally (100% green); all 8 suites configured in CI workflow; remote CI pending updated PR head run. | Engineering |
 | **Workstream E: Branch Protection** | **BLOCKED_OWNER** | `main` branch protection is not active (HTTP 404). Recommended ruleset provided. | Repository Owner |
-| **Workstream F: PR #16 Code Acceptance** | **PASS** | 40 changed files audited. Fail-closed builder, allowlist, and GA4 privacy verified. | Engineering |
+| **Workstream F: PR #16 Code Acceptance** | **PASS** | 74 changed files audited (including 16 removed legacy diagnostic reports). Fail-closed builder, allowlist, and GA4 privacy verified. | Engineering |
 | **Workstream G: PR #17 Content Safeguards** | **HOLD_SAFE** | 3 category hubs staged with `<meta name="robots" content="noindex, follow">` and excluded from `sitemap.xml`. | SEO / Owner |
 | **Workstream H: GA4 Safe Verification** | **PASS** | Strict `client_id` regex validation; zero synthetic purchases sent to production `G-NQJCMDCLLP`. | Analytics Lead |
 | **Workstream I: Owner Release Governance** | **BLOCKED_OWNER** | 8 independent decisions formulated in `docs/FINAL_OWNER_RELEASE_CHECKLIST.md`. | Repository Owner |
@@ -49,8 +49,8 @@ All code modifications, test suites, repository boundaries, and security remedia
    - *Previous state:* Public markdown files contained support ticket drafts with specific sensitive commit hashes and local workstation paths (`file:///D:/...`).
    - *Correction:* Formulated private escalation files in local gitignored storage (`data/reports/`). Sanitized `docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md` and eradicated all local machine paths across `docs/*.md`.
 3. **Reconciled Test Accounting:**
-   - *Previous state:* Apparent discrepancy between 213 unique tests and 221 test executions.
-   - *Correction:* Documented mathematical proof that 221 represents the exact execution count when the 2 critical security boundary tests are run standalone before full root discovery.
+   - *Previous state:* Apparent discrepancy between 213 unique tests and earlier duplicate 221 execution counts, plus omission of `ga4_agent` and `merchant_agent` from `seo-agent-validation.yml`.
+   - *Correction:* Phase 2.3.1 explicitly added `ga4_agent` and `merchant_agent` test commands and path triggers to `.github/workflows/seo-agent-validation.yml`. All 8 test suites are configured for single-pass CI execution (213 unique tests verified locally; remote CI pending updated PR head run).
 4. **Resolved PR #17 Rebase Conflict:**
    - *Previous state:* PR #17 paused during rebase on `scripts/build_public_site.py`.
    - *Correction:* Harmonized `APPROVED_PUBLIC_DIRS` across both branches, enabling clean automated testing.
@@ -92,7 +92,8 @@ HERMES AUTOMATED TEST SUITE RECONCILIATION SUMMARY
 8. seo-agent/tests/ (HERMES Core Suite):    43 / 43 PASS (100%)
 ----------------------------------------------------------------------
 TOTAL UNIQUE UNIT TESTS:                   213 / 213 PASS (100% Green)
-TOTAL CI TEST EXECUTIONS:                  221 / 221 PASS (100% Green)
+TOTAL LOCAL TEST VERIFICATION:            213 / 213 PASS (100% Green in 67.55s)
+CI CONFIGURATION STATUS:                  8 / 8 Suites Configured (Remote Run Pending)
 ADDITIONAL AUDIT ENGINES:
 - link_graph_checker.py --strict:          102 HTML files, 0 errors
 - build_public_site.py --verify-only:      316 assets, 0 violations

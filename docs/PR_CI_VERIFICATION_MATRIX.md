@@ -17,10 +17,10 @@
 | **Base Branch (`base.ref`)** | `main` | `release/security-pages-hardening` |
 | **Base Commit SHA (`base.sha`)** | `418fc477084c4ebb393b3c5cb6abb40b27e1fc36` | `00902e17a3a82df31c79fb4b18c50ecb79f649f9` |
 | **Head Branch (`head.ref`)** | `release/security-pages-hardening` | `content/wave1-category-hubs-staged` |
-| **Head Commit SHA (`head.sha`)** | `00902e17a3a82df31c79fb4b18c50ecb79f649f9` | `9d2aac9e2ea4eeec5f5df6d45903b6009ae84c98` |
+| **Head Commit SHA (`head.sha`)** | `195e214053f1ae7c73c3968597732ad6e26811a8` | `23ddf5f40e270eaccfbd4924aeb1a5011b4c7b97` |
 | **Mergeability (`mergeable`)** | `true` | `true` |
 | **Mergeable State** | `clean` | `clean` |
-| **Changed Files Count** | `40` | `5` |
+| **Changed Files Count** | `74` | `4` |
 | **Auto-Merge Policy** | `disabled` | `disabled` |
 
 ---

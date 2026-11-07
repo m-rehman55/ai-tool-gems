@@ -7,12 +7,21 @@
 
 ---
 
+## [Phase 2.3.1] — 2026-11-07 (CI Integrity & Release Evidence Correction)
+
+### CI/CD Workflow & Test Coverage
+- **Complete CI Suite Coverage:** Repaired `.github/workflows/seo-agent-validation.yml` to explicitly include both missing suites: `ga4_agent/tests` (30 tests) and `merchant_agent/tests` (10 tests).
+- **Agent Path Filters:** Added `ga4_agent/**` and `merchant_agent/**` to `push.paths` and `pull_request.paths` in `.github/workflows/seo-agent-validation.yml`.
+- **Reconciled CI Test Accounting:** Harmonized CI workflow to configure all 8 test suites exactly once: **213 unique unit tests verified locally; 213 configured CI executions** with remote CI verification pending execution on the updated PR head.
+- **Corrected PR #16 Changed Files Scope:** Updated documentation to reflect the live 74 changed files comparison between `main` and PR #16 (including 16 removed legacy diagnostic reports).
+- **Sanitized Public Incident Documentation:** Scrubbed specific historical commit and blob hashes from public reports; maintained unredacted details in private local gitignored storage.
+
 ## [Phase 2.3] — 2026-11-07 (Release Closure & Security Hardening)
 
 ### Security & Repository Boundaries
 - **Untracked Legacy Diagnostic Reports:** Executed `git rm -r --cached` on all 16 legacy reports under `reports/` (`reports/architecture/`, `reports/keyword-agent/`, `reports/seo/`). Files remain safely on disk in the gitignored directory.
 - **Enforced Boundary Regression Tests:** Updated `tests/test_public_repository_boundary.py` to assert that `reports/` and diagnostic paths can never be tracked in Git.
-- **Historical Git Cache Exposure Audit:** Tested direct GitHub URLs; confirmed that historical commits (`d9cdef4`, `108118a9`) and raw blob `477ca0e9` (`verified_orders.json`) return HTTP 200 due to GitHub's internal commit cache on closed PRs.
+- **Historical Git Cache Exposure Audit:** Tested direct GitHub URLs; confirmed that historical commits and raw objects from closed pull requests remain cached in GitHub's internal commit refstore until garbage collection is triggered.
 - **Created Private Support Escalation Package:** Formulated `data/reports/PRIVATE_HISTORICAL_EXPOSURE_INVENTORY.md` and `data/reports/PRIVATE_GITHUB_SUPPORT_ESCALATION.md` in local gitignored storage for the repository owner to submit to GitHub Support.
 - **Documentation Sanitization:** Removed sensitive commit hashes and raw ticket drafts from public documentation (`docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md`).
 - **Eradicated Local Machine Paths:** Removed all `file:///` and `D:\Desktop` local workstation paths across all markdown files in `docs/`.

@@ -78,15 +78,15 @@ The repository files are strictly divided into three distinct operational groups
 > Deleting a file from the latest commit (`HEAD`) **does not** erase that file from historical Git commits. Any user who clones the repository or accesses the commit-addressed GitHub API can retrieve historical commits unless they are purged and garbage-collected upstream.
 
 ### Historical Purge Status:
-1. **Purged File:** `data/orders/verified_orders.json` (accidentally committed in historical commit `8d521de0f3eee707722dd7abcb5d82c7d90989b4`).
+1. **Purged Data:** Historical customer transaction files accidentally committed in earlier pull requests.
 2. **Current Branches (100% Clean):**  
-   - `origin/main` (`418fc477084c4ebb393b3c5cb6abb40b27e1fc36`): 0 order commits.
-   - `release/security-pages-hardening` (`108118a935`): 0 order commits.
-   - `content/wave1-category-hubs-staged` (`1cbdb22b20`): 0 order commits.
+   - `origin/main`: 0 order commits.
+   - `release/security-pages-hardening`: 0 order commits.
+   - `content/wave1-category-hubs-staged`: 0 order commits.
 3. **Upstream GitHub Object Cache:**
-   - Commit `8d521de0f3` remains reachable via commit-addressed API (`/commits/8d521de0...`) solely because GitHub retains hidden pull request head references: `refs/pull/13/head` and `refs/pull/14/head`.
+   - Historical closed pull request commits remain reachable via commit-addressed API solely because GitHub retains hidden pull request head references: `refs/pull/13/head`, `refs/pull/14/head`, and `refs/pull/15/head`.
    - Because `refs/pull/*` are hidden and immutable to Git clients (`deny updating a hidden ref`), repository administrators cannot delete them via `git push origin :refs/pull/...`.
-   - A dedicated GitHub Support request must be filed by the repository owner to delete `refs/pull/13/head` and `refs/pull/14/head` and trigger backend garbage collection.
+   - A dedicated GitHub Support request must be filed by the repository owner to purge closed pull request refs and trigger backend garbage collection.
 4. **Current PR A Cleanliness:**
    - All operational diagnostic reports and draft support tickets containing commit hashes have been untracked from Git.
    - Future releases are guarded by automated regression test `tests/test_public_repository_boundary.py`.

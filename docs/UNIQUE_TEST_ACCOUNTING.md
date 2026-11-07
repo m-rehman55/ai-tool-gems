@@ -17,8 +17,9 @@ In Phase 2.1 documentation, a grand total of **221 test executions** was reporte
 ### Audit Findings:
 - **Unique Test Cases Discovered:** **213 unique test cases** exist across the entire codebase.
 - **Root Regression Discovery:** The 61 tests discovered under `tests/` **already include** the 4 tests from `test_public_deployment_allowlist.py` and the 4 tests from `test_public_repository_boundary.py`.
-- **Explanation of 221 Figure:** Running the 2 security test files as standalone commands (4 + 4) and subsequently running `discover -s tests` (61) resulted in 8 test cases being executed twice (4 + 4 + 61 = 69 executions for 61 unique tests). Adding the 152 tests from the 7 agent suites yielded 221 total test executions.
-- **Truthful Status:** There are **213 unique, fully reproducible test cases**, all passing with 100% green exit codes.
+- **Explanation of Historical 221 Figure:** Running the 2 security test files as standalone commands (4 + 4) and subsequently running `discover -s tests` (61) in early workflows resulted in 8 test cases being executed twice (4 + 4 + 61 = 69 executions for 61 unique tests). Adding the 152 tests from the 7 agent suites yielded 221 total test executions.
+- **Phase 2.3.1 Clean CI Architecture:** In Phase 2.3.1, `.github/workflows/seo-agent-validation.yml` was configured to run all 8 test suites exactly once with no duplicate executions: 61 root tests + 152 agent tests = **213 unique test definitions and 213 configured CI test executions**.
+- **Truthful Status:** Exactly **213 unique test cases** verified locally (100% green); CI workflow configured across all 8 suites; remote CI verification pending execution on the updated PR head commit.
 
 ---
 
@@ -71,8 +72,8 @@ Discovery Command: `python -m unittest discover -s tests -v`
 = 213 UNIQUE TEST CASES (Zero duplication, zero overlaps)
 
 When executed as 10 discrete workflow commands:
-   4 (python -m unittest tests/test_public_repository_boundary.py)
-+  4 (python -m unittest tests/test_public_deployment_allowlist.py)
+   4 (python -m unittest tests/test_public_repository_boundary.py) [standalone check]
++  4 (python -m unittest tests/test_public_deployment_allowlist.py) [standalone check]
 + 61 (python -m unittest discover -s tests)  <-- Re-executes the 8 above
 + 30 (python -m unittest discover -s ga4_agent/tests)
 + 10 (python -m unittest discover -s merchant_agent/tests)
@@ -82,7 +83,10 @@ When executed as 10 discrete workflow commands:
 + 33 (python -m unittest discover -s marketing_agent/tests)
 + 43 (python -m unittest discover -s seo-agent/tests)
 ------------------------------------------------------------------------
-= 221 TEST EXECUTIONS (8 tests executed twice across discrete commands)
+= 221 HISTORICAL TEST EXECUTIONS (8 tests executed twice in pre-flight mode)
+
+In Phase 2.3.1, CI validation configures all 8 suites once without standalone duplication:
+61 + 30 + 10 +  5 +  6 + 25 + 33 + 43 = 213 UNIQUE TESTS & 213 CONFIGURED CI EXECUTIONS
 ```
 
 ---

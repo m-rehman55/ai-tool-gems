@@ -11,6 +11,8 @@ on:
       - "ping_agent/**"
       - "keyword_agent/**"
       - "marketing_agent/**"
+      - "ga4_agent/**"
+      - "merchant_agent/**"
       - "scripts/**"
       - "tests/**"
       - "*.html"
@@ -33,6 +35,8 @@ on:
       - "ping_agent/**"
       - "keyword_agent/**"
       - "marketing_agent/**"
+      - "ga4_agent/**"
+      - "merchant_agent/**"
       - "scripts/**"
       - "tests/**"
       - "*.html"
@@ -106,6 +110,14 @@ jobs:
       - name: Run Ping Agent & IndexNow Unit Tests
         run: |
           python -m unittest discover -s ping_agent/tests -v
+
+      - name: Run GA4 Agent & Conversion Privacy Unit Tests
+        run: |
+          python -m unittest discover -s ga4_agent/tests -v
+
+      - name: Run Google Merchant Center Agent Unit Tests
+        run: |
+          python -m unittest discover -s merchant_agent/tests -v
 
       - name: Run Offline Repository Audit
         run: |

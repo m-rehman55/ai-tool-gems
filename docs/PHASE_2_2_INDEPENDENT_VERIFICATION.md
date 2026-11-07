@@ -61,8 +61,8 @@ Every factual assertion in this report is backed by direct API queries to GitHub
 ### 3.1 Reachable Git Graph Audit
 - **Current Tree Status:** All sensitive order files (`data/orders/verified_orders.json`), internal diagnostic reports (`reports/*.md`, `reports/*.csv`), and runtime logs are **completely untracked and absent** from the active working trees of `main`, `release/security-pages-hardening`, and `content/wave1-category-hubs-staged`.
 - **Historical Git Objects:**
-  - Commit `d9cdef409ac00f278986179afaaa34cd08c4ddd4` (head of closed PR #13) and `76d45a7` (PR #14) introduced `verified_orders.json`.
-  - These commits are **not reachable** from any active branch or release tag (`git branch -a --contains d9cdef4` returns 0).
+  - Historical closed PR feature branches (PR #13, PR #14) previously introduced sensitive transaction records.
+  - Those commits are **not reachable** from any active branch or release tag (`git branch -a --contains` returns 0).
   - However, because GitHub stores closed pull request heads in its backend ref cache (`refs/pull/*/head`), direct commit URLs remain viewable on `github.com` until GitHub Support executes server-side garbage collection.
 - **Escalation Package:** Prepared a complete, sanitized escalation package in [`docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md`](docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md) for the owner to submit to GitHub Support.
 

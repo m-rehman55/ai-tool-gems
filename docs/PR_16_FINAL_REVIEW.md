@@ -24,7 +24,7 @@ All automated code tests, AST compilations, CodeQL vulnerability scans, and regr
 | **Tracked File Boundaries** | Zero order data, wholesale costs, credentials, or operational reports tracked | `reports/` untracked from Git; `tests/test_public_repository_boundary.py` passing | **PASS** |
 | **Fail-Closed Pages Builder** | Public deployment restricted strictly to allowlisted static files | `scripts/build_public_site.py` stages exactly 316 approved files into `public-site/` | **PASS** |
 | **CI Trigger Reliability** | PR checks must execute on PRs targeting release branches | Added `"release/**"` to workflow triggers; all 5 check runs report green | **PASS** |
-| **Test Suite Completeness** | All unit tests across all agents pass with zero errors | 213 unique unit tests (221 executions) pass across 8 test suites | **PASS** |
+| **Test Suite Completeness** | All unit tests across all agents pass with zero errors | 213 unique unit tests verified locally (100% green); all 8 suites configured in CI workflow | **PASS (LOCAL) / PENDING (CI)** |
 | **Code Security Analysis** | CodeQL AST syntax & vulnerability scanning | CodeQL JavaScript/TypeScript and Python scans pass with 0 alerts | **PASS** |
 | **Link & Route Integrity** | 0 broken internal links, 0 orphaned routes, 0 anchor fragment errors | `link_graph_checker.py --strict` verified clean across 102 HTML files | **PASS** |
 | **GA4 Privacy & Provenance** | Strict `client_id` format validation, synthetic purchase provenance bounding | `ga4_agent/tests/test_ga4_agent.py` (30 tests) pass; 0 synthetic orders to live property | **PASS** |
@@ -34,7 +34,7 @@ All automated code tests, AST compilations, CodeQL vulnerability scans, and regr
 
 ---
 
-## 3. Full Change Review & Key Modifications
+## 3. Full Change Review & Key Modifications (74 Changed Files Audited)
 
 ### A. Repository & File Boundaries (`.gitignore`, `tests/`)
 - Untracked all legacy diagnostic reports in `reports/` (`reports/architecture/`, `reports/keyword-agent/`, `reports/seo/`).
