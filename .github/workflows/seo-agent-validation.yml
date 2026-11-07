@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 'release/**'
     paths:
       - "seo-agent/**"
       - "aio_agent/**"
@@ -20,10 +21,12 @@ on:
       - "deals/**"
       - "prices/**"
       - "blog/**"
+      - "category/**"
       - "sitemap.xml"
   pull_request:
     branches:
       - main
+      - 'release/**'
     paths:
       - "seo-agent/**"
       - "aio_agent/**"
@@ -40,7 +43,9 @@ on:
       - "deals/**"
       - "prices/**"
       - "blog/**"
+      - "category/**"
       - "sitemap.xml"
+  workflow_dispatch:
 
 permissions:
   contents: read
