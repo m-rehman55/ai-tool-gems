@@ -65,6 +65,43 @@ class TestCatalogueConsistency(unittest.TestCase):
         self.assertTrue(m_tw_desc, "tools/index.html twitter:description missing")
         self.assertNotIn("all 20", m_tw_desc.group(1).lower())
 
+    def test_tools_directory_metadata_distinguishes_assisted_vs_directory_models(self):
+        """Ensure directory-wide metadata does not promise WhatsApp delivery for directory-only profiles."""
+        with open(self.tools_index_path, "r", encoding="utf-8") as f:
+            html = f.read()
+
+        # Meta description must distinguish 40 assisted vs 25 directory
+        m_desc = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', html)
+        self.assertTrue(m_desc, "tools/index.html meta description missing")
+        desc = m_desc.group(1)
+        self.assertIn("65", desc)
+        self.assertIn("40", desc)
+        self.assertIn("25", desc)
+        self.assertNotIn("Fast WhatsApp delivery via EasyPaisa", desc)
+
+        # Open Graph & Twitter descriptions must match
+        m_og_desc = re.search(r'<meta\s+property=["\']og:description["\']\s+content=["\'](.*?)["\']', html)
+        self.assertTrue(m_og_desc)
+        self.assertEqual(desc, m_og_desc.group(1))
+
+        m_tw_desc = re.search(r'<meta\s+name=["\']twitter:description["\']\s+content=["\'](.*?)["\']', html)
+        self.assertTrue(m_tw_desc)
+        self.assertEqual(desc, m_tw_desc.group(1))
+
+        # Check lead paragraph and quick summary in page body
+        self.assertIn("65 verified AI tools", html)
+        self.assertIn("25 directory reference", html)
+
+        # Ensure all 40 legacy tools retain assisted WhatsApp order flow
+        for slug in self.legacy_40_slugs:
+            p = os.path.join(self.tools_dir, slug, "index.html")
+            with open(p, "r", encoding="utf-8") as tool_f:
+                tool_html = tool_f.read()
+            self.assertTrue(
+                "api.whatsapp.com" in tool_html or "whatsapp" in tool_html.lower(),
+                f"Assisted tool {slug} must preserve WhatsApp purchase flow"
+            )
+
     def test_all_legacy_40_contain_standardized_warranty(self):
         """Assert all 40 legacy listings display the Assisted Access Replacement Warranty."""
         for slug in self.legacy_40_slugs:
