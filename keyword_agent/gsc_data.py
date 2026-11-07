@@ -390,26 +390,38 @@ class GSCDataEngine:
         api_url = f"https://www.googleapis.com/webmasters/v3/sites/{site_enc}/searchAnalytics/query"
         headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
 
-        def _query_dim(dim: str, limit: int = 500) -> List[Dict[str, Any]]:
-            payload = json.dumps({
-                "startDate": start_date,
-                "endDate": end_date,
-                "dimensions": [dim],
-                "rowLimit": limit,
-            }).encode("utf-8")
-            q_req = urllib.request.Request(api_url, data=payload, headers=headers, method="POST")
-            try:
-                with urllib.request.urlopen(q_req, timeout=20) as q_resp:
-                    data = json.loads(q_resp.read().decode("utf-8"))
-                    return data.get("rows", [])
-            except Exception as e:
-                logger.warning(f"Failed querying GSC dimension {dim}: {e}")
-                return []
+        def _query_dim(dim: str, max_rows: int = 5000, page_size: int = 1000) -> List[Dict[str, Any]]:
+            all_rows: List[Dict[str, Any]] = []
+            start_row = 0
+            while len(all_rows) < max_rows:
+                fetch_limit = min(page_size, max_rows - len(all_rows))
+                payload = json.dumps({
+                    "startDate": start_date,
+                    "endDate": end_date,
+                    "dimensions": [dim],
+                    "rowLimit": fetch_limit,
+                    "startRow": start_row,
+                }).encode("utf-8")
+                q_req = urllib.request.Request(api_url, data=payload, headers=headers, method="POST")
+                try:
+                    with urllib.request.urlopen(q_req, timeout=20) as q_resp:
+                        data = json.loads(q_resp.read().decode("utf-8"))
+                        rows = data.get("rows", [])
+                        if not rows:
+                            break
+                        all_rows.extend(rows)
+                        start_row += len(rows)
+                        if len(rows) < fetch_limit:
+                            break
+                except Exception as e:
+                    logger.warning(f"Failed querying GSC dimension {dim} at startRow {start_row}: {e}")
+                    break
+            return all_rows
 
-        q_rows = _query_dim("query", limit=500)
-        p_rows = _query_dim("page", limit=500)
-        c_rows = _query_dim("country", limit=100)
-        d_rows = _query_dim("device", limit=10)
+        q_rows = _query_dim("query", max_rows=5000, page_size=1000)
+        p_rows = _query_dim("page", max_rows=1000, page_size=500)
+        c_rows = _query_dim("country", max_rows=250, page_size=250)
+        d_rows = _query_dim("device", max_rows=10, page_size=10)
 
         queries = [
             GSCQueryRow(

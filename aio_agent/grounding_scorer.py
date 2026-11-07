@@ -27,6 +27,8 @@ class PageAIOScore:
     total_aio_score: float      # out of 100
     tier: str                   # "ELITE_AIO_READY", "AIO_COMPLIANT", "NEEDS_OPTIMIZATION"
     recommendations: List[str] = field(default_factory=list)
+    evidence_tier: str = "ESTIMATED"
+    measurement_type: str = "STATIC_READINESS_HEURISTIC"
 
 
 class GroundingScorer:

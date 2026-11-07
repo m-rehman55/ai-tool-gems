@@ -57,6 +57,7 @@ class LinkGraphReport:
     total_fragments_checked: int
     total_sitemap_urls: int
     total_assets_checked: int = 0
+    max_crawl_depth: int = 0
     issues: List[Issue] = field(default_factory=list)
 
     @property
@@ -561,6 +562,41 @@ class LinkGraphChecker:
 
         return issues, assets_checked
 
+    def calculate_crawl_depths(self) -> Dict[str, int]:
+        """Calculates minimum crawl depth (BFS hops from index.html) for all public pages."""
+        depths: Dict[str, int] = {"index.html": 0}
+        queue = ["index.html"]
+
+        while queue:
+            curr = queue.pop(0)
+            curr_depth = depths[curr]
+            html = self.html_files.get(curr, "")
+            current_dir = os.path.dirname(curr)
+            links = re.findall(r'<a[^>]+href=["\']([^"\']+)["\']', html)
+
+            for href in links:
+                target = None
+                if href.startswith(('http://', 'https://', '//')):
+                    parsed = urllib.parse.urlparse(href)
+                    if parsed.netloc in INTERNAL_DOMAINS:
+                        clean = parsed.path.lstrip('/')
+                        target = (clean + 'index.html') if (not clean or clean.endswith('/')) else clean
+                elif not href.startswith(('mailto:', 'tel:', 'javascript:', '#')):
+                    path = href.split('?')[0].split('#')[0]
+                    if path.startswith('/'):
+                        clean = path.lstrip('/')
+                        target = (clean + 'index.html') if (not clean or clean.endswith('/')) else clean
+                    elif path.endswith('/'):
+                        target = os.path.normpath(os.path.join(current_dir, path, 'index.html')).replace('\\', '/')
+                    elif path:
+                        target = os.path.normpath(os.path.join(current_dir, path)).replace('\\', '/')
+
+                if target and target in self.html_files and target not in depths:
+                    depths[target] = curr_depth + 1
+                    queue.append(target)
+
+        return depths
+
     def run_all_checks(self) -> LinkGraphReport:
         """Executes full diagnostic suite and returns unified report."""
         dest_issues, links_cnt, frags_cnt = self.check_link_destinations_and_fragments()
@@ -570,6 +606,8 @@ class LinkGraphChecker:
         breadcrumb_issues = self.check_breadcrumb_hierarchy()
         button_issues = self.check_critical_actions_and_buttons()
         asset_issues, assets_cnt = self.check_asset_sources()
+        depths = self.calculate_crawl_depths()
+        max_d = max(depths.values()) if depths else 0
 
         all_issues = (
             dest_issues +
@@ -587,6 +625,7 @@ class LinkGraphChecker:
             total_fragments_checked=frags_cnt,
             total_sitemap_urls=sitemap_cnt,
             total_assets_checked=assets_cnt,
+            max_crawl_depth=max_d,
             issues=all_issues
         )
 
@@ -608,6 +647,7 @@ def main():
     print(f"Total fragment anchors checked: {report.total_fragments_checked}")
     print(f"Total local assets verified:    {report.total_assets_checked}")
     print(f"Total sitemap URLs verified:    {report.total_sitemap_urls}")
+    print(f"Max crawl depth from root:      {report.max_crawl_depth} hops")
     print("------------------------------------------------------------")
 
     errors = report.errors

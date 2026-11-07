@@ -41,6 +41,54 @@ class ApprovalRequirement(str, Enum):
     HUMAN_EXPLICIT_REQUIRED = "HUMAN_EXPLICIT_REQUIRED"
 
 
+class EvidenceTier(str, Enum):
+    LIVE_API = "LIVE_API"
+    LIVE_BROWSER = "LIVE_BROWSER"
+    LIVE_REPOSITORY = "LIVE_REPOSITORY"
+    CACHED = "CACHED"
+    HISTORICAL = "HISTORICAL"
+    ESTIMATED = "ESTIMATED"
+    INFERRED = "INFERRED"
+    UNVERIFIED = "UNVERIFIED"
+
+
+class EvidenceUpgradeViolation(Exception):
+    """Raised when an agent attempts to upgrade an estimate or inference into verified evidence."""
+    pass
+
+
+@dataclass
+class EvidenceContract:
+    """Formal evidence contract enforcing truthfulness and provenance rules."""
+    evidence_id: str
+    source_agent: str
+    tier: EvidenceTier
+    description: str
+    data: Dict[str, Any] = field(default_factory=dict)
+    provenance_uri: Optional[str] = None
+    collected_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    verified_by: Optional[str] = None
+    is_verified: bool = False
+
+    def __post_init__(self):
+        if self.tier in (EvidenceTier.ESTIMATED, EvidenceTier.INFERRED, EvidenceTier.UNVERIFIED):
+            self.is_verified = False
+
+    @staticmethod
+    def validate_evidence_upgrade(source_tier: EvidenceTier, target_tier: EvidenceTier) -> bool:
+        """
+        Enforces H2: An agent must never upgrade an estimate or inference into verified evidence.
+        """
+        unverified_tiers = {EvidenceTier.ESTIMATED, EvidenceTier.INFERRED, EvidenceTier.UNVERIFIED}
+        verified_tiers = {EvidenceTier.LIVE_API, EvidenceTier.LIVE_BROWSER, EvidenceTier.LIVE_REPOSITORY}
+        if source_tier in unverified_tiers and target_tier in verified_tiers:
+            raise EvidenceUpgradeViolation(
+                f"ILLEGAL_EVIDENCE_UPGRADE: Attempted to upgrade {source_tier.value} to {target_tier.value}. "
+                "An agent must never upgrade an estimate or inference into verified evidence."
+            )
+        return True
+
+
 @dataclass
 class TaskContract:
     """Formal contract required for every inter-agent task handoff."""
@@ -63,6 +111,23 @@ class TaskContract:
     assigned_budget_seconds: int = 300
     execution_time_seconds: float = 0.0
     error_message: Optional[str] = None
+    permission_level: str = "WORKSPACE_WRITE"
+    verification_method: str = "AUTOMATED_UNIT_TEST"
+    started_at: Optional[str] = None
+    completed_at: Optional[str] = None
+    blocker: Optional[str] = None
+
+    @property
+    def owner_agent(self) -> str:
+        return self.responsible_agent
+
+    @property
+    def risk_level(self) -> RiskClassification:
+        return self.risk_classification
+
+    @property
+    def acceptance_criteria(self) -> List[str]:
+        return self.completion_criteria
 
     def to_dict(self) -> Dict[str, Any]:
         data = asdict(self)

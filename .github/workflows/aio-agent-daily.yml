@@ -51,4 +51,5 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add llms.txt llms-full.txt
           git commit -m "chore(aio): auto-sync llms.txt knowledge bases for AI crawlers"
-          git push
+          # Push to dedicated branch for PR review to comply with branch protection
+          git push origin HEAD:refs/heads/chore/aio-sync-llms --force || echo "Branch update skipped or gated by branch protection."

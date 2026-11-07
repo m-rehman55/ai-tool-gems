@@ -7,7 +7,7 @@ import argparse
 import sys
 import json
 from ping_agent.dispatcher import dispatch_urls
-from ping_agent.verifier import get_sitemap_urls, verify_key_setup
+from ping_agent.verifier import get_sitemap_urls, get_sitemap_urls_with_dates, verify_key_setup
 from ping_agent.history import record_dispatch, load_history
 
 if hasattr(sys.stdout, 'reconfigure'):
@@ -21,6 +21,23 @@ def cmd_ping(args):
         if not urls:
             print("[PING-AGENT] Error: No URLs discovered in sitemap.xml")
             sys.exit(1)
+        if getattr(args, "changed_only", False):
+            history = load_history()
+            url_hist = history.get("url_history", {})
+            sitemap_dates = get_sitemap_urls_with_dates()
+            changed_urls = []
+            for u in urls:
+                if u not in url_hist:
+                    changed_urls.append(u)
+                else:
+                    last_sub = url_hist[u].get("last_submitted", "")
+                    last_mod = sitemap_dates.get(u, "")
+                    if last_mod and last_sub and last_mod > last_sub[:10]:
+                        changed_urls.append(u)
+            urls = changed_urls
+            if not urls:
+                print("[PING-AGENT] All sitemap URLs are already up to date. 0 changed URLs to submit.")
+                sys.exit(0)
     elif args.urls:
         urls = args.urls
     else:
@@ -93,6 +110,7 @@ def main():
     # ping command
     ping_parser = subparsers.add_parser("ping", help="Dispatch URLs to search engines via IndexNow")
     ping_parser.add_argument("--all", action="store_true", help="Ping all indexable URLs in sitemap.xml")
+    ping_parser.add_argument("--changed-only", action="store_true", help="Only ping URLs that are new or changed since last submission")
     ping_parser.add_argument("--dry-run", action="store_true", help="Simulate submission without network call")
     ping_parser.add_argument("urls", nargs="*", help="Specific URL(s) to ping")
     ping_parser.set_defaults(func=cmd_ping)

@@ -353,6 +353,39 @@ class Crawler:
 
         return crawled
 
+    def crawl_live_site(self, max_pages: Optional[int] = None) -> List[CrawledPage]:
+        """Politely crawls key site pages starting from homepage and priority routes."""
+        limit = max_pages or self.max_pages
+        seeds = [
+            f"{self.base_url}/",
+            f"{self.base_url}/category/ai-chatbots/",
+            f"{self.base_url}/category/ai-video/",
+            f"{self.base_url}/category/ai-design/",
+            f"{self.base_url}/tools/chatgpt/",
+            f"{self.base_url}/tools/canva/",
+            f"{self.base_url}/guides/best-ai-tools-pakistan/",
+            f"{self.base_url}/contact.html",
+            f"{self.base_url}/privacy.html",
+        ]
+        visited: Set[str] = set()
+        queue: List[str] = list(seeds)
+        crawled: List[CrawledPage] = []
+
+        while queue and len(crawled) < limit:
+            url = queue.pop(0)
+            if url in visited:
+                continue
+            visited.add(url)
+            page = self.fetch_live_page(url)
+            crawled.append(page)
+            for link in page.internal_links:
+                if link not in visited and link not in queue and (len(queue) + len(crawled)) < (limit * 2):
+                    queue.append(link)
+            if self.delay > 0:
+                time.sleep(min(self.delay, 0.2))
+
+        return crawled
+
     def fetch_live_page(self, url: str) -> CrawledPage:
         """Politely fetches a live page over HTTP with retry and timeout."""
         if not is_allowed_domain(url, urllib.parse.urlparse(self.base_url).netloc):

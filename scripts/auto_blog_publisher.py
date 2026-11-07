@@ -234,7 +234,7 @@ def load_queue_candidate() -> tuple[dict | None, str]:
                         {"slug": "canva", "name": "Canva Pro"}
                     ],
                     "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
-                    "approved_for_publishing": True
+                    "approved_for_publishing": os.environ.get("ALLOW_AUTONOMOUS_FALLBACK_TOPICS", "").lower() == "true"
                 }
 
                 is_valid, validation_errors = validate_queue_candidate(dyn_item, published_slugs)

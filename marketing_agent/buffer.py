@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import random
 import shutil
 import subprocess
 import tempfile
@@ -130,31 +131,31 @@ class BufferClient:
                 },
                 method="POST",
             )
-            try:
-                with urlopen(request, timeout=30) as response:
-                    payload = json.loads(response.read().decode("utf-8"))
-            except HTTPError as exc:
-                detail = exc.read().decode("utf-8", errors="replace")
-                if exc.code == 429:
-                    time.sleep(5)
-                    try:
-                        with urlopen(request, timeout=30) as response:
-                            payload = json.loads(response.read().decode("utf-8"))
-                    except HTTPError as exc2:
-                        if exc2.code == 429:
-                            time.sleep(15)
-                            try:
-                                with urlopen(request, timeout=30) as response:
-                                    payload = json.loads(response.read().decode("utf-8"))
-                            except HTTPError as exc3:
-                                detail3 = exc3.read().decode("utf-8", errors="replace")
-                                raise BufferError(f"Buffer API HTTP {exc3.code}: {detail3[:300]}") from exc3
+            payload = None
+            max_retries = 3
+            backoff_base = 2.0
+
+            for attempt in range(max_retries + 1):
+                try:
+                    with urlopen(request, timeout=30) as response:
+                        payload = json.loads(response.read().decode("utf-8"))
+                        break
+                except HTTPError as exc:
+                    detail = exc.read().decode("utf-8", errors="replace")
+                    if exc.code == 429 and attempt < max_retries:
+                        retry_after = exc.headers.get("Retry-After") if hasattr(exc, "headers") else None
+                        if retry_after and retry_after.strip().isdigit():
+                            sleep_seconds = min(60.0, float(retry_after.strip()))
                         else:
-                            raise BufferError(f"Buffer API HTTP {exc2.code}: {detail[:300]}") from exc2
-                else:
+                            sleep_seconds = min(30.0, (backoff_base ** (attempt + 1)) + random.uniform(0.5, 1.5))
+                        time.sleep(sleep_seconds)
+                        continue
                     raise BufferError(f"Buffer API HTTP {exc.code}: {detail[:300]}") from exc
-            except (URLError, TimeoutError) as exc:
-                raise BufferError(f"Buffer API connection failed: {exc}") from exc
+                except (URLError, TimeoutError) as exc:
+                    if attempt < max_retries:
+                        time.sleep(2.0 * (attempt + 1))
+                        continue
+                    raise BufferError(f"Buffer API connection failed: {exc}") from exc
         if payload.get("errors"):
             message = "; ".join(error.get("message", "Unknown GraphQL error") for error in payload["errors"])
             raise BufferError(message)

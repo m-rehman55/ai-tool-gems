@@ -23,6 +23,15 @@ def get_sitemap_urls() -> List[str]:
     return re.findall(r"<loc>(.*?)</loc>", content)
 
 
+def get_sitemap_urls_with_dates() -> Dict[str, str]:
+    """Extracts mapping of {url: lastmod_date} from sitemap.xml."""
+    if not SITEMAP_PATH.exists():
+        return {}
+    content = SITEMAP_PATH.read_text(encoding="utf-8")
+    entries = re.findall(r"<url>\s*<loc>(.*?)</loc>\s*<lastmod>(.*?)</lastmod>", content, re.DOTALL)
+    return {loc.strip(): lastmod.strip() for loc, lastmod in entries}
+
+
 def verify_key_setup(remote_check: bool = False, timeout: int = 8) -> Dict[str, Any]:
     """
     Verifies that the IndexNow key file exists locally and is live on production.

@@ -31,6 +31,13 @@ class SchemaValidationReport:
     types_found: Set[str] = field(default_factory=set)
     issues: List[SchemaIssue] = field(default_factory=list)
 
+    @property
+    def score(self) -> int:
+        if self.total_schemas == 0:
+            return 100
+        penalty = (self.error_count * 10) + (self.warning_count * 3)
+        return max(0, min(100, 100 - penalty))
+
 class SchemaValidator:
     """Validates Google Search Central Schema.org compliance."""
 
@@ -214,3 +221,34 @@ class SchemaValidator:
                     all_issues.extend(self.validate_faq(item, url))
 
         return all_issues
+
+    def validate_crawl(self, pages: List[Any]) -> SchemaValidationReport:
+        """Audits all schemas across a collection of crawled pages."""
+        all_issues: List[SchemaIssue] = []
+        total_schemas = 0
+        types_found: Set[str] = set()
+
+        for page in pages:
+            raw_schemas = getattr(page, "schemas", [])
+            page_url = getattr(page, "url", "unknown")
+            total_schemas += len(raw_schemas)
+            for raw in raw_schemas:
+                for item in self._extract_items(raw):
+                    st = item.get("@type")
+                    if st:
+                        types_found.add(str(st))
+            page_issues = self.validate_page_schemas(raw_schemas, page_url)
+            all_issues.extend(page_issues)
+
+        err_count = sum(1 for i in all_issues if i.severity == "ERROR")
+        warn_count = sum(1 for i in all_issues if i.severity == "WARNING")
+        valid_count = max(0, total_schemas - err_count)
+
+        return SchemaValidationReport(
+            total_schemas=total_schemas,
+            valid_count=valid_count,
+            error_count=err_count,
+            warning_count=warn_count,
+            types_found=types_found,
+            issues=all_issues,
+        )
