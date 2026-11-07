@@ -98,6 +98,56 @@ class TestGA4Agent(unittest.TestCase):
         self.assertIn("proof_type: 'payment_verification_proof'", content)
         self.assertNotIn("proof_src: proofElem.src", content)
 
+    def test_attribution_js_event_taxonomy_complete(self):
+        """Phase G: Verifies attribution.js implements clean ecommerce event taxonomy without false fires."""
+        attr_file = self.project_dir / "attribution.js"
+        content = attr_file.read_text(encoding="utf-8")
+
+        # 1. Page view events
+        self.assertIn("view_item", content)
+        self.assertIn("view_tool", content)
+        self.assertIn("view_category", content)
+        self.assertIn("view_comparison", content)
+        self.assertIn("view_guide", content)
+        self.assertIn("view_item_list", content)
+
+        # 2. Search & filter events
+        self.assertIn("trackEvent('search'", content)
+        self.assertIn("trackEvent('filter_tools'", content)
+
+        # 3. Micro-conversion & guidance events
+        self.assertIn("click_official_website", content)
+        self.assertIn("click_payment_guidance", content)
+        self.assertIn("click_whatsapp_order_inquiry", content)
+        self.assertIn("click_whatsapp_support", content)
+        self.assertIn("whatsapp_order_click", content)
+        self.assertIn("whatsapp_support_click", content)
+        self.assertIn("begin_checkout", content)
+        self.assertIn("generate_lead", content)
+
+        # 4. Strict purchase boundary: purchase must NEVER be fired client-side
+        self.assertNotIn("trackEvent('purchase'", content)
+
+    def test_attribution_js_posthog_privacy_configuration(self):
+        """Phase G: Verifies PostHog SDK integration enforces strict EU host and conservative masking."""
+        attr_file = self.project_dir / "attribution.js"
+        content = attr_file.read_text(encoding="utf-8")
+
+        # 1. Frankfurt EU Host
+        self.assertIn("https://eu.i.posthog.com", content)
+
+        # 2. Strict privacy settings
+        self.assertIn("autocapture: false", content)
+        self.assertIn("mask_all_element_attributes: true", content)
+        self.assertIn("mask_all_text: true", content)
+        self.assertIn("password: true", content)
+        self.assertIn("tel: true", content)
+        self.assertIn("email: true", content)
+
+        # 3. Gated initialization via updateConsent
+        self.assertIn("analytics_storage === 'granted'", content)
+        self.assertIn("initPostHog", content)
+
     # ── 2. Offline Conversion & Deduplication Tests ───────────────────────────
 
     def test_phone_number_pii_masking(self):
