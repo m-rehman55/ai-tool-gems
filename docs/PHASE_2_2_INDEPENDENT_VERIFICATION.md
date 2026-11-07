@@ -64,7 +64,7 @@ Every factual assertion in this report is backed by direct API queries to GitHub
   - Commit `d9cdef409ac00f278986179afaaa34cd08c4ddd4` (head of closed PR #13) and `76d45a7` (PR #14) introduced `verified_orders.json`.
   - These commits are **not reachable** from any active branch or release tag (`git branch -a --contains d9cdef4` returns 0).
   - However, because GitHub stores closed pull request heads in its backend ref cache (`refs/pull/*/head`), direct commit URLs remain viewable on `github.com` until GitHub Support executes server-side garbage collection.
-- **Escalation Package:** Prepared a complete, sanitized escalation package in [`docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md) for the owner to submit to GitHub Support.
+- **Escalation Package:** Prepared a complete, sanitized escalation package in [`docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md`](docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md) for the owner to submit to GitHub Support.
 
 ---
 
@@ -132,7 +132,7 @@ Every factual assertion in this report is backed by direct API queries to GitHub
    - `category/ai-chatbots/index.html`
    - `category/ai-video/index.html`
    - `category/ai-design/index.html`
-2. **Factual Claim Audit:** All 18 factual claims verified against primary sources in [`docs/CATEGORY_HUB_EVIDENCE_AUDIT.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/CATEGORY_HUB_EVIDENCE_AUDIT.md).
+2. **Factual Claim Audit:** All 18 factual claims verified against primary sources in [`docs/CATEGORY_HUB_EVIDENCE_AUDIT.md`](docs/CATEGORY_HUB_EVIDENCE_AUDIT.md).
 3. **Pricing Congruence:** 16 / 16 tools match underlying product page prices in Pakistani Rupees (PKR).
 4. **Search Disclosure:** All three hubs include prominent editorial disclaimers clarifying that Google FAQ rich snippets are awarded algorithmically by Google Search.
 
@@ -162,5 +162,5 @@ Every factual assertion in this report is backed by direct API queries to GitHub
 
 ## 9. Next Steps for Repository Owner
 
-1. Review [`docs/PR_CI_VERIFICATION_MATRIX.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/PR_CI_VERIFICATION_MATRIX.md) and [`docs/UNIQUE_TEST_ACCOUNTING.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/UNIQUE_TEST_ACCOUNTING.md).
-2. Follow the sequential execution steps in [`docs/FINAL_OWNER_DECISIONS.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/FINAL_OWNER_DECISIONS.md) to squash-and-merge PR #16, configure branch protection on `main`, and submit the support ticket.
+1. Review [`docs/PR_CI_VERIFICATION_MATRIX.md`](docs/PR_CI_VERIFICATION_MATRIX.md) and [`docs/UNIQUE_TEST_ACCOUNTING.md`](docs/UNIQUE_TEST_ACCOUNTING.md).
+2. Follow the sequential execution steps in [`docs/FINAL_OWNER_DECISIONS.md`](docs/FINAL_OWNER_DECISIONS.md) to squash-and-merge PR #16, configure branch protection on `main`, and submit the support ticket.

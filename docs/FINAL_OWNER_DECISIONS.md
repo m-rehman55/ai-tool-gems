@@ -39,7 +39,7 @@ Follow these sequential steps to safely release the remediated platform:
 
 ### Step 1: Review Pull Request A (PR #16)
 - **URL:** [https://github.com/m-rehman55/ai-tool-gems/pull/16](https://github.com/m-rehman55/ai-tool-gems/pull/16)
-- Inspect the PR verification matrix in [`docs/PR_CI_VERIFICATION_MATRIX.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/PR_CI_VERIFICATION_MATRIX.md).
+- Inspect the PR verification matrix in [`docs/PR_CI_VERIFICATION_MATRIX.md`](docs/PR_CI_VERIFICATION_MATRIX.md).
 - Confirm all 6 CI checks are green.
 - Click the merge dropdown and select **"Squash and merge"**.
 
@@ -58,12 +58,12 @@ Follow these sequential steps to safely release the remediated platform:
 
 ### Step 3: Submit Support Ticket for Historical Cache Purge
 - Navigate to: `https://support.github.com/contact`
-- Copy the sanitized ticket text from Section 5 of [`docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md).
+- Copy the sanitized ticket text from Section 5 of [`docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md`](docs/HISTORICAL_PUBLIC_DATA_EXPOSURE.md).
 - Submit ticket to permanently clear historical cached PR refs.
 
 ### Step 4: Review Pull Request B (PR #17)
 - **URL:** [https://github.com/m-rehman55/ai-tool-gems/pull/17](https://github.com/m-rehman55/ai-tool-gems/pull/17)
-- Review the claim-by-claim verification table in [`docs/CATEGORY_HUB_EVIDENCE_AUDIT.md`](file:///d:/Desktop/AI%20Tools%20Aura/docs/CATEGORY_HUB_EVIDENCE_AUDIT.md).
+- Review the claim-by-claim verification table in [`docs/CATEGORY_HUB_EVIDENCE_AUDIT.md`](docs/CATEGORY_HUB_EVIDENCE_AUDIT.md).
 - Verify the three category hubs remain `<meta name="robots" content="noindex, follow">`.
 - Click **"Squash and merge"** to integrate the staged category content into `main`.
 

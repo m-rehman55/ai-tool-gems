@@ -12,9 +12,9 @@
 ## 1. Executive Summary & Architecture Gate
 
 The GA4 analytics and conversion architecture for AIToolGems was audited end-to-end across:
-1. Client-side browser consent and event taxonomy in [`attribution.js`](file:///d:/Desktop/AI%20Tools%20Aura/attribution.js).
-2. Data models and runtime client ID provenance in [`ga4_agent/models.py`](file:///d:/Desktop/AI%20Tools%20Aura/ga4_agent/models.py).
-3. Server-side Measurement Protocol ingestion and symmetrical refund lifecycle in [`ga4_agent/conversion_importer.py`](file:///d:/Desktop/AI%20Tools%20Aura/ga4_agent/conversion_importer.py).
+1. Client-side browser consent and event taxonomy in [`attribution.js`](attribution.js).
+2. Data models and runtime client ID provenance in [`ga4_agent/models.py`](ga4_agent/models.py).
+3. Server-side Measurement Protocol ingestion and symmetrical refund lifecycle in [`ga4_agent/conversion_importer.py`](ga4_agent/conversion_importer.py).
 
 ### Gate Verdict:
 - **Code-Level Privacy & Provenance:** **PASS** (100% verified across 30 automated tests).

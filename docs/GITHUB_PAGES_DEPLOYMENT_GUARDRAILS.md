@@ -1,6 +1,6 @@
 # GitHub Pages Deployment Guardrails & CI/CD Safety Specification
 
-**Workflow:** [`.github/workflows/deploy-pages.yml`](file:///d:/Desktop/AI%20Tools%20Aura/.github/workflows/deploy-pages.yml)  
+**Workflow:** [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml)  
 **Deployment Target:** GitHub Pages (`aitoolgems.tech`)  
 **Environment:** `github-pages`  
 **Standard:** Phase 2.1 Least-Privilege & Production Protection Guardrails  

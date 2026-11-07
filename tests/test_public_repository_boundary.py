@@ -46,6 +46,7 @@ class TestPublicRepositoryBoundary(unittest.TestCase):
             "config",
             "data/wholesale_inventory.json",
             "data/wholesale_cost_reference.json",
+            "reports",
         ]
 
         violations = []

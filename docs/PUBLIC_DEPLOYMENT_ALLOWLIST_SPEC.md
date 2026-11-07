@@ -1,7 +1,7 @@
 # Fail-Closed Public Deployment Allowlist Specification
 
-**Script:** [`scripts/build_public_site.py`](file:///d:/Desktop/AI%20Tools%20Aura/scripts/build_public_site.py)  
-**Test Suite:** [`tests/test_public_deployment_allowlist.py`](file:///d:/Desktop/AI%20Tools%20Aura/tests/test_public_deployment_allowlist.py)  
+**Script:** [`scripts/build_public_site.py`](scripts/build_public_site.py)  
+**Test Suite:** [`tests/test_public_deployment_allowlist.py`](tests/test_public_deployment_allowlist.py)  
 **Deployment Target:** GitHub Pages (`aitoolgems.tech`)  
 **Standard:** Phase 2.1 Fail-Closed Public Isolation Policy  
 **Effective Date:** 2026-11-07  
@@ -15,7 +15,7 @@ Traditional static deployments copy all files recursively, which risks leaking a
 `scripts/build_public_site.py` addresses this threat through a **fail-closed, affirmative allowlist** architecture:
 
 ```
-Source Directory (D:\Desktop\AI Tool Gems)
+Source Directory (Repository Root)
   ├── index.html, about.html, ...  ──► [Affirmative Whitelist Filter] ──► Staged in public-site/
   ├── tools/*/index.html          ──► [Extension & Path Verifier]     ──► Staged in public-site/tools/
   ├── assets/*.webp, *.css, ...   ──► [Extension & Path Verifier]     ──► Staged in public-site/assets/
@@ -66,7 +66,7 @@ Every build produces a cryptographically verifiable JSON manifest in the deploym
 
 ## 3. Adversarial Test Evidence
 
-The automated test suite in [`tests/test_public_deployment_allowlist.py`](file:///d:/Desktop/AI%20Tools%20Aura/tests/test_public_deployment_allowlist.py) tests the following adversarial injection attacks:
+The automated test suite in [`tests/test_public_deployment_allowlist.py`](tests/test_public_deployment_allowlist.py) tests the following adversarial injection attacks:
 
 | Injected Adversarial File | Attack Vector | Expected Result | Actual Test Result |
 | :--- | :--- | :--- | :--- |

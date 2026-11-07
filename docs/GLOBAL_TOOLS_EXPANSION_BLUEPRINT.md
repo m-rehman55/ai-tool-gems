@@ -5,7 +5,7 @@
 * **Repository:** `https://github.com/m-rehman55/ai-tool-gems/` (Branch: `main`)
 * **Current Catalog:** 32 verified tools live (79 HTML pages, 100% schema completeness, 0 link graph errors).
 * **Strategic Pivot:** Evolving from a Pakistan-only domestic marketplace (`PKR`) into a **Global / Worldwide Multi-Currency Platform (`USD $` + `PKR Rs`)** accepting Crypto (USDT TRC20/BEP20), Cards/Wise, alongside domestic rails (EasyPaisa, JazzCash, SadaPay).
-* **Source Raw Data:** `D:\Desktop\reseller_products_2026-10-22.csv` (2,902 raw supplier listings from 10 Telegram reseller bots).
+* **Source Raw Data:** `reseller_products_2026-10-22.csv` (2,902 raw supplier listings from 10 Telegram reseller bots).
   * Filtered: 1,133 duplicate bot rows of existing 32 tools removed.
   * Filtered: 170 farmed emails/throwaway spam accounts blacklisted.
   * Result: **~48 genuine new global tools discovered**.
