@@ -37,6 +37,19 @@ class PriorityLevel(str, Enum):
     P4 = "P4"  # Optional or experimental work
 
 
+class TaskType(str, Enum):
+    RESEARCH = "RESEARCH"
+    CODE = "CODE"
+    RELEASE = "RELEASE"
+    CATALOGUE = "CATALOGUE"
+    GENERAL = "GENERAL"
+
+
+class DefinitionOfDoneViolation(Exception):
+    """Raised when a task fails Section 19 Definition of Done validation."""
+    pass
+
+
 class RiskClassification(str, Enum):
     READ_ONLY = "READ_ONLY"
     LOW_REVERSIBLE = "LOW_REVERSIBLE"
@@ -211,6 +224,124 @@ class TaskContract:
         self.status = TaskStatus.NOT_APPLICABLE
         self.error_message = f"Not applicable: {reason}"
         self.updated_at = datetime.now(timezone.utc).isoformat()
+
+    def validate_definition_of_done(self, task_type: TaskType = TaskType.GENERAL) -> bool:
+        """Section 19: Validates task against all 13 DoD criteria and task-specific invariants."""
+        return DefinitionOfDoneValidator.validate_task(self, task_type)
+
+
+class DefinitionOfDoneValidator:
+    """
+    Enforces Section 19 Definition of Done.
+    A task is complete only when all applicable universal and task-type conditions are met.
+    """
+
+    @staticmethod
+    def validate_task(task: TaskContract, task_type: TaskType = TaskType.GENERAL) -> bool:
+        violations: List[str] = []
+        ev = task.verification_evidence or {}
+
+        # ── 1. Universal Completion Criteria (13 Conditions) ──────────────────────
+        # 1. Objective is clear
+        if not task.objective or len(task.objective.strip()) < 10:
+            violations.append("1. Objective is unclear or fewer than 10 characters.")
+
+        # 2. Scope is documented
+        if not task.scope or len(task.scope.strip()) < 3:
+            violations.append("2. Scope is not documented.")
+
+        # 3. Implementation or research is complete
+        if task.status not in (TaskStatus.IMPLEMENTED, TaskStatus.TESTED, TaskStatus.VERIFIED, TaskStatus.DEPLOYED):
+            violations.append(f"3. Implementation/research incomplete (current status: {task.status.value}).")
+
+        # 4. Evidence is attached
+        if not ev and not task.input_evidence:
+            violations.append("4. No verification or input evidence is attached.")
+
+        # 5. Relevant tests have run
+        if not (ev.get("tests") or ev.get("test_results") or ev.get("test_command") or "tests_run" in ev or ev.get("verification")):
+            violations.append("5. Relevant tests have not run or are not recorded.")
+
+        # 6. Test commands and actual exit codes are recorded
+        has_cmd = bool(ev.get("test_command") or ev.get("tests", {}).get("command") or ev.get("test_suite"))
+        has_code = "exit_code" in ev or ("tests" in ev and isinstance(ev["tests"], dict) and "exit_code" in ev["tests"]) or "exit_code" in ev.get("verification", {})
+        if not (has_cmd and has_code):
+            violations.append("6. Test commands and actual exit codes are not recorded in evidence.")
+
+        # 7. Regressions have been considered
+        if not (ev.get("regressions_considered") or ev.get("regression_check") or "regressions" in ev):
+            violations.append("7. Regressions have not been considered/documented in evidence.")
+
+        # 8. Security and privacy implications have been checked
+        if not (ev.get("security_checked") or ev.get("privacy_checked") or ev.get("security_and_privacy_checked")):
+            violations.append("8. Security and privacy implications have not been checked.")
+
+        # 9. Dependencies are resolved or documented
+        if task.blocker:
+            violations.append(f"9. Task blocker remains unresolved: {task.blocker}")
+
+        # 10. Approval requirements are respected
+        if task.approval_requirement == ApprovalRequirement.HUMAN_EXPLICIT_REQUIRED:
+            if not ev.get("human_approval"):
+                violations.append("10. Human explicit approval is required but missing from evidence.")
+
+        # 11. Output is saved in the correct location
+        if not task.expected_output or len(task.expected_output.strip()) < 5:
+            violations.append("11. Output destination path is not documented.")
+
+        # 12. Status is accurate
+        if task.status == TaskStatus.NOT_STARTED or task.status == TaskStatus.FAILED:
+            violations.append(f"12. Task status '{task.status.value}' does not reflect completion.")
+
+        # 13. Remaining risks are disclosed
+        if "remaining_risks" not in ev and "disclosed_risks" not in ev:
+            violations.append("13. Remaining risks are not explicitly disclosed.")
+
+        # ── 2. Task-Type Specific Invariants ─────────────────────────────────────
+        if task_type == TaskType.RESEARCH:
+            # Official source URLs and verification timestamps
+            if not (ev.get("source_urls") or ev.get("official_source_urls") or ev.get("provenance_uri")):
+                violations.append("RESEARCH: Missing official source URLs in evidence.")
+            if not (ev.get("verification_timestamp") or ev.get("collected_at") or ev.get("timestamps")):
+                violations.append("RESEARCH: Missing verification timestamps in evidence.")
+
+        elif task_type == TaskType.CODE:
+            # Changed files, test results, diff summary, rollback instructions
+            if not ev.get("changed_files"):
+                violations.append("CODE: Missing list of changed files in evidence.")
+            if not (ev.get("test_results") or ev.get("tests")):
+                violations.append("CODE: Missing test results in evidence.")
+            if not ev.get("diff_summary"):
+                violations.append("CODE: Missing diff summary in evidence.")
+            if not ev.get("rollback_instructions"):
+                violations.append("CODE: Missing rollback instructions in evidence.")
+
+        elif task_type == TaskType.RELEASE:
+            # CI, configuration, deployment, post-deployment evidence
+            if not (ev.get("ci_status") or ev.get("ci_evidence")):
+                violations.append("RELEASE: Missing CI evidence in evidence.")
+            if not (ev.get("configuration") or ev.get("configuration_evidence")):
+                violations.append("RELEASE: Missing configuration evidence in evidence.")
+            if not (ev.get("deployment") or ev.get("deployment_evidence")):
+                violations.append("RELEASE: Missing deployment evidence in evidence.")
+            if not (ev.get("post_deployment_evidence") or ev.get("post_deployment_check")):
+                violations.append("RELEASE: Missing post-deployment evidence in evidence.")
+
+        elif task_type == TaskType.CATALOGUE:
+            # Factual evidence, commercial classification, publication state
+            if not ev.get("factual_evidence"):
+                violations.append("CATALOGUE: Missing factual evidence in evidence.")
+            if not ev.get("commercial_classification"):
+                violations.append("CATALOGUE: Missing commercial classification in evidence.")
+            if not ev.get("publication_state"):
+                violations.append("CATALOGUE: Missing publication state in evidence.")
+
+        if violations:
+            raise DefinitionOfDoneViolation(
+                f"TASK_NOT_DONE: Task '{task.task_id}' failed Definition of Done on {len(violations)} condition(s):\n" +
+                "\n".join(f"  • {v}" for v in violations)
+            )
+        return True
 
 
 class TaskRegistry:
