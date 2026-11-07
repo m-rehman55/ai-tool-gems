@@ -1,6 +1,7 @@
 """
 Unit test suite validating catalogue accounting, structured-data metadata alignment,
 and commercial boundary invariants across legacy assisted and directory-only profiles.
+Phase 2.15C: Deployment recovery invariant verification tracking.
 """
 
 import unittest
