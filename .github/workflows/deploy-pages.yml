@@ -4,12 +4,10 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -17,8 +15,10 @@ concurrency:
 
 jobs:
   build:
-    name: Build Sanitized Public Artifact
+    name: Build & Validate Public Artifact
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -38,28 +38,36 @@ jobs:
         run: |
           echo "Running post-build security assertions on public-site/..."
           
-          # Assert CNAME custom domain
+          # 1. Assert CNAME custom domain
           if [ ! -f "public-site/CNAME" ]; then
-            echo "ERROR: CNAME file missing from public-site!"
+            echo "CRITICAL: CNAME file missing from public-site!"
             exit 1
           fi
           CNAME_VAL=$(cat public-site/CNAME | tr -d '[:space:]')
           if [ "$CNAME_VAL" != "aitoolgems.tech" ]; then
-            echo "ERROR: CNAME contains unexpected domain: $CNAME_VAL"
+            echo "CRITICAL: CNAME contains unexpected domain: $CNAME_VAL (expected aitoolgems.tech)"
             exit 1
           fi
           
-          # Assert no private directories or operational files leaked
-          for forbidden in data reports admin.html admin.js admin.css; do
+          # 2. Assert manifest generation
+          if [ ! -f "public-site/manifest-public-build.json" ]; then
+            echo "CRITICAL: manifest-public-build.json missing!"
+            exit 1
+          fi
+
+          # 3. Assert zero private directories or operational files leaked
+          for forbidden in data reports config tests scripts scratch admin.html admin.js admin.css; do
             if [ -e "public-site/$forbidden" ]; then
               echo "CRITICAL SECURITY LEAK: $forbidden found in public-site artifact!"
               exit 1
             fi
           done
           
-          echo "All security and CNAME checks passed successfully."
+          echo "All security, CNAME, and manifest assertions passed successfully."
 
       - name: Upload Pages Artifact
+        # Only upload pages artifact on main branch push/dispatch to prevent unnecessary artifact creation on PRs
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: public-site
@@ -67,7 +75,13 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    # HARD GATE: Deploy job ONLY executes when triggered on main branch
+    # Feature branches and workflow_dispatch from non-main branches NEVER deploy to production
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

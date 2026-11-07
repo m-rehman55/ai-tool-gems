@@ -70,7 +70,7 @@
 
   // Google Consent Mode v2: privacy-first defaults before tag evaluation
   window.gtag('consent', 'default', {
-    'analytics_storage': 'granted',
+    'analytics_storage': 'denied',
     'ad_storage': 'denied',
     'ad_user_data': 'denied',
     'ad_personalization': 'denied',
@@ -273,7 +273,7 @@
     var proofElem = e.target.closest('img.proof-image, [data-proof], .payment-proof, .proof-screenshot');
     if (proofElem) {
       trackEvent('proof_image_open', {
-        proof_src: proofElem.src || proofElem.dataset.proof || 'proof'
+        proof_type: 'payment_verification_proof'
       });
       return;
     }

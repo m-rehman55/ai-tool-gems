@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from ga4_agent.models import OfflineRefund, OfflineVerifiedOrder
+from ga4_agent.models import OfflineRefund, OfflineVerifiedOrder, validate_client_id
 
 logger = logging.getLogger("ga4_agent.conversion_importer")
 
@@ -56,6 +56,7 @@ class ConversionImporter:
                     verified_at=item.get("verified_at") or item.get("order_timestamp", datetime.now(timezone.utc).isoformat()),
                     customer_phone_hash=item.get("customer_phone_hash", ""),
                     client_id=item.get("client_id") or item.get("ga4_client_id"),
+                    client_id_provenance=item.get("client_id_provenance") or ("browser_cookie" if (item.get("client_id") or item.get("ga4_client_id")) else "none"),
                     is_imported_to_ga4=bool(item.get("is_imported_to_ga4", False)),
                     imported_at=item.get("imported_at"),
                 )
@@ -94,15 +95,19 @@ class ConversionImporter:
         if any(o.transaction_id == tid for o in orders):
             return False, f"Duplicate transaction ID '{tid}' rejected. Deduplication enforced."
 
-        new_order = OfflineVerifiedOrder.create(
-            transaction_id=tid,
-            tool_slug=tool_slug,
-            tool_name=tool_name,
-            pkr_amount=pkr_amount,
-            payment_rail=payment_rail,
-            raw_phone=raw_phone,
-            client_id=client_id,
-        )
+        try:
+            new_order = OfflineVerifiedOrder.create(
+                transaction_id=tid,
+                tool_slug=tool_slug,
+                tool_name=tool_name,
+                pkr_amount=pkr_amount,
+                payment_rail=payment_rail,
+                raw_phone=raw_phone,
+                client_id=client_id,
+            )
+        except ValueError as e:
+            return False, str(e)
+
         orders.append(new_order)
 
         self.orders_file.write_text(
@@ -114,9 +119,10 @@ class ConversionImporter:
     def build_measurement_protocol_payload(self, order: OfflineVerifiedOrder) -> Optional[Dict[str, Any]]:
         """Formats the official GA4 Measurement Protocol purchase payload."""
         c_id = order.client_id
-        if not c_id:
+        is_valid, validated_cid, prov = validate_client_id(c_id, order.customer_phone_hash)
+        if not is_valid or not validated_cid:
             logger.warning(
-                f"Order {order.transaction_id} lacks a legitimately collected GA4 client_id. "
+                f"Order {order.transaction_id} lacks a legitimately collected GA4 client_id ({prov}). "
                 "Deriving client_id from customer phone hash or PII is strictly prohibited."
             )
             return None
@@ -308,6 +314,20 @@ class ConversionImporter:
         if any(r.refund_id == rid for r in refunds):
             return False, f"Duplicate refund ID '{rid}' rejected."
 
+        orders = self.load_orders()
+        parent_order = next((o for o in orders if o.transaction_id == tid), None)
+        if not parent_order:
+            return False, f"Refund rejected: Parent transaction '{tid}' not found in verified purchases."
+
+        prior_refunds = [r for r in refunds if r.transaction_id == tid]
+        total_refunded = sum(r.pkr_amount for r in prior_refunds)
+        if total_refunded + pkr_amount > parent_order.pkr_amount:
+            remaining = parent_order.pkr_amount - total_refunded
+            return False, (
+                f"Refund amount ({pkr_amount} PKR) exceeds remaining refundable amount "
+                f"({remaining} PKR) for transaction '{tid}'."
+            )
+
         new_refund = OfflineRefund.create(
             transaction_id=tid,
             refund_id=rid,
@@ -327,15 +347,16 @@ class ConversionImporter:
     def build_refund_payload(self, refund: OfflineRefund, client_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """Formats the official GA4 Measurement Protocol refund payload."""
         c_id = client_id
-        if not c_id:
+        is_valid, validated_cid, prov = validate_client_id(c_id)
+        if not is_valid or not validated_cid:
             logger.warning(
-                f"Refund {refund.refund_id} lacks a legitimately collected GA4 client_id. "
+                f"Refund {refund.refund_id} lacks a legitimately collected GA4 client_id ({prov}). "
                 "Deriving client_id or fabricating identifier is strictly prohibited."
             )
             return None
 
         return {
-            "client_id": c_id,
+            "client_id": validated_cid,
             "non_personalized_ads": False,
             "events": [
                 {

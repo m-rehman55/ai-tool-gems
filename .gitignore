@@ -41,6 +41,10 @@ client_secrets*.json
 public-site/
 dist/
 
+# Diagnostic & Operational Reports
+reports/
+
+
 # Private Operational & Supplier Data Quarantine
 data/orders/
 data/wholesale_inventory.json

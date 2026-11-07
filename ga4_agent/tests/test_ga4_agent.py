@@ -32,7 +32,12 @@ from ga4_agent.conversion_importer import (
     MEASUREMENT_ID,
 )
 from ga4_agent.hermes_integration import execute_ga4_task
-from ga4_agent.models import GA4EcommerceFunnel, OfflineRefund, OfflineVerifiedOrder
+from ga4_agent.models import (
+    GA4EcommerceFunnel,
+    OfflineRefund,
+    OfflineVerifiedOrder,
+    validate_client_id,
+)
 
 
 class TestGA4Agent(unittest.TestCase):
@@ -73,6 +78,25 @@ class TestGA4Agent(unittest.TestCase):
         self.assertIn("begin_checkout", content)
         # Purchase must NEVER be fired client-side
         self.assertNotIn("trackEvent('purchase'", content)
+
+    def test_attribution_js_consent_mode_v2_defaults_to_denied(self):
+        """Verifies Consent Mode v2 default denies analytics_storage and ad storages before opt-in."""
+        attr_file = self.project_dir / "attribution.js"
+        content = attr_file.read_text(encoding="utf-8")
+
+        self.assertIn("'analytics_storage': 'denied'", content)
+        self.assertIn("'ad_storage': 'denied'", content)
+        self.assertIn("'ad_user_data': 'denied'", content)
+        self.assertIn("'ad_personalization': 'denied'", content)
+        self.assertNotIn("'analytics_storage': 'granted'", content)
+
+    def test_attribution_js_proof_image_telemetry_sanitized(self):
+        """Verifies proof_image_open event does not leak raw image path/URL or query parameters."""
+        attr_file = self.project_dir / "attribution.js"
+        content = attr_file.read_text(encoding="utf-8")
+
+        self.assertIn("proof_type: 'payment_verification_proof'", content)
+        self.assertNotIn("proof_src: proofElem.src", content)
 
     # ── 2. Offline Conversion & Deduplication Tests ───────────────────────────
 
@@ -130,6 +154,47 @@ class TestGA4Agent(unittest.TestCase):
         self.assertFalse(ok)
         self.assertIn("Invalid domestic payment rail", msg)
 
+    def test_client_id_validation_rejects_email_pii(self):
+        """Verifies validate_client_id rejects strings containing email addresses."""
+        is_valid, cid, prov = validate_client_id("user@example.com")
+        self.assertFalse(is_valid)
+        self.assertIn("email", prov)
+
+    def test_client_id_validation_rejects_phone_hash_derivation(self):
+        """Verifies validate_client_id rejects identifiers derived from phone hash."""
+        phone_hash = "abcdef1234567890"
+        is_valid, cid, prov = validate_client_id("abcdef1234567890", customer_phone_hash=phone_hash)
+        self.assertFalse(is_valid)
+        self.assertIn("phone_hash", prov)
+
+    def test_client_id_validation_rejects_pii_markers(self):
+        """Verifies validate_client_id rejects explicit PII markers (user, phone, customer, etc.)."""
+        for marker in ("user_123456789", "phone_92300123", "customer_abc", "hash_value_99"):
+            is_valid, cid, prov = validate_client_id(marker)
+            self.assertFalse(is_valid, f"Expected {marker} to be rejected")
+
+    def test_client_id_validation_accepts_valid_cookie_format(self):
+        """Verifies valid pseudo-random GA4 cookie formats are accepted."""
+        is_valid, cid, prov = validate_client_id("1234567890.9876543210")
+        self.assertTrue(is_valid)
+        self.assertEqual(cid, "1234567890.9876543210")
+        self.assertEqual(prov, "browser_cookie")
+
+    def test_record_verified_payment_rejects_invalid_client_id(self):
+        """Verifies record_verified_payment returns False with explanation on invalid client_id."""
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        ok, msg = importer.record_verified_payment(
+            transaction_id="ATG-PII-001",
+            tool_slug="chatgpt",
+            tool_name="ChatGPT Plus",
+            pkr_amount=3500.0,
+            payment_rail="EasyPaisa",
+            raw_phone="+923001234567",
+            client_id="customer_derived_id",
+        )
+        self.assertFalse(ok)
+        self.assertIn("strictly prohibited", msg)
+
     # ── 3. Measurement Protocol Payload & PKR Currency Tests ──────────────────
 
     def test_measurement_protocol_payload_structure(self):
@@ -175,6 +240,15 @@ class TestGA4Agent(unittest.TestCase):
     def test_refund_recording_and_deduplication(self):
         """Verifies recording and deduplication of verified refund records."""
         importer = ConversionImporter(data_dir=self.orders_dir)
+        # Parent order must exist before refund can be recorded
+        importer.record_verified_payment(
+            transaction_id="ATG-MP-001",
+            tool_slug="cursor",
+            tool_name="Cursor AI Pro",
+            pkr_amount=5500.0,
+            payment_rail="SadaPay",
+            raw_phone="+923001234567",
+        )
         ok1, msg1 = importer.record_verified_refund(
             transaction_id="ATG-MP-001",
             refund_id="REF-20261106-001",
@@ -197,6 +271,72 @@ class TestGA4Agent(unittest.TestCase):
         )
         self.assertFalse(ok2)
         self.assertIn("Duplicate", msg2)
+
+    def test_refund_without_parent_order_is_rejected(self):
+        """Verifies refund cannot be created for a non-existent parent purchase."""
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        ok, msg = importer.record_verified_refund(
+            transaction_id="NON-EXISTENT-TX",
+            refund_id="REF-ORPHAN-001",
+            tool_slug="chatgpt",
+            tool_name="ChatGPT Plus",
+            pkr_amount=1000.0,
+        )
+        self.assertFalse(ok)
+        self.assertIn("Parent transaction", msg)
+
+    def test_refund_exceeding_parent_order_amount_is_rejected(self):
+        """Verifies refund amount cannot exceed original purchase amount."""
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="ATG-PARENT-001",
+            tool_slug="chatgpt",
+            tool_name="ChatGPT Plus",
+            pkr_amount=3000.0,
+            payment_rail="EasyPaisa",
+            raw_phone="+923001234567",
+        )
+        ok, msg = importer.record_verified_refund(
+            transaction_id="ATG-PARENT-001",
+            refund_id="REF-OVER-001",
+            tool_slug="chatgpt",
+            tool_name="ChatGPT Plus",
+            pkr_amount=3500.0,  # Exceeds 3000.0
+        )
+        self.assertFalse(ok)
+        self.assertIn("exceeds remaining refundable amount", msg)
+
+    def test_cumulative_refunds_exceeding_parent_order_amount_are_rejected(self):
+        """Verifies cumulative refunds cannot exceed original purchase amount."""
+        importer = ConversionImporter(data_dir=self.orders_dir)
+        importer.record_verified_payment(
+            transaction_id="ATG-PARENT-002",
+            tool_slug="claude",
+            tool_name="Claude Pro",
+            pkr_amount=5000.0,
+            payment_rail="JazzCash",
+            raw_phone="+923001234567",
+        )
+        # First refund: 3000
+        ok1, msg1 = importer.record_verified_refund(
+            transaction_id="ATG-PARENT-002",
+            refund_id="REF-PART1-001",
+            tool_slug="claude",
+            tool_name="Claude Pro",
+            pkr_amount=3000.0,
+        )
+        self.assertTrue(ok1)
+
+        # Second refund: 2500 (3000 + 2500 = 5500 > 5000) -> Rejected
+        ok2, msg2 = importer.record_verified_refund(
+            transaction_id="ATG-PARENT-002",
+            refund_id="REF-PART2-001",
+            tool_slug="claude",
+            tool_name="Claude Pro",
+            pkr_amount=2500.0,
+        )
+        self.assertFalse(ok2)
+        self.assertIn("exceeds remaining refundable amount", msg2)
 
     def test_refund_measurement_protocol_payload(self):
         """Verifies GA4 Measurement Protocol refund event structure and PKR currency."""
