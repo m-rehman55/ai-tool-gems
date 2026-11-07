@@ -12,6 +12,7 @@ from hermes_core.contracts import (
     RiskClassification,
     TaskContract,
     TaskStatus,
+    PriorityLevel,
 )
 
 
@@ -112,6 +113,73 @@ class TestHermesContracts(unittest.TestCase):
             is_verified=True,  # Attempting to verify an estimate
         )
         self.assertFalse(ev.is_verified, "Estimated evidence must never be flagged is_verified=True")
+
+    def test_task_status_eleven_statuses_supported(self):
+        """Section 18: Verifies all 11 standardized task statuses are supported."""
+        expected_statuses = {
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "BLOCKED_PENDING_CREDENTIALS",
+            "BLOCKED_PENDING_APPROVAL",
+            "BLOCKED_EXTERNAL_DEPENDENCY",
+            "IMPLEMENTED",
+            "TESTED",
+            "VERIFIED",
+            "DEPLOYED",
+            "FAILED",
+            "NOT_APPLICABLE",
+        }
+        actual_statuses = {status.value for status in TaskStatus}
+        self.assertEqual(expected_statuses, actual_statuses)
+
+    def test_priority_levels_five_tiers_supported(self):
+        """Section 18: Verifies all 5 standardized priority levels are supported."""
+        expected_priorities = {"P0", "P1", "P2", "P3", "P4"}
+        actual_priorities = {p.value for p in PriorityLevel}
+        self.assertEqual(expected_priorities, actual_priorities)
+
+    def test_mark_verified_requires_independent_evidence(self):
+        """Section 18: Do not mark an item VERIFIED merely because code exists."""
+        task = TaskContract(
+            task_id="TASK-VERIFY-TEST",
+            requesting_agent="HERMES-CEO",
+            responsible_agent="AGENT-04-SEO",
+            objective="Verify Core Web Vitals target",
+            scope="pakistan_commercial",
+            risk_classification=RiskClassification.READ_ONLY,
+            approval_requirement=ApprovalRequirement.AUTONOMOUS_APPROVED,
+            completion_criteria=["lcp_under_2_5s"],
+        )
+
+        # Attempting to mark VERIFIED with empty evidence must fail
+        with self.assertRaises(ValueError):
+            task.mark_verified({})
+
+        # Valid: Marked VERIFIED with authentic empirical evidence
+        task.mark_verified({"edge_lcp_seconds": 1.12, "edge_cls": 0.000, "probe_runs": 3})
+        self.assertEqual(task.status, TaskStatus.VERIFIED)
+        self.assertIn("verification", task.verification_evidence)
+
+    def test_mark_blocked_external_dependency_and_deployment(self):
+        """Section 18: Tests blocked external dependency and deployment transitions."""
+        task = TaskContract(
+            task_id="TASK-STATUS-TEST",
+            requesting_agent="HERMES-CEO",
+            responsible_agent="AGENT-05-GA4",
+            objective="Test status transitions",
+            scope="pakistan_commercial",
+            risk_classification=RiskClassification.READ_ONLY,
+            approval_requirement=ApprovalRequirement.AUTONOMOUS_APPROVED,
+            completion_criteria=["criteria_met"],
+        )
+
+        task.mark_blocked_external_dependency("CrUX API quota requires GCP API Key")
+        self.assertEqual(task.status, TaskStatus.BLOCKED_EXTERNAL_DEPENDENCY)
+        self.assertIn("CrUX API", task.error_message)
+
+        task.mark_deployed({"deploy_url": "https://aitoolgems.tech/", "git_commit": "e306efd3"})
+        self.assertEqual(task.status, TaskStatus.DEPLOYED)
+        self.assertEqual(task.verification_evidence["deployment"]["git_commit"], "e306efd3")
 
 
 if __name__ == "__main__":

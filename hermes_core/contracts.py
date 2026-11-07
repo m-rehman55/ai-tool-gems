@@ -20,11 +20,21 @@ class TaskStatus(str, Enum):
     IN_PROGRESS = "IN_PROGRESS"
     BLOCKED_PENDING_CREDENTIALS = "BLOCKED_PENDING_CREDENTIALS"
     BLOCKED_PENDING_APPROVAL = "BLOCKED_PENDING_APPROVAL"
+    BLOCKED_EXTERNAL_DEPENDENCY = "BLOCKED_EXTERNAL_DEPENDENCY"
     IMPLEMENTED = "IMPLEMENTED"
     TESTED = "TESTED"
     VERIFIED = "VERIFIED"
     DEPLOYED = "DEPLOYED"
     FAILED = "FAILED"
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+
+
+class PriorityLevel(str, Enum):
+    P0 = "P0"  # Security, release integrity or critical data correctness
+    P1 = "P1"  # High-value blockers and essential foundations
+    P2 = "P2"  # Important quality and growth improvements
+    P3 = "P3"  # Valuable enhancements
+    P4 = "P4"  # Optional or experimental work
 
 
 class RiskClassification(str, Enum):
@@ -159,8 +169,22 @@ class TaskContract:
         self.updated_at = datetime.now(timezone.utc).isoformat()
 
     def mark_verified(self, verification_data: Dict[str, Any]) -> None:
+        """Enforces Section 18: Do not mark an item VERIFIED merely because code exists."""
+        if not verification_data or not isinstance(verification_data, dict):
+            raise ValueError(
+                "VERIFICATION_ERROR: Item cannot be marked VERIFIED merely because code exists. "
+                "Independent evidence confirming expected behavior must be provided."
+            )
         self.status = TaskStatus.VERIFIED
         self.verification_evidence["verification"] = verification_data
+        self.updated_at = datetime.now(timezone.utc).isoformat()
+
+    def mark_deployed(self, deployment_evidence: Dict[str, Any]) -> None:
+        """Section 18: Deployed indicates the approved change is live in production."""
+        if not deployment_evidence or not isinstance(deployment_evidence, dict):
+            raise ValueError("DEPLOYMENT_ERROR: Deployed requires independent deployment evidence.")
+        self.status = TaskStatus.DEPLOYED
+        self.verification_evidence["deployment"] = deployment_evidence
         self.updated_at = datetime.now(timezone.utc).isoformat()
 
     def mark_failed(self, error: str) -> None:
@@ -176,6 +200,16 @@ class TaskContract:
     def mark_blocked_approval(self, reason: str) -> None:
         self.status = TaskStatus.BLOCKED_PENDING_APPROVAL
         self.error_message = f"Blocked pending approval: {reason}"
+        self.updated_at = datetime.now(timezone.utc).isoformat()
+
+    def mark_blocked_external_dependency(self, dependency_desc: str) -> None:
+        self.status = TaskStatus.BLOCKED_EXTERNAL_DEPENDENCY
+        self.error_message = f"Blocked pending external dependency: {dependency_desc}"
+        self.updated_at = datetime.now(timezone.utc).isoformat()
+
+    def mark_not_applicable(self, reason: str) -> None:
+        self.status = TaskStatus.NOT_APPLICABLE
+        self.error_message = f"Not applicable: {reason}"
         self.updated_at = datetime.now(timezone.utc).isoformat()
 
 
