@@ -37,7 +37,7 @@ class TestCatalogueConsistency(unittest.TestCase):
         ]
 
     def test_homepage_metadata_reflects_pakistan_and_worldwide(self):
-        """Verify homepage metadata includes Pakistan, PKR, and Worldwide positioning."""
+        """Verify homepage metadata includes Pakistan, PKR, and Worldwide positioning without unsupported USD claims."""
         with open(self.index_html_path, "r", encoding="utf-8") as f:
             html = f.read()
 
@@ -46,11 +46,14 @@ class TestCatalogueConsistency(unittest.TestCase):
         self.assertIn("Pakistan", m_title.group(1))
         self.assertIn("PKR", m_title.group(1))
         self.assertIn("Worldwide", m_title.group(1))
+        self.assertNotIn("(USD)", m_title.group(1), "Homepage title must not claim direct USD pricing")
 
         m_desc = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', html)
         self.assertTrue(m_desc, "Homepage meta description missing")
         self.assertIn("Pakistan", m_desc.group(1))
         self.assertIn("PKR", m_desc.group(1))
+        self.assertNotIn("USD rates", m_desc.group(1), "Meta description must not claim verified USD rates")
+        self.assertNotIn("USD prices", m_desc.group(1), "Meta description must not claim USD prices")
 
     def test_tools_index_metadata_free_from_outdated_count(self):
         """Verify tools/index.html Open Graph description does not state outdated 'all 20'."""
