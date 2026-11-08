@@ -624,6 +624,47 @@
   font-weight: 600;
 }
 
+
+/* Tri-Action Buttons for Commercial Cards & Dual-Action for Directory Cards */
+.card-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 38px 38px !important;
+  gap: 6px !important;
+  height: 90px !important;
+  margin-top: 14px !important;
+}
+.card-actions .buy-now-card {
+  grid-column: 1 / -1 !important;
+  height: 42px !important;
+}
+.card-actions.directory-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 42px !important;
+  gap: 8px !important;
+}
+.card-actions.directory-actions .buy-now-card {
+  grid-column: 1 / -1 !important;
+  height: 42px !important;
+}
+.card-actions .official-link-btn,
+.card-actions .add-button {
+  width: 100% !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+}
+.card-actions .detail-button {
+  height: 40px !important;
+  min-height: 40px !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 11px !important;
+  white-space: nowrap !important;
+  padding: 0 6px !important;
+}
+
 /* Accessibility & Screen Reader Utilities */
 .sr-only,
 [hidden] {

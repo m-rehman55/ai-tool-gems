@@ -57,6 +57,15 @@ class TestCurrencyAndMediaCleanliness(unittest.TestCase):
             self.assertIn('Directory Reference', card)
             self.assertIn('hidden', card)
 
+    def test_all_65_cards_have_official_link_button(self):
+        """Ensure all 65 cards in index.html feature the official-link-btn external website link."""
+        cards = re.findall(r'<article[^>]*class="product-card[^"]*"[^>]*>([\s\S]*?)</article>', self.index_html)
+        self.assertEqual(len(cards), 65, f"Expected 65 cards, found {len(cards)}")
+        for card in cards:
+            self.assertIn('class="official-link-btn"', card, "Card missing official-link-btn")
+            self.assertIn('i-external', card, "Card missing i-external icon")
+
+
 if __name__ == '__main__':
     unittest.main()
 
