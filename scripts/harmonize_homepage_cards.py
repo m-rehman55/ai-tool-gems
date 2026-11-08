@@ -283,6 +283,9 @@ def update_app_js():
       <div class="card-actions">
         <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} Buy now</button>
         <a class="detail-button" href="tools/${p.id}/">View details</a>
+        <a class="official-link-btn" href="${p.officialUrl || '#'}" target="_blank" rel="noopener noreferrer" title="Visit ${p.name} official website" aria-label="Visit ${p.name} official website">
+          ${svg('i-external')}
+        </a>
         <button class="add-button${inCart ? ' added' : ''}" data-add="${p.id}" aria-label="${inCart ? 'View ' + p.name + ' in cart' : 'Add ' + p.name + ' to cart'}" aria-pressed="${inCart}">
           ${svg(inCart ? 'i-check' : 'i-plus')}
         </button>
