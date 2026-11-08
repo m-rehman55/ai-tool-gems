@@ -380,3 +380,139 @@ tbody th { color:#247c69; }
     justify-content: center;
   }
 }
+
+
+/* ==========================================================================
+   ENHANCED DIRECTORY TOOL PAGE MODULES (SEO CLUSTERS, BANKING & HUBS)
+   ========================================================================== */
+.tool-seo-clusters {
+  margin-top: 32px;
+  padding: 22px 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+.tool-seo-clusters h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+}
+.keyword-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.kw-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.pakistan-banking-support {
+  margin-top: 24px;
+  padding: 22px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+}
+.pakistan-banking-support h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 800;
+  color: #065f46;
+}
+.pakistan-banking-support p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: #166534;
+  line-height: 1.5;
+}
+.banking-rails-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.rail-card {
+  background: #ffffff;
+  border: 1px solid #86efac;
+  border-radius: 10px;
+  padding: 14px;
+}
+.rail-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #167a40;
+  background: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.rail-card strong {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+.rail-card p {
+  margin: 0;
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.4;
+}
+.concierge-box {
+  background: #ffffff;
+  border-left: 4px solid #167a40;
+  padding: 14px 18px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.concierge-box p {
+  margin: 0;
+  font-size: 13px;
+  color: #1e293b;
+  line-height: 1.5;
+}
+.category-hub-links {
+  margin-top: 36px;
+  padding: 22px 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+.category-hub-links h3 {
+  margin: 0 0 14px;
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+}
+.hub-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hub-pill {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #167a40;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.hub-pill:hover {
+  background: #167a40;
+  color: #ffffff;
+  border-color: #167a40;
+}
