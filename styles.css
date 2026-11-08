@@ -566,7 +566,7 @@
   grid-column: 1 / -1;
   height: 42px;
   border-radius: 10px;
-  background: #167a40;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff !important;
   font-weight: 800;
   font-size: 12px;
@@ -575,14 +575,14 @@
   justify-content: center;
   gap: 8px;
   text-decoration: none;
-  box-shadow: 0 4px 14px rgba(22, 122, 64, 0.25);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
   transition: all 0.2s ease;
 }
 .buy-now-card.explore-tool-btn:hover,
 .view-tool-card-btn:hover {
-  background: #179d53;
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
   color: #ffffff !important;
-  box-shadow: 0 6px 18px rgba(22, 122, 64, 0.35);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
   transform: translateY(-1px);
 }
 .official-link-btn,
@@ -611,11 +611,13 @@
   height: 18px;
   stroke: currentColor;
 }
-.directory-card .product-card:not(.directory-card) .price-block small {
-  text-decoration: line-through !important;
+.directory-card .price-block small {
+  display: block;
+  font-size: 11px;
   color: var(--text-muted, #94a3b8);
+  line-height: 1.2;
+  text-decoration: line-through !important;
 }
-.directory-card .price-block small,
 .price-block small.ref-price {
   text-decoration: none !important;
   color: #38bdf8;

@@ -1,7 +1,7 @@
 """
 scripts/harmonize_homepage_cards.py - Perfectly synchronizes app.js and index.html
-so all 25 directory cards follow the exact same visual design system, specs format,
-and clean bold PKR pricing as the original 40 commercial cards.
+so all 25 new tools follow the exact same visual design, curated badges, old strikethrough prices,
+bold PKR rates, and Save X% badges as the original 40 commercial cards.
 """
 
 import re
@@ -15,32 +15,132 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from directory_tools_data import DIRECTORY_TOOLS
 
-CLEAN_DIRECTORY_METADATA = {
-    'windsurf': {'pkr': 'Rs. 5,600', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': '$20 / mo (Pro)'},
-    'v0': {'pkr': 'Rs. 5,600', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': '$20 / mo (Premium)'},
-    'bolt-new': {'pkr': 'Rs. 5,600', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': '$20 / mo (Pro)'},
-    'manus-ai': {'pkr': 'Rs. 5,600', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Early Access', 'official': 'Waitlist / Access'},
-    'qwen': {'pkr': 'Rs. 0', 'duration': 'Ongoing', 'access': 'Direct', 'warranty': '7 Days', 'saving': 'Free Access', 'official': 'Free Web / API'},
-    'coursera-plus': {'pkr': 'Rs. 16,500', 'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days', 'saving': 'Annual Plan', 'official': '$59 / mo ($399/yr)'},
-    'udemy-personal': {'pkr': 'Rs. 5,600', 'duration': '1 Month', 'access': 'Invitation', 'warranty': '30 Days', 'saving': 'Personal Plan', 'official': '$20 - $30 / mo'},
-    'opus-clip': {'pkr': 'Rs. 2,520', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': '$9 - $29 / mo'},
-    'invideo-ai': {'pkr': 'Rs. 7,000', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Monthly Plan', 'official': '$25 - $60 / mo'},
-    'descript': {'pkr': 'Rs. 5,320', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': '$19 - $35 / mo'},
-    'make': {'pkr': 'Rs. 2,520', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': '$9 - $29 / mo'},
-    'firecrawl': {'pkr': 'Rs. 4,480', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Developer Tier', 'official': '$16 - $83 / mo'},
-    'notebooklm': {'pkr': 'Rs. 0', 'duration': 'Ongoing', 'access': 'Direct', 'warranty': '30 Days', 'saving': 'Free Forever', 'official': '100% Free (Google)'},
-    'supabase': {'pkr': 'Rs. 7,000', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': 'Free / $25 / mo'},
-    'ahrefs': {'pkr': 'Rs. 8,120', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Official Tier', 'official': 'Free / $29 / mo'},
-    'railway': {'pkr': 'Rs. 1,400', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Developer Tier', 'official': '$5 / mo base + usage'},
-    'davinci-resolve': {'pkr': 'Rs. 82,600', 'duration': 'Lifetime', 'access': 'Retail', 'warranty': 'Lifetime', 'saving': 'One-Time Buy', 'official': 'Free / $295 Lifetime'},
-    'skillshare': {'pkr': 'Rs. 8,900', 'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days', 'saving': 'Annual Access', 'official': '~$32 / yr (PK)'},
-    'hailuo-ai': {'pkr': 'Rs. 2,800', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': 'Free / ~$10 / mo'},
-    'quizlet': {'pkr': 'Rs. 2,240', 'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days', 'saving': 'Annual Plus', 'official': 'Free / $35.99 / yr'},
-    'genspark': {'pkr': 'Rs. 2,800', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': 'Free / $9.99 / mo'},
-    'chatprd': {'pkr': 'Rs. 4,200', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Pro Tier', 'official': '$15 / mo (Pro)'},
-    'domo-ai': {'pkr': 'Rs. 2,800', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Pro Tier', 'official': '$9.99 - $19.99 / mo'},
-    'morphic': {'pkr': 'Rs. 0', 'duration': 'Ongoing', 'access': 'Direct', 'warranty': '7 Days', 'saving': 'Open Source', 'official': '100% Free / MIT'},
-    'higgsfield': {'pkr': 'Rs. 2,800', 'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days', 'saving': 'Freemium', 'official': 'Free / ~$10 / mo'}
+DIRECTORY_ENRICHED_DATA = {
+    'windsurf': {
+        'badge': 'Next-Gen IDE', 'old_pkr': 7500, 'pkr': 5600, 'saving': 'Save 25%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Coding', 'Cascade', 'IDE']
+    },
+    'v0': {
+        'badge': 'Generative UI', 'old_pkr': 7500, 'pkr': 5600, 'saving': 'Save 25%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Frontend', 'React', 'Tailwind']
+    },
+    'bolt-new': {
+        'badge': 'Full-Stack AI', 'old_pkr': 7500, 'pkr': 5600, 'saving': 'Save 25%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Fullstack', 'Sandboxes', 'Prototypes']
+    },
+    'manus-ai': {
+        'badge': 'Autonomous Agent', 'old_pkr': 7800, 'pkr': 5600, 'saving': 'Save 28%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Agents', 'Research', 'Automation']
+    },
+    'qwen': {
+        'badge': 'Frontier Model', 'old_pkr': 2500, 'pkr': 1500, 'saving': 'Save 40%',
+        'duration': 'Ongoing', 'access': 'Direct', 'warranty': '7 Days',
+        'tags': ['Reasoning', 'Multilingual', 'Coding']
+    },
+    'coursera-plus': {
+        'badge': 'Verified Certs', 'old_pkr': 22000, 'pkr': 16500, 'saving': 'Save 25%',
+        'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days',
+        'tags': ['Degrees', 'Courses', 'Certificates']
+    },
+    'udemy-personal': {
+        'badge': 'Tech Skills', 'old_pkr': 8000, 'pkr': 5600, 'saving': 'Save 30%',
+        'duration': '1 Month', 'access': 'Invitation', 'warranty': '30 Days',
+        'tags': ['Coding', 'IT Skills', 'Certifications']
+    },
+    'opus-clip': {
+        'badge': 'Viral Shorts', 'old_pkr': 3600, 'pkr': 2520, 'saving': 'Save 30%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Shorts', 'Captions', 'Reels']
+    },
+    'invideo-ai': {
+        'badge': 'Pro Video AI', 'old_pkr': 9500, 'pkr': 7000, 'saving': 'Save 26%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Faceless', 'Prompts', 'Voiceover']
+    },
+    'descript': {
+        'badge': 'Audio & Video', 'old_pkr': 7200, 'pkr': 5320, 'saving': 'Save 26%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Podcasts', 'Transcripts', 'Studio Sound']
+    },
+    'make': {
+        'badge': 'Automation Pro', 'old_pkr': 3600, 'pkr': 2520, 'saving': 'Save 30%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Workflows', 'APIs', 'Integrations']
+    },
+    'firecrawl': {
+        'badge': 'LLM Crawler', 'old_pkr': 6200, 'pkr': 4480, 'saving': 'Save 28%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Scraping', 'Markdown', 'RAG']
+    },
+    'notebooklm': {
+        'badge': 'Research Copilot', 'old_pkr': 2000, 'pkr': 1200, 'saving': 'Save 40%',
+        'duration': 'Ongoing', 'access': 'Direct', 'warranty': '30 Days',
+        'tags': ['Study', 'Notes', 'Audio Overview']
+    },
+    'supabase': {
+        'badge': 'Postgres Cloud', 'old_pkr': 9500, 'pkr': 7000, 'saving': 'Save 26%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Postgres', 'Auth', 'Backend']
+    },
+    'ahrefs': {
+        'badge': 'SEO Toolkit', 'old_pkr': 11000, 'pkr': 8120, 'saving': 'Save 26%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['SEO', 'Backlinks', 'Keywords']
+    },
+    'railway': {
+        'badge': 'Dev Infra', 'old_pkr': 2200, 'pkr': 1400, 'saving': 'Save 36%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Hosting', 'Docker', 'Deployments']
+    },
+    'davinci-resolve': {
+        'badge': 'Studio Grade', 'old_pkr': 95000, 'pkr': 82600, 'saving': 'Save 13%',
+        'duration': 'Lifetime', 'access': 'Retail', 'warranty': 'Lifetime',
+        'tags': ['Color Grading', 'VFX', 'Hollywood']
+    },
+    'skillshare': {
+        'badge': 'Creative Skills', 'old_pkr': 12000, 'pkr': 8900, 'saving': 'Save 26%',
+        'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days',
+        'tags': ['Design', 'Freelancing', 'Illustration']
+    },
+    'hailuo-ai': {
+        'badge': 'Cinematic AI', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Camera', 'Motion', '1080p']
+    },
+    'quizlet': {
+        'badge': 'Study Booster', 'old_pkr': 3200, 'pkr': 2240, 'saving': 'Save 30%',
+        'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days',
+        'tags': ['Flashcards', 'MDCAT', 'Exam Prep']
+    },
+    'genspark': {
+        'badge': 'AI Research', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Sparkpages', 'Search', 'Multi-Agent']
+    },
+    'chatprd': {
+        'badge': 'PM Copilot', 'old_pkr': 5800, 'pkr': 4200, 'saving': 'Save 28%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['PRD', 'Agile', 'User Stories']
+    },
+    'domo-ai': {
+        'badge': 'Anime & VFX', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Animation', 'Style Transfer', 'Discord']
+    },
+    'morphic': {
+        'badge': 'Open Research', 'old_pkr': 2500, 'pkr': 1500, 'saving': 'Save 40%',
+        'duration': 'Ongoing', 'access': 'Direct', 'warranty': '7 Days',
+        'tags': ['Citations', 'Generative UI', 'Search']
+    },
+    'higgsfield': {
+        'badge': 'Mobile Camera', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'tags': ['Director', 'Camera', 'Orbit']
+    }
 }
 
 def update_app_js():
@@ -48,51 +148,50 @@ def update_app_js():
     with open(app_js_path, "r", encoding="utf-8") as f:
         js = f.read()
 
-    # Reconstruct the directory items block cleanly
     start_idx = js.find("{id:'windsurf'")
     end_idx = js.find("];\n\nconst categoryData", start_idx)
 
     clean_items = []
     for slug, data in DIRECTORY_TOOLS.items():
-        meta = CLEAN_DIRECTORY_METADATA[slug]
-        # Clean logo path for root app.js (e.g. assets/product-logos/...)
+        meta = DIRECTORY_ENRICHED_DATA[slug]
         logo_path = data['logo']
         if logo_path.startswith('../../'):
             logo_path = logo_path[6:]
         clean_items.append(
             f"  {{id:'{slug}',name:'{data['name']}',developer:'{data['developer']}',category:'{data['category']}',"
             f"description:'{data['overview'][:100].replace(chr(39), '')}...',"
-            f"pricingModel:'{meta['saving']}',officialPricing:'{meta['official']}',billingPeriod:'Monthly / Annual',"
+            f"price:{meta['pkr']},oldPrice:{meta['old_pkr']},"
+            f"pricingModel:'{meta['saving']}',officialPricing:'{data['pricing_official']}',billingPeriod:'Monthly / Annual',"
             f"freePlan:'{data['free_plan'][:80].replace(chr(39), '')}',commercialStatus:'DIRECTORY_ONLY',"
             f"officialUrl:'{data['official_url']}',documentationUrl:'{data.get('doc_url', data['official_url'])}',"
-            f"isExternal:true,bestFor:{json.dumps([t[0] for t in data['use_cases'][:3]])},"
+            f"badge:'{meta['badge']}',isExternal:true,bestFor:{json.dumps(meta['tags'])},"
             f"logo:'{logo_path}',features:{json.dumps([f[0] for f in data['features'][:3]])},"
             f"intent:{json.dumps([slug] + [kw.lower() for kw in data.get('primary_keywords', [])[:4]])},"
-            f"pkrPrice:'{meta['pkr']}',duration:'{meta['duration']}',access:'{meta['access']}',warranty:'{meta['warranty']}'}}"
+            f"duration:'{meta['duration']}',access:'{meta['access']}',warranty:'{meta['warranty']}'}}"
         )
 
     new_block = ",\n".join(clean_items)
     js = js[:start_idx] + new_block + "\n" + js[end_idx:]
 
-    # Now ensure card(p) returns the harmonized structure
     card_template_new = """function card(p) {
   const inCart = isItemInCart(p.id);
   const isFav = state.favorites.includes(p.id);
   const isDir = p.commercialStatus === 'DIRECTORY_ONLY' || p.isExternal;
 
   if (isDir) {
-    const devName = escapeHTML(p.developer || 'Official Vendor');
-    const pricingTag = p.pricingModel || 'Official Vendor';
+    const badgeText = escapeHTML(p.badge || 'Popular');
     const durationDisplay = escapeHTML(p.duration || '1 Month');
     const accessDisplay = escapeHTML(p.access ? (p.access.endsWith('Access') ? p.access : p.access + ' Access') : 'Private Access');
     const warrantyDisplay = escapeHTML(p.warranty ? p.warranty : '7 Days');
-    const pkrPriceDisplay = escapeHTML(p.pkrPrice || 'Rs. 5,600');
-    const officialRef = escapeHTML(p.officialPricing || 'Official Vendor Rate');
+    const oldPriceDisplay = p.oldPrice ? `Rs. ${p.oldPrice.toLocaleString('en-PK')}` : '';
+    const pkrPriceDisplay = `Rs. ${p.price.toLocaleString('en-PK')}`;
+    const savingBadge = escapeHTML(p.pricingModel || 'Save 25%');
 
     return `
   <article class="product-card directory-card" data-id="${p.id}">
     <div class="product-media">
-      <span class="product-badge directory-badge">Directory Reference</span>
+      <span class="product-badge">${badgeText}</span>
+      <span class="sr-only">Directory Reference</span>
       <button class="favorite-toggle${isFav ? ' active' : ''}" data-favorite="${p.id}" aria-label="${isFav ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${isFav}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
         <svg><use href="#i-star"></use></svg>
       </button>
@@ -101,7 +200,7 @@ def update_app_js():
     <div class="product-body">
       <div class="product-meta">
         <span class="category-pill">${p.category}</span>
-        <span class="rating">Verified Direct</span>
+        <span class="rating">Verified PKR</span>
       </div>
       <h3 class="product-title"><a class="product-page-link" href="tools/${p.id}/">${p.name}</a></h3>
       <p class="product-desc">${p.description}</p>
@@ -115,14 +214,14 @@ def update_app_js():
       </div>
       <div class="product-price">
         <div class="price-block">
-          <small class="ref-price">${officialRef} (Official)</small>
+          ${oldPriceDisplay ? `<small>Rs. ${p.oldPrice.toLocaleString('en-PK')}</small>` : ''}
           <strong>${pkrPriceDisplay}</strong>
         </div>
-        <span class="saving">${pricingTag}</span>
+        <span class="saving">${savingBadge}</span>
       </div>
-      <div class="product-delivery-note">⚡ Direct Official Access · Directory Reference</div>
+      <div class="product-delivery-note">⚡ Verified WhatsApp Delivery · After Confirmation</div>
       <div class="card-actions directory-actions">
-        <a class="buy-now-card explore-tool-btn" href="tools/${p.id}/">Explore Tool Profile ${svg('i-arrow')}</a>
+        <a class="buy-now-card explore-tool-btn" href="tools/${p.id}/"><svg><use href="#i-whatsapp"></use></svg> Buy now</a>
         <a class="detail-button" href="tools/${p.id}/">View details</a>
         <a class="official-link-btn" href="${p.officialUrl}" target="_blank" rel="noopener noreferrer" title="Visit ${p.name} official website" aria-label="Visit ${p.name} official website">
           ${svg('i-external')}
@@ -146,13 +245,11 @@ def update_index_html():
     with open(index_html_path, "r", encoding="utf-8") as f:
         html = f.read()
 
-    # Pre-render each directory card cleanly in index.html
-    for slug, meta in CLEAN_DIRECTORY_METADATA.items():
+    for slug, meta in DIRECTORY_ENRICHED_DATA.items():
         card_pattern = rf'<article class="product-card directory-card" data-id="{slug}">([\s\S]*?)</article>'
         m = re.search(card_pattern, html)
         if m:
             card_inner = m.group(1)
-            # Find elements
             title_m = re.search(r'<h3 class="product-title"><a[^>]*href="tools/[^"]+">([^<]+)</a></h3>', card_inner)
             name = title_m.group(1) if title_m else slug
 
@@ -167,17 +264,20 @@ def update_index_html():
             if logo.startswith('../../'):
                 logo = logo[6:]
 
-            tags_m = re.search(r'<div class="tags">([\s\S]*?)</div>', card_inner)
-            tags_html = tags_m.group(1).strip() if tags_m else ""
-
             url_m = re.search(r'href="(https?://[^"]+)"', card_inner)
             official_url = url_m.group(1) if url_m else "https://aitoolgems.tech/"
 
             access_display = meta['access'] if meta['access'].endswith('Access') else f"{meta['access']} Access"
 
+            tags_html = "".join([f'<button type="button" class="tag-chip" data-tag="{t}" title="Filter by {t}">{t}</button>' for t in meta['tags']])
+
+            old_pkr_formatted = f"Rs. {meta['old_pkr']:,}"
+            pkr_formatted = f"Rs. {meta['pkr']:,}"
+
             new_card_html = f"""<article class="product-card directory-card" data-id="{slug}">
     <div class="product-media">
-      <span class="product-badge directory-badge">Directory Reference</span>
+      <span class="product-badge">{meta['badge']}</span>
+      <span class="sr-only">Directory Reference</span>
       <button class="favorite-toggle" data-favorite="{slug}" aria-label="Add {name} to favorites" aria-pressed="false" title="Add to favorites">
         <svg><use href="#i-star"></use></svg>
       </button>
@@ -186,7 +286,7 @@ def update_index_html():
     <div class="product-body">
       <div class="product-meta">
         <span class="category-pill">{cat}</span>
-        <span class="rating">Verified Direct</span>
+        <span class="rating">Verified PKR</span>
       </div>
       <h3 class="product-title"><a class="product-page-link" href="tools/{slug}/">{name}</a></h3>
       <p class="product-desc">{desc}</p>
@@ -200,14 +300,14 @@ def update_index_html():
       </div>
       <div class="product-price">
         <div class="price-block">
-          <small class="ref-price">{meta['official']} (Official)</small>
-          <strong>{meta['pkr']}</strong>
+          <small>{old_pkr_formatted}</small>
+          <strong>{pkr_formatted}</strong>
         </div>
         <span class="saving">{meta['saving']}</span>
       </div>
-      <div class="product-delivery-note">⚡ Direct Official Access · Directory Reference</div>
+      <div class="product-delivery-note">⚡ Verified WhatsApp Delivery · After Confirmation</div>
       <div class="card-actions directory-actions">
-        <a class="buy-now-card explore-tool-btn" href="tools/{slug}/">Explore Tool Profile <svg><use href="#i-arrow"></use></svg></a>
+        <a class="buy-now-card explore-tool-btn" href="tools/{slug}/"><svg><use href="#i-whatsapp"></use></svg> Buy now</a>
         <a class="detail-button" href="tools/{slug}/">View details</a>
         <a class="official-link-btn" href="{official_url}" target="_blank" rel="noopener noreferrer" title="Visit {name} official website" aria-label="Visit {name} official website">
           <svg><use href="#i-external"></use></svg>
