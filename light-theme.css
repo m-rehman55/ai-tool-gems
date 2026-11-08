@@ -1396,9 +1396,23 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 }
 
 /* Card titles and text crispness */
-.product-body h3 {
+.product-body h3,
+.product-body .product-title,
+.product-title a,
+.product-page-link,
+.product-body h3 a {
   color: #0f172a !important;
   font-weight: 800 !important;
+  font-size: 17px !important;
+  line-height: 1.3 !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+}
+.product-title a:hover,
+.product-page-link:hover,
+.product-body h3 a:hover {
+  color: #167a40 !important;
+  text-decoration: underline !important;
 }
 .product-desc,
 .product-specs {
@@ -1407,6 +1421,45 @@ footer { background: #f7f1e8; color: #24483f; border-top-color: #e2dbd1; }
 .product-price strong {
   color: #0f172a !important;
   font-weight: 900 !important;
+}
+.product-badge.directory-badge {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  border: 1px solid #bae6fd !important;
+  box-shadow: none !important;
+  font-weight: 800 !important;
+  font-size: 10px !important;
+}
+.product-delivery-note {
+  color: #52665b !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+.buy-now-card.explore-tool-btn,
+.view-tool-card-btn {
+  background: #167a40 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(22, 122, 64, 0.25) !important;
+}
+.buy-now-card.explore-tool-btn:hover,
+.view-tool-card-btn:hover {
+  background: #179d53 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(22, 122, 64, 0.35) !important;
+}
+.official-link-btn,
+.official-site-btn {
+  background: #ffffff !important;
+  color: #244e42 !important;
+  border-color: #cad9d0 !important;
+}
+.official-link-btn:hover,
+.official-site-btn:hover {
+  background: #dff6bf !important;
+  color: #173c35 !important;
+  border-color: #b8d795 !important;
 }
 .home-guide-grid article > a { display: inline-block; min-height: 24px; padding-block: 2px; }
 .rating { color: #6b5510; }

@@ -317,6 +317,8 @@ function card(p) {
   const isDir = p.commercialStatus === 'DIRECTORY_ONLY' || p.isExternal;
 
   if (isDir) {
+    const devName = escapeHTML(p.developer || 'Official Vendor');
+    const pricingTag = p.pricingModel || 'Official Vendor';
     return `
   <article class="product-card directory-card" data-id="${p.id}">
     <div class="product-media">
@@ -329,29 +331,32 @@ function card(p) {
     <div class="product-body">
       <div class="product-meta">
         <span class="category-pill">${p.category}</span>
-        <span class="rating directory-rating">${p.pricingModel || 'Official Vendor'}</span>
+        <span class="rating">${pricingTag}</span>
       </div>
       <h3 class="product-title"><a class="product-page-link" href="tools/${p.id}/">${p.name}</a></h3>
       <p class="product-desc">${p.description}</p>
       <div class="tags">
         ${(p.bestFor || []).map(t => `<button type="button" class="tag-chip" data-tag="${safeCatalogText(t)}" title="Filter by ${safeCatalogText(t)}">${safeCatalogText(t)}</button>`).join('')}
       </div>
-      <div class="product-specs directory-specs">
-        <span><i></i>Dev: ${escapeHTML(p.developer || 'Official')}</span>
-        <span>${p.freePlan ? 'Free Tier Available' : 'Paid Vendor'}</span>
-        <span>Direct Profile</span>
+      <div class="product-specs">
+        <span><i></i>${devName}</span>
+        <span>${p.freePlan ? 'Free Tier' : 'Direct Access'}</span>
+        <span>🛡️ Verified Tool</span>
       </div>
-      <div class="product-price directory-price">
+      <div class="product-price">
         <div class="price-block">
-          <small>Official Vendor Pricing</small>
-          <strong class="vendor-price">${p.officialPricing || 'See Official Plans'}</strong>
+          <small>Official Pricing</small>
+          <strong>${p.officialPricing || 'See Official Plans'}</strong>
         </div>
-        <span class="directory-status-tag">Reference Profile</span>
+        <span class="saving">${pricingTag}</span>
       </div>
-      <div class="product-delivery-note directory-note">🔍 Directory Reference · Direct Vendor Link</div>
+      <div class="product-delivery-note">⚡ Official Vendor Access · Directory Reference</div>
       <div class="card-actions directory-actions">
-        <a class="view-tool-card-btn" href="tools/${p.id}/">Explore Tool Profile &rarr;</a>
-        <a class="official-site-btn" href="${p.officialUrl}" target="_blank" rel="noopener noreferrer">Visit Website ↗</a>
+        <a class="buy-now-card explore-tool-btn" href="tools/${p.id}/">Explore Tool Profile ${svg('i-arrow')}</a>
+        <a class="detail-button" href="tools/${p.id}/">View details</a>
+        <a class="official-link-btn" href="${p.officialUrl}" target="_blank" rel="noopener noreferrer" title="Visit ${p.name} official website" aria-label="Visit ${p.name} official website">
+          ${svg('i-external')}
+        </a>
       </div>
     </div>
   </article>`;
