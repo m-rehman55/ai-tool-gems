@@ -112,6 +112,24 @@ class TestVisibleDirectoryAndCatalogueCompleteness(unittest.TestCase):
             self.assertNotIn('data-order=', card, "Directory card must not have data-order attribute")
             self.assertIn('Directory Reference', card, "Directory card must declare Directory Reference")
 
+    def test_all_65_detail_pages_have_whatsapp_and_official_buttons(self):
+        """Ensure all 65 tool detail pages feature BOTH the primary WhatsApp purchase button and the secondary official website link."""
+        tool_dirs = sorted([d for d in os.listdir(ROOT / 'tools') if (ROOT / 'tools' / d).is_dir()])
+        self.assertEqual(len(tool_dirs), 65, f"Expected 65 tool directories, got {len(tool_dirs)}")
+        for slug in tool_dirs:
+            idx_file = ROOT / 'tools' / slug / 'index.html'
+            self.assertTrue(idx_file.exists(), f"Missing index.html for {slug}")
+            content = idx_file.read_text(encoding='utf-8')
+            
+            # Assert primary WhatsApp button
+            self.assertIn('class="buy"', content, f"Missing primary .buy button in {slug}")
+            self.assertIn('wa.me/923236715731', content, f"Missing WhatsApp link in {slug}")
+            self.assertIn('on WhatsApp', content, f"Missing 'on WhatsApp' text in {slug}")
+            
+            # Assert secondary official vendor button
+            self.assertIn('class="official-vendor-btn"', content, f"Missing .official-vendor-btn in {slug}")
+            self.assertIn('Visit Official', content, f"Missing 'Visit Official' text in {slug}")
+
 
 if __name__ == '__main__':
     unittest.main()
