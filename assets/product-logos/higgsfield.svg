@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="hfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1B4B" />
+      <stop offset="100%" stop-color="#4C1D95" />
+    </linearGradient>
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D" />
+      <stop offset="100%" stop-color="#F43F5E" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#hfGrad)"/>
+  <path d="M64 24 C64 46 82 64 104 64 C82 64 64 82 64 104 C64 82 46 64 24 64 C46 64 64 46 64 24 Z" fill="url(#starGrad)"/>
+  <circle cx="64" cy="64" r="8" fill="#FFFFFF"/>
+</svg>
