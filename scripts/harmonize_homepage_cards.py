@@ -1,7 +1,7 @@
 """
 scripts/harmonize_homepage_cards.py - Perfectly synchronizes app.js and index.html
 so all 25 new tools follow the exact same visual design, curated badges, old strikethrough prices,
-bold PKR rates, and Save X% badges as the original 40 commercial cards.
+bold PKR rates, and Save X% badges as the original 40 commercial cards, with dynamic USD currency switching.
 """
 
 import re
@@ -17,127 +17,127 @@ from directory_tools_data import DIRECTORY_TOOLS
 
 DIRECTORY_ENRICHED_DATA = {
     'windsurf': {
-        'badge': 'Next-Gen IDE', 'old_pkr': 7500, 'pkr': 5600, 'saving': 'Save 25%',
+        'badge': 'Next-Gen IDE', 'old_pkr': 7500, 'pkr': 5600, 'usd': '19.99', 'old_usd': '26.99', 'saving': 'Save 25%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Coding', 'Cascade', 'IDE']
     },
     'v0': {
-        'badge': 'Generative UI', 'old_pkr': 7500, 'pkr': 5600, 'saving': 'Save 25%',
+        'badge': 'Generative UI', 'old_pkr': 7500, 'pkr': 5600, 'usd': '19.99', 'old_usd': '26.99', 'saving': 'Save 25%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Frontend', 'React', 'Tailwind']
     },
     'bolt-new': {
-        'badge': 'Full-Stack AI', 'old_pkr': 7500, 'pkr': 5600, 'saving': 'Save 25%',
+        'badge': 'Full-Stack AI', 'old_pkr': 7500, 'pkr': 5600, 'usd': '19.99', 'old_usd': '26.99', 'saving': 'Save 25%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Fullstack', 'Sandboxes', 'Prototypes']
     },
     'manus-ai': {
-        'badge': 'Autonomous Agent', 'old_pkr': 7800, 'pkr': 5600, 'saving': 'Save 28%',
+        'badge': 'Autonomous Agent', 'old_pkr': 7800, 'pkr': 5600, 'usd': '19.99', 'old_usd': '27.99', 'saving': 'Save 28%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Agents', 'Research', 'Automation']
     },
     'qwen': {
-        'badge': 'Frontier Model', 'old_pkr': 2500, 'pkr': 1500, 'saving': 'Save 40%',
+        'badge': 'Frontier Model', 'old_pkr': 2500, 'pkr': 1500, 'usd': '4.99', 'old_usd': '8.99', 'saving': 'Save 40%',
         'duration': 'Ongoing', 'access': 'Direct', 'warranty': '7 Days',
         'tags': ['Reasoning', 'Multilingual', 'Coding']
     },
     'coursera-plus': {
-        'badge': 'Verified Certs', 'old_pkr': 22000, 'pkr': 16500, 'saving': 'Save 25%',
+        'badge': 'Verified Certs', 'old_pkr': 22000, 'pkr': 16500, 'usd': '59.00', 'old_usd': '79.00', 'saving': 'Save 25%',
         'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days',
         'tags': ['Degrees', 'Courses', 'Certificates']
     },
     'udemy-personal': {
-        'badge': 'Tech Skills', 'old_pkr': 8000, 'pkr': 5600, 'saving': 'Save 30%',
+        'badge': 'Tech Skills', 'old_pkr': 8000, 'pkr': 5600, 'usd': '19.99', 'old_usd': '29.99', 'saving': 'Save 30%',
         'duration': '1 Month', 'access': 'Invitation', 'warranty': '30 Days',
         'tags': ['Coding', 'IT Skills', 'Certifications']
     },
     'opus-clip': {
-        'badge': 'Viral Shorts', 'old_pkr': 3600, 'pkr': 2520, 'saving': 'Save 30%',
+        'badge': 'Viral Shorts', 'old_pkr': 3600, 'pkr': 2520, 'usd': '8.99', 'old_usd': '12.99', 'saving': 'Save 30%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Shorts', 'Captions', 'Reels']
     },
     'invideo-ai': {
-        'badge': 'Pro Video AI', 'old_pkr': 9500, 'pkr': 7000, 'saving': 'Save 26%',
+        'badge': 'Pro Video AI', 'old_pkr': 9500, 'pkr': 7000, 'usd': '24.99', 'old_usd': '34.99', 'saving': 'Save 26%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Faceless', 'Prompts', 'Voiceover']
     },
     'descript': {
-        'badge': 'Audio & Video', 'old_pkr': 7200, 'pkr': 5320, 'saving': 'Save 26%',
+        'badge': 'Audio & Video', 'old_pkr': 7200, 'pkr': 5320, 'usd': '18.99', 'old_usd': '25.99', 'saving': 'Save 26%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Podcasts', 'Transcripts', 'Studio Sound']
     },
     'make': {
-        'badge': 'Automation Pro', 'old_pkr': 3600, 'pkr': 2520, 'saving': 'Save 30%',
+        'badge': 'Automation Pro', 'old_pkr': 3600, 'pkr': 2520, 'usd': '8.99', 'old_usd': '12.99', 'saving': 'Save 30%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Workflows', 'APIs', 'Integrations']
     },
     'firecrawl': {
-        'badge': 'LLM Crawler', 'old_pkr': 6200, 'pkr': 4480, 'saving': 'Save 28%',
+        'badge': 'LLM Crawler', 'old_pkr': 6200, 'pkr': 4480, 'usd': '15.99', 'old_usd': '21.99', 'saving': 'Save 28%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Scraping', 'Markdown', 'RAG']
     },
     'notebooklm': {
-        'badge': 'Research Copilot', 'old_pkr': 2000, 'pkr': 1200, 'saving': 'Save 40%',
+        'badge': 'Research Copilot', 'old_pkr': 2000, 'pkr': 1200, 'usd': '4.20', 'old_usd': '6.99', 'saving': 'Save 40%',
         'duration': 'Ongoing', 'access': 'Direct', 'warranty': '30 Days',
         'tags': ['Study', 'Notes', 'Audio Overview']
     },
     'supabase': {
-        'badge': 'Postgres Cloud', 'old_pkr': 9500, 'pkr': 7000, 'saving': 'Save 26%',
+        'badge': 'Postgres Cloud', 'old_pkr': 9500, 'pkr': 7000, 'usd': '24.99', 'old_usd': '34.99', 'saving': 'Save 26%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Postgres', 'Auth', 'Backend']
     },
     'ahrefs': {
-        'badge': 'SEO Toolkit', 'old_pkr': 11000, 'pkr': 8120, 'saving': 'Save 26%',
+        'badge': 'SEO Toolkit', 'old_pkr': 11000, 'pkr': 8120, 'usd': '29.00', 'old_usd': '39.99', 'saving': 'Save 26%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['SEO', 'Backlinks', 'Keywords']
     },
     'railway': {
-        'badge': 'Dev Infra', 'old_pkr': 2200, 'pkr': 1400, 'saving': 'Save 36%',
+        'badge': 'Dev Infra', 'old_pkr': 2200, 'pkr': 1400, 'usd': '4.99', 'old_usd': '7.99', 'saving': 'Save 36%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Hosting', 'Docker', 'Deployments']
     },
     'davinci-resolve': {
-        'badge': 'Studio Grade', 'old_pkr': 95000, 'pkr': 82600, 'saving': 'Save 13%',
+        'badge': 'Studio Grade', 'old_pkr': 95000, 'pkr': 82600, 'usd': '295.00', 'old_usd': '340.00', 'saving': 'Save 13%',
         'duration': 'Lifetime', 'access': 'Retail', 'warranty': 'Lifetime',
         'tags': ['Color Grading', 'VFX', 'Hollywood']
     },
     'skillshare': {
-        'badge': 'Creative Skills', 'old_pkr': 12000, 'pkr': 8900, 'saving': 'Save 26%',
+        'badge': 'Creative Skills', 'old_pkr': 12000, 'pkr': 8900, 'usd': '31.99', 'old_usd': '42.00', 'saving': 'Save 26%',
         'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days',
         'tags': ['Design', 'Freelancing', 'Illustration']
     },
     'hailuo-ai': {
-        'badge': 'Cinematic AI', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'badge': 'Cinematic AI', 'old_pkr': 4000, 'pkr': 2800, 'usd': '9.99', 'old_usd': '14.99', 'saving': 'Save 30%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Camera', 'Motion', '1080p']
     },
     'quizlet': {
-        'badge': 'Study Booster', 'old_pkr': 3200, 'pkr': 2240, 'saving': 'Save 30%',
+        'badge': 'Study Booster', 'old_pkr': 3200, 'pkr': 2240, 'usd': '7.99', 'old_usd': '11.99', 'saving': 'Save 30%',
         'duration': '1 Year', 'access': 'Invitation', 'warranty': '30 Days',
         'tags': ['Flashcards', 'MDCAT', 'Exam Prep']
     },
     'genspark': {
-        'badge': 'AI Research', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'badge': 'AI Research', 'old_pkr': 4000, 'pkr': 2800, 'usd': '9.99', 'old_usd': '14.99', 'saving': 'Save 30%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Sparkpages', 'Search', 'Multi-Agent']
     },
     'chatprd': {
-        'badge': 'PM Copilot', 'old_pkr': 5800, 'pkr': 4200, 'saving': 'Save 28%',
+        'badge': 'PM Copilot', 'old_pkr': 5800, 'pkr': 4200, 'usd': '14.99', 'old_usd': '20.99', 'saving': 'Save 28%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['PRD', 'Agile', 'User Stories']
     },
     'domo-ai': {
-        'badge': 'Anime & VFX', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'badge': 'Anime & VFX', 'old_pkr': 4000, 'pkr': 2800, 'usd': '9.99', 'old_usd': '14.99', 'saving': 'Save 30%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Animation', 'Style Transfer', 'Discord']
     },
     'morphic': {
-        'badge': 'Open Research', 'old_pkr': 2500, 'pkr': 1500, 'saving': 'Save 40%',
+        'badge': 'Open Research', 'old_pkr': 2500, 'pkr': 1500, 'usd': '4.99', 'old_usd': '8.99', 'saving': 'Save 40%',
         'duration': 'Ongoing', 'access': 'Direct', 'warranty': '7 Days',
         'tags': ['Citations', 'Generative UI', 'Search']
     },
     'higgsfield': {
-        'badge': 'Mobile Camera', 'old_pkr': 4000, 'pkr': 2800, 'saving': 'Save 30%',
+        'badge': 'Mobile Camera', 'old_pkr': 4000, 'pkr': 2800, 'usd': '9.99', 'old_usd': '14.99', 'saving': 'Save 30%',
         'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
         'tags': ['Director', 'Camera', 'Orbit']
     }
@@ -160,7 +160,7 @@ def update_app_js():
         clean_items.append(
             f"  {{id:'{slug}',name:'{data['name']}',developer:'{data['developer']}',category:'{data['category']}',"
             f"description:'{data['overview'][:100].replace(chr(39), '')}...',"
-            f"price:{meta['pkr']},oldPrice:{meta['old_pkr']},"
+            f"price:{meta['pkr']},oldPrice:{meta['old_pkr']},usdPrice:'{meta['usd']}',oldUsdPrice:'{meta['old_usd']}',"
             f"pricingModel:'{meta['saving']}',officialPricing:'{data['pricing_official']}',billingPeriod:'Monthly / Annual',"
             f"freePlan:'{data['free_plan'][:80].replace(chr(39), '')}',commercialStatus:'DIRECTORY_ONLY',"
             f"officialUrl:'{data['official_url']}',documentationUrl:'{data.get('doc_url', data['official_url'])}',"
@@ -173,25 +173,39 @@ def update_app_js():
     new_block = ",\n".join(clean_items)
     js = js[:start_idx] + new_block + "\n" + js[end_idx:]
 
-    card_template_new = """function card(p) {
+    card_func_new = """function card(p) {
   const inCart = isItemInCart(p.id);
   const isFav = state.favorites.includes(p.id);
   const isDir = p.commercialStatus === 'DIRECTORY_ONLY' || p.isExternal;
+  const isUSD = state.currency === 'USD';
+
+  const ratingBadge = isUSD ? 'USD Reference' : 'Verified PKR';
+  let oldPriceDisplay = '';
+  let mainPriceDisplay = '';
+
+  if (isUSD) {
+    mainPriceDisplay = p.usdPrice ? `$${p.usdPrice} USD` : 'Quote on Inquiry';
+    if (p.oldUsdPrice) {
+      oldPriceDisplay = `<small>$${p.oldUsdPrice} USD</small>`;
+    }
+  } else {
+    mainPriceDisplay = `Rs. ${p.price.toLocaleString('en-PK')}`;
+    if (p.oldPrice && p.oldPrice > p.price) {
+      oldPriceDisplay = `<small>Rs. ${p.oldPrice.toLocaleString('en-PK')}</small>`;
+    }
+  }
 
   if (isDir) {
     const badgeText = escapeHTML(p.badge || 'Popular');
     const durationDisplay = escapeHTML(p.duration || '1 Month');
     const accessDisplay = escapeHTML(p.access ? (p.access.endsWith('Access') ? p.access : p.access + ' Access') : 'Private Access');
     const warrantyDisplay = escapeHTML(p.warranty ? p.warranty : '7 Days');
-    const oldPriceDisplay = p.oldPrice ? `Rs. ${p.oldPrice.toLocaleString('en-PK')}` : '';
-    const pkrPriceDisplay = `Rs. ${p.price.toLocaleString('en-PK')}`;
     const savingBadge = escapeHTML(p.pricingModel || 'Save 25%');
 
     return `
   <article class="product-card directory-card" data-id="${p.id}">
     <div class="product-media">
       <span class="product-badge">${badgeText}</span>
-      <span class="sr-only">Directory Reference</span>
       <button class="favorite-toggle${isFav ? ' active' : ''}" data-favorite="${p.id}" aria-label="${isFav ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${isFav}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
         <svg><use href="#i-star"></use></svg>
       </button>
@@ -200,7 +214,7 @@ def update_app_js():
     <div class="product-body">
       <div class="product-meta">
         <span class="category-pill">${p.category}</span>
-        <span class="rating">Verified PKR</span>
+        <span class="rating">${ratingBadge}</span>
       </div>
       <h3 class="product-title"><a class="product-page-link" href="tools/${p.id}/">${p.name}</a></h3>
       <p class="product-desc">${p.description}</p>
@@ -214,8 +228,8 @@ def update_app_js():
       </div>
       <div class="product-price">
         <div class="price-block">
-          ${oldPriceDisplay ? `<small>Rs. ${p.oldPrice.toLocaleString('en-PK')}</small>` : ''}
-          <strong>${pkrPriceDisplay}</strong>
+          ${oldPriceDisplay}
+          <strong>${mainPriceDisplay}</strong>
         </div>
         <span class="saving">${savingBadge}</span>
       </div>
@@ -228,13 +242,88 @@ def update_app_js():
         </a>
       </div>
     </div>
+    <span hidden style="display:none!important">Directory Reference</span>
   </article>`;
-  }"""
+  }
 
-    old_card_match = re.search(r"function card\(p\)\s*\{[\s\S]*?if\s*\(isDir\)\s*\{[\s\S]*?\}\n\s*return `\n\s*<article class=\"product-card\" data-id=\"\$\{p\.id\}\">", js)
-    if old_card_match:
-        replacement = card_template_new + "\n\n  return `\n  <article class=\"product-card\" data-id=\"${p.id}\">"
-        js = js[:old_card_match.start()] + replacement + js[old_card_match.end():]
+  const savingBadgeHtml = (p.oldPrice && p.oldPrice > p.price) ? `<span class="saving">Save ${discount(p)}%</span>` : '';
+
+  return `
+  <article class="product-card" data-id="${p.id}">
+    <div class="product-media">
+      <span class="product-badge">${escapeHTML(p.badge || 'Popular')}</span>
+      <button class="favorite-toggle${isFav ? ' active' : ''}" data-favorite="${p.id}" aria-label="${isFav ? 'Remove ' + p.name + ' from favorites' : 'Add ' + p.name + ' to favorites'}" aria-pressed="${isFav}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
+        <svg><use href="#i-star"></use></svg>
+      </button>
+      <img class="brand-logo" src="${p.logo}" width="128" height="128" loading="lazy" alt="Official ${p.name} logo" decoding="async" onerror="this.onerror=null;this.src='assets/logo-transparent.webp';">
+    </div>
+    <div class="product-body">
+      <div class="product-meta">
+        <span class="category-pill">${p.category}</span>
+        <span class="rating">${ratingBadge}</span>
+      </div>
+      <h3 class="product-title"><a class="product-page-link" href="tools/${p.id}/">${p.name}</a></h3>
+      <p class="product-desc">${p.description}</p>
+      <div class="tags">
+        ${(p.bestFor || []).map(t => `<button type="button" class="tag-chip" data-tag="${safeCatalogText(t)}" title="Filter by ${safeCatalogText(t)}">${safeCatalogText(t)}</button>`).join('')}
+      </div>
+      <div class="product-specs">
+        <span><i></i>${p.duration}</span>
+        <span>${p.access} Access</span>
+        <span>🛡️ ${p.warranty || '7-Day'}</span>
+      </div>
+      <div class="product-price">
+        <div class="price-block">
+          ${oldPriceDisplay}
+          <strong>${mainPriceDisplay}</strong>
+        </div>
+        ${savingBadgeHtml}
+      </div>
+      <div class="product-delivery-note">⚡ Verified WhatsApp Delivery · After Confirmation</div>
+      <div class="card-actions">
+        <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} Buy now</button>
+        <a class="detail-button" href="tools/${p.id}/">View details</a>
+        <button class="add-button${inCart ? ' added' : ''}" data-add="${p.id}" aria-label="${inCart ? 'View ' + p.name + ' in cart' : 'Add ' + p.name + ' to cart'}" aria-pressed="${inCart}">
+          ${svg(inCart ? 'i-check' : 'i-plus')}
+        </button>
+      </div>
+    </div>
+  </article>`;
+}"""
+
+    # Replace card function in app.js
+    card_func_pattern = re.compile(r"function card\(p\)\s*\{[\s\S]*?\n\}\n\nfunction renderProducts", re.MULTILINE)
+    match = card_func_pattern.search(js)
+    if match:
+        js = js[:match.start()] + card_func_new + "\n\nfunction renderProducts" + js[match.end():]
+    else:
+        print("WARNING: Could not find function card(p) in app.js via regex")
+
+    # Update updateCart to reflect USD in cart total and lines
+    update_cart_pattern = re.compile(r"function updateCart\(\)\s*\{[\s\S]*?\n\}\n\nfunction updateBundleButton", re.MULTILINE)
+    m_cart = update_cart_pattern.search(js)
+    if m_cart:
+        old_cart_body = m_cart.group(0)
+        # Update line price in cart items
+        new_cart_body = old_cart_body.replace(
+            '<strong class="cart-line-price">Rs. ${(p.price * qty).toLocaleString(\'en-PK\')}</strong>',
+            '<strong class="cart-line-price">${state.currency === \'USD\' && p.usdPrice ? \'$\' + (parseFloat(p.usdPrice) * qty).toFixed(2) + \' USD\' : \'Rs. \' + (p.price * qty).toLocaleString(\'en-PK\')}</strong>'
+        )
+        # Update subtotal in cart footer
+        old_subtotal_block = """  const subtotalPkr = items.reduce((sum, { p, qty }) => sum + (p.price * qty), 0);
+  const totalEl = $('#cartTotal');
+  if (totalEl) {
+    totalEl.textContent = 'Rs. ' + subtotalPkr.toLocaleString('en-PK');
+  }"""
+        new_subtotal_block = """  const isUSD = state.currency === 'USD';
+  const subtotalPkr = items.reduce((sum, { p, qty }) => sum + (p.price * qty), 0);
+  const subtotalUsd = items.reduce((sum, { p, qty }) => sum + (parseFloat(p.usdPrice || 0) * qty), 0);
+  const totalEl = $('#cartTotal');
+  if (totalEl) {
+    totalEl.textContent = isUSD ? '$' + subtotalUsd.toFixed(2) + ' USD' : 'Rs. ' + subtotalPkr.toLocaleString('en-PK');
+  }"""
+        new_cart_body = new_cart_body.replace(old_subtotal_block, new_subtotal_block)
+        js = js[:m_cart.start()] + new_cart_body + js[m_cart.end():]
 
     with open(app_js_path, "w", encoding="utf-8") as f:
         f.write(js)
@@ -277,7 +366,6 @@ def update_index_html():
             new_card_html = f"""<article class="product-card directory-card" data-id="{slug}">
     <div class="product-media">
       <span class="product-badge">{meta['badge']}</span>
-      <span class="sr-only">Directory Reference</span>
       <button class="favorite-toggle" data-favorite="{slug}" aria-label="Add {name} to favorites" aria-pressed="false" title="Add to favorites">
         <svg><use href="#i-star"></use></svg>
       </button>
@@ -314,6 +402,7 @@ def update_index_html():
         </a>
       </div>
     </div>
+    <span hidden style="display:none!important">Directory Reference</span>
   </article>"""
 
             html = html[:m.start()] + new_card_html + html[m.end():]

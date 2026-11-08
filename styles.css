@@ -623,3 +623,20 @@
   color: #38bdf8;
   font-weight: 600;
 }
+
+/* Accessibility & Screen Reader Utilities */
+.sr-only,
+[hidden] {
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+}
+
