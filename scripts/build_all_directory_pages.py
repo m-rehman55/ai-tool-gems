@@ -311,10 +311,9 @@ def build_tool_page(slug, data):
   <meta name="twitter:description" content="{html.escape(meta_desc)}">
   <meta name="twitter:image" content="https://aitoolgems.tech/assets/brand-logo-light.webp">
   
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/tool-page.css">
-  <link rel="stylesheet" href="/light-theme.css">
+  <!-- Favicon & Stylesheet -->
+  <link rel="icon" href="../../assets/brand-logo-light.webp">
+  <link rel="stylesheet" href="../../tool-page.css">
   
   <!-- Structured Data: Breadcrumbs, WebPage, SoftwareApplication & FAQ -->
   <script type="application/ld+json">
@@ -341,178 +340,170 @@ def build_tool_page(slug, data):
       <a href="../../">Home</a><span>/</span><a href="../../tools/">AI tools</a><span>/</span><span aria-current="page">{html.escape(name)}</span>
     </nav>
 
-    <article class="tool-profile-card">
-      <div class="tool-header">
-        <div class="tool-visual-aside">
-          <div class="logo-wrap">
-            <img src="{logo_rel}" width="128" height="128" alt="{html.escape(name)} logo" referrerpolicy="no-referrer" loading="lazy">
-          </div>
-          <span class="directory-badge">DIRECTORY REFERENCE</span>
+    <article class="product-layout">
+      <section class="product-visual">
+        <span class="category">{html.escape(category)}</span>
+        <div class="logo-wrap">
+          <img src="{logo_rel}" width="128" height="128" alt="{html.escape(name)} logo" referrerpolicy="no-referrer" loading="lazy">
         </div>
-        <div class="tool-title-group">
-          <p class="eyebrow">VERIFIED AI DIRECTORY • OFFICIAL REFERENCE &amp; REVIEWS</p>
-          <h1>{html.escape(name)}</h1>
-          <p class="tool-developer">By <strong>{html.escape(dev)}</strong> | Category: <span class="category-tag">{html.escape(category)}</span></p>
-          <p class="quick-answer">
-            {html.escape(quick_answer_text)}
-          </p>
-          <div class="tool-cta-container">
-            <a href="{official_url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary cta-visit-official">
-              Visit Official {html.escape(name)} Website &rarr;
-            </a>
-            <span class="cta-subtext">Direct official provider link ({pricing_official})</span>
-          </div>
-        </div>
-      </div>
-
-      <section class="tool-specs-summary">
-        <h2>Quick Specifications &amp; Overview</h2>
-        <dl class="specs-grid">
-          <div><dt>Developer / Vendor</dt><dd>{html.escape(dev)}</dd></div>
-          <div><dt>Primary Category</dt><dd>{html.escape(category)}</dd></div>
-          <div><dt>Access Model</dt><dd>{access_type}</dd></div>
-          <div><dt>Replacement Warranty</dt><dd>{warranty_period} (Assisted Support)</dd></div>
-          <div><dt>Official Pricing</dt><dd>{html.escape(pricing_official)}</dd></div>
-          <div><dt>Free Tier / Trial</dt><dd>{html.escape(free_plan)}</dd></div>
-          <div><dt>Pakistan Access</dt><dd>Fully Accessible (Online / Web / App)</dd></div>
-          <div><dt>Official Documentation</dt><dd><a href="{doc_url}" target="_blank" rel="noopener noreferrer">Official Developer Docs &rarr;</a></dd></div>
-        </dl>
+        <p class="listing-badge"><span class="directory-badge">Official Vendor (Directory)</span></p>
       </section>
-
-      <section class="tool-seo-clusters">
-        <h2>Target Search Queries &amp; Keyword Clusters</h2>
-        <div class="keyword-pills-wrap">
-{keywords_html}
-        </div>
-      </section>
-
-      <section class="tool-overview-section">
-        <h2>About {html.escape(name)}</h2>
-        <p class="lead-text">{html.escape(overview)}</p>
-      </section>
-
-      <section class="tool-use-cases-section">
-        <h2>Primary Use Cases &amp; Workflows</h2>
-        <div class="use-cases-grid">
-{use_cases_html}
-        </div>
-      </section>
-
-      <section class="tool-features-section">
-        <h2>Key Capabilities &amp; Technical Features</h2>
-        <ul class="features-list">
-{features_html}
-        </ul>
-      </section>
-
-      <section class="tool-limitations-section">
-        <h2>Limitations &amp; Considerations</h2>
-        <ul class="limitations-list">
-{limitations_html}
-        </ul>
-      </section>
-
-      <section class="tool-pricing-section">
-        <h2>Official Pricing &amp; Plans Breakdown</h2>
-        <p>Verified pricing directly from the official provider. Values in PKR are approximate conversions for Pakistani professionals based on prevailing forex rates (1 USD ≈ 280 PKR) before bank foreign transaction taxes.</p>
-        <div class="table-wrap">
-          <table class="pricing-table">
-            <thead>
-              <tr>
-                <th>Subscription Tier</th>
-                <th>Official Price (USD)</th>
-                <th>Estimated PKR Rate</th>
-                <th>Key Features &amp; Quotas</th>
-              </tr>
-            </thead>
-            <tbody>
-{pricing_rows_html}
-            </tbody>
-          </table>
-        </div>
-        <p class="pricing-disclaimer">
-          <em>Official pricing verified via vendor documentation in November 2026. Exchange rates fluctuate; Pakistani commercial banks apply standard foreign transaction withholding taxes (5% to 10%) on credit/debit card international purchases.</em>
+      <section class="product-copy">
+        <p class="eyebrow">VERIFIED AI DIRECTORY • WORLDWIDE &amp; PAKISTAN</p>
+        <h1>{html.escape(name)}</h1>
+        <p class="lead">By <strong>{html.escape(dev)}</strong> • {html.escape(category)}</p>
+        <p class="quick-answer">
+          {html.escape(quick_answer_text)}
         </p>
-      </section>
-
-      <section class="tool-pakistan-availability">
-        <h2>How to Access &amp; Use {html.escape(name)} in Pakistan</h2>
-        <div class="availability-box">
-          <p><strong>Availability Status:</strong> Fully accessible in Pakistan with standard broadband connections (PTCL, Nayatel, StormFiber, Jazz, Zong). Follow these verified steps to get started:</p>
-          <ol class="pakistan-steps-list">
-{pakistan_guide_html}
-          </ol>
-          <div class="pakistan-banking-support">
-            <h3>Verified Domestic Payment &amp; Banking Rails for Pakistani Users</h3>
-            <p>Pakistani users activating {name} or seeking assisted setup can rely on these verified payment channels:</p>
-            <div class="banking-rails-grid">
-              <div class="rail-card">
-                <span class="rail-badge">Digital Card</span>
-                <strong>SadaPay &amp; NayaPay</strong>
-                <p>Virtual or physical debit cards (Mastercard/Visa) with active international e-commerce sessions.</p>
-              </div>
-              <div class="rail-card">
-                <span class="rail-badge">Bank Transfer</span>
-                <strong>Raast &amp; Direct IBFT</strong>
-                <p>Supported across all major commercial Pakistani banks (Meezan, Alfalah, HBL, UBL, Standard Chartered).</p>
-              </div>
-              <div class="rail-card">
-                <span class="rail-badge">Mobile Wallet</span>
-                <strong>EasyPaisa &amp; JazzCash</strong>
-                <p>Convenient domestic mobile wallets supported for local concierge assistance and verification inquiries.</p>
-              </div>
-            </div>
-            <div class="concierge-box">
-              <p><strong>Need Assistance in Pakistan?</strong> If you do not have an international credit card or encounter bank 3D-Secure declines, message our Pakistani verification desk on WhatsApp for concierge payment advisory and guided onboarding.</p>
-            </div>
-          </div>
-          <div class="important-notice">
-            <p><strong>Important Commercial Disclosure:</strong> AI Tool Gems is an independent informational directory and review platform. We do not sell cracked accounts, unauthorized logins, or shared seats for {html.escape(name)}. Subscriptions must be activated directly with the official provider. Read our <a href="../../policies.html#payments">payment and directory verification policies</a>.</p>
-          </div>
+        <div class="price">
+          <span>Official Vendor Pricing</span>
+          <strong>{html.escape(pricing_official)}</strong>
+          <del>({pkr_est})</del>
         </div>
-      </section>
-
-      <section class="tool-comparison-section">
-        <h2>{html.escape(comp["title"])}</h2>
-        <p>Evaluate how {html.escape(name)} compares to leading alternatives available in our marketplace and directory:</p>
-        <div class="table-wrap">
-          <table class="comparison-table">
-            <thead>
-              <tr>
-{comp_headers_html}
-              </tr>
-            </thead>
-            <tbody>
-{comp_rows_html}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="tool-faqs-section">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faqs-list">
-{faqs_html}
-        </div>
-      </section>
-
-      <section class="tool-related-section">
-        <h2>Related Tools &amp; Alternatives</h2>
-        <div class="related-grid">
-{related_html}
-        </div>
-      </section>
-
-      <section class="category-hub-links">
-        <h3>Explore Related Categories &amp; Pakistani Buying Guides</h3>
-        <div class="hub-pills">
-          <a href="../../guides/{guide_slug}/" class="hub-pill">Guides for {guide_label} &rarr;</a>
-          <a href="../../guides/ai-tools-price-pakistan/" class="hub-pill">Pakistan AI Tools Price Index &rarr;</a>
-          <a href="../../deals/" class="hub-pill">View All Active Deals &rarr;</a>
-          <a href="../../tools/" class="hub-pill">Browse All 65 Verified Tools &rarr;</a>
-        </div>
+        <dl>
+          <div><dt>Duration</dt><dd>1 Month / Free Tier</dd></div>
+          <div><dt>Access type</dt><dd>{access_type}</dd></div>
+          <div><dt>Delivery estimate</dt><dd>Direct Cloud / Web Access</dd></div>
+          <div><dt>Replacement warranty</dt><dd>{warranty_period} (Assisted Support)</dd></div>
+        </dl>
+        <a class="buy" href="{official_url}" target="_blank" rel="noopener noreferrer">Visit Official {html.escape(name)} Website &rarr;</a>
+        <p class="availability">Direct official provider link ({html.escape(pricing_official)}). For assistance with foreign payments or concierge onboarding in Pakistan, message our verified WhatsApp desk.</p>
       </section>
     </article>
+
+    <section class="tool-seo-clusters">
+      <h2>Target Search Queries &amp; Keyword Clusters</h2>
+      <div class="keyword-pills-wrap">
+{keywords_html}
+      </div>
+    </section>
+
+    <section class="tool-overview-section">
+      <h2>About {html.escape(name)}</h2>
+      <p class="lead-text">{html.escape(overview)}</p>
+    </section>
+
+    <section class="tool-use-cases-section">
+      <h2>Primary Use Cases &amp; Workflows</h2>
+      <div class="use-cases-grid">
+{use_cases_html}
+      </div>
+    </section>
+
+    <section class="tool-features-section">
+      <h2>Key Capabilities &amp; Technical Features</h2>
+      <ul class="features-list">
+{features_html}
+      </ul>
+    </section>
+
+    <section class="tool-limitations-section">
+      <h2>Limitations &amp; Considerations</h2>
+      <ul class="limitations-list">
+{limitations_html}
+      </ul>
+    </section>
+
+    <section class="tool-pricing-section">
+      <h2>Official Pricing &amp; Plans Breakdown</h2>
+      <p>Verified pricing directly from the official provider. Values in PKR are approximate conversions for Pakistani professionals based on prevailing forex rates (1 USD ≈ 280 PKR) before bank foreign transaction taxes.</p>
+      <div class="table-wrap">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Subscription Tier</th>
+              <th>Official Price (USD)</th>
+              <th>Estimated PKR Rate</th>
+              <th>Key Features &amp; Quotas</th>
+            </tr>
+          </thead>
+          <tbody>
+{pricing_rows_html}
+          </tbody>
+        </table>
+      </div>
+      <p class="pricing-disclaimer">
+        <em>Official pricing verified via vendor documentation in November 2026. Exchange rates fluctuate; Pakistani commercial banks apply standard foreign transaction withholding taxes (5% to 10%) on credit/debit card international purchases.</em>
+      </p>
+    </section>
+
+    <section class="tool-pakistan-availability">
+      <h2>How to Access &amp; Use {html.escape(name)} in Pakistan</h2>
+      <div class="availability-box">
+        <p><strong>Availability Status:</strong> Fully accessible in Pakistan with standard broadband connections (PTCL, Nayatel, StormFiber, Jazz, Zong). Follow these verified steps to get started:</p>
+        <ol class="pakistan-steps-list">
+{pakistan_guide_html}
+        </ol>
+        <div class="pakistan-banking-support">
+          <h3>Verified Domestic Payment &amp; Banking Rails for Pakistani Users</h3>
+          <p>Pakistani users activating {name} or seeking assisted setup can rely on these verified payment channels:</p>
+          <div class="banking-rails-grid">
+            <div class="rail-card">
+              <span class="rail-badge">Digital Card</span>
+              <strong>SadaPay &amp; NayaPay</strong>
+              <p>Virtual or physical debit cards (Mastercard/Visa) with active international e-commerce sessions.</p>
+            </div>
+            <div class="rail-card">
+              <span class="rail-badge">Bank Transfer</span>
+              <strong>Raast &amp; Direct IBFT</strong>
+              <p>Supported across all major commercial Pakistani banks (Meezan, Alfalah, HBL, UBL, Standard Chartered).</p>
+            </div>
+            <div class="rail-card">
+              <span class="rail-badge">Mobile Wallet</span>
+              <strong>EasyPaisa &amp; JazzCash</strong>
+              <p>Convenient domestic mobile wallets supported for local concierge assistance and verification inquiries.</p>
+            </div>
+          </div>
+          <div class="concierge-box">
+            <p><strong>Need Assistance in Pakistan?</strong> If you do not have an international credit card or encounter bank 3D-Secure declines, message our Pakistani verification desk on WhatsApp for concierge payment advisory and guided onboarding.</p>
+          </div>
+        </div>
+        <div class="important-notice">
+          <p><strong>Important Commercial Disclosure:</strong> AI Tool Gems is an independent informational directory and review platform. We do not sell cracked accounts, unauthorized logins, or shared seats for {html.escape(name)}. Subscriptions must be activated directly with the official provider. Read our <a href="../../policies.html#payments">payment and directory verification policies</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-comparison-section">
+      <h2>{html.escape(comp["title"])}</h2>
+      <p>Evaluate how {html.escape(name)} compares to leading alternatives available in our marketplace and directory:</p>
+      <div class="table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+{comp_headers_html}
+            </tr>
+          </thead>
+          <tbody>
+{comp_rows_html}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="tool-faqs-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faqs-list">
+{faqs_html}
+      </div>
+    </section>
+
+    <section class="tool-related-section">
+      <h2>Related Tools &amp; Alternatives</h2>
+      <div class="related-grid">
+{related_html}
+      </div>
+    </section>
+
+    <section class="category-hub-links">
+      <h3>Explore Related Categories &amp; Pakistani Buying Guides</h3>
+      <div class="hub-pills">
+        <a href="../../guides/{guide_slug}/" class="hub-pill">Guides for {guide_label} &rarr;</a>
+        <a href="../../guides/ai-tools-price-pakistan/" class="hub-pill">Pakistan AI Tools Price Index &rarr;</a>
+        <a href="../../deals/" class="hub-pill">View All Active Deals &rarr;</a>
+        <a href="../../tools/" class="hub-pill">Browse All 65 Verified Tools &rarr;</a>
+      </div>
+    </section>
   </main>
 
   <aside class="whatsapp-float">
