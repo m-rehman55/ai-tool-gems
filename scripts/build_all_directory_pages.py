@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from directory_tools_data import DIRECTORY_TOOLS
+from harmonize_homepage_cards import DIRECTORY_ENRICHED_DATA
 
 WAVE2_SLUGS = {
     'ahrefs', 'chatprd', 'davinci-resolve', 'domo-ai', 'genspark', 'hailuo-ai',
@@ -105,23 +106,17 @@ def build_tool_page(slug, data):
 
     robots_meta = "noindex, follow" if slug in WAVE2_SLUGS else "index, follow"
 
-    # Extract clean numerical PKR price
-    pkr_price = clean_pkr_price(pricing_table, pricing_official)
-
-    access_type, warranty_period = TOOL_COMMERCIAL_SPECS.get(slug, ("Private Access", "7 Days"))
-
-    duration_display = "1 Month"
-    if slug in ['coursera-plus', 'skillshare']:
-        duration_display = "1 Year"
-    elif slug in ['davinci-resolve']:
-        duration_display = "Lifetime"
-    elif slug in ['notebooklm', 'qwen', 'morphic']:
-        duration_display = "Ongoing"
-
-    if pkr_price == "Rs. 0" and "free" in pricing_official.lower():
-        h1_title = f"{name} in Pakistan (Rs. 0) & Review (100% Free AI)"
-    else:
-        h1_title = f"{name} Price in Pakistan ({pkr_price}) & Review (2026)"
+    enriched = DIRECTORY_ENRICHED_DATA.get(slug, {
+        'pkr': 5600, 'old_pkr': 7500, 'saving': 'Save 25%',
+        'duration': '1 Month', 'access': 'Private', 'warranty': '7 Days',
+        'badge': 'Popular'
+    })
+    pkr_price = f"Rs. {enriched['pkr']:,}"
+    old_pkr_price = f"Rs. {enriched['old_pkr']:,}"
+    duration_display = enriched['duration']
+    access_type = enriched['access'] + " Access" if not enriched['access'].endswith("Access") else enriched['access']
+    warranty_period = enriched['warranty']
+    h1_title = f"{name} Price in Pakistan ({pkr_price}) & Review (2026)"
 
     # High-precision 45-55 word direct-answer block for 100% AIO/RAG grounding
     quick_answer_text = (
@@ -385,7 +380,7 @@ def build_tool_page(slug, data):
         <div class="price">
           <span>Current listed price</span>
           <strong>{pkr_price}</strong>
-          <small class="usd-ref">({html.escape(pricing_official)})</small>
+          <del>{old_pkr_price}</del>
         </div>
         <dl>
           <div><dt>Duration</dt><dd>{duration_display}</dd></div>
