@@ -397,10 +397,6 @@ function card(p) {
     </div>
   </article>`;
 }
-      </div>
-    </div>
-  </article>`;
-}
 
 function renderProducts() {
   productsRendered = true;
