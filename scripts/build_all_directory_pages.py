@@ -34,6 +34,34 @@ CATEGORY_GUIDE_MAP = {
     'ai-chatbots': ('ai-tools-pakistan', 'AI Assistants & Chatbots')
 }
 
+TOOL_COMMERCIAL_SPECS = {
+    'windsurf': ('Private Account', '7 Days'),
+    'v0': ('Private Account', '7 Days'),
+    'bolt-new': ('Private Account', '7 Days'),
+    'manus-ai': ('Private Account', '7 Days'),
+    'qwen': ('Private Account', '7 Days'),
+    'coursera-plus': ('Invitation Seat', '30 Days'),
+    'udemy-personal': ('Invitation Seat', '30 Days'),
+    'opus-clip': ('Private Account', '7 Days'),
+    'invideo-ai': ('Private Account', '7 Days'),
+    'descript': ('Private Account', '7 Days'),
+    'make': ('Private Account', '7 Days'),
+    'firecrawl': ('Private Account', '7 Days'),
+    'notebooklm': ('Private Account', '30 Days'),
+    'supabase': ('Private Account', '7 Days'),
+    'ahrefs': ('Private Account', '7 Days'),
+    'railway': ('Private Account', '7 Days'),
+    'davinci-resolve': ('Retail Key', 'Lifetime'),
+    'skillshare': ('Invitation Seat', '30 Days'),
+    'hailuo-ai': ('Private Account', '7 Days'),
+    'quizlet': ('Invitation Seat', '30 Days'),
+    'genspark': ('Private Account', '7 Days'),
+    'chatprd': ('Private Account', '7 Days'),
+    'domo-ai': ('Private Account', '7 Days'),
+    'morphic': ('Private Account', '7 Days'),
+    'higgsfield': ('Private Account', '7 Days')
+}
+
 def build_tool_page(slug, data):
     name = data["name"]
     dev = data["developer"]
@@ -72,6 +100,8 @@ def build_tool_page(slug, data):
         if "Rs." in pkr and pkr != "Rs. 0":
             pkr_est = pkr
             break
+
+    access_type, warranty_period = TOOL_COMMERCIAL_SPECS.get(slug, ("Private Account", "7 Days"))
 
     # High-precision 45-55 word direct-answer block for 100% AIO/RAG grounding
     quick_answer_text = (
@@ -340,6 +370,8 @@ def build_tool_page(slug, data):
         <dl class="specs-grid">
           <div><dt>Developer / Vendor</dt><dd>{html.escape(dev)}</dd></div>
           <div><dt>Primary Category</dt><dd>{html.escape(category)}</dd></div>
+          <div><dt>Access Model</dt><dd>{access_type}</dd></div>
+          <div><dt>Replacement Warranty</dt><dd>{warranty_period} (Assisted Support)</dd></div>
           <div><dt>Official Pricing</dt><dd>{html.escape(pricing_official)}</dd></div>
           <div><dt>Free Tier / Trial</dt><dd>{html.escape(free_plan)}</dd></div>
           <div><dt>Pakistan Access</dt><dd>Fully Accessible (Online / Web / App)</dd></div>
