@@ -517,3 +517,26 @@ tbody th { color:#247c69; }
   color: #ffffff;
   border-color: #167a40;
 }
+
+.official-vendor-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 14px 22px;
+  border-radius: 13px;
+  border: 1.5px solid #d9e6df;
+  background: #ffffff;
+  color: #153f37 !important;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+.official-vendor-btn:hover {
+  background: #f5faf6;
+  border-color: #2f9f88;
+  color: #0d4a3e !important;
+  transform: translateY(-1px);
+}
