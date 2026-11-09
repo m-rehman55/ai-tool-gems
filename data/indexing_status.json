@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-11-09T14:10:36.207824+00:00",
+  "canonical_sitemap_count": 113,
+  "infrastructure": {
+    "google_search_console_token": {
+      "file": "googleb36d12ee905644d9.html",
+      "status": "VERIFIED_ON_DISK"
+    },
+    "bing_webmaster_token": {
+      "file": "BingSiteAuth.xml",
+      "status": "VERIFIED_ON_DISK"
+    },
+    "indexnow_key": {
+      "file": "e1a8c47f9d2b4f30a6c8116de5b97042.txt",
+      "key": "e1a8c47f9d2b4f30a6c8116de5b97042",
+      "status": "VERIFIED_ON_DISK"
+    }
+  },
+  "sitemap_sample": [
+    "https://aitoolgems.tech/",
+    "https://aitoolgems.tech/deals/",
+    "https://aitoolgems.tech/prices/",
+    "https://aitoolgems.tech/about.html",
+    "https://aitoolgems.tech/contact.html",
+    "https://aitoolgems.tech/correction-policy.html",
+    "https://aitoolgems.tech/how-we-price.html",
+    "https://aitoolgems.tech/how-we-review.html",
+    "https://aitoolgems.tech/how-we-source.html",
+    "https://aitoolgems.tech/policies.html"
+  ],
+  "summary": "All search engine verification endpoints and IndexNow key confirmed active on static web root."
+}

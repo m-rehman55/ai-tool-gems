@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-11-09T14:12:19.048607+00:00",
+  "origin": "https://aitoolgems.tech",
+  "collection_window": "28-day rolling window",
+  "profiles": {
+    "PHONE": {
+      "status": "DRY_RUN",
+      "http_code": 200,
+      "data": null,
+      "error": null
+    },
+    "DESKTOP": {
+      "status": "DRY_RUN",
+      "http_code": 200,
+      "data": null,
+      "error": null
+    }
+  }
+}
