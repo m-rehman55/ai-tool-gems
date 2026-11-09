@@ -648,3 +648,14 @@ Sitemap: https://aitoolgems.tech/sitemap.xml
 - URL: https://aitoolgems.tech/guides/canva-ai-pakistan-guide/
 - Summary: Complete guide to Canva Pro Edu in Pakistan. Review features, access types, and flat PKR pricing via EasyPaisa and JazzCash.
 
+
+## Newly Published Guides
+
+### DeepSeek API in Pakistan: Developer Pricing & Access Guide (2026)
+- URL: https://aitoolgems.tech/guides/deepseek-api-pakistan/
+- Summary: Complete guide to DeepSeek V3 & R1 API in Pakistan. Review token pricing in PKR, EasyPaisa and JazzCash payment, and OpenAI API compatibility.
+
+### Figma Pro in Pakistan: Features, Pricing & Guide (2026)
+- URL: https://aitoolgems.tech/guides/figma-ai-pakistan-guide/
+- Summary: Complete guide to Figma Pro in Pakistan. Review features, access types, and flat PKR pricing via EasyPaisa and JazzCash.
+
