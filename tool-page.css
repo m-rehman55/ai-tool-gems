@@ -540,3 +540,23 @@ tbody th { color:#247c69; }
   color: #0d4a3e !important;
   transform: translateY(-1px);
 }
+
+/* Skip to Content Link (WCAG 2.4.1) */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: var(--bg-card, #111827);
+  color: var(--neon-cyan, #2f9f88);
+  padding: 10px 18px;
+  font-weight: 700;
+  border: 2px solid var(--neon-cyan, #2f9f88);
+  border-radius: 8px;
+  z-index: 99999;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus {
+  top: 16px;
+  outline: none;
+}

@@ -1,14 +1,14 @@
 {
-  "total_runs": 33,
-  "total_issues_logged": 92,
-  "fixes_attempted": 73,
-  "fixes_verified": 73,
+  "total_runs": 35,
+  "total_issues_logged": 125,
+  "fixes_attempted": 89,
+  "fixes_verified": 89,
   "fixes_reverted": 0,
   "false_positives": {},
   "issue_recurrence": {
     "META_DESC": 54,
-    "TITLE": 15,
-    "NOINDEX": 23
+    "TITLE": 29,
+    "NOINDEX": 42
   },
   "success_rate_by_type": {
     "TECHNICAL_P0": 1.0,
@@ -17,5 +17,5 @@
     "ORPHAN_LINK": 0.95,
     "TECHNICAL_P1": 1.0
   },
-  "last_updated": "2026-11-08T12:26:41.938039+00:00"
+  "last_updated": "2026-11-09T04:37:11.050426+00:00"
 }
