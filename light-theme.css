@@ -1745,9 +1745,11 @@ a.category-card:focus-visible {
   flex-direction: column;
 }
 
-.payment-disclosure-card h4 {
+.payment-disclosure-card h4,
+.payment-disclosure-card .payment-card-title {
   margin: 8px 0 8px;
   font-size: 15px;
+  font-weight: 700;
   color: var(--text-primary);
 }
 

@@ -685,6 +685,7 @@ function openLayer(el) {
   el.classList.add('open');
   el.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('layer-active');
   requestAnimationFrame(() => {
     const first = el.querySelector('[data-close], button, a, input, select, [tabindex="0"]');
     if (first) first.focus();
@@ -699,6 +700,7 @@ function closeLayers() {
   const backdrop = $('#backdrop');
   if (backdrop) backdrop.classList.remove('show');
   document.body.style.overflow = '';
+  document.body.classList.remove('layer-active');
   if (focusBeforeLayer && document.contains(focusBeforeLayer)) focusBeforeLayer.focus();
   focusBeforeLayer = null;
 }
@@ -799,7 +801,7 @@ function orderProduct(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
   if (p.commercialStatus === 'DIRECTORY_ONLY') {
-    showToast('This tool is a directory reference profile and is not available for purchase.');
+    toast('This tool is a directory reference profile and is not available for purchase.');
     return;
   }
   const isUsd = state.currency === 'USD';
