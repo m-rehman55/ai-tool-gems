@@ -25,6 +25,7 @@ on:
       - "blog/**"
       - "category/**"
       - "sitemap.xml"
+      - "data/**"
   pull_request:
     branches:
       - main
@@ -49,6 +50,7 @@ on:
       - "blog/**"
       - "category/**"
       - "sitemap.xml"
+      - "data/**"
   workflow_dispatch:
 
 permissions:
