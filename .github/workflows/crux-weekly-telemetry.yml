@@ -1,0 +1,43 @@
+name: Weekly Core Web Vitals & CrUX Telemetry
+
+on:
+  schedule:
+    # Every Monday at 00:00 UTC (05:00 PKT)
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  poll-crux:
+    name: Poll Chrome UX Report & Core Web Vitals Telemetry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Execute CrUX Telemetry Poller
+        env:
+          CRUX_API_KEY: ${{ secrets.CRUX_API_KEY }}
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+        run: |
+          python scripts/crux_telemetry.py
+
+      - name: Validate Deployment Allowlist Boundary
+        run: |
+          python scripts/update_deployment_allowlist.py --check
+
+      - name: Upload Snapshot Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: crux-weekly-telemetry-snapshot
+          path: data/crux_history/
+          if-no-files-found: ignore
