@@ -214,7 +214,8 @@ def load_queue_candidate() -> tuple[dict | None, str]:
         for tid in tool_ids:
             candidate_slug = f"{tid}-ai-pakistan-guide"
             if candidate_slug not in published_slugs:
-                tname = tool_map.get(tid, tid.title())
+                raw_name = tool_map.get(tid, tid.title())
+                tname = re.sub(r'\s+(Private|Shared|Edu|Personal|Access|VIP)$', '', raw_name, flags=re.IGNORECASE).strip()
                 dyn_item = {
                     "slug": candidate_slug,
                     "title": f"{tname} in Pakistan: Features, Pricing & Guide (2026)",
@@ -269,6 +270,19 @@ def render_article_html(bp: dict) -> str:
     sec2 = sec_kws[1] if len(sec_kws) > 1 else f"AI generator Pakistan"
     sec3 = sec_kws[2] if len(sec_kws) > 2 else f"Buy {pk} PKR"
     sec4 = sec_kws[3] if len(sec_kws) > 3 else f"{pk} price Pakistan"
+
+    # Optional price lookup for verified PKR grounding
+    tool_key = bp.get("tool_key", "")
+    price_str = ""
+    catalog_file = BASE / "app.js"
+    if catalog_file.exists() and tool_key:
+        try:
+            cat_text = catalog_file.read_text(encoding="utf-8")
+            pm = re.search(r"id:\s*['\"]" + re.escape(tool_key) + r"['\"].*?price:\s*(\d+)", cat_text, re.S)
+            if pm:
+                price_str = f" starting from Rs. {int(pm.group(1)):,}"
+        except Exception:
+            pass
 
     # Optional dynamic editorial generation via Google Gemini 2.0 Flash
     ai_extra_html = ""
@@ -352,8 +366,8 @@ def render_article_html(bp: dict) -> str:
     related_links_html = "\n".join([f'          <li><a href="../../tools/{k}/">{name} in Pakistan</a></li>' for k, name in rel_tools])
 
     html = f"""<!doctype html><html lang="en-PK"><head>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style"
-  rel="preconnect" href="https://www.google.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
+  <link rel="preconnect" href="https://www.google.com" crossorigin>
   <link rel="preconnect" href="https://t0.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://t1.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://t3.gstatic.com" crossorigin>
@@ -449,6 +463,7 @@ def render_article_html(bp: dict) -> str:
 </script>
 </head>
 <body>
+  <a href="#top" class="skip-to-content">Skip to main content</a>
   <header class="topbar">
     <a class="brand" href="../../">
       <img src="../../assets/brand-logo-light.webp" width="48" height="48" alt="AI Tool Gems logo" loading="lazy">
@@ -464,7 +479,7 @@ def render_article_html(bp: dict) -> str:
     </nav>
   </header>
 
-  <main>
+  <main id="top" tabindex="-1">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="../../">Home</a><span>/</span>
       <a href="../">Guides &amp; Blog</a><span>/</span>
@@ -484,8 +499,7 @@ def render_article_html(bp: dict) -> str:
 
       <section class="quick-summary">
         <h2>Quick Answer &amp; Overview: {pk}</h2>
-        <p>Finding affordable, reliable access to <strong>{pk}</strong> has become a crucial challenge for {bp["target_audience"]}. International billing in USD frequently leads to high forex conversion fees, bank withholding taxes, or outright transaction declines on Pakistani debit cards. This independent guide breaks down actual PKR costs, feature benchmarks, local payment methods (EasyPaisa, JazzCash, SadaPay), and how to verify subscription legitimacy before spending money.</p>
-        <p>In Pakistan's fast-growing digital economy, freelancers working on Upwork and Fiverr, content creators scaling YouTube channels, and digital agencies need powerful generative tools without overpaying in foreign exchange fees. Our analysis examines the top alternatives, prompt accuracy, commercial usage rights, and straightforward ordering steps.</p>
+        <p class="quick-answer">Accessing <strong>{pk}</strong> is available{price_str} with transparent PKR pricing. Pakistani professionals and teams bypass international card declines and banking withholding taxes by activating verified subscriptions via EasyPaisa, JazzCash, or SadaPay, backed by full replacement warranty and prompt delivery after WhatsApp order confirmation.</p>
       </section>
 
       <section class="content-section">

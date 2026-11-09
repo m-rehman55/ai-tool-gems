@@ -671,5 +671,37 @@
     "published_url": "https://aitoolgems.tech/guides/canva-ai-pakistan-guide/",
     "published_date": "2026-11-04",
     "last_updated": "2026-11-04"
+  },
+  {
+    "slug": "deepseek-api-pakistan",
+    "primary_keyword": "DeepSeek API price in Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani software engineers, AI startup developers, and computer science students",
+    "secondary_keywords": [
+      "DeepSeek API key Pakistan",
+      "buy DeepSeek credits PKR",
+      "DeepSeek R1 reasoning API",
+      "OpenAI compatible API Pakistan"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/deepseek-api-pakistan/",
+    "published_date": "2026-11-09",
+    "last_updated": "2026-11-09"
+  },
+  {
+    "slug": "figma-ai-pakistan-guide",
+    "primary_keyword": "Figma Pro Pakistan",
+    "search_intent": "informational_commercial",
+    "target_audience": "Pakistani digital creators, freelancers, and businesses",
+    "secondary_keywords": [
+      "Figma Pro price in Pakistan",
+      "buy Figma Pro PKR",
+      "Figma Pro EasyPaisa JazzCash",
+      "best AI tools Pakistan"
+    ],
+    "status": "published",
+    "published_url": "https://aitoolgems.tech/guides/figma-ai-pakistan-guide/",
+    "published_date": "2026-11-09",
+    "last_updated": "2026-11-09"
   }
 ]
