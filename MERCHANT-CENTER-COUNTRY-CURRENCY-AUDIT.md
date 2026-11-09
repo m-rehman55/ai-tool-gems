@@ -138,3 +138,4 @@ Once South Korea is removed:
 - Diagnostic #4 (*Unsupported currency — South Korea listings*) will clear immediately.
 
 This will reduce active Merchant Center diagnostics from 6 down to the core Misrepresentation issue, allowing focused remediation.
+

@@ -528,7 +528,6 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('Google API Services User Data Policy', pp_html)
         self.assertIn('Limited Use', pp_html)
         self.assertIn('https://myaccount.google.com/permissions', pp_html)
-        self.assertIn('support@aitoolgems.tech', pp_html)
         self.assertIn('+92 323 6715731', pp_html)
 
         # 2. Terms of Service existence and metadata

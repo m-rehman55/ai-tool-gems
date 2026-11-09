@@ -109,3 +109,4 @@ To achieve genuine compliance, eliminate the 6 observed Merchant Center diagnost
 - **Owner Action Required:**  
   [ ] **APPROVED:** Authorize PR creation and merge to `main`.  
   [ ] **HOLD:** Hold deployment pending address finalization.
+

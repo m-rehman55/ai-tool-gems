@@ -152,3 +152,4 @@ Each finding is documented with:
 | **8** | Sub-100px images | 9 logo files in `assets/` | `MEDIUM` | **YES** (Upscaled) | **NO** |
 | **9** | ReturnByMail schema | Tool JSON-LD schemas | `HIGH` | **YES** (Verified) | **NO** |
 | **10** | South Korea target configuration | GMC Portal Settings | `HIGH` | Instructions | **YES** |
+

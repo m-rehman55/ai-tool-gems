@@ -135,3 +135,4 @@ python -m unittest discover -s tests -v
 ## 5. Certification of Test Completion
 
 The code changes implemented on branch `feat/merchant-center-compliance` maintain documentation integrity, preserve existing test contracts, introduce zero regressions, and resolve technical causes for Google Merchant Center diagnostics.
+

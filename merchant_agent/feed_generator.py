@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import re
 import xml.etree.ElementTree as ET
 from dataclasses import asdict, dataclass
@@ -58,7 +59,7 @@ class MerchantProductItem:
     price_pkr: int
     brand: str
     condition: str = "new"
-    google_product_category: str = "Software > Digital Goods & Subscriptions"
+    google_product_category: str = "Software > Computer Software"
     shipping_country: str = "PK"
     shipping_price: str = "0.00 PKR"
     identifier_exists: str = "no"
@@ -253,7 +254,7 @@ class MerchantFeedGenerator:
         return [self.evaluate_offer(p) for p in products]
 
     def export_eligibility_registers(self) -> Tuple[Path, Path]:
-        """Exports durable JSON audit registers for Merchant Center and Google Ads."""
+        """Exports durable JSON audit registers for Merchant Center and Google Ads, and syncs CSV."""
         assessments = self.evaluate_all_catalog_offers()
 
         hold_register = [a.to_dict() for a in assessments if a.merchant_center_status != "ELIGIBLE"]
@@ -264,6 +265,68 @@ class MerchantFeedGenerator:
 
         hold_path.write_text(json.dumps(hold_register, indent=2), encoding="utf-8")
         ads_path.write_text(json.dumps(ads_matrix, indent=2), encoding="utf-8")
+
+        # Also sync root CSV if project directory has tools folder
+        tools_dir = self.project_dir / "tools"
+        if tools_dir.exists():
+            csv_path = self.project_dir / "MERCHANT-CENTER-FINAL-ELIGIBILITY.csv"
+            fieldnames = [
+                "slug", "name", "catalog_type", "duration", "access_type",
+                "price_pkr", "price_usd", "landing_page_url", "landing_page_exists",
+                "image_url", "availability", "google_product_category",
+                "merchant_center_status", "merchant_center_reason",
+                "google_ads_search_status", "google_ads_search_reason",
+                "required_clearance_action",
+            ]
+            rows = []
+            for a in assessments:
+                rows.append({
+                    "slug": a.slug,
+                    "name": a.name,
+                    "catalog_type": "Commercial Assisted",
+                    "duration": a.duration,
+                    "access_type": a.access_model,
+                    "price_pkr": a.total_cost_pkr,
+                    "price_usd": 0.0,
+                    "landing_page_url": a.landing_page_url,
+                    "landing_page_exists": a.landing_page_exists,
+                    "image_url": f"https://aitoolgems.tech/assets/product-logos/{a.slug}.png",
+                    "availability": "in_stock",
+                    "google_product_category": "Software > Computer Software (313)",
+                    "merchant_center_status": a.merchant_center_status,
+                    "merchant_center_reason": a.merchant_center_reason,
+                    "google_ads_search_status": a.google_ads_search_status,
+                    "google_ads_search_reason": a.google_ads_search_reason,
+                    "required_clearance_action": "Requires direct on-site payment gateway and supplier invoice for Shopping."
+                })
+            # Also add directory-only tools if present
+            all_dirs = sorted([d for d in os.listdir(tools_dir) if os.path.isdir(tools_dir / d)])
+            assessed_slugs = {a.slug for a in assessments}
+            for slug in all_dirs:
+                if slug not in assessed_slugs:
+                    rows.append({
+                        "slug": slug,
+                        "name": slug.replace("-", " ").title(),
+                        "catalog_type": "Reference Directory",
+                        "duration": "N/A - Reference Guide",
+                        "access_type": "Informational Profile",
+                        "price_pkr": 0,
+                        "price_usd": 0.0,
+                        "landing_page_url": f"https://aitoolgems.tech/tools/{slug}/",
+                        "landing_page_exists": (tools_dir / slug / "index.html").exists(),
+                        "image_url": f"https://aitoolgems.tech/assets/product-logos/{slug}.png",
+                        "availability": "out_of_stock",
+                        "google_product_category": "Software > Computer Software (313)",
+                        "merchant_center_status": "HOLD_DIRECTORY_PROFILE",
+                        "merchant_center_reason": "Directory Profile: Non-transactional reference guide. Ineligible for shopping product feed.",
+                        "google_ads_search_status": "INFORMATIONAL_SEO_PAGE",
+                        "google_ads_search_reason": "Informational software reference directory page. Preserved for organic search traffic.",
+                        "required_clearance_action": "Preserve on public website for organic search and discovery. Exclude from shopping feeds.",
+                    })
+            with open(csv_path, "w", encoding="utf-8", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
 
         return hold_path, ads_path
 

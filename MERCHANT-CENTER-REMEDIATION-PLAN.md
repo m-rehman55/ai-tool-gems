@@ -136,3 +136,4 @@ Once Phase B approval is granted, the administrator must configure the Merchant 
 3. Once all website disclosures and business address updates are live on production, navigate to **Account Issues** > **Misrepresentation**.
 4. Review the declaration checklist and click **Request Review**.
 5. Document the submission timestamp and monitor for Google's re-evaluation (typically 3–5 business days).
+

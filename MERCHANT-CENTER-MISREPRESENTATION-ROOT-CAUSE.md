@@ -179,3 +179,4 @@ Structured data in JSON-LD must accurately represent the product. Claiming `Retu
 | **6** | Academic cheating / Turnitin student accounts | 1 tool | Academic Dishonesty | Permanently banned from feeds (`HOLD_PROHIBITED`). |
 | **7** | "Instant delivery" claims vs manual fulfillment | Site-wide | Misleading Representation | Replaced with verified 15–60 min delivery SLA across all pages. |
 | **8** | ReturnByMail in digital product schemas | Schema | Structured Data Parity | Remediated to digital replacement warranty; verified with unit tests. |
+
