@@ -13,13 +13,30 @@ from __future__ import annotations
 
 import json
 import re
+import struct
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from PIL import Image
-
 from merchant_agent.feed_generator import MerchantFeedGenerator, MerchantProductItem, OfferPolicyAssessment
+
+
+def _get_png_dimensions(path: Path) -> Tuple[int, int]:
+    """Reads PNG image dimensions using standard library struct with Pillow fallback."""
+    try:
+        with open(path, "rb") as f:
+            header = f.read(24)
+            if header.startswith(b"\x89PNG\r\n\x1a\n") and header[12:16] == b"IHDR":
+                return struct.unpack(">II", header[16:24])
+    except Exception:
+        pass
+    try:
+        from PIL import Image
+        with Image.open(path) as im:
+            return im.size
+    except Exception:
+        pass
+    return 0, 0
 
 
 @dataclass
@@ -131,16 +148,15 @@ class MerchantValidator:
                 logo_path = self.project_dir / "assets" / f"{slug}.png"
             if logo_path.exists():
                 try:
-                    with Image.open(logo_path) as im:
-                        w, h = im.size
-                        if w < 100 or h < 100:
-                            issues.append(ParityIssue(
-                                tool_slug=slug,
-                                issue_type="IMAGE_DIMENSION_ERROR",
-                                severity="CRITICAL",
-                                details=f"Image dimensions ({w}x{h}) are below Google Merchant Center minimum requirement of 100x100 pixels.",
-                                recommendation=f"Upscale or replace {slug}.png to at least 256x256 pixels.",
-                            ))
+                    w, h = _get_png_dimensions(logo_path)
+                    if w < 100 or h < 100:
+                        issues.append(ParityIssue(
+                            tool_slug=slug,
+                            issue_type="IMAGE_DIMENSION_ERROR",
+                            severity="CRITICAL",
+                            details=f"Image dimensions ({w}x{h}) are below Google Merchant Center minimum requirement of 100x100 pixels.",
+                            recommendation=f"Upscale or replace {slug}.png to at least 256x256 pixels.",
+                        ))
                 except Exception as img_err:
                     issues.append(ParityIssue(
                         tool_slug=slug,

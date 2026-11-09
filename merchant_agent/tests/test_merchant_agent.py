@@ -216,15 +216,29 @@ class TestMerchantAgent(unittest.TestCase):
 
     def test_validator_detects_small_image_dimensions(self):
         """Verifies validator flags images under Google Merchant Center minimum 100x100 pixels."""
-        from PIL import Image
+        import struct
+        import zlib
+
         tool_dir = self.tmp_path / "tools" / "small-img-tool"
         tool_dir.mkdir(parents=True)
         (tool_dir / "index.html").write_text("<html><body><h1>Small Img Tool</h1></body></html>", encoding="utf-8")
         
         assets_dir = self.tmp_path / "assets" / "product-logos"
         assets_dir.mkdir(parents=True)
-        small_im = Image.new("RGBA", (64, 64), (255, 0, 0, 255))
-        small_im.save(assets_dir / "small-img-tool.png")
+        
+        # Pure Python 64x64 PNG generation (zero external PIL dependency)
+        width, height = 64, 64
+        png_data = b"\x89PNG\r\n\x1a\n"
+        ihdr_data = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        ihdr_crc = zlib.crc32(b"IHDR" + ihdr_data)
+        ihdr = struct.pack(">I", len(ihdr_data)) + b"IHDR" + ihdr_data + struct.pack(">I", ihdr_crc)
+        raw_data = b"".join(b"\x00" + b"\xff\x00\x00" * width for _ in range(height))
+        compressed = zlib.compress(raw_data)
+        idat_crc = zlib.crc32(b"IDAT" + compressed)
+        idat = struct.pack(">I", len(compressed)) + b"IDAT" + compressed + struct.pack(">I", idat_crc)
+        iend_crc = zlib.crc32(b"IEND")
+        iend = struct.pack(">I", 0) + b"IEND" + struct.pack(">I", iend_crc)
+        (assets_dir / "small-img-tool.png").write_bytes(png_data + ihdr + idat + iend)
 
         item = MerchantProductItem(
             sku_id="atg-small-img-tool",
