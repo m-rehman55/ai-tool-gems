@@ -17,6 +17,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+from PIL import Image
+
 from merchant_agent.feed_generator import MerchantFeedGenerator, MerchantProductItem, OfferPolicyAssessment
 
 
@@ -123,6 +125,50 @@ class MerchantValidator:
                         recommendation="Align review structured data strictly with genuine visible customer reviews.",
                     ))
 
+            # 5. Google Merchant Center Image Dimensions Check (Minimum 100x100 px)
+            logo_path = self.project_dir / "assets" / "product-logos" / f"{slug}.png"
+            if not logo_path.exists():
+                logo_path = self.project_dir / "assets" / f"{slug}.png"
+            if logo_path.exists():
+                try:
+                    with Image.open(logo_path) as im:
+                        w, h = im.size
+                        if w < 100 or h < 100:
+                            issues.append(ParityIssue(
+                                tool_slug=slug,
+                                issue_type="IMAGE_DIMENSION_ERROR",
+                                severity="CRITICAL",
+                                details=f"Image dimensions ({w}x{h}) are below Google Merchant Center minimum requirement of 100x100 pixels.",
+                                recommendation=f"Upscale or replace {slug}.png to at least 256x256 pixels.",
+                            ))
+                except Exception as img_err:
+                    issues.append(ParityIssue(
+                        tool_slug=slug,
+                        issue_type="IMAGE_DIMENSION_ERROR",
+                        severity="HIGH",
+                        details=f"Unable to read image {logo_path}: {img_err}",
+                        recommendation=f"Ensure valid PNG image exists for {slug}.",
+                    ))
+
+            # 6. Country & Currency Enforcement (Pakistan PK and PKR exclusively)
+            if item.shipping_country != "PK":
+                issues.append(ParityIssue(
+                    tool_slug=slug,
+                    issue_type="SHIPPING_COUNTRY_ERROR",
+                    severity="CRITICAL",
+                    details=f"Unsupported shipping country '{item.shipping_country}'. Only Pakistan ('PK') is permitted.",
+                    recommendation="Set shipping country to 'PK' and restrict feed targeting to Pakistan.",
+                ))
+
+            if not item.shipping_price.endswith("PKR"):
+                issues.append(ParityIssue(
+                    tool_slug=slug,
+                    issue_type="UNSUPPORTED_CURRENCY_ERROR",
+                    severity="CRITICAL",
+                    details=f"Shipping price currency '{item.shipping_price}' is unsupported. Only PKR is accepted.",
+                    recommendation="Ensure shipping price is specified in PKR (e.g., '0.00 PKR').",
+                ))
+
         is_compliant = len(issues) == 0
         return FeedValidationReport(
             total_products_checked=len(items),
@@ -134,6 +180,9 @@ class MerchantValidator:
                 "return_policy_errors": sum(1 for i in issues if i.issue_type == "RETURN_POLICY_ERROR"),
                 "review_schema_errors": sum(1 for i in issues if i.issue_type == "FAKE_REVIEW_ERROR"),
                 "ineligible_feed_items": sum(1 for i in issues if i.issue_type == "INELIGIBLE_FEED_ITEM"),
+                "image_dimension_errors": sum(1 for i in issues if i.issue_type == "IMAGE_DIMENSION_ERROR"),
+                "shipping_country_errors": sum(1 for i in issues if i.issue_type == "SHIPPING_COUNTRY_ERROR"),
+                "currency_errors": sum(1 for i in issues if i.issue_type == "UNSUPPORTED_CURRENCY_ERROR"),
             },
         )
 

@@ -214,6 +214,78 @@ class TestMerchantAgent(unittest.TestCase):
         self.assertIn("INELIGIBLE_FEED_ITEM", issue_types)
 
 
+    def test_validator_detects_small_image_dimensions(self):
+        """Verifies validator flags images under Google Merchant Center minimum 100x100 pixels."""
+        from PIL import Image
+        tool_dir = self.tmp_path / "tools" / "small-img-tool"
+        tool_dir.mkdir(parents=True)
+        (tool_dir / "index.html").write_text("<html><body><h1>Small Img Tool</h1></body></html>", encoding="utf-8")
+        
+        assets_dir = self.tmp_path / "assets" / "product-logos"
+        assets_dir.mkdir(parents=True)
+        small_im = Image.new("RGBA", (64, 64), (255, 0, 0, 255))
+        small_im.save(assets_dir / "small-img-tool.png")
+
+        item = MerchantProductItem(
+            sku_id="atg-small-img-tool",
+            title="Small Img Tool",
+            description="Testing small image",
+            link="https://aitoolgems.tech/tools/small-img-tool/",
+            image_link="https://aitoolgems.tech/assets/product-logos/small-img-tool.png",
+            availability="in_stock",
+            price_pkr=1000,
+            brand="Test",
+        )
+        report = self.val.validate_feed_items([item])
+        self.assertFalse(report.is_feed_compliant)
+        issue_types = [i.issue_type for i in report.issues]
+        self.assertIn("IMAGE_DIMENSION_ERROR", issue_types)
+
+    def test_validator_detects_non_pk_shipping_country(self):
+        """Verifies validator flags shipping country not set to Pakistan (PK)."""
+        tool_dir = self.tmp_path / "tools" / "kr-tool"
+        tool_dir.mkdir(parents=True)
+        (tool_dir / "index.html").write_text("<html><body><h1>KR Tool</h1></body></html>", encoding="utf-8")
+
+        item = MerchantProductItem(
+            sku_id="atg-kr-tool",
+            title="KR Tool",
+            description="Testing KR shipping",
+            link="https://aitoolgems.tech/tools/kr-tool/",
+            image_link="https://aitoolgems.tech/assets/kr-tool.png",
+            availability="in_stock",
+            price_pkr=1000,
+            brand="Test",
+            shipping_country="KR",
+        )
+        report = self.val.validate_feed_items([item])
+        self.assertFalse(report.is_feed_compliant)
+        issue_types = [i.issue_type for i in report.issues]
+        self.assertIn("SHIPPING_COUNTRY_ERROR", issue_types)
+
+    def test_validator_detects_unsupported_currency(self):
+        """Verifies validator flags non-PKR currency in shipping price."""
+        tool_dir = self.tmp_path / "tools" / "usd-tool"
+        tool_dir.mkdir(parents=True)
+        (tool_dir / "index.html").write_text("<html><body><h1>USD Tool</h1></body></html>", encoding="utf-8")
+
+        item = MerchantProductItem(
+            sku_id="atg-usd-tool",
+            title="USD Tool",
+            description="Testing USD currency",
+            link="https://aitoolgems.tech/tools/usd-tool/",
+            image_link="https://aitoolgems.tech/assets/usd-tool.png",
+            availability="in_stock",
+            price_pkr=1000,
+            brand="Test",
+            shipping_price="10.00 USD",
+        )
+        report = self.val.validate_feed_items([item])
+        self.assertFalse(report.is_feed_compliant)
+        issue_types = [i.issue_type for i in report.issues]
+        self.assertIn("UNSUPPORTED_CURRENCY_ERROR", issue_types)
+
+
 if __name__ == "__main__":
     unittest.main()
 
