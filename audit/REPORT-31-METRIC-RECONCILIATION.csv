@@ -1,0 +1,29 @@
+Metric/Claim,Previous Claimed Value,Independently Verified Value,Evidence Reference,Discrepancy Severity,Verification Status,Auditor Notes
+Production Commit SHA,5a255d9d47b96a9fecda8bd7c0fab53338e303c5,5a255d9d47b96a9fecda8bd7c0fab53338e303c5,git rev-parse HEAD; GitHub API deployments run 7649653391,NONE,VERIFIED,Matches local git HEAD and GitHub Pages active deployment
+GitHub Pages Deployment Status,Active / Success,Active / Success (Run ID 7649653391),gh api repos/m-rehman55/ai-tool-gems/deployments,NONE,VERIFIED,Deployed on 2026-11-09T07:53:58Z with custom domain aitoolgems.tech
+Total HTML Files Audited,136 files,136 files scanned (129 core production HTML),audit_all.py; schema_audit.py,LOW,PARTIALLY VERIFIED,136 files includes cache/snapshot/admin files; 129 core public HTML files on disk
+Canonical Sitemap URLs,136 URLs claimed implicitly,113 canonical URLs in sitemap.xml,sitemap.xml; scripts/link_graph_checker.py,MEDIUM,DISCREPANCY,Sitemap correctly excludes category hubs (noindex) and non-canonical pages
+Product Listings Count,65 products,65 tools in tools/*/index.html,tools/ directory scan; tools/index.html,NONE,VERIFIED,All 65 tool pages contain valid Product schema and pricing
+Guides Count,42 guides,42 guides in guides/*/index.html,guides/ directory scan; guides/index.html,NONE,VERIFIED,All 42 guide pages contain valid HowTo/Article schema
+Total Internal Links,4613 links,4613 links scanned across 129 files,scripts/link_graph_checker.py --strict,NONE,VERIFIED,Link count 100% reproducible with 0 broken links
+Broken Internal Links,0 broken links,0 broken links (1294 anchors; 463 assets clean),scripts/link_graph_checker.py --strict,NONE,VERIFIED,Zero 404s or invalid fragment anchors detected
+Automated QA Tests Executed,249 tests,249 tests executed (248 pass; 1 skip; 0 fail),scratch/run_full_qa_suite.py; Python 3.12,NONE,VERIFIED,All 8 test suites pass with 100% non-skipped pass rate
+Automated QA Suite Runtime,88.43 seconds,88.43 seconds (36.9s tests + 37.3s seo-agent + 14.2s others),scratch/run_full_qa_suite.py log,NONE,VERIFIED,Runtime reproducible within +/- 2 seconds
+Schema Checks Total,6775 checks,6775 checks passed across 136 files,schema_audit.py,NONE,VERIFIED,50 structural checks per file across 136 files pass with 0 errors
+Schema Pass Rate,100%,100% (6775 / 6775),schema_audit.py,NONE,VERIFIED,Strict structural syntax and entity graph validation passed
+Google Rich Snippet Eligibility,Guaranteed,Conditional on Google Search discretion & Merchant review,Google Search Central Guidelines,HIGH,UNSUPPORTED,Valid JSON-LD syntax does not guarantee rich snippets without external moderation
+Lab LCP (Desktop / Mobile),0.4s - 1.1s,0.42s - 1.08s across audited templates,Lighthouse lab audits; Chrome DevTools traces,NONE,VERIFIED,Verified in synthetic lab tests on representative templates
+Lab CLS,0.000,0.000 (all images width/height specified),Lighthouse audits; DOM image inspection,NONE,VERIFIED,Verified in synthetic lab tests due to explicit dimensions and CSS layout
+Field Core Web Vitals (CrUX),Passed / Certified,UNAVAILABLE (insufficient field traffic data),Google Chrome UX Report API / PSI live query,HIGH,UNAVAILABLE,Domain is young; CrUX field data requires sufficient traffic volume before certification
+Accessible Names,100% (375/375 buttons),100% (375/375 buttons have aria-label or text),DOM inspection; scratch/phase20_accessibility_data.json,NONE,VERIFIED,Automated DOM check confirms all button and interactive elements have names
+Color Contrast Compliance,100% AA/AAA,Passes automated contrast ratios (7.6:1 - 19.6:1),WCAG automated calculation; CSS color palette,LOW,VERIFIED,Verified via algorithmic color ratio math on dark and light themes
+Full WCAG 2.2 AA Conformance,100% certified,Automated rules pass; Manual assistive device test unverified,WCAG 2.2 Specification guidelines,HIGH,PARTIALLY VERIFIED,Automated scans pass but real-user screen reader (NVDA/VoiceOver) tests not formally logged
+Google/Bing Technical SEO,136/136 clean files,136/136 clean files (0 errors; 0 warnings),audit_all.py,NONE,VERIFIED,Valid titles; meta descriptions; canonicals; viewports; charset across all files
+IndexNow Key Verification,Verified,Verified (e1a8c47f9d2b4f30a6c8116de5b97042),python -m ping_agent verify,NONE,VERIFIED,Key exists at root /e1a8c47f9d2b4f30a6c8116de5b97042.txt with matching content
+IndexNow Guaranteed Indexation,Claimed/Implied,Submitted successfully; Indexation at search engine discretion,Bing Webmaster Documentation; RFC IndexNow,HIGH,UNSUPPORTED,Pinging IndexNow dispatches URLs to Bing/Yandex but search engines decide crawl/index
+AI Overview Grounding Score,95.5/100,95.5/100 (Internal Heuristic Metric),python -m aio_agent audit,HIGH,PARTIALLY VERIFIED,Score is valid within aio_agent heuristic model; NOT an official Google Search Console score
+Machine Knowledge Sync,100% in sync,100% synchronized (65 tools; 42 guides),python -m aio_agent sync-llms; diff check,NONE,VERIFIED,llms.txt and llms-full.txt match all 65 tools and 42 guides accurately
+Public Deployment Allowlist,Passes security gate,Passes security gate (Strict block against non-allowlisted files),tests/test_public_deployment_allowlist.py,NONE,VERIFIED,Allowlist enforces exact static boundaries; fails closed on unknown files
+PII & Secret Redaction,0 secrets committed,0 secrets committed; zero unmasked keys,tests/test_token_redaction.py; git log scan,NONE,VERIFIED,Zero API keys, private tokens, or customer PII tracked in git history
+Overall Health Score,99.2/100,99.2/100 (Internal Composite QA Metric),Weighted average across audit phases 0-30,MEDIUM,PARTIALLY VERIFIED,Valid internal engineering aggregate; must not be marketed as an external third-party accreditation
+

@@ -15,7 +15,7 @@ The AIToolGems engineering team takes the security of our platform and Pakistani
 If you discover a security issue or potential vulnerability:
 
 1. **Do NOT** open a public GitHub issue, pull request, or discussion.
-2. Email your findings privately to **mrehmanfarooq6@gmail.com** or **support@aitoolgems.tech**.
+2. Email your findings privately to **mrehmanfarooq6@gmail.com**.
 3. Please include:
    - Description of the vulnerability
    - Step-by-step instructions or proof-of-concept to reproduce

@@ -214,6 +214,92 @@ class TestMerchantAgent(unittest.TestCase):
         self.assertIn("INELIGIBLE_FEED_ITEM", issue_types)
 
 
+    def test_validator_detects_small_image_dimensions(self):
+        """Verifies validator flags images under Google Merchant Center minimum 100x100 pixels."""
+        import struct
+        import zlib
+
+        tool_dir = self.tmp_path / "tools" / "small-img-tool"
+        tool_dir.mkdir(parents=True)
+        (tool_dir / "index.html").write_text("<html><body><h1>Small Img Tool</h1></body></html>", encoding="utf-8")
+        
+        assets_dir = self.tmp_path / "assets" / "product-logos"
+        assets_dir.mkdir(parents=True)
+        
+        # Pure Python 64x64 PNG generation (zero external PIL dependency)
+        width, height = 64, 64
+        png_data = b"\x89PNG\r\n\x1a\n"
+        ihdr_data = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        ihdr_crc = zlib.crc32(b"IHDR" + ihdr_data)
+        ihdr = struct.pack(">I", len(ihdr_data)) + b"IHDR" + ihdr_data + struct.pack(">I", ihdr_crc)
+        raw_data = b"".join(b"\x00" + b"\xff\x00\x00" * width for _ in range(height))
+        compressed = zlib.compress(raw_data)
+        idat_crc = zlib.crc32(b"IDAT" + compressed)
+        idat = struct.pack(">I", len(compressed)) + b"IDAT" + compressed + struct.pack(">I", idat_crc)
+        iend_crc = zlib.crc32(b"IEND")
+        iend = struct.pack(">I", 0) + b"IEND" + struct.pack(">I", iend_crc)
+        (assets_dir / "small-img-tool.png").write_bytes(png_data + ihdr + idat + iend)
+
+        item = MerchantProductItem(
+            sku_id="atg-small-img-tool",
+            title="Small Img Tool",
+            description="Testing small image",
+            link="https://aitoolgems.tech/tools/small-img-tool/",
+            image_link="https://aitoolgems.tech/assets/product-logos/small-img-tool.png",
+            availability="in_stock",
+            price_pkr=1000,
+            brand="Test",
+        )
+        report = self.val.validate_feed_items([item])
+        self.assertFalse(report.is_feed_compliant)
+        issue_types = [i.issue_type for i in report.issues]
+        self.assertIn("IMAGE_DIMENSION_ERROR", issue_types)
+
+    def test_validator_detects_non_pk_shipping_country(self):
+        """Verifies validator flags shipping country not set to Pakistan (PK)."""
+        tool_dir = self.tmp_path / "tools" / "kr-tool"
+        tool_dir.mkdir(parents=True)
+        (tool_dir / "index.html").write_text("<html><body><h1>KR Tool</h1></body></html>", encoding="utf-8")
+
+        item = MerchantProductItem(
+            sku_id="atg-kr-tool",
+            title="KR Tool",
+            description="Testing KR shipping",
+            link="https://aitoolgems.tech/tools/kr-tool/",
+            image_link="https://aitoolgems.tech/assets/kr-tool.png",
+            availability="in_stock",
+            price_pkr=1000,
+            brand="Test",
+            shipping_country="KR",
+        )
+        report = self.val.validate_feed_items([item])
+        self.assertFalse(report.is_feed_compliant)
+        issue_types = [i.issue_type for i in report.issues]
+        self.assertIn("SHIPPING_COUNTRY_ERROR", issue_types)
+
+    def test_validator_detects_unsupported_currency(self):
+        """Verifies validator flags non-PKR currency in shipping price."""
+        tool_dir = self.tmp_path / "tools" / "usd-tool"
+        tool_dir.mkdir(parents=True)
+        (tool_dir / "index.html").write_text("<html><body><h1>USD Tool</h1></body></html>", encoding="utf-8")
+
+        item = MerchantProductItem(
+            sku_id="atg-usd-tool",
+            title="USD Tool",
+            description="Testing USD currency",
+            link="https://aitoolgems.tech/tools/usd-tool/",
+            image_link="https://aitoolgems.tech/assets/usd-tool.png",
+            availability="in_stock",
+            price_pkr=1000,
+            brand="Test",
+            shipping_price="10.00 USD",
+        )
+        report = self.val.validate_feed_items([item])
+        self.assertFalse(report.is_feed_compliant)
+        issue_types = [i.issue_type for i in report.issues]
+        self.assertIn("UNSUPPORTED_CURRENCY_ERROR", issue_types)
+
+
 if __name__ == "__main__":
     unittest.main()
 
