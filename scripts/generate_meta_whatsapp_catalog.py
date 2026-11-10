@@ -40,12 +40,12 @@ def build_catalog_csv():
         duration = p.get("duration", "1 Month")
         access = p.get("access", "Private")
         
-        # Determine image
+        # Determine image - using GitHub raw URL from catalog-feed branch for instant CDN access
         png_path = BASE_DIR / "assets" / "product-logos" / f"{slug}.png"
         if png_path.exists():
-            image_url = f"https://aitoolgems.tech/assets/product-logos/{slug}.png"
+            image_url = f"https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/catalog-feed/assets/product-logos/{slug}.png"
         else:
-            image_url = "https://aitoolgems.tech/assets/brand-logo-light.png"
+            image_url = f"https://aitoolgems.tech/assets/product-logos/{slug}.png"
             
         link = f"https://aitoolgems.tech/tools/{slug}/"
         
@@ -102,9 +102,9 @@ def build_catalog_csv():
                     
         png_path = BASE_DIR / "assets" / "product-logos" / f"{slug}.png"
         if png_path.exists():
-            image_url = f"https://aitoolgems.tech/assets/product-logos/{slug}.png"
+            image_url = f"https://raw.githubusercontent.com/m-rehman55/ai-tool-gems/catalog-feed/assets/product-logos/{slug}.png"
         else:
-            image_url = "https://aitoolgems.tech/assets/brand-logo-light.png"
+            image_url = f"https://aitoolgems.tech/assets/product-logos/{slug}.png"
             
         link = f"https://aitoolgems.tech/tools/{slug}/"
         
