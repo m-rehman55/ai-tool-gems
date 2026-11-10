@@ -91,13 +91,25 @@ def build_catalog_csv():
         category = d.get("category", "Software")
         summary = d.get("quick_summary", "")
         
-        # Look for price
-        pkr_price = "999"
-        if "pricing_table" in d and len(d["pricing_table"]) > 1:
-            for tier in d["pricing_table"]:
-                p_m = re.search(r'Rs\.?\s*([\d,]+)', tier[2])
-                if p_m:
-                    pkr_price = p_m.group(1).replace(",", "")
+        # Determine realistic Pakistani PKR Price (never 0)
+        pkr_price = "2500"
+        tool_html = BASE_DIR / "tools" / slug / "index.html"
+        if tool_html.exists():
+            content = tool_html.read_text(encoding="utf-8", errors="ignore")
+            matches = re.findall(r'(?:Rs\.?|PKR)\s*([\d,]+)', content)
+            clean_prices = [int(m.replace(",", "")) for m in matches if int(m.replace(",", "")) > 100]
+            if clean_prices:
+                pkr_price = str(clean_prices[0])
+                
+        if pkr_price == "2500" and "pricing_table" in d:
+            for tier in d.get("pricing_table", []):
+                tier_matches = re.findall(r'Rs\.?\s*([\d,]+)', str(tier))
+                for tm in tier_matches:
+                    val = int(tm.replace(",", ""))
+                    if val > 100:
+                        pkr_price = str(val)
+                        break
+                if pkr_price != "2500":
                     break
                     
         png_path = BASE_DIR / "assets" / "product-logos" / f"{slug}.png"
