@@ -587,7 +587,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('policies.html#payments', mj_html)
 
     def test_batch2_gemini_linkedin_claude_compliance(self):
-        """Batch 2: Asserts Gemini guide accuracy, LinkedIn tier-agnostic listing, Claude Pro Option C1 cleanup, and visible/JSON-LD FAQ parity."""
+        """Batch 2: Asserts Gemini guide accuracy, LinkedIn tier-agnostic listing, Claude Pro Option C1 cleanup, payment claim truthfulness, and visible/JSON-LD FAQ parity."""
         import html as html_lib
         import json
 
@@ -662,6 +662,34 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         product_nodes = [n for n in cl_nodes if n.get('@type') == 'Product']
         self.assertEqual(len(product_nodes), 1)
         self.assertNotIn('aggregateRating', product_nodes[0])
+
+        # 4. Payment claim truthfulness on LinkedIn and Claude tool pages
+        expected_payment_copy = (
+            'Pakistani customers can contact our WhatsApp support desk for payment instructions. '
+            'Supported domestic methods include EasyPaisa, JazzCash, SadaPay/NayaPay through the '
+            'documented local transfer process, and Raast / Local Bank IBFT. Confirm the applicable '
+            'payment instructions before sending funds.'
+        )
+        forbidden_payment_patterns = [
+            r'\bVisa\b',
+            r'\bMastercard\b',
+            r'international e-commerce',
+            r'all major commercial Pakistani banks',
+            r'\bUBL\b',
+            r'Standard Chartered',
+            r'Verified Domestic Payment',
+            r'verified payment channels',
+            r'verified payment rails',
+            r'independently verified',
+        ]
+        for label, raw_page in [('tools/linkedin/index.html', li_html), ('tools/claude/index.html', cl_html)]:
+            self.assertIn(expected_payment_copy, raw_page, f"Expected policy-aligned payment copy in {label}")
+            self.assertIn('Supported Domestic Payment Channels in Pakistan', raw_page)
+            for pattern in forbidden_payment_patterns:
+                self.assertIsNone(
+                    re.search(pattern, raw_page, re.IGNORECASE),
+                    f"Unsupported payment pattern {pattern!r} found in {label}"
+                )
 
 
 if __name__ == '__main__':
