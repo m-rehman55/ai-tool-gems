@@ -1,0 +1,30 @@
+# Current Project State: AI Tool Gems SEO & Bing Growth
+
+- **Project:** AI Tool Gems Pakistan (https://aitoolgems.tech/)
+- **Repository:** m-rehman55/ai-tool-gems
+- **Current Branch:** feat/bing-batch-1-optimization
+- **Current Phase:** Phase 21–40 (Bing Ranking Growth & AEO Execution)
+- **Current Batch:** Batch 1 (4 Authorized Tasks + 1 Blocked Task)
+- **Status:** Branch Created | Handoff Established | Cursor Price Conflict Blocked | Awaiting Testing & PR
+- **Production Deployment:** NOT YET AUTHORIZED
+- **Bing Sitemaps Baseline:** https://aitoolgems.tech/sitemap.xml crawled on 11/11/2026 with status Success (113 discovered URLs, 0 errors, 0 warnings).
+- **Bing URL Submission Baseline:** 100/100 daily quota submitted on 11/11/2026. 0 URLs remaining today.
+- **Search Performance Baseline (6-Month):** 77 impressions, 2 clicks, 46 unique search queries, 16 active landing pages.
+- **AI Performance (Copilot) Grounding:** 12 citations verified for https://aitoolgems.tech/tools/claude on Oct 20, 2026.
+- **Live Bing Top Rankings Held:**
+  - cursor ai subscription in pakistan: Position 1.00
+  - buy linkedin premium pakistan 2026: Position 1.00 (100% CTR)
+  - gemini pro pakistan: Position 3.00 (guides/gemini-ai-pakistan-guide/) & Position 8.00 (tools/gemini/)
+  - cursor pricing for pakistan it was 1600 rupees per month: Position 3.00
+  - can i buy a claude subscription with pkr: Position 3.00
+  - buy ai tools cheap price in pak: Position 5.00 (100% CTR)
+- **Commercial Claims Audit:**
+  - Gemini Pro: Rs. 800 PKR (Verified - No conflict)
+  - Claude Pro: Rs. 2,200 PKR (Verified - No conflict)
+  - Cursor AI: BLOCKED - PRICE CONFLICT (Product page Rs. 2,800 vs Guide/Query Rs. 1,600)
+- **Execution Scope (Authorized 4 Tasks):**
+  - TASK-B1-01: Claude Pro Guide (Card decline resolution & PKR payment)
+  - TASK-B1-02: Gemini Pro Tool (Rs. 800 price & EasyPaisa support)
+  - TASK-B1-04: Grok AI Guide (FAQ schema & PKR pricing)
+  - TASK-B1-05: ChatGPT Plus Links (Internal links from comparison guides)
+  - TASK-B1-03: Cursor AI Guide (BLOCKED - Price Conflict)
