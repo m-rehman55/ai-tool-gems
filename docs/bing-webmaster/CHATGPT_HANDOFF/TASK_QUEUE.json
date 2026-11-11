@@ -10,7 +10,9 @@
     "impressions": 15,
     "clicks": 0,
     "action": "Add H2 section resolving dollar card decline and showing EasyPaisa/JazzCash PKR payment options",
-    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+    "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
+    "prNumber": 47,
+    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
   },
   {
     "taskId": "TASK-B1-02",
@@ -23,7 +25,9 @@
     "impressions": 7,
     "clicks": 0,
     "action": "Optimize title and meta description to emphasize Rs. 800 PKR price and EasyPaisa/JazzCash support",
-    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+    "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
+    "prNumber": 47,
+    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
   },
   {
     "taskId": "TASK-B1-03",
@@ -49,7 +53,9 @@
     "impressions": 6,
     "clicks": 0,
     "action": "Add FAQ schema and visible content for Grok AI price in Pakistan and local payment methods",
-    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+    "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
+    "prNumber": 47,
+    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
   },
   {
     "taskId": "TASK-B1-05",
@@ -62,6 +68,8 @@
     "impressions": 2,
     "clicks": 0,
     "action": "Inject contextual internal links from chatgpt-vs-claude and chatgpt-vs-gemini guides",
-    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+    "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
+    "prNumber": 47,
+    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
   }
 ]
