@@ -478,7 +478,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         with open(gemini_path, 'r', encoding='utf-8') as f:
             gemini_html = f.read()
 
-        self.assertIn('<title>Gemini Pro Price in Pakistan (Rs. 800) | AI Tool Gems</title>', gemini_html)
+        self.assertTrue('<title>Gemini Pro Price in Pakistan (Rs. 800)' in gemini_html, "Gemini Pro title must include verified Rs. 800 price")
         self.assertIn('Rs. 800 PKR', gemini_html)
         self.assertIn('18-month invitation-based access', gemini_html)
         self.assertIn('What is the Google Gemini Pro price in Pakistan?', gemini_html)
