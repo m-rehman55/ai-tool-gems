@@ -1,0 +1,67 @@
+[
+  {
+    "taskId": "TASK-B1-01",
+    "batch": 1,
+    "pageUrl": "https://aitoolgems.tech/guides/claude-ai-pakistan/",
+    "filePath": "guides/claude-ai-pakistan/index.html",
+    "targetQuery": "how can i pay claude in pkr its showing in dollars",
+    "baselinePos": 6.00,
+    "targetPos": 1.00,
+    "impressions": 15,
+    "clicks": 0,
+    "action": "Add H2 section resolving dollar card decline and showing EasyPaisa/JazzCash PKR payment options",
+    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+  },
+  {
+    "taskId": "TASK-B1-02",
+    "batch": 1,
+    "pageUrl": "https://aitoolgems.tech/tools/gemini/",
+    "filePath": "tools/gemini/index.html",
+    "targetQuery": "gemini ai thru easypaisa",
+    "baselinePos": 8.43,
+    "targetPos": 2.00,
+    "impressions": 7,
+    "clicks": 0,
+    "action": "Optimize title and meta description to emphasize Rs. 800 PKR price and EasyPaisa/JazzCash support",
+    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+  },
+  {
+    "taskId": "TASK-B1-03",
+    "batch": 1,
+    "pageUrl": "https://aitoolgems.tech/guides/cursor-ai-pakistan/",
+    "filePath": "guides/cursor-ai-pakistan/index.html",
+    "targetQuery": "cursor pricing for pakistan it was 1600 rupees per month",
+    "baselinePos": 2.83,
+    "targetPos": 1.00,
+    "impressions": 6,
+    "clicks": 0,
+    "action": "Awaiting explicit business-owner confirmation of public plan and price (Product page Rs. 2,800 vs Guide Rs. 1,600)",
+    "status": "BLOCKED — PRICE CONFLICT"
+  },
+  {
+    "taskId": "TASK-B1-04",
+    "batch": 1,
+    "pageUrl": "https://aitoolgems.tech/guides/grok-ai-pakistan/",
+    "filePath": "guides/grok-ai-pakistan/index.html",
+    "targetQuery": "grok ai subscription in pakistan",
+    "baselinePos": 3.83,
+    "targetPos": 1.00,
+    "impressions": 6,
+    "clicks": 0,
+    "action": "Add FAQ schema and visible content for Grok AI price in Pakistan and local payment methods",
+    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+  },
+  {
+    "taskId": "TASK-B1-05",
+    "batch": 1,
+    "pageUrl": "https://aitoolgems.tech/tools/chatgpt/",
+    "filePath": "tools/chatgpt/index.html",
+    "targetQuery": "chatgpt plus pakistan",
+    "baselinePos": "Submitted/Pending Crawl",
+    "targetPos": "Top 5",
+    "impressions": 2,
+    "clicks": 0,
+    "action": "Inject contextual internal links from chatgpt-vs-claude and chatgpt-vs-gemini guides",
+    "status": "AUTHORIZED_FOR_IMPLEMENTATION"
+  }
+]
