@@ -483,7 +483,13 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('18-month invitation-based access', gemini_html)
         self.assertIn('What is the Google Gemini Pro price in Pakistan?', gemini_html)
         self.assertNotIn('15-minute', gemini_html.lower())
-        self.assertNotIn('prompt delivery', gemini_html.lower()); self.assertEqual(gemini_html.count('name="twitter:card"'), 1, "Gemini page must have exactly one twitter:card tag"); self.assertEqual(gemini_html.count('name="twitter:title"'), 1, "Gemini page must have exactly one twitter:title tag"); self.assertEqual(gemini_html.count('name="twitter:description"'), 1, "Gemini page must have exactly one twitter:description tag"); self.assertEqual(gemini_html.count('name="twitter:image"'), 1, "Gemini page must have exactly one twitter:image tag"); self.assertIn('<meta name="description" content="Check Google Gemini Pro price in Pakistan. 18-month invitation access with 2TB storage for Rs. 800 PKR. Pay via EasyPaisa &amp; JazzCash on WhatsApp.">', gemini_html); self.assertIn('<meta property="og:description" content="Check Google Gemini Pro price in Pakistan. 18-month invitation access with 2TB storage for Rs. 800 PKR. Pay via EasyPaisa &amp; JazzCash on WhatsApp.">', gemini_html); self.assertIn('<meta name="twitter:description" content="Check Google Gemini Pro price in Pakistan. 18-month invitation access with 2TB storage for Rs. 800 PKR. Pay via EasyPaisa &amp; JazzCash on WhatsApp.">', gemini_html)
+        self.assertNotIn('prompt delivery', gemini_html.lower()); self.assertEqual(gemini_html.count('name="twitter:card"'), 1, "Gemini page must have exactly one twitter:card tag")
+        self.assertEqual(gemini_html.count('name="twitter:title"'), 1, "Gemini page must have exactly one twitter:title tag")
+        self.assertEqual(gemini_html.count('name="twitter:description"'), 1, "Gemini page must have exactly one twitter:description tag")
+        self.assertEqual(gemini_html.count('name="twitter:image"'), 1, "Gemini page must have exactly one twitter:image tag")
+        self.assertIn('<meta name="description" content="Check Google Gemini Pro price in Pakistan. 18-month invitation access with 2TB storage for Rs. 800 PKR. Pay via EasyPaisa &amp; JazzCash on WhatsApp.">', gemini_html)
+        self.assertIn('<meta property="og:description" content="Check Google Gemini Pro price in Pakistan. 18-month invitation access with 2TB storage for Rs. 800 PKR. Pay via EasyPaisa &amp; JazzCash on WhatsApp.">', gemini_html)
+        self.assertIn('<meta name="twitter:description" content="Check Google Gemini Pro price in Pakistan. 18-month invitation access with 2TB storage for Rs. 800 PKR. Pay via EasyPaisa &amp; JazzCash on WhatsApp.">', gemini_html)
 
         # 3. Veo 3 Ultra Tool Page
         veo_path = os.path.join(REPO_ROOT, 'tools', 'veo', 'index.html')
