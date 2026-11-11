@@ -594,45 +594,135 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('policies.html#payments', mj_html)
 
     def test_bing_batch1_claude_and_grok_regressions(self):
-        """Bing Batch 1: Confirms Claude Pro guide metadata/Twitter/date consistency and Grok FAQ/X pricing/canonical URL."""
-        # 1. Claude Pro Guide
+        """Bing Batch 1: Enforces Claude metadata/JSON-LD verification and Grok FAQ/JSON-LD parity with Pakistan X PKR pricing."""
+        import html as html_lib
+        import json
+
+        def extract_jsonld_nodes(raw_html):
+            blocks = re.findall(
+                r"""<script[^>]*type=["']application/ld[+]json["'][^>]*>(.*?)</script>""",
+                raw_html,
+                flags=re.DOTALL | re.IGNORECASE,
+            )
+            nodes = []
+            for block in blocks:
+                parsed = json.loads(block.strip())
+                if isinstance(parsed, dict) and '@graph' in parsed:
+                    nodes.extend(parsed['@graph'])
+                elif isinstance(parsed, list):
+                    nodes.extend(parsed)
+                elif isinstance(parsed, dict):
+                    nodes.append(parsed)
+            return nodes
+
+        def normalize_visible_html(fragment):
+            text = re.sub(r'<[^>]+>', '', fragment)
+            text = html_lib.unescape(text)
+            return ' '.join(text.split())
+
+        # 1. Claude Pro Guide: social metadata uniqueness + parsed Article/WebPage JSON-LD verification
         claude_path = os.path.join(REPO_ROOT, 'guides', 'claude-ai-pakistan', 'index.html')
         with open(claude_path, 'r', encoding='utf-8') as f:
             claude_html = f.read()
 
-        expected_claude_desc = (
+        expected_claude_title = 'Claude Pro in Pakistan: Pricing, Card Declines &amp; PKR Buying Guide (2026)'
+        expected_claude_headline = 'Claude Pro in Pakistan: Pricing, Card Declines & PKR Buying Guide (2026)'
+        expected_claude_desc_html = (
             'Complete guide to Claude Pro in Pakistan. Compare official vs PKR pricing, '
             'resolve USD card declines with EasyPaisa &amp; JazzCash, and compare with ChatGPT.'
+        )
+        expected_claude_desc_text = (
+            'Complete guide to Claude Pro in Pakistan. Compare official vs PKR pricing, '
+            'resolve USD card declines with EasyPaisa & JazzCash, and compare with ChatGPT.'
         )
         self.assertEqual(claude_html.count('name="twitter:card"'), 1, "Claude guide must have exactly one twitter:card tag")
         self.assertEqual(claude_html.count('name="twitter:title"'), 1, "Claude guide must have exactly one twitter:title tag")
         self.assertEqual(claude_html.count('name="twitter:description"'), 1, "Claude guide must have exactly one twitter:description tag")
         self.assertEqual(claude_html.count('name="twitter:image"'), 1, "Claude guide must have exactly one twitter:image tag")
-        self.assertIn('<title>Claude Pro in Pakistan: Pricing, Card Declines &amp; PKR Buying Guide (2026)</title>', claude_html)
-        self.assertIn(f'<meta name="description" content="{expected_claude_desc}">', claude_html)
-        self.assertIn(f'<meta property="og:description" content="{expected_claude_desc}">', claude_html)
-        self.assertIn(f'<meta name="twitter:description" content="{expected_claude_desc}">', claude_html)
+        self.assertIn(f'<title>{expected_claude_title}</title>', claude_html)
+        self.assertIn(f'<meta name="twitter:title" content="{expected_claude_title}">', claude_html)
+        self.assertIn(f'<meta name="description" content="{expected_claude_desc_html}">', claude_html)
+        self.assertIn(f'<meta property="og:description" content="{expected_claude_desc_html}">', claude_html)
+        self.assertIn(f'<meta name="twitter:description" content="{expected_claude_desc_html}">', claude_html)
         self.assertIn('<meta property="article:modified_time" content="2026-11-11T00:00:00+05:00">', claude_html)
-        self.assertIn('"dateModified": "2026-11-11"', claude_html)
         self.assertIn('<span>Verified: 11 November 2026</span>', claude_html)
-        self.assertIn('"name": "Claude Pro in Pakistan: Pricing, Card Declines & PKR Buying Guide (2026)"', claude_html)
         self.assertNotIn('"dateModified": "2026-10-11"', claude_html)
         self.assertNotIn('Verified: 11 October 2026', claude_html)
         self.assertNotIn('</script>"dateModified"', claude_html)
 
-        # 2. Grok AI Guide
+        claude_nodes = extract_jsonld_nodes(claude_html)
+        claude_articles = [n for n in claude_nodes if n.get('@type') == 'Article']
+        claude_webpages = [n for n in claude_nodes if n.get('@type') == 'WebPage']
+        self.assertEqual(len(claude_articles), 1, "Claude guide must define one Article JSON-LD node")
+        self.assertEqual(len(claude_webpages), 1, "Claude guide must define one WebPage JSON-LD node")
+
+        claude_article = claude_articles[0]
+        claude_webpage = claude_webpages[0]
+        self.assertEqual(claude_article.get('@id'), 'https://aitoolgems.tech/guides/claude-ai-pakistan/#article')
+        self.assertEqual(claude_article.get('headline'), expected_claude_headline)
+        self.assertEqual(claude_article.get('description'), expected_claude_desc_text)
+        self.assertEqual(claude_article.get('datePublished'), '2026-10-11')
+        self.assertEqual(claude_article.get('dateModified'), '2026-11-11')
+        self.assertEqual(claude_article.get('inLanguage'), 'en-PK')
+        self.assertEqual(
+            claude_article.get('mainEntityOfPage', {}).get('@id'),
+            'https://aitoolgems.tech/guides/claude-ai-pakistan/#webpage',
+        )
+        self.assertEqual(claude_article.get('author', {}).get('name'), 'AI Tool Gems Editorial Team')
+        self.assertEqual(claude_article.get('publisher', {}).get('@id'), 'https://aitoolgems.tech/#organization')
+        self.assertEqual(claude_webpage.get('@id'), 'https://aitoolgems.tech/guides/claude-ai-pakistan/#webpage')
+        self.assertEqual(claude_webpage.get('url'), 'https://aitoolgems.tech/guides/claude-ai-pakistan/')
+        self.assertEqual(claude_webpage.get('name'), expected_claude_headline)
+        self.assertEqual(claude_webpage.get('dateModified'), '2026-11-11')
+        self.assertEqual(claude_webpage.get('inLanguage'), 'en-PK')
+        self.assertEqual(claude_webpage.get('isPartOf', {}).get('@id'), 'https://aitoolgems.tech/#website')
+
+        # 2. Grok AI Guide: visible FAQ vs FAQPage JSON-LD parity + Pakistan X PKR rates & official link
         grok_path = os.path.join(REPO_ROOT, 'guides', 'grok-ai-pakistan', 'index.html')
         with open(grok_path, 'r', encoding='utf-8') as f:
             grok_html = f.read()
 
         self.assertIn('<span>Updated 2026-11-11</span>', grok_html)
         self.assertIn('<meta property="article:modified_time" content="2026-11-11T00:00:00+05:00">', grok_html)
-        self.assertIn('"dateModified": "2026-11-11"', grok_html)
-        self.assertIn('X Premium starts at $8 USD/month', grok_html)
-        self.assertIn('X Premium+ starts at $40 USD/month', grok_html)
-        self.assertIn('https://help.x.com/en/using-x/x-premium', grok_html)
         self.assertNotIn('Updated 2026-10-26', grok_html)
         self.assertNotIn('https://help.x.com/using-x/x-premium', grok_html)
+        self.assertIn('href="https://help.x.com/en/using-x/x-premium"', grok_html)
+
+        grok_nodes = extract_jsonld_nodes(grok_html)
+        grok_articles = [n for n in grok_nodes if n.get('@type') == 'Article']
+        grok_webpages = [n for n in grok_nodes if n.get('@type') == 'WebPage']
+        grok_faqs = [n for n in grok_nodes if n.get('@type') == 'FAQPage']
+        self.assertEqual(len(grok_articles), 1)
+        self.assertEqual(len(grok_webpages), 1)
+        self.assertEqual(len(grok_faqs), 1)
+        self.assertEqual(grok_articles[0].get('dateModified'), '2026-11-11')
+        self.assertEqual(grok_webpages[0].get('dateModified'), '2026-11-11')
+
+        jsonld_qa = [
+            (
+                ' '.join(item['name'].split()),
+                ' '.join(item['acceptedAnswer']['text'].split()),
+            )
+            for item in grok_faqs[0].get('mainEntity', [])
+        ]
+        visible_qa_raw = re.findall(
+            r'<div class="faq-item">[\s\S]*?<h3>(.*?)</h3>[\s\S]*?<p>(.*?)</p>',
+            grok_html,
+        )
+        visible_qa = [
+            (normalize_visible_html(q), normalize_visible_html(a))
+            for q, a in visible_qa_raw
+        ]
+        self.assertGreaterEqual(len(visible_qa), 4, "Grok guide must render at least 4 visible FAQ items")
+        self.assertEqual(visible_qa, jsonld_qa, "Grok visible FAQ Q&A must match FAQPage JSON-LD exactly")
+
+        pricing_q, pricing_a = visible_qa[0]
+        self.assertEqual(pricing_q, 'How much does Grok AI cost in Pakistan and what payment methods are accepted?')
+        self.assertIn('Rs. 2,250/month', pricing_a)
+        self.assertIn('Rs. 11,180/month', pricing_a)
+        self.assertIn('$8 USD/month', pricing_a)
+        self.assertIn('$40 USD/month', pricing_a)
+        self.assertIn('local pricing, taxes, and payment method charges vary by region', pricing_a)
 
 
 if __name__ == '__main__':
