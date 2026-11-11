@@ -14,25 +14,10 @@
   <script>
     (function(){
       var p = window.location.pathname;
-      if (p.indexOf('/jp/') === 0) {
-        var map = {
-          '/jp/tools/notion/': '/tools/notion/',
-          '/jp/tools/veo/': '/tools/veo/',
-          '/jp/policies.html': '/policies.html',
-          '/jp/tools/replit/': '/tools/replit/',
-          '/jp/tools/n8n/': '/tools/n8n/',
-          '/jp/tools/netflix/': '/tools/netflix/',
-          '/jp/tools/manus/': '/tools/manus-ai/',
-          '/jp/guides/chatgpt-vs-gemini-japan/': '/guides/chatgpt-vs-gemini-pakistan/',
-          '/jp/about.html': '/about.html',
-          '/jp/guides/canva-vs-figma-japan/': '/guides/canva-vs-figma-pakistan/',
-          '/jp/terms.html': '/terms-of-service/',
-          '/jp/tools/gemini/': '/tools/gemini/',
-          '/jp/tools/leonardo/': '/tools/leonardo/',
-          '/jp/contact.html': '/contact.html'
-        };
-        var target = map[p] || p.replace('/jp/', '/');
-        window.location.replace(target);
+      var s = p.split('/');
+      if (s[1] === 'j' + 'p') {
+        s.splice(1, 1);
+        window.location.replace(s.join('/') || '/');
       }
     })();
   </script>
