@@ -12,7 +12,7 @@
     "action": "Add H2 section resolving dollar card decline and showing EasyPaisa/JazzCash PKR payment options",
     "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
     "prNumber": 47,
-    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
+    "ciVerified": "HERMES #195 (run_id: 43022255764), CodeQL #212 (run_id: 43022255728), Pages #123 (run_id: 43022255724, Build PASSED / Deploy SKIPPED) at HEAD 49d8e5c08759aae4beb41f263c3cb18c6cdaba58; prior HERMES #190 & #192, CodeQL #207, Pages #118 (Deploy SKIPPED)"
   },
   {
     "taskId": "TASK-B1-02",
@@ -27,7 +27,7 @@
     "action": "Optimize title and meta description to emphasize Rs. 800 PKR price and EasyPaisa/JazzCash support",
     "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
     "prNumber": 47,
-    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
+    "ciVerified": "HERMES #195 (run_id: 43022255764), CodeQL #212 (run_id: 43022255728), Pages #123 (run_id: 43022255724, Build PASSED / Deploy SKIPPED) at HEAD 49d8e5c08759aae4beb41f263c3cb18c6cdaba58; prior HERMES #190 & #192, CodeQL #207, Pages #118 (Deploy SKIPPED)"
   },
   {
     "taskId": "TASK-B1-03",
@@ -55,7 +55,7 @@
     "action": "Add FAQ schema and visible content for Grok AI price in Pakistan and local payment methods",
     "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
     "prNumber": 47,
-    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
+    "ciVerified": "HERMES #195 (run_id: 43022255764), CodeQL #212 (run_id: 43022255728), Pages #123 (run_id: 43022255724, Build PASSED / Deploy SKIPPED) at HEAD 49d8e5c08759aae4beb41f263c3cb18c6cdaba58; prior HERMES #190 & #192, CodeQL #207, Pages #118 (Deploy SKIPPED)"
   },
   {
     "taskId": "TASK-B1-05",
@@ -70,6 +70,6 @@
     "action": "Inject contextual internal links from chatgpt-vs-claude and chatgpt-vs-gemini guides",
     "status": "IMPLEMENTED_AND_VALIDATED_IN_PR_47",
     "prNumber": 47,
-    "ciVerified": "HERMES #190 & #192; CodeQL #207; Pages #118 (Deploy SKIPPED)"
+    "ciVerified": "HERMES #195 (run_id: 43022255764), CodeQL #212 (run_id: 43022255728), Pages #123 (run_id: 43022255724, Build PASSED / Deploy SKIPPED) at HEAD 49d8e5c08759aae4beb41f263c3cb18c6cdaba58; prior HERMES #190 & #192, CodeQL #207, Pages #118 (Deploy SKIPPED)"
   }
 ]
