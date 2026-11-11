@@ -483,7 +483,8 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('18-month invitation-based access', gemini_html)
         self.assertIn('What is the Google Gemini Pro price in Pakistan?', gemini_html)
         self.assertNotIn('15-minute', gemini_html.lower())
-        self.assertNotIn('prompt delivery', gemini_html.lower()); self.assertEqual(gemini_html.count('name="twitter:card"'), 1, "Gemini page must have exactly one twitter:card tag")
+        self.assertNotIn('prompt delivery', gemini_html.lower())
+        self.assertEqual(gemini_html.count('name="twitter:card"'), 1, "Gemini page must have exactly one twitter:card tag")
         self.assertEqual(gemini_html.count('name="twitter:title"'), 1, "Gemini page must have exactly one twitter:title tag")
         self.assertEqual(gemini_html.count('name="twitter:description"'), 1, "Gemini page must have exactly one twitter:description tag")
         self.assertEqual(gemini_html.count('name="twitter:image"'), 1, "Gemini page must have exactly one twitter:image tag")
@@ -591,6 +592,47 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             mj_html = f.read()
         self.assertIn('How to Order via Local Pakistani Payments (EasyPaisa, JazzCash, SadaPay, Raast)', mj_html)
         self.assertIn('policies.html#payments', mj_html)
+
+    def test_bing_batch1_claude_and_grok_regressions(self):
+        """Bing Batch 1: Confirms Claude Pro guide metadata/Twitter/date consistency and Grok FAQ/X pricing/canonical URL."""
+        # 1. Claude Pro Guide
+        claude_path = os.path.join(REPO_ROOT, 'guides', 'claude-ai-pakistan', 'index.html')
+        with open(claude_path, 'r', encoding='utf-8') as f:
+            claude_html = f.read()
+
+        expected_claude_desc = (
+            'Complete guide to Claude Pro in Pakistan. Compare official vs PKR pricing, '
+            'resolve USD card declines with EasyPaisa &amp; JazzCash, and compare with ChatGPT.'
+        )
+        self.assertEqual(claude_html.count('name="twitter:card"'), 1, "Claude guide must have exactly one twitter:card tag")
+        self.assertEqual(claude_html.count('name="twitter:title"'), 1, "Claude guide must have exactly one twitter:title tag")
+        self.assertEqual(claude_html.count('name="twitter:description"'), 1, "Claude guide must have exactly one twitter:description tag")
+        self.assertEqual(claude_html.count('name="twitter:image"'), 1, "Claude guide must have exactly one twitter:image tag")
+        self.assertIn('<title>Claude Pro in Pakistan: Pricing, Card Declines &amp; PKR Buying Guide (2026)</title>', claude_html)
+        self.assertIn(f'<meta name="description" content="{expected_claude_desc}">', claude_html)
+        self.assertIn(f'<meta property="og:description" content="{expected_claude_desc}">', claude_html)
+        self.assertIn(f'<meta name="twitter:description" content="{expected_claude_desc}">', claude_html)
+        self.assertIn('<meta property="article:modified_time" content="2026-11-11T00:00:00+05:00">', claude_html)
+        self.assertIn('"dateModified": "2026-11-11"', claude_html)
+        self.assertIn('<span>Verified: 11 November 2026</span>', claude_html)
+        self.assertIn('"name": "Claude Pro in Pakistan: Pricing, Card Declines & PKR Buying Guide (2026)"', claude_html)
+        self.assertNotIn('"dateModified": "2026-10-11"', claude_html)
+        self.assertNotIn('Verified: 11 October 2026', claude_html)
+        self.assertNotIn('</script>"dateModified"', claude_html)
+
+        # 2. Grok AI Guide
+        grok_path = os.path.join(REPO_ROOT, 'guides', 'grok-ai-pakistan', 'index.html')
+        with open(grok_path, 'r', encoding='utf-8') as f:
+            grok_html = f.read()
+
+        self.assertIn('<span>Updated 2026-11-11</span>', grok_html)
+        self.assertIn('<meta property="article:modified_time" content="2026-11-11T00:00:00+05:00">', grok_html)
+        self.assertIn('"dateModified": "2026-11-11"', grok_html)
+        self.assertIn('X Premium starts at $8 USD/month', grok_html)
+        self.assertIn('X Premium+ starts at $40 USD/month', grok_html)
+        self.assertIn('https://help.x.com/en/using-x/x-premium', grok_html)
+        self.assertNotIn('Updated 2026-10-26', grok_html)
+        self.assertNotIn('https://help.x.com/using-x/x-premium', grok_html)
 
 
 if __name__ == '__main__':
