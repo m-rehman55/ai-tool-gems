@@ -38,3 +38,4 @@ for slug, domain in DOMAINS.items():
                 print(f"Warning: {slug} icon too small ({len(data)} bytes)")
     except Exception as e:
         print(f"Error fetching {slug}: {e}")
+
