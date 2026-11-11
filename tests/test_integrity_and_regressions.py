@@ -643,7 +643,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('exact Premium tier and applicable InMail allowance must be confirmed on WhatsApp before payment', li_html)
         for forbidden in ['Business/Career features', 'Advanced AI-powered tool', 'Voucher & or', 'Voucher &amp; or']:
             self.assertNotIn(forbidden, li_html)
-        li_faq_q, li_vis_q, _ = extract_meta_and_faq(li_html)
+        li_faq_q, li_vis_q, li_nodes = extract_meta_and_faq(li_html)
         self.assertEqual(len(li_faq_q), 8)
         self.assertEqual(li_faq_q, li_vis_q)
 
@@ -689,6 +689,38 @@ class TestIntegrityAndRegressions(unittest.TestCase):
                 self.assertIsNone(
                     re.search(pattern, raw_page, re.IGNORECASE),
                     f"Unsupported payment pattern {pattern!r} found in {label}"
+                )
+
+        # 5. Structured-data truthfulness: no unbacked LinkedIn reviews/ratings or zero-day delivery claims
+        li_product_nodes = [n for n in li_nodes if n.get('@type') == 'Product']
+        self.assertEqual(len(li_product_nodes), 1)
+        for label, product_node, raw_page in [
+            ('tools/linkedin/index.html', li_product_nodes[0], li_html),
+            ('tools/claude/index.html', product_nodes[0], cl_html),
+        ]:
+            self.assertNotIn('aggregateRating', product_node, f"Unbacked aggregateRating found in {label}")
+            self.assertNotIn('review', product_node, f"Unbacked review found in {label}")
+            offers = product_node.get('offers', {})
+            self.assertNotIn('shippingDetails', offers, f"Unsupported zero-day shippingDetails found in {label}")
+            return_policy = offers.get('hasMerchantReturnPolicy', {})
+            self.assertEqual(return_policy.get('merchantReturnDays'), 7, f"Expected 7-day return policy in {label}")
+            for forbidden_schema_token in [
+                '"aggregateRating"',
+                '"review"',
+                '"reviewCount"',
+                '"ratingValue"',
+                'Verified Pakistani Buyer',
+                '"shippingDetails"',
+                'OfferShippingDetails',
+                'ShippingDeliveryTime',
+                '"deliveryTime"',
+                '"handlingTime"',
+                '"transitTime"',
+            ]:
+                self.assertNotIn(
+                    forbidden_schema_token,
+                    raw_page,
+                    f"Forbidden structured-data token {forbidden_schema_token} found in {label}"
                 )
 
 
