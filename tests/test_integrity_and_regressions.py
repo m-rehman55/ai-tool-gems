@@ -586,9 +586,83 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('How to Order via Local Pakistani Payments (EasyPaisa, JazzCash, SadaPay, Raast)', mj_html)
         self.assertIn('policies.html#payments', mj_html)
 
+    def test_batch2_gemini_linkedin_claude_compliance(self):
+        """Batch 2: Asserts Gemini guide accuracy, LinkedIn tier-agnostic listing, Claude Pro Option C1 cleanup, and visible/JSON-LD FAQ parity."""
+        import html as html_lib
+        import json
+
+        def extract_meta_and_faq(raw_html):
+            desc = re.search(r'<meta\s+name=["\']description["\']\s+content=["\']([^"\']+)["\']', raw_html)
+            og_desc = re.search(r'<meta\s+property=["\']og:description["\']\s+content=["\']([^"\']+)["\']', raw_html)
+            tw_desc = re.search(r'<meta\s+name=["\']twitter:description["\']\s+content=["\']([^"\']+)["\']', raw_html)
+            self.assertIsNotNone(desc)
+            self.assertIsNotNone(og_desc)
+            self.assertIsNotNone(tw_desc)
+            self.assertEqual(html_lib.unescape(desc.group(1)), html_lib.unescape(og_desc.group(1)))
+            self.assertEqual(html_lib.unescape(desc.group(1)), html_lib.unescape(tw_desc.group(1)))
+
+            ld_blocks = re.findall(r'<script\s+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', raw_html, re.DOTALL)
+            faq_questions = []
+            graph_nodes = []
+            for block in ld_blocks:
+                data = json.loads(block.strip())
+                if isinstance(data, list):
+                    graph_nodes.extend(data)
+                elif '@graph' in data:
+                    graph_nodes.extend(data['@graph'])
+                else:
+                    graph_nodes.append(data)
+            for node in graph_nodes:
+                if node.get('@type') == 'FAQPage':
+                    faq_questions.extend([q['name'] for q in node.get('mainEntity', [])])
+            visible_qs = [
+                html_lib.unescape(re.sub(r'<[^>]+>', '', q).strip())
+                for q in re.findall(r'<div\s+class=["\']faq-item["\'][^>]*>\s*<h3>(.*?)</h3>', raw_html, re.DOTALL)
+            ]
+            return faq_questions, visible_qs, graph_nodes
+
+        # 1. Gemini Pro Pakistan Guide
+        gem_guide_path = os.path.join(REPO_ROOT, 'guides', 'gemini-ai-pakistan-guide', 'index.html')
+        with open(gem_guide_path, 'r', encoding='utf-8') as f:
+            gem_html = f.read()
+        self.assertIn('Rs. 800 PKR', gem_html)
+        self.assertIn('18 Months', gem_html)
+        self.assertIn('Invitation', gem_html)
+        self.assertIn('30-Day Assisted Access Replacement Warranty', gem_html)
+        self.assertIn('<nav class="toc"', gem_html)
+        for forbidden in ['2TB', '7-day replacement', 'Leonardo', 'Canva Pro Edu', 'high-resolution rendering']:
+            self.assertNotIn(forbidden, gem_html)
+        gem_faq_q, gem_vis_q, _ = extract_meta_and_faq(gem_html)
+        self.assertEqual(len(gem_faq_q), 5)
+        self.assertEqual(gem_faq_q, gem_vis_q)
+
+        # 2. LinkedIn Premium Tool Page (Option L1)
+        li_path = os.path.join(REPO_ROOT, 'tools', 'linkedin', 'index.html')
+        with open(li_path, 'r', encoding='utf-8') as f:
+            li_html = f.read()
+        self.assertIn('exact Premium tier and applicable InMail allowance must be confirmed on WhatsApp before payment', li_html)
+        for forbidden in ['Business/Career features', 'Advanced AI-powered tool', 'Voucher & or', 'Voucher &amp; or']:
+            self.assertNotIn(forbidden, li_html)
+        li_faq_q, li_vis_q, _ = extract_meta_and_faq(li_html)
+        self.assertEqual(len(li_faq_q), 8)
+        self.assertEqual(li_faq_q, li_vis_q)
+
+        # 3. Claude Pro Tool Page (Option C1)
+        cl_path = os.path.join(REPO_ROOT, 'tools', 'claude', 'index.html')
+        with open(cl_path, 'r', encoding='utf-8') as f:
+            cl_html = f.read()
+        self.assertIn('Rs. 2,200 PKR', cl_html)
+        self.assertIn('../../guides/claude-ai-pakistan/', cl_html)
+        self.assertEqual(len(re.findall(r'<meta\s+name=["\']twitter:title["\']', cl_html)), 1)
+        for forbidden in ['3.5 Sonnet', 'flagship AI', '5x higher message caps', 'on WhatsApp after payment confirmation']:
+            self.assertNotIn(forbidden, cl_html)
+        cl_faq_q, cl_vis_q, cl_nodes = extract_meta_and_faq(cl_html)
+        self.assertEqual(len(cl_faq_q), 6)
+        self.assertEqual(cl_faq_q, cl_vis_q)
+        product_nodes = [n for n in cl_nodes if n.get('@type') == 'Product']
+        self.assertEqual(len(product_nodes), 1)
+        self.assertNotIn('aggregateRating', product_nodes[0])
+
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
