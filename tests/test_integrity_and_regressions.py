@@ -483,7 +483,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertIn('18-month invitation-based access', gemini_html)
         self.assertIn('What is the Google Gemini Pro price in Pakistan?', gemini_html)
         self.assertNotIn('15-minute', gemini_html.lower())
-        self.assertNotIn('prompt delivery', gemini_html.lower())
+        self.assertNotIn('prompt delivery', gemini_html.lower()); self.assertEqual(gemini_html.count('name="twitter:card"'), 1, "Gemini page must have exactly one twitter:card tag"); self.assertEqual(gemini_html.count('name="twitter:title"'), 1, "Gemini page must have exactly one twitter:title tag"); self.assertEqual(gemini_html.count('name="twitter:description"'), 1, "Gemini page must have exactly one twitter:description tag"); self.assertEqual(gemini_html.count('name="twitter:image"'), 1, "Gemini page must have exactly one twitter:image tag")
 
         # 3. Veo 3 Ultra Tool Page
         veo_path = os.path.join(REPO_ROOT, 'tools', 'veo', 'index.html')
