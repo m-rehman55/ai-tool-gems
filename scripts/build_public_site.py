@@ -83,13 +83,18 @@ APPROVED_PUBLIC_DIRS = {
 }
 
 # 4. Strict Extension Whitelist per Public Directory
+APPROVED_PUBLIC_DATASETS = {
+    "prices/ai-tools-pricing-pakistan.csv",
+    "prices/ai-tools-pricing-pakistan.json",
+}
+
 ALLOWED_EXTENSIONS_BY_DIR = {
     "assets": {".webp", ".png", ".jpg", ".jpeg", ".svg", ".ico", ".css", ".mp4", ".woff", ".woff2", ".ttf"},
     "tools": {".html"},
     "category": {".html"},
     "guides": {".html"},
     "blog": {".html"},
-    "prices": {".html"},
+    "prices": {".html", ".csv", ".json"},
     "deals": {".html"},
     "privacy-policy": {".html"},
     "terms-of-service": {".html"},
@@ -163,7 +168,7 @@ def validate_file_candidate(rel_path: str, src_path: Path) -> None:
 
     # Check against universal prohibited extensions
     ext = src_path.suffix.lower()
-    if ext in UNIVERSAL_PROHIBITED_EXTENSIONS:
+    if ext in UNIVERSAL_PROHIBITED_EXTENSIONS and str(rel_path).replace("\\","/") not in APPROVED_PUBLIC_DATASETS:
         raise PublicSiteSecurityError(f"Prohibited file extension '{ext}' rejected from public build: {rel_path}")
 
     # Check against sensitive keywords in filename
@@ -278,7 +283,7 @@ def build_public_site(project_dir: Path, output_dir: Path, clean: bool = True) -
             if parts[-1].lower() in UNIVERSAL_PROHIBITED_FILENAMES:
                 violations.append(f"Forbidden file staged: {rel}")
             ext = Path(file).suffix.lower()
-            if ext in UNIVERSAL_PROHIBITED_EXTENSIONS:
+            if ext in UNIVERSAL_PROHIBITED_EXTENSIONS and rel not in APPROVED_PUBLIC_DATASETS:
                 violations.append(f"Forbidden extension staged: {rel}")
 
     if violations:

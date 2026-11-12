@@ -49,3 +49,9 @@ python -m marketing_agent hermes audit
 ```
 
 Confirm 0 audit issues before committing or deploying changes.
+
+## 6. Off-Page Citation & Entity Authority Readiness
+
+- Keep `Organization.sameAs` in `index.html` strictly limited to verified official brand profiles (never low-trust directories or reciprocal badge pages).
+- Ensure primary research pages (such as `/prices/`) expose machine-readable CSV/JSON datasets, clear methodology, citation format, and correction-policy links.
+- Track off-page placements through `.agents/skills/off-page-authority-builder/SKILL.md` and validate `seo-agent/data/offpage_authority_tracker.csv` via `python3 scripts/offpage_authority_tracker.py --validate`.
