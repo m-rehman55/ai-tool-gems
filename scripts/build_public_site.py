@@ -37,6 +37,8 @@ APPROVED_ROOT_FILES = {
     "how-we-review.html",
     "how-we-source.html",
     "product-verification.html",
+    "privacy.html",
+    "terms.html",
     "404.html",
     # Public Core JavaScript & Attribution
     "app.js",
@@ -72,6 +74,7 @@ APPROVED_VERIFICATION_FILES = {
 # 3. Approved Public Directories
 APPROVED_PUBLIC_DIRS = {
     "assets",
+    "chatbot",
     "tools",
     "category",
     "guides",
@@ -90,6 +93,7 @@ APPROVED_PUBLIC_DATASETS = {
 
 ALLOWED_EXTENSIONS_BY_DIR = {
     "assets": {".webp", ".png", ".jpg", ".jpeg", ".svg", ".ico", ".css", ".mp4", ".woff", ".woff2", ".ttf"},
+    "chatbot": {".css", ".js"},
     "tools": {".html"},
     "category": {".html"},
     "guides": {".html"},
@@ -248,6 +252,8 @@ def build_public_site(project_dir: Path, output_dir: Path, clean: bool = True) -
                     raise PublicSiteSecurityError(f"Directory symlink detected: {rel_root / d}")
 
             for file in sorted(files):
+                if file.endswith(".spec.mjs"):
+                    continue
                 src_file = Path(root) / file
                 rel_file = (rel_root / file).as_posix()
                 copy_file_safe(src_file, rel_file)

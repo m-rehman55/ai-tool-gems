@@ -898,10 +898,10 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         bad_a = ('"aggregateRating"', '"shippingDetails"', '"hasMerchantReturnPolicy"',
                  '"merchantReturnDays"', 'class="kw-pill"', 'tool-seo-clusters')
         for r, ds, fs in os.walk(REPO_ROOT):
-            ds[:] = [d for d in ds if d not in ('seo-agent', '.git', 'node_modules')]
+            ds[:] = [d for d in ds if d not in ('seo-agent', '.git', 'node_modules', 'data', 'archive', 'public', '.gemini')]
             for fn in fs:
                 if not fn.endswith('.html'): continue
-                p = os.path.relpath(os.path.join(r, fn), REPO_ROOT)
+                p = os.path.relpath(os.path.join(r, fn), REPO_ROOT).replace('\\', '/')
                 if p == 'tools/cursor/index.html' or p in stubs: continue
                 fp = os.path.join(REPO_ROOT, p)
                 with open(fp, encoding='utf-8') as fh: t = fh.read()

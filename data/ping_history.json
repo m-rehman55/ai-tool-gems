@@ -1,10 +1,10 @@
 {
-  "total_dispatches": 25,
-  "last_dispatch": "2026-11-12T15:34:12.510882+00:00",
+  "total_dispatches": 27,
+  "last_dispatch": "2026-11-12T18:05:07.561976+00:00",
   "url_history": {
     "https://aitoolgems.tech/tools/test-sample/": {
-      "last_submitted": "2026-11-10T23:56:13.641109+00:00",
-      "submission_count": 11,
+      "last_submitted": "2026-11-12T18:05:07.561976+00:00",
+      "submission_count": 13,
       "last_status": "success"
     },
     "https://aitoolgems.tech/": {
@@ -574,6 +574,26 @@
     }
   },
   "recent_runs": [
+    {
+      "timestamp": "2026-11-12T18:05:07.561976+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-12T16:51:32.925303+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
     {
       "timestamp": "2026-11-12T15:34:12.510882+00:00",
       "urls_count": 111,

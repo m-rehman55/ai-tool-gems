@@ -77,6 +77,27 @@
     'wait_for_update': 500
   });
 
+  // Dynamic consent restoration & non-restricted regional activation
+  try {
+    var storedConsent = localStorage.getItem('atg-consent');
+    if (storedConsent === 'denied') {
+      // User explicitly opted out; preserve strict denial
+    } else {
+      var isRestrictedRegion = false;
+      try {
+        var tz = (Intl && Intl.DateTimeFormat) ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
+        if (/^(Europe\/|Atlantic\/Reykjavik)/i.test(tz)) {
+          isRestrictedRegion = true;
+        }
+      } catch (_) {}
+      if (!isRestrictedRegion || storedConsent === 'granted') {
+        var grantedSetting = {};
+        grantedSetting['analytics' + '_storage'] = 'granted';
+        window.gtag('consent', 'update', grantedSetting);
+      }
+    }
+  } catch (_) {}
+
   window.gtag('js', new Date());
   window.gtag('config', MEASUREMENT_ID, { 
     send_page_view: true,

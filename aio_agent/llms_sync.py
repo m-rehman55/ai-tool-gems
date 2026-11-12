@@ -42,6 +42,8 @@ class LLMsSyncEngine:
                 idx = item / "index.html"
                 content = idx.read_text(encoding="utf-8")
                 slug = item.name
+                if slug in {"ai-tools-pricing", "gemini"} or 'http-equiv="refresh"' in content:
+                    continue
                 url = f"https://aitoolgems.tech/guides/{slug}/"
 
                 title_match = re.search(r"<title>(.*?)</title>", content, re.IGNORECASE | re.DOTALL)
