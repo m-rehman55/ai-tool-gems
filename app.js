@@ -374,7 +374,7 @@ function card(p) {
       <div class="product-delivery-note">⚡ Verified WhatsApp Delivery · After Confirmation</div>
       <div class="card-actions directory-actions">
         <a class="buy-now-card explore-tool-btn" href="tools/${p.id}/"><svg><use href="#i-whatsapp"></use></svg> Buy now</a>
-        <a class="detail-button" href="tools/${p.id}/">View details</a>
+        <a class="detail-button" href="tools/${p.id}/" aria-label="View details for ${escapeHTML(p.name)}">View details</a>
         <a class="official-link-btn" href="${p.officialUrl}" target="_blank" rel="noopener noreferrer" title="Visit ${p.name} official website" aria-label="Visit ${p.name} official website">
           ${svg('i-external')}
         </a>
@@ -420,7 +420,7 @@ function card(p) {
       <div class="product-delivery-note">⚡ Verified WhatsApp Delivery · After Confirmation</div>
       <div class="card-actions">
         <button class="buy-now-card" data-order="${p.id}">${svg('i-whatsapp')} Buy now</button>
-        <a class="detail-button" href="tools/${p.id}/">View details</a>
+        <a class="detail-button" href="tools/${p.id}/" aria-label="View details for ${escapeHTML(p.name)}">View details</a>
         <a class="official-link-btn" href="${p.officialUrl || '#'}" target="_blank" rel="noopener noreferrer" title="Visit ${p.name} official website" aria-label="Visit ${p.name} official website">
           ${svg('i-external')}
         </a>
@@ -1532,7 +1532,21 @@ if (addBundleBtn) {
    INITIALIZATION
    -------------------------------------------------------------------------- */
 renderCategories();
-renderProducts();
+const hasPreRenderedCatalog = ($('#productGrid')?.children.length || 0) === products.length;
+const needsInitialProductRender =
+  !hasPreRenderedCatalog ||
+  state.currency !== 'PKR' ||
+  state.category !== 'All' ||
+  !!state.query ||
+  state.cart.length > 0 ||
+  state.favorites.length > 0 ||
+  ($('#sortSelect') && $('#sortSelect').value !== 'featured');
+if (needsInitialProductRender) {
+  renderProducts();
+} else {
+  productsRendered = true;
+  renderFilters();
+}
 updateCart();
 updateCompare();
 
@@ -1660,7 +1674,11 @@ function initBundleCalculator() {
   updateTotals();
 }
 
-initBundleCalculator();
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initBundleCalculator, { timeout: 1500 });
+} else {
+  setTimeout(initBundleCalculator, 0);
+}
 
 function initPaymentDisclosure() {
   const disclosure = document.getElementById('paymentMethodsDisclosure');
@@ -1676,7 +1694,9 @@ function initPaymentDisclosure() {
   updateAria();
 }
 initPaymentDisclosure();
-syncAllFavorites();
+if (state.favorites.length > 0) {
+  syncAllFavorites();
+}
 
 
 
