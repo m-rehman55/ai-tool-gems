@@ -21,7 +21,7 @@ const productSeed = [
   ['netflix','Netflix Premium 4K','Entertainment',400,'netflix.com'],
   ['linkedin','LinkedIn Premium','Business',1500,'linkedin.com'],
   ['windows','Windows 11 Pro Key','Software',1900,'microsoft.com'],
-  ['claude','Claude Pro (3.5 Sonnet)','AI Assistants',2200,'claude.com'],
+  ['claude','Claude Pro','AI Assistants',2200,'claude.com'],
   ['midjourney','Midjourney v6.1 Pro','Design',2400,'midjourney.com'],
   ['cursor','Cursor AI Pro','Development',2800,'cursor.com'],
   ['perplexity','Perplexity Pro','AI Assistants',1400,'perplexity.com'],

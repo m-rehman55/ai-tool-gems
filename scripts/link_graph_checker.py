@@ -32,6 +32,8 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 # Documented legitimate exceptions for orphan check
 DOCUMENTED_ORPHAN_EXCEPTIONS = {
+    "guides/ai-tools-pricing/index.html",
+    "guides/gemini/index.html",
     "404.html",                   # HTTP 404 Error page (unlinked by design, noindex)
     "admin.html",                 # Private administrative desk (unlinked from public nav, noindex)
     "gsc_daily_checklist.html",   # Internal manual checklist (noindex)

@@ -195,12 +195,13 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         # 2. All 40 tool pages have links to policies.html#payments and the section exists
         tools_dir = os.path.join(REPO_ROOT, 'tools')
         tool_dirs = [d for d in os.listdir(tools_dir) if os.path.isdir(os.path.join(tools_dir, d))]
-        self.assertGreaterEqual(len(tool_dirs), 40, "Expected at least 40 tool pages")
+        self.assertEqual(len(tool_dirs), 65)
+        pc, dc = 0, 0
         for td in tool_dirs:
-            tfile = os.path.join(tools_dir, td, 'index.html')
-            with open(tfile, 'r', encoding='utf-8') as f:
-                tcontent = f.read()
-            self.assertIn('policies.html#payments', tcontent, f"{td}/index.html must link to policies.html#payments")
+            with open(os.path.join(tools_dir, td, 'index.html'), encoding='utf-8') as fh: tc = fh.read()
+            if 'policies.html#payments' in tc: pc += 1
+            else: self.assertIn('class="directory-badge"', tc); dc += 1
+        self.assertEqual((pc, dc), (40, 25))
 
         # 3. Transparent 3-tier payment classification in policies.html
         self.assertIn('Verified &amp; Configured', policies_html, "policies.html must include 'Verified & Configured' classification")
@@ -629,11 +630,11 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         expected_claude_headline = 'Claude Pro in Pakistan: Pricing, Card Declines & PKR Buying Guide (2026)'
         expected_claude_desc_html = (
             'Complete guide to Claude Pro in Pakistan. Compare official vs PKR pricing, '
-            'resolve USD card declines with EasyPaisa &amp; JazzCash, and compare with ChatGPT.'
+            'resolve USD card declines via EasyPaisa or JazzCash vs. ChatGPT.'
         )
         expected_claude_desc_text = (
             'Complete guide to Claude Pro in Pakistan. Compare official vs PKR pricing, '
-            'resolve USD card declines with EasyPaisa & JazzCash, and compare with ChatGPT.'
+            'resolve USD card declines via EasyPaisa or JazzCash vs. ChatGPT.'
         )
         self.assertEqual(claude_html.count('name="twitter:card"'), 1, "Claude guide must have exactly one twitter:card tag")
         self.assertEqual(claude_html.count('name="twitter:title"'), 1, "Claude guide must have exactly one twitter:title tag")
@@ -737,7 +738,9 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         gem_path = os.path.join(REPO_ROOT, 'tools', 'gemini', 'index.html')
         with open(gem_path, 'r', encoding='utf-8') as f:
             gem_tool_html = f.read()
-        for forbidden in ['2TB', '"aggregateRating"', 'Verified Pakistani Buyer', 'OfferShippingDetails', '"shippingDetails"', '"deliveryTime"', '18-month replacement warranty', 'merchantReturnDays', '7-day replacement warranty']:
+        for forbidden in ['2TB', '"aggregateRating"', 'Verified Pakistani Buyer',
+                'hasMerchantReturnPolicy',
+                'merchantReturnDays', 'OfferShippingDetails', '"shippingDetails"', '"deliveryTime"', '18-month replacement warranty', 'merchantReturnDays', '7-day replacement warranty']:
             self.assertNotIn(forbidden, gem_tool_html, f"Forbidden Option B token {forbidden} in tools/gemini/index.html")
         gem_nodes = extract_jsonld_nodes(gem_tool_html)
         gem_products = [n for n in gem_nodes if n.get('@type') == 'Product']
@@ -868,8 +871,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             self.assertNotIn('review', product_node, f"Unbacked review found in {label}")
             offers = product_node.get('offers', {})
             self.assertNotIn('shippingDetails', offers, f"Unsupported zero-day shippingDetails found in {label}")
-            return_policy = offers.get('hasMerchantReturnPolicy', {})
-            self.assertEqual(return_policy.get('merchantReturnDays'), 7, f"Expected 7-day return policy in {label}")
+            self.assertNotIn("hasMerchantReturnPolicy", offers)
             for forbidden_schema_token in [
                 '"aggregateRating"',
                 '"review"',
@@ -889,6 +891,77 @@ class TestIntegrityAndRegressions(unittest.TestCase):
                     f"Forbidden structured-data token {forbidden_schema_token} found in {label}"
                 )
 
+
+    def test_batch3_technical_and_content_hygiene(self):
+        import json, html as hl
+        stubs = {'guides/ai-tools-pricing/index.html', 'guides/gemini/index.html'}
+        bad_a = ('"aggregateRating"', '"shippingDetails"', '"hasMerchantReturnPolicy"',
+                 '"merchantReturnDays"', 'class="kw-pill"', 'tool-seo-clusters')
+        for r, ds, fs in os.walk(REPO_ROOT):
+            ds[:] = [d for d in ds if d not in ('seo-agent', '.git', 'node_modules')]
+            for fn in fs:
+                if not fn.endswith('.html'): continue
+                p = os.path.relpath(os.path.join(r, fn), REPO_ROOT)
+                if p == 'tools/cursor/index.html' or p in stubs: continue
+                fp = os.path.join(REPO_ROOT, p)
+                with open(fp, encoding='utf-8') as fh: t = fh.read()
+                for x in bad_a: self.assertNotIn(x, t, p)
+                for a in re.findall(r'<a\b[^>]*wa\.me/[^>]*>', t):
+                    self.assertIn('nofollow', a, p)
+                if p.startswith('tools/'):
+                    for x in ('UBL', 'Standard Chartered'):
+                        self.assertNotIn(x, t, p)
+                for ln in t.splitlines():
+                    if 'Cursor' not in ln and 'Composer' not in ln:
+                        for x in ('3.5 Sonnet', 'Gemini 1.5', '2TB'):
+                            self.assertNotIn(x, ln, p)
+                if p.startswith('tools/') and '"FAQPage"' in t:
+                    self.assertIn('faq-item', t, p)
+                if '"FAQPage"' in t and 'faq-item' in t:
+                    fq = []
+                    for b in re.findall(
+                        r'application/ld\+json[^>]*>(.*?)</script>',t,re.S):
+                        d = json.loads(b)
+                        ns = d if isinstance(d,list) else d.get('@graph',[d])
+                        for n in ns:
+                            if n.get('@type') == 'FAQPage':
+                                fq += [hl.unescape(q['name'])
+                                       for q in n.get('mainEntity', [])]
+                    vq = [hl.unescape(re.sub(r'<[^>]+>', '', q).strip())
+                          for q in re.findall(
+                        r'class="faq-item"[^>]*>\s*<h3>(.*?)</h3>',t,re.S)]
+                    self.assertEqual(fq, vq, p)
+        def rd(q):
+            with open(os.path.join(REPO_ROOT, q), encoding='utf-8') as fh: return fh.read()
+        cv = rd('tools/canva/index.html'); self.assertIn('30 Days', cv)
+        self.assertNotIn('7-Day', cv); self.assertNotIn('7-day', cv)
+        al = rd('tools/allinone/index.html'); self.assertNotIn('7-day', al)
+        gm = rd('tools/gemini/index.html'); self.assertIn('18 Months', gm)
+        self.assertIn('30 Days', gm); self.assertNotIn('2TB', gm)
+        for p in stubs:
+            st = rd(p); self.assertIn('http-equiv="refresh"', st)
+            self.assertIn('rel="canonical"', st)
+            self.assertNotIn('noindex', st.lower())
+        mfs = ('sitemap.xml', 'sitemap.txt', 'llms.txt',
+               'llms-full.txt', 'guides/index.html')
+        for mf in mfs:
+            mt = rd(mf); self.assertNotIn('ai-tools-pricing', mt)
+            self.assertNotIn('guides/gemini/', mt)
+        for lf in ('llms.txt', 'llms-full.txt'):
+            for ln in rd(lf).splitlines():
+                if 'Cursor' not in ln and 'Composer' not in ln and 'inside IDE' not in ln:
+                    for x in ('3.5 Sonnet', 'Gemini 1.5', '2TB', 'UBL'):
+                        self.assertNotIn(x, ln, lf)
+        for fn in os.listdir(os.path.join(REPO_ROOT, 'scripts')):
+            if not fn.endswith('.py') or fn=='run_agent_shift.py': continue
+            for ln in rd(f'scripts/{fn}').splitlines():
+                if 'Cursor' not in ln and 'Composer' not in ln and 'inside IDE' not in ln and 'gemini-1.5-' not in ln:
+                    for x in ('3.5 Sonnet', 'Gemini 1.5', '2TB'):
+                        self.assertNotIn(x, ln, fn)
+        cu = rd('tools/cursor/index.html'); self.assertIn('Rs. 2,800', cu)
+        su = rd('scripts/update_llms_txt.py')
+        self.assertIn('Claude 3.5 Sonnet', cu)
+        self.assertIn('Claude 3.5 Sonnet inside IDE.', su)
 
 if __name__ == '__main__':
     unittest.main()

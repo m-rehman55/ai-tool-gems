@@ -101,10 +101,10 @@ def build_tool_page(slug, data):
         page_title = f"{name} - Pricing, Features & Review | AI Tool Gems"
 
     meta_desc = f"Explore {name} by {dev}. Verified review, official pricing ({pricing_official}), key features, limitations, and access in Pakistan."
-    if len(meta_desc) > 160:
-        meta_desc = meta_desc[:157] + "..."
+    if len(meta_desc) > 155:
+        meta_desc = meta_desc[:154].rsplit(" ",1)[0].rstrip(",.")+"."
 
-    robots_meta = "noindex, follow" if slug in WAVE2_SLUGS else "index, follow"
+    robots_meta = "noindex, follow"
 
     enriched = DIRECTORY_ENRICHED_DATA.get(slug, {
         'pkr': 5600, 'old_pkr': 7500, 'saving': 'Save 25%',
@@ -302,11 +302,6 @@ def build_tool_page(slug, data):
         for r_slug, r_name, r_desc in related
     ])
 
-    keywords_html = "\n".join([
-        f'        <span class="kw-pill">{html.escape(kw)}</span>'
-        for kw in primary_keywords
-    ])
-
     guide_slug, guide_label = CATEGORY_GUIDE_MAP.get(cat_slug, ('developers', 'Developers & Coders'))
 
     html_content = f"""<!doctype html>
@@ -388,16 +383,12 @@ def build_tool_page(slug, data):
           <div><dt>Delivery estimate</dt><dd>Direct Cloud / Web Access</dd></div>
           <div><dt>Replacement warranty</dt><dd>{warranty_period} (Assisted Support)</dd></div>
         </dl>
-        <a class="buy" href="{official_url}" target="_blank" rel="noopener noreferrer">Visit Official {html.escape(name)} Website &rarr;</a>
+        <a class="official-vendor-btn" href="{official_url}" target="_blank" rel="noopener noreferrer">Visit Official {html.escape(name)} Website &rarr;</a>
         <p class="availability">Direct official provider link ({html.escape(pricing_official)}). For assistance with foreign payments or concierge onboarding in Pakistan, message our verified WhatsApp desk.</p>
       </section>
     </article>
 
-    <section class="tool-seo-clusters">
-      <h2>Target Search Queries &amp; Keyword Clusters</h2>
-      <div class="keyword-pills-wrap">
-{keywords_html}
-      </div>
+    <section class="card">
 
       <div class="pakistan-banking-support">
         <h3>Verified Domestic Payment &amp; Banking Rails for Pakistani Users</h3>
@@ -406,12 +397,12 @@ def build_tool_page(slug, data):
           <div class="rail-card">
             <span class="rail-badge">Digital Card</span>
             <strong>SadaPay &amp; NayaPay</strong>
-            <p>Virtual or physical debit cards (Mastercard/Visa) with active international e-commerce sessions.</p>
+            <p>Virtual or physical cards with active international e-commerce sessions.</p>
           </div>
           <div class="rail-card">
             <span class="rail-badge">Bank Transfer</span>
             <strong>Raast &amp; Direct IBFT</strong>
-            <p>Supported across all major commercial Pakistani banks (Meezan, Alfalah, HBL, UBL, Standard Chartered).</p>
+            <p>Supported across all major commercial Pakistani banks (Meezan, Alfalah, HBL, and Raast banks).</p>
           </div>
           <div class="rail-card">
             <span class="rail-badge">Mobile Wallet</span>
@@ -420,7 +411,7 @@ def build_tool_page(slug, data):
           </div>
         </div>
         <div class="concierge-box">
-          <p><strong>Need Assistance in Pakistan?</strong> If you do not have an international credit card or encounter bank 3D-Secure declines, message our Pakistani verification desk on WhatsApp for concierge payment advisory and guided onboarding.</p>
+          <p><strong>Need Assistance in Pakistan?</strong> If you do not have an international card or encounter bank 3D-Secure declines, message our Pakistani verification desk on WhatsApp for concierge payment advisory and guided onboarding.</p>
         </div>
       </div>
     </section>

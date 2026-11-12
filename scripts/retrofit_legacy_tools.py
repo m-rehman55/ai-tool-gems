@@ -23,7 +23,7 @@ LEGACY_TOOLS = {
     "canva": {"name": "Canva Pro Edu", "pkr": 900, "usd": "3.99", "duration": "1 Year", "access": "Invitation Access", "warranty": "30 Days"},
     "capcut": {"name": "CapCut Pro VIP", "pkr": 900, "usd": "3.99", "duration": "1 Month", "access": "Private Account", "warranty": "7 Days"},
     "chatgpt": {"name": "ChatGPT Plus", "pkr": 2300, "usd": "8.99", "duration": "1 Month", "access": "Private Account", "warranty": "7 Days"},
-    "claude": {"name": "Claude Pro (3.5 Sonnet)", "pkr": 2200, "usd": "8.99", "duration": "1 Month", "access": "Private Account", "warranty": "7 Days"},
+    "claude": {"name": "Claude Pro", "pkr": 2200, "usd": "8.99", "duration": "1 Month", "access": "Private Account", "warranty": "7 Days"},
     "cursor": {"name": "Cursor AI Pro", "pkr": 2800, "usd": "10.99", "duration": "1 Month", "access": "Private Account", "warranty": "7 Days"},
     "deepseek": {"name": "DeepSeek Unlimited", "pkr": 1100, "usd": "4.49", "duration": "1 Month", "access": "Private Portal", "warranty": "7 Days"},
     "elevenlabs": {"name": "ElevenLabs Voice AI", "pkr": 3300, "usd": "12.99", "duration": "1 Month", "access": "Private Account", "warranty": "7 Days"},

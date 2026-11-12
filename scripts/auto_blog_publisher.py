@@ -400,11 +400,10 @@ def render_article_html(bp: dict) -> str:
       "author": {{
         "@type": "Organization",
         "name": "AI Tool Gems Editorial Team",
-        "url": "https://aitoolgems.tech/how-we-review.html",
-        "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
+        "url": "https://aitoolgems.tech/how-we-review.html"
       }},
       "publisher": {{
-        "@id": "https://aitoolgems.tech/#organization"
+        "@type": "Organization","name": "AI Tool Gems"
       }},
       "image": "https://aitoolgems.tech/assets/brand-logo-light.png",
       "about": [
@@ -422,9 +421,8 @@ def render_article_html(bp: dict) -> str:
       "dateModified": "{now_date}",
       "inLanguage": "en-PK",
       "isPartOf": {{
-        "@id": "https://aitoolgems.tech/#website"
-      }},
-      "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
+        "@type": "WebSite","name": "AI Tool Gems"
+      }}
     }},
     {{
       "@type": "BreadcrumbList",
@@ -447,18 +445,15 @@ def render_article_html(bp: dict) -> str:
           "name": "{title}",
           "item": "https://aitoolgems.tech/guides/{slug}/"
         }}
-      ],
-      "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
+      ]
     }},
     {{
       "@type": "FAQPage",
       "mainEntity": [
 {faq_schema_str}
-      ],
-      "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
+      ]
     }}
-  ],
-  "image": "https://aitoolgems.tech/assets/brand-logo-light.png"
+  ]
 }}
 </script>
 </head>

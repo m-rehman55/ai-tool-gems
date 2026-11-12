@@ -33,6 +33,7 @@ def unify_detail_pages():
     modified_count = 0
     
     for slug in tool_dirs:
+        if slug == "cursor": continue
         idx_path = os.path.join(ROOT, 'tools', slug, 'index.html')
         if not os.path.exists(idx_path):
             continue
@@ -86,7 +87,7 @@ def unify_detail_pages():
         # 1. <a class="buy"...>Buy [Name] on WhatsApp</a>
         # 2. <a class="official-vendor-btn"...>Visit Official [Name] Website &rarr;</a>
         
-        new_block = f'{wa_btn_html}\n        {vendor_btn_html}'
+        new_block = vendor_btn_html if is_dir_tool else f'{wa_btn_html}\n        {vendor_btn_html}'
         
         # If the page already had an official-vendor-btn, remove the old one first
         content = re.sub(r'\s*<a class="official-vendor-btn"[^>]*>.*?</a>', '', content)

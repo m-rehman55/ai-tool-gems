@@ -21,7 +21,7 @@ AI Tool Gems solves this challenge by providing verified AI tool subscriptions, 
 
 ---
 
-## Complete Product Catalog & Multi-Currency Pricing (40 Verified Listings)
+## Complete Product Catalog & Multi-Currency Pricing (40 Commercial Verified Listings)
 
 ### 1. ChatGPT Plus
 - URL: https://aitoolgems.tech/tools/chatgpt/
@@ -40,7 +40,7 @@ AI Tool Gems solves this challenge by providing verified AI tool subscriptions, 
 - Access Type: Invitation Access
 - Delivery Time: Delivery after payment confirmation on WhatsApp
 - Warranty: 30 Days Replacement Warranty
-- Key Features: 2TB Google Drive cloud storage, 2M token context, Docs & Gmail integrations.
+- Key Features: Long-context document analysis, Docs & Gmail integrations.
 - Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Google%20Gemini%20Pro
 
 ### 3. Veo 3 Ultra
@@ -223,15 +223,15 @@ AI Tool Gems solves this challenge by providing verified AI tool subscriptions, 
 - Key Features: Genuine digital retail activation key, BitLocker encryption, Remote Desktop Host.
 - Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Windows%2011%20Pro%20Key
 
-### 21. Claude Pro (3.5 Sonnet)
+### 21. Claude Pro
 - URL: https://aitoolgems.tech/tools/claude/
 - Listed Price: Rs. 2,200 PKR / $8.99 USD
 - Duration: 1 Month
 - Access Type: Private Access
 - Delivery Time: Delivery after payment confirmation on WhatsApp
 - Warranty: 7 Days Replacement Warranty
-- Key Features: Claude 3.5 Sonnet & Opus, interactive Artifacts visualizer & 200K token deep context.
-- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Claude%20Pro%20(3.5%20Sonnet)
+- Key Features: Claude Sonnet & Opus, interactive Artifacts visualizer & 200K token deep context.
+- Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Claude%20Pro
 
 ### 22. Midjourney v6.1 Pro
 - URL: https://aitoolgems.tech/tools/midjourney/
@@ -260,7 +260,7 @@ AI Tool Gems solves this challenge by providing verified AI tool subscriptions, 
 - Access Type: Private Access
 - Delivery Time: Delivery after payment confirmation on WhatsApp
 - Warranty: 7 Days Replacement Warranty
-- Key Features: Pro Search with citations, unlimited document uploads, Claude 3.5 & GPT-4o switcher.
+- Key Features: Pro Search with citations, unlimited document uploads, Claude & GPT-4o switcher.
 - Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20Perplexity%20Pro
 
 ### 25. DeepSeek Unlimited
@@ -340,7 +340,7 @@ AI Tool Gems solves this challenge by providing verified AI tool subscriptions, 
 - Access Type: Private Portal Access
 - Delivery Time: Delivery after payment confirmation on WhatsApp
 - Warranty: 30 Days Replacement Warranty
-- Key Features: Claude 3.5 + GPT-4o + Gemini 1.5 + Perplexity in 1 portal login. No VPN needed.
+- Key Features: Claude Sonnet + GPT-4o + Gemini + Perplexity in 1 portal login. No VPN needed.
 - Order WhatsApp: https://wa.me/923236715731?text=Hello%20AI%20Tool%20Gems%2C%20I%20want%20to%20order%20All-in-One%20Mega%20AI%20Portal
 
 ### 33. TradingView Pro
@@ -463,10 +463,6 @@ A: All tools come with a documented 7-day, 30-day, or active-period replacement 
 - URL: https://aitoolgems.tech/guides/ai-tools-price-pakistan/
 - Summary: Compare 20 AI tools prices in Pakistan for 2026, including duration, access type, buying checks and direct links to current PKR listings.
 
-### AI Tools Pricing in Pakistan (2026): Monthly PKR Rates & Costs
-- URL: https://aitoolgems.tech/guides/ai-tools-pricing/
-- Summary: Up-to-date AI tools pricing in Pakistan for 2026. Compare monthly costs in PKR, avoid foreign card taxes, and get verified local subscription deals.
-
 ### Top AI Video Generators in Pakistan: CapCut, Veo & Runway (2026)
 - URL: https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/
 - Summary: Best AI video generators in Pakistan compared for 2026. Explore CapCut Pro VIP, Google Veo 3 Ultra & ElevenLabs with PKR pricing and verified WhatsApp delivery.
@@ -493,7 +489,7 @@ A: All tools come with a documented 7-day, 30-day, or active-period replacement 
 
 ### Best ChatGPT Alternatives in Pakistan (2026): Claude, Gemini, DeepSeek
 - URL: https://aitoolgems.tech/guides/chatgpt-alternatives/
-- Summary: Compare top ChatGPT alternatives in Pakistan for 2026. Explore Claude 3.5 Sonnet, Google Gemini, DeepSeek & Perplexity with PKR prices & local access.
+- Summary: Compare top ChatGPT alternatives in Pakistan for 2026. Explore Claude Pro, Google Gemini, DeepSeek & Perplexity with PKR prices & local access.
 
 ### ChatGPT Plus vs Claude Pro in Pakistan: 2026 Comparison
 - URL: https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/
@@ -503,9 +499,9 @@ A: All tools come with a documented 7-day, 30-day, or active-period replacement 
 - URL: https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/
 - Summary: Compare ChatGPT Plus and Gemini Pro in Pakistan by tasks, access type, duration and current PKR marketplace price. Updated September 2026.
 
-### Claude 3.5 Sonnet in Pakistan: Pricing & Access Guide (2026)
+### Claude Pro in Pakistan: Pricing & Access Guide (2026)
 - URL: https://aitoolgems.tech/guides/claude-ai-pakistan/
-- Summary: Claude 3.5 Sonnet & Claude Pro Pakistan guide. Compare official vs PKR pricing, bypass card limits with EasyPaisa, and compare Claude with ChatGPT.
+- Summary: Claude Pro & Sonnet Pakistan guide. Compare official vs PKR pricing, bypass card limits with EasyPaisa, and compare Claude with ChatGPT.
 
 ### AI Tools for Content Creators in Pakistan (2026): Video, Voice & Art
 - URL: https://aitoolgems.tech/guides/creators/
@@ -521,15 +517,11 @@ A: All tools come with a documented 7-day, 30-day, or active-period replacement 
 
 ### AI Tools for Developers in Pakistan (2026): Cursor, Claude & Replit
 - URL: https://aitoolgems.tech/guides/developers/
-- Summary: Best AI coding tools for Pakistani software engineers in 2026. Compare Cursor AI, Claude 3.5 Sonnet & Replit in PKR with EasyPaisa & Bank IBFT.
+- Summary: Best AI coding tools for Pakistani software engineers in 2026. Compare Cursor AI, Claude Pro & Replit in PKR with EasyPaisa & Bank IBFT.
 
 ### ElevenLabs Voice AI in Pakistan: Pricing, Urdu Support & Guide
 - URL: https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/
 - Summary: Complete guide to ElevenLabs Voice AI in Pakistan. Review character plans in PKR, Urdu voice cloning, and payment via EasyPaisa and JazzCash.
-
-### Google Gemini Advanced in Pakistan (2026): 2TB Storage & Price
-- URL: https://aitoolgems.tech/guides/gemini/
-- Summary: Google Gemini Advanced guide for Pakistan in 2026. Explore 2M token context, 2TB Google One storage, PKR pricing & EasyPaisa/JazzCash activation.
 
 ### Lovable vs Replit in Pakistan: Best AI App Builder (2026)
 - URL: https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/
@@ -545,7 +537,7 @@ A: All tools come with a documented 7-day, 30-day, or active-period replacement 
 
 ### Perplexity AI Pro in Pakistan: Pricing, Search Features & Guide (2026)
 - URL: https://aitoolgems.tech/guides/perplexity-ai-pakistan/
-- Summary: Complete guide to Perplexity AI Pro in Pakistan. Compare Pro Search, Claude 3.5 & GPT-4o models in PKR with EasyPaisa, JazzCash, and SadaPay payment.
+- Summary: Complete guide to Perplexity AI Pro in Pakistan. Compare Pro Search, Claude & GPT-4o models in PKR with EasyPaisa, JazzCash, and SadaPay payment.
 
 ### AI Tools for Productivity in Pakistan (2026): Office & Workflow Guide
 - URL: https://aitoolgems.tech/guides/productivity/

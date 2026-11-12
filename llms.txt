@@ -8,7 +8,7 @@ Last reviewed: 2026-10-24
 ## Core pages
 
 - [Homepage](https://aitoolgems.tech/) — complete marketplace, software license keys, finder, ordering process, and FAQs
-- [All Tools Directory](https://aitoolgems.tech/tools/) — complete 2026 directory of 40 verified AI software tools, subscriptions, and license keys
+- [All Tools Directory](https://aitoolgems.tech/tools/) — complete 2026 directory of 65 verified AI software tools, subscriptions, and license keys
 - [Deals](https://aitoolgems.tech/deals/) — current discounted software marketplace directory with bundle savings
 - [Price Index](https://aitoolgems.tech/prices/) — full 2026 directory of verified AI tools and subscription rates in PKR and USD
 - [About](https://aitoolgems.tech/about.html) — marketplace identity, listing process, and independence disclosure
@@ -64,26 +64,24 @@ Last reviewed: 2026-10-24
 - [Blog & Guides](https://aitoolgems.tech/blog/) — official AI Tool Gems blog, latest tech tutorials, and developer articles
 - [AI Subscriptions Pakistan](https://aitoolgems.tech/guides/ai-subscriptions-pakistan/) — complete buyer's guide to AI tool plans in Pakistan
 - [AI Tools Pakistan](https://aitoolgems.tech/guides/ai-tools-pakistan/) — top AI software for Pakistani freelancers and businesses
-- [AI Tools Price Pakistan](https://aitoolgems.tech/guides/ai-tools-price-pakistan/) — all 40 current listings compared by PKR & USD price, duration, and access type
-- [AI Tools Pricing Guide](https://aitoolgems.tech/guides/ai-tools-pricing/) — comprehensive breakdown of billing cycles and costs
+- [AI Tools Price Pakistan](https://aitoolgems.tech/guides/ai-tools-price-pakistan/) — all 40 commercial listings compared by PKR & USD price, duration, and access type
 - [AI Tools for Businesses](https://aitoolgems.tech/guides/businesses/) — enterprise and SME AI tool deployment in Pakistan
 - [Canva vs Figma Pakistan](https://aitoolgems.tech/guides/canva-vs-figma-pakistan/) — workflow-based Canva Pro and Figma Pro comparison
 - [Canva Pro Guide](https://aitoolgems.tech/guides/canva/) — Canva Pro features, templates, and team setup in Pakistan
 - [CapCut Pro Guide](https://aitoolgems.tech/guides/capcut/) — CapCut Pro PC and mobile video editing workflow
-- [Claude 3.5 Sonnet Pakistan](https://aitoolgems.tech/guides/claude-ai-pakistan/) — complete guide to Claude 3.5 Sonnet & Claude Pro in Pakistan
+- [Claude Pro Pakistan](https://aitoolgems.tech/guides/claude-ai-pakistan/) — complete guide to Claude Pro & Sonnet in Pakistan
 - [Cursor AI Pakistan](https://aitoolgems.tech/guides/cursor-ai-pakistan/) — complete Cursor AI developer & pricing guide in Pakistan
 - [ChatGPT Alternatives](https://aitoolgems.tech/guides/chatgpt-alternatives/) — best LLM and reasoning alternatives to ChatGPT Plus
 - [ChatGPT vs Gemini Pakistan](https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/) — task-based ChatGPT Plus and Gemini Pro comparison
 - [AI Tools for Creators](https://aitoolgems.tech/guides/creators/) — generative AI stack for YouTubers, TikTokers, and influencers
 - [AI Tools for Developers](https://aitoolgems.tech/guides/developers/) — AI coding assistants, IDEs, and automation platforms
-- [Google Gemini Guide](https://aitoolgems.tech/guides/gemini/) — Gemini Advanced, 2TB Cloud storage, and Workspace integration
 - [AI Tools for Productivity](https://aitoolgems.tech/guides/productivity/) — note-taking, slides, and task automation tools
 - [AI Tools for Students](https://aitoolgems.tech/guides/students/) — budget-friendly academic research and design tools
 
-## Product Catalog (40 Verified Listings)
+## Product Catalog (40 Commercial Verified Listings)
 
 - [ChatGPT Plus](https://aitoolgems.tech/tools/chatgpt/) — Rs. 2,300 PKR ($8.99 USD) (1 Month, Private access, GPT-4o, advanced coding, DALL-E 3 image generation, file analysis & custom GPTs, delivery after payment confirmation on WhatsApp)
-- [Google Gemini Pro](https://aitoolgems.tech/tools/gemini/) — Rs. 800 PKR ($3.99 USD) (18 Months, Invitation access, 2TB Google Drive cloud storage, 2M token context, Docs & Gmail integrations, delivery after payment confirmation on WhatsApp)
+- [Google Gemini Pro](https://aitoolgems.tech/tools/gemini/) — Rs. 800 PKR ($3.99 USD) (18 Months, Invitation access, 2M token context, Docs & Gmail integrations, delivery after payment confirmation on WhatsApp)
 - [Veo 3 Ultra](https://aitoolgems.tech/tools/veo/) — Rs. 2,100 PKR ($8.49 USD) (Unlimited, Shared access, Text-to-video workflow, audio-capable generation, 1080p output & consistent motion, delivery after payment confirmation on WhatsApp)
 - [Leonardo AI Essential](https://aitoolgems.tech/tools/leonardo/) — Rs. 1,900 PKR ($7.49 USD) (8,500 Credits, Private access, PhotoReal & Alchemy pipeline, prompt enhancer, 8,500 credits & commercial use, delivery after payment confirmation on WhatsApp)
 - [ElevenLabs Voice AI](https://aitoolgems.tech/tools/elevenlabs/) — Rs. 3,300 PKR ($12.99 USD) (1 Month, Private access, Multilingual voice synthesis, voice cloning, monthly credit allowance & audio dubbing, delivery after payment confirmation on WhatsApp)
@@ -102,10 +100,10 @@ Last reviewed: 2026-10-24
 - [Netflix Premium 4K](https://aitoolgems.tech/tools/netflix/) — Rs. 400 PKR ($1.99 USD) (1 Month, Shared access, 4K Ultra HD & HDR streaming, spatial audio, dedicated profile with PIN lock, delivery after payment confirmation on WhatsApp)
 - [LinkedIn Premium](https://aitoolgems.tech/tools/linkedin/) — Rs. 1,500 PKR ($5.99 USD) (2 Months, Invitation access, InMail credits, profile viewer analytics, applicant insights & LinkedIn Learning, delivery after payment confirmation on WhatsApp)
 - [Windows 11 Pro Key](https://aitoolgems.tech/tools/windows/) — Rs. 1,900 PKR ($7.99 USD) (Lifetime, License Key access, Genuine digital retail activation key, BitLocker encryption, Remote Desktop Host, delivery after payment confirmation on WhatsApp)
-- [Claude Pro (3.5 Sonnet)](https://aitoolgems.tech/tools/claude/) — Rs. 2,200 PKR ($8.99 USD) (1 Month, Private access, Claude 3, delivery after payment confirmation on WhatsApp)
+- [Claude Pro](https://aitoolgems.tech/tools/claude/) — Rs. 2,200 PKR ($8.99 USD) (1 Month, Private access, Claude Sonnet, delivery after payment confirmation on WhatsApp)
 - [Midjourney v6.1 Pro](https://aitoolgems.tech/tools/midjourney/) — Rs. 2,400 PKR ($9.99 USD) (1 Month, Private / Discord access, Photorealistic AI art, GPU generation hours, commercial rights & web/Discord access, delivery after payment confirmation on WhatsApp)
 - [Cursor AI Pro](https://aitoolgems.tech/tools/cursor/) — Rs. 2,800 PKR ($10.99 USD) (1 Month, Private access, Composer multi-file AI editing, fast tab completions, Claude 3, delivery after payment confirmation on WhatsApp)
-- [Perplexity Pro](https://aitoolgems.tech/tools/perplexity/) — Rs. 1,400 PKR ($5.49 USD) (1 Month, Private access, Pro Search with citations, unlimited document uploads, Claude 3, delivery after payment confirmation on WhatsApp)
+- [Perplexity Pro](https://aitoolgems.tech/tools/perplexity/) — Rs. 1,400 PKR ($5.49 USD) (1 Month, Private access, Pro Search with citations, unlimited document uploads, Claude Sonnet, delivery after payment confirmation on WhatsApp)
 - [DeepSeek Unlimited](https://aitoolgems.tech/tools/deepseek/) — Rs. 1,100 PKR ($4.49 USD) (1 Month, Private Portal access, DeepSeek R1 full reasoning chain, mathematical proofs, logic solving & zero queue, delivery after payment confirmation on WhatsApp)
 - [SuperGrok / Grok 2](https://aitoolgems.tech/tools/grok/) — Rs. 1,800 PKR ($6.99 USD) (1 Month, Private access, Real-time news search on X, Flux photorealistic image generator & creative modes, delivery after payment confirmation on WhatsApp)
 - [Runway ML Gen-3 Pro](https://aitoolgems.tech/tools/runway/) — Rs. 3,500 PKR ($13.99 USD) (1 Month, Private access, Gen-3 Alpha cinematic video generator, motion brush camera controls & 4K upscaler, delivery after payment confirmation on WhatsApp)
@@ -113,7 +111,7 @@ Last reviewed: 2026-10-24
 - [Grammarly Premium](https://aitoolgems.tech/tools/grammarly/) — Rs. 750 PKR ($2.99 USD) (1 Month, Private / Shared access, Full sentence rewrites, tone tuner, built-in plagiarism detector & browser extension, delivery after payment confirmation on WhatsApp)
 - [QuillBot Premium](https://aitoolgems.tech/tools/quillbot/) — Rs. 450 PKR ($1.99 USD) (1 Month, Private / Shared access, Unlimited paraphrasing words, 8 custom modes, freeze words & citation generator, delivery after payment confirmation on WhatsApp)
 - [SEMrush Pro](https://aitoolgems.tech/tools/semrush/) — Rs. 1,500 PKR ($5.99 USD) (1 Month, Shared access, Keyword Magic tool with PKR metrics, competitor organic audit & backlink analytics, delivery after payment confirmation on WhatsApp)
-- [All-in-One Mega AI Portal](https://aitoolgems.tech/tools/allinone/) — Rs. 1,999 PKR ($7.99 USD) (1 Month, Private Portal access, Claude 3, delivery after payment confirmation on WhatsApp)
+- [All-in-One Mega AI Portal](https://aitoolgems.tech/tools/allinone/) — Rs. 1,999 PKR ($7.99 USD) (1 Month, Private Portal access, Claude Sonnet, delivery after payment confirmation on WhatsApp)
 - [TradingView Pro](https://aitoolgems.tech/tools/tradingview/) — Rs. 3,500 PKR ($14.99 USD) (1 Month, Private access, Institutional-grade technical charts, custom Pine Script, volume profiles & alerts, delivery after payment confirmation on WhatsApp)
 - [Kling AI](https://aitoolgems.tech/tools/kling/) — Rs. 4,800 PKR ($19.99 USD) (1 Month, Private access, 1080p full HD cinematic video, 3D camera controls, physics simulation & commercial use, delivery after payment confirmation on WhatsApp)
 - [Freepik Premium](https://aitoolgems.tech/tools/freepik/) — Rs. 2,400 PKR ($9.99 USD) (1 Month, Private access, 100 daily downloads, 150M+ vectors, PSD templates, stock photos & Pikaso AI, delivery after payment confirmation on WhatsApp)

@@ -386,14 +386,16 @@ tbody th { color:#247c69; }
 /* ==========================================================================
    ENHANCED DIRECTORY TOOL PAGE MODULES (SEO CLUSTERS, BANKING & HUBS)
    ========================================================================== */
-.tool-seo-clusters {
+.tool-seo-clusters,
+.tool-payment-support {
   margin-top: 32px;
   padding: 22px 24px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
 }
-.tool-seo-clusters h2 {
+.tool-seo-clusters h2,
+.tool-payment-support h2 {
   margin: 0 0 12px;
   font-size: 18px;
   font-weight: 800;

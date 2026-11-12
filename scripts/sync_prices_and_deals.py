@@ -31,7 +31,7 @@ PRODUCTS = [
     {"slug": "netflix", "name": "Netflix Premium 4K", "provider": "Netflix", "category": "Entertainment", "pkr": 400, "usd": "1.99", "duration": "1 Month", "access": "Shared"},
     {"slug": "linkedin", "name": "LinkedIn Premium", "provider": "Microsoft", "category": "Business", "pkr": 1500, "usd": "5.99", "duration": "2 Months", "access": "Invitation"},
     {"slug": "windows", "name": "Windows 11 Pro Key", "provider": "Microsoft", "category": "Software", "pkr": 1900, "usd": "7.99", "duration": "Lifetime", "access": "License Key"},
-    {"slug": "claude", "name": "Claude Pro (3.5 Sonnet)", "provider": "Anthropic", "category": "AI Assistants", "pkr": 2200, "usd": "8.99", "duration": "1 Month", "access": "Private"},
+    {"slug": "claude", "name": "Claude Pro", "provider": "Anthropic", "category": "AI Assistants", "pkr": 2200, "usd": "8.99", "duration": "1 Month", "access": "Private"},
     {"slug": "midjourney", "name": "Midjourney v6.1 Pro", "provider": "Midjourney", "category": "Design", "pkr": 2400, "usd": "9.99", "duration": "1 Month", "access": "Private / Discord"},
     {"slug": "cursor", "name": "Cursor AI Pro", "provider": "Anysphere", "category": "Development", "pkr": 2800, "usd": "10.99", "duration": "1 Month", "access": "Private"},
     {"slug": "perplexity", "name": "Perplexity Pro", "provider": "Perplexity", "category": "AI Assistants", "pkr": 1400, "usd": "5.49", "duration": "1 Month", "access": "Private"},

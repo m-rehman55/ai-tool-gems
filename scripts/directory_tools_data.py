@@ -23,7 +23,7 @@ DIRECTORY_TOOLS = {
             ("Cascade Agentic AI", "Autonomous multi-file context tracking, code generation, and terminal command execution with user review gates."),
             ("Supercomplete Real-Time Engine", "Low-latency predictive completions anticipating cursor movement and next-line edits."),
             ("Complete VS Code Compatibility", "Directly imports all VS Code extensions, themes, keybindings, and configurations seamlessly."),
-            ("Multi-Model Support", "Switch flexibly between Claude 3.5 Sonnet, GPT-4o, and specialized Codeium in-house code models."),
+            ("Multi-Model Support", "Switch flexibly between Claude Sonnet, GPT-4o, and specialized Codeium in-house code models."),
             ("Local & Cloud Context Indexing", "Combines local AST repository analysis with secure cloud indexing for multi-repo awareness.")
         ],
         "use_cases": [
@@ -39,13 +39,13 @@ DIRECTORY_TOOLS = {
         ],
         "pricing_table": [
             ("Free Tier", "$0", "Rs. 0", "Unlimited basic tab completions, limited Cascade flows, standard Codeium model access."),
-            ("Pro Plan", "$20 / mo", "~Rs. 5,600 / mo", "500 fast premium requests (Claude 3.5 Sonnet & GPT-4o), unlimited Cascade agent flows, priority indexing."),
+            ("Pro Plan", "$20 / mo", "~Rs. 5,600 / mo", "500 fast premium requests (Claude Sonnet & GPT-4o), unlimited Cascade agent flows, priority indexing."),
             ("Teams / Enterprise", "$40+ / seat", "Custom quote", "Centralized seat management, admin analytics, SOC 2 compliance, and zero data retention guarantees.")
         ],
         "pakistan_guide": [
             "Download the official Windsurf desktop client for Windows, macOS, or Linux from codeium.com/windsurf.",
             "Sign in with your Google or GitHub account to immediately activate the permanent Free Tier.",
-            "To upgrade to Pro ($20/mo), use a Pakistani debit/credit card enabled for international transactions (SadaPay, NayaPay, or bank Visa/Mastercard with international e-commerce enabled).",
+            "To upgrade to Pro ($20/mo), use a Pakistani card enabled for international transactions (SadaPay, NayaPay, or an enabled bank card with international e-commerce enabled).",
             "Ensure your bank card has international 3D-Secure active. Exchange conversion taxes of 5% to 10% apply according to FBR withholding tax rules for foreign payments."
         ],
         "competitor_comparison": {
@@ -56,20 +56,20 @@ DIRECTORY_TOOLS = {
                 ["Base Editor", "VS Code Fork", "VS Code Fork", "Extension for VS Code / JetBrains"],
                 ["Free Tier", "Generous unlimited completions", "Limited 14-day trial / 50 reqs", "Free tier with 2,000 completions/mo"],
                 ["Pro Pricing", "$20 / month", "Rs. 2,800 on AI Tool Gems ($20 off.)", "$10 / month"],
-                ["Model Switching", "Claude 3.5 Sonnet, GPT-4o", "Claude 3.5 Sonnet, GPT-4o, o1", "GPT-4o, Claude 3.5, Gemini 1.5"]
+                ["Model Switching", "Claude Sonnet, GPT-4o", "Claude Sonnet, GPT-4o, o1", "GPT-4o, Claude Sonnet, Gemini Pro"]
             ]
         },
         "faqs": [
             ("Is Windsurf Editor free to use in Pakistan?", "Yes, Windsurf Editor provides a permanent Free Tier that includes unlimited basic single-line and multi-line code completions alongside standard Cascade interactions with no credit card required."),
             ("How much does Windsurf Pro cost in Pakistani Rupees?", "Windsurf Pro costs $20 USD per month on Codeium's official website, which equals approximately Rs. 5,600 PKR (at 1 USD ≈ 280 PKR), plus bank foreign transaction withholding taxes."),
-            ("Can I use SadaPay or NayaPay to purchase Windsurf Pro?", "Yes, Pakistani developers routinely use SadaPay and NayaPay virtual Visa/Mastercard debit cards to pay for Windsurf Pro. Make sure international transactions are toggled ON in your app."),
+            ("Can I use SadaPay or NayaPay to purchase Windsurf Pro?", "Yes, Pakistani developers routinely use SadaPay and NayaPay virtual international cards to pay for Windsurf Pro. Make sure international transactions are toggled ON in your app."),
             ("How does Windsurf compare to Cursor AI?", "Both are VS Code forks with agentic AI. Windsurf is praised for its lower latency 'Supercomplete' and smoother Cascade agent workflows, while Cursor offers deep Composer agent integration and wider custom model selection."),
             ("Does Windsurf support Python, JavaScript, and Flutter?", "Yes, Windsurf natively supports all languages available in the VS Code ecosystem, including Python, TypeScript, React, Next.js, Go, Rust, PHP, Flutter, and C++.")
         ],
         "related_tools": [
-            ("cursor", "Cursor AI Pro", "AI-first code editor with multi-file Composer and Claude 3.5 Sonnet."),
+            ("cursor", "Cursor AI Pro", "AI-first code editor with multi-file Composer and Claude Sonnet."),
             ("copilot", "GitHub Copilot", "Microsoft's ubiquitous coding assistant integrated across editors."),
-            ("claude", "Claude 3.5 Sonnet", "Anthropic's flagship model powering Windsurf's agentic reasoning."),
+            ("claude", "Claude Sonnet", "Anthropic's flagship model powering Windsurf's agentic reasoning."),
             ("v0", "v0 by Vercel", "Generative UI builder that generates full React components for your project.")
         ]
     },
@@ -114,7 +114,7 @@ DIRECTORY_TOOLS = {
             "Navigate to v0.dev and log in with your GitHub or Vercel account.",
             "Start generating UI immediately using your free 200 credits allowance.",
             "Copy the resulting React JSX code or use 'npx v0 add <id>' in your local VS Code terminal to install it directly into your Next.js project.",
-            "To purchase the Premium plan ($20/mo), pay using a Pakistani international debit card (SadaPay, NayaPay, Standard Chartered, or Meezan Bank) with foreign e-commerce permissions active."
+            "To purchase the Premium plan ($20/mo), pay using a Pakistani international debit card (SadaPay, NayaPay, or Meezan Bank) with foreign e-commerce permissions active."
         ],
         "competitor_comparison": {
             "title": "v0 vs Bolt.new vs Lovable",
@@ -132,7 +132,7 @@ DIRECTORY_TOOLS = {
             ("What frontend libraries does v0 generate code for?", "v0 generates React components styled with Tailwind CSS, primarily structured around shadcn/ui and Radix UI accessible primitives."),
             ("Can I make my v0 generations private?", "Private generations require the v0 Premium plan ($20/month). On the Free plan, all generated components are public in the v0 community feed."),
             ("How do I install a v0 component into my local project?", "You can copy the code directly or run the official CLI command `npx v0 add <component-id>` inside your Next.js project folder to download the component and dependencies automatically."),
-            ("What payment methods work for v0 in Pakistan?", "Any Pakistani credit or debit card enabled for international payments (such as SadaPay, NayaPay, or international Visa/Mastercard) can be used on Vercel's checkout.")
+            ("What payment methods work for v0 in Pakistan?", "Any Pakistani bank card enabled for international payments (such as SadaPay, NayaPay, or an enabled bank card) can be used on Vercel's checkout.")
         ],
         "related_tools": [
             ("bolt-new", "Bolt.new", "Full-stack in-browser IDE that creates functioning frontend and backend apps."),
@@ -154,7 +154,7 @@ DIRECTORY_TOOLS = {
         "free_plan": "Free plan with daily token allowances to create and run full-stack apps in the browser",
         "quick_summary": "Bolt.new by StackBlitz is an AI-powered in-browser development environment that builds, executes, and deploys full-stack web applications entirely in your browser using WebContainers. Pakistani developers can build prototypes for free and deploy with one click to Netlify.",
         "primary_keywords": ["Bolt.new", "Bolt new price Pakistan", "Bolt.new review", "StackBlitz AI editor", "Bolt new vs v0"],
-        "overview": "Bolt.new harnesses StackBlitz's groundbreaking WebContainer technology to execute Node.js runtimes directly inside browser tabs. Paired with Anthropic's Claude 3.5 Sonnet, Bolt.new can install npm dependencies, compile code, configure databases, fix compilation errors autonomously, and provide a live URL—all without local Node.js installation or terminal configuration.",
+        "overview": "Bolt.new harnesses StackBlitz's groundbreaking WebContainer technology to execute Node.js runtimes directly inside browser tabs. Paired with Anthropic's Claude Sonnet, Bolt.new can install npm dependencies, compile code, configure databases, fix compilation errors autonomously, and provide a live URL—all without local Node.js installation or terminal configuration.",
         "features": [
             ("In-Browser Node.js Runtime", "Runs a complete WebContainer execution environment inside your browser with full npm support."),
             ("Autonomous Multi-File Generation", "Scaffolds complete full-stack web applications including package.json, routes, API endpoints, and styling."),
@@ -182,7 +182,7 @@ DIRECTORY_TOOLS = {
             "Visit bolt.new in any modern Chromium or Firefox browser.",
             "Sign in with your GitHub account to start generating applications immediately on the free token quota.",
             "When ready to deploy, click 'Deploy' in the top right to push live to Netlify or download the project as a ZIP archive for local development in VS Code.",
-            "To upgrade to Pro, use an international debit/credit card (SadaPay, NayaPay, or bank card) with active 3D-Secure authentication."
+            "To upgrade to Pro, use an international card (SadaPay, NayaPay, or bank card) with active 3D-Secure authentication."
         ],
         "competitor_comparison": {
             "title": "Bolt.new vs v0 vs Replit",
@@ -199,8 +199,8 @@ DIRECTORY_TOOLS = {
             ("Is Bolt.new free to use in Pakistan?", "Yes, Bolt.new has a free tier that gives you daily token quotas to build and run web applications in your browser without requiring a credit card."),
             ("Can Bolt.new run backends and databases?", "Yes, because Bolt.new runs on WebContainers, it executes full Node.js backends like Express, Next.js server actions, and connects to cloud databases like Supabase or Firebase."),
             ("How do I export my project from Bolt.new?", "You can push your project directly to GitHub with one click, deploy it to Netlify, or download the entire project directory as a ZIP file to open locally in VS Code or Cursor."),
-            ("What AI model does Bolt.new use?", "Bolt.new primarily uses Anthropic's Claude 3.5 Sonnet due to its superior coding and multi-file architectural reasoning capabilities."),
-            ("Can I pay for Bolt.new using SadaPay or NayaPay in Pakistan?", "Yes, SadaPay and NayaPay debit cards work on StackBlitz's official Stripe checkout for Bolt.new Pro subscriptions.")
+            ("What AI model does Bolt.new use?", "Bolt.new primarily uses Anthropic's Claude Sonnet due to its superior coding and multi-file architectural reasoning capabilities."),
+            ("Can I pay for Bolt.new using SadaPay or NayaPay in Pakistan?", "Yes, SadaPay and NayaPay cards work on StackBlitz's official Stripe checkout for Bolt.new Pro subscriptions.")
         ],
         "related_tools": [
             ("v0", "v0 by Vercel", "Leading UI component builder to design individual React screens."),
@@ -272,7 +272,7 @@ DIRECTORY_TOOLS = {
         ],
         "related_tools": [
             ("chatgpt", "ChatGPT Plus (GPT-4o)", "OpenAI's foundational chat model offering custom GPTs and web browsing."),
-            ("claude", "Claude 3.5 Sonnet", "Anthropic's leading model known for industry-leading computer use and coding."),
+            ("claude", "Claude Sonnet", "Anthropic's leading model known for industry-leading computer use and coding."),
             ("perplexity", "Perplexity Pro", "Real-time AI research engine for cited informational discovery."),
             ("deepseek", "DeepSeek R1", "Open-weight reasoning powerhouse for deep logical problem solving.")
         ]
@@ -288,7 +288,7 @@ DIRECTORY_TOOLS = {
         "pricing_official": "Free Web Chat / Pay-as-you-go API",
         "pricing_annual": "API compute discounted on Alibaba Cloud",
         "free_plan": "100% Free web chat with Qwen 2.5 Max, Qwen 2.5 Coder, and Vision models",
-        "quick_summary": "Qwen AI by Alibaba Cloud is an open-weights foundation model family competing directly with GPT-4o and Claude 3.5 Sonnet in coding, mathematics, and multilingual understanding. Pakistani users can chat with top-tier Qwen 2.5 models completely free on the web or integrate cheap API tokens.",
+        "quick_summary": "Qwen AI by Alibaba Cloud is an open-weights foundation model family competing directly with GPT-4o and Claude Sonnet in coding, mathematics, and multilingual understanding. Pakistani users can chat with top-tier Qwen 2.5 models completely free on the web or integrate cheap API tokens.",
         "primary_keywords": ["Qwen AI", "Qwen 2.5 review", "Qwen price Pakistan", "Qwen Coder 32B", "Qwen vs DeepSeek"],
         "overview": "Qwen (Tongyi Qianwen), developed by Alibaba Cloud, has emerged as one of the world's most formidable open-weight and proprietary AI ecosystems. With models ranging from compact 0.5B parameters up to flagship Qwen 2.5 72B and Qwen 2.5 Max, it matches or exceeds leading Western frontier models in mathematics, Python/C++ coding, and complex multilingual reasoning across English, Urdu, Arabic, and Chinese.",
         "features": [
@@ -333,7 +333,7 @@ DIRECTORY_TOOLS = {
         },
         "faqs": [
             ("Is Qwen AI completely free to use in Pakistan?", "Yes, the official Qwen web chat at chat.qwenlm.ai is 100% free with no monthly subscription required, giving you access to Qwen 2.5 Max and Qwen Coder."),
-            ("Can Qwen write code as well as Claude 3.5 Sonnet?", "Qwen 2.5 Coder 32B is widely recognized as one of the best open-source coding models in the world, achieving competitive benchmark scores with Claude 3.5 Sonnet in Python, TypeScript, and C++."),
+            ("Can Qwen write code as well as Claude Sonnet?", "Qwen 2.5 Coder 32B is widely recognized as one of the best open-source coding models in the world, achieving competitive benchmark scores with Claude Sonnet in Python, TypeScript, and C++."),
             ("Can I run Qwen locally on my own computer in Pakistan?", "Yes! You can download Qwen models via Ollama (`ollama run qwen2.5:7b`) to run completely offline on a computer with 8GB to 16GB of RAM without sending data over the internet."),
             ("Does Qwen understand Urdu?", "Yes, Qwen has extensive multilingual training and possesses strong understanding and generation capabilities in Urdu, Arabic, and English."),
             ("How do I get API keys for Qwen in Pakistan?", "You can obtain Qwen API keys directly through Alibaba Cloud Model Studio or via third-party aggregators like OpenRouter, which accept Pakistani payment cards.")
@@ -385,7 +385,7 @@ DIRECTORY_TOOLS = {
         "pakistan_guide": [
             "Create an account on coursera.org using your email or Google login.",
             "If on a budget, apply for Coursera's official 'Financial Aid' button on any specific course page, which frequently awards 75% to 90% discounts to Pakistani applicants within 16 days.",
-            "To subscribe directly to Coursera Plus, use a Pakistani international debit or credit card (Standard Chartered, Meezan, Bank Alfalah, SadaPay, or NayaPay).",
+            "To subscribe directly to Coursera Plus, use a Pakistani international card (Meezan, Bank Alfalah, SadaPay, or NayaPay).",
             "Ensure international internet transactions are active in your banking app before checking out on Coursera."
         ],
         "competitor_comparison": {
@@ -402,7 +402,7 @@ DIRECTORY_TOOLS = {
         "faqs": [
             ("Is Coursera Plus worth it for Pakistani students?", "Yes, for students pursuing Google, Meta, or IBM certificates, Coursera Plus is far cheaper than paying individually ($49/mo per specialization), allowing you to complete multiple credentials under one fee."),
             ("How can Pakistani students get Coursera courses for free?", "You can audit most courses for free, or click 'Financial Aid Available' on any course page. Coursera routinely approves financial aid for Pakistani applicants who explain their financial background."),
-            ("What payment methods work for Coursera in Pakistan?", "Pakistani bank debit/credit cards (Visa or Mastercard) with international online sessions enabled, as well as SadaPay and NayaPay virtual cards, work smoothly on Coursera's checkout."),
+            ("What payment methods work for Coursera in Pakistan?", "Pakistani bank cards with international online sessions enabled, as well as SadaPay and NayaPay virtual cards, work smoothly on Coursera's checkout."),
             ("Are Coursera certificates recognized by international employers?", "Yes, Professional Certificates from Google, IBM, and Meta on Coursera are widely recognized by global recruiters and can be displayed on your LinkedIn profile."),
             ("Can I cancel Coursera Plus anytime?", "Yes, if you choose the monthly plan, you can cancel at any time through your account settings and you will retain access until the end of your billing cycle.")
         ],
@@ -452,7 +452,7 @@ DIRECTORY_TOOLS = {
         ],
         "pakistan_guide": [
             "Visit udemy.com and look for the 'Personal Plan' banner in the top navigation or under your profile icon.",
-            "Activate the 7-day free trial using an international debit/credit card (SadaPay, NayaPay, or bank Visa/Mastercard).",
+            "Activate the 7-day free trial using an international card (SadaPay, NayaPay, or an enabled bank card).",
             "Tip for Pakistani buyers: If you only need 1 or 2 specific courses, check Udemy during their frequent monthly flash sales where individual courses drop to $9.99 to $12.99 with lifetime access.",
             "Ensure international e-commerce is active on your banking card before subscribing."
         ],
@@ -468,11 +468,11 @@ DIRECTORY_TOOLS = {
             ]
         },
         "faqs": [
-            ("Is the Udemy Personal Plan available in Pakistan?", "Yes, Udemy's Personal Plan is available to Pakistani accounts and can be activated via international Visa/Mastercard debit and credit cards."),
+            ("Is the Udemy Personal Plan available in Pakistan?", "Yes, Udemy's Personal Plan is available to Pakistani accounts and can be activated via internationally enabled cards."),
             ("Can I keep the courses if I cancel the Personal Plan?", "No. Personal Plan is a subscription model. If you cancel, you lose access to the courses. If you want permanent lifetime access, purchase the specific course individually during a sale."),
             ("Does Udemy Personal Plan include a free trial?", "Yes, Udemy typically offers a 7-day free trial for first-time subscribers to test out the courses before the first monthly charge."),
             ("Are Udemy certificates recognized by employers in Pakistan?", "Udemy certificates show practical effort and technical competence. Pakistani software houses value the actual projects and code you build more than the certificate itself."),
-            ("What payment cards work for Udemy in Pakistan?", "SadaPay, NayaPay, Standard Chartered, Meezan Bank, and Bank Alfalah cards enabled for international payments work reliably.")
+            ("What payment cards work for Udemy in Pakistan?", "SadaPay, NayaPay, Meezan Bank, and Bank Alfalah cards enabled for international payments work reliably.")
         ],
         "related_tools": [
             ("coursera-plus", "Coursera Plus", "Accredited university certificates from Google, IBM, and Meta."),
@@ -539,7 +539,7 @@ DIRECTORY_TOOLS = {
             ("Is OpusClip free to use in Pakistan?", "Yes, OpusClip offers a permanent Free Tier that grants 60 processing minutes every month without requiring a credit card."),
             ("Does the OpusClip free version have a watermark?", "OpusClip allows you to export high-definition 1080p clips without a forced intrusive watermark on eligible free quota videos."),
             ("Can OpusClip process Urdu or Hindi speech?", "Yes, OpusClip supports over 20 languages and accurately transcribes and adds captions to Urdu, Hindi, and English spoken dialogue."),
-            ("What payment cards work for OpusClip in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank debit cards work seamlessly on OpusClip's official checkout."),
+            ("What payment cards work for OpusClip in Pakistan?", "SadaPay, NayaPay, and Meezan Bank cards work seamlessly on OpusClip's official checkout."),
             ("How long does it take OpusClip to generate clips?", "A 30-minute podcast video typically takes about 3 to 5 minutes to analyze, cut, caption, and deliver 8 to 12 ready-to-post clips.")
         ],
         "related_tools": [
@@ -607,7 +607,7 @@ DIRECTORY_TOOLS = {
             ("Can I monetize InVideo AI videos on YouTube in Pakistan?", "Yes, videos created with paid InVideo plans (Plus or Max) include commercial licenses for all footage, music, and voiceovers, making them fully eligible for YouTube partner monetization."),
             ("How does InVideo AI compare to CapCut?", "CapCut is a manual timeline video editor where you cut and arrange footage yourself; InVideo AI generates the script, voiceover, stock footage, and edits automatically from a single sentence prompt."),
             ("Can InVideo AI create videos in Urdu?", "Yes, InVideo AI supports scriptwriting and voiceovers in Urdu, as well as over 50 other international languages."),
-            ("What payment options work for InVideo in Pakistan?", "Pakistani users can pay using international debit/credit cards from SadaPay, NayaPay, Standard Chartered, or Meezan Bank."),
+            ("What payment options work for InVideo in Pakistan?", "Pakistani users can pay using international international cards from SadaPay, NayaPay, or Meezan Bank."),
             ("Can I clone my own voice in InVideo AI?", "Yes, the InVideo Max plan supports voice cloning, allowing you to narrate your automated videos in your own voice without speaking each script.")
         ],
         "related_tools": [
@@ -675,7 +675,7 @@ DIRECTORY_TOOLS = {
             ("Is Descript's Studio Sound really that good?", "Yes, Studio Sound is considered the best AI audio enhancement tool in the world, capable of turning audio recorded with cheap phone earphones into pristine studio-quality audio with zero background noise."),
             ("Can Descript transcribe Urdu language audio?", "Descript supports transcription in over 20 languages, but its primary optimization and highest accuracy are in English. For bilingual English/Urdu recordings, English portions transcribe with 95%+ accuracy."),
             ("How does text-based video editing work?", "Descript transcribes your audio into text. If you highlight a sentence and press 'Backspace', Descript cuts that exact video and audio section smoothly without you needing to find cut points on a timeline."),
-            ("What payment cards work for Descript in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank debit cards work smoothly on Descript's Stripe payment gateway."),
+            ("What payment cards work for Descript in Pakistan?", "SadaPay, NayaPay, and Meezan Bank cards work smoothly on Descript's Stripe payment gateway."),
             ("Can I export Descript timelines to Adobe Premiere or Final Cut?", "Yes, paid Descript plans let you export XML, FCPXML, and EDL files to continue fine-tuning your project in Adobe Premiere Pro or Final Cut Pro.")
         ],
         "related_tools": [
@@ -743,7 +743,7 @@ DIRECTORY_TOOLS = {
             ("Is Make free to use in Pakistan?", "Yes, Make offers a permanent Free Plan with 1,000 operations per month and unlimited scenarios, which is great for small business automations."),
             ("How does Make compare to Zapier?", "Make is significantly more affordable than Zapier (offering 10,000 operations for $9 compared to Zapier's $100+ for similar volume) and features a much more powerful visual branching canvas."),
             ("Can I connect WhatsApp to Make?", "Yes, you can connect WhatsApp Business Cloud API directly to Make via webhooks and HTTP modules to send automated messages and notifications."),
-            ("What payment cards work for Make in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank debit cards work reliably on Make's checkout."),
+            ("What payment cards work for Make in Pakistan?", "SadaPay, NayaPay, and Meezan Bank cards work reliably on Make's checkout."),
             ("Can Make integrate with OpenAI and ChatGPT?", "Yes, Make has native OpenAI and Claude modules that let you analyze text, extract JSON, generate content, and build autonomous agent workflows.")
         ],
         "related_tools": [
@@ -811,7 +811,7 @@ DIRECTORY_TOOLS = {
             ("What makes Firecrawl different from normal web scrapers?", "Traditional scrapers return raw HTML full of ads, navigation menus, and scripts that waste LLM tokens. Firecrawl returns pure, clean Markdown containing only the core content."),
             ("Can I use Firecrawl for free in Pakistan?", "Yes, Firecrawl gives you 500 free credits upon signup, and their core engine is open-source on GitHub if you wish to self-host it on your own server."),
             ("Does Firecrawl handle sites that require JavaScript?", "Yes, Firecrawl renders full JavaScript, dynamic hydration, and SPAs automatically before converting the DOM into clean Markdown."),
-            ("What payment cards work for Firecrawl in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank debit cards work smoothly on Firecrawl's Stripe checkout."),
+            ("What payment cards work for Firecrawl in Pakistan?", "SadaPay, NayaPay, and Meezan Bank cards work smoothly on Firecrawl's Stripe checkout."),
             ("Can Firecrawl scrape an entire website automatically?", "Yes, using the `/crawl` endpoint, Firecrawl traverses all internal links on a website or sitemap and returns Markdown files for every page.")
         ],
         "related_tools": [
@@ -832,9 +832,9 @@ DIRECTORY_TOOLS = {
         "pricing_official": "100% Free with Google Account",
         "pricing_annual": "$0 / year (Included with Google Workspace / Personal accounts)",
         "free_plan": "Permanent free access with up to 50 source documents (500k words each) per notebook",
-        "quick_summary": "Google NotebookLM is an AI-powered personalized research assistant powered by Gemini 1.5 Pro. It grounds responses exclusively in your uploaded PDFs, Google Docs, YouTube links, and audio, featuring viral 'Audio Overviews' (two AI hosts discussing your notes as a podcast). Completely free in Pakistan.",
+        "quick_summary": "Google NotebookLM is an AI-powered personalized research assistant powered by Gemini. It grounds responses exclusively in your uploaded PDFs, Google Docs, YouTube links, and audio, featuring viral 'Audio Overviews' (two AI hosts discussing your notes as a podcast). Completely free in Pakistan.",
         "primary_keywords": ["Google NotebookLM", "NotebookLM review 2026", "NotebookLM audio overview", "NotebookLM free in Pakistan", "best AI research tool"],
-        "overview": "Google NotebookLM is Google's breakout research and thinking assistant built on Gemini 1.5 Pro's massive context architecture. Unlike open-ended AI chatbots that hallucinate or browse random internet content, NotebookLM is strictly 'grounded' in the specific source materials you upload (PDFs, docs, research papers, YouTube videos). It features direct citation numbers linking to exact source pages, and went viral worldwide for its 'Audio Overview' feature which generates engaging, human-sounding deep-dive podcast discussions from any material.",
+        "overview": "Google NotebookLM is Google's breakout research and thinking assistant built on Gemini's massive context architecture. Unlike open-ended AI chatbots that hallucinate or browse random internet content, NotebookLM is strictly 'grounded' in the specific source materials you upload (PDFs, docs, research papers, YouTube videos). It features direct citation numbers linking to exact source pages, and went viral worldwide for its 'Audio Overview' feature which generates engaging, human-sounding deep-dive podcast discussions from any material.",
         "features": [
             ("Source-Grounded Truth", "Answers questions strictly using your uploaded materials, citing exact paragraphs and page numbers."),
             ("Viral AI Audio Overviews", "Transforms complex notes and PDFs into lively, engaging two-host podcast conversations with human-like banter."),
@@ -854,7 +854,7 @@ DIRECTORY_TOOLS = {
             ("Audio Editing Uncustomizable", "You cannot currently edit the script or interrupt the AI hosts during the generated Audio Overview.")
         ],
         "pricing_table": [
-            ("Standard Free Account", "$0", "Rs. 0", "Full access to Gemini 1.5 Pro grounding, 50 sources/notebook, unlimited Audio Overviews."),
+            ("Standard Free Account", "$0", "Rs. 0", "Full access to Gemini grounding, 50 sources/notebook, unlimited Audio Overviews."),
             ("Google Workspace / Enterprise", "$0 (Included)", "Rs. 0", "Enterprise data privacy protections ensuring uploaded documents are never used for model training.")
         ],
         "pakistan_guide": [
@@ -884,7 +884,7 @@ DIRECTORY_TOOLS = {
         "related_tools": [
             ("chatgpt", "ChatGPT Plus", "OpenAI's premier conversational engine with custom GPTs and voice mode."),
             ("gemini", "Google Gemini Advanced", "Google's flagship AI model powering NotebookLM's core reasoning engine."),
-            ("claude", "Claude 3.5 Sonnet", "Anthropic's leader for long-form document comprehension and analysis."),
+            ("claude", "Claude Sonnet", "Anthropic's leader for long-form document comprehension and analysis."),
             ("perplexity", "Perplexity Pro", "Live cited internet research engine for real-time web discovery.")
         ]
     },
@@ -945,7 +945,7 @@ DIRECTORY_TOOLS = {
         "faqs": [
             ("Is Supabase free for Pakistani developers?", "Yes, Supabase offers an outstanding Free Tier that includes 2 PostgreSQL databases, 50,000 monthly active users, and 1GB of storage with zero credit card required."),
             ("Why do developers prefer Supabase over Firebase?", "Developers prefer Supabase because it uses standard relational SQL (Postgres) instead of restrictive NoSQL, eliminates vendor lock-in, and offers built-in vector search for AI apps."),
-            ("What payment cards work for Supabase Pro in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank international debit cards work smoothly on Supabase's Stripe billing."),
+            ("What payment cards work for Supabase Pro in Pakistan?", "SadaPay, NayaPay, and Meezan Bank international cards work smoothly on Supabase's Stripe billing."),
             ("Which server region should I choose from Pakistan?", "When creating a Supabase project, select 'Singapore' (ap-southeast-1) or 'Frankfurt' (eu-central-1) to achieve low network ping latency from Pakistan."),
             ("Does Supabase pause my project if I am on the free tier?", "Free tier projects pause if there are no database queries for 7 consecutive days, but you can restore them instantly from the dashboard. Paid Pro plans never pause.")
         ],
@@ -1014,7 +1014,7 @@ DIRECTORY_TOOLS = {
             ("Is Ahrefs really free for website owners in Pakistan?", "Yes! Ahrefs Webmaster Tools (AWT) is 100% free for websites you own. It provides deep technical site audits, backlink tracking, and keyword monitoring without needing a credit card."),
             ("How does Ahrefs compare to Semrush?", "Ahrefs is widely regarded as having the superior backlink index, UI cleanliness, and technical SEO crawler, while Semrush excels in PPC competitor advertising and social media tools."),
             ("What is Domain Rating (DR) in Ahrefs?", "Domain Rating (DR) is Ahrefs' proprietary metric (scaled 0 to 100) that shows the relative strength of a website's backlink profile compared to every other site in their index."),
-            ("What payment cards work for Ahrefs in Pakistan?", "International Visa and Mastercard credit cards from Standard Chartered, Meezan Bank, and Bank Alfalah work on Ahrefs' checkout."),
+            ("What payment cards work for Ahrefs in Pakistan?", "International cards enabled for foreign currency payments from Meezan Bank, and Bank Alfalah work on Ahrefs' checkout."),
             ("Can Ahrefs help me find broken links on my website?", "Yes, Ahrefs Webmaster Tools scans your website and provides a complete list of all internal and external broken 404 links so you can fix them.")
         ],
         "related_tools": [
@@ -1081,7 +1081,7 @@ DIRECTORY_TOOLS = {
         "faqs": [
             ("Is Railway free to use in Pakistan?", "Railway provides $5 in free compute credits to test the platform. To keep your applications running permanently, you need to subscribe to the $5/month Hobby plan."),
             ("Why are developers moving from Heroku to Railway?", "Developers moved to Railway because Heroku removed its free tier, increased prices, and has an outdated interface, whereas Railway offers modern Git-push deployments and cheaper pay-as-you-go pricing."),
-            ("What payment cards work for Railway in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank international debit cards work smoothly on Railway's checkout."),
+            ("What payment cards work for Railway in Pakistan?", "SadaPay, NayaPay, and Meezan Bank international cards work smoothly on Railway's checkout."),
             ("Can I run 24/7 background Python bots on Railway?", "Yes! Railway is one of the top platforms for hosting Telegram bots, Discord bots, and background cron jobs because it automatically restarts failed processes."),
             ("Can I connect my own custom domain on Railway?", "Yes, you can add any custom domain (e.g. `api.mysite.com`) for free and Railway will automatically issue and renew your SSL certificates.")
         ],
@@ -1217,7 +1217,7 @@ DIRECTORY_TOOLS = {
             ("Is Skillshare cheaper in Pakistan?", "Yes! Skillshare offers regional pricing for Pakistan, charging approximately $32 USD per year (around Rs. 8,900 PKR), compared to standard US pricing of $168/year."),
             ("Can I get a free trial of Skillshare in Pakistan?", "Yes, new users can activate a 7-day to 30-day free trial on Skillshare using a debit card with international transactions enabled."),
             ("Can Skillshare help me get freelance design clients on Upwork?", "Absolutely! Skillshare's project-based curriculum teaches you to build real logo suites, social media kits, and brand identities that make impressive portfolio samples for Upwork and Fiverr."),
-            ("What payment cards work for Skillshare in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank debit cards with international online payments enabled work reliably."),
+            ("What payment cards work for Skillshare in Pakistan?", "SadaPay, NayaPay, and Meezan Bank cards with international online payments enabled work reliably."),
             ("Can I cancel my Skillshare subscription before the free trial ends?", "Yes, you can cancel your trial anytime in your account settings before the trial period ends to avoid being charged.")
         ],
         "related_tools": [
@@ -1285,7 +1285,7 @@ DIRECTORY_TOOLS = {
             ("Is Hailuo AI free to use in Pakistan?", "Yes, Hailuo AI gives users free daily generation credits every day, allowing you to create high-definition AI videos without paying anything."),
             ("How does Hailuo AI compare to Kling AI?", "Both are industry-leading generative video models from China. Hailuo is renowned for exceptional facial realism and natural character movement, while Kling offers longer 10-second extensions and motion brush tools."),
             ("Can I monetize videos made with Hailuo AI on YouTube?", "Yes, paid plans include commercial usage rights, and clips can be edited into monetized YouTube videos, commercials, and social media reels."),
-            ("What payment methods work for Hailuo AI in Pakistan?", "Pakistani international debit cards (SadaPay, NayaPay, Standard Chartered, and Meezan Bank) work on Hailuo AI's international payment system."),
+            ("What payment methods work for Hailuo AI in Pakistan?", "Pakistani international cards (SadaPay, NayaPay, and Meezan Bank) work on Hailuo AI's international payment system."),
             ("How long does Hailuo AI take to generate a video?", "Generating a 6-second 1080p video clip typically takes between 2 to 4 minutes depending on current server demand.")
         ],
         "related_tools": [
@@ -1353,7 +1353,7 @@ DIRECTORY_TOOLS = {
             ("Is Quizlet free in Pakistan?", "Yes! The core Quizlet platform—including flashcards, learning modes, and access to millions of existing study sets—is completely free to use."),
             ("What are the advantages of Quizlet Plus?", "Quizlet Plus removes all advertisements, unlocks the Q-Chat AI study tutor, provides smart conceptual grading, and lets you study offline on the mobile app."),
             ("Can Quizlet help with MDCAT preparation in Pakistan?", "Yes, thousands of Pakistani medical students use Quizlet to memorize Biology, Chemistry, and Physics terms for the MDCAT, with many top academy sets shared publicly."),
-            ("What payment cards work for Quizlet in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank international debit cards work smoothly on Quizlet's payment gateway."),
+            ("What payment cards work for Quizlet in Pakistan?", "SadaPay, NayaPay, and Meezan Bank international cards work smoothly on Quizlet's payment gateway."),
             ("How does Quizlet compare to Anki?", "Quizlet has a much prettier, easier-to-use interface with gamified study modes and millions of pre-made decks, whereas Anki is an open-source, highly customizable tool preferred by medical students who want strict mathematical spaced-repetition schedules.")
         ],
         "related_tools": [
@@ -1420,7 +1420,7 @@ DIRECTORY_TOOLS = {
             ("Is Genspark AI free to use in Pakistan?", "Yes, Genspark AI is free to use on the web in Pakistan, allowing you to generate comprehensive research Sparkpages without requiring a paid subscription."),
             ("How does Genspark differ from Perplexity?", "Perplexity generates a concise text summary with footnote links; Genspark autonomously builds a complete, beautifully designed interactive web page ('Sparkpage') with comparison tables, pros/cons, and curated videos."),
             ("Can Genspark research local Pakistani topics?", "Yes, Genspark can research Pakistani travel, universities, and commercial topics, synthesizing data from verified local and international publications."),
-            ("What payment cards work for Genspark Plus in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank international debit cards work smoothly on Genspark's checkout."),
+            ("What payment cards work for Genspark Plus in Pakistan?", "SadaPay, NayaPay, and Meezan Bank international cards work smoothly on Genspark's checkout."),
             ("Does Genspark have advertisements?", "No, Genspark is built to provide an ad-free search experience that prioritizes objective information over sponsored placements.")
         ],
         "related_tools": [
@@ -1487,14 +1487,14 @@ DIRECTORY_TOOLS = {
         "faqs": [
             ("Why should I use ChatPRD instead of normal ChatGPT?", "ChatGPT produces generic, surface-level documents unless prompted extensively. ChatPRD has built-in senior PM frameworks, challenges your technical assumptions, and writes production-ready PRDs tailored for engineering teams."),
             ("Can I try ChatPRD for free in Pakistan?", "Yes, ChatPRD offers a free trial upon signup so you can experience generating PRDs and user stories before subscribing."),
-            ("What payment cards work for ChatPRD in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank international debit cards work smoothly on ChatPRD's Stripe checkout."),
+            ("What payment cards work for ChatPRD in Pakistan?", "SadaPay, NayaPay, and Meezan Bank international cards work smoothly on ChatPRD's Stripe checkout."),
             ("Does ChatPRD export to Jira and Notion?", "Yes, all generated documents and user stories are formatted in clean Markdown that pastes seamlessly into Notion, Confluence, Jira, and Linear."),
             ("Is my proprietary product idea safe on ChatPRD?", "ChatPRD utilizes enterprise API endpoints that do not train public models on your proprietary product inputs and features.")
         ],
         "related_tools": [
             ("notion", "Notion", "The primary product workspace where PMs manage documentation and product wikis."),
             ("chatgpt", "ChatGPT Plus", "OpenAI's foundational model for wide-ranging creative and technical tasks."),
-            ("claude", "Claude 3.5 Sonnet", "Anthropic's model praised for long-form nuanced technical writing."),
+            ("claude", "Claude Sonnet", "Anthropic's model praised for long-form nuanced technical writing."),
             ("cursor", "Cursor AI Pro", "AI code editor where engineers bring ChatPRD feature specifications to life.")
         ]
     },
@@ -1555,7 +1555,7 @@ DIRECTORY_TOOLS = {
         "faqs": [
             ("Is Domo AI free to use in Pakistan?", "Domo AI provides free trial credits when you first sign up, allowing you to test out video-to-anime transformations before purchasing a paid plan."),
             ("How do I get the best results with Domo AI?", "Use videos with good lighting, a clear central subject, minimal background clutter, and steady camera movement for the cleanest anime transformation."),
-            ("What payment cards work for Domo AI in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank international debit cards work smoothly on Domo AI's checkout."),
+            ("What payment cards work for Domo AI in Pakistan?", "SadaPay, NayaPay, and Meezan Bank international cards work smoothly on Domo AI's checkout."),
             ("Can Domo AI transform videos into 3D Pixar styles?", "Yes! Domo AI includes multiple style models, including Japanese Anime, 3D Cartoon, Claymation, Pixel Art, and Origami styles."),
             ("How long does it take Domo AI to stylize a video?", "A 5-second video typically takes between 1 to 3 minutes to process depending on server traffic.")
         ],
@@ -1579,7 +1579,7 @@ DIRECTORY_TOOLS = {
         "free_plan": "Fully free public search with live citations and code generation",
         "quick_summary": "Morphic is a modern, open-source generative AI search engine and Perplexity alternative built on Next.js, Vercel AI SDK, and Tavily search. It provides cited search results, interactive charts, and source verification with full self-hosting freedom.",
         "primary_keywords": ["Morphic AI", "Morphic search review", "open source Perplexity alternative", "Morphic AI Pakistan", "free AI search"],
-        "overview": "Morphic was developed as an open-source answer to proprietary AI search engines like Perplexity. Built with Next.js and the Vercel AI SDK, Morphic performs real-time web queries using search APIs like Tavily and SearXNG, synthesizes the results with top frontier models (Claude 3.5 Sonnet, GPT-4o, or local Ollama models), and provides answers complete with numbered source citations, related follow-up questions, and interactive data visualizations.",
+        "overview": "Morphic was developed as an open-source answer to proprietary AI search engines like Perplexity. Built with Next.js and the Vercel AI SDK, Morphic performs real-time web queries using search APIs like Tavily and SearXNG, synthesizes the results with top frontier models (Claude Sonnet, GPT-4o, or local Ollama models), and provides answers complete with numbered source citations, related follow-up questions, and interactive data visualizations.",
         "features": [
             ("100% Open Source Architecture", "Full codebase available on GitHub; self-host on your own infrastructure with complete privacy."),
             ("Real-Time Web Search Grounding", "Fetches live news, stock prices, and documentation via search APIs to deliver up-to-date answers."),
@@ -1601,7 +1601,7 @@ DIRECTORY_TOOLS = {
         "pricing_table": [
             ("Public Web Version", "Free ($0)", "Rs. 0", "Free search at morphic.sh with live citations, standard AI models, and follow-up prompts."),
             ("Self-Hosted Open Source", "100% Free (MIT)", "Rs. 0 (Bring API keys)", "Deploy on Vercel, Railway, or local Docker with custom API keys and full privacy."),
-            ("Morphic Pro Cloud", "$10 / mo", "~Rs. 2,800 / mo", "Unlimited searches, priority frontier model access (Claude 3.5 Sonnet, GPT-4o).")
+            ("Morphic Pro Cloud", "$10 / mo", "~Rs. 2,800 / mo", "Unlimited searches, priority frontier model access (Claude Sonnet, GPT-4o).")
         ],
         "pakistan_guide": [
             "Visit morphic.sh in your browser in Pakistan without needing a VPN.",
@@ -1624,7 +1624,7 @@ DIRECTORY_TOOLS = {
             ("Is Morphic AI free to use in Pakistan?", "Yes, the public version of Morphic at morphic.sh is free to use, and the entire source code is available on GitHub for anyone to deploy freely."),
             ("How does Morphic compare to Perplexity?", "Morphic offers a very similar cited research experience to Perplexity, with the crucial advantage that Morphic is open-source, allowing developers to self-host it and use their own API keys or local models."),
             ("Can I run Morphic completely locally with Ollama?", "Yes! Morphic supports local LLMs via Ollama and local search engines like SearXNG, allowing you to run private AI searches completely on your own machine without sending data to external APIs."),
-            ("What payment cards work for Morphic Pro in Pakistan?", "SadaPay, NayaPay, Standard Chartered, and Meezan Bank international debit cards work smoothly on Morphic's checkout."),
+            ("What payment cards work for Morphic Pro in Pakistan?", "SadaPay, NayaPay, and Meezan Bank international cards work smoothly on Morphic's checkout."),
             ("Can Morphic search for Pakistani news and events?", "Yes, Morphic accesses live search engines to fetch current news, weather, stock prices, and sports scores from Pakistan and around the world.")
         ],
         "related_tools": [

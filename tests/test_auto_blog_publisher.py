@@ -45,7 +45,7 @@ class TestAutoBlogPublisherSafeguards(unittest.TestCase):
             "related_tools": [
                 {"slug": "deepseek", "name": "DeepSeek V3 / R1"},
                 {"slug": "chatgpt", "name": "ChatGPT Plus"},
-                {"slug": "claude", "name": "Claude 3.5 Sonnet"}
+                {"slug": "claude", "name": "Claude Pro"}
             ],
             "official_sources": [
                 "https://www.deepseek.com",
