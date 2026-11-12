@@ -21,7 +21,7 @@ TOOLS_DATA = [
             "Cascade Agentic AI: Autonomous multi-file context tracking and refactoring across your repository.",
             "Supercomplete: Deep next-action prediction anticipating what you will code next.",
             "VS Code Compatibility: Full extension ecosystem, keybindings, and settings compatibility.",
-            "Multi-Model Switching: Flexible access to Claude 3.5 Sonnet, GPT-4o, and specialized Codeium models."
+            "Multi-Model Switching: Flexible access to Claude Sonnet, GPT-4o, and specialized Codeium models."
         ],
         "limitations": [
             "Heavy Memory Usage: Agentic indexing can consume significant RAM on large projects.",
@@ -29,7 +29,7 @@ TOOLS_DATA = [
             "Internet Dependency: Agentic reasoning and model inference require an active, stable internet connection."
         ],
         "free_plan": "Free Tier available with unlimited basic single/multi-line code completion and limited monthly Cascade interactions.",
-        "paid_plan": "Pro Tier at $20/month (or $15/month billed annually at $180/year). Includes priority compute on Claude 3.5 Sonnet and high-volume Cascade credits.",
+        "paid_plan": "Pro Tier at $20/month (or $15/month billed annually at $180/year). Includes priority compute on Claude Sonnet and high-volume Cascade credits.",
         "pricing_usd": "$20 / month",
         "pricing_pkr_est": "Approx. Rs. 5,600 PKR / month (Estimated at 1 USD ≈ 280 PKR; bank conversion taxes apply)",
         "pakistan_availability": "Fully accessible in Pakistan via browser and desktop client. Paid plans require an international credit or debit card enabled for online foreign transactions.",

@@ -32,7 +32,7 @@ PRODUCTS = [
     {"slug": "netflix", "name": "Netflix Premium 4K"},
     {"slug": "linkedin", "name": "LinkedIn Premium"},
     {"slug": "windows", "name": "Windows 11 Pro Key"},
-    {"slug": "claude", "name": "Claude Pro (3.5 Sonnet)"},
+    {"slug": "claude", "name": "Claude Pro"},
     {"slug": "midjourney", "name": "Midjourney v6.1 Pro"},
     {"slug": "cursor", "name": "Cursor AI Pro"},
     {"slug": "perplexity", "name": "Perplexity Pro"},

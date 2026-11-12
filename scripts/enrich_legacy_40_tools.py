@@ -20,7 +20,7 @@ COMMERCIAL_TOOL_CLUSTERS = {
     "canva": ["Canva Pro price Pakistan", "Canva Pro Edu invitation", "Canva subscription PKR", "Canva Pro lifetime deal", "buy Canva Pro EasyPaisa"],
     "capcut": ["CapCut Pro price Pakistan", "CapCut Pro VIP account", "CapCut desktop Windows Mac", "CapCut video editor subscription", "buy CapCut Pro JazzCash"],
     "chatgpt": ["ChatGPT Plus price Pakistan", "ChatGPT 4o subscription PKR", "buy ChatGPT Plus on WhatsApp", "ChatGPT Plus EasyPaisa", "OpenAI ChatGPT Plus Pakistan"],
-    "claude": ["Claude Pro price Pakistan", "Claude 3.5 Sonnet subscription", "Anthropic Claude Pro PKR", "Claude AI Pakistan access", "buy Claude Pro EasyPaisa"],
+    "claude": ["Claude Pro price Pakistan", "Claude Pro subscription", "Anthropic Claude Pro PKR", "Claude AI Pakistan access", "buy Claude Pro EasyPaisa"],
     "copilot": ["GitHub Copilot price Pakistan", "Copilot subscription PKR", "GitHub Copilot VS Code", "Copilot student individual", "buy GitHub Copilot JazzCash"],
     "cursor": ["Cursor AI Pro price Pakistan", "Cursor AI subscription PKR", "Cursor vs VS Code", "Cursor Pro Claude Sonnet", "buy Cursor AI Pro EasyPaisa"],
     "deepseek": ["DeepSeek Unlimited Pakistan", "DeepSeek R1 price PKR", "DeepSeek API subscription", "DeepSeek AI assistant", "buy DeepSeek access Pakistan"],
@@ -95,7 +95,7 @@ def enrich_page(slug: str, dry_run: bool = False) -> bool:
         clean_name = slug.title()
 
     # 2. Add Target Search Queries & Keyword Clusters (.tool-seo-clusters) if not present
-    if "tool-seo-clusters" not in content and slug in COMMERCIAL_TOOL_CLUSTERS:
+    if False and "tool-seo-clusters" not in content and slug in COMMERCIAL_TOOL_CLUSTERS:
         keywords = COMMERCIAL_TOOL_CLUSTERS[slug]
         pills_html = "\n".join([f'        <span class="kw-pill">{kw}</span>' for kw in keywords])
         clusters_section = f"""
@@ -121,12 +121,12 @@ def enrich_page(slug: str, dry_run: bool = False) -> bool:
           <div class="rail-card">
             <span class="rail-badge">Digital Card</span>
             <strong>SadaPay &amp; NayaPay</strong>
-            <p>Virtual or physical debit cards (Mastercard/Visa) with active international e-commerce sessions.</p>
+            <p>Virtual or physical cards with active international e-commerce sessions.</p>
           </div>
           <div class="rail-card">
             <span class="rail-badge">Bank Transfer</span>
             <strong>Raast &amp; Direct IBFT</strong>
-            <p>Supported across all major commercial Pakistani banks (Meezan, Alfalah, HBL, UBL, Standard Chartered).</p>
+            <p>Supported across all major commercial Pakistani banks (Meezan, Alfalah, HBL, and Raast banks).</p>
           </div>
           <div class="rail-card">
             <span class="rail-badge">Mobile Wallet</span>

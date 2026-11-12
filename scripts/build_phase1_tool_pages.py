@@ -222,7 +222,7 @@ TOOLS = [
         "rating": "4.9",
         "reviews_count": "58",
         "lead": "Accelerate software engineering with your AI pair programmer. Real-time code completions, multi-line logic suggestions, and interactive conversational debugging directly inside VS Code and JetBrains.",
-        "quick_answer": "The <strong>GitHub Copilot price in Pakistan</strong> on AI Tool Gems is <strong>Rs. 2,500 PKR ($9.99 USD)</strong> per month for full private developer access on your GitHub account. An annual subscription is available for <strong>Rs. 24,000 PKR ($99.99 USD)</strong>. Powered by OpenAI's Codex, Claude 3.5 Sonnet, and GPT-4o, Copilot turns natural language comments into clean code, writes unit tests, and explains complex algorithms inside VS Code, Visual Studio, Neovim, and JetBrains IDEs. Pay via EasyPaisa, JazzCash, SadaPay, Bank IBFT, Wise, or USDT. Activated on WhatsApp with a 30-day warranty.",
+        "quick_answer": "The <strong>GitHub Copilot price in Pakistan</strong> on AI Tool Gems is <strong>Rs. 2,500 PKR ($9.99 USD)</strong> per month for full private developer access on your GitHub account. An annual subscription is available for <strong>Rs. 24,000 PKR ($99.99 USD)</strong>. Powered by OpenAI's Codex, Claude Sonnet, and GPT-4o, Copilot turns natural language comments into clean code, writes unit tests, and explains complex algorithms inside VS Code, Visual Studio, Neovim, and JetBrains IDEs. Pay via EasyPaisa, JazzCash, SadaPay, Bank IBFT, Wise, or USDT. Activated on WhatsApp with a 30-day warranty.",
         "features": [
             "Real-time code completions in Python, JS/TS, Go, Rust & C++",
             "GitHub Copilot Chat inside VS Code sidebar & terminal",
@@ -240,7 +240,7 @@ TOOLS = [
         "overview_desc": "GitHub Copilot Pakistan aur international developers ke liye premier AI pair programmer hai. VS Code aur JetBrains IDEs mein real-time code autocomplete, automated testing aur interactive AI Chat provide karta hai.",
         "related": [
             {"name": "Cursor AI Pro", "url": "../cursor/", "text": "AI-first code editor with Composer"},
-            {"name": "Claude Pro", "url": "../claude/", "text": "Claude 3.5 Sonnet logic and reasoning"},
+            {"name": "Claude Pro", "url": "../claude/", "text": "Claude Sonnet logic and reasoning"},
             {"name": "Replit Core", "url": "../replit/", "text": "cloud hosting and autonomous agents"}
         ],
         "faqs": [
@@ -437,50 +437,9 @@ def render_tool_page(t):
                 "validFrom": "2026-10-24",
                 "priceValidUntil": "2026-12-31",
                 "availability": "https://schema.org/LimitedAvailability",
-                "seller": {"@id": "https://aitoolgems.tech/#organization"},
-                "shippingDetails": {
-                    "@type": "OfferShippingDetails",
-                    "shippingRate": {
-                        "@type": "MonetaryAmount",
-                        "value": "0",
-                        "currency": "PKR"
-                    },
-                    "shippingDestination": {
-                        "@type": "DefinedRegion",
-                        "addressCountry": "PK"
-                    },
-                    "deliveryTime": {
-                        "@type": "ShippingDeliveryTime",
-                        "handlingTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"},
-                        "transitTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY"}
-                    }
-                },
-                "hasMerchantReturnPolicy": {
-                    "@type": "MerchantReturnPolicy",
-                    "applicableCountry": "PK",
-                    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-                    "merchantReturnDays": 30,
-                    "returnMethod": "https://schema.org/ReturnByMail",
-                    "returnFees": "https://schema.org/FreeReturn"
-                }
+                "seller": {"@id": "https://aitoolgems.tech/#organization"}
             },
-            "@id": f"https://aitoolgems.tech/tools/{t['slug']}/#product",
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": t["rating"],
-                "reviewCount": t["reviews_count"],
-                "bestRating": "5",
-                "worstRating": "1"
-            },
-            "review": [
-                {
-                    "@type": "Review",
-                    "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
-                    "author": {"@type": "Person", "name": "Verified Customer"},
-                    "datePublished": "2026-10-22",
-                    "reviewBody": f"Verified delivery for {t['name']}. Fast WhatsApp activation after payment confirmation. Supported via EasyPaisa, SadaPay, and USDT with 30-day warranty."
-                }
-            ]
+            "@id": f"https://aitoolgems.tech/tools/{t['slug']}/#product"
         },
         {
             "@type": "FAQPage",

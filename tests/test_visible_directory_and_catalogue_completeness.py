@@ -121,14 +121,17 @@ class TestVisibleDirectoryAndCatalogueCompleteness(unittest.TestCase):
             self.assertTrue(idx_file.exists(), f"Missing index.html for {slug}")
             content = idx_file.read_text(encoding='utf-8')
             
-            # Assert primary WhatsApp button
-            self.assertIn('class="buy"', content, f"Missing primary .buy button in {slug}")
-            self.assertIn('wa.me/923236715731', content, f"Missing WhatsApp link in {slug}")
-            self.assertIn('on WhatsApp', content, f"Missing 'on WhatsApp' text in {slug}")
-            
-            # Assert secondary official vendor button
-            self.assertIn('class="official-vendor-btn"', content, f"Missing .official-vendor-btn in {slug}")
-            self.assertIn('Visit Official', content, f"Missing 'Visit Official' text in {slug}")
+            if slug in CANONICAL_40_ASSISTED:
+                self.assertIn('class="buy"',content,slug)
+                self.assertIn('wa.me/923236715731',content,slug)
+                self.assertIn('on WhatsApp</a>',content,slug)
+            else:
+                self.assertIn(slug,DIRECTORY_25_PROFILES,slug)
+                self.assertIn('class="directory-badge"',content,slug)
+                self.assertNotIn('wa.me/923236715731',content,slug)
+                self.assertNotIn('on WhatsApp</a>',content,slug)
+            self.assertIn('official-vendor-btn',content,slug)
+            self.assertIn('Visit Official',content,slug)
 
 
 if __name__ == '__main__':
