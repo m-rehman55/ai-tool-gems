@@ -2,4 +2,4 @@
 # Core dependencies (compatible with standard Python 3.10+)
 
 pyyaml>=6.0.1
-Pillow>=10.0.0
+Pillow>=13.0.0
