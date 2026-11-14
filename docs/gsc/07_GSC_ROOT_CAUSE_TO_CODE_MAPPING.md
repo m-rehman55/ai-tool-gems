@@ -36,3 +36,4 @@ All fixes are permanently protected by our automated test harness:
 - **`scripts/link_graph_checker.py --strict`**: Validates 4,480+ links across all 91 pages.
 - **`aio_agent/`**: Verifies Google AI Overviews query fan-out and RAG extractability.
 - **`ping_agent/`**: Dispatches instant IndexNow updates upon any deployment.
+

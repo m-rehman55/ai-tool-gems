@@ -146,3 +146,4 @@ Inside `/performance/search-analytics/ai`, GSC exposes our performance within Go
    * Deploy electronic delivery (`shippingDetails`) and warranty (`hasMerchantReturnPolicy`) markup across the 26 flagged offers, followed by triggering the "VALIDATE FIX" button in Google Search Console.
 4. **P4 — Continuous Search Console Insights Monitoring:**
    * Track weekly impression and click velocity to push Page-2 contenders (`claude-ai-pakistan` at 12.0, `linkedin` at 11.0, `replit` at 11.3) into the top 3 spots on Page 1.
+
