@@ -17,6 +17,8 @@
 | **4** | **`tools/bolt-new/` Indexing** | URL Inspection tool | `https://aitoolgems.tech/tools/bolt-new/` | 2026-11-14 06:25:00 | **IN PROGRESS** | Status: "Crawled - currently not indexed". Internal link graph reinforced. |
 | **5** | **Merchant Listings Warnings** | GSC Merchant Listings Report | 26 items across Homepage & 5 tool pages | 2026-11-14 06:20:00 | **MONITORED** | Optional warnings (`hasMerchantReturnPolicy`, `shippingDetails`). Compliant with GMC. |
 | **6** | **High-CTR Title/Snippet Push** | Repository PR deployment | `tools/allinone/`<br>`prices/`<br>`contact.html` | 2026-11-14 06:35:00 | **DEPLOYED** | Code pushed to `main`. Deployed to GitHub Pages CDN. |
+| **7** | **Return Policy Validation Attempt** | GSC "Validate Fix" Live Button | `Missing field 'hasMerchantReturnPolicy'` | 2026-11-14 07:05:12 | **ABORTED BY GSC** | Live Googlebot quick check returned: *"Cannot continue validation process. Affected pages were found: tools/adobe/, index.html"*. Validates that schema must remain omitted per GMC policy. |
+| **8** | **Shipping Details Validation Attempt** | GSC "Validate Fix" Live Button | `Missing field 'shippingDetails'` | 2026-11-14 07:07:30 | **ABORTED BY GSC** | Live Googlebot quick check returned: *"Cannot continue validation process. Affected pages were found: tools/adobe/, index.html"*. |
 
 ---
 
@@ -45,3 +47,4 @@
 
 3. **SERP Snippet Refresh for `tools/allinone/` and `prices/`:**
    - Deployed high-intent metadata will be observed in Google SERPs as Googlebot refreshes cached page headers over the next 3 to 5 days.
+

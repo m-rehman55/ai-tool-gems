@@ -113,3 +113,4 @@ This action plan translates these forensic insights into a high-impact, prioriti
 | **Crawl Error Rate (404s)** | 10% | **Subsiding** | **<2%** | **0%** |
 | **Indexed Pages** | 103 | **103** | **110+** | **130+** |
 | **Monthly WhatsApp Inquiries** | Baseline | **+40%** | **+120%** | **+300%** |
+

@@ -91,3 +91,4 @@ The 139 crawl attempts across 29 distinct URLs break down into four distinct str
 * `/terms.html` & `/policies/` (1 request each)
 * **Root Cause:** Relative `src="assets/..."` paths in older guide templates resolved relative to `/guides/` instead of apex root `/assets/`.
 * **Fix Status:** All active templates in the current repository use strict normalized paths (`../../assets/...` or `/assets/...`). Live link graph checker confirms **0 broken links**.
+
