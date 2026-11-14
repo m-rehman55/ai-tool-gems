@@ -1,0 +1,19 @@
+url,indexing_status,issue_category,last_crawled,canonical_url,sitemap_status,root_cause,proposed_action
+https://aitoolgems.tech/jp/tools/notion/,Not Indexed,Not found (404),2026-11-03,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/tools/veo/,Not Indexed,Not found (404),2026-11-03,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/policies.html,Not Indexed,Not found (404),2026-11-03,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/tools/replit/,Not Indexed,Not found (404),2026-11-03,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/tools/n8n/,Not Indexed,Not found (404),2026-11-03,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/tools/netflix/,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/tools/manus/,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/guides/chatgpt-vs-gemini-japan/,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/about.html,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/guides/canva-vs-figma-japan/,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/terms.html,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/tools/gemini/,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub (received 1 click in Oct),Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/tools/leonardo/,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/jp/contact.html,Not Indexed,Not found (404),2026-11-02,None,Excluded from sitemap,Decommissioned Japanese localized stub,Allow Googlebot to naturally prune via 404
+https://aitoolgems.tech/index.html,Not Indexed,Page with redirect,2026-10-29,https://aitoolgems.tech/,Excluded from sitemap,Root permalink 301 redirection to apex /,Expected behavior; no action required
+https://aitoolgems.tech/tools/bolt-new/,Not Indexed,Crawled - currently not indexed,2026-11-10,https://aitoolgems.tech/tools/bolt-new/,Submitted in sitemap,Recently crawled directory addition in secondary indexing queue,Strengthen internal linking and request single-URL inspection recrawl
+https://aitoolgems.tech/tools/chatgpt/?utm_source=tiktok...,Not Indexed,Alternative page with proper canonical tag,2026-10-22,https://aitoolgems.tech/tools/chatgpt/,Excluded from sitemap,Social media marketing tracking URL,Expected behavior; canonical prevents duplicate indexation
+https://aitoolgems.tech/deals/?utm_source=instagram...,Not Indexed,Alternative page with proper canonical tag,2026-09-23,https://aitoolgems.tech/deals/,Excluded from sitemap,Social media marketing tracking URL,Expected behavior; canonical prevents duplicate indexation
