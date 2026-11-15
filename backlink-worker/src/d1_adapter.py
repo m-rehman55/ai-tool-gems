@@ -133,7 +133,7 @@ class D1Adapter:
                 err_s = str(e).lower()
                 if "constraint" in err_s or "abort" in err_s:
                     return False, "Atomic transition failed: conditional state mismatch (already approved or invalid source status) or worker fenced out"
-                raise
+                return False, f"Atomic transition failed: {e}"
             finally:
                 self.conn.isolation_level = prev_isolation
 
@@ -173,7 +173,133 @@ class D1Adapter:
                 err_s = str(e).lower()
                 if "constraint" in err_s or "abort" in err_s:
                     return False, "Atomic transition failed: conditional state mismatch (already approved or invalid source status) or worker fenced out"
-                raise
+                return False, f"Atomic transition failed: {e}"
+
+        raise RuntimeError("No active D1 binding or SQLite connection available.")
+
+    async def execute_atomic_claim_recovery(
+        self,
+        update_id: int,
+        old_claimed_at: str,
+        new_claimed_at: str,
+        new_lease_token: str,
+        actor: str = "worker_lease_recovery",
+    ) -> Tuple[bool, Optional[str], int]:
+        """Atomically recovers an expired update claim AND records its audit event.
+        Guarantees that lease takeover and audit record succeed together or fail together.
+        Returns: (success, new_lease_token, lease_recoveries).
+        """
+        assert_id = f"assert_rec_{uuid.uuid4().hex[:8]}"
+        event_id = f"evt_{int(datetime.now(timezone.utc).timestamp() * 1000)}_{uuid.uuid4().hex[:8]}"
+
+        if self.conn is not None:
+            prev_isolation = self.conn.isolation_level
+            self.conn.isolation_level = None
+            cursor = self.conn.cursor()
+            try:
+                cursor.execute("BEGIN IMMEDIATE")
+                # Step 1: In-transaction assertion enforcing active claim and matching timestamp
+                cursor.execute(
+                    """
+                    INSERT INTO _d1_transaction_assertions (id, is_valid)
+                    VALUES (?, CASE WHEN 
+                        (SELECT count(*) FROM telegram_processed_updates WHERE update_id = ? AND status = 'processing' AND claimed_at = ?) = 1
+                    THEN 1 ELSE 0 END)
+                    """,
+                    (assert_id, int(update_id), old_claimed_at),
+                )
+                # Step 2: Optimistic update with SQL-side increment
+                cursor.execute(
+                    """
+                    UPDATE telegram_processed_updates 
+                    SET claimed_at = ?, lease_recoveries = lease_recoveries + 1, lease_token = ? 
+                    WHERE update_id = ? AND status = 'processing' AND claimed_at = ?
+                    """,
+                    (new_claimed_at, new_lease_token, int(update_id), old_claimed_at),
+                )
+                # Step 3: Fetch updated recovery count
+                cursor.execute(
+                    "SELECT lease_recoveries FROM telegram_processed_updates WHERE update_id = ?",
+                    (int(update_id),),
+                )
+                row = cursor.fetchone()
+                lease_recs = row[0] if row else 1
+
+                # Step 4: Atomic audit event insert
+                payload = json.dumps({
+                    "update_id": update_id,
+                    "previous_claimed_at": old_claimed_at,
+                    "recovered_at": new_claimed_at,
+                    "new_lease_token": new_lease_token,
+                    "lease_recoveries": lease_recs,
+                })
+                cursor.execute(
+                    """
+                    INSERT INTO audit_events (id, event_type, actor, entity_id, payload_json, created_at)
+                    VALUES (?, 'telegram_claim_recovered', ?, ?, ?, ?)
+                    """,
+                    (event_id, actor, str(update_id), payload, new_claimed_at),
+                )
+                # Step 5: Cleanup assertion
+                cursor.execute("DELETE FROM _d1_transaction_assertions WHERE id = ?", (assert_id,))
+                cursor.execute("COMMIT")
+                return True, new_lease_token, lease_recs
+            except Exception:
+                try:
+                    cursor.execute("ROLLBACK")
+                except Exception:
+                    pass
+                return False, None, 0
+            finally:
+                self.conn.isolation_level = prev_isolation
+
+        if self.db is not None:
+            # Fetch current recoveries count for audit payload
+            curr_row = await self.execute_first(
+                "SELECT lease_recoveries FROM telegram_processed_updates WHERE update_id = ?",
+                (int(update_id),),
+            )
+            lease_recs = (curr_row.get("lease_recoveries", 0) + 1) if curr_row else 1
+            payload = json.dumps({
+                "update_id": update_id,
+                "previous_claimed_at": old_claimed_at,
+                "recovered_at": new_claimed_at,
+                "new_lease_token": new_lease_token,
+                "lease_recoveries": lease_recs,
+            })
+            statements = [
+                # Assertion: Verify claim is still in processing with expected claimed_at
+                self.db.prepare(
+                    """
+                    INSERT INTO _d1_transaction_assertions (id, is_valid)
+                    VALUES (?, CASE WHEN 
+                        (SELECT count(*) FROM telegram_processed_updates WHERE update_id = ? AND status = 'processing' AND claimed_at = ?) = 1
+                    THEN 1 ELSE 0 END)
+                    """
+                ).bind(assert_id, int(update_id), old_claimed_at),
+                # Mutation: Lease takeover
+                self.db.prepare(
+                    """
+                    UPDATE telegram_processed_updates 
+                    SET claimed_at = ?, lease_recoveries = lease_recoveries + 1, lease_token = ? 
+                    WHERE update_id = ? AND status = 'processing' AND claimed_at = ?
+                    """
+                ).bind(new_claimed_at, new_lease_token, int(update_id), old_claimed_at),
+                # Mutation: Atomic audit record
+                self.db.prepare(
+                    """
+                    INSERT INTO audit_events (id, event_type, actor, entity_id, payload_json, created_at)
+                    VALUES (?, 'telegram_claim_recovered', ?, ?, ?, ?)
+                    """
+                ).bind(event_id, actor, str(update_id), payload, new_claimed_at),
+                # Cleanup assertion
+                self.db.prepare("DELETE FROM _d1_transaction_assertions WHERE id = ?").bind(assert_id),
+            ]
+            try:
+                await self.db.batch(statements)
+                return True, new_lease_token, lease_recs
+            except Exception:
+                return False, None, 0
 
         raise RuntimeError("No active D1 binding or SQLite connection available.")
 

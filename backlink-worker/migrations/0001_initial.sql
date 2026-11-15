@@ -106,7 +106,8 @@ CREATE TABLE IF NOT EXISTS telegram_processed_updates (
     claimed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     completed_at TEXT,
     lease_recoveries INTEGER NOT NULL DEFAULT 0,
-    lease_token TEXT NOT NULL DEFAULT ''
+    lease_token TEXT NOT NULL DEFAULT '',
+    response_text TEXT
 );
 
 -- 5c. Transaction Assertions Table (Forces D1 batch atomic rollback on conditional zero-row failure)

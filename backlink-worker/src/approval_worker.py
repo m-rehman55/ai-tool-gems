@@ -100,7 +100,7 @@ class WorkerApprovalEngine:
 
         # Check existing claim status
         existing = await self.d1.execute_first(
-            "SELECT status, claimed_at, lease_recoveries, lease_token FROM telegram_processed_updates WHERE update_id = ?",
+            "SELECT status, claimed_at, lease_recoveries, lease_token, response_text FROM telegram_processed_updates WHERE update_id = ?",
             (int(update_id),),
         )
 
@@ -135,37 +135,25 @@ class WorkerApprovalEngine:
                 is_expired = False
 
         if is_expired:
-            # Atomically recover lease via optimistic lock on claimed_at with SQL-side increment
+            # Atomically recover lease via execute_atomic_claim_recovery (single transaction for update + audit)
             new_lease_token = f"tok_{uuid.uuid4().hex[:12]}"
-            rows = await self.d1.execute_mutation(
-                "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = lease_recoveries + 1, lease_token = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
-                (now_utc, new_lease_token, int(update_id), claimed_at_str),
+            ok, tok, _ = await self.d1.execute_atomic_claim_recovery(
+                update_id=int(update_id),
+                old_claimed_at=claimed_at_str,
+                new_claimed_at=now_utc,
+                new_lease_token=new_lease_token,
+                actor="worker_lease_recovery",
             )
-            if rows > 0:
-                rec_row = await self.d1.execute_first(
-                    "SELECT lease_recoveries FROM telegram_processed_updates WHERE update_id = ?",
-                    (int(update_id),),
-                )
-                lease_recs = rec_row.get("lease_recoveries", 1) if rec_row else 1
-                await self.d1.record_audit_event(
-                    event_type="telegram_claim_recovered",
-                    actor="worker_lease_recovery",
-                    entity_id=str(update_id),
-                    payload={
-                        "update_id": update_id,
-                        "previous_claimed_at": claimed_at_str,
-                        "recovered_at": now_utc,
-                        "new_lease_token": new_lease_token,
-                        "lease_recoveries": lease_recs,
-                    },
-                )
-                return True, new_lease_token
+            if ok:
+                return True, tok
             return False, None
 
         return False, None
 
-    async def complete_telegram_update(self, update_id: int, lease_token: str) -> bool:
-        """Atomically marks a claimed update as completed.
+    async def complete_telegram_update(
+        self, update_id: int, lease_token: str, response_text: Optional[str] = None
+    ) -> bool:
+        """Atomically marks a claimed update as completed and records its durable response.
         Enforces that the caller still holds the active lease_token and status is 'processing'.
         Returns True if completed, False if fenced out.
         """
@@ -173,14 +161,14 @@ class WorkerApprovalEngine:
             return False
         now_comp = datetime.now(timezone.utc).isoformat()
         rows = await self.d1.execute_mutation(
-            "UPDATE telegram_processed_updates SET status = 'completed', completed_at = ? WHERE update_id = ? AND lease_token = ? AND status = 'processing'",
-            (now_comp, int(update_id), str(lease_token)),
+            "UPDATE telegram_processed_updates SET status = 'completed', completed_at = ?, response_text = ? WHERE update_id = ? AND lease_token = ? AND status = 'processing'",
+            (now_comp, response_text or "", int(update_id), str(lease_token)),
         )
         return bool(rows > 0)
 
     async def recover_stale_claims_sweep(self, lease_timeout_seconds: int = 300) -> List[int]:
         """Scheduled recovery scanner for abandoned claims.
-        Recovers claims stuck in 'processing' where claimed_at > timeout.
+        Recovers claims stuck in 'processing' where claimed_at > timeout using atomic claim recovery.
         """
         now_dt = datetime.now(timezone.utc)
         now_utc = now_dt.isoformat()
@@ -197,17 +185,14 @@ class WorkerApprovalEngine:
                 if (now_dt - claimed_dt).total_seconds() > lease_timeout_seconds:
                     upd_id = int(r["update_id"])
                     new_token = f"tok_sweep_{uuid.uuid4().hex[:10]}"
-                    changed = await self.d1.execute_mutation(
-                        "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = lease_recoveries + 1, lease_token = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
-                        (now_utc, new_token, upd_id, claimed_at_str),
+                    ok, _, _ = await self.d1.execute_atomic_claim_recovery(
+                        update_id=upd_id,
+                        old_claimed_at=claimed_at_str,
+                        new_claimed_at=now_utc,
+                        new_lease_token=new_token,
+                        actor="cron_sweeper",
                     )
-                    if changed > 0:
-                        await self.d1.record_audit_event(
-                            event_type="telegram_claim_recovered_by_sweep",
-                            actor="cron_sweeper",
-                            entity_id=str(upd_id),
-                            payload={"update_id": upd_id, "previous_claimed_at": claimed_at_str, "recovered_at": now_utc},
-                        )
+                    if ok:
                         recovered_ids.append(upd_id)
             except Exception:
                 pass
@@ -239,9 +224,10 @@ class WorkerApprovalEngine:
         # 3. Atomic Replay, Concurrency Claim & Fencing Token
         lease_token = None
         if update_id:
-            claimed, lease_token = await self.claim_telegram_update(update_id, chat_id, user_id, cmd)
+            claimed, token = await self.claim_telegram_update(update_id, chat_id, user_id, cmd)
             if not claimed:
                 return f"ℹ️ Update ID {update_id} already processed or claimed concurrently. Duplicate skipped safely."
+            lease_token = token
 
         # Record update receipt in audit trail
         if update_id:
@@ -254,9 +240,9 @@ class WorkerApprovalEngine:
 
         reply_text = await self._dispatch_command(cmd, parts, chat_id, user_id, update_id, lease_token)
 
-        # Mark update as completed with fencing token verification
+        # Mark update as completed with fencing token verification and persist response
         if update_id and lease_token:
-            completed_ok = await self.complete_telegram_update(update_id, lease_token)
+            completed_ok = await self.complete_telegram_update(update_id, lease_token, response_text=reply_text)
             if not completed_ok:
                 return f"⛔ Execution dropped: Worker was fenced out because lease token for update {update_id} expired or was recovered."
 
@@ -320,6 +306,22 @@ class WorkerApprovalEngine:
 
             now_utc = datetime.now(timezone.utc).isoformat()
             content_hash = hashlib.sha256(f"{p.get('prospect_domain')}|{p.get('target_url')}".encode("utf-8")).hexdigest()[:16]
+
+            # Idempotency check: if prospect already approved, check if this update_id approved it before a crash
+            if p.get("action_status") == "owner_approved_for_manual_submission":
+                if update_id:
+                    prior_ev = await self.d1.execute_first(
+                        "SELECT payload_json FROM audit_events WHERE event_type = 'prospect_approved' AND entity_id = ? AND payload_json LIKE ?",
+                        (p.get("id"), f'%"update_id": {update_id}%'),
+                    )
+                    if prior_ev:
+                        return (
+                            f"✅ Approved for Manual Submission: {p.get('prospect_domain')}\n"
+                            f"• Target URL: {p.get('target_url')}\n"
+                            f"• Draft Hash: {content_hash}\n"
+                            "🛡️ Guardrail: Zero automated forms or emails sent. Submission is owner-operated."
+                        )
+                return f"ℹ️ Prospect '{target}' is already approved for manual submission. No duplicate state transition."
 
             # Revalidate pending draft in drafts table if present
             draft = await self.d1.execute_first(

@@ -231,7 +231,8 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
         })
         self.assertIn("already approved", res_dup_approve)
 
-        # Now test tampered draft
+        # Now test tampered draft (reset prospect to active first)
+        await self.d1.execute_mutation("UPDATE prospects SET action_status = 'active' WHERE id = ?", (p["id"],))
         tampered_id = f"draft_{uuid.uuid4().hex[:8]}"
         await self.d1.execute_mutation(
             "INSERT INTO drafts (id, prospect_id, target_url, proposed_anchor, pitch_copy, content_sha256, status, created_at) VALUES (?, ?, ?, ?, ?, 'tampered_bad_hash', 'pending_approval', ?)",
@@ -388,6 +389,160 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
         # Check audit event was written
         ev = await self.d1.execute_first("SELECT payload_json FROM audit_events WHERE entity_id = '99933'")
         self.assertIsNotNone(ev)
+
+    async def test_recovery_atomic_with_audit_rollback(self):
+        # Insert a stale claim
+        past_iso = "2026-11-14T00:00:00Z"
+        await self.d1.execute_mutation(
+            "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_recoveries, lease_token) VALUES (99944, '123456', '789012', '/backlinks', 'processing', ?, 0, 'tok_initial')",
+            (past_iso,),
+        )
+
+        # Successful atomic recovery
+        now_iso = "2026-11-15T08:00:00Z"
+        ok, tok, recs = await self.d1.execute_atomic_claim_recovery(
+            update_id=99944,
+            old_claimed_at=past_iso,
+            new_claimed_at=now_iso,
+            new_lease_token="tok_atomic_ok",
+            actor="test_recovery",
+        )
+        self.assertTrue(ok)
+        self.assertEqual(tok, "tok_atomic_ok")
+        self.assertEqual(recs, 1)
+
+        # Audit event exists
+        ev = await self.d1.execute_first("SELECT * FROM audit_events WHERE entity_id = '99944'")
+        self.assertIsNotNone(ev)
+
+        # Concurrent recovery attempt with wrong old timestamp fails atomically
+        ok_race, _, _ = await self.d1.execute_atomic_claim_recovery(
+            update_id=99944,
+            old_claimed_at=past_iso, # Already changed to now_iso!
+            new_claimed_at="2026-11-15T08:05:00Z",
+            new_lease_token="tok_race_fail",
+            actor="test_recovery_race",
+        )
+        self.assertFalse(ok_race)
+
+    async def test_old_worker_resumes_notification_dropped_and_side_effects_fenced(self):
+        # Worker 1 claims update 99955
+        claimed1, token1 = await self.engine.claim_telegram_update(99955, "123456", "789012", "/approve github.com")
+        self.assertTrue(claimed1)
+
+        # Worker 2 recovers lease after timeout
+        past_iso = "2026-11-14T00:00:00Z"
+        await self.d1.execute_mutation(
+            "UPDATE telegram_processed_updates SET claimed_at = ? WHERE update_id = 99955",
+            (past_iso,),
+        )
+        claimed2, token2 = await self.engine.claim_telegram_update(99955, "123456", "789012", "/approve github.com")
+        self.assertTrue(claimed2)
+
+        # Worker 1 attempts to complete update and send response -> Fenced out!
+        completed_w1 = await self.engine.complete_telegram_update(99955, token1, response_text="Success from Worker 1")
+        self.assertFalse(completed_w1)
+
+        # Update record in DB remains in processing (held by Worker 2)
+        row = await self.d1.execute_first("SELECT status, lease_token FROM telegram_processed_updates WHERE update_id = 99955")
+        self.assertEqual(row["status"], "processing")
+        self.assertEqual(row["lease_token"], token2)
+
+    async def test_completed_update_skips_duplicate_without_mutation(self):
+        # 1. First execution processes and completes with response_text recorded
+        update_payload = {
+            "update_id": 99966,
+            "message": {
+                "chat": {"id": 123456, "type": "private"},
+                "from": {"id": 789012},
+                "text": "/backlinks",
+            },
+        }
+        resp1 = await self.engine.handle_update(update_payload, "test-secret-123")
+        self.assertIn("AI Tool Gems Cloudflare Backlink Pipeline", resp1)
+
+        # Verify DB status is 'completed' with stored response_text
+        row = await self.d1.execute_first("SELECT status, response_text FROM telegram_processed_updates WHERE update_id = 99966")
+        self.assertEqual(row["status"], "completed")
+        self.assertEqual(row["response_text"], resp1)
+
+        # 2. Redelivery of exact same update_id is safely rejected without mutations
+        resp2 = await self.engine.handle_update(update_payload, "test-secret-123")
+        self.assertIn("already processed", resp2)
+        self.assertIn("Duplicate skipped safely", resp2)
+
+    async def test_crash_after_approval_before_response_idempotent_retry(self):
+        # Setup: prospect approved by update 99977, but worker crashed before completing telegram update
+        p = await self.d1.execute_first("SELECT id, prospect_domain, target_url FROM prospects WHERE lower(prospect_domain) = 'hashnode.com'")
+        now_iso = "2026-11-15T00:00:00Z"
+        await self.d1.execute_mutation(
+            "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission' WHERE id = ?",
+            (p["id"],),
+        )
+        await self.d1.record_audit_event(
+            event_type="prospect_approved",
+            actor="telegram:123456",
+            entity_id=p["id"],
+            payload={"update_id": 99977, "action": "approve"},
+        )
+        await self.d1.execute_mutation(
+            "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_token) VALUES (99977, '123456', '789012', '/approve hashnode.com', 'processing', ?, 'tok_crash')",
+            (now_iso,),
+        )
+
+        # Retried execution recovers and returns success response idempotently
+        update_payload = {
+            "update_id": 99977,
+            "message": {
+                "chat": {"id": 123456, "type": "private"},
+                "from": {"id": 789012},
+                "text": "/approve hashnode.com",
+            },
+        }
+        # Force timeout so lease can be claimed
+        past_iso = "2026-11-14T00:00:00Z"
+        await self.d1.execute_mutation(
+            "UPDATE telegram_processed_updates SET claimed_at = ? WHERE update_id = 99977",
+            (past_iso,),
+        )
+        resp = await self.engine.handle_update(update_payload, "test-secret-123")
+        self.assertIn("Approved for Manual Submission", resp)
+        self.assertIn("hashnode.com", resp)
+
+    async def test_sqlite_commit_failure_handled_gracefully(self):
+        # Simulate a database failure during COMMIT
+        p = await self.d1.execute_first("SELECT id FROM prospects WHERE lower(prospect_domain) = 'dev.to'")
+        
+        orig_conn = self.d1.conn
+        class MockCursor:
+            def __init__(self, real_c):
+                self._c = real_c
+            def execute(self, sql, *args):
+                if sql == "COMMIT":
+                    raise Exception("Simulated disk I/O or lock failure during COMMIT")
+                return self._c.execute(sql, *args)
+            def fetchone(self):
+                return self._c.fetchone()
+            def fetchall(self):
+                return self._c.fetchall()
+            @property
+            def rowcount(self):
+                return self._c.rowcount
+
+        class MockConnection:
+            def __init__(self, real):
+                self._real = real
+                self.isolation_level = real.isolation_level
+            def cursor(self):
+                return MockCursor(self._real.cursor())
+
+        self.d1.conn = MockConnection(orig_conn)
+        try:
+            ok, msg = await self.d1.execute_atomic_approval(p["id"], None, "2026-11-15T00:00:00Z", "tester")
+            self.assertFalse(ok)
+            self.assertIn("Atomic transition failed", msg)
+        finally:
+            self.d1.conn = orig_conn
 
 
 if __name__ == "__main__":
