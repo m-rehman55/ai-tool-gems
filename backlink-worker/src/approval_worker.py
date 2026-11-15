@@ -68,14 +68,38 @@ class WorkerApprovalEngine:
         return True, "Authorized"
 
     async def is_update_already_processed(self, update_id: int) -> bool:
-        """D1-based replay protection checking if update_id was already handled."""
+        """Checks if update_id was already handled (via telegram_processed_updates table)."""
         if not update_id:
             return False
         row = await self.d1.execute_first(
-            "SELECT count(*) as c FROM audit_events WHERE event_type = 'telegram_update' AND entity_id = ?",
-            (str(update_id),),
+            "SELECT count(*) as c FROM telegram_processed_updates WHERE update_id = ?",
+            (int(update_id),),
         )
         return bool(row and row.get("c", 0) > 0)
+
+    async def claim_telegram_update(
+        self,
+        update_id: int,
+        chat_id: str,
+        user_id: Optional[str],
+        command: str,
+    ) -> bool:
+        """Atomically claims an incoming Telegram update ID in D1.
+        Relies on PRIMARY KEY (update_id) constraint to eliminate race conditions
+        between concurrent webhook deliveries.
+        """
+        if not update_id:
+            return True
+        now_utc = datetime.now(timezone.utc).isoformat()
+        try:
+            await self.d1.execute_mutation(
+                "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, claimed_at) VALUES (?, ?, ?, ?, ?)",
+                (int(update_id), str(chat_id), str(user_id or ""), str(command), now_utc),
+            )
+            return True
+        except Exception:
+            # Primary key constraint violation (already claimed concurrently)
+            return False
 
     async def handle_update(self, update: Dict[str, Any], header_secret: Optional[str] = None) -> str:
         # 1. Header Secret Verification
@@ -97,12 +121,14 @@ class WorkerApprovalEngine:
         if not authorized:
             return f"⛔ Access Denied: {reason}"
 
-        # 3. Replay Protection
-        if update_id and await self.is_update_already_processed(update_id):
-            return f"ℹ️ Update ID {update_id} already processed. Duplicate skipped safely."
-
         parts = text.split()
         cmd = parts[0].lower() if parts else ""
+
+        # 3. Atomic Replay and Concurrency Claim
+        if update_id:
+            claimed = await self.claim_telegram_update(update_id, chat_id, user_id, cmd)
+            if not claimed:
+                return f"ℹ️ Update ID {update_id} already processed or claimed concurrently. Duplicate skipped safely."
 
         # Record update receipt in audit trail
         if update_id:
@@ -159,8 +185,27 @@ class WorkerApprovalEngine:
             p = await self.d1.execute_first("SELECT * FROM prospects WHERE lower(prospect_domain) = ?", (target,))
             if not p:
                 return f"Prospect '{target}' not found in D1."
-            content_hash = hashlib.sha256(f"{p.get('prospect_domain')}|{p.get('target_url')}".encode("utf-8")).hexdigest()[:16]
+
             now_utc = datetime.now(timezone.utc).isoformat()
+            content_hash = hashlib.sha256(f"{p.get('prospect_domain')}|{p.get('target_url')}".encode("utf-8")).hexdigest()[:16]
+
+            # Revalidate pending draft in drafts table if present
+            draft = await self.d1.execute_first(
+                "SELECT * FROM drafts WHERE prospect_id = ? AND status = 'pending_approval' ORDER BY created_at DESC LIMIT 1",
+                (p.get("id"),),
+            )
+            if draft:
+                expected_draft_hash = hashlib.sha256(
+                    f"{draft.get('target_url')}|{draft.get('proposed_anchor')}|{draft.get('pitch_copy')}".encode("utf-8")
+                ).hexdigest()
+                recorded_hash = draft.get("content_sha256", "")
+                if recorded_hash and not secure_compare(recorded_hash, expected_draft_hash):
+                    return f"⛔ Draft integrity error: SHA-256 content hash mismatch for {target}. Approval blocked."
+                await self.d1.execute_mutation(
+                    "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ?",
+                    (now_utc, f"telegram:{user_id or chat_id}", draft.get("id")),
+                )
+
             await self.d1.execute_mutation(
                 "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ?",
                 (now_utc, p.get("id")),
@@ -169,7 +214,13 @@ class WorkerApprovalEngine:
                 event_type="prospect_approved",
                 actor=f"telegram:{chat_id}",
                 entity_id=p.get("id"),
-                payload={"action": "approve", "draft_hash": content_hash, "update_id": update_id, "timestamp": now_utc},
+                payload={
+                    "action": "approve",
+                    "draft_hash": content_hash,
+                    "user_id": user_id,
+                    "update_id": update_id,
+                    "timestamp": now_utc,
+                },
             )
             return (
                 f"✅ Approved for Manual Submission: {p.get('prospect_domain')}\n"

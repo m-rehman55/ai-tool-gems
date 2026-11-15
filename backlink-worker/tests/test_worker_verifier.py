@@ -14,6 +14,7 @@ from src.verifier_worker import (
     classify_rel_tokens,
     is_html_content_type,
     normalize_target_url,
+    validate_redirect_chain,
     validate_redirect_hop,
     validate_worker_url,
     verify_html_content,
@@ -67,6 +68,74 @@ class TestWorkerVerifier(unittest.TestCase):
             validate_worker_url("https://10.0.0.1/")
         with self.assertRaises(ValueError):
             validate_worker_url("https://192.168.1.1/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://0.0.0.1/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://100.64.0.1/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://192.0.0.1/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://198.18.0.1/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://240.0.0.1/")
+
+    def test_validate_worker_url_blocks_ipv6_special_ranges_and_mapped(self):
+        # IPv6 loopback
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://[::1]/")
+        # IPv6 link-local
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://[fe80::1]/")
+        # IPv6 ULA
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://[fc00::1]/")
+        # IPv6 multicast
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://[ff02::1]/")
+        # IPv4-mapped IPv6 loopback
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://[::ffff:127.0.0.1]/")
+        # IPv4-mapped IPv6 metadata
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://[::ffff:169.254.169.254]/")
+        # IPv4-mapped IPv6 private
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://[::ffff:10.0.0.1]/")
+
+    def test_validate_redirect_chain_and_loop_detection(self):
+        # Valid 2-hop chain
+        final_url = validate_redirect_chain(
+            "https://start.com/entry",
+            ["/step1", "https://destination.com/final"],
+            max_hops=5,
+        )
+        self.assertEqual(final_url, "https://destination.com/final")
+
+        # Redirect loop detection
+        with self.assertRaises(ValueError) as ctx_loop:
+            validate_redirect_chain(
+                "https://start.com/entry",
+                ["/step1", "https://start.com/entry"],
+                max_hops=5,
+            )
+        self.assertIn("Redirect loop detected", str(ctx_loop.exception))
+
+        # Excessive hops detection (> max_hops)
+        with self.assertRaises(ValueError) as ctx_hops:
+            validate_redirect_chain(
+                "https://start.com/entry",
+                ["/1", "/2", "/3", "/4", "/5", "/6"],
+                max_hops=5,
+            )
+        self.assertIn("Excessive redirects", str(ctx_hops.exception))
+
+        # Redirect chain terminating in forbidden SSRF IP
+        with self.assertRaises(ValueError):
+            validate_redirect_chain(
+                "https://start.com/entry",
+                ["/safe", "https://169.254.169.254/latest/meta-data"],
+                max_hops=5,
+            )
 
     def test_validate_redirect_hop(self):
         # Valid relative redirect

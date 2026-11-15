@@ -83,6 +83,28 @@ CREATE TABLE IF NOT EXISTS audit_events (
     created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Triggers strictly enforcing append-only immutability on audit_events
+CREATE TRIGGER IF NOT EXISTS prevent_audit_update
+BEFORE UPDATE ON audit_events
+BEGIN
+    SELECT RAISE(ABORT, 'audit_events is an immutable append-only ledger: UPDATE prohibited');
+END;
+
+CREATE TRIGGER IF NOT EXISTS prevent_audit_delete
+BEFORE DELETE ON audit_events
+BEGIN
+    SELECT RAISE(ABORT, 'audit_events is an immutable append-only ledger: DELETE prohibited');
+END;
+
+-- 5b. Telegram Processed Updates Table (Atomic update_id claiming for replay & race protection)
+CREATE TABLE IF NOT EXISTS telegram_processed_updates (
+    update_id INTEGER PRIMARY KEY,
+    chat_id TEXT NOT NULL,
+    user_id TEXT,
+    command TEXT,
+    claimed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 -- 6. Agent Control Table (Kill switch and mode gate)
 CREATE TABLE IF NOT EXISTS agent_control (
     control_key TEXT PRIMARY KEY,

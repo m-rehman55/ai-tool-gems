@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 import json
 import sqlite3
 from typing import Any, Dict, List, Optional, Tuple
+import uuid
 
 
 class D1Adapter:
@@ -167,7 +168,7 @@ class D1Adapter:
         self, event_type: str, actor: str, entity_id: Optional[str], payload: Dict[str, Any]
     ) -> None:
         now_utc = datetime.now(timezone.utc).isoformat()
-        event_id = f"evt_{int(datetime.now(timezone.utc).timestamp())}_{event_type[:8]}"
+        event_id = f"evt_{int(datetime.now(timezone.utc).timestamp() * 1000)}_{uuid.uuid4().hex[:8]}"
         await self.execute_mutation(
             """
             INSERT INTO audit_events (id, event_type, actor, entity_id, payload_json, created_at)

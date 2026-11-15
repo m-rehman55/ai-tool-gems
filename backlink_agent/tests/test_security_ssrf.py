@@ -70,7 +70,10 @@ class TestSSRFSecurity(unittest.TestCase):
             "100.64.0.1",       # CGNAT
             "100.127.255.254",  # CGNAT
             "0.0.0.0",          # Current network
+            "0.0.0.1",          # 0.0.0.0/8 host
+            "192.0.0.1",        # IETF protocol assignments RFC 6890
             "192.0.2.1",        # TEST-NET-1
+            "198.18.0.1",       # Network benchmark RFC 2544
             "198.51.100.1",     # TEST-NET-2
             "203.0.113.1",      # TEST-NET-3
             "224.0.0.1",        # Multicast

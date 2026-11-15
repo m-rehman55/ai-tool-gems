@@ -308,3 +308,25 @@ def validate_redirect_hop(current_url: str, redirect_location: str) -> str:
     next_url = urllib.parse.urljoin(current_url, redirect_location)
     validate_worker_url(next_url)
     return next_url
+
+
+def validate_redirect_chain(start_url: str, hops: List[str], max_hops: int = 5) -> str:
+    """Validates an entire redirect chain sequentially with loop detection and max-hop caps.
+    Raises ValueError on SSRF target, redirect loop, or excessive hops.
+    """
+    validate_worker_url(start_url)
+    if len(hops) > max_hops:
+        raise ValueError(f"Excessive redirects: {len(hops)} hops exceeds maximum allowed ({max_hops})")
+
+    seen_urls = {normalize_target_url(start_url)}
+    current_url = start_url
+
+    for hop in hops:
+        next_url = validate_redirect_hop(current_url, hop)
+        norm_next = normalize_target_url(next_url)
+        if norm_next in seen_urls:
+            raise ValueError(f"Redirect loop detected at '{next_url}'")
+        seen_urls.add(norm_next)
+        current_url = next_url
+
+    return current_url
