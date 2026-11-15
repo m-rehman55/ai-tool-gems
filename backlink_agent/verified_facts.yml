@@ -1,0 +1,47 @@
+# AI Tool Gems — Verified Facts Source of Truth
+# Version: 1.0.0
+# Last Reviewed: 2026-11-15
+# Policy: Grounded, strictly verified commercial and entity facts for AI Tool Gems.
+# Any automated outreach, profile copy, or citation draft MUST strictly adhere to this file.
+# DO NOT claim unverified pricing, currencies, payment methods, partnerships, or metrics.
+
+entity:
+  brand_name: "AI Tool Gems"
+  legal_name: "AI Tool Gems"
+  business_type: "Independent Reseller & Software Intelligence Directory"
+  website_url: "https://aitoolgems.tech"
+  dataset_url: "https://aitoolgems.tech/prices/"
+  llms_txt_url: "https://aitoolgems.tech/llms.txt"
+  llms_full_txt_url: "https://aitoolgems.tech/llms-full.txt"
+  github_repository: "https://github.com/m-rehman55/ai-tool-gems"
+  github_profile: "https://github.com/m-rehman55"
+  official_telegram_channel: "https://t.me/aitoolgemspak"
+  support_channel: "WhatsApp Direct Support"
+  support_whatsapp_number: "923107005510"
+
+scope:
+  primary_market: "Pakistan"
+  catalog_tools_count: 40
+  directory_tools_count: 65
+  pricing_model: "Flat Pakistani Rupee (PKR) pricing for Pakistan market"
+  warranty_policy: "Direct replacement warranty or full pro-rata refund during active access term"
+
+verified_payment_rails:
+  pakistan:
+    - "EasyPaisa"
+    - "JazzCash"
+    - "SadaPay"
+    - "NayaPay"
+    - "Raast"
+    - "Bank IBFT"
+  international:
+    status: "manual_quote_only"
+    terms: "Inquiries handled individually via WhatsApp/Email. No foreign fixed prices or instant card checkout."
+
+disallowed_claims:
+  - "Do NOT claim Stripe, PayPal, or automated credit card gateway checkout."
+  - "Do NOT claim official direct partnership or endorsement from OpenAI, Anthropic, Google, Midjourney, or Adobe."
+  - "Do NOT claim physical international offices outside Pakistan."
+  - "Do NOT claim fixed USD prices for international customers without explicit owner verification."
+  - "Do NOT claim unverified third-party rankings, awards, or fake customer count statistics."
+  - "Do NOT agree to reciprocal backlink exchanges, link rings, or footer badges."

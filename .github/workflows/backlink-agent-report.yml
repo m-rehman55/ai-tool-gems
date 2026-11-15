@@ -1,0 +1,77 @@
+name: Backlink Agent Report & Pipeline Audit
+
+# Note: GitHub Actions is a scheduled cloud execution environment, NOT an always-on daemon.
+# Scheduled runs execute in ephemeral runners and can be delayed by GitHub queue load.
+# The laptop can be powered off during cloud execution.
+
+on:
+  schedule:
+    - cron: "0 3 * * 0"  # Sunday 08:00 PKT (03:00 UTC) weekly executive audit
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Backlink Agent Mode (report_only, verify)"
+        required: true
+        default: "report_only"
+        type: choice
+        options:
+          - report_only
+          - verify
+      telegram_report:
+        description: "Dispatch executive report to owner Telegram chat"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read  # Least privilege: strictly read-only, NO push or write to main
+
+concurrency:
+  group: backlink-agent-report
+  cancel-in-progress: false
+
+jobs:
+  audit-and-report:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      BACKLINK_AGENT_ENABLED: "false"  # Hard kill switch active by default
+      BACKLINK_AGENT_MODE: "report_only"
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_OWNER_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      ATG_TIMEZONE: Asia/Karachi
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Tracker Schema and Entity Hygiene
+        run: |
+          python -m backlink_agent audit
+
+      - name: Run HTML Anchor Verification (if selected)
+        if: ${{ inputs.mode == 'verify' }}
+        run: |
+          python -m backlink_agent verify
+
+      - name: Generate Pipeline Report
+        run: |
+          TELEGRAM_FLAG=""
+          if [ "${{ inputs.telegram_report }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+            TELEGRAM_FLAG="--telegram"
+          fi
+          python -m backlink_agent report $TELEGRAM_FLAG
+
+      - name: Upload Backlink Pipeline Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backlink-agent-reports
+          path: seo-agent/reports/backlinks/
+          retention-days: 30

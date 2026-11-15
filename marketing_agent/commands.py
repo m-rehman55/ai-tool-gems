@@ -86,7 +86,20 @@ def process_updates(settings: Settings, state_path: Path = STATE_PATH) -> int:
             if not text:
                 continue
             command = text.split()[0].lower()
-            _reply(settings, client, str(chat["id"]), command)
+            if command.startswith("/backlink") or command in {"/approve", "/reject", "/defer"}:
+                from backlink_agent.approval import TelegramApprovalEngine
+                engine = TelegramApprovalEngine(owner_chat_id=settings.telegram_owner_chat_id)
+                user_id = str(message.get("from", {}).get("id")) if message.get("from") else None
+                reply_text = engine.handle_command(
+                    command_text=text,
+                    chat_id=str(chat["id"]),
+                    chat_type=str(chat.get("type", "")),
+                    user_id=user_id,
+                    update_id=int(update["update_id"]),
+                )
+                client.send_message(str(chat["id"]), reply_text)
+            else:
+                _reply(settings, client, str(chat["id"]), command)
             handled += 1
     if latest != int(state.get("last_update_id", 0)):
         _save_state({"last_update_id": latest, "updated_at": datetime.now(settings.timezone).isoformat(timespec="seconds")}, state_path)

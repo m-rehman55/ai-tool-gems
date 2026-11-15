@@ -66,6 +66,19 @@ class TelegramClient:
         return None
 
     def send_message(self, chat_id: str, text: str, button_url: str | None = None) -> dict[str, Any]:
+        if len(text) > 4000:
+            from backlink_agent.telegram_utils import split_message_into_chunks
+            chunks = split_message_into_chunks(text, max_chars=3800)
+            res = {}
+            for chunk in chunks:
+                payload = {
+                    "chat_id": chat_id,
+                    "text": chunk,
+                    "disable_web_page_preview": False,
+                }
+                res = self.call("sendMessage", payload)
+            return res
+
         payload: dict[str, Any] = {
             "chat_id": chat_id,
             "text": text,
