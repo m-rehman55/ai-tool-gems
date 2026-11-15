@@ -21,14 +21,16 @@ Every criterion below must be evaluated and signed off by the system owner befor
 | **G-06** | **D1 Transaction Rollback** | Forced assertion failure triggers atomic batch rollback with zero state mutation | `test_execute_atomic_approval_rollback_on_conflict` | ✅ **PASS** |
 | **G-07** | **Lease Fencing Token** | Stale workers are fenced out on approval and completion after timeout | `test_stale_worker_fenced_out_when_lease_token_changes` | ✅ **PASS** |
 | **G-08** | **Atomic Recovery Audit** | Lease takeover and audit event record commit in the exact same transaction | `test_recovery_atomic_with_audit_rollback` | ✅ **PASS** |
-| **G-09** | **Live Cloud Acceptance** | All 8 LAT tests pass against live Cloudflare staging Worker | `docs/WP12_LIVE_ACCEPTANCE_MATRIX.md` | ⏳ **PENDING_PROVISION** |
-| **G-10** | **48-Hour Burn-In** | 48 consecutive hours of error-free staging execution with 0 unexplained DLQ jobs | `docs/WP12_48H_OBSERVATION_LOG.md` | ⏳ **PENDING_PROVISION** |
+| **G-09** | **Live Cloud Acceptance** | All 8 LAT tests pass against live Cloudflare staging Worker | `docs/WP12_LIVE_ACCEPTANCE_MATRIX.md` | ✅ **PASS** |
+| **G-10** | **48-Hour Burn-In** | 48 consecutive hours of error-free staging execution with 0 unexplained DLQ jobs | `docs/WP12_48H_OBSERVATION_LOG.md` | ⏳ **IN_PROGRESS** |
 | **G-11** | **Notification Outbox** | Transactional notification outbox architecture reviewed and verified | `docs/WP12_NOTIFICATION_DELIVERY_REVIEW.md` | ✅ **PASS** |
-| **G-12** | **Owner Explicit Consent** | Explicit owner sign-off and approval before production deployment dispatch | Signed decision log | ⏳ **WAITING_OWNER** |
+| **G-12** | **Owner Explicit Consent** | Explicit owner sign-off and approval before production deployment dispatch | Signed decision log | ⏳ **HOLD (Awaiting 48-Hour Completion)** |
 
 ---
 
 ## 2. Final Decision
 
-- **Isolated Staging Deployment:** **APPROVED** (Ready for owner interactive authentication).
-- **Production Deployment:** **STRICT HOLD** (Blocked on G-09, G-10, G-12).
+- **Isolated Staging Deployment:** ✅ **LIVE & ACTIVE** (Version: `1badd7f0-c66d-414d-9a73-0a87ef4529fd`, Endpoint: `https://ai-tool-gems-backlink-agent-staging.mrehmanfarooq6.workers.dev`).
+- **Live Acceptance Tests (LAT-01 to LAT-08):** ✅ **8 / 8 PASSED LIVE**.
+- **48-Hour Staging Observation:** ⏳ **RUNNING** (`2026-11-15T05:50:00Z` to `2026-11-17T05:50:00Z`).
+- **Production Deployment:** ⛔ **STRICT HOLD** (Blocked until 48-hour observation completes with zero errors and owner review).

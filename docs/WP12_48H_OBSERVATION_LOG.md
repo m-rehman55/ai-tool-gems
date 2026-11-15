@@ -61,15 +61,20 @@ The following 10 telemetry categories are reconciled continuously:
   - [x] LAT-07: Append-only immutable audit events ledger verified.
   - [x] LAT-08: Staging queue and DLQ bindings active.
 
-- **Gate C — 48-Hour Observation:** ⏳ **IN PROGRESS**
-  - Clock Started: `2026-11-15T05:50:00Z`
-  - Reconciling 8 verification cycles (01:00, 07:00, 13:00, 19:00 UTC).
-  - Reconciling 96 heartbeat intervals (*/30 crons).
-  - Queue and DLQ counts monitored.
-  - Zero unexplained errors tolerated.
+- **Gate C — 48-Hour Observation:** ⏳ **IN PROGRESS (Authorized by ChatGPT Engineering)**
+  - Clock Started: `2026-11-15T05:50:00Z` (10:50 PKT)
+  - Target Completion: `2026-11-17T05:50:00Z` (10:50 PKT)
+  - Expected Verification Cycles: Exactly 8 cycles (`0 1,7,13,19 * * *` UTC)
+  - Expected Heartbeat Intervals: Exactly 96 intervals (`*/30 * * * *` UTC)
+  - Expected Weekly Draft Cycles: Exactly 0 cycles (Sunday 03:00 UTC occurred prior to observation window start; next occurrence is outside the 48-hour window)
+  - Queue and DLQ counts monitored continuously ($Produced = Consumed + DLQ$).
+  - LAT-05 `dev.to` test data confirmed isolated in staging D1; zero external submissions or emails dispatched.
+  - Zero tolerance failure policy: Any unauthorized action, production resource access, audit-ledger mutation, stale-worker mutation, or unexplained data loss immediately halts observation.
 
 - **Gate D — Owner Review & Sign-Off:** ⏳ **PENDING 48-HOUR COMPLETION**
   - Sign-off strictly deferred until Gate C has successfully run for 48 consecutive clock hours.
+  - Full evidence package to be produced at `2026-11-17T05:50:00Z`: 8-cycle verification reconciliation, 96-interval heartbeat reconciliation, queue/DLQ accounting, sanitized logs, D1 audit evidence, Telegram auth logs, and updated G-01 to G-12 Go/No-Go checklist.
+  - Promotion to production strictly gated by owner approval.
 
 - **Gate D — Production Go/No-Go Decision:**
   - All 12 G-01 through G-12 criteria independently evidenced.
