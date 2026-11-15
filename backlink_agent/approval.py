@@ -153,6 +153,12 @@ class TelegramApprovalEngine:
             target_hash = parts[2] if len(parts) > 2 else None
             return self._cmd_approve(parts[1], target_hash, chat_id, user_id, update_id)
 
+        if cmd in ("/execute", "/auto_execute"):
+            if len(parts) < 2:
+                return "Usage: /execute <domain_or_hash> [draft_hash]"
+            target_hash = parts[2] if len(parts) > 2 else None
+            return self._cmd_execute(parts[1], target_hash, chat_id, user_id, update_id)
+
         if cmd == "/submitted":
             if len(parts) < 2:
                 return "Usage: /submitted <domain_or_hash> [optional_live_url]"
@@ -173,7 +179,7 @@ class TelegramApprovalEngine:
         if cmd == "/backlink_report":
             return self._cmd_report()
 
-        return f"Unknown backlink command: {cmd}. Supported: /backlinks, /backlink, /copy, /approve, /submitted, /reject, /defer, /backlink_report"
+        return f"Unknown backlink command: {cmd}. Supported: /backlinks, /backlink, /copy, /approve, /execute, /submitted, /reject, /defer, /backlink_report"
 
     def _cmd_backlinks(self) -> str:
         prospects = self.repository.all_prospects()
@@ -451,14 +457,38 @@ class TelegramApprovalEngine:
 
         lines.extend([
             "",
+            "⚡ Zero-Touch Auto-Execute (Zero manual copy-paste):",
+            f"`/execute {domain} {d_hash}`",
+            "",
             "🎯 Step 3 — Form Submit Karne Ke Baad:",
             f"Submit karne ke baad yahan ye command bhein:",
             f"`/submitted {domain}`",
             "",
-            "🛡️ Guardrail: No automated forms or outreach sent. Submission is owner-operated.",
+            "🛡️ Guardrail: No automated forms or outreach sent without owner trigger.",
         ])
 
         return "\n".join(lines)
+
+    def _cmd_execute(
+        self,
+        target: str,
+        draft_hash: Optional[str],
+        chat_id: str,
+        user_id: Optional[str],
+        update_id: int,
+    ) -> str:
+        from backlink_agent.execution import ExecutionManager
+
+        manager = ExecutionManager(repository=self.repository, approval_engine=self)
+        _result, reply_text = manager.execute_prospect(
+            target=target,
+            draft_hash=draft_hash,
+            dry_run=False,
+            chat_id=chat_id,
+            user_id=user_id,
+            update_id=update_id,
+        )
+        return reply_text
 
     def _cmd_submitted(
         self,

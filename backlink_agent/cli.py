@@ -75,6 +75,12 @@ def main():
     sub_adv_verify.add_argument("--expected-anchor", default=None, help="Optional substring anchor text expected")
     sub_adv_verify.add_argument("--timeout", type=float, default=15.0, help="HTTP request timeout in seconds")
 
+    # WP20 Autonomous Execution Subcommand
+    sub_exec = subparsers.add_parser("execute", help="Auto-execute backlink submission and register live evidence")
+    sub_exec.add_argument("target", help="Domain or draft hash of the prospect to execute")
+    sub_exec.add_argument("--draft-hash", default=None, help="Optional draft hash for deterministic resolution")
+    sub_exec.add_argument("--dry-run", action="store_true", help="Run in dry-run mode without external mutations")
+
     args = parser.parse_args()
 
     if not args.command or args.command == "audit":
@@ -213,6 +219,19 @@ def main():
         print(f"  • Content Hash: {res.content_hash[:16]}..." if res.content_hash else "  • Content Hash: None")
         if res.error_message:
             print(f"  • Error Details: {res.error_message}")
+
+    elif args.command == "execute":
+        from .execution import ExecutionManager
+        from .approval import TelegramApprovalEngine
+
+        approval_engine = TelegramApprovalEngine(owner_chat_id=os.environ.get("TELEGRAM_OWNER_CHAT_ID", "local_owner"))
+        manager = ExecutionManager(approval_engine=approval_engine)
+        result, reply_text = manager.execute_prospect(
+            target=args.target,
+            draft_hash=args.draft_hash,
+            dry_run=args.dry_run,
+        )
+        print(reply_text)
 
 
 if __name__ == "__main__":
