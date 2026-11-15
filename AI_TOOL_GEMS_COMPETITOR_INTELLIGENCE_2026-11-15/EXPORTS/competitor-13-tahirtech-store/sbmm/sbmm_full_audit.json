@@ -1,0 +1,148 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "tahirtech.store",
+    "business_name": "TahirTech",
+    "target_url": "https://tahirtech.store/",
+    "selection_score": "66.0",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "10725 visits/mo",
+    "referring_domains": "102 domains",
+    "authority_score": "29.7/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 1,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "50/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "TahirTech \u2014 Premium Software &amp; AI Subscriptions in Pakistan",
+    "title_length": 63,
+    "title_status": "GOOD",
+    "meta_description": "Buy premium software and AI subscriptions in Pakistan with reliable delivery, clear warranty terms and 24/7 WhatsApp support from TahirTech.",
+    "meta_desc_length": 140,
+    "canonical_url": "https://tahirtech.store/",
+    "robots_directive": "index, follow"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 842.8,
+    "page_size_kb": 3.9,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 50,
+    "direct_answer_coverage": "Low",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 0,
+    "h1_primary": "Missing H1",
+    "h2_count": 0,
+    "h3_count": 0
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "techurlhttpstahirtechstore",
+        2
+      ],
+      [
+        "tahirtech",
+        1
+      ],
+      [
+        "premium",
+        1
+      ],
+      [
+        "software",
+        1
+      ],
+      [
+        "amp",
+        1
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 0,
+    "external_links_count": 0,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 0,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "Organization",
+      "WebSite"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "TahirTech \u2014 Premium Software &amp; AI Subscriptions in Pakistan",
+    "og_description": "Buy premium software and AI subscriptions in Pakistan with reliable delivery, clear warranty terms and 24/7 WhatsApp support from TahirTech.",
+    "og_image": "https://storage.googleapis.com/gpt-engineer-file-uploads/WvMVa3Fj6FZrrgtsqMdekhYy73n2/social-images/social-1775881752954-121958.webp"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Cloudflare CDN"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "tahirtech.store",
+    "tld": "store",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 842.8,
+    "payload_kb": 3.9,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": []
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

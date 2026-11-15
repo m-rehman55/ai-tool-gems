@@ -1,0 +1,127 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "toolsseller.com",
+    "business_name": "ToolsSeller",
+    "target_url": "https://toolsseller.com/",
+    "selection_score": "53.0",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "7700 visits/mo",
+    "referring_domains": "79 domains",
+    "authority_score": "23.9/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 1,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "45/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "",
+    "title_length": 0,
+    "title_status": "NEEDS_OPTIMIZATION",
+    "meta_description": "",
+    "meta_desc_length": 0,
+    "canonical_url": "",
+    "robots_directive": "index, follow"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 208.1,
+    "page_size_kb": 0.1,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 45,
+    "direct_answer_coverage": "Low",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 0,
+    "h1_primary": "Missing H1",
+    "h2_count": 0,
+    "h3_count": 0
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "windowonloadfunctionwindowlocationhreflander",
+        1
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 0,
+    "external_links_count": 0,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 0,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "",
+    "og_description": "",
+    "og_image": ""
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": []
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "toolsseller.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 208.1,
+    "payload_kb": 0.1,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": []
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

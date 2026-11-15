@@ -1,0 +1,156 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "toolzbuy.com",
+    "business_name": "ToolzBuy",
+    "target_url": "https://toolzbuy.com/",
+    "selection_score": "66.2",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "8250 visits/mo",
+    "referring_domains": "84 domains",
+    "authority_score": "29.8/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "100/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Toolzbuy - Group Buy SEO Tools | SEMrush &amp; Ahrefs Group Buy",
+    "title_length": 63,
+    "title_status": "GOOD",
+    "meta_description": "Premium group buy SEO tools at up to 95% off: SEMrush group buy Rs199/mo, Ahrefs, ChatGPT, Canva Pro &amp; 100+ tools. Instant one-click access, UPI payment, 48-hour refund, 24/7 support.",
+    "meta_desc_length": 187,
+    "canonical_url": "https://toolzbuy.com/",
+    "robots_directive": "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 895.8,
+    "page_size_kb": 171.3,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 100,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Group Buy SEO Tools &mdash; SEMrush Group Buy, Ahrefs Group Buy &amp; 100+ Premium Tools at 95% Off",
+    "h2_count": 18,
+    "h3_count": 77
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "group",
+        337
+      ],
+      [
+        "mdash",
+        116
+      ],
+      [
+        "tzlpage",
+        104
+      ],
+      [
+        "access",
+        88
+      ],
+      [
+        "pricing",
+        86
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 111,
+    "external_links_count": 25,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 0,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "FAQPage",
+      "WebSite",
+      "ItemList",
+      "Product",
+      "Organization"
+    ],
+    "has_product_schema": true,
+    "has_faq_schema": true
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Toolzbuy - Group Buy SEO Tools | SEMrush &amp; Ahrefs Group Buy",
+    "og_description": "SEMrush group buy Rs199/mo, Ahrefs, ChatGPT, Canva Pro &amp; 100+ premium tools at up to 95% off. Instant access, UPI payment, 48-hour refund.",
+    "og_image": "https://toolzbuy.com/og-image.jpg"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "toolzbuy.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 895.8,
+    "payload_kb": 171.3,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Envato Elements pakistan",
+      "buy ChatGPT Plus pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

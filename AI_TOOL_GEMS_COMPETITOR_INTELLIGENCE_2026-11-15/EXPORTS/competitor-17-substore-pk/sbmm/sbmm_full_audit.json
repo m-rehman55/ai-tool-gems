@@ -1,0 +1,151 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "substore.pk",
+    "business_name": "SubStore PK",
+    "target_url": "https://substore.pk/shop/category/ai-tools",
+    "selection_score": "63.5",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "9625 visits/mo",
+    "referring_domains": "94 domains",
+    "authority_score": "28.6/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "60/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "AI TOOLS Subscriptions - SubStore",
+    "title_length": 33,
+    "title_status": "GOOD",
+    "meta_description": "Browse and buy AI TOOLS subscriptions at the best prices in Pakistan. Delivery in 5 minutes to 5 hours, support 2 PM to 2 AM.",
+    "meta_desc_length": 125,
+    "canonical_url": "https://substore.pk/shop/category/ai-tools",
+    "robots_directive": "index, follow, max-image-preview:large"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 417.4,
+    "page_size_kb": 22.2,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 60,
+    "direct_answer_coverage": "Low",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "AI TOOLS",
+    "h2_count": 0,
+    "h3_count": 10
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "view",
+        6
+      ],
+      [
+        "stock",
+        5
+      ],
+      [
+        "details",
+        5
+      ],
+      [
+        "categories",
+        4
+      ],
+      [
+        "subscriptions",
+        3
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 40,
+    "external_links_count": 1,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 8,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "AI TOOLS Subscriptions - SubStore",
+    "og_description": "Browse and buy AI TOOLS subscriptions at the best prices in Pakistan. Delivery in 5 minutes to 5 hours, support 2 PM to 2 AM.",
+    "og_image": "https://substore.pk/assets/img/og-default.jpg"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "substore.pk",
+    "tld": "pk",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 417.4,
+    "payload_kb": 22.2,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy ChatGPT Plus pakistan",
+      "buy Perplexity Pro pakistan",
+      "buy Leonardo AI pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

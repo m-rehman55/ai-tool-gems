@@ -1,0 +1,150 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "ikudigitaltools.com",
+    "business_name": "Iku Digital Tools",
+    "target_url": "https://www.ikudigitaltools.com/products",
+    "selection_score": "80.0",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "10450 visits/mo",
+    "referring_domains": "100 domains",
+    "authority_score": "36.0/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 1,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "65/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Digital Tools &amp; Subscription Plans in Pakistan | Iku Digital Tools",
+    "title_length": 70,
+    "title_status": "NEEDS_OPTIMIZATION",
+    "meta_description": "Compare AI, developer and productivity tools with PKR prices, current stock and plan-specific warranty. Confirm your selected plan with WhatsApp support.",
+    "meta_desc_length": 153,
+    "canonical_url": "https://ikudigitaltools.com/products",
+    "robots_directive": "index, follow"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 989.9,
+    "page_size_kb": 488.3,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 65,
+    "direct_answer_coverage": "Low",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 0,
+    "h1_primary": "Missing H1",
+    "h2_count": 2,
+    "h3_count": 27
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "warranty",
+        1049
+      ],
+      [
+        "full",
+        558
+      ],
+      [
+        "days",
+        326
+      ],
+      [
+        "month",
+        308
+      ],
+      [
+        "hours",
+        139
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 380,
+    "external_links_count": 4,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 26,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Powerful Digital Tools. One Smart Marketplace. | Iku Digital Tools",
+    "og_description": "Explore AI, creative software and everyday essentials. Compare plans and prices with personal WhatsApp support.",
+    "og_image": "https://ikudigitaltools.com/share-image?v=4"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "ikudigitaltools.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 989.9,
+    "payload_kb": 488.3,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Envato Elements pakistan",
+      "buy Midjourney pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

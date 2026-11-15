@@ -1,0 +1,154 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "1,110,600",
+    "monthly_visits_est": "14,260",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 2231,
+    "live_avg_duration_seconds": 92.5
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "Pakistan (PK)",
+    "traffic_share": "78.4% PK",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "392",
+    "top_commercial_queries": [
+      "HeyGen price in pakistan",
+      "Midjourney price in pakistan",
+      "ChatGPT Plus price in pakistan",
+      "Canva Pro price in pakistan"
+    ]
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "aitoolspak.tech",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2026-07-13T10:46:38.591Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "Cheap AI Tools Pakistan | AI Tools Sale & PKR Prices",
+    "meta_description": "Compare cheap AI tools in Pakistan, current sale prices in PKR, plan duration, access checks and WhatsApp support for ChatGPT, Claude, Canva Pro and more.",
+    "canonical": "https://aitoolspak.tech/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "AI Tools PakCheap AI tools in Pakistan.",
+    "h2_count": 16
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 0,
+    "external_links": 36
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 1,
+    "missing_alt": 0
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": []
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 140.0,
+    "page_load_rating": "FAST"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/aitoolspak.tech",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=aitoolspak.tech"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "3",
+    "selection_score": "88.8"
+  },
+  "aitdk_backlinks_live": {
+    "status": "CAPTURED",
+    "source": "AITDK Extension Live Lookup (Profile 7)",
+    "domain": "aitoolspak.tech",
+    "domain_rating": 0,
+    "total_backlinks": 403,
+    "dofollow_backlinks_pct": "3%",
+    "referring_domains": 399,
+    "dofollow_referring_domains_pct": "2%",
+    "backlink_profile_analysis": "97%+ Toxic / Automated PBN Link Farm Networks (.shop, .site, tiered spam links). Only real authority link is Scamadviser safety review.",
+    "top_backlinks_sample": [
+      {
+        "source_domain": "scamadviser.com",
+        "dr": 80,
+        "anchor": "VISIT aitoolspak.tech",
+        "context": "Scam/Legit verification lookup"
+      },
+      {
+        "source_domain": "seonix.agency",
+        "dr": 53,
+        "anchor": "{site_name}",
+        "context": "Automated testimonial blast"
+      },
+      {
+        "source_domain": "crawltera.shop",
+        "dr": 27,
+        "anchor": "aitoolspak.tech",
+        "context": "PBN link insertion"
+      },
+      {
+        "source_domain": "anchornaro.shop",
+        "dr": 27,
+        "anchor": "aitoolspak.tech",
+        "context": "PBN link insertion"
+      },
+      {
+        "source_domain": "brightboosthub.shop",
+        "dr": 27,
+        "anchor": "TF boost packages from aitoolspak.tech",
+        "context": "PBN reseller link"
+      },
+      {
+        "source_domain": "searchwins.shop",
+        "dr": 0,
+        "anchor": "aitoolspak.tech",
+        "context": "PBN link farm"
+      },
+      {
+        "source_domain": "solidlinkpro.shop",
+        "dr": 0,
+        "anchor": "aitoolspak.tech was built for publishers",
+        "context": "PBN link insertion"
+      },
+      {
+        "source_domain": "indexmexa.shop",
+        "dr": 0,
+        "anchor": "aitoolspak.tech was built for publishers",
+        "context": "PBN link insertion"
+      },
+      {
+        "source_domain": "rankzira.shop",
+        "dr": 0,
+        "anchor": "aitoolspak.tech was built for publishers",
+        "context": "PBN link insertion"
+      },
+      {
+        "source_domain": "serpvilo.shop",
+        "dr": 0,
+        "anchor": "aitoolspak.tech was built for publishers",
+        "context": "PBN link insertion"
+      },
+      {
+        "source_domain": "rankgoods.shop",
+        "dr": 1,
+        "anchor": "Take aitoolspak.tech to page one",
+        "context": "Tiered PBN playbook"
+      }
+    ]
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

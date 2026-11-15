@@ -45,7 +45,10 @@ dist/
 reports/
 
 
-# Private Operational & Supplier Data Quarantine
+# Private user docs / tax certs
+*.pdf
+nayapay_tax_cert.jpg
+*.jpg
 data/orders/
 data/archive/
 .kombai/

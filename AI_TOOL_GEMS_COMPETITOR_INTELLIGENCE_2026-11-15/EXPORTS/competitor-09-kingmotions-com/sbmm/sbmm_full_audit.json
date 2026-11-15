@@ -1,0 +1,156 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "kingmotions.com",
+    "business_name": "KingMotions",
+    "target_url": "https://kingmotions.com/",
+    "selection_score": "69.0",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "8800 visits/mo",
+    "referring_domains": "88 domains",
+    "authority_score": "31.1/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "King Motions | Buy Digital Subscriptions &amp; AI Tools in Pakistan",
+    "title_length": 67,
+    "title_status": "NEEDS_OPTIMIZATION",
+    "meta_description": "Compare digital subscriptions, AI tools, streaming and software packages in Pakistan. Check current prices, availability and access terms at King Motions.",
+    "meta_desc_length": 154,
+    "canonical_url": "https://kingmotions.com",
+    "robots_directive": "index, follow"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 366.5,
+    "page_size_kb": 303.3,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Buy Digital Subscriptions, Software & AI Tools in Pakistan - King Motions",
+    "h2_count": 9,
+    "h3_count": 4
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "width",
+        116
+      ],
+      [
+        "important",
+        112
+      ],
+      [
+        "display",
+        101
+      ],
+      [
+        "color",
+        100
+      ],
+      [
+        "fontsize",
+        98
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 167,
+    "external_links_count": 1,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 82,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "WebSite",
+      "OnlineStore"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "King Motions | Buy Digital Subscriptions &amp; AI Tools in Pakistan",
+    "og_description": "Compare digital subscriptions, AI tools, streaming and software packages in Pakistan. Check current prices, availability and access terms at King Motions.",
+    "og_image": "https://kingmotions.com/storage/uploads/logo/motions-logo.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Elementor",
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "kingmotions.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 366.5,
+    "payload_kb": 303.3,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Envato Elements pakistan",
+      "buy Midjourney pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

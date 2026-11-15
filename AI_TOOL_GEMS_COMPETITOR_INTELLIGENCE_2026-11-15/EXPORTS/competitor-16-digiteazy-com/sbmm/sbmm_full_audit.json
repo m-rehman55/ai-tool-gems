@@ -1,0 +1,155 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "digiteazy.com",
+    "business_name": "Digiteazy",
+    "target_url": "https://digiteazy.com/",
+    "selection_score": "63.8",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "9075 visits/mo",
+    "referring_domains": "90 domains",
+    "authority_score": "28.7/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 1,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "60/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Best Digital Marketing Agency in Karachi - Digiteazy",
+    "title_length": 52,
+    "title_status": "GOOD",
+    "meta_description": "DigitEazy is the best digital marketing agency in Karachi offering SEO, web development, social media and Google Ads for businesses across Pakistan. Consult now.",
+    "meta_desc_length": 161,
+    "canonical_url": "https://digiteazy.com/",
+    "robots_directive": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 687.8,
+    "page_size_kb": 161.5,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 60,
+    "direct_answer_coverage": "Low",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 4,
+    "h1_primary": "Web Development &amp;",
+    "h2_count": 8,
+    "h3_count": 7
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "important",
+        34
+      ],
+      [
+        "position",
+        28
+      ],
+      [
+        "background",
+        25
+      ],
+      [
+        "marketing",
+        24
+      ],
+      [
+        "content",
+        24
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 32,
+    "external_links_count": 3,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 38,
+    "missing_alt_count": 22,
+    "alt_text_coverage": "42.1%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "ProfessionalService",
+      "WebPage",
+      "WebSite"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Best Digital Marketing Agency in Karachi - Digiteazy",
+    "og_description": "DigitEazy is the best digital marketing agency in Karachi offering SEO, web development, social media and Google Ads for businesses across Pakistan. Consult now.",
+    "og_image": "https://digiteazy.com/wp-content/uploads/2026/07/digiteazy-og.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "WordPress",
+      "Elementor",
+      "Google Analytics",
+      "Google Tag Manager",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "digiteazy.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 687.8,
+    "payload_kb": 161.5,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy Canva Pro pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

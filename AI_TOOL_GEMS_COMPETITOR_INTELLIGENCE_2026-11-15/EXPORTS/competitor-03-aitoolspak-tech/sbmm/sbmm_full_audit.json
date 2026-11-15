@@ -1,0 +1,155 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "aitoolspak.tech",
+    "business_name": "AI Tools Pak Tech",
+    "target_url": "https://aitoolspak.tech/",
+    "selection_score": "88.8",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "12650 visits/mo",
+    "referring_domains": "117 domains",
+    "authority_score": "40.0/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "100/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Cheap AI Tools Pakistan | AI Tools Sale & PKR Prices",
+    "title_length": 52,
+    "title_status": "GOOD",
+    "meta_description": "Compare cheap AI tools in Pakistan, current sale prices in PKR, plan duration, access checks and WhatsApp support for ChatGPT, Claude, Canva Pro and more.",
+    "meta_desc_length": 154,
+    "canonical_url": "https://aitoolspak.tech/",
+    "robots_directive": "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 140.0,
+    "page_size_kb": 125.5,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 100,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "AI Tools PakCheap AI tools in Pakistan.",
+    "h2_count": 16,
+    "h3_count": 8
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "type",
+        336
+      ],
+      [
+        "pakistan",
+        127
+      ],
+      [
+        "name",
+        107
+      ],
+      [
+        "url",
+        100
+      ],
+      [
+        "whatsapp",
+        83
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 0,
+    "external_links_count": 36,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 1,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "WebPage",
+      "Product",
+      "WebSite",
+      "Person",
+      "ItemList",
+      "Organization",
+      "BreadcrumbList"
+    ],
+    "has_product_schema": true,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Cheap AI Tools Pakistan | AI Tools Sale & PKR Prices",
+    "og_description": "Compare affordable AI subscriptions, current PKR sale prices and safe buying checks for customers in Pakistan.",
+    "og_image": "https://aitoolspak.tech/og-image.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": []
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "aitoolspak.tech",
+    "tld": "tech",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 140.0,
+    "payload_kb": 125.5,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Midjourney pakistan",
+      "buy ChatGPT Plus pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

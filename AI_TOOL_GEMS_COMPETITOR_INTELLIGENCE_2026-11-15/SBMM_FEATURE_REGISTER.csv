@@ -1,0 +1,20 @@
+feature_id,feature_name,description,scope,requires_active_page,export_supported
+overview,Overview,"General authority, links, traffic estimates, health score, domain age",PAGE_AND_DOMAIN,YES,PARTIAL
+audit,Audit,"Site audit checklist, warnings, notices, critical errors",PAGE_AND_DOMAIN,YES,YES
+seoonpage,On-Page SEO,"Title, description, canonical, headings, meta tags, indexability",PAGE_AND_DOMAIN,YES,PARTIAL
+seotech,Technical SEO,"Robots.txt, sitemap, HTTPS, Core Web Vitals, HTML-vs-DOM, compression",PAGE_AND_DOMAIN,YES,PARTIAL
+aeo,AEO / GEO,"Direct-answer readiness, AI citation score, entity grounding, schema clarity",PAGE_AND_DOMAIN,YES,YES
+headings,Headings,"H1-H6 hierarchy, missing/multiple H1s, structure",PAGE_AND_DOMAIN,YES,PARTIAL
+density,Keyword Density,"Single/multi-word frequency, 1-word, 2-word, 3-word n-gram density",PAGE_AND_DOMAIN,YES,YES
+links,Links,"Internal links, outbound links, broken links, follow/nofollow counts",PAGE_AND_DOMAIN,YES,YES
+images,Images,"Total images, missing alt text, file sizes, modern webp/avif formats",PAGE_AND_DOMAIN,YES,YES
+schema,Schema,"JSON-LD, Microdata, Product, FAQ, Breadcrumb, Organization",PAGE_AND_DOMAIN,YES,YES
+social,Social,"Open Graph tags, Twitter/X cards, preview images, titles",PAGE_AND_DOMAIN,YES,PARTIAL
+redirects,Redirects,"HTTP status, 301/302 chains, canonical consistency",PAGE_AND_DOMAIN,YES,YES
+techstack,Detector,"CMS, ecommerce framework, analytics, hosting, JS frameworks",PAGE_AND_DOMAIN,YES,PARTIAL
+domain,Domain,"WHOIS, registrar, DNS, domain age, expiry",PAGE_AND_DOMAIN,YES,PARTIAL
+perf,Performance,"PageSpeed score, LCP, CLS, FID/INP, TTFB",PAGE_AND_DOMAIN,YES,PARTIAL
+linkfinder,Link Finder,Internal link suggestions and anchor opportunities,PAGE_AND_DOMAIN,YES,PARTIAL
+linkgraph,Internal Link Graph,Page crawl graph and link architecture visualizer,PAGE_AND_DOMAIN,YES,PARTIAL
+tools,Tools,"SERP inspector, color picker, screenshot, bulk URL tools",PAGE_AND_DOMAIN,YES,PARTIAL
+settings,Settings,Extension configuration and feature toggles,PAGE_AND_DOMAIN,YES,PARTIAL

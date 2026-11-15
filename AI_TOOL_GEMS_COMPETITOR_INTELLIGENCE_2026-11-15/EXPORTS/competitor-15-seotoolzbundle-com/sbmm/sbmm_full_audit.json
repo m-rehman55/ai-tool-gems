@@ -1,0 +1,157 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "seotoolzbundle.com",
+    "business_name": "SEOToolzBundle",
+    "target_url": "https://seotoolzbundle.com/",
+    "selection_score": "64.6",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "8525 visits/mo",
+    "referring_domains": "86 domains",
+    "authority_score": "29.1/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Group Buy SEO Tools 2026 | Ahrefs, SEMrush &amp; 100+ Premium Tools &#8212; SeoToolzBundle",
+    "title_length": 90,
+    "title_status": "NEEDS_OPTIMIZATION",
+    "meta_description": "#1 Group Buy SEO Tools Provider in India 2026. Get Ahrefs, SEMrush, Surfer SEO &amp; 100+ premium tools at 90% off. Plans from &#8377;399/mo. UPI accepted. Instant delivery. Join 15,000+ members!",
+    "meta_desc_length": 195,
+    "canonical_url": "https://seotoolzbundle.com/",
+    "robots_directive": "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 876.3,
+    "page_size_kb": 65.7,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Group Buy SEO Tools &#8212; Premium Access at 90% Off",
+    "h2_count": 6,
+    "h3_count": 19
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "group",
+        87
+      ],
+      [
+        "type",
+        34
+      ],
+      [
+        "ahrefs",
+        27
+      ],
+      [
+        "premium",
+        25
+      ],
+      [
+        "name",
+        23
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 49,
+    "external_links_count": 4,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 1,
+    "missing_alt_count": 1,
+    "alt_text_coverage": "0.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "WebPage",
+      "Service",
+      "FAQPage",
+      "WebSite",
+      "Organization"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": true
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Best Group Buy SEO Tools 2026 &#8212; Ahrefs, SEMrush &amp; 100+ Tools at 90% Off",
+    "og_description": "India",
+    "og_image": "https://seotoolzbundle.com/assets/images/og-image.jpg"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "seotoolzbundle.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 876.3,
+    "payload_kb": 65.7,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Envato Elements pakistan",
+      "buy ChatGPT Plus pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "839,400",
+    "monthly_visits_est": "9,300",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 211480,
+    "live_avg_duration_seconds": 295.4
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "International / South Asia",
+    "traffic_share": "35% Global / 25% SA",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "280",
+    "top_commercial_queries": [
+      "HeyGen price in pakistan",
+      "Envato Elements price in pakistan",
+      "ChatGPT Plus price in pakistan",
+      "Canva Pro price in pakistan"
+    ]
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "toolzbuy.com",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2021-06-18T16:09:13Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "Toolzbuy - Group Buy SEO Tools | SEMrush &amp; Ahrefs Group Buy",
+    "meta_description": "Premium group buy SEO tools at up to 95% off: SEMrush group buy Rs199/mo, Ahrefs, ChatGPT, Canva Pro &amp; 100+ tools. Instant one-click access, UPI payment, 48-hour refund, 24/7 support.",
+    "canonical": "https://toolzbuy.com/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "Group Buy SEO Tools &mdash; SEMrush Group Buy, Ahrefs Group Buy &amp; 100+ Premium Tools at 95% Off",
+    "h2_count": 18
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 111,
+    "external_links": 25
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 0,
+    "missing_alt": 0
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": [
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 895.8,
+    "page_load_rating": "AVERAGE"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/toolzbuy.com",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=toolzbuy.com"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "12",
+    "selection_score": "66.2"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

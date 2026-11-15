@@ -1,0 +1,82 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "822,600",
+    "monthly_visits_est": "8,370",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 25147,
+    "live_avg_duration_seconds": 281.2
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "International / South Asia",
+    "traffic_share": "35% Global / 25% SA",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "259",
+    "top_commercial_queries": [
+      "HeyGen price in pakistan",
+      "Midjourney price in pakistan",
+      "Suno AI price in pakistan",
+      "ChatGPT Plus price in pakistan"
+    ]
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "aitoolspro.org",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2026-09-13T09:10:26.02Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "Buy AI Tools &#038; Digital Subscriptions Online",
+    "meta_description": "Explore AI tools, software and digital subscriptions from AI Tools Bro, including ChatGPT, Claude, CapCut, Adobe, Notion and more.",
+    "canonical": "https://aitoolspro.org/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "Premium AI Tools at Unbeatable Prices",
+    "h2_count": 12
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 506,
+    "external_links": 4
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 29,
+    "missing_alt": 9
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": [
+      "WordPress",
+      "WooCommerce",
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 2921.5,
+    "page_load_rating": "AVERAGE"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/aitoolspro.org",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=aitoolspro.org"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "14",
+    "selection_score": "64.8"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

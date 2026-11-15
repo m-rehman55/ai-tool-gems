@@ -1,0 +1,153 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "zippersells.com",
+    "business_name": "ZipperSells",
+    "target_url": "https://zippersells.com/",
+    "selection_score": "71.0",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "9350 visits/mo",
+    "referring_domains": "92 domains",
+    "authority_score": "31.9/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Game Top-Ups &amp; Gift Cards in Pakistan | ZipperSells",
+    "title_length": 55,
+    "title_status": "GOOD",
+    "meta_description": "Get instant game top-ups, gift cards, PUBG UC, and premium digital accounts. Safe, secure, fast delivery via local payments.",
+    "meta_desc_length": 124,
+    "canonical_url": "https://zippersells.com",
+    "robots_directive": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 686.6,
+    "page_size_kb": 297.0,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Buy Game Top-Ups, Gift Cards &amp; Digital Accounts in Pakistan",
+    "h2_count": 16,
+    "h3_count": 34
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "color",
+        654
+      ],
+      [
+        "fontsize",
+        335
+      ],
+      [
+        "background",
+        312
+      ],
+      [
+        "display",
+        312
+      ],
+      [
+        "wherehtmlzsdark",
+        302
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 133,
+    "external_links_count": 6,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 40,
+    "missing_alt_count": 9,
+    "alt_text_coverage": "77.5%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "ItemList",
+      "FAQPage",
+      "WebSite",
+      "OnlineStore"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": true
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Game Top-Ups &amp; Gift Cards in Pakistan | ZipperSells",
+    "og_description": "Get instant game top-ups, gift cards, PUBG UC, and premium digital accounts. Safe, secure, fast delivery via local payments.",
+    "og_image": "https://zippersells.com/og-image.jpg"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "zippersells.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 686.6,
+    "payload_kb": 297.0,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": []
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

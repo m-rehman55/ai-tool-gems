@@ -1,0 +1,163 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "codesforever.com",
+    "business_name": "CodesForever",
+    "target_url": "https://codesforever.com/",
+    "selection_score": "52.0",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "7150 visits/mo",
+    "referring_domains": "75 domains",
+    "authority_score": "23.4/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "70/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "All Your Software at the Lowest Prices | Codesforever",
+    "title_length": 53,
+    "title_status": "GOOD",
+    "meta_description": "We offer genuine and affordable Software Licenses. Make a safe trade with us! Immediate delivery! Extremely low prices and good discounts.",
+    "meta_desc_length": 138,
+    "canonical_url": "https://www.codesforever.com/",
+    "robots_directive": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 193.3,
+    "page_size_kb": 488.3,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 70,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "WE MAKE SOFTWARE SIMPLE!",
+    "h2_count": 6,
+    "h3_count": 63
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "pound",
+        118
+      ],
+      [
+        "500",
+        65
+      ],
+      [
+        "quick",
+        63
+      ],
+      [
+        "view",
+        60
+      ],
+      [
+        "rated",
+        60
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 342,
+    "external_links_count": 1,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 160,
+    "missing_alt_count": 1,
+    "alt_text_coverage": "99.4%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "WebPage",
+      "Article",
+      "ImageObject",
+      "WebSite",
+      "Person",
+      "Organization",
+      "Place"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "All Your Software at the Lowest Prices | Codesforever",
+    "og_description": "We offer genuine and affordable Software Licenses. Make a safe trade with us! Immediate delivery! Extremely low prices and good discounts.",
+    "og_image": "https://www.codesforever.com/wp-content/uploads/2021/09/Codesforever-CP.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "codesforever.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 193.3,
+    "payload_kb": 488.3,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy Canva Pro pakistan",
+      "buy Claude Pro pakistan",
+      "buy Adobe Creative Cloud pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

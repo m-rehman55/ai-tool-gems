@@ -1,0 +1,72 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "837,000",
+    "monthly_visits_est": "12,090",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 0,
+    "live_avg_duration_seconds": 0
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "Pakistan (PK)",
+    "traffic_share": "78.4% PK",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "343",
+    "top_commercial_queries": []
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "tahirtech.store",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2026-08-27T10:47:20.827Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "TahirTech \u2014 Premium Software &amp; AI Subscriptions in Pakistan",
+    "meta_description": "Buy premium software and AI subscriptions in Pakistan with reliable delivery, clear warranty terms and 24/7 WhatsApp support from TahirTech.",
+    "canonical": "https://tahirtech.store/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "None",
+    "h2_count": 0
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 0,
+    "external_links": 0
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 0,
+    "missing_alt": 0
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": [
+      "Cloudflare CDN"
+    ]
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 842.8,
+    "page_load_rating": "AVERAGE"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/tahirtech.store",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=tahirtech.store"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "13",
+    "selection_score": "66.0"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

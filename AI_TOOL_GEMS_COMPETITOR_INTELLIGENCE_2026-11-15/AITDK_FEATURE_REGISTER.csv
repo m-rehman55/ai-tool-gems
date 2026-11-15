@@ -1,0 +1,13 @@
+feature_id,feature_name,description,scope,requires_active_page,export_supported
+aitdk_overview,Overview,"Global rank, monthly visits, bounce rate, pages per visit, avg duration",PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_traffic,Traffic & Engagement,"Desktop vs mobile split, traffic geography, country rankings",PAGE_AND_DOMAIN,YES,YES
+aitdk_keywords,Organic Keywords,"Top ranking keywords, search volume, CPC, estimated keyword traffic",PAGE_AND_DOMAIN,YES,YES
+aitdk_whois,Whois & Domain,"Registrar, creation date, server location, IP address",PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_onpage,On-Page SEO Diagnostics,"Title length, description, H1 tags, canonical URL, robots tags",PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_headings,Headings Structure,Heading hierarchy H1-H6 count and text,PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_links,Link Analysis,Internal and external link distribution and anchor analysis,PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_images,Image Optimization,"Images count, missing alt text check",PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_tech,Technology Stack,"Detected CMS, server, analytics, frontend frameworks",PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_speed,Speed / Performance,Page load benchmarks and response metrics,PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_quicklinks,External Intelligence QuickLinks,"Similarweb deep link, Semrush deep link, Ahrefs link",PAGE_AND_DOMAIN,YES,PARTIAL
+aitdk_serp_count,SERP Integration,"Search result metric badge, result position and domain summary",PAGE_AND_DOMAIN,YES,PARTIAL
