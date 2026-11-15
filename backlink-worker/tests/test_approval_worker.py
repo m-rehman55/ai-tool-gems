@@ -245,6 +245,37 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
         })
         self.assertIn("Draft integrity error: SHA-256 content hash mismatch", res_tampered)
 
+    async def test_stale_claim_recovery_after_timeout(self):
+        from datetime import datetime, timezone, timedelta
+        # Insert a simulated crashed claim from 10 minutes ago
+        past_iso = (datetime.now(timezone.utc) - timedelta(minutes=10)).isoformat()
+        await self.d1.execute_mutation(
+            "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_recoveries) VALUES (?, ?, ?, ?, 'processing', ?, 0)",
+            (66601, "123456", "789012", "/backlinks", past_iso),
+        )
+
+        # Retried update should recover the lease
+        claimed = await self.engine.claim_telegram_update(66601, "123456", "789012", "/backlinks")
+        self.assertTrue(claimed)
+
+        # Verify audit trail recorded recovery
+        ev = await self.d1.execute_first(
+            "SELECT payload_json FROM audit_events WHERE event_type = 'telegram_claim_recovered' AND entity_id = '66601'"
+        )
+        self.assertIsNotNone(ev)
+        self.assertIn("lease_recoveries", ev["payload_json"])
+
+    async def test_execute_atomic_approval_rollback_on_conflict(self):
+        # Test atomic rollback if prospect fails condition
+        p = await self.d1.execute_first("SELECT id FROM prospects WHERE lower(prospect_domain) = 'github.com'")
+        ok1, _ = await self.d1.execute_atomic_approval(p["id"], None, "2026-11-15T00:00:00Z", "test")
+        self.assertTrue(ok1)
+
+        # Second attempt fails atomically
+        ok2, msg = await self.d1.execute_atomic_approval(p["id"], None, "2026-11-15T00:00:00Z", "test")
+        self.assertFalse(ok2)
+        self.assertIn("already approved", msg)
+
 
 if __name__ == "__main__":
     unittest.main()

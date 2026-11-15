@@ -72,7 +72,7 @@ class WorkerApprovalEngine:
         if not update_id:
             return False
         row = await self.d1.execute_first(
-            "SELECT count(*) as c FROM telegram_processed_updates WHERE update_id = ?",
+            "SELECT count(*) as c FROM telegram_processed_updates WHERE update_id = ? AND status = 'completed'",
             (int(update_id),),
         )
         return bool(row and row.get("c", 0) > 0)
@@ -83,27 +83,77 @@ class WorkerApprovalEngine:
         chat_id: str,
         user_id: Optional[str],
         command: str,
+        lease_timeout_seconds: int = 300,
     ) -> bool:
-        """Atomically claims an incoming Telegram update ID in D1.
-        Relies on PRIMARY KEY (update_id) constraint to eliminate race conditions
-        between concurrent webhook deliveries.
+        """Atomically claims an incoming Telegram update ID in D1 with lease-recovery.
+        Relies on PRIMARY KEY (update_id) constraint and optimistic timestamp locking
+        to eliminate race conditions and recover stale claims from crashed workers.
         """
         if not update_id:
             return True
-        now_utc = datetime.now(timezone.utc).isoformat()
-        try:
-            await self.d1.execute_mutation(
-                "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at) VALUES (?, ?, ?, ?, 'processing', ?)",
-                (int(update_id), str(chat_id), str(user_id or ""), str(command), now_utc),
+
+        now_dt = datetime.now(timezone.utc)
+        now_utc = now_dt.isoformat()
+
+        # Check existing claim status
+        existing = await self.d1.execute_first(
+            "SELECT status, claimed_at, lease_recoveries FROM telegram_processed_updates WHERE update_id = ?",
+            (int(update_id),),
+        )
+
+        if not existing:
+            try:
+                await self.d1.execute_mutation(
+                    "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_recoveries) VALUES (?, ?, ?, ?, 'processing', ?, 0)",
+                    (int(update_id), str(chat_id), str(user_id or ""), str(command), now_utc),
+                )
+                return True
+            except Exception as e:
+                err_msg = str(e).lower()
+                if "unique" in err_msg or "primary key" in err_msg or "constraint failed" in err_msg:
+                    # Duplicate concurrent delivery
+                    return False
+                raise
+
+        status = existing.get("status")
+        if status == "completed":
+            return False
+
+        # If status is 'processing', check lease expiration for crash recovery
+        claimed_at_str = existing.get("claimed_at")
+        is_expired = False
+        if claimed_at_str:
+            try:
+                claimed_dt = datetime.fromisoformat(claimed_at_str.replace("Z", "+00:00"))
+                elapsed = (now_dt - claimed_dt).total_seconds()
+                if elapsed > lease_timeout_seconds:
+                    is_expired = True
+            except Exception:
+                is_expired = False
+
+        if is_expired:
+            # Atomically recover lease via optimistic lock on claimed_at
+            recoveries = int(existing.get("lease_recoveries", 0) or 0) + 1
+            rows = await self.d1.execute_mutation(
+                "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
+                (now_utc, recoveries, int(update_id), claimed_at_str),
             )
-            return True
-        except Exception as e:
-            err_msg = str(e).lower()
-            if "unique" in err_msg or "primary key" in err_msg or "constraint failed" in err_msg:
-                # Genuine duplicate delivery / race condition
-                return False
-            # Unrelated database error: raise rather than masking as duplicate
-            raise
+            if rows > 0:
+                await self.d1.record_audit_event(
+                    event_type="telegram_claim_recovered",
+                    actor="worker_lease_recovery",
+                    entity_id=str(update_id),
+                    payload={
+                        "update_id": update_id,
+                        "previous_claimed_at": claimed_at_str,
+                        "recovered_at": now_utc,
+                        "lease_recoveries": recoveries,
+                    },
+                )
+                return True
+            return False
+
+        return False
 
     async def handle_update(self, update: Dict[str, Any], header_secret: Optional[str] = None) -> str:
         # 1. Header Secret Verification
@@ -213,7 +263,7 @@ class WorkerApprovalEngine:
                 "SELECT * FROM drafts WHERE prospect_id = ? AND status = 'pending_approval' ORDER BY created_at DESC LIMIT 1",
                 (p.get("id"),),
             )
-            draft_rows = 0
+            draft_id = None
             if draft:
                 expected_draft_hash = hashlib.sha256(
                     f"{draft.get('target_url')}|{draft.get('proposed_anchor')}|{draft.get('pitch_copy')}".encode("utf-8")
@@ -221,18 +271,17 @@ class WorkerApprovalEngine:
                 recorded_hash = draft.get("content_sha256", "")
                 if recorded_hash and not secure_compare(recorded_hash, expected_draft_hash):
                     return f"⛔ Draft integrity error: SHA-256 content hash mismatch for {target}. Approval blocked."
-                draft_rows = await self.d1.execute_mutation(
-                    "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ? AND status = 'pending_approval'",
-                    (now_utc, f"telegram:{user_id or chat_id}", draft.get("id")),
-                )
+                draft_id = draft.get("id")
 
-            # Conditional state transition: only succeeds if not already approved
-            prospect_rows = await self.d1.execute_mutation(
-                "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ? AND action_status != 'owner_approved_for_manual_submission'",
-                (now_utc, p.get("id")),
+            # Execute atomic multi-statement transaction (prospect + draft together)
+            ok, msg = await self.d1.execute_atomic_approval(
+                prospect_id=p.get("id"),
+                draft_id=draft_id,
+                now_utc=now_utc,
+                actor=f"telegram:{user_id or chat_id}",
             )
 
-            if prospect_rows == 0 and (draft is None or draft_rows == 0):
+            if not ok:
                 return f"ℹ️ Prospect '{target}' is already approved for manual submission. No duplicate state transition."
 
             await self.d1.record_audit_event(
@@ -242,6 +291,7 @@ class WorkerApprovalEngine:
                 payload={
                     "action": "approve",
                     "draft_hash": content_hash,
+                    "draft_id": draft_id,
                     "user_id": user_id,
                     "update_id": update_id,
                     "timestamp": now_utc,

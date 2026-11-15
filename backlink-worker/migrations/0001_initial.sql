@@ -104,7 +104,8 @@ CREATE TABLE IF NOT EXISTS telegram_processed_updates (
     command TEXT,
     status TEXT NOT NULL DEFAULT 'processing',
     claimed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    completed_at TEXT
+    completed_at TEXT,
+    lease_recoveries INTEGER NOT NULL DEFAULT 0
 );
 
 -- 6. Agent Control Table (Kill switch and mode gate)

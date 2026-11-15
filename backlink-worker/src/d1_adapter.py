@@ -66,6 +66,70 @@ class D1Adapter:
 
         raise RuntimeError("No active D1 binding or SQLite connection available.")
 
+    async def execute_atomic_approval(
+        self,
+        prospect_id: str,
+        draft_id: Optional[str],
+        now_utc: str,
+        actor: str,
+    ) -> Tuple[bool, str]:
+        """Atomically transitions prospect and optional draft to approved status in a single transaction.
+        Guarantees that both succeed, or neither succeeds (eliminates partial approval drift).
+        """
+        if self.conn is not None:
+            cursor = self.conn.cursor()
+            try:
+                self.conn.execute("BEGIN IMMEDIATE")
+                # 1. Update prospect
+                cursor.execute(
+                    "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ? AND action_status != 'owner_approved_for_manual_submission'",
+                    (now_utc, prospect_id),
+                )
+                p_rows = cursor.rowcount
+                if p_rows == 0:
+                    self.conn.rollback()
+                    return False, "Prospect already approved or not in pending state"
+
+                # 2. If draft present, update draft
+                if draft_id:
+                    cursor.execute(
+                        "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ? AND status = 'pending_approval'",
+                        (now_utc, actor, draft_id),
+                    )
+                    d_rows = cursor.rowcount
+                    if d_rows == 0:
+                        self.conn.rollback()
+                        return False, "Draft already approved or not in pending_approval state"
+
+                self.conn.commit()
+                return True, "Approved"
+            except Exception:
+                self.conn.rollback()
+                raise
+
+        if self.db is not None:
+            # Cloudflare D1 batch transaction
+            statements = [
+                self.db.prepare(
+                    "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ? AND action_status != 'owner_approved_for_manual_submission'"
+                ).bind(now_utc, prospect_id)
+            ]
+            if draft_id:
+                statements.append(
+                    self.db.prepare(
+                        "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ? AND status = 'pending_approval'"
+                    ).bind(now_utc, actor, draft_id)
+                )
+            results = await self.db.batch(statements)
+            for res in results:
+                meta = getattr(res, "meta", None)
+                changes = getattr(meta, "changes", 1) if meta else 1
+                if changes == 0:
+                    return False, "Atomic transition failed: conditional state mismatch"
+            return True, "Approved"
+
+        raise RuntimeError("No active D1 binding or SQLite connection available.")
+
     # Core Kill Switch & Control Gates
     async def is_agent_enabled(self) -> bool:
         row = await self.execute_first(
