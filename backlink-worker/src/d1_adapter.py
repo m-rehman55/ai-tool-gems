@@ -45,20 +45,24 @@ class D1Adapter:
         rows = await self.execute_query(query, params)
         return rows[0] if rows else None
 
-    async def execute_mutation(self, query: str, params: Tuple[Any, ...] = ()) -> None:
-        """Executes an INSERT / UPDATE / DELETE statement."""
+    async def execute_mutation(self, query: str, params: Tuple[Any, ...] = ()) -> int:
+        """Executes an INSERT / UPDATE / DELETE statement and returns rows changed."""
         if self.conn is not None:
             cursor = self.conn.cursor()
             cursor.execute(query, params)
             self.conn.commit()
-            return
+            return cursor.rowcount if cursor.rowcount is not None else 0
 
         if self.db is not None:
             stmt = self.db.prepare(query)
             if params:
                 stmt = stmt.bind(*params)
-            await stmt.run()
-            return
+            res = await stmt.run()
+            # Cloudflare D1 meta.changes gives rows affected
+            meta = getattr(res, "meta", None)
+            if meta and hasattr(meta, "changes"):
+                return int(meta.changes)
+            return 1
 
         raise RuntimeError("No active D1 binding or SQLite connection available.")
 

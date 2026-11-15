@@ -218,6 +218,17 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
         d = await self.d1.execute_first("SELECT status, approved_by FROM drafts WHERE id = ?", (draft_id,))
         self.assertEqual(d["status"], "approved")
 
+        # Second approval attempt with new update_id must detect already approved state
+        res_dup_approve = await self.engine.handle_update({
+            "update_id": 88803,
+            "message": {
+                "chat": {"id": 123456, "type": "private"},
+                "from": {"id": 789012},
+                "text": "/approve dev.to",
+            },
+        })
+        self.assertIn("already approved", res_dup_approve)
+
         # Now test tampered draft
         tampered_id = f"draft_{uuid.uuid4().hex[:8]}"
         await self.d1.execute_mutation(

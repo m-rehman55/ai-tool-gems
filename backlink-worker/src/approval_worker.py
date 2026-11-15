@@ -93,13 +93,17 @@ class WorkerApprovalEngine:
         now_utc = datetime.now(timezone.utc).isoformat()
         try:
             await self.d1.execute_mutation(
-                "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, claimed_at) VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at) VALUES (?, ?, ?, ?, 'processing', ?)",
                 (int(update_id), str(chat_id), str(user_id or ""), str(command), now_utc),
             )
             return True
-        except Exception:
-            # Primary key constraint violation (already claimed concurrently)
-            return False
+        except Exception as e:
+            err_msg = str(e).lower()
+            if "unique" in err_msg or "primary key" in err_msg or "constraint failed" in err_msg:
+                # Genuine duplicate delivery / race condition
+                return False
+            # Unrelated database error: raise rather than masking as duplicate
+            raise
 
     async def handle_update(self, update: Dict[str, Any], header_secret: Optional[str] = None) -> str:
         # 1. Header Secret Verification
@@ -139,6 +143,21 @@ class WorkerApprovalEngine:
                 payload={"command": cmd, "chat_id": chat_id, "timestamp": datetime.now(timezone.utc).isoformat()},
             )
 
+        reply_text = await self._dispatch_command(cmd, parts, chat_id, user_id, update_id)
+
+        # Mark update as completed in telegram_processed_updates
+        if update_id:
+            now_comp = datetime.now(timezone.utc).isoformat()
+            await self.d1.execute_mutation(
+                "UPDATE telegram_processed_updates SET status = 'completed', completed_at = ? WHERE update_id = ?",
+                (now_comp, int(update_id)),
+            )
+
+        return reply_text
+
+    async def _dispatch_command(
+        self, cmd: str, parts: List[str], chat_id: str, user_id: Optional[str], update_id: int
+    ) -> str:
         if cmd == "/backlinks":
             summary = await self.d1.get_pipeline_summary()
             prospects = await self.d1.get_prospects_for_verification(limit=5)
@@ -194,6 +213,7 @@ class WorkerApprovalEngine:
                 "SELECT * FROM drafts WHERE prospect_id = ? AND status = 'pending_approval' ORDER BY created_at DESC LIMIT 1",
                 (p.get("id"),),
             )
+            draft_rows = 0
             if draft:
                 expected_draft_hash = hashlib.sha256(
                     f"{draft.get('target_url')}|{draft.get('proposed_anchor')}|{draft.get('pitch_copy')}".encode("utf-8")
@@ -201,15 +221,20 @@ class WorkerApprovalEngine:
                 recorded_hash = draft.get("content_sha256", "")
                 if recorded_hash and not secure_compare(recorded_hash, expected_draft_hash):
                     return f"⛔ Draft integrity error: SHA-256 content hash mismatch for {target}. Approval blocked."
-                await self.d1.execute_mutation(
-                    "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ?",
+                draft_rows = await self.d1.execute_mutation(
+                    "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ? AND status = 'pending_approval'",
                     (now_utc, f"telegram:{user_id or chat_id}", draft.get("id")),
                 )
 
-            await self.d1.execute_mutation(
-                "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ?",
+            # Conditional state transition: only succeeds if not already approved
+            prospect_rows = await self.d1.execute_mutation(
+                "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ? AND action_status != 'owner_approved_for_manual_submission'",
                 (now_utc, p.get("id")),
             )
+
+            if prospect_rows == 0 and (draft is None or draft_rows == 0):
+                return f"ℹ️ Prospect '{target}' is already approved for manual submission. No duplicate state transition."
+
             await self.d1.record_audit_event(
                 event_type="prospect_approved",
                 actor=f"telegram:{chat_id}",
