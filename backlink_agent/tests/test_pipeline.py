@@ -13,13 +13,13 @@ from backlink_agent.telegram_delivery import TelegramOutboxManager
 class TestBacklinkPipeline(unittest.TestCase):
     def setUp(self):
         self.tmp_dir = Path(tempfile.mkdtemp())
-        self.outbox_dir = self.tmp_dir / "outbox"
         self.reports_dir = self.tmp_dir / "reports"
+        db_file = self.tmp_dir / "pipeline_outbox.db"
 
         self.outbox = TelegramOutboxManager(
             bot_token="test_token",
             chat_id="123456",
-            outbox_dir=self.outbox_dir,
+            db_path=db_file,
             dry_run=True,
         )
         self.pipeline = BacklinkIntelligencePipeline(

@@ -1,0 +1,96 @@
+name: Autonomous Backlink Intelligence Daily Engine (WP14)
+
+# ==============================================================================
+# HERMES Autonomous Backlink Intelligence Daily Pipeline
+# WP14 Operational Specification & Verification Package
+#
+# IMPORTANT SCHEDULING CONSTRAINTS & DEFAULT-BRANCH RULE:
+# 1. GitHub Actions scheduled workflows (cron) ONLY evaluate and execute from the
+#    repository's default branch ('main'). Workflows on feature branches cannot trigger
+#    on schedule.
+# 2. Workflow dispatch on this feature branch ('feat/backlink-agent-critical-fixes')
+#    is configured for isolated validation and dry-run execution.
+# 3. Target daily cron schedule: "23 2 * * *" (07:23 PKT / 02:23 UTC daily).
+#    This schedule is PRE-CONFIGURED below but requires explicit owner authorization
+#    and landing on 'main' before cloud activation.
+# 4. Strict Safety Guard: BACKLINK_AGENT_ENABLED="false" and dry-run are enforced.
+#    Autonomous external form submissions, emails, or PBN linking are prohibited.
+# ==============================================================================
+
+on:
+  # Planned cloud schedule (activates upon landing on default branch with owner consent):
+  # schedule:
+  #   - cron: "23 2 * * *"  # Daily at 07:23 PKT (02:23 UTC)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry-run mode (zero external API calls / Telegram simulated)"
+        required: true
+        default: true
+        type: boolean
+      dispatch_telegram:
+        description: "Flush pending messages to owner Telegram (requires valid secrets)"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read  # Strictly read-only; no write or push capabilities
+
+concurrency:
+  group: backlink-intelligence-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  daily-intelligence:
+    name: Run Autonomous Backlink Intelligence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      BACKLINK_AGENT_ENABLED: "false"  # Safety kill-switch
+      BACKLINK_AGENT_MODE: "report_only"
+      BACKLINK_AGENT_DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_OWNER_CHAT_ID }}
+      ATG_TIMEZONE: Asia/Karachi
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Backlink Agent Test Suite Verification
+        run: |
+          python -m unittest discover -s backlink_agent/tests -v
+
+      - name: Execute Daily Backlink Intelligence Cycle
+        run: |
+          EXTRA_FLAGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+            EXTRA_FLAGS="$EXTRA_FLAGS --dry-run"
+          fi
+          if [ "${{ inputs.dispatch_telegram }}" = "false" ]; then
+            EXTRA_FLAGS="$EXTRA_FLAGS --no-telegram"
+          fi
+          python -m backlink_agent run-daily-intelligence $EXTRA_FLAGS
+
+      - name: Upload Daily Backlink Intelligence Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backlink-intelligence-daily-artifacts
+          path: |
+            seo-agent/reports/backlinks/
+            seo-agent/data/backlink_outbox.db
+          retention-days: 30

@@ -33,7 +33,12 @@ class SubmissionDraftingEngine:
 
         Only generates drafts for opportunities with action_recommendation == 'draft_ready'.
         """
-        if opp.action_recommendation != "draft_ready":
+        # Strict WP14 Draft Eligibility Gate: Only high_priority (score >= 75) can be drafted
+        if (
+            opp.action_recommendation != "draft_ready"
+            or opp.score.priority_tier != "high_priority"
+            or opp.score.total_score < 75
+        ):
             return None
 
         p_type = opp.prospect_type

@@ -12,15 +12,20 @@ from urllib.parse import urlparse
 from .models import DiscoveredProspect, normalize_url
 
 # Known toxic spam/PBN patterns identified during competitor audits (e.g. REC-11)
+# Note: Blanket TLD bans (e.g. all .shop/.site) are avoided; patterns require verified spam/farm signatures
 KNOWN_TOXIC_PBN_PATTERNS = [
-    re.compile(r"\.shop$", re.IGNORECASE),
-    re.compile(r"\.site$", re.IGNORECASE),
     re.compile(r"searchwins\.", re.IGNORECASE),
     re.compile(r"solidlinkpro\.", re.IGNORECASE),
     re.compile(r"serpvilo\.", re.IGNORECASE),
     re.compile(r"backlinkblast\.", re.IGNORECASE),
     re.compile(r"pbnfarm\.", re.IGNORECASE),
     re.compile(r"freebacklink\.", re.IGNORECASE),
+    re.compile(r"linkfarm\.", re.IGNORECASE),
+    re.compile(r"cheapbacklinks\.", re.IGNORECASE),
+    re.compile(r"spammy-directory\.", re.IGNORECASE),
+    re.compile(r"bulkbacklink\.", re.IGNORECASE),
+    # Evidence-based spam keywords combined with suspicious/farm gTLDs
+    re.compile(r"(?:^|[.-])(?:seo|pbn|blast|backlinks?|linkfarms?)[a-z0-9-]*\.(?:shop|site|online|xyz|top|bid|icu)$", re.IGNORECASE),
 ]
 
 

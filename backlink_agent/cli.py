@@ -46,6 +46,10 @@ def main():
     sub_daily.add_argument("--no-telegram", action="store_true", help="Enqueue to outbox but do not flush Telegram")
     sub_daily.add_argument("--no-reports", action="store_true", help="Skip writing markdown and JSON report files")
 
+    # WP14 Outbox Leases Recovery Command
+    sub_recover = subparsers.add_parser("recover-leases", help="Recover stale outbox worker leases stuck in sending state")
+    sub_recover.add_argument("--timeout", type=int, default=300, help="Lease age in seconds to consider stale (default 300)")
+
     args = parser.parse_args()
 
     if not args.command or args.command == "audit":
@@ -132,6 +136,13 @@ def main():
         if summary.get("report_files"):
             print(f"  • Markdown Report: {summary['report_files'].get('markdown')}")
             print(f"  • JSON Report: {summary['report_files'].get('json')}")
+
+    elif args.command == "recover-leases":
+        from .telegram_delivery import LocalSQLiteOutboxStore
+
+        store = LocalSQLiteOutboxStore()
+        recovered = store.recover_stale_leases(lease_timeout_seconds=args.timeout)
+        print(f"✅ Recovered {recovered} stale outbox worker lease(s) (timeout: {args.timeout}s).")
 
 
 if __name__ == "__main__":

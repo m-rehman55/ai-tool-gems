@@ -47,11 +47,11 @@ class TestTelegramDelivery(unittest.TestCase):
 
         # Retry failure logic
         msg2 = OutboxMessage(chat_id="12345", text="Fail test", max_retries=2)
-        msg2.mark_failed("Network timeout")
-        self.assertEqual(msg2.status, "pending")
+        msg2.mark_retry_pending("Network timeout")
+        self.assertEqual(msg2.status, "retry_pending")
         self.assertEqual(msg2.retry_count, 1)
 
-        msg2.mark_failed("Second timeout")
+        msg2.mark_retry_pending("Second timeout")
         self.assertEqual(msg2.status, "failed")
         self.assertEqual(msg2.retry_count, 2)
 
@@ -137,10 +137,11 @@ class TestTelegramDelivery(unittest.TestCase):
         self.assertIn("Quarantined / Spam (< 55): `1`", summary)
 
     def test_outbox_manager_lifecycle(self):
+        db_file = self.tmp_dir / "test_outbox.db"
         manager = TelegramOutboxManager(
             bot_token="fake_bot_token",
             chat_id="123456789",
-            outbox_dir=self.outbox_dir,
+            db_path=db_file,
             dry_run=True,
         )
 
@@ -158,13 +159,15 @@ class TestTelegramDelivery(unittest.TestCase):
         # Flush outbox in dry-run mode
         result = manager.flush_outbox()
         self.assertEqual(result["processed"], 1)
+        self.assertEqual(result["dry_run_simulated"], 1)
         self.assertEqual(result["sent"], 1)
         self.assertEqual(result["failed"], 0)
 
-        # Check pending is empty and sent has 1 file
+        # Check pending is empty and store has 1 message in dry_run_simulated state
         self.assertEqual(len(manager.list_pending()), 0)
-        sent_files = list(manager.sent_dir.glob("*.json"))
-        self.assertEqual(len(sent_files), 1)
+        counts = manager.store.get_status_counts()
+        self.assertEqual(counts["dry_run_simulated"], 1)
+        self.assertEqual(counts["pending"], 0)
 
 
 if __name__ == "__main__":

@@ -65,10 +65,15 @@ class TestProspectDiscovery(unittest.TestCase):
 
     def test_toxic_pbn_filter_blocks_spam_farms(self):
         gap = CompetitorGapDiscoverer()
+        # Verified spam/PBN signatures
         self.assertTrue(gap.is_toxic_pbn("searchwins.shop"))
         self.assertTrue(gap.is_toxic_pbn("solidlinkpro.shop"))
         self.assertTrue(gap.is_toxic_pbn("serpvilo.shop"))
         self.assertTrue(gap.is_toxic_pbn("spammy-directory.site"))
+        self.assertTrue(gap.is_toxic_pbn("seo-backlinks-fast.xyz"))
+        # Legitimate non-spam domains on .shop and .site must NOT be falsely blocked
+        self.assertFalse(gap.is_toxic_pbn("creativetools.shop"))
+        self.assertFalse(gap.is_toxic_pbn("ai-portfolio.site"))
         self.assertFalse(gap.is_toxic_pbn("propakistani.pk"))
         self.assertFalse(gap.is_toxic_pbn("techjuice.pk"))
         self.assertFalse(gap.is_toxic_pbn("dev.to"))
