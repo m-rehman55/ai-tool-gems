@@ -47,8 +47,8 @@ class OpportunityCardFormatter:
             f"• Non-Spam Quality: `{score.non_spam_quality}/15`",
             f"• Indexability: `{score.indexability}/15`",
             "",
-            f"🔗 *Source Page:* `{opp.source_page_url}`",
-            f"🎯 *Target Asset:* `{opp.target_asset_url}`",
+            f"🔗 *Submit Link (Click to Open):* {opp.source_page_url}",
+            f"🎯 *Target Asset:* {opp.target_asset_url}",
         ]
 
         if opp.rationale:
@@ -69,6 +69,8 @@ class OpportunityCardFormatter:
             lines.append(f"• Draft ID: `{draft.draft_id}`")
             lines.append(f"• Draft Hash: `{d_hash}`")
             if isinstance(draft, DirectorySubmissionDraft):
+                lines.append(f"• Tool Name: `{draft.tool_name}`")
+                lines.append(f"• Website URL: `{draft.website_url}`")
                 lines.append(f"• Tagline: _{draft.short_tagline}_")
                 lines.append(f"• Category: `{draft.category}`")
             elif isinstance(draft, GitHubAwesomePRDraft):

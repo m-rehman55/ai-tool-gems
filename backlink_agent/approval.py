@@ -169,10 +169,11 @@ class TelegramApprovalEngine:
             f"• Live Placements: {len(live)}",
             f"• Actionable Queue: {len(pending)}",
             "",
-            "Top Actionable Prospects:",
+            "Top Actionable Prospects (Click link to submit):",
         ]
         for p in pending[:5]:
-            lines.append(f"• [{p.get('relevance')}/100] {p.get('prospect_domain')} ({p.get('action_status')})")
+            url = p.get('prospect_url') or p.get('source_page') or 'https://aitoolgems.tech/'
+            lines.append(f"• [{p.get('relevance')}/100] {p.get('prospect_domain')} ({p.get('action_status')})\n  👉 Submit: {url}")
         lines.append("\nUse /backlink <domain> for full review.")
         return "\n".join(lines)
 
@@ -181,9 +182,10 @@ class TelegramApprovalEngine:
         if not p:
             return f"Prospect '{target}' not found in tracker."
         d_hash = calculate_draft_hash(p)
+        url = p.get('prospect_url') or p.get('source_page') or 'https://aitoolgems.tech/'
         lines = [
             f"📋 Prospect: {p.get('prospect_domain')}",
-            f"• URL: {p.get('prospect_url')}",
+            f"👉 Submit Link: {url}",
             f"• Site Type: {p.get('site_type')}",
             f"• Score: {p.get('relevance')}/100",
             f"• Eligibility: {p.get('eligibility')}",

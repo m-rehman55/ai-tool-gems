@@ -15,8 +15,9 @@ STATE_PATH = Path(__file__).resolve().parent / "data" / "bot-state.json"
 
 
 COMMANDS = [
-    {"command": "catalog", "description": "Browse all 20 tools and prices"},
-    {"command": "deals", "description": "See current PKR deals"},
+    {"command": "backlinks", "description": "View daily backlink opportunities & submission links"},
+    {"command": "catalog", "description": "Browse 40 AI tools & prices in PKR"},
+    {"command": "deals", "description": "See current PKR deals & discounts"},
     {"command": "channel", "description": "Open the official deals channel"},
     {"command": "contact", "description": "Order or ask on WhatsApp"},
     {"command": "help", "description": "How this bot works"},
@@ -27,9 +28,9 @@ def setup_bot(settings: Settings) -> None:
     client = TelegramClient(settings.telegram_bot_token)
     client.call("setMyCommands", {"commands": COMMANDS})
     client.call("setMyDescription", {
-        "description": "Browse AI tools and digital subscriptions with PKR prices, clear access terms and direct WhatsApp support from AI Tool Gems Pakistan."
+        "description": "AI Tool Gems Pakistan 💎 — Browse 40+ AI tools in PKR with direct WhatsApp ordering, plus autonomous SEO monitoring & daily curated backlink opportunities."
     })
-    client.call("setMyShortDescription", {"short_description": "AI tools in PKR with direct WhatsApp ordering."})
+    client.call("setMyShortDescription", {"short_description": "AI tools in PKR with WhatsApp ordering & Backlink agent."})
 
 
 def _load_state(path: Path = STATE_PATH) -> dict:
@@ -52,12 +53,14 @@ def _reply(settings: Settings, client: TelegramClient, chat_id: str, command: st
     if command in {"/start", "/help"}:
         text = (
             "Welcome to AI Tool Gems Pakistan 💎\n\n"
-            "Use /catalog to browse all tools, /deals for current PKR offers, /channel for daily posts, or /contact for human WhatsApp support.\n\n"
+            "Use /backlinks to view daily backlink opportunities,\n"
+            "/catalog to browse all 40 tools, /deals for current PKR offers,\n"
+            "/channel for daily posts, or /contact for human WhatsApp support.\n\n"
             "Availability and exact access terms are confirmed before payment. Independent reseller."
         )
         client.send_message(chat_id, text, website)
     elif command == "/catalog":
-        client.send_message(chat_id, "Browse all 20 AI tools and digital subscriptions with PKR prices:", website)
+        client.send_message(chat_id, "Browse all 40 AI tools and digital subscriptions with PKR prices:", website)
     elif command == "/deals":
         client.send_message(chat_id, "See current AI Tool Gems offers, access types and delivery estimates:", deals)
     elif command == "/channel":
@@ -65,7 +68,7 @@ def _reply(settings: Settings, client: TelegramClient, chat_id: str, command: st
     elif command == "/contact":
         client.send_message(chat_id, "Talk to the AI Tool Gems team on WhatsApp for availability and ordering:", whatsapp)
     else:
-        client.send_message(chat_id, "I understand /catalog, /deals, /channel, /contact and /help. Choose a command from the menu.", website)
+        client.send_message(chat_id, "I understand /backlinks, /catalog, /deals, /channel, /contact and /help. Choose a command from the menu.", website)
 
 
 def process_updates(settings: Settings, state_path: Path = STATE_PATH) -> int:
