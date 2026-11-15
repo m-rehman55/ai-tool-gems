@@ -24,6 +24,8 @@ KNOWN_TOXIC_PBN_PATTERNS = [
     re.compile(r"cheapbacklinks\.", re.IGNORECASE),
     re.compile(r"spammy-directory\.", re.IGNORECASE),
     re.compile(r"bulkbacklink\.", re.IGNORECASE),
+    # Verified PBN farm domains discovered during aitoolspak.tech and competitor link audits (REC-11)
+    re.compile(r"(?:searchwins|solidlinkpro|indexmexa|rankzira|serpvilo|rankgoods|solidseolink|indextera|cripio|seogo|easyranklab|crisplinkpro|boldboosthub|eliteseo|crawltera|anchornaro|brightboosthub)\.", re.IGNORECASE),
     # Evidence-based spam keywords combined with suspicious/farm gTLDs
     re.compile(r"(?:^|[.-])(?:seo|pbn|blast|backlinks?|linkfarms?)[a-z0-9-]*\.(?:shop|site|online|xyz|top|bid|icu)$", re.IGNORECASE),
 ]
