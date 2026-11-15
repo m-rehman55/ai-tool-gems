@@ -187,19 +187,83 @@ class ProspectRepository:
 
         return results
 
+    def load_seed_registries(self) -> List[UnifiedProspect]:
+        """Loads curated directory seeds, tech publications, and GitHub repos directly in memory."""
+        results: List[UnifiedProspect] = []
+        try:
+            from backlink_agent.evidence_scoring import OpportunityScoringEngine
+            from backlink_agent.prospect_discovery import DiscoveryOrchestrator
+            from backlink_agent.submission_drafter import SubmissionDraftingEngine
+
+            disc = DiscoveryOrchestrator().run_discovery()
+            scorer = OpportunityScoringEngine()
+            drafter = SubmissionDraftingEngine()
+
+            scored = [scorer.score_prospect(p) for p in disc.get("prospects", [])]
+            draft_tuples = drafter.draft_batch(scored)
+
+            drafts_map: Dict[str, Tuple[Any, str, Any]] = {}
+            for draft, d_hash, opp in draft_tuples:
+                drafts_map[opp.prospect_domain.lower()] = (draft, d_hash, opp)
+
+            for opp in scored:
+                domain = self.normalize_domain(opp.prospect_domain)
+                if not domain:
+                    continue
+
+                draft_tuple = drafts_map.get(domain)
+                draft_obj = draft_tuple[0].to_dict() if draft_tuple else {}
+                draft_hash = draft_tuple[1] if draft_tuple else opp.prospect_id[:16]
+
+                sub_url = (
+                    opp.source_page_url
+                    or draft_obj.get("submission_url")
+                    or f"https://{domain}"
+                )
+                target_url = (
+                    opp.target_asset_url
+                    or draft_obj.get("target_landing_page")
+                    or "https://aitoolgems.tech/"
+                )
+
+                prospect = UnifiedProspect(
+                    prospect_id=opp.prospect_id,
+                    prospect_domain=domain,
+                    prospect_type=opp.prospect_type,
+                    submission_url=sub_url,
+                    target_asset_url=target_url,
+                    score=opp.score.total_score,
+                    draft_hash=draft_hash,
+                    source_origin="seed_registry",
+                    status="pending_owner_review",
+                    draft=draft_obj,
+                    metadata=opp.to_dict(),
+                )
+                results.append(prospect)
+        except Exception as e:
+            logger.warning(f"Error loading in-memory seed registries: {e}")
+
+        return results
+
     def all_prospects(self) -> List[UnifiedProspect]:
-        """Loads and deduplicates all prospects across daily JSON reports and legacy tracker CSV."""
+        """Loads and deduplicates all prospects across daily JSON reports, seed registries, and legacy tracker CSV."""
         json_prospects = self.load_daily_json_reports()
+        seed_prospects = self.load_seed_registries()
         csv_prospects = self.load_tracker_csv()
 
         combined: Dict[str, UnifiedProspect] = {}
 
-        # Give priority to richest daily intelligence reports
+        # 1. Give priority to richest daily intelligence reports
         for p in json_prospects:
             if p.prospect_domain not in combined:
                 combined[p.prospect_domain] = p
 
-        # Supplement with legacy CSV prospects not in JSON
+        # 2. Supplement with in-memory seed registries (guarantees 100% CI coverage)
+        for p in seed_prospects:
+            if p.prospect_domain not in combined:
+                combined[p.prospect_domain] = p
+
+        # 3. Supplement with legacy CSV prospects not in JSON or seeds
         for p in csv_prospects:
             if p.prospect_domain not in combined:
                 combined[p.prospect_domain] = p
