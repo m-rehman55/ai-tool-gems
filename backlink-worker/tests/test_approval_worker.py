@@ -179,12 +179,14 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
 
     async def test_atomic_concurrent_update_claim(self):
         # First claim wins
-        res1 = await self.engine.claim_telegram_update(77701, "123456", "789012", "/backlinks")
-        self.assertTrue(res1)
+        claimed1, token1 = await self.engine.claim_telegram_update(77701, "123456", "789012", "/backlinks")
+        self.assertTrue(claimed1)
+        self.assertIsNotNone(token1)
 
         # Concurrent attempt with same update_id loses atomically
-        res2 = await self.engine.claim_telegram_update(77701, "123456", "789012", "/backlinks")
-        self.assertFalse(res2)
+        claimed2, token2 = await self.engine.claim_telegram_update(77701, "123456", "789012", "/backlinks")
+        self.assertFalse(claimed2)
+        self.assertIsNone(token2)
 
     async def test_draft_hash_revalidation_at_approval_time(self):
         import hashlib
@@ -255,8 +257,9 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
         )
 
         # Retried update should recover the lease
-        claimed = await self.engine.claim_telegram_update(66601, "123456", "789012", "/backlinks")
+        claimed, recovered_token = await self.engine.claim_telegram_update(66601, "123456", "789012", "/backlinks")
         self.assertTrue(claimed)
+        self.assertIsNotNone(recovered_token)
 
         # Verify audit trail recorded recovery
         ev = await self.d1.execute_first(
@@ -275,6 +278,54 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
         ok2, msg = await self.d1.execute_atomic_approval(p["id"], None, "2026-11-15T00:00:00Z", "test")
         self.assertFalse(ok2)
         self.assertIn("already approved", msg)
+
+    async def test_stale_worker_fenced_out_when_lease_token_changes(self):
+        # 1. Worker A claims update 77001
+        claimed_a, token_a = await self.engine.claim_telegram_update(77001, "123456", "789012", "/approve github.com")
+        self.assertTrue(claimed_a)
+        self.assertIsNotNone(token_a)
+
+        # 2. Worker B recovers lease with new token after simulated timeout
+        past_iso = "2026-11-14T00:00:00Z"
+        await self.d1.execute_mutation(
+            "UPDATE telegram_processed_updates SET claimed_at = ? WHERE update_id = 77001",
+            (past_iso,),
+        )
+        claimed_b, token_b = await self.engine.claim_telegram_update(77001, "123456", "789012", "/approve github.com")
+        self.assertTrue(claimed_b)
+        self.assertNotEqual(token_a, token_b)
+
+        # 3. Stale Worker A resumes and attempts approval with old token_a -> Fenced out!
+        p = await self.d1.execute_first("SELECT id FROM prospects WHERE lower(prospect_domain) = 'github.com'")
+        ok_a, msg_a = await self.d1.execute_atomic_approval(
+            p["id"], None, "2026-11-15T00:00:00Z", "worker_a", update_id=77001, lease_token=token_a
+        )
+        self.assertFalse(ok_a)
+        self.assertIn("fenced out", msg_a.lower())
+
+        # 4. Active Worker B executes approval with valid token_b -> Succeeds!
+        ok_b, _ = await self.d1.execute_atomic_approval(
+            p["id"], None, "2026-11-15T00:00:00Z", "worker_b", update_id=77001, lease_token=token_b
+        )
+        self.assertTrue(ok_b)
+
+    async def test_d1_assertion_forces_rollback_when_draft_not_pending(self):
+        # Prospect exists in pending state
+        p = await self.d1.execute_first("SELECT id FROM prospects WHERE lower(prospect_domain) = 'dev.to'")
+        # Insert a draft that is already 'approved'
+        draft_id = "draft_test_rollback_99"
+        await self.d1.execute_mutation(
+            "INSERT INTO drafts (id, prospect_id, target_url, proposed_anchor, pitch_copy, content_sha256, status, created_at) VALUES (?, ?, 'https://aitoolgems.tech/', 'Anchor', 'Pitch', 'hash', 'approved', '2026-11-15T00:00:00Z')",
+            (draft_id, p["id"]),
+        )
+
+        # Attempt atomic approval on prospect with this non-pending draft
+        ok, msg = await self.d1.execute_atomic_approval(p["id"], draft_id, "2026-11-15T00:00:00Z", "tester")
+        self.assertFalse(ok)
+
+        # Verify prospect status was NOT updated (transaction rolled back completely!)
+        p_after = await self.d1.execute_first("SELECT action_status FROM prospects WHERE id = ?", (p["id"],))
+        self.assertNotEqual(p_after["action_status"], "owner_approved_for_manual_submission")
 
 
 if __name__ == "__main__":

@@ -72,61 +72,118 @@ class D1Adapter:
         draft_id: Optional[str],
         now_utc: str,
         actor: str,
+        update_id: Optional[int] = None,
+        lease_token: Optional[str] = None,
     ) -> Tuple[bool, str]:
         """Atomically transitions prospect and optional draft to approved status in a single transaction.
-        Guarantees that both succeed, or neither succeeds (eliminates partial approval drift).
+        Enforces:
+        1. Fencing token check: Worker must hold the active lease token.
+        2. D1 constraint assertion: Forces batch abort and rollback if conditional matches fail.
+        Guarantees that both succeed, or neither succeeds (zero partial drift).
         """
+        assert_id = f"assert_{uuid.uuid4().hex[:8]}"
+
         if self.conn is not None:
             cursor = self.conn.cursor()
             try:
-                self.conn.execute("BEGIN IMMEDIATE")
-                # 1. Update prospect
-                cursor.execute(
-                    "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ? AND action_status != 'owner_approved_for_manual_submission'",
-                    (now_utc, prospect_id),
-                )
-                p_rows = cursor.rowcount
-                if p_rows == 0:
-                    self.conn.rollback()
-                    return False, "Prospect already approved or not in pending state"
+                # 1. Verify fencing token if update_id provided
+                if update_id and lease_token:
+                    cursor.execute(
+                        "SELECT lease_token FROM telegram_processed_updates WHERE update_id = ? AND status = 'processing'",
+                        (int(update_id),),
+                    )
+                    row = cursor.fetchone()
+                    if not row or row[0] != lease_token:
+                        return False, f"Worker fenced out: lease token for update {update_id} has expired or was recovered"
 
-                # 2. If draft present, update draft
+                # 2. Check conditions before mutating
+                cursor.execute(
+                    "SELECT action_status FROM prospects WHERE id = ?",
+                    (prospect_id,),
+                )
+                p_row = cursor.fetchone()
+                if not p_row or p_row[0] == "owner_approved_for_manual_submission":
+                    return False, "Prospect already approved or not found"
+
                 if draft_id:
                     cursor.execute(
-                        "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ? AND status = 'pending_approval'",
+                        "SELECT status FROM drafts WHERE id = ?",
+                        (draft_id,),
+                    )
+                    d_row = cursor.fetchone()
+                    if not d_row or d_row[0] != "pending_approval":
+                        return False, "Draft already approved or not pending"
+
+                # 3. Assertive constraint insertion (forces rollback if conditions fail)
+                cursor.execute(
+                    """
+                    INSERT INTO _d1_transaction_assertions (id, is_valid)
+                    VALUES (?, CASE WHEN 
+                        (SELECT count(*) FROM prospects WHERE id = ? AND action_status != 'owner_approved_for_manual_submission') = 1
+                        AND (? IS NULL OR (SELECT count(*) FROM drafts WHERE id = ? AND status = 'pending_approval') = 1)
+                    THEN 1 ELSE 0 END)
+                    """,
+                    (assert_id, prospect_id, draft_id, draft_id),
+                )
+
+                # 4. Perform mutations
+                cursor.execute(
+                    "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ?",
+                    (now_utc, prospect_id),
+                )
+                if draft_id:
+                    cursor.execute(
+                        "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ?",
                         (now_utc, actor, draft_id),
                     )
-                    d_rows = cursor.rowcount
-                    if d_rows == 0:
-                        self.conn.rollback()
-                        return False, "Draft already approved or not in pending_approval state"
 
+                cursor.execute("DELETE FROM _d1_transaction_assertions WHERE id = ?", (assert_id,))
                 self.conn.commit()
                 return True, "Approved"
-            except Exception:
+            except Exception as e:
                 self.conn.rollback()
+                err_s = str(e).lower()
+                if "constraint" in err_s or "abort" in err_s:
+                    return False, "Atomic transition failed: conditional state mismatch"
                 raise
 
         if self.db is not None:
-            # Cloudflare D1 batch transaction
+            # Cloudflare D1 batch transaction with constraint assertion
             statements = [
+                # Assertion 1: Forces D1 batch failure if conditions not met or worker fenced out
                 self.db.prepare(
-                    "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ? AND action_status != 'owner_approved_for_manual_submission'"
-                ).bind(now_utc, prospect_id)
+                    """
+                    INSERT INTO _d1_transaction_assertions (id, is_valid)
+                    VALUES (?, CASE WHEN 
+                        (SELECT count(*) FROM prospects WHERE id = ? AND action_status != 'owner_approved_for_manual_submission') = 1
+                        AND (? IS NULL OR (SELECT count(*) FROM drafts WHERE id = ? AND status = 'pending_approval') = 1)
+                        AND (? IS NULL OR (SELECT lease_token FROM telegram_processed_updates WHERE update_id = ?) = ?)
+                    THEN 1 ELSE 0 END)
+                    """
+                ).bind(assert_id, prospect_id, draft_id, draft_id, update_id, update_id, lease_token or ""),
+                # Mutation 1: Prospect update
+                self.db.prepare(
+                    "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ?"
+                ).bind(now_utc, prospect_id),
             ]
             if draft_id:
                 statements.append(
                     self.db.prepare(
-                        "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ? AND status = 'pending_approval'"
+                        "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ?"
                     ).bind(now_utc, actor, draft_id)
                 )
-            results = await self.db.batch(statements)
-            for res in results:
-                meta = getattr(res, "meta", None)
-                changes = getattr(meta, "changes", 1) if meta else 1
-                if changes == 0:
-                    return False, "Atomic transition failed: conditional state mismatch"
-            return True, "Approved"
+            statements.append(
+                self.db.prepare("DELETE FROM _d1_transaction_assertions WHERE id = ?").bind(assert_id)
+            )
+
+            try:
+                await self.db.batch(statements)
+                return True, "Approved"
+            except Exception as e:
+                err_s = str(e).lower()
+                if "constraint" in err_s or "abort" in err_s:
+                    return False, "Atomic transition failed: conditional state mismatch or worker fenced out"
+                raise
 
         raise RuntimeError("No active D1 binding or SQLite connection available.")
 

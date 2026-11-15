@@ -18,6 +18,7 @@ import hashlib
 import hmac
 import json
 from typing import Any, Dict, Optional, Tuple
+import uuid
 
 from .d1_adapter import D1Adapter
 
@@ -84,40 +85,42 @@ class WorkerApprovalEngine:
         user_id: Optional[str],
         command: str,
         lease_timeout_seconds: int = 300,
-    ) -> bool:
-        """Atomically claims an incoming Telegram update ID in D1 with lease-recovery.
+    ) -> Tuple[bool, Optional[str]]:
+        """Atomically claims an incoming Telegram update ID in D1 with lease-recovery and fencing token.
         Relies on PRIMARY KEY (update_id) constraint and optimistic timestamp locking
         to eliminate race conditions and recover stale claims from crashed workers.
+        Returns (is_claimed: bool, lease_token: Optional[str]).
         """
         if not update_id:
-            return True
+            return True, None
 
         now_dt = datetime.now(timezone.utc)
         now_utc = now_dt.isoformat()
+        lease_token = f"tok_{uuid.uuid4().hex[:12]}"
 
         # Check existing claim status
         existing = await self.d1.execute_first(
-            "SELECT status, claimed_at, lease_recoveries FROM telegram_processed_updates WHERE update_id = ?",
+            "SELECT status, claimed_at, lease_recoveries, lease_token FROM telegram_processed_updates WHERE update_id = ?",
             (int(update_id),),
         )
 
         if not existing:
             try:
                 await self.d1.execute_mutation(
-                    "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_recoveries) VALUES (?, ?, ?, ?, 'processing', ?, 0)",
-                    (int(update_id), str(chat_id), str(user_id or ""), str(command), now_utc),
+                    "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_recoveries, lease_token) VALUES (?, ?, ?, ?, 'processing', ?, 0, ?)",
+                    (int(update_id), str(chat_id), str(user_id or ""), str(command), now_utc, lease_token),
                 )
-                return True
+                return True, lease_token
             except Exception as e:
                 err_msg = str(e).lower()
                 if "unique" in err_msg or "primary key" in err_msg or "constraint failed" in err_msg:
                     # Duplicate concurrent delivery
-                    return False
+                    return False, None
                 raise
 
         status = existing.get("status")
         if status == "completed":
-            return False
+            return False, None
 
         # If status is 'processing', check lease expiration for crash recovery
         claimed_at_str = existing.get("claimed_at")
@@ -134,9 +137,10 @@ class WorkerApprovalEngine:
         if is_expired:
             # Atomically recover lease via optimistic lock on claimed_at
             recoveries = int(existing.get("lease_recoveries", 0) or 0) + 1
+            new_lease_token = f"tok_{uuid.uuid4().hex[:12]}"
             rows = await self.d1.execute_mutation(
-                "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
-                (now_utc, recoveries, int(update_id), claimed_at_str),
+                "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = ?, lease_token = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
+                (now_utc, recoveries, new_lease_token, int(update_id), claimed_at_str),
             )
             if rows > 0:
                 await self.d1.record_audit_event(
@@ -148,12 +152,13 @@ class WorkerApprovalEngine:
                         "previous_claimed_at": claimed_at_str,
                         "recovered_at": now_utc,
                         "lease_recoveries": recoveries,
+                        "new_lease_token": new_lease_token,
                     },
                 )
-                return True
-            return False
+                return True, new_lease_token
+            return False, None
 
-        return False
+        return False, None
 
     async def handle_update(self, update: Dict[str, Any], header_secret: Optional[str] = None) -> str:
         # 1. Header Secret Verification
@@ -178,9 +183,10 @@ class WorkerApprovalEngine:
         parts = text.split()
         cmd = parts[0].lower() if parts else ""
 
-        # 3. Atomic Replay and Concurrency Claim
+        # 3. Atomic Replay, Concurrency Claim & Fencing Token
+        lease_token = None
         if update_id:
-            claimed = await self.claim_telegram_update(update_id, chat_id, user_id, cmd)
+            claimed, lease_token = await self.claim_telegram_update(update_id, chat_id, user_id, cmd)
             if not claimed:
                 return f"ℹ️ Update ID {update_id} already processed or claimed concurrently. Duplicate skipped safely."
 
@@ -190,23 +196,29 @@ class WorkerApprovalEngine:
                 event_type="telegram_update",
                 actor=f"user:{user_id or 'unknown'}",
                 entity_id=str(update_id),
-                payload={"command": cmd, "chat_id": chat_id, "timestamp": datetime.now(timezone.utc).isoformat()},
+                payload={"command": cmd, "chat_id": chat_id, "lease_token": lease_token, "timestamp": datetime.now(timezone.utc).isoformat()},
             )
 
-        reply_text = await self._dispatch_command(cmd, parts, chat_id, user_id, update_id)
+        reply_text = await self._dispatch_command(cmd, parts, chat_id, user_id, update_id, lease_token)
 
-        # Mark update as completed in telegram_processed_updates
-        if update_id:
+        # Mark update as completed in telegram_processed_updates (matching lease_token)
+        if update_id and lease_token:
             now_comp = datetime.now(timezone.utc).isoformat()
             await self.d1.execute_mutation(
-                "UPDATE telegram_processed_updates SET status = 'completed', completed_at = ? WHERE update_id = ?",
-                (now_comp, int(update_id)),
+                "UPDATE telegram_processed_updates SET status = 'completed', completed_at = ? WHERE update_id = ? AND lease_token = ?",
+                (now_comp, int(update_id), lease_token),
             )
 
         return reply_text
 
     async def _dispatch_command(
-        self, cmd: str, parts: List[str], chat_id: str, user_id: Optional[str], update_id: int
+        self,
+        cmd: str,
+        parts: List[str],
+        chat_id: str,
+        user_id: Optional[str],
+        update_id: int,
+        lease_token: Optional[str] = None,
     ) -> str:
         if cmd == "/backlinks":
             summary = await self.d1.get_pipeline_summary()
@@ -273,16 +285,18 @@ class WorkerApprovalEngine:
                     return f"⛔ Draft integrity error: SHA-256 content hash mismatch for {target}. Approval blocked."
                 draft_id = draft.get("id")
 
-            # Execute atomic multi-statement transaction (prospect + draft together)
+            # Execute atomic multi-statement transaction (prospect + draft together with fencing token assertion)
             ok, msg = await self.d1.execute_atomic_approval(
                 prospect_id=p.get("id"),
                 draft_id=draft_id,
                 now_utc=now_utc,
                 actor=f"telegram:{user_id or chat_id}",
+                update_id=update_id if update_id else None,
+                lease_token=lease_token,
             )
 
             if not ok:
-                return f"ℹ️ Prospect '{target}' is already approved for manual submission. No duplicate state transition."
+                return f"ℹ️ Prospect '{target}' is already approved for manual submission or worker was fenced out. No duplicate state transition."
 
             await self.d1.record_audit_event(
                 event_type="prospect_approved",

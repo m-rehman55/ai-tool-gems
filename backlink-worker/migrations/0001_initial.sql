@@ -105,7 +105,14 @@ CREATE TABLE IF NOT EXISTS telegram_processed_updates (
     status TEXT NOT NULL DEFAULT 'processing',
     claimed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     completed_at TEXT,
-    lease_recoveries INTEGER NOT NULL DEFAULT 0
+    lease_recoveries INTEGER NOT NULL DEFAULT 0,
+    lease_token TEXT NOT NULL DEFAULT ''
+);
+
+-- 5c. Transaction Assertions Table (Forces D1 batch atomic rollback on conditional zero-row failure)
+CREATE TABLE IF NOT EXISTS _d1_transaction_assertions (
+    id TEXT PRIMARY KEY,
+    is_valid INTEGER NOT NULL CHECK (is_valid = 1)
 );
 
 -- 6. Agent Control Table (Kill switch and mode gate)
