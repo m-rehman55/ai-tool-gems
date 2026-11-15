@@ -115,6 +115,48 @@ class TestTelegramApproval(unittest.TestCase):
         lines = self.audit_path.read_text(encoding="utf-8").strip().splitlines()
         self.assertIn("Reciprocal link demanded", lines[-1])
 
+    def test_resolve_and_approve_json_discovered_prospect(self):
+        """WP18: Approves a prospect originating from daily intelligence JSON report (e.g. techjuice.pk)."""
+        res = self.engine.handle_command(
+            command_text="/approve techjuice.pk 8e3b7b4040d0a47f",
+            chat_id="123456789",
+            chat_type="private",
+            user_id="987654321",
+            update_id=104,
+        )
+        self.assertIn("Approved for Manual Submission: techjuice.pk", res)
+        self.assertIn("Step 1 — Open Official Submission Page", res)
+        self.assertIn("Step 2 — Tap-to-Copy Form Fields", res)
+        self.assertIn("/submitted techjuice.pk", res)
+
+    def test_copy_command_outputs_monospace_blocks(self):
+        """WP18: /copy sends mobile-friendly monospace copy blocks."""
+        res = self.engine.handle_command(
+            command_text="/copy saashub.com",
+            chat_id="123456789",
+            chat_type="private",
+            user_id="987654321",
+        )
+        self.assertIn("Tap-to-Copy Fields for saashub.com", res)
+        self.assertIn("AI Tool Gems", res)
+        self.assertIn("https://aitoolgems.tech/", res)
+
+    def test_submitted_command_updates_state_and_audit(self):
+        """WP18: /submitted confirms manual submission and transitions to submitted_pending_review."""
+        res = self.engine.handle_command(
+            command_text="/submitted techjuice.pk https://techjuice.pk/pakistan-ai-prices-2026",
+            chat_id="123456789",
+            chat_type="private",
+            user_id="987654321",
+            update_id=105,
+        )
+        self.assertIn("techjuice.pk ko submitted mark kar diya gaya hai", res)
+        self.assertIn("submitted_pending_review", res)
+        self.assertIn("https://techjuice.pk/pakistan-ai-prices-2026", res)
+
+        state = self.engine.load_state()
+        self.assertEqual(state["approvals"]["techjuice.pk"]["action"], "submitted")
+
 
 if __name__ == "__main__":
     unittest.main()
