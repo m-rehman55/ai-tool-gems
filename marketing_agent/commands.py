@@ -16,6 +16,7 @@ STATE_PATH = Path(__file__).resolve().parent / "data" / "bot-state.json"
 
 COMMANDS = [
     {"command": "backlinks", "description": "View daily backlink opportunities & submission links"},
+    {"command": "execute", "description": "Auto-execute backlink submission (Zero manual work)"},
     {"command": "catalog", "description": "Browse 40 AI tools & prices in PKR"},
     {"command": "deals", "description": "See current PKR deals & discounts"},
     {"command": "channel", "description": "Open the official deals channel"},
@@ -89,7 +90,7 @@ def process_updates(settings: Settings, state_path: Path = STATE_PATH) -> int:
             if not text:
                 continue
             command = text.split()[0].lower()
-            if command.startswith("/backlink") or command in {"/approve", "/reject", "/defer", "/submitted", "/copy"}:
+            if command.startswith("/backlink") or command in {"/approve", "/reject", "/defer", "/submitted", "/copy", "/execute", "/auto_execute"}:
                 from backlink_agent.approval import TelegramApprovalEngine
                 engine = TelegramApprovalEngine(owner_chat_id=settings.telegram_owner_chat_id)
                 user_id = str(message.get("from", {}).get("id")) if message.get("from") else None
