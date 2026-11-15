@@ -1,0 +1,70 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "711,000",
+    "monthly_visits_est": "8,990",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 0,
+    "live_avg_duration_seconds": 0
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "International / South Asia",
+    "traffic_share": "35% Global / 25% SA",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "273",
+    "top_commercial_queries": []
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "freshtools.net",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2019-05-09T22:16:15Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "FreshTools | Spam Tools | SMTP | SHELL | MAILER | cPanel | FTP | Combo List | Fresh RDP | Fresh Tools | Valid shod | site to buy smtp | buy spam tools | spammer shop | best site to buy spamming tools | Hacking RDP | Hacking shop | Buy Spamming Tools | buy cpanel for spamming | buy rdp for spamming | spammer store | spammer ro | free spam tools | remote desktop | underground marketplace | email accounts | Spammer Tools | dark web | hacked rdp shop | Inbox Mailer | hacked rdp | Buy Tools Spam | Spamming Tools | Rdp Shop | Site To Buy Spamming Tools | Buy Spam Equipment | Buy Carding Accounts | Fresh Cracked RDP",
+    "meta_description": "FreshTools | Spam Tools | SMTP | SHELL | MAILER | cPanel | FTP | Combo List | Fresh RDP | Fresh Tools | Valid shod | spammer shop | Fresh Cpanel | Fresh Shell | Hacking RDP | Hacking shop | Buy Spamming Tools | Spammer Tools | Inbox Mailer | Buy Tools Spam | Spamming Tools | Rdp Shop | Site To Buy Spamming Tools | Buy Spamm Equipments | Buy Carding Accounts | RDP 30 days | best tools shop | emails database | buy rackspace webmail | cpanels webmail | email sender tools | email leads | inbox smtps | Underground Market | Carding | dating | freshtools | freshtools .net | spamming tools | spam tools | fresh tools | freshtools.net | freshtool | spamtools | tools spam | spam tools shop | spamming tools shop | freshtools .pw | spamming tools website | buy cpanel for spamming | buy spamming tools | spamming tools site | buy spam tools | site to buy spamming tools | buy smtp for spamming | spamming tool | spammer tools | freshtools .to | spammer tool | legit site to buy spamming tools | buy rdp for spamming | buy hacked smtp | fresh spam tools | spam toolz | best spamming tools | spam tool | tools for spamming | email spamming tools | spammers tools | spaming tools | smtp tools shop | spammer tool online | best site to buy spamming tools | spam tools shop 2021 | list of spamming tools | free spamming tools | hacked cpanel for sale | freshspamtools | buy spam tool | spamming tools dealer | shell spam | spammer store | best spamming tools shop | rdp for spamming | spam tools shop 2020 | where to buy spamming tools | spamshop | site to buy smtp and rdp | smtps rdps leads | buying spam tool | buy cpanel shell | buy fresh spam tools | buy shell and cpanel | fresh rdp | spammer.ro | fresh spam | spamtoolz | free spam tools | hacked rdp shop | spammer ro | spam tools free | buy hacked rdp | spam shop | tools needed for spamming | myfreshtools | spamtools.io | buy spammed cc | free spamming tools 2021 | spamtoolz.net | where to buy spammed logs | spam cc shop | smtp shop | tool spam | spamtool | spamming tools free | rdp shop online | buy rdp for carding | best mailer for spamming | buy rdp | fresh tool | shell spamming | best rdp for spamming | spammer.ru | bank spamming tools | alibaba spamming tools | spam tools shop script",
+    "canonical": ""
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "None",
+    "h2_count": 6
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 1,
+    "external_links": 3
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 2,
+    "missing_alt": 1
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": []
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 2022.4,
+    "page_load_rating": "AVERAGE"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/freshtools.net",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=freshtools.net"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "18",
+    "selection_score": "55.5"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

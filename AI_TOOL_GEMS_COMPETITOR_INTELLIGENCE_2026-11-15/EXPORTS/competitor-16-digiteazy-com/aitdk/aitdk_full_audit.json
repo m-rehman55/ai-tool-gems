@@ -1,0 +1,78 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "810,600",
+    "monthly_visits_est": "10,230",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 464,
+    "live_avg_duration_seconds": 0
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "Pakistan (PK)",
+    "traffic_share": "78.4% PK",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "301",
+    "top_commercial_queries": [
+      "Canva Pro price in pakistan"
+    ]
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "digiteazy.com",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2023-04-29T18:16:23Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "Best Digital Marketing Agency in Karachi - Digiteazy",
+    "meta_description": "DigitEazy is the best digital marketing agency in Karachi offering SEO, web development, social media and Google Ads for businesses across Pakistan. Consult now.",
+    "canonical": "https://digiteazy.com/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "Web Development &amp;",
+    "h2_count": 8
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 32,
+    "external_links": 3
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 38,
+    "missing_alt": 22
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": [
+      "WordPress",
+      "Elementor",
+      "Google Analytics",
+      "Google Tag Manager",
+      "React/Next.js"
+    ]
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 687.8,
+    "page_load_rating": "AVERAGE"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/digiteazy.com",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=digiteazy.com"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "16",
+    "selection_score": "63.8"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

@@ -1,0 +1,83 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "669,000",
+    "monthly_visits_est": "8,060",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 18218,
+    "live_avg_duration_seconds": 14.9
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "International / South Asia",
+    "traffic_share": "35% Global / 25% SA",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "252",
+    "top_commercial_queries": [
+      "Canva Pro price in pakistan",
+      "Claude Pro price in pakistan",
+      "Adobe Creative Cloud price in pakistan",
+      "Perplexity Pro price in pakistan"
+    ]
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "codesforever.com",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2019-03-17T12:41:29Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "All Your Software at the Lowest Prices | Codesforever",
+    "meta_description": "We offer genuine and affordable Software Licenses. Make a safe trade with us! Immediate delivery! Extremely low prices and good discounts.",
+    "canonical": "https://www.codesforever.com/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "WE MAKE SOFTWARE SIMPLE!",
+    "h2_count": 6
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 342,
+    "external_links": 1
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 160,
+    "missing_alt": 1
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 193.3,
+    "page_load_rating": "FAST"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/codesforever.com",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=codesforever.com"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "20",
+    "selection_score": "52.0"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

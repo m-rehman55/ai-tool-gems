@@ -1,0 +1,161 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "toolwaly.com",
+    "business_name": "ToolWaly",
+    "target_url": "https://toolwaly.com/",
+    "selection_score": "82.8",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "11000 visits/mo",
+    "referring_domains": "105 domains",
+    "authority_score": "37.3/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Get Instant Access to Group buy SEO Tools",
+    "title_length": 41,
+    "title_status": "GOOD",
+    "meta_description": "instantly get access to100+ Group Buy SEO, AI, Writing and Marketing Tools with 24/7 premium Customer support at upto 95% discounted prices.",
+    "meta_desc_length": 140,
+    "canonical_url": "https://toolwaly.com/",
+    "robots_directive": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 715.1,
+    "page_size_kb": 325.5,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "100+ SEO &amp; AI Group Buy Tools for Freelancers and Agencies",
+    "h2_count": 9,
+    "h3_count": 5
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "name",
+        157
+      ],
+      [
+        "color",
+        155
+      ],
+      [
+        "tag",
+        155
+      ],
+      [
+        "null",
+        136
+      ],
+      [
+        "domain",
+        134
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 20,
+    "external_links_count": 26,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 17,
+    "missing_alt_count": 8,
+    "alt_text_coverage": "52.9%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "WebPage",
+      "Article",
+      "ImageObject",
+      "WebSite",
+      "Person",
+      "Organization"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Get Instant Access to Group buy SEO Tools",
+    "og_description": "instantly get access to100+ Group Buy SEO, AI, Writing and Marketing Tools with 24/7 premium Customer support at upto 95% discounted prices.",
+    "og_image": ""
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "WordPress",
+      "Elementor",
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "toolwaly.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 715.1,
+    "payload_kb": 325.5,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy Envato Elements pakistan",
+      "buy Midjourney pakistan",
+      "buy Canva Pro pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

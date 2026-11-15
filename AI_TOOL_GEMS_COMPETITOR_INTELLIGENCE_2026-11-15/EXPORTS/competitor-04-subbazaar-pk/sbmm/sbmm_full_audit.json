@@ -1,0 +1,152 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "subbazaar.pk",
+    "business_name": "SubBazaar",
+    "target_url": "https://subbazaar.pk/",
+    "selection_score": "87.6",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "12375 visits/mo",
+    "referring_domains": "115 domains",
+    "authority_score": "39.4/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 1,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "SubBazaar.pk \u2014 Subscriptions and licences, priced in the open",
+    "title_length": 61,
+    "title_status": "GOOD",
+    "meta_description": "Genuine subscriptions and software licences for Pakistan. Every plan and every term is listed with its price. Activated on your own account and delivered on WhatsApp.",
+    "meta_desc_length": 166,
+    "canonical_url": "",
+    "robots_directive": "index, follow"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 497.2,
+    "page_size_kb": 168.6,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Every price,out in the open",
+    "h2_count": 8,
+    "h3_count": 54
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "term",
+        201
+      ],
+      [
+        "longest",
+        140
+      ],
+      [
+        "plan",
+        87
+      ],
+      [
+        "stock",
+        52
+      ],
+      [
+        "termspannullclassnamealtchildrenspannullchildrenlongest",
+        46
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 86,
+    "external_links_count": 7,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 49,
+    "missing_alt_count": 49,
+    "alt_text_coverage": "0.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "Organization"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "SubBazaar.pk \u2014 Subscriptions and licences, priced in the open",
+    "og_description": "Genuine subscriptions and software licences for Pakistan. Every plan and every term is listed with its price. Activated on your own account and delivered on WhatsApp.",
+    "og_image": "https://subbazaar.pk/logo.svg"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "subbazaar.pk",
+    "tld": "pk",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 497.2,
+    "payload_kb": 168.6,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy Adobe Creative Cloud pakistan",
+      "buy ChatGPT Plus pakistan",
+      "buy Canva Pro pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

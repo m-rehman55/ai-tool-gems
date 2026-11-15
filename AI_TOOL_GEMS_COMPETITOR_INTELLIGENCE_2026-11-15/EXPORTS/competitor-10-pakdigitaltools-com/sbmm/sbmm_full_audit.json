@@ -1,0 +1,152 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "pakdigitaltools.com",
+    "business_name": "Pak Digital Tools",
+    "target_url": "https://pakdigitaltools.com/products",
+    "selection_score": "67.8",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "10175 visits/mo",
+    "referring_domains": "98 domains",
+    "authority_score": "30.5/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "60/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "All Products \u2014 Pak Digital Tools",
+    "title_length": 32,
+    "title_status": "GOOD",
+    "meta_description": "Verified digital subscriptions with protected checkout, private delivery and real support.",
+    "meta_desc_length": 90,
+    "canonical_url": "https://pakdigitaltools.com/products",
+    "robots_directive": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 2385.0,
+    "page_size_kb": 92.4,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 60,
+    "direct_answer_coverage": "Low",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "All digital products",
+    "h2_count": 0,
+    "h3_count": 10
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "function",
+        40
+      ],
+      [
+        "return",
+        19
+      ],
+      [
+        "digital",
+        12
+      ],
+      [
+        "false",
+        11
+      ],
+      [
+        "open",
+        11
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 78,
+    "external_links_count": 1,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 31,
+    "missing_alt_count": 22,
+    "alt_text_coverage": "29.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "WebSite",
+      "OnlineStore"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "All Products \u2014 Pak Digital Tools",
+    "og_description": "Verified digital subscriptions with protected checkout, private delivery and real support.",
+    "og_image": ""
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "pakdigitaltools.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 2385.0,
+    "payload_kb": 92.4,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy ChatGPT Plus pakistan",
+      "buy Canva Pro pakistan",
+      "buy CapCut Pro pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "820,200",
+    "monthly_visits_est": "9,610",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 2549,
+    "live_avg_duration_seconds": 10.7
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "Pakistan (PK)",
+    "traffic_share": "78.4% PK",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "287",
+    "top_commercial_queries": [
+      "HeyGen price in pakistan",
+      "Envato Elements price in pakistan",
+      "ChatGPT Plus price in pakistan",
+      "Grammarly Premium price in pakistan"
+    ]
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "seotoolzbundle.com",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2024-05-30T06:18:53Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "Group Buy SEO Tools 2026 | Ahrefs, SEMrush &amp; 100+ Premium Tools &#8212; SeoToolzBundle",
+    "meta_description": "#1 Group Buy SEO Tools Provider in India 2026. Get Ahrefs, SEMrush, Surfer SEO &amp; 100+ premium tools at 90% off. Plans from &#8377;399/mo. UPI accepted. Instant delivery. Join 15,000+ members!",
+    "canonical": "https://seotoolzbundle.com/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "Group Buy SEO Tools &#8212; Premium Access at 90% Off",
+    "h2_count": 6
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 49,
+    "external_links": 4
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 1,
+    "missing_alt": 1
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": [
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN"
+    ]
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 876.3,
+    "page_load_rating": "AVERAGE"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/seotoolzbundle.com",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=seotoolzbundle.com"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "15",
+    "selection_score": "64.6"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

@@ -1,0 +1,151 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "malikdatacentre.store",
+    "business_name": "Malik Data Centre",
+    "target_url": "https://www.malikdatacentre.store/tools/",
+    "selection_score": "89.5",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "11275 visits/mo",
+    "referring_domains": "105 domains",
+    "authority_score": "40.3/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Buy AI Tools &amp; Subscriptions Online, Worldwide | MALIK DATA CENTRE",
+    "title_length": 70,
+    "title_status": "NEEDS_OPTIMIZATION",
+    "meta_description": "Compare 64 AI tools and software subscriptions from $1.08: ChatGPT, Gemini, Google AI Ultra, SuperGrok, Canva, Adobe, CapCut, Cursor and more. Worldwide delivery, USDT payment and WhatsApp activation.",
+    "meta_desc_length": 200,
+    "canonical_url": "https://www.malikdatacentre.store/tools/",
+    "robots_directive": "index, follow, max-image-preview:large, max-snippet:-1"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 221.4,
+    "page_size_kb": 105.9,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "AI tools &amp; subscriptions, worldwide",
+    "h2_count": 3,
+    "h3_count": 64
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "amp",
+        213
+      ],
+      [
+        "order",
+        65
+      ],
+      [
+        "middot",
+        65
+      ],
+      [
+        "view",
+        64
+      ],
+      [
+        "details",
+        62
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 1,
+    "external_links_count": 10,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 67,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "ItemList",
+      "BreadcrumbList",
+      "OnlineStore"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Buy AI Tools &amp; Subscriptions Online, Worldwide | MALIK DATA CENTRE",
+    "og_description": "Compare 64 AI tools and software subscriptions from $1.08: ChatGPT, Gemini, Google AI Ultra, SuperGrok, Canva, Adobe, CapCut, Cursor and more. Worldwide delivery, USDT payment and WhatsApp activation.",
+    "og_image": "https://www.malikdatacentre.store/assets/logo.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": []
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "malikdatacentre.store",
+    "tld": "store",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 221.4,
+    "payload_kb": 105.9,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Midjourney pakistan",
+      "buy Adobe Creative Cloud pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

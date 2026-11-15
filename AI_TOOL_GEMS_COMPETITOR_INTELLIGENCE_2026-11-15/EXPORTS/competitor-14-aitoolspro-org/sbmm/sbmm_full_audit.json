@@ -1,0 +1,159 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "aitoolspro.org",
+    "business_name": "AI Tools Pro",
+    "target_url": "https://aitoolspro.org/",
+    "selection_score": "64.8",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "7425 visits/mo",
+    "referring_domains": "77 domains",
+    "authority_score": "29.2/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Buy AI Tools &#038; Digital Subscriptions Online",
+    "title_length": 48,
+    "title_status": "GOOD",
+    "meta_description": "Explore AI tools, software and digital subscriptions from AI Tools Bro, including ChatGPT, Claude, CapCut, Adobe, Notion and more.",
+    "meta_desc_length": 130,
+    "canonical_url": "https://aitoolspro.org/",
+    "robots_directive": "max-image-preview:large, max-snippet, max-video-preview"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 2921.5,
+    "page_size_kb": 478.1,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Premium AI Tools at Unbeatable Prices",
+    "h2_count": 12,
+    "h3_count": 47
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "stock",
+        276
+      ],
+      [
+        "036",
+        267
+      ],
+      [
+        "warranty",
+        194
+      ],
+      [
+        "full",
+        115
+      ],
+      [
+        "month",
+        109
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 506,
+    "external_links_count": 4,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 29,
+    "missing_alt_count": 9,
+    "alt_text_coverage": "69.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "Organization",
+      "ItemList",
+      "FAQPage",
+      "WebSite"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": true
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Buy AI Tools &#038; Digital Subscriptions Online",
+    "og_description": "Explore AI tools, software and digital subscriptions from AI Tools Bro, including ChatGPT, Claude, CapCut, Adobe, Notion and more.",
+    "og_image": "https://aitoolspro.org/wp-content/plugins/ai-pro-control/assets/brand/logo-on-light.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "WordPress",
+      "WooCommerce",
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "aitoolspro.org",
+    "tld": "org",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 2921.5,
+    "payload_kb": 478.1,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Midjourney pakistan",
+      "buy Suno AI pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "aitoolspak.com",
+    "business_name": "AI Tools Pak",
+    "target_url": "https://aitoolspak.com/",
+    "selection_score": "94.3",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "12925 visits/mo",
+    "referring_domains": "119 domains",
+    "authority_score": "42.4/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 1,
+    "notices": 2,
+    "health_score": "85/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Affordable AI Tools Seller in Pakistan | AI Tools PAK",
+    "title_length": 53,
+    "title_status": "GOOD",
+    "meta_description": "Buy AI tools in Pakistan from AI Tools PAK, an AI tools provider. Purchase AI tools and subscriptions with PKR prices, local payment and WhatsApp delivery.",
+    "meta_desc_length": 155,
+    "canonical_url": "https://aitoolspak.com",
+    "robots_directive": "index, follow"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 121.6,
+    "page_size_kb": 37.2,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 85,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "Yes"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Buy AI Tools &amp; Subscriptions in Pakistan",
+    "h2_count": 7,
+    "h3_count": 22
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "amp",
+        16
+      ],
+      [
+        "explore",
+        15
+      ],
+      [
+        "whatsapp",
+        11
+      ],
+      [
+        "pakistan",
+        10
+      ],
+      [
+        "digital",
+        10
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 64,
+    "external_links_count": 1,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 2,
+    "missing_alt_count": 2,
+    "alt_text_coverage": "0.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "Organization",
+      "FAQPage",
+      "WebSite"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": true
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Affordable AI Tools Seller in Pakistan | AI Tools PAK",
+    "og_description": "Buy AI tools in Pakistan from AI Tools PAK, an AI tools provider. Purchase AI tools and subscriptions with PKR prices, local payment and WhatsApp delivery.",
+    "og_image": "https://aitoolspak.com/og-image.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "aitoolspak.com",
+    "tld": "com",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 121.6,
+    "payload_kb": 37.2,
+    "speed_index": "Good (< 1.5s)"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy ChatGPT Plus pakistan",
+      "buy Canva Pro pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

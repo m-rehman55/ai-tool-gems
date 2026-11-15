@@ -1,0 +1,45 @@
+{
+  "audit_date": "2026-11-15",
+  "project": "AI Tool Gems Pakistan Competitor Intelligence",
+  "status": "COMPLETED",
+  "current_competitor_index": 20,
+  "completed_domains": [
+    "aitoolspak.com",
+    "malikdatacentre.store",
+    "aitoolspak.tech",
+    "subbazaar.pk",
+    "toolsaura.pk",
+    "toolwaly.com",
+    "ikudigitaltools.com",
+    "zippersells.com",
+    "kingmotions.com",
+    "pakdigitaltools.com",
+    "aiwala.pk",
+    "toolzbuy.com",
+    "tahirtech.store",
+    "aitoolspro.org",
+    "seotoolzbundle.com",
+    "digiteazy.com",
+    "substore.pk",
+    "freshtools.net",
+    "toolsseller.com",
+    "codesforever.com"
+  ],
+  "total_domains": 20,
+  "features_per_competitor": {
+    "sbmm_total": 19,
+    "sbmm_captured": 19,
+    "aitdk_total": 12,
+    "aitdk_captured": 12
+  },
+  "artifacts_generated": {
+    "domain_reports": 20,
+    "sbmm_exports": 20,
+    "aitdk_exports": 20,
+    "csv_matrices": 7
+  },
+  "last_checkpoint_timestamp": "2026-11-15T05:55:53.939354",
+  "aitdk_live_stream_status": "COMPLETED_ALL_20_DOMAINS",
+  "total_live_domains_extracted": 20,
+  "live_stream_endpoint": "https://aitdk.com/api/v1/domains/summaries"
+}

@@ -1,0 +1,152 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "toolsaura.pk",
+    "business_name": "ToolsAura",
+    "target_url": "https://toolsaura.pk/",
+    "selection_score": "85.8",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "11825 visits/mo",
+    "referring_domains": "111 domains",
+    "authority_score": "38.6/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 0,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "70/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "ToolsAura - All AI Tools. One Place. Buy ChatGPT, Claude, Midjourney, Canva Pro & 1000+ AI Tools & Models in Pakistan",
+    "title_length": 117,
+    "title_status": "NEEDS_OPTIMIZATION",
+    "meta_description": "Buy premium AI tool subscriptions in Pakistan at ToolsAura \u2014 ChatGPT Plus, Claude Pro, Midjourney, Gemini Advanced, Canva Pro, Copilot, Grok, DALL-E 3, ElevenLabs, CapCut Pro, Notion AI, Runway, Perplexity Pro &amp; 1000+ more. Instant delivery, 100% authentic accounts, secure payments, unbeatable prices, 24/7 support.",
+    "meta_desc_length": 320,
+    "canonical_url": "https://toolsaura.pk/",
+    "robots_directive": "index,follow"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 1571.0,
+    "page_size_kb": 488.3,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 70,
+    "direct_answer_coverage": "Moderate",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 1,
+    "h1_primary": "Buy ChatGPT, Claude, Midjourney, Canva Pro &amp; 1000+ AI tools in Pakistan",
+    "h2_count": 10,
+    "h3_count": 0
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "stock",
+        233
+      ],
+      [
+        "only",
+        134
+      ],
+      [
+        "left",
+        134
+      ],
+      [
+        "fw",
+        96
+      ],
+      [
+        "premium",
+        85
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 401,
+    "external_links_count": 0,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 370,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "Organization",
+      "WebSite"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "ToolsAura",
+    "og_description": "Buy premium AI tool subscriptions in Pakistan at ToolsAura \u2014 ChatGPT Plus, Claude Pro, Midjourney, Gemini Advanced, Canva Pro, Copilot, Grok, DALL-E 3, ElevenLabs, CapCut Pro, Notion AI, Runway, Perplexity Pro &amp; 1000+ more. Instant delivery, 100% authentic accounts, secure payments, unbeatable prices, 24/7 support.",
+    "og_image": "https://toolsaura.pk/assets/img/logo.png"
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "WordPress"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "toolsaura.pk",
+    "tld": "pk",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 1571.0,
+    "payload_kb": 488.3,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy HeyGen pakistan",
+      "buy Envato Elements pakistan",
+      "buy Midjourney pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}

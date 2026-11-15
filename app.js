@@ -371,9 +371,9 @@ function card(p) {
         </div>
         <span class="saving">${savingBadge}</span>
       </div>
-      <div class="product-delivery-note">⚡ Verified WhatsApp Delivery · After Confirmation</div>
+      <div class="product-delivery-note">⚡ Official Vendor Directory · Direct Access</div>
       <div class="card-actions directory-actions">
-        <a class="buy-now-card explore-tool-btn" href="tools/${p.id}/"><svg><use href="#i-whatsapp"></use></svg> Buy now</a>
+        <a class="buy-now-card explore-tool-btn" href="tools/${p.id}/">Explore Free Tool ↗</a>
         <a class="detail-button" href="tools/${p.id}/" aria-label="View details for ${escapeHTML(p.name)}">View details</a>
         <a class="official-link-btn" href="${p.officialUrl}" target="_blank" rel="noopener noreferrer" title="Visit ${p.name} official website" aria-label="Visit ${p.name} official website">
           ${svg('i-external')}
@@ -440,7 +440,16 @@ function renderProducts() {
   if (grid) grid.innerHTML = shown.map(card).join('');
   
   const empty = $('#emptyState');
-  if (empty) empty.classList.toggle('show', !all.length);
+  if (empty) {
+    empty.classList.toggle('show', !all.length);
+    if (!all.length) {
+      empty.removeAttribute('hidden');
+      empty.style.display = 'block';
+    } else {
+      empty.setAttribute('hidden', '');
+      empty.style.display = 'none';
+    }
+  }
   
   const aq = $('#activeQuery');
   if (aq) {

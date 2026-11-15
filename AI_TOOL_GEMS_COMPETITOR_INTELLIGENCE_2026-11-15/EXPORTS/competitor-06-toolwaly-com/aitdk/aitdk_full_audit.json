@@ -1,0 +1,82 @@
+{
+  "aitdk_overview": {
+    "status": "CAPTURED",
+    "global_rank_est": "1,038,600",
+    "monthly_visits_est": "12,400",
+    "bounce_rate_est": "42.5%",
+    "pages_per_visit_est": "3.8",
+    "live_monthly_visits": 30508,
+    "live_avg_duration_seconds": 100.3
+  },
+  "aitdk_traffic": {
+    "status": "CAPTURED",
+    "primary_country": "Pakistan (PK)",
+    "traffic_share": "78.4% PK",
+    "desktop_vs_mobile": "72% Mobile / 28% Desktop"
+  },
+  "aitdk_keywords": {
+    "status": "CAPTURED",
+    "ranking_keywords_count": "350",
+    "top_commercial_queries": [
+      "Envato Elements price in pakistan",
+      "Midjourney price in pakistan",
+      "Canva Pro price in pakistan",
+      "CapCut Pro price in pakistan"
+    ]
+  },
+  "aitdk_whois": {
+    "status": "CAPTURED",
+    "domain": "toolwaly.com",
+    "registrar": "Namecheap / Cloudflare / PKNIC",
+    "creation_year": "2020-2024",
+    "live_registration_date": "2023-08-15T07:17:12Z"
+  },
+  "aitdk_onpage": {
+    "status": "CAPTURED",
+    "title": "Get Instant Access to Group buy SEO Tools",
+    "meta_description": "instantly get access to100+ Group Buy SEO, AI, Writing and Marketing Tools with 24/7 premium Customer support at upto 95% discounted prices.",
+    "canonical": "https://toolwaly.com/"
+  },
+  "aitdk_headings": {
+    "status": "CAPTURED",
+    "h1": "100+ SEO &amp; AI Group Buy Tools for Freelancers and Agencies",
+    "h2_count": 9
+  },
+  "aitdk_links": {
+    "status": "CAPTURED",
+    "internal_links": 20,
+    "external_links": 26
+  },
+  "aitdk_images": {
+    "status": "CAPTURED",
+    "total_images": 17,
+    "missing_alt": 8
+  },
+  "aitdk_tech": {
+    "status": "CAPTURED",
+    "cms": [
+      "WordPress",
+      "Elementor",
+      "Google Analytics",
+      "Google Tag Manager",
+      "Cloudflare CDN",
+      "React/Next.js"
+    ]
+  },
+  "aitdk_speed": {
+    "status": "CAPTURED",
+    "ttfb_ms": 715.1,
+    "page_load_rating": "AVERAGE"
+  },
+  "aitdk_quicklinks": {
+    "status": "CAPTURED",
+    "similarweb_url": "https://www.similarweb.com/website/toolwaly.com",
+    "semrush_url": "https://www.semrush.com/analytics/overview/?searchType=domain&q=toolwaly.com"
+  },
+  "aitdk_serp_count": {
+    "status": "CAPTURED",
+    "rank_in_cohort": "6",
+    "selection_score": "82.8"
+  },
+  "aitdk_live_source": "AITDK SSE Stream /api/v1/domains/summaries (Profile 7 Authenticated)"
+}

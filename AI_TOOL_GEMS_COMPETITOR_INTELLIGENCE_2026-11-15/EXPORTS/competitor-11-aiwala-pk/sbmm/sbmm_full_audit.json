@@ -1,0 +1,157 @@
+{
+  "overview": {
+    "status": "CAPTURED",
+    "domain": "aiwala.pk",
+    "business_name": "AI Wala",
+    "target_url": "https://aiwala.pk/",
+    "selection_score": "66.8",
+    "domain_age": "Established (2-6 years)",
+    "estimated_monthly_visits": "9900 visits/mo",
+    "referring_domains": "96 domains",
+    "authority_score": "30.1/100"
+  },
+  "audit": {
+    "status": "CAPTURED",
+    "critical_errors": 1,
+    "warnings": 0,
+    "notices": 2,
+    "health_score": "50/100"
+  },
+  "seoonpage": {
+    "status": "CAPTURED",
+    "title": "Buy Premium AI Tools in Pakistan at PKR Prices | AI Wala",
+    "title_length": 56,
+    "title_status": "GOOD",
+    "meta_description": "Buy Claude, Runway, Leonardo, Ideogram, Grammarly &amp; more AI tools in Pakistan at PKR prices. Fast delivery and WhatsApp support.",
+    "meta_desc_length": 132,
+    "canonical_url": "https://aiwala.pk/",
+    "robots_directive": "index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+  },
+  "seotech": {
+    "status": "CAPTURED",
+    "https": true,
+    "ttfb_ms": 3927.4,
+    "page_size_kb": 488.3,
+    "html_vs_dom": "Consistent static/SSR HTML markup"
+  },
+  "aeo": {
+    "status": "CAPTURED",
+    "aeo_readiness_score": 50,
+    "direct_answer_coverage": "Low",
+    "faq_blocks_detected": "No"
+  },
+  "headings": {
+    "status": "CAPTURED",
+    "h1_count": 0,
+    "h1_primary": "Missing H1",
+    "h2_count": 0,
+    "h3_count": 0
+  },
+  "density": {
+    "status": "CAPTURED",
+    "top_terms": [
+      [
+        "pxlheading",
+        331
+      ],
+      [
+        "12px",
+        188
+      ],
+      [
+        "pxlbutton",
+        165
+      ],
+      [
+        "16px",
+        159
+      ],
+      [
+        "24px",
+        140
+      ]
+    ],
+    "keyword_stuffing_risk": "Low"
+  },
+  "links": {
+    "status": "CAPTURED",
+    "internal_links_count": 0,
+    "external_links_count": 0,
+    "broken_links_detected": 0
+  },
+  "images": {
+    "status": "CAPTURED",
+    "total_images": 0,
+    "missing_alt_count": 0,
+    "alt_text_coverage": "100.0%"
+  },
+  "schema": {
+    "status": "CAPTURED",
+    "detected_types": [
+      "WebPage",
+      "Article",
+      "ImageObject",
+      "WebSite",
+      "Person",
+      "Organization"
+    ],
+    "has_product_schema": false,
+    "has_faq_schema": false
+  },
+  "social": {
+    "status": "CAPTURED",
+    "og_title": "Buy Premium AI Tools in Pakistan at PKR Prices | AI Wala",
+    "og_description": "Buy Claude, Runway, Leonardo, Ideogram, Grammarly &amp; more AI tools in Pakistan at PKR prices. Fast delivery and WhatsApp support.",
+    "og_image": ""
+  },
+  "redirects": {
+    "status": "CAPTURED",
+    "http_status": 200,
+    "redirect_chains": 0,
+    "destination_canonical": "Match"
+  },
+  "techstack": {
+    "status": "CAPTURED",
+    "detected_technologies": [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "Cloudflare CDN"
+    ]
+  },
+  "domain": {
+    "status": "CAPTURED",
+    "root_domain": "aiwala.pk",
+    "tld": "pk",
+    "server_location": "Cloudflare / International Edge"
+  },
+  "perf": {
+    "status": "CAPTURED",
+    "ttfb_ms": 3927.4,
+    "payload_kb": 488.3,
+    "speed_index": "Moderate"
+  },
+  "linkfinder": {
+    "status": "CAPTURED",
+    "recommended_inbound_anchors": [
+      "buy Claude Pro pakistan"
+    ]
+  },
+  "linkgraph": {
+    "status": "CAPTURED",
+    "structure_depth": "2-3 clicks to checkout",
+    "hub_pages": [
+      "/products",
+      "/category/ai-tools",
+      "/shop"
+    ]
+  },
+  "tools": {
+    "status": "CAPTURED",
+    "inspected_page_type": "Homepage / Catalogue Root"
+  },
+  "settings": {
+    "status": "CAPTURED",
+    "extension_profile": "Profile 7 (Active)"
+  }
+}
