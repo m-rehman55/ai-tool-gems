@@ -23,6 +23,8 @@ class LinkQualification:
     INCONCLUSIVE_SERVER_ERROR = "inconclusive_server_error"
     INCONCLUSIVE_TIMEOUT = "inconclusive_timeout"
     SSRF_BLOCKED = "ssrf_blocked"
+    BLOCKED_WAF = "blocked_waf"
+    CHALLENGE_REQUIRED = "challenge_required"
 
 
 @dataclass

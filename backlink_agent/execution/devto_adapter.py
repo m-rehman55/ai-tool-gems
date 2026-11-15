@@ -72,6 +72,9 @@ class DevtoAPIAdapter:
                 adapter_name=self.ADAPTER_NAME,
                 status=ExecutionStatus.DRY_RUN,
                 live_url=simulated_url,
+                submission_url="https://dev.to/new",
+                submission_evidence_url=simulated_url,
+                canonical_placement_url=simulated_url,
                 evidence_message=f"Simulated Dev.to article published: {simulated_url}",
                 audit_metadata={
                     "title": title,
@@ -110,6 +113,9 @@ class DevtoAPIAdapter:
                     adapter_name=self.ADAPTER_NAME,
                     status=ExecutionStatus.SUCCESS,
                     live_url=live_url,
+                    submission_url="https://dev.to/new",
+                    submission_evidence_url=live_url,
+                    canonical_placement_url=live_url,
                     evidence_message=f"Live Dev.to article published: {live_url}",
                     audit_metadata={
                         "id": data.get("id"),

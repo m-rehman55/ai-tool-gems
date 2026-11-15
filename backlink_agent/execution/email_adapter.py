@@ -64,6 +64,9 @@ class EmailPitchAdapter:
                 adapter_name=self.ADAPTER_NAME,
                 status=ExecutionStatus.DRY_RUN,
                 live_url=f"Sent via editorial pitch to {recipient}",
+                submission_url=f"https://www.{domain}/contact/",
+                submission_evidence_url=f"Sent via editorial pitch to {recipient}",
+                canonical_placement_url=f"https://www.{domain}",
                 evidence_message=f"Simulated email pitch sent to {recipient}",
                 audit_metadata={
                     "recipient": recipient,
@@ -90,6 +93,9 @@ class EmailPitchAdapter:
                 adapter_name=self.ADAPTER_NAME,
                 status=ExecutionStatus.SUCCESS,
                 live_url=f"Sent via email pitch to {recipient}",
+                submission_url=f"https://www.{domain}/contact/",
+                submission_evidence_url=f"Sent via email pitch to {recipient}",
+                canonical_placement_url=f"https://www.{domain}",
                 evidence_message=f"Live email pitch delivered to {recipient}",
                 audit_metadata={
                     "recipient": recipient,
