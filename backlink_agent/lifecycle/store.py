@@ -234,6 +234,23 @@ class LocalSQLiteLifecycleStore:
             )
         return sub_id
 
+    def update_draft_package(
+        self, prospect_id: str, draft_id: str, draft_hash: str
+    ) -> None:
+        """Associates a prepared draft package and its deterministic hash with a prospect."""
+        now_iso = datetime.now(timezone.utc).isoformat()
+        with self._get_connection() as conn:
+            conn.execute(
+                """
+                UPDATE prospect_lifecycle
+                SET draft_id = ?,
+                    draft_hash = ?,
+                    updated_at = ?
+                WHERE prospect_id = ?
+                """,
+                (draft_id, draft_hash, now_iso, prospect_id),
+            )
+
     def update_verification_status(
         self,
         prospect_id: str,

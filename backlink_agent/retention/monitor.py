@@ -24,10 +24,13 @@ class RetentionMonitor:
         now_iso = datetime.now(timezone.utc).isoformat()
         prev_hash = previous_snapshot.content_hash if previous_snapshot else None
 
-        # 1. Temporary failure check (Never mark removed on 5xx or socket timeout)
-        if current_result.qualification in (
-            LinkQualification.INCONCLUSIVE_SERVER_ERROR,
-            LinkQualification.INCONCLUSIVE_TIMEOUT,
+        # 1. Temporary failure check (Never mark removed on 5xx, 429 rate limit, or socket timeout)
+        if (
+            current_result.qualification in (
+                LinkQualification.INCONCLUSIVE_SERVER_ERROR,
+                LinkQualification.INCONCLUSIVE_TIMEOUT,
+            )
+            or current_result.http_status in (429, 500, 502, 503, 504)
         ):
             return RetentionSnapshot(
                 prospect_id=current_result.prospect_id,
@@ -39,7 +42,22 @@ class RetentionMonitor:
                 content_hash=prev_hash or current_result.content_hash,
                 previous_content_hash=prev_hash,
                 status_detected=RetentionStatus.INCONCLUSIVE_TEMPORARY_FAILURE,
-                notes=f"Temporary verification error: {current_result.error_message}. Preserving prior status.",
+                notes=f"Temporary verification error: {current_result.error_message or f'HTTP {current_result.http_status}'}. Preserving prior status.",
+            )
+
+        # 1b. Explicit Permanent HTTP 404 / 410 Gone Check
+        if current_result.http_status in (404, 410):
+            return RetentionSnapshot(
+                prospect_id=current_result.prospect_id,
+                verification_date=now_iso,
+                days_since_first_verified=days_active,
+                qualification=current_result.qualification,
+                anchor_text="",
+                target_destination="",
+                content_hash=current_result.content_hash,
+                previous_content_hash=prev_hash,
+                status_detected=RetentionStatus.LINK_REMOVED,
+                notes=f"Source page returns HTTP {current_result.http_status} (Permanent Removal)",
             )
 
         # 2. Check if page became noindex

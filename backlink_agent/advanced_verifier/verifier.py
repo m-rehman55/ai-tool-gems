@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 import logging
 import re
 import socket
@@ -23,6 +24,7 @@ logger = logging.getLogger(__name__)
 USER_AGENT = "AIToolGems-AdvancedVerifier/2.0 (+https://aitoolgems.tech/llms.txt)"
 DEFAULT_TIMEOUT = 12.0
 DEFAULT_MAX_BYTES = 2 * 1024 * 1024  # 2 MB limit
+DEFAULT_MAX_DECOMPRESSED_BYTES = 4 * 1024 * 1024  # 4 MB decompressed expansion limit
 DEFAULT_MAX_REDIRECTS = 5
 
 
@@ -33,10 +35,12 @@ class AdvancedBacklinkVerifier:
         self,
         timeout: float = DEFAULT_TIMEOUT,
         max_bytes: int = DEFAULT_MAX_BYTES,
+        max_decompressed_bytes: int = DEFAULT_MAX_DECOMPRESSED_BYTES,
         max_redirects: int = DEFAULT_MAX_REDIRECTS,
     ):
         self.timeout = timeout
         self.max_bytes = max_bytes
+        self.max_decompressed_bytes = max_decompressed_bytes
         self.max_redirects = max_redirects
 
     def verify_html(
@@ -193,6 +197,23 @@ class AdvancedBacklinkVerifier:
 
                     # Terminal response
                     body_bytes = resp.read(self.max_bytes)
+
+                    # Decompression limit guard: prevent compressed expansion bombs
+                    encoding = (headers.get("Content-Encoding") or headers.get("content-encoding") or "").lower()
+                    if "gzip" in encoding:
+                        import gzip
+                        try:
+                            gz = gzip.GzipFile(fileobj=io.BytesIO(body_bytes))
+                            body_bytes = gz.read(self.max_decompressed_bytes)
+                        except Exception as e:
+                            logger.warning("Gzip decompression failed for %s: %s", current_url, e)
+                    elif "deflate" in encoding:
+                        import zlib
+                        try:
+                            body_bytes = zlib.decompress(body_bytes, 15, self.max_decompressed_bytes)
+                        except Exception as e:
+                            logger.warning("Deflate decompression failed for %s: %s", current_url, e)
+
                     html_text = body_bytes.decode("utf-8", errors="replace")
 
                     return self.verify_html(

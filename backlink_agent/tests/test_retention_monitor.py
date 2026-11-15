@@ -110,6 +110,46 @@ class TestRetentionMonitor(unittest.TestCase):
         self.assertEqual(snap.anchor_text, "AI Tool Gems")  # Preserved from previous snapshot!
         self.assertIn("Temporary verification error", snap.notes)
 
+    def test_http_404_410_permanent_removal(self):
+        """Permanent 404 or 410 returns LINK_REMOVED with explicit status notes."""
+        curr_404 = DetailedVerificationResult(
+            prospect_id="p1",
+            source_page_url="https://site.example/page",
+            target_asset_url="https://aitoolgems.tech/",
+            http_status=404,
+            final_page_url="https://site.example/page",
+            anchor_found=False,
+            qualification=LinkQualification.ANCHOR_MISSING,
+        )
+        snap = RetentionMonitor.evaluate_retention(curr_404, days_active=14)
+        self.assertEqual(snap.status_detected, RetentionStatus.LINK_REMOVED)
+        self.assertIn("HTTP 404 (Permanent Removal)", snap.notes)
+
+    def test_http_429_rate_limit_preserves_status(self):
+        """HTTP 429 Too Many Requests is a temporary rate limit and must preserve prior status."""
+        prev = RetentionSnapshot(
+            prospect_id="p2",
+            verification_date="2026-11-01T00:00:00Z",
+            days_since_first_verified=30,
+            qualification=LinkQualification.EDITORIAL_DOFOLLOW,
+            anchor_text="AI Tool Gems",
+            target_destination="https://aitoolgems.tech/",
+            content_hash="hash_p2",
+        )
+        curr_429 = DetailedVerificationResult(
+            prospect_id="p2",
+            source_page_url="https://site.example/rate-limited",
+            target_asset_url="https://aitoolgems.tech/",
+            http_status=429,
+            final_page_url="https://site.example/rate-limited",
+            anchor_found=False,
+            qualification=LinkQualification.ANCHOR_MISSING,
+        )
+        snap = RetentionMonitor.evaluate_retention(curr_429, days_active=35, previous_snapshot=prev)
+        self.assertEqual(snap.status_detected, RetentionStatus.INCONCLUSIVE_TEMPORARY_FAILURE)
+        self.assertEqual(snap.anchor_text, "AI Tool Gems")
+        self.assertIn("HTTP 429", snap.notes)
+
 
 if __name__ == "__main__":
     unittest.main()
