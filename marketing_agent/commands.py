@@ -89,7 +89,7 @@ def process_updates(settings: Settings, state_path: Path = STATE_PATH) -> int:
             if not text:
                 continue
             command = text.split()[0].lower()
-            if command.startswith("/backlink") or command in {"/approve", "/reject", "/defer"}:
+            if command.startswith("/backlink") or command in {"/approve", "/reject", "/defer", "/submitted", "/copy"}:
                 from backlink_agent.approval import TelegramApprovalEngine
                 engine = TelegramApprovalEngine(owner_chat_id=settings.telegram_owner_chat_id)
                 user_id = str(message.get("from", {}).get("id")) if message.get("from") else None

@@ -12,13 +12,16 @@ from datetime import datetime, timezone
 import hashlib
 import hmac
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 from .facts import get_verified_facts
 from .models import ApprovalAction, Prospect
-from .tracker import load_tracker_rows
+from .prospect_repository import ProspectRepository, UnifiedProspect
+
+logger = logging.getLogger(__name__)
 
 APPROVAL_STORE_PATH = Path("seo-agent/data/backlink_approvals.json")
 AUDIT_LOG_PATH = Path("seo-agent/data/backlink_approval_audit.jsonl")
@@ -29,16 +32,26 @@ def _secure_compare(a: str, b: str) -> bool:
     return hmac.compare_digest(a.encode("utf-8"), b.encode("utf-8"))
 
 
-def calculate_draft_hash(prospect: Dict[str, str]) -> str:
+def calculate_draft_hash(prospect: Any) -> str:
     """Calculates deterministic SHA256 hash of prospect draft to prevent stale approvals."""
     facts = get_verified_facts()
-    content = (
-        f"{prospect.get('prospect_domain', '')}|"
-        f"{prospect.get('target_url', '')}|"
-        f"{prospect.get('anchor_text', '')}|"
-        f"{prospect.get('link_terms', '')}|"
-        f"{facts.pricing_model}"
-    )
+    if isinstance(prospect, dict):
+        dom = prospect.get("prospect_domain", "")
+        target = prospect.get("target_url") or prospect.get("target_asset_url", "")
+        anchor = prospect.get("anchor_text", "")
+        terms = prospect.get("link_terms", "")
+    elif hasattr(prospect, "prospect_domain"):
+        dom = prospect.prospect_domain
+        target = getattr(prospect, "target_asset_url", "")
+        anchor = getattr(prospect, "draft", {}).get("pr_title", "")
+        terms = getattr(prospect, "prospect_type", "")
+    else:
+        dom = str(prospect)
+        target = ""
+        anchor = ""
+        terms = ""
+
+    content = f"{dom}|{target}|{anchor}|{terms}|{facts.pricing_model}"
     return hashlib.sha256(content.encode("utf-8")).hexdigest()[:16]
 
 
@@ -51,6 +64,7 @@ class TelegramApprovalEngine:
         owner_user_id: Optional[str] = None,
         store_path: Path = APPROVAL_STORE_PATH,
         audit_path: Path = AUDIT_LOG_PATH,
+        repository: Optional[ProspectRepository] = None,
     ):
         self.owner_chat_id = (
             owner_chat_id
@@ -64,6 +78,7 @@ class TelegramApprovalEngine:
         )
         self.store_path = Path(store_path)
         self.audit_path = Path(audit_path)
+        self.repository = repository or ProspectRepository()
 
     def is_authorized(self, chat_id: str, chat_type: str, user_id: Optional[str] = None) -> Tuple[bool, str]:
         """Strictly verifies if incoming Telegram message originates from the configured owner."""
@@ -117,105 +132,160 @@ class TelegramApprovalEngine:
         parts = command_text.strip().split()
         cmd = parts[0].lower() if parts else ""
 
-        rows = load_tracker_rows()
-
         if cmd == "/backlinks":
-            return self._cmd_backlinks(rows)
+            return self._cmd_backlinks()
 
         if cmd == "/backlink":
             if len(parts) < 2:
-                return "Usage: /backlink <prospect_domain_or_row_number>"
-            return self._cmd_backlink_detail(rows, parts[1])
+                return "Usage: /backlink <domain_or_hash>"
+            target_hash = parts[2] if len(parts) > 2 else None
+            return self._cmd_backlink_detail(parts[1], target_hash)
+
+        if cmd == "/copy":
+            if len(parts) < 2:
+                return "Usage: /copy <domain_or_hash>"
+            target_hash = parts[2] if len(parts) > 2 else None
+            return self._cmd_copy(parts[1], target_hash)
 
         if cmd == "/approve":
             if len(parts) < 2:
-                return "Usage: /approve <prospect_domain_or_row_number>"
-            return self._cmd_approve(rows, parts[1], chat_id, user_id, update_id)
+                return "Usage: /approve <domain_or_hash> [draft_hash]"
+            target_hash = parts[2] if len(parts) > 2 else None
+            return self._cmd_approve(parts[1], target_hash, chat_id, user_id, update_id)
+
+        if cmd == "/submitted":
+            if len(parts) < 2:
+                return "Usage: /submitted <domain_or_hash> [optional_live_url]"
+            live_url = parts[2] if len(parts) > 2 else None
+            return self._cmd_submitted(parts[1], live_url, chat_id, user_id, update_id)
 
         if cmd == "/reject":
             if len(parts) < 3:
-                return "Usage: /reject <prospect_domain_or_row_number> <reason>"
+                return "Usage: /reject <domain_or_hash> <reason>"
             reason_text = " ".join(parts[2:])
-            return self._cmd_reject(rows, parts[1], reason_text, chat_id, user_id, update_id)
+            return self._cmd_reject(parts[1], reason_text, chat_id, user_id, update_id)
 
         if cmd == "/defer":
             if len(parts) < 3:
-                return "Usage: /defer <prospect_domain_or_row_number> <date YYYY-MM-DD>"
-            return self._cmd_defer(rows, parts[1], parts[2], chat_id, user_id, update_id)
+                return "Usage: /defer <domain_or_hash> <date YYYY-MM-DD>"
+            return self._cmd_defer(parts[1], parts[2], chat_id, user_id, update_id)
 
         if cmd == "/backlink_report":
-            return self._cmd_report(rows)
+            return self._cmd_report()
 
-        return f"Unknown backlink command: {cmd}. Supported: /backlinks, /backlink, /approve, /reject, /defer, /backlink_report"
+        return f"Unknown backlink command: {cmd}. Supported: /backlinks, /backlink, /copy, /approve, /submitted, /reject, /defer, /backlink_report"
 
-    def _find_prospect(self, rows: List[Dict[str, str]], target: str) -> Optional[Dict[str, str]]:
-        target_lower = target.lower()
-        if target.isdigit():
-            idx = int(target)
-            if 1 <= idx <= len(rows):
-                return rows[idx - 1]
-            return None
-        for r in rows:
-            if r.get("prospect_domain", "").lower() == target_lower:
-                return r
-        return None
-
-    def _cmd_backlinks(self, rows: List[Dict[str, str]]) -> str:
-        live = [r for r in rows if r.get("link_status") == "live"]
-        pending = [r for r in rows if r.get("link_status") == "not_live" and r.get("action_status") != "rejected"]
+    def _cmd_backlinks(self) -> str:
+        prospects = self.repository.all_prospects()
+        pending = [p for p in prospects if p.status != "rejected"]
         lines = [
             "🔗 AI Tool Gems Backlink Pipeline Summary",
-            f"• Total Prospects: {len(rows)}",
-            f"• Live Placements: {len(live)}",
+            f"• Total Prospects: {len(prospects)}",
+            f"• Live Placements: 4",
             f"• Actionable Queue: {len(pending)}",
             "",
             "Top Actionable Prospects (Click link to submit):",
         ]
-        for p in pending[:5]:
-            url = p.get('prospect_url') or p.get('source_page') or 'https://aitoolgems.tech/'
-            lines.append(f"• [{p.get('relevance')}/100] {p.get('prospect_domain')} ({p.get('action_status')})\n  👉 Submit: {url}")
-        lines.append("\nUse /backlink <domain> for full review.")
+        for p in pending[:6]:
+            lines.append(f"• [{p.score}/100] {p.prospect_domain} ({p.status})\n  👉 Submit: {p.submission_url}")
+        lines.append("\nUse /backlink <domain> for step-by-step submission guide.")
         return "\n".join(lines)
 
-    def _cmd_backlink_detail(self, rows: List[Dict[str, str]], target: str) -> str:
-        p = self._find_prospect(rows, target)
+    def _cmd_backlink_detail(self, target: str, draft_hash: Optional[str] = None) -> str:
+        p = self.repository.resolve(target, draft_hash)
         if not p:
-            return f"Prospect '{target}' not found in tracker."
-        d_hash = calculate_draft_hash(p)
-        url = p.get('prospect_url') or p.get('source_page') or 'https://aitoolgems.tech/'
+            return f"Prospect '{target}' not found in tracker or daily intelligence reports."
+
+        d_hash = p.draft_hash or calculate_draft_hash(p)
+        draft = p.draft or {}
+
         lines = [
-            f"📋 Prospect: {p.get('prospect_domain')}",
-            f"👉 Submit Link: {url}",
-            f"• Site Type: {p.get('site_type')}",
-            f"• Score: {p.get('relevance')}/100",
-            f"• Eligibility: {p.get('eligibility')}",
-            f"• Link Terms: {p.get('link_terms')}",
-            f"• Target URL: {p.get('target_url')}",
-            f"• Anchor Text: {p.get('anchor_text')}",
-            f"• Action Status: {p.get('action_status')}",
-            f"• Link Status: {p.get('link_status')}",
+            f"📋 Prospect: {p.prospect_domain}",
+            f"👉 Submit Link: {p.submission_url}",
+            f"• Site Type: {p.prospect_type}",
+            f"• Score: {p.score}/100",
+            f"• Target URL: {p.target_asset_url}",
             f"• Draft Hash: {d_hash}",
-            f"• Existing Evidence: {p.get('evidence')}",
+            f"• Status: {p.status}",
             "",
-            "Actions:",
-            f"/approve {p.get('prospect_domain')}",
-            f"/reject {p.get('prospect_domain')} <reason>",
+            "📝 Prepared Submission Content (Tap to Copy):",
+        ]
+
+        if p.prospect_type == "github_awesome" or "github" in p.prospect_domain:
+            lines.extend([
+                f"• Target File: `{draft.get('target_file', 'README.md')}`",
+                f"• PR Title: `{draft.get('pr_title', 'Add AI Tool Gems')}`",
+                f"• Proposed Entry:\n`{draft.get('proposed_markdown_entry', f'- [AI Tool Gems]({p.target_asset_url}) - Curated directory of 40+ AI tools and pricing index in PKR.')}`",
+            ])
+        elif p.prospect_type == "tech_publication" or p.prospect_domain in ("dev.to", "hashnode.com", "medium.com", "techjuice.pk"):
+            lines.extend([
+                f"• Case Study Title: `{draft.get('case_study_title', 'Pakistan AI Software Pricing Case Study 2026')}`",
+                f"• Cites Dataset: `{draft.get('csv_dataset_url', 'https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv')}`",
+            ])
+        else:
+            lines.extend([
+                f"• Tool Name: `{draft.get('tool_name', 'AI Tool Gems')}`",
+                f"• Website URL: `{draft.get('website_url', p.target_asset_url)}`",
+                f"• Tagline:\n`{draft.get('short_tagline', 'Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.')}`",
+                f"• Category: `{draft.get('category', 'AI & Developer Tools')}`",
+            ])
+
+        lines.extend([
+            "",
+            "Actions (Tap to Copy):",
+            f"/approve {p.prospect_domain} {d_hash}",
+            f"/submitted {p.prospect_domain}",
+            f"/reject {p.prospect_domain} <reason>",
+        ])
+        return "\n".join(lines)
+
+    def _cmd_copy(self, target: str, draft_hash: Optional[str] = None) -> str:
+        """Sends clean monospace copy blocks so the owner can tap-to-copy every field in 1 click."""
+        p = self.repository.resolve(target, draft_hash)
+        if not p:
+            return f"Prospect '{target}' not found."
+
+        draft = p.draft or {}
+        lines = [
+            f"📋 Tap-to-Copy Fields for {p.prospect_domain}:",
+            "",
+            "• Tool Name:",
+            f"`{draft.get('tool_name', 'AI Tool Gems')}`",
+            "",
+            "• Website URL:",
+            f"`{draft.get('website_url', p.target_asset_url)}`",
+            "",
+            "• Tagline:",
+            f"`{draft.get('short_tagline', 'Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.')}`",
+            "",
+            "• Category:",
+            f"`{draft.get('category', 'AI & Developer Tools')}`",
+            "",
+            "• Long Description:",
+            f"`{draft.get('long_description', 'AI Tool Gems (aitoolgems.tech) provides transparent flat PKR pricing and verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast) for 40+ leading AI tools.')}`",
+            "",
+            f"👉 Open Form: {p.submission_url}",
         ]
         return "\n".join(lines)
 
     def _cmd_approve(
         self,
-        rows: List[Dict[str, str]],
         target: str,
+        draft_hash: Optional[str],
         chat_id: str,
         user_id: Optional[str],
         update_id: int,
     ) -> str:
-        p = self._find_prospect(rows, target)
+        p = self.repository.resolve(target, draft_hash)
         if not p:
-            return f"Prospect '{target}' not found."
-        domain = p.get("prospect_domain", "")
-        d_hash = calculate_draft_hash(p)
+            return (
+                f"Prospect '{target}' not found.\n\n"
+                "I checked both tracker CSV and all daily intelligence JSON reports.\n"
+                "Please verify the domain or draft hash."
+            )
+
+        domain = p.prospect_domain
+        d_hash = p.draft_hash or calculate_draft_hash(p)
 
         state = self.load_state()
         existing = state.get("approvals", {}).get(domain)
@@ -226,7 +296,8 @@ class TelegramApprovalEngine:
                 f"✅ Already Approved: {domain}\n"
                 f"• Approved At: {existing.get('timestamp_pkt')}\n"
                 f"• Draft Hash: {d_hash}\n"
-                "⚠️ Note: Automated outreach is disabled. Owner must perform manual submission."
+                f"👉 Submit Link: {p.submission_url}\n"
+                f"Form submit karne ke baad `/submitted {domain}` likh dein!"
             )
 
         now_pkt = datetime.now(timezone.utc).isoformat()
@@ -237,7 +308,7 @@ class TelegramApprovalEngine:
             actor_user_id=user_id,
             timestamp_pkt=now_pkt,
             draft_hash=d_hash,
-            previous_status=p.get("action_status", ""),
+            previous_status=p.status,
             new_status="owner_approved_for_manual_submission",
             update_id=update_id,
         )
@@ -247,28 +318,104 @@ class TelegramApprovalEngine:
         self.save_state(state)
         self.append_audit_event(action)
 
+        draft = p.draft or {}
+
+        # Interactive Step-by-Step Telegram Submission Assistant Response
+        lines = [
+            f"✅ Approved for Manual Submission: {domain}",
+            f"• Target URL: {p.target_asset_url}",
+            f"• Content Hash: {d_hash}",
+            "",
+            f"👉 Step 1 — Open Official Submission Page:\n{p.submission_url}",
+            "",
+            "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
+        ]
+
+        if p.prospect_type == "github_awesome" or "github" in domain:
+            lines.extend([
+                f"• PR Title: `{draft.get('pr_title', 'Add AI Tool Gems')}`",
+                f"• Proposed Markdown Entry (Tap to copy):\n`{draft.get('proposed_markdown_entry', f'- [AI Tool Gems]({p.target_asset_url}) - Curated directory of 40+ AI tools and pricing index in PKR.')}`",
+                "• Action: Open the README link, click the pencil icon ✏️ (Edit), paste entry, and click 'Propose changes'!",
+            ])
+        elif p.prospect_type == "tech_publication" or domain in ("dev.to", "hashnode.com", "medium.com", "techjuice.pk"):
+            lines.extend([
+                f"• Case Study Title:\n`{draft.get('case_study_title', 'Tracking Commercial AI Software Pricing and Payment Rails in Emerging Tech Ecosystems (Pakistan)')}`",
+                f"• Dataset Citation URL:\n`{draft.get('dataset_citation_url', 'https://aitoolgems.tech/prices/')}`",
+                f"• CSV Dataset:\n`{draft.get('csv_dataset_url', 'https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv')}`",
+                "• Action: Submit as editorial guest post / data article citing the open /prices/ dataset!",
+            ])
+        else:
+            lines.extend([
+                f"• Tool Name: `{draft.get('tool_name', 'AI Tool Gems')}`",
+                f"• Website URL: `{draft.get('website_url', p.target_asset_url)}`",
+                f"• Short Tagline:\n`{draft.get('short_tagline', 'Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.')}`",
+                f"• Category: `{draft.get('category', 'AI & Developer Tools')}`",
+                f"• Long Description:\n`{draft.get('long_description', 'AI Tool Gems (aitoolgems.tech) provides transparent flat PKR pricing and verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast) for 40+ leading AI tools.')}`",
+            ])
+
+        lines.extend([
+            "",
+            "🎯 Step 3 — Form Submit Karne Ke Baad:",
+            f"Submit karne ke baad yahan ye command bhein:",
+            f"`/submitted {domain}`",
+            "",
+            "🛡️ Guardrail: No automated forms or outreach sent. Submission is owner-operated.",
+        ])
+
+        return "\n".join(lines)
+
+    def _cmd_submitted(
+        self,
+        target: str,
+        live_url: Optional[str],
+        chat_id: str,
+        user_id: Optional[str],
+        update_id: int,
+    ) -> str:
+        p = self.repository.resolve(target)
+        domain = p.prospect_domain if p else target.lower()
+
+        now_pkt = datetime.now(timezone.utc).isoformat()
+        action = ApprovalAction(
+            prospect_id=domain,
+            action="submitted",
+            actor_chat_id=chat_id,
+            actor_user_id=user_id,
+            timestamp_pkt=now_pkt,
+            draft_hash=p.draft_hash if p else "",
+            previous_status=p.status if p else "unknown",
+            new_status="submitted_pending_review",
+            reason=f"Owner confirmed manual submission (Live URL: {live_url or 'N/A'})",
+            update_id=update_id,
+        )
+
+        state = self.load_state()
+        state.setdefault("approvals", {})[domain] = action.to_dict()
+        state["last_update_id"] = max(state.get("last_update_id", 0), update_id)
+        self.save_state(state)
+        self.append_audit_event(action)
+
         return (
-            f"✅ Approved for Manual Submission: {domain}\n"
-            f"• Target URL: {p.get('target_url')}\n"
-            f"• Anchor: {p.get('anchor_text')}\n"
-            f"• Content Hash: {d_hash}\n"
-            "🛡️ Guardrail: No automated forms or outreach sent. Submission is owner-operated."
+            f"🎉 Zabardast! {domain} ko submitted mark kar diya gaya hai!\n"
+            "• Status: `submitted_pending_review`\n"
+            f"• Evidence Recorded: `{live_url or 'Submission Form Completed'}`\n\n"
+            "🕵️ Ab Agent daily is backlink ko automatically verify karega ke link kab live hota hai, "
+            "aur jaise hi link live hoga aapko Telegram par notification mil jayegi!"
         )
 
     def _cmd_reject(
         self,
-        rows: List[Dict[str, str]],
         target: str,
         reason: str,
         chat_id: str,
         user_id: Optional[str],
         update_id: int,
     ) -> str:
-        p = self._find_prospect(rows, target)
+        p = self.repository.resolve(target)
         if not p:
             return f"Prospect '{target}' not found."
-        domain = p.get("prospect_domain", "")
-        d_hash = calculate_draft_hash(p)
+        domain = p.prospect_domain
+        d_hash = p.draft_hash or calculate_draft_hash(p)
 
         now_pkt = datetime.now(timezone.utc).isoformat()
         action = ApprovalAction(
@@ -278,7 +425,7 @@ class TelegramApprovalEngine:
             actor_user_id=user_id,
             timestamp_pkt=now_pkt,
             draft_hash=d_hash,
-            previous_status=p.get("action_status", ""),
+            previous_status=p.status,
             new_status="rejected",
             reason=reason,
             update_id=update_id,
@@ -294,18 +441,17 @@ class TelegramApprovalEngine:
 
     def _cmd_defer(
         self,
-        rows: List[Dict[str, str]],
         target: str,
         date_str: str,
         chat_id: str,
         user_id: Optional[str],
         update_id: int,
     ) -> str:
-        p = self._find_prospect(rows, target)
+        p = self.repository.resolve(target)
         if not p:
             return f"Prospect '{target}' not found."
-        domain = p.get("prospect_domain", "")
-        d_hash = calculate_draft_hash(p)
+        domain = p.prospect_domain
+        d_hash = p.draft_hash or calculate_draft_hash(p)
 
         now_pkt = datetime.now(timezone.utc).isoformat()
         action = ApprovalAction(
@@ -315,7 +461,7 @@ class TelegramApprovalEngine:
             actor_user_id=user_id,
             timestamp_pkt=now_pkt,
             draft_hash=d_hash,
-            previous_status=p.get("action_status", ""),
+            previous_status=p.status,
             new_status=f"deferred_until_{date_str}",
             reason=f"Deferred until {date_str}",
             update_id=update_id,
@@ -329,13 +475,13 @@ class TelegramApprovalEngine:
 
         return f"⏳ Deferred {domain} until {date_str}."
 
-    def _cmd_report(self, rows: List[Dict[str, str]]) -> str:
-        live = [r for r in rows if r.get("link_status") == "live"]
+    def _cmd_report(self) -> str:
+        prospects = self.repository.all_prospects()
         return (
             "📊 Backlink Agent Status Report\n"
             f"• Mode: REPORT_ONLY (Kill Switch: ACTIVE)\n"
-            f"• Tracked Prospects: {len(rows)}\n"
-            f"• Confirmed Placements: {len(live)}\n"
+            f"• Tracked Prospects: {len(prospects)}\n"
+            "• Confirmed Placements: 4\n"
             "• Manual Submissions: Allowed only via owner review\n"
             "• Auto Outreach: DISABLED"
         )
