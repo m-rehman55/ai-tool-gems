@@ -30,6 +30,24 @@ DEFAULT_MAX_DECOMPRESSED_BYTES = 4 * 1024 * 1024  # 4 MB decompressed expansion 
 DEFAULT_MAX_REDIRECTS = 5
 
 
+def extract_hostname(host_str: str) -> str:
+    """Extract clean hostname or IPv6 literal without port or enclosing brackets for SNI / cert validation."""
+    if not host_str:
+        return ""
+    # Handle bracketed IPv6 e.g. [2001:db8::1]:443 or [2001:db8::1]
+    if host_str.startswith("["):
+        end = host_str.find("]")
+        if end != -1:
+            return host_str[1:end]
+    # Handle host:port (IPv4 or domain)
+    if ":" in host_str:
+        # Bare IPv6 address with multiple colons
+        if host_str.count(":") > 1:
+            return host_str
+        return host_str.split(":", 1)[0]
+    return host_str
+
+
 class PinnedHTTPSConnection(http.client.HTTPSConnection):
     """HTTPS connection connecting to a pre-validated IP literal to prevent DNS rebinding."""
 
@@ -47,15 +65,33 @@ class PinnedHTTPSConnection(http.client.HTTPSConnection):
         if self._tunnel_host:
             self._tunnel()
 
-        server_hostname = self.host.split(":")[0]
+        server_hostname = extract_hostname(self.host)
         ctx = getattr(self, "_context", None)
         if ctx is None:
             ctx = ssl.create_default_context()
+        ctx.check_hostname = True
+        ctx.verify_mode = ssl.CERT_REQUIRED
         self.sock = ctx.wrap_socket(self.sock, server_hostname=server_hostname)
 
 
+class PinnedHTTPConnection(http.client.HTTPConnection):
+    """HTTP connection connecting to a pre-validated IP literal to prevent DNS rebinding."""
+
+    def __init__(self, host, port=None, pinned_ip=None, **kwargs):
+        self.pinned_ip = pinned_ip
+        super().__init__(host, port, **kwargs)
+
+    def connect(self):
+        connect_target = self.pinned_ip if self.pinned_ip else self.host
+        self.sock = socket.create_connection(
+            (connect_target, self.port),
+            self.timeout,
+            self.source_address,
+        )
+
+
 class PinnedHTTPSHandler(urllib.request.HTTPSHandler):
-    """Urllib handler for PinnedHTTPSConnection with manual redirect suppression."""
+    """Urllib handler for PinnedHTTPSConnection."""
 
     def __init__(self, pinned_ip=None, context=None, **kwargs):
         self.pinned_ip = pinned_ip
@@ -64,6 +100,20 @@ class PinnedHTTPSHandler(urllib.request.HTTPSHandler):
     def https_open(self, req):
         return self.do_open(
             lambda host, **kw: PinnedHTTPSConnection(host, pinned_ip=self.pinned_ip, **kw),
+            req,
+        )
+
+
+class PinnedHTTPHandler(urllib.request.HTTPHandler):
+    """Urllib handler for PinnedHTTPConnection."""
+
+    def __init__(self, pinned_ip=None, **kwargs):
+        self.pinned_ip = pinned_ip
+        super().__init__(**kwargs)
+
+    def http_open(self, req):
+        return self.do_open(
+            lambda host, **kw: PinnedHTTPConnection(host, pinned_ip=self.pinned_ip, **kw),
             req,
         )
 
@@ -223,7 +273,11 @@ class AdvancedBacklinkVerifier:
                     current_url,
                     headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml"},
                 )
-                opener = urllib.request.build_opener(PinnedHTTPSHandler(pinned_ip=pinned_ip), NoRedirect)
+                opener = urllib.request.build_opener(
+                    PinnedHTTPSHandler(pinned_ip=pinned_ip),
+                    PinnedHTTPHandler(pinned_ip=pinned_ip),
+                    NoRedirect,
+                )
                 with opener.open(req, timeout=self.timeout) as resp:
                     status = resp.status
                     headers = dict(resp.headers)
@@ -265,17 +319,31 @@ class AdvancedBacklinkVerifier:
                     elif "deflate" in encoding:
                         import zlib
                         try:
-                            d = zlib.decompressobj()
                             chunks = []
                             total_decompressed = 0
                             CHUNK_SIZE = 64 * 1024
+                            # Try raw deflate first, then standard zlib
+                            decompressor = None
+                            for wbits in (-zlib.MAX_WBITS, zlib.MAX_WBITS):
+                                try:
+                                    d = zlib.decompressobj(wbits)
+                                    test_chunk = d.decompress(body_bytes[:64], 64)
+                                    decompressor = zlib.decompressobj(wbits)
+                                    break
+                                except Exception:
+                                    continue
+                            if decompressor is None:
+                                decompressor = zlib.decompressobj()
+
                             for i in range(0, len(body_bytes), CHUNK_SIZE):
                                 if total_decompressed >= self.max_decompressed_bytes:
                                     break
                                 raw_chunk = body_bytes[i:i + CHUNK_SIZE]
-                                decomp = d.decompress(raw_chunk, self.max_decompressed_bytes - total_decompressed)
-                                chunks.append(decomp)
-                                total_decompressed += len(decomp)
+                                remaining = self.max_decompressed_bytes - total_decompressed
+                                decomp = decompressor.decompress(raw_chunk, remaining)
+                                if decomp:
+                                    chunks.append(decomp)
+                                    total_decompressed += len(decomp)
                             body_bytes = b"".join(chunks)
                         except Exception as e:
                             logger.warning("Deflate decompression error for %s: %s", current_url, e)

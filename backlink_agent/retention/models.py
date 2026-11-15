@@ -34,6 +34,7 @@ class RetentionSnapshot:
     target_destination: str
     content_hash: str
     status_detected: str = RetentionStatus.RETAINED
+    consecutive_failures: int = 0
     snapshot_id: str = field(default_factory=lambda: f"snap_{uuid.uuid4().hex[:10]}")
     previous_content_hash: Optional[str] = None
     notes: Optional[str] = None
@@ -50,5 +51,6 @@ class RetentionSnapshot:
             "content_hash": self.content_hash,
             "previous_content_hash": self.previous_content_hash,
             "status_detected": self.status_detected,
+            "consecutive_failures": self.consecutive_failures,
             "notes": self.notes,
         }

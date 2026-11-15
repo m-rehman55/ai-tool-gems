@@ -77,6 +77,7 @@ class AcquisitionReporter:
                 "quarantined": funnel.get(LifecycleState.QUARANTINED, 0),
                 "rejected_by_owner": funnel.get(LifecycleState.REJECTED, 0),
                 "link_removed": funnel.get(LifecycleState.LINK_REMOVED, 0),
+                "expired": funnel.get(LifecycleState.EXPIRED, 0),
             },
             "conversion_rates": {
                 "owner_approval_rate_pct": approval_rate,

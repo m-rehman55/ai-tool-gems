@@ -298,3 +298,12 @@ class LocalSQLiteLifecycleStore:
             for row in cursor.fetchall():
                 counts[row["current_state"]] = row["count"]
             return counts
+
+    def get_prospect_transitions(self, prospect_id: str) -> List[Dict[str, Any]]:
+        """Retrieves all immutable transition records for a given prospect."""
+        with self._get_connection() as conn:
+            cursor = conn.execute(
+                "SELECT * FROM lifecycle_transitions WHERE prospect_id = ? ORDER BY timestamp ASC",
+                (prospect_id,),
+            )
+            return [dict(row) for row in cursor.fetchall()]
