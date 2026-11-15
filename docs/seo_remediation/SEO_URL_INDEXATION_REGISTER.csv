@@ -1,0 +1,134 @@
+file_path,canonical_url,robots_directive,in_sitemap,page_type,indexability_decision
+404.html,https://aitoolgems.tech/404.html,"noindex, follow",NO,General,NOINDEX
+about.html,https://aitoolgems.tech/about.html,"index,follow",YES,Core / Trust,INDEXABLE
+admin.html,https://aitoolgems.tech/admin.html,"noindex, nofollow",NO,General,NOINDEX
+contact.html,https://aitoolgems.tech/contact.html,"index,follow",YES,Core / Trust,INDEXABLE
+correction-policy.html,https://aitoolgems.tech/correction-policy.html,"index, follow",YES,General,INDEXABLE
+googleb36d12ee905644d9.html,NONE,"index, follow (default)",NO,General,INDEXABLE
+gsc_daily_checklist.html,https://aitoolgems.tech/gsc_daily_checklist.html,"noindex, nofollow",NO,General,NOINDEX
+how-we-price.html,https://aitoolgems.tech/how-we-price.html,"index, follow",YES,Core / Trust,INDEXABLE
+how-we-review.html,https://aitoolgems.tech/how-we-review.html,"index, follow",YES,General,INDEXABLE
+how-we-source.html,https://aitoolgems.tech/how-we-source.html,"index, follow",YES,General,INDEXABLE
+index.html,https://aitoolgems.tech/,"index, follow, max-image-preview:large",YES,Core / Trust,INDEXABLE
+policies.html,https://aitoolgems.tech/policies.html,"index,follow",YES,Core / Trust,INDEXABLE
+privacy.html,https://aitoolgems.tech/privacy-policy/,"noindex, follow",YES,General,NOINDEX
+product-verification.html,https://aitoolgems.tech/product-verification.html,"index, follow",YES,General,INDEXABLE
+terms.html,https://aitoolgems.tech/terms-of-service/,"noindex, follow",YES,General,NOINDEX
+blog/index.html,https://aitoolgems.tech/blog/,"index,follow,max-image-preview:large",YES,General,INDEXABLE
+category/ai-chatbots/index.html,https://aitoolgems.tech/category/ai-chatbots/,"index, follow, max-image-preview:large, max-snippet:-1",YES,Category Hub,INDEXABLE
+category/ai-design/index.html,https://aitoolgems.tech/category/ai-design/,"index, follow, max-image-preview:large, max-snippet:-1",YES,Category Hub,INDEXABLE
+category/ai-video/index.html,https://aitoolgems.tech/category/ai-video/,"index, follow, max-image-preview:large, max-snippet:-1",YES,Category Hub,INDEXABLE
+data/snapshots/snap_20261106_173647_auto/index.html,https://aitoolgems.tech/,"index, follow, max-image-preview:large",YES,General,INDEXABLE
+deals/index.html,https://aitoolgems.tech/deals/,"index,follow,max-image-preview:large",YES,General,INDEXABLE
+guides/index.html,https://aitoolgems.tech/guides/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/ai-subscriptions-pakistan/index.html,https://aitoolgems.tech/guides/ai-subscriptions-pakistan/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/ai-tools-pakistan/index.html,https://aitoolgems.tech/guides/ai-tools-pakistan/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/ai-tools-price-pakistan/index.html,https://aitoolgems.tech/guides/ai-tools-price-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/ai-tools-pricing/index.html,https://aitoolgems.tech/guides/ai-tools-price-pakistan/,"index, follow",YES,Guide / Blog,REDIRECT_STUB
+guides/best-ai-video-generators-pakistan/index.html,https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/businesses/index.html,https://aitoolgems.tech/guides/businesses/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/canva/index.html,https://aitoolgems.tech/guides/canva/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/canva-ai-pakistan-guide/index.html,https://aitoolgems.tech/guides/canva-ai-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/canva-pro-pakistan-guide/index.html,https://aitoolgems.tech/guides/canva-pro-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/canva-vs-figma-pakistan/index.html,https://aitoolgems.tech/guides/canva-vs-figma-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/capcut/index.html,https://aitoolgems.tech/guides/capcut/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/capcut-vs-runway-pakistan/index.html,https://aitoolgems.tech/guides/capcut-vs-runway-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/chatgpt-ai-pakistan-guide/index.html,https://aitoolgems.tech/guides/chatgpt-ai-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/chatgpt-alternatives/index.html,https://aitoolgems.tech/guides/chatgpt-alternatives/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/chatgpt-vs-claude-pakistan/index.html,https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/chatgpt-vs-gemini-pakistan/index.html,https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/claude-ai-pakistan/index.html,https://aitoolgems.tech/guides/claude-ai-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/creators/index.html,https://aitoolgems.tech/guides/creators/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/cursor-ai-pakistan/index.html,https://aitoolgems.tech/guides/cursor-ai-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/deepseek-ai-pakistan/index.html,https://aitoolgems.tech/guides/deepseek-ai-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/deepseek-api-pakistan/index.html,https://aitoolgems.tech/guides/deepseek-api-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/developers/index.html,https://aitoolgems.tech/guides/developers/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/elevenlabs-ai-pakistan-guide/index.html,https://aitoolgems.tech/guides/elevenlabs-ai-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/elevenlabs-voice-ai-pakistan/index.html,https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/figma-ai-pakistan-guide/index.html,https://aitoolgems.tech/guides/figma-ai-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/gamma-app-pakistan/index.html,https://aitoolgems.tech/guides/gamma-app-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/gemini/index.html,https://aitoolgems.tech/guides/gemini-ai-pakistan-guide/,"index, follow",YES,Guide / Blog,REDIRECT_STUB
+guides/gemini-ai-pakistan-guide/index.html,https://aitoolgems.tech/guides/gemini-ai-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/grammarly-vs-quillbot-pakistan/index.html,https://aitoolgems.tech/guides/grammarly-vs-quillbot-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/grok-ai-pakistan/index.html,https://aitoolgems.tech/guides/grok-ai-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/heygen-ai-video-pakistan/index.html,https://aitoolgems.tech/guides/heygen-ai-video-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/leonardo-ai-pakistan-guide/index.html,https://aitoolgems.tech/guides/leonardo-ai-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/lovable-vs-replit-pakistan/index.html,https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/midjourney-alternatives-pakistan/index.html,https://aitoolgems.tech/guides/midjourney-alternatives-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/n8n-automation-pakistan/index.html,https://aitoolgems.tech/guides/n8n-automation-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/nordvpn-vs-surfshark-pakistan/index.html,https://aitoolgems.tech/guides/nordvpn-vs-surfshark-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/perplexity-ai-pakistan/index.html,https://aitoolgems.tech/guides/perplexity-ai-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/productivity/index.html,https://aitoolgems.tech/guides/productivity/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/runway-gen3-pakistan/index.html,https://aitoolgems.tech/guides/runway-gen3-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/semrush-pro-pakistan/index.html,https://aitoolgems.tech/guides/semrush-pro-pakistan/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/students/index.html,https://aitoolgems.tech/guides/students/,"index, follow, max-image-preview:large",YES,Guide / Blog,INDEXABLE
+guides/veo-ai-pakistan-guide/index.html,https://aitoolgems.tech/guides/veo-ai-pakistan-guide/,"index,follow,max-image-preview:large",YES,Guide / Blog,INDEXABLE
+prices/index.html,https://aitoolgems.tech/prices/,"index, follow",YES,General,INDEXABLE
+privacy-policy/index.html,https://aitoolgems.tech/privacy-policy/,"index,follow,max-image-preview:large",YES,General,REDIRECT_STUB
+terms-of-service/index.html,https://aitoolgems.tech/terms-of-service/,"index,follow,max-image-preview:large",YES,General,INDEXABLE
+tools/index.html,https://aitoolgems.tech/tools/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/adobe/index.html,https://aitoolgems.tech/tools/adobe/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/ahrefs/index.html,https://aitoolgems.tech/tools/ahrefs/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/allinone/index.html,https://aitoolgems.tech/tools/allinone/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/bolt-new/index.html,https://aitoolgems.tech/tools/bolt-new/,"index, follow",YES,Tool Page,INDEXABLE
+tools/canva/index.html,https://aitoolgems.tech/tools/canva/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/capcut/index.html,https://aitoolgems.tech/tools/capcut/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/chatgpt/index.html,https://aitoolgems.tech/tools/chatgpt/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/chatprd/index.html,https://aitoolgems.tech/tools/chatprd/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/claude/index.html,https://aitoolgems.tech/tools/claude/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/copilot/index.html,https://aitoolgems.tech/tools/copilot/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/coursera-plus/index.html,https://aitoolgems.tech/tools/coursera-plus/,"index, follow",YES,Tool Page,INDEXABLE
+tools/cursor/index.html,https://aitoolgems.tech/tools/cursor/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/davinci-resolve/index.html,https://aitoolgems.tech/tools/davinci-resolve/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/deepseek/index.html,https://aitoolgems.tech/tools/deepseek/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/descript/index.html,https://aitoolgems.tech/tools/descript/,"index, follow",YES,Tool Page,INDEXABLE
+tools/domo-ai/index.html,https://aitoolgems.tech/tools/domo-ai/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/elevenlabs/index.html,https://aitoolgems.tech/tools/elevenlabs/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/figma/index.html,https://aitoolgems.tech/tools/figma/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/firecrawl/index.html,https://aitoolgems.tech/tools/firecrawl/,"index, follow",YES,Tool Page,INDEXABLE
+tools/freepik/index.html,https://aitoolgems.tech/tools/freepik/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/gamma/index.html,https://aitoolgems.tech/tools/gamma/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/gemini/index.html,https://aitoolgems.tech/tools/gemini/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/genspark/index.html,https://aitoolgems.tech/tools/genspark/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/grammarly/index.html,https://aitoolgems.tech/tools/grammarly/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/grok/index.html,https://aitoolgems.tech/tools/grok/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/hailuo-ai/index.html,https://aitoolgems.tech/tools/hailuo-ai/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/heygen/index.html,https://aitoolgems.tech/tools/heygen/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/higgsfield/index.html,https://aitoolgems.tech/tools/higgsfield/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/invideo-ai/index.html,https://aitoolgems.tech/tools/invideo-ai/,"index, follow",YES,Tool Page,INDEXABLE
+tools/kling/index.html,https://aitoolgems.tech/tools/kling/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/leonardo/index.html,https://aitoolgems.tech/tools/leonardo/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/linkedin/index.html,https://aitoolgems.tech/tools/linkedin/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/lovable/index.html,https://aitoolgems.tech/tools/lovable/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/make/index.html,https://aitoolgems.tech/tools/make/,"index, follow",YES,Tool Page,INDEXABLE
+tools/manus-ai/index.html,https://aitoolgems.tech/tools/manus-ai/,"index, follow",YES,Tool Page,INDEXABLE
+tools/midjourney/index.html,https://aitoolgems.tech/tools/midjourney/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/morphic/index.html,https://aitoolgems.tech/tools/morphic/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/n8n/index.html,https://aitoolgems.tech/tools/n8n/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/netflix/index.html,https://aitoolgems.tech/tools/netflix/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/nordvpn/index.html,https://aitoolgems.tech/tools/nordvpn/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/notebooklm/index.html,https://aitoolgems.tech/tools/notebooklm/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/notion/index.html,https://aitoolgems.tech/tools/notion/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/office365/index.html,https://aitoolgems.tech/tools/office365/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/opus-clip/index.html,https://aitoolgems.tech/tools/opus-clip/,"index, follow",YES,Tool Page,INDEXABLE
+tools/perplexity/index.html,https://aitoolgems.tech/tools/perplexity/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/quillbot/index.html,https://aitoolgems.tech/tools/quillbot/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/quizlet/index.html,https://aitoolgems.tech/tools/quizlet/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/qwen/index.html,https://aitoolgems.tech/tools/qwen/,"index, follow",YES,Tool Page,INDEXABLE
+tools/railway/index.html,https://aitoolgems.tech/tools/railway/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/replit/index.html,https://aitoolgems.tech/tools/replit/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/runway/index.html,https://aitoolgems.tech/tools/runway/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/semrush/index.html,https://aitoolgems.tech/tools/semrush/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/skillshare/index.html,https://aitoolgems.tech/tools/skillshare/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/spotify/index.html,https://aitoolgems.tech/tools/spotify/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/suno/index.html,https://aitoolgems.tech/tools/suno/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/supabase/index.html,https://aitoolgems.tech/tools/supabase/,"noindex, follow",NO,Tool Page,NOINDEX
+tools/surfshark/index.html,https://aitoolgems.tech/tools/surfshark/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/tradingview/index.html,https://aitoolgems.tech/tools/tradingview/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/turnitin/index.html,https://aitoolgems.tech/tools/turnitin/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/udemy-personal/index.html,https://aitoolgems.tech/tools/udemy-personal/,"index, follow",YES,Tool Page,INDEXABLE
+tools/v0/index.html,https://aitoolgems.tech/tools/v0/,"index, follow",YES,Tool Page,INDEXABLE
+tools/veo/index.html,https://aitoolgems.tech/tools/veo/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/windows/index.html,https://aitoolgems.tech/tools/windows/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE
+tools/windsurf/index.html,https://aitoolgems.tech/tools/windsurf/,"index, follow",YES,Tool Page,INDEXABLE
+tools/youtube/index.html,https://aitoolgems.tech/tools/youtube/,"index,follow,max-image-preview:large",YES,Tool Page,INDEXABLE

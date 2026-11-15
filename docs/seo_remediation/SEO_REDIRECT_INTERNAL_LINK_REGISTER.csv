@@ -1,0 +1,7 @@
+source_url,destination_url,redirect_type,internal_links_pointing,reason
+https://aitoolgems.tech/guides/ai-tools-pricing/,https://aitoolgems.tech/guides/ai-tools-price-pakistan/,Canonical / Meta-Refresh Stub,0 (Cleaned),Consolidate legacy pricing keyword equity
+https://aitoolgems.tech/guides/gemini/,https://aitoolgems.tech/guides/gemini-ai-pakistan-guide/,Canonical / Meta-Refresh Stub,0 (Cleaned),Consolidate legacy guide URL into comprehensive 2026 guide
+https://aitoolgems.tech/privacy.html,https://aitoolgems.tech/privacy-policy/,Meta-Refresh / Canonical Stub,0 (Cleaned),Direct traffic to modern semantic directory route
+https://aitoolgems.tech/terms.html,https://aitoolgems.tech/terms-of-service/,Meta-Refresh / Canonical Stub,0 (Cleaned),Direct traffic to modern semantic directory route
+http://aitoolgems.tech/*,https://aitoolgems.tech/*,Apex Server 301,0 (Zero internal HTTP links),Enforce HTTPS encryption on all traffic
+https://www.aitoolgems.tech/*,https://aitoolgems.tech/*,Apex Server 301,0 (Zero internal WWW links),Normalize host to apex domain
