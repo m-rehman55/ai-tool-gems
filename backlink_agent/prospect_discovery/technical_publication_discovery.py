@@ -31,6 +31,14 @@ CURATED_TECH_PUBLICATIONS: List[Dict[str, Any]] = [
         "angle": "AI Industry Economics: Software Subscription Costs Across Emerging South Asian Markets",
         "relevance": 80,
     },
+    {
+        "platform": "techjuice.pk",
+        "name": "TechJuice Pakistan Tech Media",
+        "domain": "techjuice.pk",
+        "citation_target": "https://aitoolgems.tech/prices/",
+        "angle": "Pakistani AI Ecosystem: 2026 Price Index & Local Currency Software Adoption Trends",
+        "relevance": 90,
+    },
 ]
 
 

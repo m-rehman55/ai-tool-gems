@@ -48,7 +48,7 @@ class SubmissionDraftingEngine:
 
         if p_type == "github_awesome" or domain == "github.com" or domain.endswith(".github.com"):
             draft = self.github_drafter.draft_pr(opp)
-        elif p_type == "tech_publication" or domain in ("dev.to", "hashnode.com", "medium.com"):
+        elif p_type == "tech_publication" or domain in ("dev.to", "hashnode.com", "medium.com", "techjuice.pk"):
             draft = self.pub_drafter.draft_pitch(opp)
         elif p_type in ("directory_class1", "directory_class2", "directory_class3", "competitor_backlink"):
             draft = self.directory_drafter.draft_submission(opp)

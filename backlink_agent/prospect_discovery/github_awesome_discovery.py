@@ -26,6 +26,14 @@ CURATED_GITHUB_REPOS: List[Dict[str, Any]] = [
         "relevance": 85,
     },
     {
+        "repo_url": "https://github.com/filipecalegario/awesome-generative-ai",
+        "repo_name": "filipecalegario/awesome-generative-ai",
+        "target_file": "README.md",
+        "allowed_categories": ["Directories & Aggregators", "Platforms"],
+        "allows_directories": True,
+        "relevance": 88,
+    },
+    {
         "repo_url": "https://github.com/OuterSpacee/awesome-ai-tools",
         "repo_name": "OuterSpacee/awesome-ai-tools",
         "target_file": "README.md",

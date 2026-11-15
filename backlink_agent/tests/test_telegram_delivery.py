@@ -98,7 +98,7 @@ class TestTelegramDelivery(unittest.TestCase):
             proposed_markdown_entry="- [AI Tool Gems](https://aitoolgems.tech/)",
         )
         card = OpportunityCardFormatter.format_card(opp, draft)
-        self.assertIn("🐙 [GitHub Awesome]", card)
+        self.assertIn("🐙 GitHub Awesome", card)
         self.assertIn("eudk/awesome-ai-tools", card)
         self.assertIn("`/approve github.com", card)
 
@@ -168,6 +168,76 @@ class TestTelegramDelivery(unittest.TestCase):
         counts = manager.store.get_status_counts()
         self.assertEqual(counts["dry_run_simulated"], 1)
         self.assertEqual(counts["pending"], 0)
+
+    def test_opportunity_card_formatter_markdown_safety(self):
+        """WP17: Card formatter must not produce unclosed brackets or raw underscore triggers."""
+        breakdown = ScoreBreakdown(22, 22, 20, 15, 15)
+        opp = ScoredOpportunity(
+            prospect_id="p_dir",
+            prospect_domain="startups.pasha.org.pk",
+            source_page_url="https://startups.pasha.org.pk/",
+            prospect_type="directory_class3",
+            target_asset_url="https://aitoolgems.tech/",
+            score=breakdown,
+            rationale=["Verified editorial review on submissions_and_listings"],
+            risk_factors=["Minor_delay_in_review"],
+        )
+        draft = DirectorySubmissionDraft(
+            draft_id="d_01",
+            prospect_id="p_dir",
+            short_tagline="AI Tools Directory for Pakistan with flat PKR pricing",
+            category="AI & Developer Tools",
+        )
+        card = OpportunityCardFormatter.format_card(opp, draft, draft_hash="abc12345def67890")
+
+        # Check that [Curated Directory] or [GitHub Awesome] link-syntax brackets are absent
+        self.assertNotIn("[Curated Directory]", card)
+        self.assertIn("📁 Curated Directory", card)
+        # Check tier display is safe and has no raw underscore trigger outside backticks
+        self.assertIn("`HIGH PRIORITY`", card)
+        self.assertNotIn("(HIGH_PRIORITY)", card)
+        # Rationale with underscore sanitized
+        self.assertIn("submissions and listings", card)
+        self.assertIn("Minor delay in review", card)
+
+    def test_dispatch_message_auto_healing_fallback_on_400(self):
+        """WP17: When Telegram returns HTTP 400 Bad Request entity error, fallback sends as plain text."""
+        import io
+        import urllib.error
+        from unittest.mock import patch, MagicMock
+
+        db_file = self.tmp_dir / "fallback_outbox.db"
+        manager = TelegramOutboxManager(
+            bot_token="test_bot_token",
+            chat_id="123456789",
+            db_path=db_file,
+            dry_run=False,
+        )
+        msg = OutboxMessage(chat_id="123456789", text="Card with bad markdown formatting")
+        manager.store.enqueue(msg)
+
+        # Mock first call: HTTPError 400 Bad Request can't parse entities
+        err_fp = io.BytesIO(b'{"ok":false,"error_code":400,"description":"Bad Request: can\'t parse entities"}')
+        http_error = urllib.error.HTTPError(
+            url="https://api.telegram.org",
+            code=400,
+            msg="Bad Request",
+            hdrs={},
+            fp=err_fp,
+        )
+
+        # Mock second call: successful HTTP 200 response
+        mock_success_resp = MagicMock()
+        mock_success_resp.status = 200
+        mock_success_resp.read.return_value = b'{"ok":true,"result":{"message_id":998877}}'
+        mock_success_resp.__enter__.return_value = mock_success_resp
+
+        with patch("urllib.request.urlopen", side_effect=[http_error, mock_success_resp]):
+            success = manager.dispatch_message(msg)
+
+        self.assertTrue(success)
+        self.assertEqual(msg.status, "accepted_by_telegram")
+        self.assertEqual(msg.telegram_message_id, 998877)
 
 
 if __name__ == "__main__":
