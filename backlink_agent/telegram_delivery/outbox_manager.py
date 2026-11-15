@@ -33,7 +33,12 @@ class TelegramOutboxManager:
         dry_run: bool = False,
     ):
         self.bot_token = bot_token or os.environ.get("TELEGRAM_BOT_TOKEN", "")
-        self.chat_id = chat_id or os.environ.get("TELEGRAM_CHAT_ID", "")
+        self.chat_id = (
+            chat_id
+            or os.environ.get("TELEGRAM_CHAT_ID")
+            or os.environ.get("TELEGRAM_OWNER_CHAT_ID")
+            or os.environ.get("TELEGRAM_CHANNEL_ID", "")
+        )
         self.dry_run = dry_run or os.environ.get("BACKLINK_AGENT_DRY_RUN", "false").lower() == "true"
         self.store = store or LocalSQLiteOutboxStore(db_path=db_path or Path("seo-agent/data/backlink_outbox.db"))
         self.worker_id = f"worker_{uuid.uuid4().hex[:8]}"

@@ -18,7 +18,19 @@ from .tracker import (
 )
 
 
+def _load_env_if_present() -> None:
+    env_path = Path(".env")
+    if env_path.exists():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+
 def main():
+    _load_env_if_present()
     parser = argparse.ArgumentParser(description="AI Tool Gems Autonomous Backlink Agent CLI")
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")
 

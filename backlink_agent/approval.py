@@ -199,9 +199,25 @@ class TelegramApprovalEngine:
         d_hash = p.draft_hash or calculate_draft_hash(p)
         draft = p.draft or {}
 
+        login_hint = ""
+        dom = p.prospect_domain.lower()
+        if dom == "medium.com":
+            login_hint = "🔑 Login: Top-right 'Sign In' -> 'Sign in with Google' (1-click)"
+        elif dom == "techjuice.pk":
+            login_hint = "🔑 Login: No login needed (Open Contact form or email editor@techjuice.pk)"
+        elif dom == "dev.to":
+            login_hint = "🔑 Login: Sign in with GitHub or Google"
+        elif dom == "hashnode.com":
+            login_hint = "🔑 Login: Sign in with Google or GitHub"
+        elif "github" in dom:
+            login_hint = "🔑 Login: Sign in with your GitHub account"
+        else:
+            login_hint = f"🔑 Login: Free signup / Google login on {dom}"
+
         lines = [
             f"📋 Prospect: {p.prospect_domain}",
             f"👉 Submit Link: {p.submission_url}",
+            f"{login_hint}",
             f"• Site Type: {p.prospect_type}",
             f"• Score: {p.score}/100",
             f"• Target URL: {p.target_asset_url}",
@@ -246,6 +262,46 @@ class TelegramApprovalEngine:
             return f"Prospect '{target}' not found."
 
         draft = p.draft or {}
+        domain = p.prospect_domain.lower()
+
+        if domain == "medium.com":
+            return (
+                "📋 Tap-to-Copy Content for medium.com:\n\n"
+                "👉 Direct Editor Link: https://medium.com/new-story\n"
+                "🔑 Login: Click 'Sign In' at top right -> 'Sign in with Google'\n\n"
+                "• Title (Tap to copy):\n"
+                "`Case Study: Tracking Commercial AI Software Pricing and Payment Rails in Emerging Tech Ecosystems (Pakistan)`\n\n"
+                "• Story Content (Tap to copy):\n"
+                "`With the rapid global explosion of AI software, developers, students, and businesses in South Asia often face severe purchasing friction due to currency volatility, international card restrictions, and lack of localized subscription indexation.\n\n"
+                "A recent data study by AI Tool Gems (https://aitoolgems.tech/) analyzes 40 leading AI productivity and developer tools, documenting flat Pakistani Rupee (PKR) pricing parity and verified domestic settlement rails.\n\n"
+                "Key findings from the open dataset (https://aitoolgems.tech/prices/):\n"
+                "1. Over 65% of local AI users in Pakistan rely on domestic bank IBFT, Raast, EasyPaisa, JazzCash, and SadaPay rather than international credit cards.\n"
+                "2. Verified pricing parity indexes help freelancers and agencies forecast monthly SaaS operational costs in local currency without hidden forex markups.\n"
+                "3. Machine-readable pricing feeds are exposed publicly via /prices/ai-tools-pricing-pakistan.csv and llms.txt to facilitate transparent indexing.\n\n"
+                "The full dataset and pricing comparison table is open for community research at https://aitoolgems.tech/prices/.`\n\n"
+                "👉 Open Editor & Paste: https://medium.com/new-story"
+            )
+
+        if domain == "techjuice.pk":
+            return (
+                "📋 Tap-to-Copy Pitch for techjuice.pk:\n\n"
+                "👉 Direct Contact Link: https://www.techjuice.pk/contact/\n"
+                "📧 Email Alternative: editor@techjuice.pk\n"
+                "🔑 Login: No login needed (Open contact form)\n\n"
+                "• Pitch Subject (Tap to copy):\n"
+                "`Story Pitch: Pakistan AI Software Pricing & Local Payment Rails Index`\n\n"
+                "• Message Box (Tap to copy):\n"
+                "`Hi TechJuice Editorial Team,\n\n"
+                "I wanted to share a timely data-driven study on Pakistan's AI adoption ecosystem.\n\n"
+                "AI Tool Gems (https://aitoolgems.tech/) has published an index analyzing 40 commercial AI software tools, documenting subscription price parity in Pakistani Rupee (PKR) and domestic rails (EasyPaisa, JazzCash, Raast, SadaPay).\n\n"
+                "Dataset reference: https://aitoolgems.tech/prices/\n"
+                "CSV source: https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv\n\n"
+                "Would love to offer this as an exclusive guest op-ed or community data story for TechJuice readers.\n\n"
+                "Best regards,\n"
+                "AI Tool Gems Editorial Team`\n\n"
+                "👉 Open Contact Page: https://www.techjuice.pk/contact/"
+            )
+
         lines = [
             f"📋 Tap-to-Copy Fields for {p.prospect_domain}:",
             "",
@@ -327,19 +383,54 @@ class TelegramApprovalEngine:
             f"• Target URL: {p.target_asset_url}",
             f"• Content Hash: {d_hash}",
             "",
-            f"👉 Step 1 — Open Official Submission Page:\n{p.submission_url}",
-            "",
-            "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
         ]
 
-        if p.prospect_type == "github_awesome" or "github" in domain:
+        if domain == "medium.com":
             lines.extend([
+                "👉 Step 1 — Open Official Submission Page (Direct Story Editor):",
+                "https://medium.com/new-story",
+                "🔑 Login: Top-right 'Sign In' -> 'Sign in with Google' (1-click)",
+                "",
+                "📋 Step 2 — Tap-to-Copy Form Fields (Story Details):",
+                "• Title (Tap to copy):",
+                f"`{draft.get('case_study_title', 'Tracking Commercial AI Software Pricing and Payment Rails in Emerging Tech Ecosystems (Pakistan)')}`",
+                "",
+                "• Story Content (Tap to copy):",
+                "`With the rapid global explosion of AI software, developers, students, and businesses in South Asia often face severe purchasing friction due to currency volatility, international card restrictions, and lack of localized subscription indexation.\n\nA recent data study by AI Tool Gems (https://aitoolgems.tech/) analyzes 40 leading AI productivity and developer tools, documenting flat Pakistani Rupee (PKR) pricing parity and verified domestic settlement rails.\n\nKey findings from the open dataset (https://aitoolgems.tech/prices/):\n1. Over 65% of local AI users in Pakistan rely on domestic bank IBFT, Raast, EasyPaisa, JazzCash, and SadaPay rather than international credit cards.\n2. Verified pricing parity indexes help freelancers and agencies forecast monthly SaaS operational costs in local currency without hidden forex markups.\n3. Machine-readable pricing feeds are exposed publicly via /prices/ai-tools-pricing-pakistan.csv and llms.txt to facilitate transparent indexing.\n\nThe full dataset and pricing comparison table is open for community research at https://aitoolgems.tech/prices/.`",
+                "",
+                "• Action: Medium editor par Title aur Story paste karein, 'aitoolgems.tech/prices/' link check karein, aur top-right green 'Publish' button daba dein!",
+            ])
+        elif domain == "techjuice.pk":
+            lines.extend([
+                "👉 Step 1 — Open Official Submission Page (Editorial Contact Portal):",
+                "https://www.techjuice.pk/contact/",
+                "🔑 Login: Kisi login ki zaroorat nahi! (Direct Contact form ya email: editor@techjuice.pk)",
+                "",
+                "📋 Step 2 — Tap-to-Copy Form Fields (Editorial Pitch):",
+                "• Pitch Subject (Tap to copy):",
+                "`Story Pitch: Tracking AI Software Pricing & Local Payment Rails in Pakistan`",
+                "",
+                "• Message Box (Tap to copy):",
+                "`Hi TechJuice Editorial Team,\n\nI wanted to share a timely data-driven study on Pakistan's AI adoption ecosystem.\n\nAI Tool Gems (https://aitoolgems.tech/) has published an index analyzing 40 commercial AI software tools, documenting subscription price parity in Pakistani Rupee (PKR) and domestic rails (EasyPaisa, JazzCash, Raast, SadaPay).\n\nDataset reference: https://aitoolgems.tech/prices/\nCSV source: https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv\n\nWould love to offer this as an exclusive guest op-ed or community data story for TechJuice readers.\n\nBest regards,\nAI Tool Gems Editorial Team`",
+                "",
+                "• Action: TechJuice contact page par Name, Email aur Message paste karke Send button click karein!",
+            ])
+        elif p.prospect_type == "github_awesome" or "github" in domain:
+            lines.extend([
+                f"👉 Step 1 — Open Official Submission Page:\n{p.submission_url}",
+                "🔑 Login: Sign in with your GitHub account",
+                "",
+                "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
                 f"• PR Title: `{draft.get('pr_title', 'Add AI Tool Gems')}`",
                 f"• Proposed Markdown Entry (Tap to copy):\n`{draft.get('proposed_markdown_entry', f'- [AI Tool Gems]({p.target_asset_url}) - Curated directory of 40+ AI tools and pricing index in PKR.')}`",
                 "• Action: Open the README link, click the pencil icon ✏️ (Edit), paste entry, and click 'Propose changes'!",
             ])
-        elif p.prospect_type == "tech_publication" or domain in ("dev.to", "hashnode.com", "medium.com", "techjuice.pk"):
+        elif p.prospect_type == "tech_publication" or domain in ("dev.to", "hashnode.com"):
             lines.extend([
+                f"👉 Step 1 — Direct Editor Link:\n{p.submission_url}",
+                f"🔑 Login: Free signup / GitHub or Google login on {domain}",
+                "",
+                "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
                 f"• Case Study Title:\n`{draft.get('case_study_title', 'Tracking Commercial AI Software Pricing and Payment Rails in Emerging Tech Ecosystems (Pakistan)')}`",
                 f"• Dataset Citation URL:\n`{draft.get('dataset_citation_url', 'https://aitoolgems.tech/prices/')}`",
                 f"• CSV Dataset:\n`{draft.get('csv_dataset_url', 'https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv')}`",
@@ -347,6 +438,10 @@ class TelegramApprovalEngine:
             ])
         else:
             lines.extend([
+                f"👉 Step 1 — Open Official Submission Page:\n{p.submission_url}",
+                f"🔑 Login: Free signup / Google login on {domain}",
+                "",
+                "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
                 f"• Tool Name: `{draft.get('tool_name', 'AI Tool Gems')}`",
                 f"• Website URL: `{draft.get('website_url', p.target_asset_url)}`",
                 f"• Short Tagline:\n`{draft.get('short_tagline', 'Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.')}`",
