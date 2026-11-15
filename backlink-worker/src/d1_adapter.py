@@ -77,56 +77,41 @@ class D1Adapter:
     ) -> Tuple[bool, str]:
         """Atomically transitions prospect and optional draft to approved status in a single transaction.
         Enforces:
-        1. Fencing token check: Worker must hold the active lease token.
-        2. D1 constraint assertion: Forces batch abort and rollback if conditional matches fail.
+        1. Fencing token check: Caller must hold active lease token in 'processing' status.
+        2. Strict allowed statuses: prospect must be in ('active', 'submitted_pending_review', 'draft_ready').
+        3. D1/SQLite constraint assertion: Forces batch abort and rollback if conditional matches fail.
         Guarantees that both succeed, or neither succeeds (zero partial drift).
         """
+        # Strict rule: if update_id is provided, lease_token must be a non-empty string
+        if update_id is not None:
+            if not lease_token or not isinstance(lease_token, str) or not lease_token.strip():
+                return False, "Security violation: update_id supplied without valid non-empty lease_token"
+
         assert_id = f"assert_{uuid.uuid4().hex[:8]}"
+        allowed_statuses = "('active', 'submitted_pending_review', 'draft_ready')"
 
         if self.conn is not None:
+            # Set autocommit to allow explicit BEGIN IMMEDIATE transaction control
+            prev_isolation = self.conn.isolation_level
+            self.conn.isolation_level = None
             cursor = self.conn.cursor()
             try:
-                # 1. Verify fencing token if update_id provided
-                if update_id and lease_token:
-                    cursor.execute(
-                        "SELECT lease_token FROM telegram_processed_updates WHERE update_id = ? AND status = 'processing'",
-                        (int(update_id),),
-                    )
-                    row = cursor.fetchone()
-                    if not row or row[0] != lease_token:
-                        return False, f"Worker fenced out: lease token for update {update_id} has expired or was recovered"
+                cursor.execute("BEGIN IMMEDIATE")
 
-                # 2. Check conditions before mutating
-                cursor.execute(
-                    "SELECT action_status FROM prospects WHERE id = ?",
-                    (prospect_id,),
-                )
-                p_row = cursor.fetchone()
-                if not p_row or p_row[0] == "owner_approved_for_manual_submission":
-                    return False, "Prospect already approved or not found"
-
-                if draft_id:
-                    cursor.execute(
-                        "SELECT status FROM drafts WHERE id = ?",
-                        (draft_id,),
-                    )
-                    d_row = cursor.fetchone()
-                    if not d_row or d_row[0] != "pending_approval":
-                        return False, "Draft already approved or not pending"
-
-                # 3. Assertive constraint insertion (forces rollback if conditions fail)
+                # In-transaction assertion enforcing allowed prospect status, draft status, and active lease token
                 cursor.execute(
                     """
                     INSERT INTO _d1_transaction_assertions (id, is_valid)
                     VALUES (?, CASE WHEN 
-                        (SELECT count(*) FROM prospects WHERE id = ? AND action_status != 'owner_approved_for_manual_submission') = 1
+                        (SELECT count(*) FROM prospects WHERE id = ? AND action_status IN ('active', 'submitted_pending_review', 'draft_ready')) = 1
                         AND (? IS NULL OR (SELECT count(*) FROM drafts WHERE id = ? AND status = 'pending_approval') = 1)
+                        AND (? IS NULL OR (SELECT count(*) FROM telegram_processed_updates WHERE update_id = ? AND lease_token = ? AND status = 'processing') = 1)
                     THEN 1 ELSE 0 END)
                     """,
-                    (assert_id, prospect_id, draft_id, draft_id),
+                    (assert_id, prospect_id, draft_id, draft_id, update_id, update_id, lease_token),
                 )
 
-                # 4. Perform mutations
+                # Perform mutations
                 cursor.execute(
                     "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ?",
                     (now_utc, prospect_id),
@@ -138,14 +123,19 @@ class D1Adapter:
                     )
 
                 cursor.execute("DELETE FROM _d1_transaction_assertions WHERE id = ?", (assert_id,))
-                self.conn.commit()
+                cursor.execute("COMMIT")
                 return True, "Approved"
             except Exception as e:
-                self.conn.rollback()
+                try:
+                    cursor.execute("ROLLBACK")
+                except Exception:
+                    pass
                 err_s = str(e).lower()
                 if "constraint" in err_s or "abort" in err_s:
-                    return False, "Atomic transition failed: conditional state mismatch"
+                    return False, "Atomic transition failed: conditional state mismatch (already approved or invalid source status) or worker fenced out"
                 raise
+            finally:
+                self.conn.isolation_level = prev_isolation
 
         if self.db is not None:
             # Cloudflare D1 batch transaction with constraint assertion
@@ -155,9 +145,9 @@ class D1Adapter:
                     """
                     INSERT INTO _d1_transaction_assertions (id, is_valid)
                     VALUES (?, CASE WHEN 
-                        (SELECT count(*) FROM prospects WHERE id = ? AND action_status != 'owner_approved_for_manual_submission') = 1
+                        (SELECT count(*) FROM prospects WHERE id = ? AND action_status IN ('active', 'submitted_pending_review', 'draft_ready')) = 1
                         AND (? IS NULL OR (SELECT count(*) FROM drafts WHERE id = ? AND status = 'pending_approval') = 1)
-                        AND (? IS NULL OR (SELECT lease_token FROM telegram_processed_updates WHERE update_id = ?) = ?)
+                        AND (? IS NULL OR (SELECT count(*) FROM telegram_processed_updates WHERE update_id = ? AND lease_token = ? AND status = 'processing') = 1)
                     THEN 1 ELSE 0 END)
                     """
                 ).bind(assert_id, prospect_id, draft_id, draft_id, update_id, update_id, lease_token or ""),
@@ -182,7 +172,7 @@ class D1Adapter:
             except Exception as e:
                 err_s = str(e).lower()
                 if "constraint" in err_s or "abort" in err_s:
-                    return False, "Atomic transition failed: conditional state mismatch or worker fenced out"
+                    return False, "Atomic transition failed: conditional state mismatch (already approved or invalid source status) or worker fenced out"
                 raise
 
         raise RuntimeError("No active D1 binding or SQLite connection available.")

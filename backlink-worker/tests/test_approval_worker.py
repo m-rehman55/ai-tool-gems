@@ -327,6 +327,68 @@ class TestApprovalWorker(unittest.IsolatedAsyncioTestCase):
         p_after = await self.d1.execute_first("SELECT action_status FROM prospects WHERE id = ?", (p["id"],))
         self.assertNotEqual(p_after["action_status"], "owner_approved_for_manual_submission")
 
+    async def test_two_workers_racing_to_recover_same_expired_claim(self):
+        past_iso = "2026-11-14T00:00:00Z"
+        await self.d1.execute_mutation(
+            "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_recoveries, lease_token) VALUES (?, '123456', '789012', '/backlinks', 'processing', ?, 0, 'old_tok')",
+            (99911, past_iso),
+        )
+
+        # Worker 1 recovers
+        claimed1, token1 = await self.engine.claim_telegram_update(99911, "123456", "789012", "/backlinks")
+        # Worker 2 attempts recovery against the same expired timestamp (already superseded by Worker 1)
+        claimed2, token2 = await self.engine.claim_telegram_update(99911, "123456", "789012", "/backlinks")
+
+        self.assertTrue(claimed1)
+        self.assertIsNotNone(token1)
+        self.assertFalse(claimed2)
+        self.assertIsNone(token2)
+
+    async def test_stale_worker_cannot_complete_update_after_lease_loss(self):
+        # Worker 1 claims update
+        claimed1, token1 = await self.engine.claim_telegram_update(99922, "123456", "789012", "/backlinks")
+        self.assertTrue(claimed1)
+
+        # Force lease expiration and recover by Worker 2
+        past_iso = "2026-11-14T00:00:00Z"
+        await self.d1.execute_mutation(
+            "UPDATE telegram_processed_updates SET claimed_at = ? WHERE update_id = 99922",
+            (past_iso,),
+        )
+        claimed2, token2 = await self.engine.claim_telegram_update(99922, "123456", "789012", "/backlinks")
+        self.assertTrue(claimed2)
+
+        # Worker 1 attempts completion with stale token1 -> Fenced out!
+        ok1 = await self.engine.complete_telegram_update(99922, token1)
+        self.assertFalse(ok1)
+
+        # Worker 2 completes with valid token2 -> Succeeds!
+        ok2 = await self.engine.complete_telegram_update(99922, token2)
+        self.assertTrue(ok2)
+
+    async def test_approval_rejected_if_prospect_in_rejected_or_ineligible_state(self):
+        # Futuretools prospect is rejected / ineligible
+        p = await self.d1.execute_first("SELECT id, action_status FROM prospects WHERE lower(prospect_domain) = 'futuretools.io'")
+        self.assertEqual(p["action_status"], "rejected")
+
+        # Attempting atomic approval must fail constraint and roll back
+        ok, msg = await self.d1.execute_atomic_approval(p["id"], None, "2026-11-15T00:00:00Z", "tester")
+        self.assertFalse(ok)
+        self.assertIn("invalid source status", msg.lower())
+
+    async def test_recover_stale_claims_sweep(self):
+        past_iso = "2026-11-14T00:00:00Z"
+        await self.d1.execute_mutation(
+            "INSERT INTO telegram_processed_updates (update_id, chat_id, user_id, command, status, claimed_at, lease_recoveries, lease_token) VALUES (99933, '123456', '789012', '/backlinks', 'processing', ?, 0, 'tok_abandoned')",
+            (past_iso,),
+        )
+        recovered = await self.engine.recover_stale_claims_sweep()
+        self.assertIn(99933, recovered)
+
+        # Check audit event was written
+        ev = await self.d1.execute_first("SELECT payload_json FROM audit_events WHERE entity_id = '99933'")
+        self.assertIsNotNone(ev)
+
 
 if __name__ == "__main__":
     unittest.main()

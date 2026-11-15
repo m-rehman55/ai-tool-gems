@@ -135,14 +135,18 @@ class WorkerApprovalEngine:
                 is_expired = False
 
         if is_expired:
-            # Atomically recover lease via optimistic lock on claimed_at
-            recoveries = int(existing.get("lease_recoveries", 0) or 0) + 1
+            # Atomically recover lease via optimistic lock on claimed_at with SQL-side increment
             new_lease_token = f"tok_{uuid.uuid4().hex[:12]}"
             rows = await self.d1.execute_mutation(
-                "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = ?, lease_token = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
-                (now_utc, recoveries, new_lease_token, int(update_id), claimed_at_str),
+                "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = lease_recoveries + 1, lease_token = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
+                (now_utc, new_lease_token, int(update_id), claimed_at_str),
             )
             if rows > 0:
+                rec_row = await self.d1.execute_first(
+                    "SELECT lease_recoveries FROM telegram_processed_updates WHERE update_id = ?",
+                    (int(update_id),),
+                )
+                lease_recs = rec_row.get("lease_recoveries", 1) if rec_row else 1
                 await self.d1.record_audit_event(
                     event_type="telegram_claim_recovered",
                     actor="worker_lease_recovery",
@@ -151,14 +155,63 @@ class WorkerApprovalEngine:
                         "update_id": update_id,
                         "previous_claimed_at": claimed_at_str,
                         "recovered_at": now_utc,
-                        "lease_recoveries": recoveries,
                         "new_lease_token": new_lease_token,
+                        "lease_recoveries": lease_recs,
                     },
                 )
                 return True, new_lease_token
             return False, None
 
         return False, None
+
+    async def complete_telegram_update(self, update_id: int, lease_token: str) -> bool:
+        """Atomically marks a claimed update as completed.
+        Enforces that the caller still holds the active lease_token and status is 'processing'.
+        Returns True if completed, False if fenced out.
+        """
+        if not update_id or not lease_token:
+            return False
+        now_comp = datetime.now(timezone.utc).isoformat()
+        rows = await self.d1.execute_mutation(
+            "UPDATE telegram_processed_updates SET status = 'completed', completed_at = ? WHERE update_id = ? AND lease_token = ? AND status = 'processing'",
+            (now_comp, int(update_id), str(lease_token)),
+        )
+        return bool(rows > 0)
+
+    async def recover_stale_claims_sweep(self, lease_timeout_seconds: int = 300) -> List[int]:
+        """Scheduled recovery scanner for abandoned claims.
+        Recovers claims stuck in 'processing' where claimed_at > timeout.
+        """
+        now_dt = datetime.now(timezone.utc)
+        now_utc = now_dt.isoformat()
+        rows = await self.d1.execute_query(
+            "SELECT update_id, claimed_at FROM telegram_processed_updates WHERE status = 'processing'"
+        )
+        recovered_ids = []
+        for r in rows:
+            claimed_at_str = r.get("claimed_at")
+            if not claimed_at_str:
+                continue
+            try:
+                claimed_dt = datetime.fromisoformat(claimed_at_str.replace("Z", "+00:00"))
+                if (now_dt - claimed_dt).total_seconds() > lease_timeout_seconds:
+                    upd_id = int(r["update_id"])
+                    new_token = f"tok_sweep_{uuid.uuid4().hex[:10]}"
+                    changed = await self.d1.execute_mutation(
+                        "UPDATE telegram_processed_updates SET claimed_at = ?, lease_recoveries = lease_recoveries + 1, lease_token = ? WHERE update_id = ? AND status = 'processing' AND claimed_at = ?",
+                        (now_utc, new_token, upd_id, claimed_at_str),
+                    )
+                    if changed > 0:
+                        await self.d1.record_audit_event(
+                            event_type="telegram_claim_recovered_by_sweep",
+                            actor="cron_sweeper",
+                            entity_id=str(upd_id),
+                            payload={"update_id": upd_id, "previous_claimed_at": claimed_at_str, "recovered_at": now_utc},
+                        )
+                        recovered_ids.append(upd_id)
+            except Exception:
+                pass
+        return recovered_ids
 
     async def handle_update(self, update: Dict[str, Any], header_secret: Optional[str] = None) -> str:
         # 1. Header Secret Verification
@@ -201,13 +254,11 @@ class WorkerApprovalEngine:
 
         reply_text = await self._dispatch_command(cmd, parts, chat_id, user_id, update_id, lease_token)
 
-        # Mark update as completed in telegram_processed_updates (matching lease_token)
+        # Mark update as completed with fencing token verification
         if update_id and lease_token:
-            now_comp = datetime.now(timezone.utc).isoformat()
-            await self.d1.execute_mutation(
-                "UPDATE telegram_processed_updates SET status = 'completed', completed_at = ? WHERE update_id = ? AND lease_token = ?",
-                (now_comp, int(update_id), lease_token),
-            )
+            completed_ok = await self.complete_telegram_update(update_id, lease_token)
+            if not completed_ok:
+                return f"⛔ Execution dropped: Worker was fenced out because lease token for update {update_id} expired or was recovered."
 
         return reply_text
 
