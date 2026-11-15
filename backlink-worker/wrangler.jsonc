@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+  "name": "ai-tool-gems-backlink-agent",
+  "main": "src/entry.py",
+  "compatibility_date": "2026-11-15",
+  "compatibility_flags": [
+    "python_workers"
+  ],
+  "workers_dev": true,
+  "account_id": "4f7a087d9199c825cced4aa7b66ee81d",
+
+  "vars": {
+    "BACKLINK_AGENT_ENABLED": "false",
+    "BACKLINK_AGENT_MODE": "report_only",
+    "MAX_VERIFICATIONS_PER_RUN": "25",
+    "MAX_DRAFTS_PER_RUN": "5",
+    "OWNER_APPROVAL_REQUIRED": "true",
+    "ATG_SITE_URL": "https://aitoolgems.tech"
+  },
+
+  "triggers": {
+    "crons": [
+      "0 1,7,13,19 * * *",
+      "0 3 * * 0",
+      "*/30 * * * *"
+    ]
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "aitoolgems-backlink-agent",
+      "database_id": "aitoolgems-backlink-agent-db",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  "queues": {
+    "producers": [
+      {
+        "binding": "BACKLINK_QUEUE",
+        "queue": "aitoolgems-backlink-jobs"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "aitoolgems-backlink-jobs",
+        "max_batch_size": 5,
+        "max_batch_timeout": 10,
+        "max_retries": 3,
+        "dead_letter_queue": "aitoolgems-backlink-dlq"
+      }
+    ]
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
