@@ -27,6 +27,7 @@ class OutboxMessage:
     error_message: Optional[str] = None
     locked_by: Optional[str] = None
     locked_at: Optional[str] = None
+    lease_token: Optional[str] = None
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     delivered_at: Optional[str] = None
@@ -95,6 +96,7 @@ class OutboxMessage:
             "error_message": self.error_message,
             "locked_by": self.locked_by,
             "locked_at": self.locked_at,
+            "lease_token": self.lease_token,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "delivered_at": self.delivered_at,
@@ -117,6 +119,7 @@ class OutboxMessage:
             error_message=data.get("error_message"),
             locked_by=data.get("locked_by"),
             locked_at=data.get("locked_at"),
+            lease_token=data.get("lease_token"),
             created_at=data.get("created_at", datetime.now(timezone.utc).isoformat()),
             updated_at=data.get("updated_at", datetime.now(timezone.utc).isoformat()),
             delivered_at=data.get("delivered_at"),

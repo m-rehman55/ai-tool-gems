@@ -90,6 +90,45 @@ class TestOutboxStore(unittest.TestCase):
         self.assertEqual(len(worker2_claimed), 1)
         self.assertEqual(worker2_claimed[0].message_id, msg.message_id)
 
+    def test_lease_token_fencing_blocks_stale_worker_update(self):
+        """WP15-A: A worker whose lease expired cannot update status if lease token changed."""
+        msg = OutboxMessage(chat_id="12345", text="Fencing test")
+        self.store.enqueue(msg)
+
+        # Worker A claims message
+        claimed_a = self.store.claim_pending_messages(worker_id="worker_a", limit=1)[0]
+        token_a = claimed_a.lease_token
+        self.assertIsNotNone(token_a)
+
+        # Simulate lease expiration and Worker B taking over
+        stale_time = (datetime.now(timezone.utc) - timedelta(seconds=600)).isoformat()
+        with self.store._get_connection() as conn:
+            conn.execute(
+                "UPDATE outbox_messages SET locked_at = ? WHERE message_id = ?",
+                (stale_time, msg.message_id),
+            )
+        self.store.recover_stale_leases(lease_timeout_seconds=300)
+        claimed_b = self.store.claim_pending_messages(worker_id="worker_b", limit=1)[0]
+        token_b = claimed_b.lease_token
+        self.assertNotEqual(token_a, token_b)
+
+        # Stale Worker A wakes up and attempts to mark delivered with old token
+        success_a = self.store.update_delivery_status(
+            message_id=msg.message_id,
+            status="delivered",
+            expected_lease_token=token_a,
+        )
+        self.assertFalse(success_a)  # Fenced out!
+
+        # Worker B completes cleanly with active token
+        success_b = self.store.update_delivery_status(
+            message_id=msg.message_id,
+            status="delivered",
+            expected_lease_token=token_b,
+        )
+        self.assertTrue(success_b)
+        self.assertEqual(self.store.get(msg.message_id).status, "delivered")
+
     def test_delivery_unknown_transition(self):
         msg = OutboxMessage(chat_id="12345", text="Timeout msg")
         self.store.enqueue(msg)

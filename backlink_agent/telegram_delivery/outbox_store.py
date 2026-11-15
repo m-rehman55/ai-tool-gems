@@ -50,8 +50,9 @@ class OutboxStore(ABC):
         status: str,
         error_message: Optional[str] = None,
         telegram_message_id: Optional[int] = None,
+        expected_lease_token: Optional[str] = None,
     ) -> bool:
-        """Updates the status and metadata of a message."""
+        """Updates the status and metadata of a message, fencing out stale worker leases."""
         pass
 
     @abstractmethod
@@ -84,12 +85,14 @@ class LocalSQLiteOutboxStore(OutboxStore):
         error_message TEXT,
         locked_by TEXT,
         locked_at TEXT,
+        lease_token TEXT,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
         delivered_at TEXT
     );
     CREATE INDEX IF NOT EXISTS idx_outbox_status ON outbox_messages(status);
     CREATE INDEX IF NOT EXISTS idx_outbox_draft_hash ON outbox_messages(draft_hash);
+    CREATE INDEX IF NOT EXISTS idx_outbox_lease_token ON outbox_messages(lease_token);
     CREATE INDEX IF NOT EXISTS idx_outbox_created_at ON outbox_messages(created_at);
     """
 
@@ -109,6 +112,18 @@ class LocalSQLiteOutboxStore(OutboxStore):
     def _init_db(self) -> None:
         with self._get_connection() as conn:
             conn.executescript(self.SCHEMA)
+            # Schema migration safety if table already existed without lease_token
+            try:
+                conn.execute("ALTER TABLE outbox_messages ADD COLUMN lease_token TEXT")
+            except sqlite3.OperationalError:
+                pass  # Already present
+
+    def checkpoint_wal(self) -> Dict[str, Any]:
+        """Checkpoints SQLite WAL journal into main DB file to ensure zero uncommitted artifacts."""
+        with self._get_connection() as conn:
+            cursor = conn.execute("PRAGMA wal_checkpoint(TRUNCATE);")
+            res = cursor.fetchone()
+            return {"busy": res[0], "log": res[1], "checkpointed": res[2]}
 
     def enqueue(self, message: OutboxMessage) -> None:
         now_str = datetime.now(timezone.utc).isoformat()
@@ -119,8 +134,8 @@ class LocalSQLiteOutboxStore(OutboxStore):
                     message_id, chat_id, text, message_type, prospect_domain,
                     draft_id, draft_hash, status, retry_count, max_retries,
                     telegram_message_id, error_message, locked_by, locked_at,
-                    created_at, updated_at, delivered_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL, ?, ?, ?)
+                    lease_token, created_at, updated_at, delivered_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL, ?, ?, ?, ?)
                 """,
                 (
                     message.message_id,
@@ -135,6 +150,7 @@ class LocalSQLiteOutboxStore(OutboxStore):
                     message.max_retries,
                     getattr(message, "telegram_message_id", None),
                     message.error_message,
+                    getattr(message, "lease_token", None),
                     message.created_at,
                     now_str,
                     message.delivered_at,
@@ -189,19 +205,24 @@ class LocalSQLiteOutboxStore(OutboxStore):
 
             for r in rows:
                 m_id = r["message_id"]
+                lease_tok = f"tok_{uuid.uuid4().hex[:12]}"
                 conn.execute(
                     """
                     UPDATE outbox_messages
                     SET status = 'sending',
                         locked_by = ?,
                         locked_at = ?,
+                        lease_token = ?,
                         updated_at = ?
                     WHERE message_id = ?
                     """,
-                    (worker_id, now_iso, now_iso, m_id),
+                    (worker_id, now_iso, lease_tok, now_iso, m_id),
                 )
                 msg = self._row_to_message(r)
                 msg.status = "sending"
+                msg.locked_by = worker_id
+                msg.locked_at = now_iso
+                msg.lease_token = lease_tok
                 claimed_messages.append(msg)
 
         return claimed_messages
@@ -212,6 +233,7 @@ class LocalSQLiteOutboxStore(OutboxStore):
         status: str,
         error_message: Optional[str] = None,
         telegram_message_id: Optional[int] = None,
+        expected_lease_token: Optional[str] = None,
     ) -> bool:
         now_iso = datetime.now(timezone.utc).isoformat()
         delivered_at = (
@@ -221,20 +243,38 @@ class LocalSQLiteOutboxStore(OutboxStore):
         )
 
         with self._get_connection() as conn:
-            cursor = conn.execute(
-                """
-                UPDATE outbox_messages
-                SET status = ?,
-                    error_message = ?,
-                    telegram_message_id = COALESCE(?, telegram_message_id),
-                    delivered_at = COALESCE(?, delivered_at),
-                    updated_at = ?,
-                    locked_by = NULL,
-                    locked_at = NULL
-                WHERE message_id = ?
-                """,
-                (status, error_message, telegram_message_id, delivered_at, now_iso, message_id),
-            )
+            if expected_lease_token:
+                cursor = conn.execute(
+                    """
+                    UPDATE outbox_messages
+                    SET status = ?,
+                        error_message = ?,
+                        telegram_message_id = COALESCE(?, telegram_message_id),
+                        delivered_at = COALESCE(?, delivered_at),
+                        updated_at = ?,
+                        locked_by = NULL,
+                        locked_at = NULL,
+                        lease_token = NULL
+                    WHERE message_id = ? AND (lease_token IS NULL OR lease_token = ?)
+                    """,
+                    (status, error_message, telegram_message_id, delivered_at, now_iso, message_id, expected_lease_token),
+                )
+            else:
+                cursor = conn.execute(
+                    """
+                    UPDATE outbox_messages
+                    SET status = ?,
+                        error_message = ?,
+                        telegram_message_id = COALESCE(?, telegram_message_id),
+                        delivered_at = COALESCE(?, delivered_at),
+                        updated_at = ?,
+                        locked_by = NULL,
+                        locked_at = NULL,
+                        lease_token = NULL
+                    WHERE message_id = ?
+                    """,
+                    (status, error_message, telegram_message_id, delivered_at, now_iso, message_id),
+                )
             return cursor.rowcount > 0
 
     def recover_stale_leases(self, lease_timeout_seconds: int = 300) -> int:
@@ -251,6 +291,7 @@ class LocalSQLiteOutboxStore(OutboxStore):
                     error_message = 'Recovered from crashed/stale worker lease',
                     locked_by = NULL,
                     locked_at = NULL,
+                    lease_token = NULL,
                     updated_at = ?
                 WHERE status = 'sending' AND (locked_at IS NULL OR locked_at < ?)
                 """,
@@ -297,6 +338,8 @@ class LocalSQLiteOutboxStore(OutboxStore):
             msg.telegram_message_id = row["telegram_message_id"]
         if "draft_id" in row.keys():
             msg.draft_id = row["draft_id"]
+        if "lease_token" in row.keys():
+            msg.lease_token = row["lease_token"]
         return msg
 
 

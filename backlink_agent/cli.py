@@ -50,6 +50,19 @@ def main():
     sub_recover = subparsers.add_parser("recover-leases", help="Recover stale outbox worker leases stuck in sending state")
     sub_recover.add_argument("--timeout", type=int, default=300, help="Lease age in seconds to consider stale (default 300)")
 
+    # WP15 Acquisition Lifecycle Report Command
+    sub_acq = subparsers.add_parser("acquisition-report", help="Generate earned backlink acquisition and conversion report")
+    sub_acq.add_argument("--db", default=None, help="Path to lifecycle SQLite DB")
+    sub_acq.add_argument("--output-dir", default="reports/acquisition", help="Directory to export report files")
+    sub_acq.add_argument("--no-export", action="store_true", help="Print to console only without saving files")
+
+    # WP15 Advanced Live Anchor Verification Command
+    sub_adv_verify = subparsers.add_parser("verify-advanced", help="Run deep multi-hop SSRF & indexability anchor verification on a URL")
+    sub_adv_verify.add_argument("source_url", help="URL of external source page containing backlink")
+    sub_adv_verify.add_argument("target_url", help="Target URL that should be linked to (e.g. https://aitoolgems.tech/)")
+    sub_adv_verify.add_argument("--expected-anchor", default=None, help="Optional substring anchor text expected")
+    sub_adv_verify.add_argument("--timeout", type=float, default=15.0, help="HTTP request timeout in seconds")
+
     args = parser.parse_args()
 
     if not args.command or args.command == "audit":
@@ -143,6 +156,51 @@ def main():
         store = LocalSQLiteOutboxStore()
         recovered = store.recover_stale_leases(lease_timeout_seconds=args.timeout)
         print(f"✅ Recovered {recovered} stale outbox worker lease(s) (timeout: {args.timeout}s).")
+
+    elif args.command == "acquisition-report":
+        from .lifecycle.store import LocalSQLiteLifecycleStore
+        from .reporting.acquisition_reporter import AcquisitionReporter
+
+        db_path = Path(args.db) if args.db else None
+        store = LocalSQLiteLifecycleStore(db_path=db_path)
+        output_dir = Path(args.output_dir) if args.output_dir else Path("reports/acquisition")
+        reporter = AcquisitionReporter(lifecycle_store=store, reports_dir=output_dir)
+
+        report = reporter.generate_acquisition_report()
+        print(report.get("markdown_report", ""))
+
+        if not args.no_export:
+            files = report.get("report_files", {})
+            print(f"\n📁 Exported acquisition reports:")
+            print(f"  • Markdown: {files.get('markdown')}")
+            print(f"  • JSON: {files.get('json')}")
+
+    elif args.command == "verify-advanced":
+        from .advanced_verifier.verifier import AdvancedBacklinkVerifier
+
+        verifier = AdvancedBacklinkVerifier(timeout=args.timeout)
+        print(f"🔍 Probing source page: {args.source_url}")
+        print(f"🎯 Target expected: {args.target_url}")
+
+        res = verifier.verify_url(
+            source_page_url=args.source_url,
+            target_asset_url=args.target_url,
+        )
+
+        print("\n📊 Verification Outcome:")
+        print(f"  • Qualification: {res.qualification.upper()}")
+        print(f"  • Live Backlink Earned: {'✅ YES' if res.is_live_backlink else '❌ NO'}")
+        print(f"  • HTTP Status: {res.http_status}")
+        print(f"  • Anchor Found: {res.anchor_found}")
+        print(f"  • Exact Anchor Text: {res.actual_anchor_text}")
+        print(f"  • Actual Href: {res.actual_href}")
+        print(f"  • Rel Tokens: {res.rel_tokens}")
+        print(f"  • Indexable: {res.is_indexable} (Noindex: {res.noindex_source})")
+        print(f"  • Canonical: {res.canonical_url}")
+        print(f"  • Redirect Hops: {len(res.redirect_chain)}")
+        print(f"  • Content Hash: {res.content_hash[:16]}..." if res.content_hash else "  • Content Hash: None")
+        if res.error_message:
+            print(f"  • Error Details: {res.error_message}")
 
 
 if __name__ == "__main__":

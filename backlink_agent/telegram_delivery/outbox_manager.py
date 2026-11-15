@@ -79,6 +79,7 @@ class TelegramOutboxManager:
             self.store.update_delivery_status(
                 message_id=msg.message_id,
                 status="dry_run_simulated",
+                expected_lease_token=msg.lease_token,
             )
             return True
 
@@ -107,6 +108,7 @@ class TelegramOutboxManager:
                         message_id=msg.message_id,
                         status="accepted_by_telegram",
                         telegram_message_id=remote_msg_id,
+                        expected_lease_token=msg.lease_token,
                     )
                     return True
                 else:
@@ -116,6 +118,7 @@ class TelegramOutboxManager:
                         message_id=msg.message_id,
                         status=msg.status,
                         error_message=err_msg,
+                        expected_lease_token=msg.lease_token,
                     )
                     return False
 
@@ -127,6 +130,7 @@ class TelegramOutboxManager:
                 message_id=msg.message_id,
                 status="delivery_unknown",
                 error_message=err_msg,
+                expected_lease_token=msg.lease_token,
             )
             return False
 
@@ -137,6 +141,7 @@ class TelegramOutboxManager:
                 message_id=msg.message_id,
                 status=msg.status,
                 error_message=sanitized_err,
+                expected_lease_token=msg.lease_token,
             )
             return False
 
