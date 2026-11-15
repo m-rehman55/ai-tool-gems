@@ -392,6 +392,20 @@ class AdvancedBacklinkVerifier:
                     )
                     res.content_hash = res.compute_content_hash()
                     return res
+                elif status in (403, 429):
+                    res = DetailedVerificationResult(
+                        prospect_id=prospect_id,
+                        source_page_url=source_page_url,
+                        target_asset_url=target_asset_url,
+                        http_status=status,
+                        final_page_url=current_url,
+                        redirect_chain=redirect_chain,
+                        qualification=LinkQualification.BLOCKED_WAF,
+                        is_live_backlink=False,
+                        error_message=f"WAF / Bot Protection Active (HTTP {status})",
+                    )
+                    res.content_hash = res.compute_content_hash()
+                    return res
                 else:
                     res = DetailedVerificationResult(
                         prospect_id=prospect_id,

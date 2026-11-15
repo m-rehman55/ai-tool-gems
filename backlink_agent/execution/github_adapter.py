@@ -121,6 +121,9 @@ class GitHubPRAdapter:
                 adapter_name=self.ADAPTER_NAME,
                 status=ExecutionStatus.DRY_RUN,
                 live_url=simulated_pr_url,
+                submission_url=f"https://github.com/{repo_name}",
+                submission_evidence_url=simulated_pr_url,
+                canonical_placement_url=f"https://github.com/{repo_name}/blob/main/README.md",
                 evidence_message=f"Simulated PR opened on {repo_name} (branch: feat/add-ai-tool-gems)",
                 audit_metadata={
                     "repo_name": repo_name,
@@ -152,6 +155,9 @@ class GitHubPRAdapter:
                     adapter_name=self.ADAPTER_NAME,
                     status=ExecutionStatus.SKIPPED,
                     live_url=f"https://github.com/{repo_name}",
+                    submission_url=f"https://github.com/{repo_name}",
+                    submission_evidence_url=f"https://github.com/{repo_name}/blob/main/README.md",
+                    canonical_placement_url=f"https://github.com/{repo_name}/blob/main/README.md",
                     evidence_message=f"AI Tool Gems is already listed in {repo_name} README.md",
                     audit_metadata={"repo_name": repo_name, "already_present": True},
                 )
@@ -189,6 +195,9 @@ class GitHubPRAdapter:
                     adapter_name=self.ADAPTER_NAME,
                     status=ExecutionStatus.SUCCESS,
                     live_url=pr_url,
+                    submission_url=f"https://github.com/{repo_name}",
+                    submission_evidence_url=pr_url,
+                    canonical_placement_url=f"https://github.com/{repo_name}/blob/main/README.md",
                     evidence_message=f"Live PR created on {repo_name}: {pr_url}",
                     audit_metadata={"repo_name": repo_name, "pr_url": pr_url, "branch": branch_name},
                 )
@@ -200,6 +209,9 @@ class GitHubPRAdapter:
                     adapter_name=self.ADAPTER_NAME,
                     status=ExecutionStatus.SUCCESS,
                     live_url=fallback_pr_url,
+                    submission_url=f"https://github.com/{repo_name}",
+                    submission_evidence_url=fallback_pr_url,
+                    canonical_placement_url=f"https://github.com/{repo_name}/blob/main/README.md",
                     evidence_message=f"PR prepared and registered for {repo_name}",
                     audit_metadata={"repo_name": repo_name, "pr_url": fallback_pr_url},
                 )

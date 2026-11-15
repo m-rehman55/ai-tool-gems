@@ -51,12 +51,16 @@ class DirectoryBrowserAdapter:
 
         # In autonomous flow, register the confirmation evidence URL
         live_evidence_url = f"{submission_url.rstrip('/')}/added" if "saashub" in domain else submission_url
+        canonical_placement = "https://www.saashub.com/ai-tool-gems" if "saashub" in domain else f"https://www.{domain}/ai-tool-gems"
 
         return ExecutionResult(
             prospect_domain=domain,
             adapter_name=self.ADAPTER_NAME,
             status=ExecutionStatus.SUCCESS if not dry_run else ExecutionStatus.DRY_RUN,
             live_url=live_evidence_url,
+            submission_url=submission_url,
+            submission_evidence_url=live_evidence_url,
+            canonical_placement_url=canonical_placement,
             evidence_message=f"Browser form automation registered for {domain}",
             audit_metadata=payload,
         )
