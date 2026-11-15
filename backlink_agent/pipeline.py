@@ -43,10 +43,11 @@ class BacklinkIntelligencePipeline:
         self,
         dispatch_telegram: bool = True,
         export_reports: bool = True,
+        silent_discovery: bool = False,
     ) -> Dict[str, Any]:
         """Executes a full daily backlink intelligence cycle."""
         run_start = datetime.now(timezone.utc)
-        logger.info(f"Starting Backlink Intelligence Cycle at {run_start.isoformat()}")
+        logger.info(f"Starting Backlink Intelligence Cycle at {run_start.isoformat()} (silent_discovery={silent_discovery})")
 
         # 1. Discover Prospects
         discovery_result = self.discovery_orchestrator.run_discovery()
@@ -65,26 +66,27 @@ class BacklinkIntelligencePipeline:
         drafted_tuples = self.drafting_engine.draft_batch(scored_opportunities)
         drafts_generated: List[BaseDraft] = [t[0] for t in drafted_tuples]
 
-        # 4. Generate Telegram Daily Summary & Individual Cards
-        summary_text = DailyTelegramReporter.format_daily_summary(
-            total_discovered=len(discovered),
-            scored_opportunities=scored_opportunities,
-            drafts_generated=drafts_generated,
-            live_backlinks_count=4,
-        )
-        self.outbox_manager.enqueue(
-            text=summary_text,
-            message_type="daily_summary",
-        )
-
-        for draft, d_hash, opp in drafted_tuples:
-            card_text = OpportunityCardFormatter.format_card(opp, draft, d_hash)
-            self.outbox_manager.enqueue(
-                text=card_text,
-                message_type="opportunity_card",
-                prospect_domain=opp.prospect_domain,
-                draft_hash=d_hash,
+        # 4. Generate Telegram Daily Summary & Individual Cards (if not silent)
+        if not silent_discovery:
+            summary_text = DailyTelegramReporter.format_daily_summary(
+                total_discovered=len(discovered),
+                scored_opportunities=scored_opportunities,
+                drafts_generated=drafts_generated,
+                live_backlinks_count=4,
             )
+            self.outbox_manager.enqueue(
+                text=summary_text,
+                message_type="daily_summary",
+            )
+
+            for draft, d_hash, opp in drafted_tuples:
+                card_text = OpportunityCardFormatter.format_card(opp, draft, d_hash)
+                self.outbox_manager.enqueue(
+                    text=card_text,
+                    message_type="opportunity_card",
+                    prospect_domain=opp.prospect_domain,
+                    draft_hash=d_hash,
+                )
 
         # 5. Flush outbox
         flush_results = {"processed": 0, "sent": 0, "failed": 0}

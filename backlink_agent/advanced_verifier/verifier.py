@@ -19,7 +19,7 @@ from backlink_agent.security import (
     validate_and_sanitize_url,
 )
 from backlink_agent.verifier import BacklinkHTMLParser
-from .models import DetailedVerificationResult, LinkQualification
+from .models import DetailedVerificationResult, LinkQualification, TargetMatchPolicy
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +150,8 @@ class AdvancedBacklinkVerifier:
         response_headers: Optional[Dict[str, str]] = None,
         prospect_id: str = "",
         redirect_chain: Optional[List[str]] = None,
+        match_policy: str = TargetMatchPolicy.EXACT_URL,
+        allowed_target_urls: Optional[List[str]] = None,
     ) -> DetailedVerificationResult:
         """Parses HTML DOM and evaluates backlink qualification without making network calls."""
         parser = BacklinkHTMLParser(base_url)
@@ -170,18 +172,22 @@ class AdvancedBacklinkVerifier:
 
         norm_approved_target = normalize_target_url(target_url)
         target_domain = urllib.parse.urlsplit(norm_approved_target).netloc.lower()
+        allowed_targets = {normalize_target_url(u) for u in (allowed_target_urls or [])}
 
         matching_anchor = None
-        wrong_target_anchor = None
+        allowed_match_anchor = None
+        same_domain_anchor = None
 
         for anchor in parser.anchors:
             norm_anchor = normalize_target_url(anchor.resolved_href)
             if norm_anchor == norm_approved_target:
                 matching_anchor = anchor
                 break
+            if norm_anchor in allowed_targets and not allowed_match_anchor:
+                allowed_match_anchor = anchor
             anchor_netloc = urllib.parse.urlsplit(norm_anchor).netloc.lower()
-            if anchor_netloc == target_domain and not wrong_target_anchor:
-                wrong_target_anchor = anchor
+            if anchor_netloc == target_domain and not same_domain_anchor:
+                same_domain_anchor = anchor
 
         redirects = redirect_chain or [base_url]
         final_url = redirects[-1] if redirects else base_url
@@ -196,6 +202,7 @@ class AdvancedBacklinkVerifier:
             canonical_url=parser.canonical_url,
             is_indexable=not is_noindex,
             noindex_source=noindex_source,
+            target_match_policy=match_policy,
         )
 
         if matching_anchor:
@@ -204,6 +211,7 @@ class AdvancedBacklinkVerifier:
             res.actual_href = matching_anchor.raw_href
             res.final_target_destination = matching_anchor.resolved_href
             res.target_matches_approved = True
+            res.target_match_status = "live_exact_target"
             res.rel_tokens = matching_anchor.rel_tokens
 
             tokens_set = set(t.lower() for t in matching_anchor.rel_tokens)
@@ -223,18 +231,53 @@ class AdvancedBacklinkVerifier:
                 res.qualification = LinkQualification.EDITORIAL_DOFOLLOW
                 res.is_live_backlink = True
 
-        elif wrong_target_anchor:
+        elif allowed_match_anchor and match_policy in (TargetMatchPolicy.ALLOWED_URLS, TargetMatchPolicy.ANY_VERIFIED_CANONICAL_ASSET):
             res.anchor_found = True
-            res.actual_anchor_text = wrong_target_anchor.text
-            res.actual_href = wrong_target_anchor.raw_href
-            res.final_target_destination = wrong_target_anchor.resolved_href
-            res.target_matches_approved = False
-            res.rel_tokens = wrong_target_anchor.rel_tokens
-            res.qualification = LinkQualification.WRONG_TARGET
-            res.is_live_backlink = False
+            res.actual_anchor_text = allowed_match_anchor.text
+            res.actual_href = allowed_match_anchor.raw_href
+            res.final_target_destination = allowed_match_anchor.resolved_href
+            res.target_matches_approved = True
+            res.target_match_status = "live_allowed_target"
+            res.rel_tokens = allowed_match_anchor.rel_tokens
+
+            tokens_set = set(t.lower() for t in allowed_match_anchor.rel_tokens)
+            if is_noindex:
+                res.qualification = LinkQualification.SOURCE_NOINDEX
+                res.is_live_backlink = False
+            elif "sponsored" in tokens_set:
+                res.qualification = LinkQualification.SPONSORED
+                res.is_live_backlink = True
+            elif "ugc" in tokens_set:
+                res.qualification = LinkQualification.USER_GENERATED_UGC
+                res.is_live_backlink = True
+            elif "nofollow" in tokens_set:
+                res.qualification = LinkQualification.EDITORIAL_NOFOLLOW
+                res.is_live_backlink = True
+            else:
+                res.qualification = LinkQualification.EDITORIAL_DOFOLLOW
+                res.is_live_backlink = True
+
+        elif same_domain_anchor:
+            res.anchor_found = True
+            res.actual_anchor_text = same_domain_anchor.text
+            res.actual_href = same_domain_anchor.raw_href
+            res.final_target_destination = same_domain_anchor.resolved_href
+            res.rel_tokens = same_domain_anchor.rel_tokens
+
+            if match_policy == TargetMatchPolicy.ANY_VERIFIED_CANONICAL_ASSET:
+                res.target_matches_approved = False
+                res.target_match_status = "domain_asset_accepted"
+                res.qualification = LinkQualification.DOMAIN_ASSET_ACCEPTED
+                res.is_live_backlink = not is_noindex
+            else:
+                res.target_matches_approved = False
+                res.target_match_status = "wrong_target"
+                res.qualification = LinkQualification.WRONG_TARGET
+                res.is_live_backlink = False
 
         else:
             res.anchor_found = False
+            res.target_match_status = "anchor_missing"
             res.qualification = LinkQualification.ANCHOR_MISSING
             res.is_live_backlink = False
 
@@ -242,7 +285,12 @@ class AdvancedBacklinkVerifier:
         return res
 
     def verify_url(
-        self, source_page_url: str, target_asset_url: str, prospect_id: str = ""
+        self,
+        source_page_url: str,
+        target_asset_url: str,
+        prospect_id: str = "",
+        match_policy: str = TargetMatchPolicy.EXACT_URL,
+        allowed_target_urls: Optional[List[str]] = None,
     ) -> DetailedVerificationResult:
         """Fetches live source page via HTTPS, enforcing multi-hop SSRF validation and 2MB stream cap."""
         # 1. SSRF Pre-flight check and IP Pinning
@@ -260,6 +308,7 @@ class AdvancedBacklinkVerifier:
                 qualification=LinkQualification.SSRF_BLOCKED,
                 is_live_backlink=False,
                 error_message=f"SSRF Check Failed: {e}",
+                target_match_policy=match_policy,
             )
             res.content_hash = res.compute_content_hash()
             return res
@@ -359,6 +408,8 @@ class AdvancedBacklinkVerifier:
                         response_headers=headers,
                         prospect_id=prospect_id,
                         redirect_chain=redirect_chain,
+                        match_policy=match_policy,
+                        allowed_target_urls=allowed_target_urls,
                     )
 
             except (socket.timeout, TimeoutError) as e:

@@ -9,6 +9,14 @@ import json
 from typing import Any, Dict, List, Optional
 
 
+class TargetMatchPolicy:
+    """Policy governing destination URL matching flexibility."""
+
+    EXACT_URL = "exact_url"
+    ALLOWED_URLS = "allowed_urls"
+    ANY_VERIFIED_CANONICAL_ASSET = "any_verified_canonical_asset"
+
+
 class LinkQualification:
     """Detailed attribution and qualification classifications for backlinks."""
 
@@ -17,6 +25,7 @@ class LinkQualification:
     USER_GENERATED_UGC = "user_generated_ugc"
     SPONSORED = "sponsored"
     MIXED_QUALIFIED = "mixed_qualified"
+    DOMAIN_ASSET_ACCEPTED = "domain_asset_accepted"
     WRONG_TARGET = "wrong_target"
     ANCHOR_MISSING = "anchor_missing"
     SOURCE_NOINDEX = "source_noindex"
@@ -45,6 +54,8 @@ class DetailedVerificationResult:
     actual_href: str = ""
     final_target_destination: str = ""
     target_matches_approved: bool = False
+    target_match_policy: str = TargetMatchPolicy.EXACT_URL
+    target_match_status: str = ""
     rel_tokens: List[str] = field(default_factory=list)
     qualification: str = LinkQualification.ANCHOR_MISSING
     content_hash: str = ""
