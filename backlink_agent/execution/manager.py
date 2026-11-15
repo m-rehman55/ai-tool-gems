@@ -14,6 +14,7 @@ from .browser_adapter import DirectoryBrowserAdapter
 from .devto_adapter import DevtoAPIAdapter
 from .email_adapter import EmailPitchAdapter
 from .github_adapter import GitHubPRAdapter
+from .hashnode_adapter import HashnodeGraphQLAdapter
 from .models import ExecutionResult, ExecutionStatus
 
 
@@ -29,6 +30,7 @@ class ExecutionManager:
         self.approval_engine = approval_engine
         self.github_adapter = GitHubPRAdapter()
         self.devto_adapter = DevtoAPIAdapter()
+        self.hashnode_adapter = HashnodeGraphQLAdapter()
         self.email_adapter = EmailPitchAdapter()
         self.browser_adapter = DirectoryBrowserAdapter()
 
@@ -41,6 +43,8 @@ class ExecutionManager:
             return self.github_adapter
         if domain == "dev.to":
             return self.devto_adapter
+        if domain == "hashnode.com" or "hashnode" in domain:
+            return self.hashnode_adapter
         if domain == "techjuice.pk" or (p_type == "tech_publication" and "medium" not in domain):
             return self.email_adapter
         return self.browser_adapter

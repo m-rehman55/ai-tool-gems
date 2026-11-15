@@ -30,6 +30,31 @@ class OutcomeNotificationFormatter:
         return "\n".join(lines)
 
     @staticmethod
+    def format_backlink_won(
+        domain: str,
+        placement_url: str,
+        target_url: str,
+        anchor_text: str,
+        rel_tokens: List[str],
+        qualification: str,
+        target_match_status: str,
+        http_status: int = 200,
+    ) -> str:
+        rel_str = ", ".join(rel_tokens) if rel_tokens else "dofollow"
+        lines = [
+            "🏆 *Backlink Won & Verified Live [DOM Verified]*",
+            f"• *Platform:* `{domain}`",
+            f"• *Published Article:* {placement_url}",
+            f"• *Destination:* `{target_url}`",
+            f"• *Anchor Text:* \"{anchor_text}\"",
+            f"• *Attributes:* `rel=\"{rel_str}\"` | HTTP: `{http_status}`",
+            f"• *Target Match:* `{target_match_status}` (`{qualification}`)",
+            "",
+            "✨ *Status:* `backlink_verified` (Autonomous tracking active)",
+        ]
+        return "\n".join(lines)
+
+    @staticmethod
     def format_publication_verified(
         domain: str,
         prospect_id: str,
