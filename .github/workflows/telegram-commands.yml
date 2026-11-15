@@ -29,11 +29,24 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Restore Telegram bot state cache
+        uses: actions/cache/restore@v4
+        with:
+          path: marketing_agent/data/bot-state.json
+          key: telegram-bot-state-${{ github.run_id }}
+          restore-keys: |
+            telegram-bot-state-
       - name: Configure menu and answer new commands
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ]; then echo "No TELEGRAM_BOT_TOKEN — skipping"; exit 0; fi
           python -m marketing_agent setup-bot || echo "setup-bot failed"
           python -m marketing_agent process-commands || echo "process-commands failed"
+      - name: Save Telegram bot state cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: marketing_agent/data/bot-state.json
+          key: telegram-bot-state-${{ github.run_id }}
       - name: Save command cursor
         shell: bash
         run: |
@@ -41,5 +54,5 @@ jobs:
           git config user.name "AI Tool Gems Bot"
           git config user.email "actions@users.noreply.github.com"
           git add marketing_agent/data/bot-state.json
-          git commit -m "Advance Telegram bot command cursor"
-          git push
+          git commit -m "Advance Telegram bot command cursor" || exit 0
+          git push || echo "Direct push to main prevented by branch protection; cursor preserved in GitHub Actions cache"

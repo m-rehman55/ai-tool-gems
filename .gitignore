@@ -62,5 +62,8 @@ data/backlinks/
 data/aio/
 data/bing/
 data/merchant/
+seo-agent/data/outbox/
+seo-agent/data/*.db
+seo-agent/data/*.db-*
 
 
