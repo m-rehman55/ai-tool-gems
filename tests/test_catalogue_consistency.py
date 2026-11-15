@@ -135,29 +135,35 @@ class TestCatalogueConsistency(unittest.TestCase):
             self.assertNotIn('data-step-action="whatsapp"', content)
             self.assertNotIn('Direct Concierge Checkout', content)
 
-    def test_wave2_tools_quarantined_noindex(self):
-        """Assert all 13 Wave 2 tools on main have meta robots noindex, follow."""
-        for slug in self.wave2_slugs:
+    def test_all_25_directory_tools_indexed_and_compliant(self):
+        """Assert all 25 directory tools (Wave 1 & Wave 2) have meta robots index, follow."""
+        for slug in self.wave1_slugs + self.wave2_slugs:
             p = os.path.join(self.tools_dir, slug, "index.html")
             with open(p, "r", encoding="utf-8") as f:
                 content = f.read()
             m_robots = re.search(r'<meta\s+name=["\']robots["\']\s+content=["\']([^"\']+)["\']', content)
-            self.assertTrue(m_robots, f"Missing robots tag in Wave 2 profile {slug}")
-            self.assertEqual(m_robots.group(1).strip(), "noindex, follow")
+            self.assertTrue(m_robots, f"Missing robots tag in directory profile {slug}")
+            self.assertIn("index", m_robots.group(1).lower())
+            self.assertNotIn("noindex", m_robots.group(1).lower())
 
     def test_sitemap_accounting_and_exclusion_invariants(self):
-        """Verify sitemap contains exactly 52 tool URLs and excludes Wave 2 and Japan URLs."""
+        """Verify sitemap contains all 65 tool URLs (40 legacy + 25 directory) and excludes Japan URLs."""
         tree = ET.parse(self.sitemap_path)
         root = tree.getroot()
         urls = [elem.text for elem in root.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
 
         tool_urls = [u for u in urls if '/tools/' in u and u != 'https://aitoolgems.tech/tools/']
-        self.assertEqual(len(tool_urls), 52, f"Expected exactly 52 tool URLs in sitemap, found {len(tool_urls)}")
+        self.assertEqual(len(tool_urls), 65, f"Expected exactly 65 tool URLs in sitemap, found {len(tool_urls)}")
 
-        # No Wave 2 in sitemap
-        for slug in self.wave2_slugs:
+        # All 40 legacy tools in sitemap
+        for slug in self.legacy_40_slugs:
             target = f"https://aitoolgems.tech/tools/{slug}/"
-            self.assertNotIn(target, urls, f"Quarantined Wave 2 tool {slug} must not be in sitemap")
+            self.assertIn(target, urls, f"Legacy tool {slug} must be in sitemap")
+
+        # All 25 directory tools in sitemap
+        for slug in self.wave1_slugs + self.wave2_slugs:
+            target = f"https://aitoolgems.tech/tools/{slug}/"
+            self.assertIn(target, urls, f"Promoted directory tool {slug} must be in sitemap")
 
         # No Japan in sitemap
         for u in urls:
