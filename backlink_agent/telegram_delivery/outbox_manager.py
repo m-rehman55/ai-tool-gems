@@ -7,6 +7,7 @@ import logging
 import os
 from pathlib import Path
 import socket
+import time
 from typing import Any, Dict, List, Optional
 import urllib.error
 import urllib.parse
@@ -134,6 +135,50 @@ class TelegramOutboxManager:
             )
             return False
 
+        except urllib.error.HTTPError as e:
+            err_body = ""
+            try:
+                err_body = e.read().decode("utf-8", errors="replace")
+            except Exception:
+                pass
+
+            # Auto-healing fallback: If markdown parsing failed, retry as plain text without parse_mode
+            if e.code == 400 and ("parse" in err_body.lower() or "entity" in err_body.lower() or "bad request" in err_body.lower()):
+                try:
+                    fallback_payload = dict(payload)
+                    fallback_payload.pop("parse_mode", None)
+                    fallback_data = json.dumps(fallback_payload).encode("utf-8")
+                    fallback_req = urllib.request.Request(
+                        url,
+                        data=fallback_data,
+                        headers={"Content-Type": "application/json"},
+                        method="POST",
+                    )
+                    with urllib.request.urlopen(fallback_req, timeout=10.0) as fb_resp:
+                        fb_data = json.loads(fb_resp.read().decode("utf-8"))
+                        if fb_resp.status == 200 and fb_data.get("ok"):
+                            remote_msg_id = fb_data.get("result", {}).get("message_id")
+                            msg.mark_accepted_by_telegram(remote_msg_id)
+                            self.store.update_delivery_status(
+                                message_id=msg.message_id,
+                                status="accepted_by_telegram",
+                                telegram_message_id=remote_msg_id,
+                                expected_lease_token=msg.lease_token,
+                            )
+                            return True
+                except Exception as fb_err:
+                    logger.warning(f"Plain-text fallback dispatch also failed: {fb_err}")
+
+            sanitized_err = f"Telegram HTTP {e.code}: {redact_bot_token(err_body or str(e), self.bot_token)}"
+            msg.mark_retry_pending(sanitized_err)
+            self.store.update_delivery_status(
+                message_id=msg.message_id,
+                status=msg.status,
+                error_message=sanitized_err,
+                expected_lease_token=msg.lease_token,
+            )
+            return False
+
         except Exception as e:
             sanitized_err = redact_bot_token(str(e), self.bot_token)
             msg.mark_retry_pending(sanitized_err)
@@ -165,7 +210,10 @@ class TelegramOutboxManager:
             "sent": 0,  # Combined successful dispatches (dry-run or accepted)
         }
 
-        for msg in claimed:
+        for i, msg in enumerate(claimed):
+            if i > 0 and not self.dry_run:
+                # Comply with Telegram per-chat rate limits (1 message/second)
+                time.sleep(1.0)
             success = self.dispatch_message(msg)
             status = msg.status
             if status == "dry_run_simulated":

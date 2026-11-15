@@ -39,10 +39,23 @@ class OpportunityScoringEngine:
         # 2. Editorial Quality (0 - 25 points)
         editorial_score = 18
         domain = prospect.prospect_domain.lower()
-        if domain in ("github.com", "dev.to", "hashnode.com", "medium.com"):
+        if domain in ("github.com", "dev.to", "hashnode.com", "medium.com", "techjuice.pk"):
             editorial_score = 25
             rationale.append("Established platform with strict human/community curation")
-        elif domain == "saashub.com" or domain.endswith(".saashub.com") or domain == "startupnetwork.pk" or domain.endswith(".startupnetwork.pk"):
+        elif (
+            domain in (
+                "saashub.com",
+                "alternativeto.net",
+                "crunchbase.com",
+                "g2.com",
+                "capterra.com",
+                "startupnetwork.pk",
+            )
+            or domain == "pasha.org.pk"
+            or domain.endswith(".pasha.org.pk")
+            or domain.endswith(".saashub.com")
+            or domain.endswith(".startupnetwork.pk")
+        ):
             editorial_score = 22
             rationale.append("Verified editorial review process on submissions")
         elif evidence.get("has_editorial_guidelines"):
@@ -54,7 +67,7 @@ class OpportunityScoringEngine:
         if "/prices/" in target or "pricing" in target:
             brand_score = 20
             rationale.append("Direct asset citation: targets machine-readable /prices/ index")
-        elif p_type in ("directory_class1", "directory_class2"):
+        elif p_type in ("directory_class1", "directory_class2", "directory_class3"):
             brand_score = 18
             rationale.append("Clean commercial match: 40 tools catalog representation")
 
@@ -73,7 +86,19 @@ class OpportunityScoringEngine:
 
         # 5. Indexability & Authority (0 - 15 points)
         index_score = 12
-        if domain in ("github.com", "dev.to", "hashnode.com", "saashub.com"):
+        high_da_domains = (
+            "github.com",
+            "dev.to",
+            "hashnode.com",
+            "medium.com",
+            "saashub.com",
+            "alternativeto.net",
+            "crunchbase.com",
+            "g2.com",
+            "capterra.com",
+            "techjuice.pk",
+        )
+        if domain in high_da_domains or domain == "pasha.org.pk" or domain.endswith(".pasha.org.pk"):
             index_score = 15
             rationale.append("High domain authority (DA 70+) and guaranteed search engine indexing")
         elif evidence.get("is_noindex"):
