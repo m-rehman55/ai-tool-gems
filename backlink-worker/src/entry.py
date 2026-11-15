@@ -64,8 +64,33 @@ class Default(WorkerEntrypoint):
         if method == "POST" and "/telegram/webhook" in url_str:
             owner_chat_id = getattr(env, "TELEGRAM_OWNER_CHAT_ID", "")
             owner_user_id = getattr(env, "TELEGRAM_OWNER_USER_ID", None)
+            webhook_secret = getattr(env, "TELEGRAM_WEBHOOK_SECRET", None)
 
-            engine = WorkerApprovalEngine(d1, owner_chat_id, owner_user_id)
+            engine = WorkerApprovalEngine(
+                d1=d1,
+                owner_chat_id=owner_chat_id,
+                owner_user_id=owner_user_id,
+                webhook_secret=webhook_secret,
+            )
+
+            # Extract header secret
+            header_secret = None
+            req_headers = getattr(request, "headers", None)
+            if req_headers is not None:
+                if hasattr(req_headers, "get"):
+                    header_secret = req_headers.get("X-Telegram-Bot-Api-Secret-Token") or req_headers.get("x-telegram-bot-api-secret-token")
+                elif isinstance(req_headers, dict):
+                    header_secret = req_headers.get("X-Telegram-Bot-Api-Secret-Token") or req_headers.get("x-telegram-bot-api-secret-token")
+
+            # Check secret before parsing body to prevent unauthenticated payload processing
+            if webhook_secret:
+                secret_ok, secret_msg = engine.verify_webhook_secret(header_secret)
+                if not secret_ok:
+                    return Response(
+                        json.dumps({"error": "Unauthorized", "detail": secret_msg}),
+                        status=401,
+                        headers={"Content-Type": "application/json"},
+                    )
 
             try:
                 body_bytes = await request.text()
@@ -73,7 +98,7 @@ class Default(WorkerEntrypoint):
             except Exception:
                 return Response(json.dumps({"error": "Malformed JSON"}), status=400)
 
-            reply_text = await engine.handle_update(update_data)
+            reply_text = await engine.handle_update(update_data, header_secret=header_secret)
 
             # Optional: send Telegram reply back to chat if token is configured
             token = getattr(env, "TELEGRAM_BOT_TOKEN", "")

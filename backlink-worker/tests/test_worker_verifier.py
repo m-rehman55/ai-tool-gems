@@ -12,7 +12,9 @@ if str(WORKER_DIR) not in sys.path:
 
 from src.verifier_worker import (
     classify_rel_tokens,
+    is_html_content_type,
     normalize_target_url,
+    validate_redirect_hop,
     validate_worker_url,
     verify_html_content,
 )
@@ -56,6 +58,45 @@ class TestWorkerVerifier(unittest.TestCase):
             validate_worker_url("https://localhost/")
         with self.assertRaises(ValueError):
             validate_worker_url("https://metadata.google.internal/")
+        # Blocks IP literals in blocked ranges
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://127.0.0.1/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://169.254.169.254/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://10.0.0.1/")
+        with self.assertRaises(ValueError):
+            validate_worker_url("https://192.168.1.1/")
+
+    def test_validate_redirect_hop(self):
+        # Valid relative redirect
+        res1 = validate_redirect_hop("https://example.com/start", "/final")
+        self.assertEqual(res1, "https://example.com/final")
+
+        # Valid absolute HTTPS redirect
+        res2 = validate_redirect_hop("https://example.com/start", "https://trusted-site.com/page")
+        self.assertEqual(res2, "https://trusted-site.com/page")
+
+        # Blocked redirect to loopback
+        with self.assertRaises(ValueError):
+            validate_redirect_hop("https://example.com/start", "https://127.0.0.1/admin")
+
+        # Blocked redirect to private network
+        with self.assertRaises(ValueError):
+            validate_redirect_hop("https://example.com/start", "https://10.0.0.1/internal")
+
+        # Blocked redirect to HTTP
+        with self.assertRaises(ValueError):
+            validate_redirect_hop("https://example.com/start", "http://insecure.com/target")
+
+    def test_is_html_content_type(self):
+        self.assertTrue(is_html_content_type("text/html; charset=utf-8"))
+        self.assertTrue(is_html_content_type("application/xhtml+xml"))
+        self.assertFalse(is_html_content_type("application/json"))
+        self.assertFalse(is_html_content_type("application/pdf"))
+        self.assertFalse(is_html_content_type("image/png"))
+        self.assertFalse(is_html_content_type(None))
+        self.assertFalse(is_html_content_type(""))
 
 
 if __name__ == "__main__":

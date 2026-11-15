@@ -14,9 +14,88 @@ import urllib.parse
 from typing import Any, Dict, List, Optional, Tuple
 
 # Reusable pure-Python anchor parser matching backlink_agent specifications
+import ipaddress
+
 USER_AGENT = "AIToolGems-CloudflareVerifier/2.0 (+https://aitoolgems.tech/llms.txt)"
 DEFAULT_TIMEOUT = 15
 DEFAULT_MAX_BYTES = 2 * 1024 * 1024  # 2MB cap
+
+BLOCKED_IPV4_NETWORKS = [
+    ipaddress.ip_network("0.0.0.0/8"),
+    ipaddress.ip_network("10.0.0.0/8"),
+    ipaddress.ip_network("100.64.0.0/10"),     # CGNAT
+    ipaddress.ip_network("127.0.0.0/8"),       # Loopback
+    ipaddress.ip_network("169.254.0.0/16"),    # Link-local / Cloud metadata
+    ipaddress.ip_network("172.16.0.0/12"),     # RFC1918
+    ipaddress.ip_network("192.0.0.0/24"),
+    ipaddress.ip_network("192.0.2.0/24"),
+    ipaddress.ip_network("192.88.99.0/24"),
+    ipaddress.ip_network("192.168.0.0/16"),    # RFC1918
+    ipaddress.ip_network("198.18.0.0/15"),
+    ipaddress.ip_network("198.51.100.0/24"),
+    ipaddress.ip_network("203.0.113.0/24"),
+    ipaddress.ip_network("224.0.0.0/4"),       # Multicast
+    ipaddress.ip_network("240.0.0.0/4"),       # Reserved
+    ipaddress.ip_network("255.255.255.255/32"),
+]
+
+BLOCKED_IPV6_NETWORKS = [
+    ipaddress.ip_network("::/128"),
+    ipaddress.ip_network("::1/128"),
+    ipaddress.ip_network("100::/64"),
+    ipaddress.ip_network("2001:db8::/32"),
+    ipaddress.ip_network("fc00::/7"),          # ULA
+    ipaddress.ip_network("fe80::/10"),         # Link-local
+    ipaddress.ip_network("ff00::/8"),          # Multicast
+]
+
+FORBIDDEN_HOSTNAMES = {
+    "localhost",
+    "localhost.localdomain",
+    "ip6-localhost",
+    "ip6-loopback",
+    "metadata.google.internal",
+    "metadata",
+    "instance-data",
+}
+
+
+def is_ip_prohibited(ip: ipaddress.IPv4Address | ipaddress.IPv6Address) -> Tuple[bool, str]:
+    """Inspects an IP address and determines if it falls into prohibited ranges."""
+    if isinstance(ip, ipaddress.IPv6Address) and ip.ipv4_mapped is not None:
+        return is_ip_prohibited(ip.ipv4_mapped)
+
+    if ip.is_loopback:
+        return True, f"Loopback address ({ip})"
+    if ip.is_private:
+        return True, f"Private network address ({ip})"
+    if ip.is_link_local:
+        return True, f"Link-local address ({ip})"
+    if ip.is_multicast:
+        return True, f"Multicast address ({ip})"
+    if ip.is_reserved:
+        return True, f"Reserved address ({ip})"
+    if ip.is_unspecified:
+        return True, f"Unspecified address ({ip})"
+
+    if isinstance(ip, ipaddress.IPv4Address):
+        for net in BLOCKED_IPV4_NETWORKS:
+            if ip in net:
+                return True, f"Prohibited IPv4 subnet {net} ({ip})"
+    elif isinstance(ip, ipaddress.IPv6Address):
+        for net in BLOCKED_IPV6_NETWORKS:
+            if ip in net:
+                return True, f"Prohibited IPv6 subnet {net} ({ip})"
+
+    return False, ""
+
+
+def is_html_content_type(content_type_header: Optional[str]) -> bool:
+    """Confirms Content-Type is text/html or application/xhtml+xml."""
+    if not content_type_header or not isinstance(content_type_header, str):
+        return False
+    lower = content_type_header.lower()
+    return "text/html" in lower or "application/xhtml+xml" in lower
 
 
 class AnchorData:
@@ -185,16 +264,47 @@ def verify_html_content(
 
 
 def validate_worker_url(url: str) -> None:
-    """Enforces HTTPS and SSRF syntax boundaries."""
+    """Enforces HTTPS and strict SSRF syntax/IP boundaries."""
     if not url or not isinstance(url, str):
         raise ValueError("URL must be a non-empty string")
+    if any(c in url for c in " \t\r\n\0"):
+        raise ValueError("URL contains illegal whitespace or control characters")
+
     parsed = urllib.parse.urlsplit(url)
     if parsed.scheme.lower() != "https":
         raise ValueError(f"Disallowed scheme '{parsed.scheme}': only https is permitted")
     if parsed.username or parsed.password:
         raise ValueError("Embedded credentials in URL are prohibited")
+
     host = parsed.hostname or ""
-    if host.lower() in ("localhost", "metadata", "instance-data", "metadata.google.internal"):
+    if not host:
+        raise ValueError("URL is missing a valid hostname")
+
+    if host.lower() in FORBIDDEN_HOSTNAMES:
         raise ValueError(f"Forbidden hostname alias '{host}'")
     if host.endswith((".localhost", ".local", ".internal")):
         raise ValueError(f"Forbidden internal host suffix '{host}'")
+
+    # If host is an IP literal or resolves to IP literal
+    clean_host = host.strip("[]")
+    try:
+        ip = ipaddress.ip_address(clean_host)
+        is_bad, reason = is_ip_prohibited(ip)
+        if is_bad:
+            raise ValueError(f"Prohibited IP address target: {reason}")
+    except ValueError as e:
+        if "Prohibited IP address target" in str(e):
+            raise
+        # Not a raw IP address (valid domain name)
+        pass
+
+
+def validate_redirect_hop(current_url: str, redirect_location: str) -> str:
+    """Validates every redirect hop sequentially, preventing redirect-based SSRF."""
+    if not redirect_location or not isinstance(redirect_location, str):
+        raise ValueError("Invalid redirect location")
+
+    # Resolve relative redirects against current URL
+    next_url = urllib.parse.urljoin(current_url, redirect_location)
+    validate_worker_url(next_url)
+    return next_url

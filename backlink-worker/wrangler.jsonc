@@ -55,5 +55,43 @@
 
   "observability": {
     "enabled": true
+  },
+
+  "env": {
+    "staging": {
+      "name": "ai-tool-gems-backlink-agent-staging",
+      "vars": {
+        "BACKLINK_AGENT_ENABLED": "false",
+        "BACKLINK_AGENT_MODE": "report_only",
+        "MAX_VERIFICATIONS_PER_RUN": "10",
+        "MAX_DRAFTS_PER_RUN": "2",
+        "OWNER_APPROVAL_REQUIRED": "true",
+        "ATG_SITE_URL": "https://aitoolgems.tech"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "aitoolgems-backlink-agent-staging",
+          "database_id": "STAGING_D1_ID_PENDING_PROVISION"
+        }
+      ],
+      "queues": {
+        "producers": [
+          {
+            "binding": "BACKLINK_QUEUE",
+            "queue": "aitoolgems-backlink-jobs-staging"
+          }
+        ],
+        "consumers": [
+          {
+            "queue": "aitoolgems-backlink-jobs-staging",
+            "max_batch_size": 2,
+            "max_batch_timeout": 10,
+            "max_retries": 2,
+            "dead_letter_queue": "aitoolgems-backlink-dlq-staging"
+          }
+        ]
+      }
+    }
   }
 }
