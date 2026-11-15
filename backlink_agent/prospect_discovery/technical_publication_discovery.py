@@ -51,6 +51,17 @@ CURATED_TECH_PUBLICATIONS: List[Dict[str, Any]] = [
         "angle": "Pakistani AI Ecosystem: 2026 Price Index & Local Currency Software Adoption Trends",
         "relevance": 90,
     },
+    {
+        "platform": "propakistani.pk",
+        "name": "ProPakistani Tech News & Analysis",
+        "domain": "propakistani.pk",
+        "submit_url": "https://propakistani.pk/contact-us/",
+        "login_url": "https://propakistani.pk/contact-us/",
+        "login_method": "No login needed — Editorial Contact Form or email tips@propakistani.pk",
+        "citation_target": "https://aitoolgems.tech/prices/",
+        "angle": "Pakistan Tech & Economy: First Open AI Software Pricing Index (PKR Flat Parity & Domestic Payments)",
+        "relevance": 92,
+    },
 ]
 
 
