@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import http.client
 import io
 import logging
 import re
 import socket
+import ssl
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -26,6 +28,51 @@ DEFAULT_TIMEOUT = 12.0
 DEFAULT_MAX_BYTES = 2 * 1024 * 1024  # 2 MB limit
 DEFAULT_MAX_DECOMPRESSED_BYTES = 4 * 1024 * 1024  # 4 MB decompressed expansion limit
 DEFAULT_MAX_REDIRECTS = 5
+
+
+class PinnedHTTPSConnection(http.client.HTTPSConnection):
+    """HTTPS connection connecting to a pre-validated IP literal to prevent DNS rebinding."""
+
+    def __init__(self, host, port=None, pinned_ip=None, **kwargs):
+        self.pinned_ip = pinned_ip
+        super().__init__(host, port, **kwargs)
+
+    def connect(self):
+        connect_target = self.pinned_ip if self.pinned_ip else self.host
+        self.sock = socket.create_connection(
+            (connect_target, self.port),
+            self.timeout,
+            self.source_address,
+        )
+        if self._tunnel_host:
+            self._tunnel()
+
+        server_hostname = self.host.split(":")[0]
+        ctx = getattr(self, "_context", None)
+        if ctx is None:
+            ctx = ssl.create_default_context()
+        self.sock = ctx.wrap_socket(self.sock, server_hostname=server_hostname)
+
+
+class PinnedHTTPSHandler(urllib.request.HTTPSHandler):
+    """Urllib handler for PinnedHTTPSConnection with manual redirect suppression."""
+
+    def __init__(self, pinned_ip=None, context=None, **kwargs):
+        self.pinned_ip = pinned_ip
+        super().__init__(context=context, **kwargs)
+
+    def https_open(self, req):
+        return self.do_open(
+            lambda host, **kw: PinnedHTTPSConnection(host, pinned_ip=self.pinned_ip, **kw),
+            req,
+        )
+
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Suppresses automatic redirects to allow per-hop SSRF inspection and IP re-pinning."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
 
 
 class AdvancedBacklinkVerifier:
@@ -147,9 +194,11 @@ class AdvancedBacklinkVerifier:
         self, source_page_url: str, target_asset_url: str, prospect_id: str = ""
     ) -> DetailedVerificationResult:
         """Fetches live source page via HTTPS, enforcing multi-hop SSRF validation and 2MB stream cap."""
-        # 1. SSRF Pre-flight check
+        # 1. SSRF Pre-flight check and IP Pinning
         try:
-            current_url = validate_and_sanitize_url(source_page_url)
+            sanitized_url, safe_dests = validate_and_sanitize_url(source_page_url)
+            current_url = sanitized_url
+            pinned_ip = safe_dests[0][0] if safe_dests else None
         except SSRFSecurityError as e:
             res = DetailedVerificationResult(
                 prospect_id=prospect_id,
@@ -167,20 +216,14 @@ class AdvancedBacklinkVerifier:
         redirect_chain = [current_url]
         hop_count = 0
 
-        # Follow redirects with per-hop SSRF check
+        # Follow redirects with per-hop SSRF check & IP re-pinning
         while hop_count < self.max_redirects:
             try:
                 req = urllib.request.Request(
                     current_url,
                     headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml"},
                 )
-                opener = urllib.request.build_opener(urllib.request.HTTPRedirectHandler)
-
-                class NoRedirect(urllib.request.HTTPRedirectHandler):
-                    def redirect_request(self, req, fp, code, msg, headers, newurl):
-                        return None  # Handle manually to check SSRF on each hop
-
-                opener = urllib.request.build_opener(NoRedirect)
+                opener = urllib.request.build_opener(PinnedHTTPSHandler(pinned_ip=pinned_ip), NoRedirect)
                 with opener.open(req, timeout=self.timeout) as resp:
                     status = resp.status
                     headers = dict(resp.headers)
@@ -190,7 +233,9 @@ class AdvancedBacklinkVerifier:
                         if not location:
                             break
                         next_url = urllib.parse.urljoin(current_url, location)
-                        current_url = validate_and_sanitize_url(next_url)
+                        sanitized_next, next_safe_dests = validate_and_sanitize_url(next_url)
+                        current_url = sanitized_next
+                        pinned_ip = next_safe_dests[0][0] if next_safe_dests else None
                         redirect_chain.append(current_url)
                         hop_count += 1
                         continue
@@ -198,21 +243,42 @@ class AdvancedBacklinkVerifier:
                     # Terminal response
                     body_bytes = resp.read(self.max_bytes)
 
-                    # Decompression limit guard: prevent compressed expansion bombs
+                    # Incremental decompression limit guard: prevent compressed expansion bombs
                     encoding = (headers.get("Content-Encoding") or headers.get("content-encoding") or "").lower()
                     if "gzip" in encoding:
                         import gzip
                         try:
                             gz = gzip.GzipFile(fileobj=io.BytesIO(body_bytes))
-                            body_bytes = gz.read(self.max_decompressed_bytes)
+                            chunks = []
+                            total_decompressed = 0
+                            CHUNK_SIZE = 64 * 1024
+                            while total_decompressed < self.max_decompressed_bytes:
+                                to_read = min(CHUNK_SIZE, self.max_decompressed_bytes - total_decompressed)
+                                chunk = gz.read(to_read)
+                                if not chunk:
+                                    break
+                                chunks.append(chunk)
+                                total_decompressed += len(chunk)
+                            body_bytes = b"".join(chunks)
                         except Exception as e:
-                            logger.warning("Gzip decompression failed for %s: %s", current_url, e)
+                            logger.warning("Gzip decompression error for %s: %s", current_url, e)
                     elif "deflate" in encoding:
                         import zlib
                         try:
-                            body_bytes = zlib.decompress(body_bytes, 15, self.max_decompressed_bytes)
+                            d = zlib.decompressobj()
+                            chunks = []
+                            total_decompressed = 0
+                            CHUNK_SIZE = 64 * 1024
+                            for i in range(0, len(body_bytes), CHUNK_SIZE):
+                                if total_decompressed >= self.max_decompressed_bytes:
+                                    break
+                                raw_chunk = body_bytes[i:i + CHUNK_SIZE]
+                                decomp = d.decompress(raw_chunk, self.max_decompressed_bytes - total_decompressed)
+                                chunks.append(decomp)
+                                total_decompressed += len(decomp)
+                            body_bytes = b"".join(chunks)
                         except Exception as e:
-                            logger.warning("Deflate decompression failed for %s: %s", current_url, e)
+                            logger.warning("Deflate decompression error for %s: %s", current_url, e)
 
                     html_text = body_bytes.decode("utf-8", errors="replace")
 

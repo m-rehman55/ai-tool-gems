@@ -189,7 +189,9 @@ def resolve_and_verify_hostname(
     return safe_destinations
 
 
-def validate_and_sanitize_url(url: str) -> Tuple[str, List[Tuple[str, int]]]:
+def validate_and_sanitize_url(
+    url: str, dns_resolver=None
+) -> Tuple[str, List[Tuple[str, int]]]:
     """Complete SSRF pre-flight validation.
 
     Returns:
@@ -202,7 +204,7 @@ def validate_and_sanitize_url(url: str) -> Tuple[str, List[Tuple[str, int]]]:
     assert hostname is not None
     port = parsed.port or 443
 
-    safe_destinations = resolve_and_verify_hostname(hostname, port)
+    safe_destinations = resolve_and_verify_hostname(hostname, port, dns_resolver=dns_resolver)
 
     # Reconstruct sanitized canonical URL without fragment
     sanitized = urllib.parse.urlunsplit((

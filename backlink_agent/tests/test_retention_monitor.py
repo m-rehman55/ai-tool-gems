@@ -80,8 +80,13 @@ class TestRetentionMonitor(unittest.TestCase):
             anchor_found=False,
             qualification=LinkQualification.ANCHOR_MISSING,
         )
-        snap = RetentionMonitor.evaluate_retention(curr, days_active=60)
-        self.assertEqual(snap.status_detected, RetentionStatus.LINK_REMOVED)
+        # First check when anchor vanishes is SUSPECTED_REMOVAL (recheck scheduled)
+        snap1 = RetentionMonitor.evaluate_retention(curr, days_active=60)
+        self.assertEqual(snap1.status_detected, RetentionStatus.SUSPECTED_REMOVAL)
+
+        # Repeat confirmation confirms LINK_REMOVED
+        snap2 = RetentionMonitor.evaluate_retention(curr, days_active=61, previous_snapshot=snap1)
+        self.assertEqual(snap2.status_detected, RetentionStatus.LINK_REMOVED)
 
     def test_temporary_server_error_preserves_prior_status(self):
         """Temporary 503 or socket timeout must NOT falsely mark backlink as removed."""
@@ -110,8 +115,8 @@ class TestRetentionMonitor(unittest.TestCase):
         self.assertEqual(snap.anchor_text, "AI Tool Gems")  # Preserved from previous snapshot!
         self.assertIn("Temporary verification error", snap.notes)
 
-    def test_http_404_410_permanent_removal(self):
-        """Permanent 404 or 410 returns LINK_REMOVED with explicit status notes."""
+    def test_http_404_410_removal_confirmation(self):
+        """Initial 404 flags SUSPECTED_REMOVAL; 410 flags STRONG_REMOVAL; repeat check confirms LINK_REMOVED."""
         curr_404 = DetailedVerificationResult(
             prospect_id="p1",
             source_page_url="https://site.example/page",
@@ -121,9 +126,88 @@ class TestRetentionMonitor(unittest.TestCase):
             anchor_found=False,
             qualification=LinkQualification.ANCHOR_MISSING,
         )
-        snap = RetentionMonitor.evaluate_retention(curr_404, days_active=14)
-        self.assertEqual(snap.status_detected, RetentionStatus.LINK_REMOVED)
-        self.assertIn("HTTP 404 (Permanent Removal)", snap.notes)
+        # 1. First 404: Suspected removal (not yet confirmed)
+        snap1 = RetentionMonitor.evaluate_retention(curr_404, days_active=14)
+        self.assertEqual(snap1.status_detected, RetentionStatus.SUSPECTED_REMOVAL)
+        self.assertIn("Suspected removal", snap1.notes)
+
+        # 2. Second consecutive 404: Confirmed removal
+        snap2 = RetentionMonitor.evaluate_retention(curr_404, days_active=15, previous_snapshot=snap1)
+        self.assertEqual(snap2.status_detected, RetentionStatus.LINK_REMOVED)
+        self.assertIn("Confirmed removal", snap2.notes)
+
+        # 3. First 410: Strong removal evidence
+        curr_410 = DetailedVerificationResult(
+            prospect_id="p1",
+            source_page_url="https://site.example/page",
+            target_asset_url="https://aitoolgems.tech/",
+            http_status=410,
+            final_page_url="https://site.example/page",
+            anchor_found=False,
+            qualification=LinkQualification.ANCHOR_MISSING,
+        )
+        snap_410_1 = RetentionMonitor.evaluate_retention(curr_410, days_active=16)
+        self.assertEqual(snap_410_1.status_detected, RetentionStatus.STRONG_REMOVAL_EVIDENCE)
+
+        # 4. Repeat 410: Confirmed removal
+        snap_410_2 = RetentionMonitor.evaluate_retention(curr_410, days_active=17, previous_snapshot=snap_410_1)
+        self.assertEqual(snap_410_2.status_detected, RetentionStatus.LINK_REMOVED)
+
+    def test_http_403_access_restricted_preserves_status(self):
+        """HTTP 403 Access Restricted / WAF challenge preserves status as inconclusive."""
+        prev = RetentionSnapshot(
+            prospect_id="p3",
+            verification_date="2026-11-01T00:00:00Z",
+            days_since_first_verified=30,
+            qualification=LinkQualification.EDITORIAL_DOFOLLOW,
+            anchor_text="AI Tool Gems",
+            target_destination="https://aitoolgems.tech/",
+            content_hash="hash_p3",
+        )
+        curr_403 = DetailedVerificationResult(
+            prospect_id="p3",
+            source_page_url="https://site.example/waf-blocked",
+            target_asset_url="https://aitoolgems.tech/",
+            http_status=403,
+            final_page_url="https://site.example/waf-blocked",
+            anchor_found=False,
+            qualification=LinkQualification.ANCHOR_MISSING,
+        )
+        snap = RetentionMonitor.evaluate_retention(curr_403, days_active=35, previous_snapshot=prev)
+        self.assertEqual(snap.status_detected, RetentionStatus.INCONCLUSIVE_ACCESS_RESTRICTED)
+        self.assertEqual(snap.anchor_text, "AI Tool Gems")
+        self.assertIn("HTTP 403", snap.notes)
+
+    def test_placement_recovery_after_degradation(self):
+        """A placement previously in SUSPECTED_REMOVAL transitions to RECOVERED when anchor reappears."""
+        suspected_snap = RetentionSnapshot(
+            prospect_id="p4",
+            verification_date="2026-11-01T00:00:00Z",
+            days_since_first_verified=30,
+            qualification=LinkQualification.ANCHOR_MISSING,
+            anchor_text="AI Tool Gems",
+            target_destination="https://aitoolgems.tech/",
+            content_hash="hash_old",
+            status_detected=RetentionStatus.SUSPECTED_REMOVAL,
+        )
+        recovered_curr = DetailedVerificationResult(
+            prospect_id="p4",
+            source_page_url="https://site.example/recovered",
+            target_asset_url="https://aitoolgems.tech/",
+            http_status=200,
+            final_page_url="https://site.example/recovered",
+            anchor_found=True,
+            actual_anchor_text="AI Tool Gems",
+            actual_href="https://aitoolgems.tech/",
+            final_target_destination="https://aitoolgems.tech/",
+            target_matches_approved=True,
+            is_indexable=True,
+            qualification=LinkQualification.EDITORIAL_DOFOLLOW,
+            is_live_backlink=True,
+        )
+        snap = RetentionMonitor.evaluate_retention(recovered_curr, days_active=35, previous_snapshot=suspected_snap)
+        self.assertEqual(snap.status_detected, RetentionStatus.RECOVERED)
+        self.assertIn("Placement successfully re-verified as healthy", snap.notes)
 
     def test_http_429_rate_limit_preserves_status(self):
         """HTTP 429 Too Many Requests is a temporary rate limit and must preserve prior status."""

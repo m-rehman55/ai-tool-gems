@@ -14,8 +14,12 @@ class RetentionStatus:
     TARGET_CHANGED = "target_changed"
     NOINDEX_ADDED = "noindex_added"
     CANONICAL_CHANGED = "canonical_changed"
-    LINK_REMOVED = "link_removed"
-    INCONCLUSIVE_TEMPORARY_FAILURE = "inconclusive_temporary_failure"
+    SUSPECTED_REMOVAL = "suspected_removal"              # HTTP 404 or missing anchor (recheck required)
+    STRONG_REMOVAL_EVIDENCE = "strong_removal_evidence"  # HTTP 410 Gone
+    INCONCLUSIVE_ACCESS_RESTRICTED = "inconclusive_access_restricted"  # HTTP 403 / WAF
+    INCONCLUSIVE_TEMPORARY_FAILURE = "inconclusive_temporary_failure"  # HTTP 429, 5xx, timeout, DNS/TLS
+    LINK_REMOVED = "link_removed"                        # Confirmed removed after repeat confirmation
+    RECOVERED = "recovered"                              # Previously degraded/unavailable, now verified valid
 
 
 @dataclass

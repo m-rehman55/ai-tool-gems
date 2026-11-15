@@ -45,20 +45,52 @@ class RetentionMonitor:
                 notes=f"Temporary verification error: {current_result.error_message or f'HTTP {current_result.http_status}'}. Preserving prior status.",
             )
 
-        # 1b. Explicit Permanent HTTP 404 / 410 Gone Check
-        if current_result.http_status in (404, 410):
+        # 1b. Access Restricted / WAF Check (HTTP 403)
+        if current_result.http_status == 403:
             return RetentionSnapshot(
                 prospect_id=current_result.prospect_id,
                 verification_date=now_iso,
                 days_since_first_verified=days_active,
                 qualification=current_result.qualification,
-                anchor_text="",
-                target_destination="",
-                content_hash=current_result.content_hash,
+                anchor_text=previous_snapshot.anchor_text if previous_snapshot else "",
+                target_destination=previous_snapshot.target_destination if previous_snapshot else "",
+                content_hash=prev_hash or current_result.content_hash,
                 previous_content_hash=prev_hash,
-                status_detected=RetentionStatus.LINK_REMOVED,
-                notes=f"Source page returns HTTP {current_result.http_status} (Permanent Removal)",
+                status_detected=RetentionStatus.INCONCLUSIVE_ACCESS_RESTRICTED,
+                notes="HTTP 403 Access Restricted / WAF challenge; preserving prior verified status.",
             )
+
+        # 1c. HTTP 410 Gone Check (Strong removal evidence; repeat confirmation required for permanent removal)
+        if current_result.http_status == 410:
+            if previous_snapshot and previous_snapshot.status_detected in (
+                RetentionStatus.STRONG_REMOVAL_EVIDENCE,
+                RetentionStatus.SUSPECTED_REMOVAL,
+            ):
+                return RetentionSnapshot(
+                    prospect_id=current_result.prospect_id,
+                    verification_date=now_iso,
+                    days_since_first_verified=days_active,
+                    qualification=current_result.qualification,
+                    anchor_text="",
+                    target_destination="",
+                    content_hash=current_result.content_hash,
+                    previous_content_hash=prev_hash,
+                    status_detected=RetentionStatus.LINK_REMOVED,
+                    notes="HTTP 410 Gone confirmed on repeat verification (Confirmed Removal).",
+                )
+            else:
+                return RetentionSnapshot(
+                    prospect_id=current_result.prospect_id,
+                    verification_date=now_iso,
+                    days_since_first_verified=days_active,
+                    qualification=current_result.qualification,
+                    anchor_text="",
+                    target_destination="",
+                    content_hash=current_result.content_hash,
+                    previous_content_hash=prev_hash,
+                    status_detected=RetentionStatus.STRONG_REMOVAL_EVIDENCE,
+                    notes="Source page returned HTTP 410 Gone. Strong removal evidence; repeat confirmation required.",
+                )
 
         # 2. Check if page became noindex
         if not current_result.is_indexable or current_result.qualification == LinkQualification.SOURCE_NOINDEX:
@@ -75,20 +107,37 @@ class RetentionMonitor:
                 notes=f"Page acquired noindex directive via {current_result.noindex_source}",
             )
 
-        # 3. Check if anchor is missing
-        if not current_result.anchor_found:
-            return RetentionSnapshot(
-                prospect_id=current_result.prospect_id,
-                verification_date=now_iso,
-                days_since_first_verified=days_active,
-                qualification=current_result.qualification,
-                anchor_text="",
-                target_destination="",
-                content_hash=current_result.content_hash,
-                previous_content_hash=prev_hash,
-                status_detected=RetentionStatus.LINK_REMOVED,
-                notes="Anchor tag missing from live page DOM",
-            )
+        # 3. Check if anchor is missing or page returned HTTP 404 (Suspected removal vs confirmed on repeat)
+        if not current_result.anchor_found or current_result.http_status == 404:
+            if previous_snapshot and previous_snapshot.status_detected in (
+                RetentionStatus.SUSPECTED_REMOVAL,
+                RetentionStatus.STRONG_REMOVAL_EVIDENCE,
+            ):
+                return RetentionSnapshot(
+                    prospect_id=current_result.prospect_id,
+                    verification_date=now_iso,
+                    days_since_first_verified=days_active,
+                    qualification=current_result.qualification,
+                    anchor_text="",
+                    target_destination="",
+                    content_hash=current_result.content_hash,
+                    previous_content_hash=prev_hash,
+                    status_detected=RetentionStatus.LINK_REMOVED,
+                    notes=f"Confirmed removal: anchor missing/404 confirmed on repeat check ({current_result.http_status}).",
+                )
+            else:
+                return RetentionSnapshot(
+                    prospect_id=current_result.prospect_id,
+                    verification_date=now_iso,
+                    days_since_first_verified=days_active,
+                    qualification=current_result.qualification,
+                    anchor_text=previous_snapshot.anchor_text if previous_snapshot else "",
+                    target_destination=previous_snapshot.target_destination if previous_snapshot else "",
+                    content_hash=current_result.content_hash,
+                    previous_content_hash=prev_hash,
+                    status_detected=RetentionStatus.SUSPECTED_REMOVAL,
+                    notes=f"Suspected removal: anchor missing or HTTP {current_result.http_status}. Recheck scheduled before confirmed removal.",
+                )
 
         # 4. Check target URL mismatch
         if not current_result.target_matches_approved:
@@ -120,7 +169,31 @@ class RetentionMonitor:
                 notes=f"Anchor text modified from '{previous_snapshot.anchor_text}' to '{current_result.actual_anchor_text}'",
             )
 
-        # 6. Clean link retention
+        # 6. Check recovery (If previously suspected missing, access restricted, or degraded)
+        if previous_snapshot and previous_snapshot.status_detected in (
+            RetentionStatus.SUSPECTED_REMOVAL,
+            RetentionStatus.STRONG_REMOVAL_EVIDENCE,
+            RetentionStatus.INCONCLUSIVE_ACCESS_RESTRICTED,
+            RetentionStatus.INCONCLUSIVE_TEMPORARY_FAILURE,
+            RetentionStatus.ANCHOR_CHANGED,
+            RetentionStatus.TARGET_CHANGED,
+            RetentionStatus.NOINDEX_ADDED,
+            RetentionStatus.LINK_REMOVED,
+        ):
+            return RetentionSnapshot(
+                prospect_id=current_result.prospect_id,
+                verification_date=now_iso,
+                days_since_first_verified=days_active,
+                qualification=current_result.qualification,
+                anchor_text=current_result.actual_anchor_text,
+                target_destination=current_result.final_target_destination,
+                content_hash=current_result.content_hash,
+                previous_content_hash=prev_hash,
+                status_detected=RetentionStatus.RECOVERED,
+                notes="Placement successfully re-verified as healthy (Recovered).",
+            )
+
+        # 7. Clean link retention
         return RetentionSnapshot(
             prospect_id=current_result.prospect_id,
             verification_date=now_iso,
