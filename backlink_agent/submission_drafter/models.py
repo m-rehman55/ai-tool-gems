@@ -19,8 +19,10 @@ class BaseDraft:
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
     def calculate_draft_hash(self) -> str:
-        """Deterministic SHA-256 content hash."""
-        payload_str = json.dumps(self.to_dict(), sort_keys=True)
+        """Deterministic SHA-256 content hash based on draft payload (ignoring created_at timestamp)."""
+        data = self.to_dict()
+        data.pop("created_at", None)
+        payload_str = json.dumps(data, sort_keys=True)
         return hashlib.sha256(payload_str.encode("utf-8")).hexdigest()[:16]
 
     def to_dict(self) -> Dict[str, Any]:

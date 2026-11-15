@@ -290,15 +290,16 @@ class TelegramApprovalEngine:
         state = self.load_state()
         existing = state.get("approvals", {}).get(domain)
 
-        # Idempotency check
-        if existing and existing.get("draft_hash") == d_hash and existing.get("action") == "approved":
-            return (
-                f"✅ Already Approved: {domain}\n"
-                f"• Approved At: {existing.get('timestamp_pkt')}\n"
-                f"• Draft Hash: {d_hash}\n"
-                f"👉 Submit Link: {p.submission_url}\n"
-                f"Form submit karne ke baad `/submitted {domain}` likh dein!"
-            )
+        # Idempotency check: Already approved with matching hash OR generic approval
+        if existing and existing.get("action") == "approved":
+            if not draft_hash or existing.get("draft_hash") == d_hash:
+                return (
+                    f"✅ Already Approved: {domain}\n"
+                    f"• Approved At: {existing.get('timestamp_pkt')}\n"
+                    f"• Draft Hash: {existing.get('draft_hash')}\n"
+                    f"👉 Submit Link: {p.submission_url}\n"
+                    f"Form submit karne ke baad `/submitted {domain}` likh dein!"
+                )
 
         now_pkt = datetime.now(timezone.utc).isoformat()
         action = ApprovalAction(

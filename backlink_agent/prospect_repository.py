@@ -70,6 +70,7 @@ class ProspectRepository:
     ):
         self.csv_path = Path(csv_path or DEFAULT_CSV_PATH)
         self.json_dir = Path(json_dir or DEFAULT_JSON_DIR)
+        self._cache: Optional[List[UnifiedProspect]] = None
 
     @staticmethod
     def normalize_domain(value: str) -> str:
@@ -245,8 +246,11 @@ class ProspectRepository:
 
         return results
 
-    def all_prospects(self) -> List[UnifiedProspect]:
+    def all_prospects(self, force_reload: bool = False) -> List[UnifiedProspect]:
         """Loads and deduplicates all prospects across daily JSON reports, seed registries, and legacy tracker CSV."""
+        if self._cache is not None and not force_reload:
+            return self._cache
+
         json_prospects = self.load_daily_json_reports()
         seed_prospects = self.load_seed_registries()
         csv_prospects = self.load_tracker_csv()
@@ -268,7 +272,8 @@ class ProspectRepository:
             if p.prospect_domain not in combined:
                 combined[p.prospect_domain] = p
 
-        return list(combined.values())
+        self._cache = list(combined.values())
+        return self._cache
 
     def resolve(
         self,
