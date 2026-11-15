@@ -40,6 +40,12 @@ def main():
     sub_facts = subparsers.add_parser("facts", help="Display verified commercial facts or check copy")
     sub_facts.add_argument("--check-copy", help="Check proposed outreach copy for disallowed claims")
 
+    # WP13 Autonomous Intelligence Pipeline
+    sub_daily = subparsers.add_parser("run-daily-intelligence", help="Run full Discovery -> Scoring -> Drafting -> Telegram pipeline")
+    sub_daily.add_argument("--dry-run", action="store_true", help="Run in dry-run mode without external network calls")
+    sub_daily.add_argument("--no-telegram", action="store_true", help="Enqueue to outbox but do not flush Telegram")
+    sub_daily.add_argument("--no-reports", action="store_true", help="Skip writing markdown and JSON report files")
+
     args = parser.parse_args()
 
     if not args.command or args.command == "audit":
@@ -100,6 +106,32 @@ def main():
                 print("✅ Copy passed verified facts truth check.")
         else:
             print(json.dumps(facts.as_dict(), indent=2))
+
+    elif args.command == "run-daily-intelligence":
+        from .pipeline import BacklinkIntelligencePipeline
+        from .telegram_delivery import TelegramOutboxManager
+
+        outbox = TelegramOutboxManager(dry_run=args.dry_run)
+        pipeline = BacklinkIntelligencePipeline(outbox_manager=outbox)
+
+        print("🚀 Executing Autonomous Backlink Intelligence Pipeline...")
+        summary = pipeline.run_daily_intelligence(
+            dispatch_telegram=not args.no_telegram,
+            export_reports=not args.no_reports,
+        )
+
+        print("\n🏆 Daily Cycle Summary:")
+        print(f"  • Duration: {summary['duration_seconds']}s")
+        print(f"  • Discovered: {summary['discovered_count']} prospects")
+        print(f"  • Scored: {summary['scored_count']} opportunities")
+        print(f"  • High Priority (>= 75): {summary['tiers']['high_priority']}")
+        print(f"  • Investigate (55-74): {summary['tiers']['investigate']}")
+        print(f"  • Quarantined (< 55): {summary['tiers']['quarantine']}")
+        print(f"  • Draft Packages Ready: {summary['drafts_generated_count']}")
+        print(f"  • Telegram Outbox: {summary['outbox_flush']}")
+        if summary.get("report_files"):
+            print(f"  • Markdown Report: {summary['report_files'].get('markdown')}")
+            print(f"  • JSON Report: {summary['report_files'].get('json')}")
 
 
 if __name__ == "__main__":

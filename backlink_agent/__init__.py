@@ -11,8 +11,28 @@ Provides:
 
 from .facts import VerifiedFacts, get_verified_facts
 from .models import ApprovalAction, Prospect, VerificationResult
+from .pipeline import BacklinkIntelligencePipeline
 from .security import SSRFSecurityError, is_ip_prohibited, normalize_target_url, validate_and_sanitize_url
 from .tracker import load_tracker_rows, summarize_tracker, validate_tracker_data
 from .verifier import BacklinkHTMLParser, parse_and_verify_html, verify_prospect_url
 
 __version__ = "2.0.0"
+
+__all__ = [
+    "ApprovalAction",
+    "BacklinkHTMLParser",
+    "BacklinkIntelligencePipeline",
+    "Prospect",
+    "SSRFSecurityError",
+    "VerificationResult",
+    "VerifiedFacts",
+    "get_verified_facts",
+    "is_ip_prohibited",
+    "load_tracker_rows",
+    "normalize_target_url",
+    "parse_and_verify_html",
+    "summarize_tracker",
+    "validate_and_sanitize_url",
+    "validate_tracker_data",
+    "verify_prospect_url",
+]
