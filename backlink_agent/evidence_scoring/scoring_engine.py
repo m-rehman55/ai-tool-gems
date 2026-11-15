@@ -42,7 +42,7 @@ class OpportunityScoringEngine:
         if domain in ("github.com", "dev.to", "hashnode.com", "medium.com"):
             editorial_score = 25
             rationale.append("Established platform with strict human/community curation")
-        elif "saashub.com" in domain or "startupnetwork.pk" in domain:
+        elif domain == "saashub.com" or domain.endswith(".saashub.com") or domain == "startupnetwork.pk" or domain.endswith(".startupnetwork.pk"):
             editorial_score = 22
             rationale.append("Verified editorial review process on submissions")
         elif evidence.get("has_editorial_guidelines"):

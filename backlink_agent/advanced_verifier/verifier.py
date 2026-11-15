@@ -69,6 +69,7 @@ class PinnedHTTPSConnection(http.client.HTTPSConnection):
         ctx = getattr(self, "_context", None)
         if ctx is None:
             ctx = ssl.create_default_context()
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2
         ctx.check_hostname = True
         ctx.verify_mode = ssl.CERT_REQUIRED
         self.sock = ctx.wrap_socket(self.sock, server_hostname=server_hostname)

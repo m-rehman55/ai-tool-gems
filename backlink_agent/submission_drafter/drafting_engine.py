@@ -46,7 +46,7 @@ class SubmissionDraftingEngine:
 
         draft: Optional[BaseDraft] = None
 
-        if p_type == "github_awesome" or "github.com" in domain:
+        if p_type == "github_awesome" or domain == "github.com" or domain.endswith(".github.com"):
             draft = self.github_drafter.draft_pr(opp)
         elif p_type == "tech_publication" or domain in ("dev.to", "hashnode.com", "medium.com"):
             draft = self.pub_drafter.draft_pitch(opp)
