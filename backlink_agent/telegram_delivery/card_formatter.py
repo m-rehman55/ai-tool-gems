@@ -38,7 +38,25 @@ class OpportunityCardFormatter:
 
         tier_display = score.priority_tier.replace("_", " ").upper()
 
-        lines: List[str] = [
+        submit_url = opp.source_page_url
+        if domain == "medium.com":
+            submit_url = "https://medium.com/new-story"
+            login_hint = "🔑 *Login:* Google 1-Click Sign In (Top-right 'Sign In' -> Google)"
+        elif domain == "techjuice.pk":
+            submit_url = "https://www.techjuice.pk/contact/"
+            login_hint = "🔑 *Login:* No login needed (Direct Contact Form or email editor@techjuice.pk)"
+        elif domain == "dev.to":
+            submit_url = "https://dev.to/new"
+            login_hint = "🔑 *Login:* Sign in with GitHub or Google"
+        elif domain == "hashnode.com":
+            submit_url = "https://hashnode.com/onboard"
+            login_hint = "🔑 *Login:* Sign in with Google or GitHub"
+        elif "github" in domain:
+            login_hint = "🔑 *Login:* Sign in with your GitHub account"
+        else:
+            login_hint = f"🔑 *Login:* Free signup / Google login on {domain}"
+
+        lines = [
             f"🎯 *New Backlink Opportunity: {domain}*",
             f"{icon} • `Score: {score.total_score}/100` (`{tier_display}`)",
             "",
@@ -49,7 +67,8 @@ class OpportunityCardFormatter:
             f"• Non-Spam Quality: `{score.non_spam_quality}/15`",
             f"• Indexability: `{score.indexability}/15`",
             "",
-            f"👉 *Submit Link (Click to Open):*\n{opp.source_page_url}",
+            f"👉 *Submit Link (Click to Open):*\n{submit_url}",
+            f"{login_hint}",
             f"🎯 *Target Asset:*\n{opp.target_asset_url}",
         ]
 
