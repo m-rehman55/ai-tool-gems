@@ -11,8 +11,12 @@ import hashlib
 import json
 from typing import Any, Dict, List
 
-from .d1_adapter import D1Adapter
-from .verifier_worker import validate_worker_url, verify_html_content
+try:
+    from d1_adapter import D1Adapter
+    from verifier_worker import validate_worker_url, verify_html_content
+except ImportError:
+    from .d1_adapter import D1Adapter
+    from .verifier_worker import validate_worker_url, verify_html_content
 
 
 async def enqueue_verifications(d1: D1Adapter, queue: Any, limit: int = 25) -> int:

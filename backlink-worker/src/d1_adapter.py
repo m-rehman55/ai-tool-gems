@@ -14,6 +14,41 @@ from typing import Any, Dict, List, Optional, Tuple
 import uuid
 
 
+try:
+    from pyodide.ffi import jsnull
+except ImportError:
+    try:
+        from js import null as jsnull
+    except ImportError:
+        jsnull = None
+
+
+def _to_bind_param(val: Any) -> Any:
+    if val is None and jsnull is not None:
+        return jsnull
+    return val
+
+
+def _prepare_params(params: Any) -> tuple:
+    return tuple(_to_bind_param(v) for v in params)
+
+
+def _normalize_row(row: Any) -> Dict[str, Any]:
+    if row is None:
+        return {}
+    if hasattr(row, "to_py"):
+        row = row.to_py()
+    if isinstance(row, dict):
+        return row
+    if hasattr(row, "__dict__"):
+        return row.__dict__
+    try:
+        return dict(row)
+    except Exception:
+        pass
+    return {}
+
+
 class D1Adapter:
     """Manages transactional state in Cloudflare D1 / SQLite."""
 
@@ -32,11 +67,21 @@ class D1Adapter:
         if self.db is not None:
             stmt = self.db.prepare(query)
             if params:
-                stmt = stmt.bind(*params)
+                stmt = stmt.bind(*_prepare_params(params))
             res = await stmt.all()
-            if hasattr(res, "results"):
-                return list(res.results or [])
-            return list(res or [])
+            if hasattr(res, "to_py"):
+                res = res.to_py()
+            raw_rows = []
+            if isinstance(res, dict) and "results" in res:
+                raw_rows = res["results"] or []
+            elif hasattr(res, "results"):
+                r = res.results
+                if hasattr(r, "to_py"):
+                    r = r.to_py()
+                raw_rows = r or []
+            elif isinstance(res, (list, tuple)):
+                raw_rows = res
+            return [_normalize_row(r) for r in raw_rows]
 
         raise RuntimeError("No active D1 binding or SQLite connection available.")
 
@@ -56,8 +101,19 @@ class D1Adapter:
         if self.db is not None:
             stmt = self.db.prepare(query)
             if params:
-                stmt = stmt.bind(*params)
+                stmt = stmt.bind(*_prepare_params(params))
             res = await stmt.run()
+            if hasattr(res, "to_py"):
+                res = res.to_py()
+            meta = {}
+            if isinstance(res, dict):
+                meta = res.get("meta", {})
+            elif hasattr(res, "meta"):
+                m = res.meta
+                meta = m.to_py() if hasattr(m, "to_py") else m
+            if isinstance(meta, dict):
+                return meta.get("rows_written", 0) or meta.get("changes", 0) or 1
+            return 1
             # Cloudflare D1 meta.changes gives rows affected
             meta = getattr(res, "meta", None)
             if meta and hasattr(meta, "changes"):
@@ -150,20 +206,20 @@ class D1Adapter:
                         AND (? IS NULL OR (SELECT count(*) FROM telegram_processed_updates WHERE update_id = ? AND lease_token = ? AND status = 'processing') = 1)
                     THEN 1 ELSE 0 END)
                     """
-                ).bind(assert_id, prospect_id, draft_id, draft_id, update_id, update_id, lease_token or ""),
+                ).bind(*_prepare_params((assert_id, prospect_id, draft_id, draft_id, update_id, update_id, lease_token or ""))),
                 # Mutation 1: Prospect update
                 self.db.prepare(
                     "UPDATE prospects SET action_status = 'owner_approved_for_manual_submission', updated_at = ? WHERE id = ?"
-                ).bind(now_utc, prospect_id),
+                ).bind(*_prepare_params((now_utc, prospect_id))),
             ]
             if draft_id:
                 statements.append(
                     self.db.prepare(
                         "UPDATE drafts SET status = 'approved', approved_at = ?, approved_by = ? WHERE id = ?"
-                    ).bind(now_utc, actor, draft_id)
+                    ).bind(*_prepare_params((now_utc, actor, draft_id)))
                 )
             statements.append(
-                self.db.prepare("DELETE FROM _d1_transaction_assertions WHERE id = ?").bind(assert_id)
+                self.db.prepare("DELETE FROM _d1_transaction_assertions WHERE id = ?").bind(*_prepare_params((assert_id,)))
             )
 
             try:
@@ -276,7 +332,7 @@ class D1Adapter:
                         (SELECT count(*) FROM telegram_processed_updates WHERE update_id = ? AND status = 'processing' AND claimed_at = ?) = 1
                     THEN 1 ELSE 0 END)
                     """
-                ).bind(assert_id, int(update_id), old_claimed_at),
+                ).bind(*_prepare_params((assert_id, int(update_id), old_claimed_at))),
                 # Mutation: Lease takeover
                 self.db.prepare(
                     """
@@ -284,16 +340,16 @@ class D1Adapter:
                     SET claimed_at = ?, lease_recoveries = lease_recoveries + 1, lease_token = ? 
                     WHERE update_id = ? AND status = 'processing' AND claimed_at = ?
                     """
-                ).bind(new_claimed_at, new_lease_token, int(update_id), old_claimed_at),
+                ).bind(*_prepare_params((new_claimed_at, new_lease_token, int(update_id), old_claimed_at))),
                 # Mutation: Atomic audit record
                 self.db.prepare(
                     """
                     INSERT INTO audit_events (id, event_type, actor, entity_id, payload_json, created_at)
                     VALUES (?, 'telegram_claim_recovered', ?, ?, ?, ?)
                     """
-                ).bind(event_id, actor, str(update_id), payload, new_claimed_at),
+                ).bind(*_prepare_params((event_id, actor, str(update_id), payload, new_claimed_at))),
                 # Cleanup assertion
-                self.db.prepare("DELETE FROM _d1_transaction_assertions WHERE id = ?").bind(assert_id),
+                self.db.prepare("DELETE FROM _d1_transaction_assertions WHERE id = ?").bind(*_prepare_params((assert_id,))),
             ]
             try:
                 await self.db.batch(statements)

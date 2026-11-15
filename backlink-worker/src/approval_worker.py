@@ -20,7 +20,10 @@ import json
 from typing import Any, Dict, Optional, Tuple
 import uuid
 
-from .d1_adapter import D1Adapter
+try:
+    from d1_adapter import D1Adapter
+except ImportError:
+    from .d1_adapter import D1Adapter
 
 
 def secure_compare(a: str, b: str) -> bool:

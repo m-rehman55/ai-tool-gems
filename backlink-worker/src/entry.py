@@ -11,10 +11,16 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from .approval_worker import WorkerApprovalEngine
-from .d1_adapter import D1Adapter
-from .health import get_health_status
-from .queue_handlers import enqueue_draft_generation, enqueue_verifications, handle_queue_batch
+try:
+    from approval_worker import WorkerApprovalEngine
+    from d1_adapter import D1Adapter
+    from health import get_health_status
+    from queue_handlers import enqueue_draft_generation, enqueue_verifications, handle_queue_batch
+except ImportError:
+    from .approval_worker import WorkerApprovalEngine
+    from .d1_adapter import D1Adapter
+    from .health import get_health_status
+    from .queue_handlers import enqueue_draft_generation, enqueue_verifications, handle_queue_batch
 
 try:
     from workers import Response, WorkerEntrypoint
@@ -33,11 +39,11 @@ except ImportError:
 class Default(WorkerEntrypoint):
     """Cloudflare Python Worker Entrypoint."""
 
-    async def fetch(self, request: Any) -> Any:
+    async def fetch(self, request: Any, env: Any = None, ctx: Any = None) -> Any:
         url_str = getattr(request, "url", "http://localhost/")
         method = getattr(request, "method", "GET").upper()
-        env = getattr(self, "env", None)
-        d1 = D1Adapter(getattr(env, "DB", None))
+        resolved_env = env if env is not None else getattr(self, "env", None)
+        d1 = D1Adapter(getattr(resolved_env, "DB", None))
 
         # 1. Root diagnostic info
         if method == "GET" and (url_str.endswith("/") or url_str.endswith(":8787")):
@@ -62,9 +68,9 @@ class Default(WorkerEntrypoint):
 
         # 3. Telegram Webhook route
         if method == "POST" and "/telegram/webhook" in url_str:
-            owner_chat_id = getattr(env, "TELEGRAM_OWNER_CHAT_ID", "")
-            owner_user_id = getattr(env, "TELEGRAM_OWNER_USER_ID", None)
-            webhook_secret = getattr(env, "TELEGRAM_WEBHOOK_SECRET", None)
+            owner_chat_id = getattr(resolved_env, "TELEGRAM_OWNER_CHAT_ID", "")
+            owner_user_id = getattr(resolved_env, "TELEGRAM_OWNER_USER_ID", None)
+            webhook_secret = getattr(resolved_env, "TELEGRAM_WEBHOOK_SECRET", None)
 
             engine = WorkerApprovalEngine(
                 d1=d1,
@@ -98,10 +104,19 @@ class Default(WorkerEntrypoint):
             except Exception:
                 return Response(json.dumps({"error": "Malformed JSON"}), status=400)
 
-            reply_text = await engine.handle_update(update_data, header_secret=header_secret)
+            try:
+                reply_text = await engine.handle_update(update_data, header_secret=header_secret)
+            except Exception as err:
+                import traceback
+                tb = traceback.format_exc()
+                return Response(
+                    json.dumps({"ok": False, "error": f"{type(err).__name__}: {str(err)}", "traceback": tb}),
+                    status=500,
+                    headers={"Content-Type": "application/json"},
+                )
 
             # Optional: send Telegram reply back to chat if token is configured
-            token = getattr(env, "TELEGRAM_BOT_TOKEN", "")
+            token = getattr(resolved_env, "TELEGRAM_BOT_TOKEN", "")
             chat_id = update_data.get("message", {}).get("chat", {}).get("id")
             if token and chat_id:
                 try:
@@ -145,7 +160,7 @@ class Default(WorkerEntrypoint):
             await enqueue_verifications(d1, queue, limit=max_verif)
 
         # 2. Weekly Draft Generation & Executive Cycle (Sunday 08:00 PKT)
-        elif cron == "0 3 * * 0":
+        elif cron in ("0 3 * * 0", "0 3 * * SUN"):
             max_drafts = int(getattr(env, "MAX_DRAFTS_PER_RUN", 5))
             await enqueue_draft_generation(d1, queue, limit=max_drafts)
 
