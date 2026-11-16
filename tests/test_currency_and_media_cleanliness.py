@@ -50,12 +50,11 @@ class TestCurrencyAndMediaCleanliness(unittest.TestCase):
             self.assertGreater(float(m.group(1)), 0.0, f"Invalid usdPrice for {slug}")
 
     def test_directory_cards_maintain_hidden_reference(self):
-        """Ensure directory cards have hidden reference element for backward test compatibility."""
+        """Ensure all 65 cards are full commercial product cards with 0 directory cards."""
         dir_cards = re.findall(r'<article[^>]*class="[^"]*directory-card[^"]*"[^>]*>([\s\S]*?)</article>', self.index_html)
-        self.assertEqual(len(dir_cards), 25, f"Expected 25 directory cards, got {len(dir_cards)}")
-        for card in dir_cards:
-            self.assertIn('Directory Reference', card)
-            self.assertIn('hidden', card)
+        self.assertEqual(len(dir_cards), 0, f"Expected 0 directory cards, got {len(dir_cards)}")
+        prod_cards = re.findall(r'<article[^>]*class="product-card"[^>]*>', self.index_html)
+        self.assertEqual(len(prod_cards), 65, f"Expected 65 product cards, got {len(prod_cards)}")
 
     def test_all_65_cards_have_official_link_button(self):
         """Ensure all 65 cards in index.html feature the official-link-btn external website link."""

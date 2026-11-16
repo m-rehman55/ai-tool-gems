@@ -201,7 +201,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             with open(os.path.join(tools_dir, td, 'index.html'), encoding='utf-8') as fh: tc = fh.read()
             if 'policies.html#payments' in tc: pc += 1
             else: self.assertIn('class="directory-badge"', tc); dc += 1
-        self.assertEqual((pc, dc), (40, 25))
+        self.assertEqual((pc, dc), (65, 0))
 
         # 3. Transparent 3-tier payment classification in policies.html
         self.assertIn('Verified &amp; Configured', policies_html, "policies.html must include 'Verified & Configured' classification")

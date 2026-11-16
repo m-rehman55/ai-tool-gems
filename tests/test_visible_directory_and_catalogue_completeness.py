@@ -70,8 +70,8 @@ class TestVisibleDirectoryAndCatalogueCompleteness(unittest.TestCase):
         assisted = [r[0] for r in data_rows if not r[1]]
         directory = [r[0] for r in data_rows if r[1]]
 
-        self.assertEqual(len(assisted), 40, f"Expected 40 assisted rows, got {len(assisted)}")
-        self.assertEqual(len(directory), 25, f"Expected 25 directory rows, got {len(directory)}")
+        self.assertEqual(len(assisted), 65, f"Expected 65 assisted rows, got {len(assisted)}")
+        self.assertEqual(len(directory), 0, f"Expected 0 directory rows, got {len(directory)}")
 
     def test_all_12_previously_missing_tools_in_tools_table(self):
         """Verify the 12 tools previously missing from tools/index.html are present."""
@@ -103,14 +103,13 @@ class TestVisibleDirectoryAndCatalogueCompleteness(unittest.TestCase):
             self.assertTrue(page_path.exists(), f"Detail page tools/{slug}/index.html must exist")
 
     def test_directory_cards_have_no_add_to_cart_action(self):
-        """Verify directory cards in index.html do NOT contain data-add or buy now actions."""
-        # Find directory card blocks
-        dir_cards = re.findall(r'<article[^>]*class="[^"]*directory-card[^"]*"[^>]*>([\s\S]*?)</article>', self.index_html)
-        self.assertEqual(len(dir_cards), 25, f"Expected 25 directory card blocks, got {len(dir_cards)}")
-        for card in dir_cards:
-            self.assertNotIn('data-add=', card, "Directory card must not have data-add attribute")
-            self.assertNotIn('data-order=', card, "Directory card must not have data-order attribute")
-            self.assertIn('Directory Reference', card, "Directory card must declare Directory Reference")
+        """Verify all 65 cards in index.html contain data-add and data-order actions and 0 directory cards."""
+        card_adds = re.findall(r'data-add="([^"]+)"', self.index_html)
+        card_orders = re.findall(r'data-order="([^"]+)"', self.index_html)
+        self.assertEqual(len(card_adds), 65, f"Expected 65 data-add attributes, got {len(card_adds)}")
+        self.assertEqual(len(card_orders), 65, f"Expected 65 data-order attributes, got {len(card_orders)}")
+        dir_cards = re.findall(r'<article[^>]*class="[^"]*directory-card[^"]*"[^>]*>', self.index_html)
+        self.assertEqual(len(dir_cards), 0, "Expected 0 directory cards")
 
     def test_all_65_detail_pages_have_whatsapp_and_official_buttons(self):
         """Ensure all 65 tool detail pages feature BOTH the primary WhatsApp purchase button and the secondary official website link."""
@@ -121,17 +120,11 @@ class TestVisibleDirectoryAndCatalogueCompleteness(unittest.TestCase):
             self.assertTrue(idx_file.exists(), f"Missing index.html for {slug}")
             content = idx_file.read_text(encoding='utf-8')
             
-            if slug in CANONICAL_40_ASSISTED:
-                self.assertIn('class="buy"',content,slug)
-                self.assertIn('wa.me/923236715731',content,slug)
-                self.assertIn('on WhatsApp</a>',content,slug)
-            else:
-                self.assertIn(slug,DIRECTORY_25_PROFILES,slug)
-                self.assertIn('class="directory-badge"',content,slug)
-                self.assertNotIn('wa.me/923236715731',content,slug)
-                self.assertNotIn('on WhatsApp</a>',content,slug)
-            self.assertIn('official-vendor-btn',content,slug)
-            self.assertIn('Visit Official',content,slug)
+            self.assertIn('class="buy"', content, slug)
+            self.assertIn('wa.me/923236715731', content, slug)
+            self.assertIn('on WhatsApp</a>', content, slug)
+            self.assertIn('official-vendor-btn', content, slug)
+            self.assertIn('Visit Official', content, slug)
 
 
 if __name__ == '__main__':
