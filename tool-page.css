@@ -562,3 +562,30 @@ tbody th { color:#247c69; }
   top: 16px;
   outline: none;
 }
+
+/* Verified Customer Rating Badge */
+.product-rating-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(47, 159, 136, 0.08);
+  border: 1px solid rgba(47, 159, 136, 0.25);
+  border-radius: 9999px;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.product-rating-badge .stars {
+  color: #f59e0b;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.product-rating-badge .rating-val {
+  font-weight: 800;
+  color: var(--ink);
+}
+.product-rating-badge .review-count {
+  color: var(--muted);
+  font-size: 12px;
+}

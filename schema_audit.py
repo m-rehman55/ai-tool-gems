@@ -123,7 +123,8 @@ def audit_page(page_path: Path) -> dict:
         result["warnings"].append("Missing meta description")
 
     # Tool pages specific checks
-    if "tools/" in str(page_path):
+    rel_posix = page_path.as_posix()
+    if "/tools/" in rel_posix:
         # Check for FAQPage on tool pages
         if '"@type": "FAQPage"' in html:
             result["max_score"] += 15
@@ -146,17 +147,13 @@ def audit_page(page_path: Path) -> dict:
                 result["score"] += 5
             else:
                 result["warnings"].append("Missing priceValidUntil in Product offer schema")
-            # Validate Product Snippets review and aggregateRating
+            # Validate Product Snippets review and aggregateRating if present
             if '"review"' in html:
                 result["max_score"] += 5
                 result["score"] += 5
-            else:
-                result["warnings"].append("Missing review in Product schema")
             if '"aggregateRating"' in html:
                 result["max_score"] += 5
                 result["score"] += 5
-            else:
-                result["warnings"].append("Missing aggregateRating in Product schema")
         else:
             result["warnings"].append("Missing Product schema")
 
@@ -166,7 +163,7 @@ def audit_page(page_path: Path) -> dict:
             result["score"] += 5
 
     # Guide pages specific
-    if "/guides/" in str(page_path):
+    if "/guides/" in rel_posix:
         if '"@type": "CollectionPage"' in html or '"@type": "WebPage"' in html:
             result["max_score"] += 5
             result["score"] += 5

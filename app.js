@@ -443,9 +443,26 @@ function renderProducts() {
   if (empty) {
     empty.classList.toggle('show', !all.length);
     if (!all.length) {
+      empty.innerHTML = `
+        <img src="assets/brand-logo-light.webp" width="119" height="119" loading="lazy" class="empty-state-logo" alt="AI Tool Gems Diamond">
+        <h3>No matching tools found</h3>
+        <p>Try searching for other keywords like "video", "assistant", or "design".</p>
+        <button class="secondary-button" id="clearFilters">Clear filters</button>
+      `;
+      const btn = empty.querySelector('#clearFilters');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          state.query = '';
+          state.category = 'All';
+          const s = $('#searchInput');
+          if (s) s.value = '';
+          renderProducts();
+        });
+      }
       empty.removeAttribute('hidden');
       empty.style.display = 'block';
     } else {
+      empty.innerHTML = '';
       empty.setAttribute('hidden', '');
       empty.style.display = 'none';
     }
