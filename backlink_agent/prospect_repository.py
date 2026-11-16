@@ -1,323 +1,148 @@
-"""Unified Prospect Repository resolving opportunities across Tracker CSV and Daily Intelligence Reports."""
+"""Data models for Backlink Agent verification, tracking, and approval."""
 
 from __future__ import annotations
 
-import csv
-import json
-import logging
-from pathlib import Path
-import re
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-logger = logging.getLogger(__name__)
 
-DEFAULT_CSV_PATH = Path("seo-agent/data/offpage_authority_tracker.csv")
-DEFAULT_JSON_DIR = Path("seo-agent/reports/backlinks")
+@dataclass
+class Prospect:
+    prospect_domain: str
+    prospect_url: str
+    site_type: str
+    relevance: int
+    eligibility: str
+    link_terms: str
+    action_status: str
+    source_page: str
+    target_url: str
+    anchor_text: str
+    link_status: str
+    discovered_by_bing: str
+    discovered_by_gsc: str
+    referral_activity: str
+    last_checked: str
+    evidence: str
+    row_index: int = 0
+
+    @classmethod
+    def from_row(cls, row: Dict[str, str], row_index: int = 0) -> Prospect:
+        relevance_raw = row.get("relevance", "0").strip()
+        try:
+            relevance = int(relevance_raw)
+        except ValueError:
+            relevance = -1
+
+        return cls(
+            prospect_domain=row.get("prospect_domain", "").strip(),
+            prospect_url=row.get("prospect_url", "").strip(),
+            site_type=row.get("site_type", "").strip(),
+            relevance=relevance,
+            eligibility=row.get("eligibility", "").strip(),
+            link_terms=row.get("link_terms", "").strip(),
+            action_status=row.get("action_status", "").strip(),
+            source_page=row.get("source_page", "").strip(),
+            target_url=row.get("target_url", "").strip(),
+            anchor_text=row.get("anchor_text", "").strip(),
+            link_status=row.get("link_status", "").strip(),
+            discovered_by_bing=row.get("discovered_by_bing", "").strip(),
+            discovered_by_gsc=row.get("discovered_by_gsc", "").strip(),
+            referral_activity=row.get("referral_activity", "").strip(),
+            last_checked=row.get("last_checked", "").strip(),
+            evidence=row.get("evidence", "").strip(),
+            row_index=row_index,
+        )
+
+    def to_row(self) -> Dict[str, str]:
+        return {
+            "prospect_domain": self.prospect_domain,
+            "prospect_url": self.prospect_url,
+            "site_type": self.site_type,
+            "relevance": str(self.relevance),
+            "eligibility": self.eligibility,
+            "link_terms": self.link_terms,
+            "action_status": self.action_status,
+            "source_page": self.source_page,
+            "target_url": self.target_url,
+            "anchor_text": self.anchor_text,
+            "link_status": self.link_status,
+            "discovered_by_bing": self.discovered_by_bing,
+            "discovered_by_gsc": self.discovered_by_gsc,
+            "referral_activity": self.referral_activity,
+            "last_checked": self.last_checked,
+            "evidence": self.evidence,
+        }
 
 
-class UnifiedProspect:
-    """Canonical normalized representation of a backlink prospect from any source."""
+@dataclass
+class VerificationResult:
+    source_page: str
+    target_url: str
+    status_code: int = 0
+    classification: str = "unknown"
+    target_found: bool = False
+    actual_anchor_text: str = ""
+    rel_tokens: List[str] = field(default_factory=list)
+    final_url: str = ""
+    redirect_chain: List[str] = field(default_factory=list)
+    is_noindex: bool = False
+    canonical_url: Optional[str] = None
+    response_bytes: int = 0
+    elapsed_seconds: float = 0.0
+    error_message: Optional[str] = None
+    timestamp_utc: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
-    def __init__(
-        self,
-        prospect_id: str,
-        prospect_domain: str,
-        prospect_type: str,
-        submission_url: str,
-        target_asset_url: str,
-        score: int,
-        draft_hash: str,
-        source_origin: str,
-        status: str = "pending_owner_review",
-        draft: Optional[Dict[str, Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
-    ):
-        self.prospect_id = prospect_id
-        self.prospect_domain = prospect_domain
-        self.prospect_type = prospect_type
-        self.submission_url = submission_url
-        self.target_asset_url = target_asset_url
-        self.score = score
-        self.draft_hash = draft_hash
-        self.source_origin = source_origin
-        self.status = status
-        self.draft = draft or {}
-        self.metadata = metadata or {}
+    @property
+    def is_live(self) -> bool:
+        return self.classification.startswith("live_")
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "source_page": self.source_page,
+            "target_url": self.target_url,
+            "status_code": self.status_code,
+            "classification": self.classification,
+            "target_found": self.target_found,
+            "actual_anchor_text": self.actual_anchor_text,
+            "rel_tokens": self.rel_tokens,
+            "final_url": self.final_url,
+            "redirect_chain": self.redirect_chain,
+            "is_noindex": self.is_noindex,
+            "canonical_url": self.canonical_url,
+            "response_bytes": self.response_bytes,
+            "elapsed_seconds": round(self.elapsed_seconds, 3),
+            "error_message": self.error_message,
+            "timestamp_utc": self.timestamp_utc,
+            "is_live": self.is_live,
+        }
+
+
+@dataclass
+class ApprovalAction:
+    prospect_id: str
+    action: str  # approve, reject, defer
+    actor_chat_id: str
+    actor_user_id: Optional[str]
+    timestamp_pkt: str
+    draft_hash: str
+    previous_status: str
+    new_status: str
+    reason: Optional[str] = None
+    update_id: int = 0
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "prospect_id": self.prospect_id,
-            "prospect_domain": self.prospect_domain,
-            "prospect_type": self.prospect_type,
-            "submission_url": self.submission_url,
-            "target_asset_url": self.target_asset_url,
-            "score": self.score,
+            "action": self.action,
+            "actor_chat_id": self.actor_chat_id,
+            "actor_user_id": self.actor_user_id,
+            "timestamp_pkt": self.timestamp_pkt,
             "draft_hash": self.draft_hash,
-            "source_origin": self.source_origin,
-            "status": self.status,
-            "draft": self.draft,
-            "metadata": self.metadata,
+            "previous_status": self.previous_status,
+            "new_status": self.new_status,
+            "reason": self.reason,
+            "update_id": self.update_id,
         }
 
-
-class ProspectRepository:
-    """Resolves prospects across legacy CSV trackers and daily intelligence JSON reports."""
-
-    def __init__(
-        self,
-        csv_path: Optional[Path] = None,
-        json_dir: Optional[Path] = None,
-    ):
-        self.csv_path = Path(csv_path or DEFAULT_CSV_PATH)
-        self.json_dir = Path(json_dir or DEFAULT_JSON_DIR)
-        self._cache: Optional[List[UnifiedProspect]] = None
-
-    @staticmethod
-    def normalize_domain(value: str) -> str:
-        val = str(value or "").strip().lower()
-        val = re.sub(r"^https?://", "", val)
-        val = val.split("/")[0].split(":")[0]
-        return val.removeprefix("www.")
-
-    @staticmethod
-    def normalize_hash(value: str) -> str:
-        return str(value or "").strip().lower()
-
-    def load_tracker_csv(self) -> List[UnifiedProspect]:
-        results: List[UnifiedProspect] = []
-        if not self.csv_path.exists():
-            return results
-
-        try:
-            with self.csv_path.open("r", encoding="utf-8-sig") as f:
-                reader = csv.DictReader(f)
-                for idx, row in enumerate(reader, start=1):
-                    domain = self.normalize_domain(row.get("prospect_domain", ""))
-                    if not domain:
-                        continue
-
-                    url = row.get("prospect_url") or row.get("source_page") or f"https://{domain}"
-                    target = row.get("target_url") or "https://aitoolgems.tech/"
-                    score = int(row.get("relevance") or 70)
-                    action_status = row.get("action_status") or "pending_owner_review"
-
-                    prospect = UnifiedProspect(
-                        prospect_id=f"csv_row_{idx}",
-                        prospect_domain=domain,
-                        prospect_type=row.get("site_type", "directory"),
-                        submission_url=url,
-                        target_asset_url=target,
-                        score=score,
-                        draft_hash=f"csv_{idx}_{domain[:6]}",
-                        source_origin="tracker_csv",
-                        status=action_status,
-                        draft={
-                            "tool_name": "AI Tool Gems",
-                            "website_url": "https://aitoolgems.tech/",
-                            "short_tagline": "Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.",
-                            "category": "AI & Developer Tools",
-                            "submission_url": url,
-                        },
-                        metadata=row,
-                    )
-                    results.append(prospect)
-        except Exception as e:
-            logger.warning(f"Error reading tracker CSV: {e}")
-
-        return results
-
-    def load_daily_json_reports(self) -> List[UnifiedProspect]:
-        results: List[UnifiedProspect] = []
-        if not self.json_dir.exists():
-            return results
-
-        # Process from newest to oldest
-        json_files = sorted(self.json_dir.glob("backlink_intelligence_*.json"), reverse=True)
-        for jf in json_files:
-            try:
-                data = json.loads(jf.read_text(encoding="utf-8"))
-                drafts_map: Dict[str, Dict[str, Any]] = {}
-                for d_entry in data.get("drafts", []):
-                    domain = self.normalize_domain(d_entry.get("domain", ""))
-                    if domain:
-                        drafts_map[domain] = d_entry
-
-                for opp in data.get("opportunities", []):
-                    domain = self.normalize_domain(opp.get("prospect_domain", ""))
-                    if not domain:
-                        continue
-
-                    d_info = drafts_map.get(domain, {})
-                    draft_obj = d_info.get("draft", {})
-                    draft_hash = d_info.get("draft_hash", "") or opp.get("prospect_id", "")[:16]
-
-                    score_info = opp.get("score", {})
-                    total_score = (
-                        score_info.get("total_score", 75)
-                        if isinstance(score_info, dict)
-                        else int(score_info or 75)
-                    )
-
-                    sub_url = (
-                        opp.get("source_page_url")
-                        or draft_obj.get("submission_url")
-                        or f"https://{domain}"
-                    )
-                    target_url = (
-                        opp.get("target_asset_url")
-                        or draft_obj.get("target_landing_page")
-                        or "https://aitoolgems.tech/"
-                    )
-
-                    prospect = UnifiedProspect(
-                        prospect_id=opp.get("prospect_id", f"opp_{domain}"),
-                        prospect_domain=domain,
-                        prospect_type=opp.get("prospect_type", "curated_directory"),
-                        submission_url=sub_url,
-                        target_asset_url=target_url,
-                        score=total_score,
-                        draft_hash=draft_hash,
-                        source_origin=jf.name,
-                        status="pending_owner_review",
-                        draft=draft_obj,
-                        metadata=opp,
-                    )
-                    results.append(prospect)
-            except Exception as e:
-                logger.warning(f"Error reading intelligence JSON {jf.name}: {e}")
-
-        return results
-
-    def load_seed_registries(self) -> List[UnifiedProspect]:
-        """Loads curated directory seeds, tech publications, and GitHub repos directly in memory."""
-        results: List[UnifiedProspect] = []
-        try:
-            from backlink_agent.evidence_scoring import OpportunityScoringEngine
-            from backlink_agent.prospect_discovery import DiscoveryOrchestrator
-            from backlink_agent.submission_drafter import SubmissionDraftingEngine
-
-            disc = DiscoveryOrchestrator().run_discovery()
-            scorer = OpportunityScoringEngine()
-            drafter = SubmissionDraftingEngine()
-
-            scored = [scorer.score_prospect(p) for p in disc.get("prospects", [])]
-            draft_tuples = drafter.draft_batch(scored)
-
-            drafts_map: Dict[str, Tuple[Any, str, Any]] = {}
-            for draft, d_hash, opp in draft_tuples:
-                drafts_map[opp.prospect_domain.lower()] = (draft, d_hash, opp)
-
-            for opp in scored:
-                domain = self.normalize_domain(opp.prospect_domain)
-                if not domain:
-                    continue
-
-                draft_tuple = drafts_map.get(domain)
-                draft_obj = draft_tuple[0].to_dict() if draft_tuple else {}
-                draft_hash = draft_tuple[1] if draft_tuple else opp.prospect_id[:16]
-
-                sub_url = (
-                    opp.source_page_url
-                    or draft_obj.get("submission_url")
-                    or f"https://{domain}"
-                )
-                target_url = (
-                    opp.target_asset_url
-                    or draft_obj.get("target_landing_page")
-                    or "https://aitoolgems.tech/"
-                )
-
-                prospect = UnifiedProspect(
-                    prospect_id=opp.prospect_id,
-                    prospect_domain=domain,
-                    prospect_type=opp.prospect_type,
-                    submission_url=sub_url,
-                    target_asset_url=target_url,
-                    score=opp.score.total_score,
-                    draft_hash=draft_hash,
-                    source_origin="seed_registry",
-                    status="pending_owner_review",
-                    draft=draft_obj,
-                    metadata=opp.to_dict(),
-                )
-                results.append(prospect)
-        except Exception as e:
-            logger.warning(f"Error loading in-memory seed registries: {e}")
-
-        return results
-
-    def all_prospects(self, force_reload: bool = False) -> List[UnifiedProspect]:
-        """Loads and deduplicates all prospects across daily JSON reports, seed registries, and legacy tracker CSV."""
-        if self._cache is not None and not force_reload:
-            return self._cache
-
-        json_prospects = self.load_daily_json_reports()
-        seed_prospects = self.load_seed_registries()
-        csv_prospects = self.load_tracker_csv()
-
-        combined: Dict[str, UnifiedProspect] = {}
-
-        # 1. Give priority to richest daily intelligence reports
-        for p in json_prospects:
-            if p.prospect_domain not in combined:
-                combined[p.prospect_domain] = p
-
-        # 2. Supplement with in-memory seed registries (guarantees 100% CI coverage)
-        for p in seed_prospects:
-            if p.prospect_domain not in combined:
-                combined[p.prospect_domain] = p
-
-        # 3. Supplement with legacy CSV prospects not in JSON or seeds
-        for p in csv_prospects:
-            if p.prospect_domain not in combined:
-                combined[p.prospect_domain] = p
-
-        self._cache = list(combined.values())
-        return self._cache
-
-    def resolve(
-        self,
-        identifier: str,
-        prospect_hash: Optional[str] = None,
-    ) -> Optional[UnifiedProspect]:
-        """Resolves a prospect by domain name, draft hash, row index, or draft ID."""
-        clean_id = self.normalize_domain(identifier)
-        clean_hash = self.normalize_hash(prospect_hash) if prospect_hash else ""
-
-        prospects = self.all_prospects()
-
-        # 1. Exact match by draft hash if identifier is a hash
-        if not clean_hash and len(clean_id) in (8, 16) and not "." in clean_id:
-            for p in prospects:
-                if p.draft_hash.lower().startswith(clean_id) or p.prospect_id.lower().startswith(clean_id):
-                    return p
-
-        # 2. Match by domain and optional hash
-        matches = []
-        for p in prospects:
-            dom = p.prospect_domain.lower()
-            if (
-                dom == clean_id
-                or dom.removeprefix("www.") == clean_id
-                or dom.split(".")[0] == clean_id
-            ):
-                if clean_hash:
-                    if p.draft_hash.lower().startswith(clean_hash) or clean_hash.startswith(p.draft_hash.lower()[:8]):
-                        return p
-                matches.append(p)
-
-        if len(matches) == 1:
-            return matches[0]
-
-        # 3. Numeric row lookup (1-based index)
-        if clean_id.isdigit():
-            idx = int(clean_id)
-            if 1 <= idx <= len(prospects):
-                return prospects[idx - 1]
-
-        # 4. Partial domain search fallback
-        for p in prospects:
-            if clean_id in p.prospect_domain.lower():
-                return p
-
-        return None

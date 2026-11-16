@@ -1,613 +1,316 @@
-"""Owner-Only Telegram Approval and Command Handler for Backlink Agent.
-
-Restricted strictly to configured TELEGRAM_OWNER_CHAT_ID.
-Draft-only execution: approvals permit OWNER MANUAL SUBMISSIONS ONLY.
-Automated outreach or public form submission is strictly prohibited.
-"""
+"""Unified Prospect Repository resolving opportunities across Tracker CSV and Daily Intelligence Reports."""
 
 from __future__ import annotations
 
-from dataclasses import asdict
-from datetime import datetime, timezone
-import hashlib
-import hmac
+import csv
 import json
 import logging
-import os
 from pathlib import Path
+import re
 from typing import Any, Dict, List, Optional, Tuple
-
-from .facts import get_verified_facts
-from .models import ApprovalAction, Prospect
-from .prospect_repository import ProspectRepository, UnifiedProspect
 
 logger = logging.getLogger(__name__)
 
-APPROVAL_STORE_PATH = Path("seo-agent/data/backlink_approvals.json")
-AUDIT_LOG_PATH = Path("seo-agent/data/backlink_approval_audit.jsonl")
+DEFAULT_CSV_PATH = Path("seo-agent/data/offpage_authority_tracker.csv")
+DEFAULT_JSON_DIR = Path("seo-agent/reports/backlinks")
 
 
-def _secure_compare(a: str, b: str) -> bool:
-    """Constant-time string comparison to prevent timing attacks."""
-    return hmac.compare_digest(a.encode("utf-8"), b.encode("utf-8"))
-
-
-def calculate_draft_hash(prospect: Any) -> str:
-    """Calculates deterministic SHA256 hash of prospect draft to prevent stale approvals."""
-    facts = get_verified_facts()
-    if isinstance(prospect, dict):
-        dom = prospect.get("prospect_domain", "")
-        target = prospect.get("target_url") or prospect.get("target_asset_url", "")
-        anchor = prospect.get("anchor_text", "")
-        terms = prospect.get("link_terms", "")
-    elif hasattr(prospect, "prospect_domain"):
-        dom = prospect.prospect_domain
-        target = getattr(prospect, "target_asset_url", "")
-        anchor = getattr(prospect, "draft", {}).get("pr_title", "")
-        terms = getattr(prospect, "prospect_type", "")
-    else:
-        dom = str(prospect)
-        target = ""
-        anchor = ""
-        terms = ""
-
-    content = f"{dom}|{target}|{anchor}|{terms}|{facts.pricing_model}"
-    return hashlib.sha256(content.encode("utf-8")).hexdigest()[:16]
-
-
-class TelegramApprovalEngine:
-    """Validates owner identity, processes commands, and maintains immutable audit logs."""
+class UnifiedProspect:
+    """Canonical normalized representation of a backlink prospect from any source."""
 
     def __init__(
         self,
-        owner_chat_id: Optional[str] = None,
-        owner_user_id: Optional[str] = None,
-        store_path: Path = APPROVAL_STORE_PATH,
-        audit_path: Path = AUDIT_LOG_PATH,
-        repository: Optional[ProspectRepository] = None,
+        prospect_id: str,
+        prospect_domain: str,
+        prospect_type: str,
+        submission_url: str,
+        target_asset_url: str,
+        score: int,
+        draft_hash: str,
+        source_origin: str,
+        status: str = "pending_owner_review",
+        draft: Optional[Dict[str, Any]] = None,
+        metadata: Optional[Dict[str, Any]] = None,
     ):
-        self.owner_chat_id = (
-            owner_chat_id
-            if owner_chat_id is not None
-            else os.environ.get("TELEGRAM_OWNER_CHAT_ID", "").strip()
-        )
-        self.owner_user_id = (
-            owner_user_id
-            if owner_user_id is not None
-            else os.environ.get("TELEGRAM_OWNER_USER_ID", "").strip()
-        )
-        self.store_path = Path(store_path)
-        self.audit_path = Path(audit_path)
-        self.repository = repository or ProspectRepository()
+        self.prospect_id = prospect_id
+        self.prospect_domain = prospect_domain
+        self.prospect_type = prospect_type
+        self.submission_url = submission_url
+        self.target_asset_url = target_asset_url
+        self.score = score
+        self.draft_hash = draft_hash
+        self.source_origin = source_origin
+        self.status = status
+        self.draft = draft or {}
+        self.metadata = metadata or {}
 
-    def is_authorized(self, chat_id: str, chat_type: str, user_id: Optional[str] = None) -> Tuple[bool, str]:
-        """Strictly verifies if incoming Telegram message originates from the configured owner."""
-        if chat_type != "private":
-            return False, f"Unauthorized chat type '{chat_type}'. Commands allowed in private chat only."
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "prospect_id": self.prospect_id,
+            "prospect_domain": self.prospect_domain,
+            "prospect_type": self.prospect_type,
+            "submission_url": self.submission_url,
+            "target_asset_url": self.target_asset_url,
+            "score": self.score,
+            "draft_hash": self.draft_hash,
+            "source_origin": self.source_origin,
+            "status": self.status,
+            "draft": self.draft,
+            "metadata": self.metadata,
+        }
 
-        if not self.owner_chat_id:
-            return False, "TELEGRAM_OWNER_CHAT_ID is not configured in environment."
 
-        if not _secure_compare(str(chat_id), str(self.owner_chat_id)):
-            return False, f"Unauthorized chat_id '{chat_id}'"
+class ProspectRepository:
+    """Resolves prospects across legacy CSV trackers and daily intelligence JSON reports."""
 
-        if self.owner_user_id and user_id:
-            if not _secure_compare(str(user_id), str(self.owner_user_id)):
-                return False, f"Unauthorized user_id '{user_id}'"
+    def __init__(
+        self,
+        csv_path: Optional[Path] = None,
+        json_dir: Optional[Path] = None,
+    ):
+        self.csv_path = Path(csv_path or DEFAULT_CSV_PATH)
+        self.json_dir = Path(json_dir or DEFAULT_JSON_DIR)
+        self._cache: Optional[List[UnifiedProspect]] = None
 
-        return True, "Authorized"
+    @staticmethod
+    def normalize_domain(value: str) -> str:
+        val = str(value or "").strip().lower()
+        val = re.sub(r"^https?://", "", val)
+        val = val.split("/")[0].split(":")[0]
+        return val.removeprefix("www.")
 
-    def load_state(self) -> Dict[str, Any]:
-        if not self.store_path.exists():
-            return {"last_update_id": 0, "approvals": {}}
+    @staticmethod
+    def normalize_hash(value: str) -> str:
+        return str(value or "").strip().lower()
+
+    def load_tracker_csv(self) -> List[UnifiedProspect]:
+        results: List[UnifiedProspect] = []
+        if not self.csv_path.exists():
+            return results
+
         try:
-            return json.loads(self.store_path.read_text(encoding="utf-8"))
-        except Exception:
-            return {"last_update_id": 0, "approvals": {}}
+            with self.csv_path.open("r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                for idx, row in enumerate(reader, start=1):
+                    domain = self.normalize_domain(row.get("prospect_domain", ""))
+                    if not domain:
+                        continue
 
-    def save_state(self, state: Dict[str, Any]) -> None:
-        self.store_path.parent.mkdir(parents=True, exist_ok=True)
-        temp_file = self.store_path.with_suffix(".tmp")
-        temp_file.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
-        temp_file.replace(self.store_path)
+                    url = row.get("prospect_url") or row.get("source_page") or f"https://{domain}"
+                    target = row.get("target_url") or "https://aitoolgems.tech/"
+                    score = int(row.get("relevance") or 70)
+                    action_status = row.get("action_status") or "pending_owner_review"
 
-    def append_audit_event(self, action: ApprovalAction) -> None:
-        self.audit_path.parent.mkdir(parents=True, exist_ok=True)
-        with self.audit_path.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(action.to_dict()) + "\n")
+                    prospect = UnifiedProspect(
+                        prospect_id=f"csv_row_{idx}",
+                        prospect_domain=domain,
+                        prospect_type=row.get("site_type", "directory"),
+                        submission_url=url,
+                        target_asset_url=target,
+                        score=score,
+                        draft_hash=f"csv_{idx}_{domain[:6]}",
+                        source_origin="tracker_csv",
+                        status=action_status,
+                        draft={
+                            "tool_name": "AI Tool Gems",
+                            "website_url": "https://aitoolgems.tech/",
+                            "short_tagline": "Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.",
+                            "category": "AI & Developer Tools",
+                            "submission_url": url,
+                        },
+                        metadata=row,
+                    )
+                    results.append(prospect)
+        except Exception as e:
+            logger.warning(f"Error reading tracker CSV: {e}")
 
-    def handle_command(
-        self,
-        command_text: str,
-        chat_id: str,
-        chat_type: str,
-        user_id: Optional[str] = None,
-        update_id: int = 0,
-    ) -> str:
-        """Processes an administrative backlink command with owner authorization."""
-        authorized, reason = self.is_authorized(chat_id, chat_type, user_id)
-        if not authorized:
-            return f"⛔ Access Denied: {reason}"
+        return results
 
-        parts = command_text.strip().split()
-        cmd = parts[0].lower() if parts else ""
+    def load_daily_json_reports(self) -> List[UnifiedProspect]:
+        results: List[UnifiedProspect] = []
+        if not self.json_dir.exists():
+            return results
 
-        if cmd == "/backlinks":
-            return self._cmd_backlinks()
+        json_files = sorted(self.json_dir.glob("backlink_intelligence_*.json"), reverse=True)
+        for jf in json_files:
+            try:
+                data = json.loads(jf.read_text(encoding="utf-8"))
+                drafts_map: Dict[str, Dict[str, Any]] = {}
+                for d_entry in data.get("drafts", []):
+                    domain = self.normalize_domain(d_entry.get("domain", ""))
+                    if domain:
+                        drafts_map[domain] = d_entry
 
-        if cmd == "/backlink":
-            if len(parts) < 2:
-                return "Usage: /backlink <domain_or_hash>"
-            target_hash = parts[2] if len(parts) > 2 else None
-            return self._cmd_backlink_detail(parts[1], target_hash)
+                for opp in data.get("opportunities", []):
+                    domain = self.normalize_domain(opp.get("prospect_domain", ""))
+                    if not domain:
+                        continue
 
-        if cmd == "/copy":
-            if len(parts) < 2:
-                return "Usage: /copy <domain_or_hash>"
-            target_hash = parts[2] if len(parts) > 2 else None
-            return self._cmd_copy(parts[1], target_hash)
+                    d_info = drafts_map.get(domain, {})
+                    draft_obj = d_info.get("draft", {})
+                    draft_hash = d_info.get("draft_hash", "") or opp.get("prospect_id", "")[:16]
 
-        if cmd == "/approve":
-            if len(parts) < 2:
-                return "Usage: /approve <domain_or_hash> [draft_hash]"
-            target_hash = parts[2] if len(parts) > 2 else None
-            return self._cmd_approve(parts[1], target_hash, chat_id, user_id, update_id)
+                    score_info = opp.get("score", {})
+                    total_score = (
+                        score_info.get("total_score", 75)
+                        if isinstance(score_info, dict)
+                        else int(score_info or 75)
+                    )
 
-        if cmd in ("/execute", "/auto_execute"):
-            if len(parts) < 2:
-                return "Usage: /execute <domain_or_hash> [draft_hash]"
-            target_hash = parts[2] if len(parts) > 2 else None
-            return self._cmd_execute(parts[1], target_hash, chat_id, user_id, update_id)
+                    sub_url = (
+                        opp.get("source_page_url")
+                        or draft_obj.get("submission_url")
+                        or f"https://{domain}"
+                    )
+                    target_url = (
+                        opp.get("target_asset_url")
+                        or draft_obj.get("target_landing_page")
+                        or "https://aitoolgems.tech/"
+                    )
 
-        if cmd == "/submitted":
-            if len(parts) < 2:
-                return "Usage: /submitted <domain_or_hash> [optional_live_url]"
-            live_url = parts[2] if len(parts) > 2 else None
-            return self._cmd_submitted(parts[1], live_url, chat_id, user_id, update_id)
+                    prospect = UnifiedProspect(
+                        prospect_id=opp.get("prospect_id", f"opp_{domain}"),
+                        prospect_domain=domain,
+                        prospect_type=opp.get("prospect_type", "curated_directory"),
+                        submission_url=sub_url,
+                        target_asset_url=target_url,
+                        score=total_score,
+                        draft_hash=draft_hash,
+                        source_origin=jf.name,
+                        status="pending_owner_review",
+                        draft=draft_obj,
+                        metadata=opp,
+                    )
+                    results.append(prospect)
+            except Exception as e:
+                logger.warning(f"Error reading intelligence JSON {jf.name}: {e}")
 
-        if cmd == "/reject":
-            if len(parts) < 3:
-                return "Usage: /reject <domain_or_hash> <reason>"
-            reason_text = " ".join(parts[2:])
-            return self._cmd_reject(parts[1], reason_text, chat_id, user_id, update_id)
+        return results
 
-        if cmd == "/defer":
-            if len(parts) < 3:
-                return "Usage: /defer <domain_or_hash> <date YYYY-MM-DD>"
-            return self._cmd_defer(parts[1], parts[2], chat_id, user_id, update_id)
+    def load_seed_registries(self) -> List[UnifiedProspect]:
+        """Loads curated directory seeds, tech publications, and GitHub repos directly in memory."""
+        results: List[UnifiedProspect] = []
+        try:
+            from backlink_agent.evidence_scoring import OpportunityScoringEngine
+            from backlink_agent.prospect_discovery import DiscoveryOrchestrator
+            from backlink_agent.submission_drafter import SubmissionDraftingEngine
 
-        if cmd == "/backlink_report":
-            return self._cmd_report()
+            disc = DiscoveryOrchestrator().run_discovery()
+            scorer = OpportunityScoringEngine()
+            drafter = SubmissionDraftingEngine()
 
-        return f"Unknown backlink command: {cmd}. Supported: /backlinks, /backlink, /copy, /approve, /execute, /submitted, /reject, /defer, /backlink_report"
+            scored = [scorer.score_prospect(p) for p in disc.get("prospects", [])]
+            draft_tuples = drafter.draft_batch(scored)
 
-    def _cmd_backlinks(self) -> str:
-        prospects = self.repository.all_prospects()
-        pending = [p for p in prospects if p.status != "rejected"]
-        lines = [
-            "🔗 AI Tool Gems Backlink Pipeline Summary",
-            f"• Total Prospects: {len(prospects)}",
-            f"• Live Placements: 4",
-            f"• Actionable Queue: {len(pending)}",
-            "",
-            "Top Actionable Prospects (Click link to submit):",
-        ]
-        for p in pending[:6]:
-            lines.append(f"• [{p.score}/100] {p.prospect_domain} ({p.status})\n  👉 Submit: {p.submission_url}")
-        lines.append("\nUse /backlink <domain> for step-by-step submission guide.")
-        return "\n".join(lines)
+            drafts_map: Dict[str, Tuple[Any, str, Any]] = {}
+            for draft, d_hash, opp in draft_tuples:
+                drafts_map[opp.prospect_domain.lower()] = (draft, d_hash, opp)
 
-    def _cmd_backlink_detail(self, target: str, draft_hash: Optional[str] = None) -> str:
-        p = self.repository.resolve(target, draft_hash)
-        if not p:
-            return f"Prospect '{target}' not found in tracker or daily intelligence reports."
+            for opp in scored:
+                domain = self.normalize_domain(opp.prospect_domain)
+                if not domain:
+                    continue
 
-        d_hash = p.draft_hash or calculate_draft_hash(p)
-        draft = p.draft or {}
+                draft_tuple = drafts_map.get(domain)
+                draft_obj = draft_tuple[0].to_dict() if draft_tuple else {}
+                draft_hash = draft_tuple[1] if draft_tuple else opp.prospect_id[:16]
 
-        login_hint = ""
-        dom = p.prospect_domain.lower()
-        if dom == "medium.com":
-            login_hint = "🔑 Login: Top-right 'Sign In' -> 'Sign in with Google' (1-click)"
-        elif dom == "techjuice.pk":
-            login_hint = "🔑 Login: No login needed (Open Contact form or email editor@techjuice.pk)"
-        elif dom == "dev.to":
-            login_hint = "🔑 Login: Sign in with GitHub or Google"
-        elif dom == "hashnode.com":
-            login_hint = "🔑 Login: Sign in with Google or GitHub"
-        elif "github" in dom:
-            login_hint = "🔑 Login: Sign in with your GitHub account"
-        else:
-            login_hint = f"🔑 Login: Free signup / Google login on {dom}"
-
-        lines = [
-            f"📋 Prospect: {p.prospect_domain}",
-            f"👉 Submit Link: {p.submission_url}",
-            f"{login_hint}",
-            f"• Site Type: {p.prospect_type}",
-            f"• Score: {p.score}/100",
-            f"• Target URL: {p.target_asset_url}",
-            f"• Draft Hash: {d_hash}",
-            f"• Status: {p.status}",
-            "",
-            "📝 Prepared Submission Content (Tap to Copy):",
-        ]
-
-        if p.prospect_type == "github_awesome" or "github" in p.prospect_domain:
-            lines.extend([
-                f"• Target File: `{draft.get('target_file', 'README.md')}`",
-                f"• PR Title: `{draft.get('pr_title', 'Add AI Tool Gems')}`",
-                f"• Proposed Entry:\n`{draft.get('proposed_markdown_entry', f'- [AI Tool Gems]({p.target_asset_url}) - Curated directory of 40+ AI tools and pricing index in PKR.')}`",
-            ])
-        elif p.prospect_type == "tech_publication" or p.prospect_domain in ("dev.to", "hashnode.com", "medium.com", "techjuice.pk"):
-            lines.extend([
-                f"• Case Study Title: `{draft.get('case_study_title', 'Pakistan AI Software Pricing Case Study 2026')}`",
-                f"• Cites Dataset: `{draft.get('csv_dataset_url', 'https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv')}`",
-            ])
-        else:
-            lines.extend([
-                f"• Tool Name: `{draft.get('tool_name', 'AI Tool Gems')}`",
-                f"• Website URL: `{draft.get('website_url', p.target_asset_url)}`",
-                f"• Tagline:\n`{draft.get('short_tagline', 'Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.')}`",
-                f"• Category: `{draft.get('category', 'AI & Developer Tools')}`",
-            ])
-
-        lines.extend([
-            "",
-            "Actions (Tap to Copy):",
-            f"/approve {p.prospect_domain} {d_hash}",
-            f"/submitted {p.prospect_domain}",
-            f"/reject {p.prospect_domain} <reason>",
-        ])
-        return "\n".join(lines)
-
-    def _cmd_copy(self, target: str, draft_hash: Optional[str] = None) -> str:
-        """Sends clean monospace copy blocks so the owner can tap-to-copy every field in 1 click."""
-        p = self.repository.resolve(target, draft_hash)
-        if not p:
-            return f"Prospect '{target}' not found."
-
-        draft = p.draft or {}
-        domain = p.prospect_domain.lower()
-
-        if domain == "medium.com":
-            return (
-                "📋 Tap-to-Copy Content for medium.com:\n\n"
-                "👉 Direct Editor Link: https://medium.com/new-story\n"
-                "🔑 Login: Click 'Sign In' at top right -> 'Sign in with Google'\n\n"
-                "• Title (Tap to copy):\n"
-                "`Case Study: Tracking Commercial AI Software Pricing and Payment Rails in Emerging Tech Ecosystems (Pakistan)`\n\n"
-                "• Story Content (Tap to copy):\n"
-                "`With the rapid global explosion of AI software, developers, students, and businesses in South Asia often face severe purchasing friction due to currency volatility, international card restrictions, and lack of localized subscription indexation.\n\n"
-                "A recent data study by AI Tool Gems (https://aitoolgems.tech/) analyzes 40 leading AI productivity and developer tools, documenting flat Pakistani Rupee (PKR) pricing parity and verified domestic settlement rails.\n\n"
-                "Key findings from the open dataset (https://aitoolgems.tech/prices/):\n"
-                "1. Over 65% of local AI users in Pakistan rely on domestic bank IBFT, Raast, EasyPaisa, JazzCash, and SadaPay rather than international credit cards.\n"
-                "2. Verified pricing parity indexes help freelancers and agencies forecast monthly SaaS operational costs in local currency without hidden forex markups.\n"
-                "3. Machine-readable pricing feeds are exposed publicly via /prices/ai-tools-pricing-pakistan.csv and llms.txt to facilitate transparent indexing.\n\n"
-                "The full dataset and pricing comparison table is open for community research at https://aitoolgems.tech/prices/.`\n\n"
-                "👉 Open Editor & Paste: https://medium.com/new-story"
-            )
-
-        if domain == "techjuice.pk":
-            return (
-                "📋 Tap-to-Copy Pitch for techjuice.pk:\n\n"
-                "👉 Direct Contact Link: https://www.techjuice.pk/contact/\n"
-                "📧 Email Alternative: editor@techjuice.pk\n"
-                "🔑 Login: No login needed (Open contact form)\n\n"
-                "• Pitch Subject (Tap to copy):\n"
-                "`Story Pitch: Pakistan AI Software Pricing & Local Payment Rails Index`\n\n"
-                "• Message Box (Tap to copy):\n"
-                "`Hi TechJuice Editorial Team,\n\n"
-                "I wanted to share a timely data-driven study on Pakistan's AI adoption ecosystem.\n\n"
-                "AI Tool Gems (https://aitoolgems.tech/) has published an index analyzing 40 commercial AI software tools, documenting subscription price parity in Pakistani Rupee (PKR) and domestic rails (EasyPaisa, JazzCash, Raast, SadaPay).\n\n"
-                "Dataset reference: https://aitoolgems.tech/prices/\n"
-                "CSV source: https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv\n\n"
-                "Would love to offer this as an exclusive guest op-ed or community data story for TechJuice readers.\n\n"
-                "Best regards,\n"
-                "AI Tool Gems Editorial Team`\n\n"
-                "👉 Open Contact Page: https://www.techjuice.pk/contact/"
-            )
-
-        lines = [
-            f"📋 Tap-to-Copy Fields for {p.prospect_domain}:",
-            "",
-            "• Tool Name:",
-            f"`{draft.get('tool_name', 'AI Tool Gems')}`",
-            "",
-            "• Website URL:",
-            f"`{draft.get('website_url', p.target_asset_url)}`",
-            "",
-            "• Tagline:",
-            f"`{draft.get('short_tagline', 'Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.')}`",
-            "",
-            "• Category:",
-            f"`{draft.get('category', 'AI & Developer Tools')}`",
-            "",
-            "• Long Description:",
-            f"`{draft.get('long_description', 'AI Tool Gems (aitoolgems.tech) provides transparent flat PKR pricing and verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast) for 40+ leading AI tools.')}`",
-            "",
-            f"👉 Open Form: {p.submission_url}",
-        ]
-        return "\n".join(lines)
-
-    def _cmd_approve(
-        self,
-        target: str,
-        draft_hash: Optional[str],
-        chat_id: str,
-        user_id: Optional[str],
-        update_id: int,
-    ) -> str:
-        p = self.repository.resolve(target, draft_hash)
-        if not p:
-            return (
-                f"Prospect '{target}' not found.\n\n"
-                "I checked both tracker CSV and all daily intelligence JSON reports.\n"
-                "Please verify the domain or draft hash."
-            )
-
-        domain = p.prospect_domain
-        d_hash = p.draft_hash or calculate_draft_hash(p)
-
-        state = self.load_state()
-        existing = state.get("approvals", {}).get(domain)
-
-        # Idempotency check: Already approved with matching hash OR generic approval
-        if existing and existing.get("action") == "approved":
-            if not draft_hash or existing.get("draft_hash") == d_hash:
-                return (
-                    f"✅ Already Approved: {domain}\n"
-                    f"• Approved At: {existing.get('timestamp_pkt')}\n"
-                    f"• Draft Hash: {existing.get('draft_hash')}\n"
-                    f"👉 Submit Link: {p.submission_url}\n"
-                    f"Form submit karne ke baad `/submitted {domain}` likh dein!"
+                sub_url = (
+                    opp.source_page_url
+                    or draft_obj.get("submission_url")
+                    or f"https://{domain}"
+                )
+                target_url = (
+                    opp.target_asset_url
+                    or draft_obj.get("target_landing_page")
+                    or "https://aitoolgems.tech/"
                 )
 
-        now_pkt = datetime.now(timezone.utc).isoformat()
-        action = ApprovalAction(
-            prospect_id=domain,
-            action="approved",
-            actor_chat_id=chat_id,
-            actor_user_id=user_id,
-            timestamp_pkt=now_pkt,
-            draft_hash=d_hash,
-            previous_status=p.status,
-            new_status="owner_approved_for_manual_submission",
-            update_id=update_id,
-        )
+                prospect = UnifiedProspect(
+                    prospect_id=opp.prospect_id,
+                    prospect_domain=domain,
+                    prospect_type=opp.prospect_type,
+                    submission_url=sub_url,
+                    target_asset_url=target_url,
+                    score=opp.score.total_score,
+                    draft_hash=draft_hash,
+                    source_origin="seed_registry",
+                    status="pending_owner_review",
+                    draft=draft_obj,
+                    metadata=opp.to_dict(),
+                )
+                results.append(prospect)
+        except Exception as e:
+            logger.warning(f"Error loading in-memory seed registries: {e}")
 
-        state.setdefault("approvals", {})[domain] = action.to_dict()
-        state["last_update_id"] = max(state.get("last_update_id", 0), update_id)
-        self.save_state(state)
-        self.append_audit_event(action)
+        return results
 
-        draft = p.draft or {}
+    def all_prospects(self, force_reload: bool = False) -> List[UnifiedProspect]:
+        """Loads and deduplicates all prospects across daily JSON reports, seed registries, and legacy tracker CSV."""
+        if self._cache is not None and not force_reload:
+            return self._cache
 
-        # Interactive Step-by-Step Telegram Submission Assistant Response
-        lines = [
-            f"✅ Approved for Manual Submission: {domain}",
-            f"• Target URL: {p.target_asset_url}",
-            f"• Content Hash: {d_hash}",
-            "",
-        ]
+        json_prospects = self.load_daily_json_reports()
+        seed_prospects = self.load_seed_registries()
+        csv_prospects = self.load_tracker_csv()
 
-        if domain == "medium.com":
-            lines.extend([
-                "👉 Step 1 — Open Official Submission Page (Direct Story Editor):",
-                "https://medium.com/new-story",
-                "🔑 Login: Top-right 'Sign In' -> 'Sign in with Google' (1-click)",
-                "",
-                "📋 Step 2 — Tap-to-Copy Form Fields (Story Details):",
-                "• Title (Tap to copy):",
-                f"`{draft.get('case_study_title', 'Tracking Commercial AI Software Pricing and Payment Rails in Emerging Tech Ecosystems (Pakistan)')}`",
-                "",
-                "• Story Content (Tap to copy):",
-                "`With the rapid global explosion of AI software, developers, students, and businesses in South Asia often face severe purchasing friction due to currency volatility, international card restrictions, and lack of localized subscription indexation.\n\nA recent data study by AI Tool Gems (https://aitoolgems.tech/) analyzes 40 leading AI productivity and developer tools, documenting flat Pakistani Rupee (PKR) pricing parity and verified domestic settlement rails.\n\nKey findings from the open dataset (https://aitoolgems.tech/prices/):\n1. Over 65% of local AI users in Pakistan rely on domestic bank IBFT, Raast, EasyPaisa, JazzCash, and SadaPay rather than international credit cards.\n2. Verified pricing parity indexes help freelancers and agencies forecast monthly SaaS operational costs in local currency without hidden forex markups.\n3. Machine-readable pricing feeds are exposed publicly via /prices/ai-tools-pricing-pakistan.csv and llms.txt to facilitate transparent indexing.\n\nThe full dataset and pricing comparison table is open for community research at https://aitoolgems.tech/prices/.`",
-                "",
-                "• Action: Medium editor par Title aur Story paste karein, 'aitoolgems.tech/prices/' link check karein, aur top-right green 'Publish' button daba dein!",
-            ])
-        elif domain == "techjuice.pk":
-            lines.extend([
-                "👉 Step 1 — Open Official Submission Page (Editorial Contact Portal):",
-                "https://www.techjuice.pk/contact/",
-                "🔑 Login: Kisi login ki zaroorat nahi! (Direct Contact form ya email: editor@techjuice.pk)",
-                "",
-                "📋 Step 2 — Tap-to-Copy Form Fields (Editorial Pitch):",
-                "• Pitch Subject (Tap to copy):",
-                "`Story Pitch: Tracking AI Software Pricing & Local Payment Rails in Pakistan`",
-                "",
-                "• Message Box (Tap to copy):",
-                "`Hi TechJuice Editorial Team,\n\nI wanted to share a timely data-driven study on Pakistan's AI adoption ecosystem.\n\nAI Tool Gems (https://aitoolgems.tech/) has published an index analyzing 40 commercial AI software tools, documenting subscription price parity in Pakistani Rupee (PKR) and domestic rails (EasyPaisa, JazzCash, Raast, SadaPay).\n\nDataset reference: https://aitoolgems.tech/prices/\nCSV source: https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv\n\nWould love to offer this as an exclusive guest op-ed or community data story for TechJuice readers.\n\nBest regards,\nAI Tool Gems Editorial Team`",
-                "",
-                "• Action: TechJuice contact page par Name, Email aur Message paste karke Send button click karein!",
-            ])
-        elif p.prospect_type == "github_awesome" or "github" in domain:
-            lines.extend([
-                f"👉 Step 1 — Open Official Submission Page:\n{p.submission_url}",
-                "🔑 Login: Sign in with your GitHub account",
-                "",
-                "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
-                f"• PR Title: `{draft.get('pr_title', 'Add AI Tool Gems')}`",
-                f"• Proposed Markdown Entry (Tap to copy):\n`{draft.get('proposed_markdown_entry', f'- [AI Tool Gems]({p.target_asset_url}) - Curated directory of 40+ AI tools and pricing index in PKR.')}`",
-                "• Action: Open the README link, click the pencil icon ✏️ (Edit), paste entry, and click 'Propose changes'!",
-            ])
-        elif p.prospect_type == "tech_publication" or domain in ("dev.to", "hashnode.com"):
-            lines.extend([
-                f"👉 Step 1 — Direct Editor Link:\n{p.submission_url}",
-                f"🔑 Login: Free signup / GitHub or Google login on {domain}",
-                "",
-                "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
-                f"• Case Study Title:\n`{draft.get('case_study_title', 'Tracking Commercial AI Software Pricing and Payment Rails in Emerging Tech Ecosystems (Pakistan)')}`",
-                f"• Dataset Citation URL:\n`{draft.get('dataset_citation_url', 'https://aitoolgems.tech/prices/')}`",
-                f"• CSV Dataset:\n`{draft.get('csv_dataset_url', 'https://aitoolgems.tech/prices/ai-tools-pricing-pakistan.csv')}`",
-                "• Action: Submit as editorial guest post / data article citing the open /prices/ dataset!",
-            ])
-        else:
-            lines.extend([
-                f"👉 Step 1 — Open Official Submission Page:\n{p.submission_url}",
-                f"🔑 Login: Free signup / Google login on {domain}",
-                "",
-                "📋 Step 2 — Tap-to-Copy Form Fields (Mobile Friendly):",
-                f"• Tool Name: `{draft.get('tool_name', 'AI Tool Gems')}`",
-                f"• Website URL: `{draft.get('website_url', p.target_asset_url)}`",
-                f"• Short Tagline:\n`{draft.get('short_tagline', 'Verified AI tools directory and transparent subscription pricing index in Pakistan PKR.')}`",
-                f"• Category: `{draft.get('category', 'AI & Developer Tools')}`",
-                f"• Long Description:\n`{draft.get('long_description', 'AI Tool Gems (aitoolgems.tech) provides transparent flat PKR pricing and verified domestic payment rails (EasyPaisa, JazzCash, SadaPay, Raast) for 40+ leading AI tools.')}`",
-            ])
+        combined: Dict[str, UnifiedProspect] = {}
 
-        lines.extend([
-            "",
-            "⚡ Zero-Touch Auto-Execute (Zero manual copy-paste):",
-            f"`/execute {domain} {d_hash}`",
-            "",
-            "🎯 Step 3 — Form Submit Karne Ke Baad:",
-            f"Submit karne ke baad yahan ye command bhein:",
-            f"`/submitted {domain}`",
-            "",
-            "🛡️ Guardrail: No automated forms or outreach sent without owner trigger.",
-        ])
+        for p in json_prospects:
+            if p.prospect_domain not in combined:
+                combined[p.prospect_domain] = p
 
-        return "\n".join(lines)
+        for p in seed_prospects:
+            if p.prospect_domain not in combined:
+                combined[p.prospect_domain] = p
 
-    def _cmd_execute(
+        for p in csv_prospects:
+            if p.prospect_domain not in combined:
+                combined[p.prospect_domain] = p
+
+        self._cache = list(combined.values())
+        return self._cache
+
+    def resolve(
         self,
-        target: str,
-        draft_hash: Optional[str],
-        chat_id: str,
-        user_id: Optional[str],
-        update_id: int,
-    ) -> str:
-        from backlink_agent.execution import ExecutionManager
+        identifier: str,
+        prospect_hash: Optional[str] = None,
+    ) -> Optional[UnifiedProspect]:
+        """Resolves a prospect by domain name, draft hash, row index, or draft ID."""
+        clean_id = self.normalize_domain(identifier)
+        clean_hash = self.normalize_hash(prospect_hash) if prospect_hash else ""
 
-        manager = ExecutionManager(repository=self.repository, approval_engine=self)
-        _result, reply_text = manager.execute_prospect(
-            target=target,
-            draft_hash=draft_hash,
-            dry_run=False,
-            chat_id=chat_id,
-            user_id=user_id,
-            update_id=update_id,
-        )
-        return reply_text
+        prospects = self.all_prospects()
 
-    def _cmd_submitted(
-        self,
-        target: str,
-        live_url: Optional[str],
-        chat_id: str,
-        user_id: Optional[str],
-        update_id: int,
-    ) -> str:
-        p = self.repository.resolve(target)
-        domain = p.prospect_domain if p else target.lower()
+        if not clean_hash and len(clean_id) in (8, 16) and "." not in clean_id:
+            for p in prospects:
+                if p.draft_hash.lower().startswith(clean_id) or p.prospect_id.lower().startswith(clean_id):
+                    return p
 
-        now_pkt = datetime.now(timezone.utc).isoformat()
-        action = ApprovalAction(
-            prospect_id=domain,
-            action="submitted",
-            actor_chat_id=chat_id,
-            actor_user_id=user_id,
-            timestamp_pkt=now_pkt,
-            draft_hash=p.draft_hash if p else "",
-            previous_status=p.status if p else "unknown",
-            new_status="submitted_pending_review",
-            reason=f"Owner confirmed manual submission (Live URL: {live_url or 'N/A'})",
-            update_id=update_id,
-        )
+        matches = []
+        for p in prospects:
+            dom = p.prospect_domain.lower()
+            if (
+                dom == clean_id
+                or dom.removeprefix("www.") == clean_id
+                or dom.split(".")[0] == clean_id
+            ):
+                if clean_hash:
+                    if p.draft_hash.lower().startswith(clean_hash) or clean_hash.startswith(p.draft_hash.lower()[:8]):
+                        return p
+                matches.append(p)
 
-        state = self.load_state()
-        state.setdefault("approvals", {})[domain] = action.to_dict()
-        state["last_update_id"] = max(state.get("last_update_id", 0), update_id)
-        self.save_state(state)
-        self.append_audit_event(action)
+        if len(matches) == 1:
+            return matches[0]
 
-        return (
-            f"🎉 Zabardast! {domain} ko submitted mark kar diya gaya hai!\n"
-            "• Status: `submitted_pending_review`\n"
-            f"• Evidence Recorded: `{live_url or 'Submission Form Completed'}`\n\n"
-            "🕵️ Ab Agent daily is backlink ko automatically verify karega ke link kab live hota hai, "
-            "aur jaise hi link live hoga aapko Telegram par notification mil jayegi!"
-        )
+        if clean_id.isdigit():
+            idx = int(clean_id)
+            if 1 <= idx <= len(prospects):
+                return prospects[idx - 1]
 
-    def _cmd_reject(
-        self,
-        target: str,
-        reason: str,
-        chat_id: str,
-        user_id: Optional[str],
-        update_id: int,
-    ) -> str:
-        p = self.repository.resolve(target)
-        if not p:
-            return f"Prospect '{target}' not found."
-        domain = p.prospect_domain
-        d_hash = p.draft_hash or calculate_draft_hash(p)
+        for p in prospects:
+            if clean_id in p.prospect_domain.lower():
+                return p
 
-        now_pkt = datetime.now(timezone.utc).isoformat()
-        action = ApprovalAction(
-            prospect_id=domain,
-            action="rejected",
-            actor_chat_id=chat_id,
-            actor_user_id=user_id,
-            timestamp_pkt=now_pkt,
-            draft_hash=d_hash,
-            previous_status=p.status,
-            new_status="rejected",
-            reason=reason,
-            update_id=update_id,
-        )
+        return None
 
-        state = self.load_state()
-        state.setdefault("approvals", {})[domain] = action.to_dict()
-        state["last_update_id"] = max(state.get("last_update_id", 0), update_id)
-        self.save_state(state)
-        self.append_audit_event(action)
-
-        return f"❌ Rejected {domain}: {reason}"
-
-    def _cmd_defer(
-        self,
-        target: str,
-        date_str: str,
-        chat_id: str,
-        user_id: Optional[str],
-        update_id: int,
-    ) -> str:
-        p = self.repository.resolve(target)
-        if not p:
-            return f"Prospect '{target}' not found."
-        domain = p.prospect_domain
-        d_hash = p.draft_hash or calculate_draft_hash(p)
-
-        now_pkt = datetime.now(timezone.utc).isoformat()
-        action = ApprovalAction(
-            prospect_id=domain,
-            action="deferred",
-            actor_chat_id=chat_id,
-            actor_user_id=user_id,
-            timestamp_pkt=now_pkt,
-            draft_hash=d_hash,
-            previous_status=p.status,
-            new_status=f"deferred_until_{date_str}",
-            reason=f"Deferred until {date_str}",
-            update_id=update_id,
-        )
-
-        state = self.load_state()
-        state.setdefault("approvals", {})[domain] = action.to_dict()
-        state["last_update_id"] = max(state.get("last_update_id", 0), update_id)
-        self.save_state(state)
-        self.append_audit_event(action)
-
-        return f"⏳ Deferred {domain} until {date_str}."
-
-    def _cmd_report(self) -> str:
-        prospects = self.repository.all_prospects()
-        return (
-            "📊 Backlink Agent Status Report\n"
-            f"• Mode: REPORT_ONLY (Kill Switch: ACTIVE)\n"
-            f"• Tracked Prospects: {len(prospects)}\n"
-            "• Confirmed Placements: 4\n"
-            "• Manual Submissions: Allowed only via owner review\n"
-            "• Auto Outreach: DISABLED"
-        )
