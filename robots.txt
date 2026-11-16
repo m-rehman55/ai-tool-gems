@@ -6,6 +6,10 @@ Disallow: /.env.example
 Disallow: /.seo-cache/
 Disallow: /reports/
 Disallow: /scratch/
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /cart
+Disallow: /compare
 Allow: /
 
 User-agent: bingbot
@@ -18,6 +22,10 @@ Disallow: /.env.example
 Disallow: /.seo-cache/
 Disallow: /reports/
 Disallow: /scratch/
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /cart
+Disallow: /compare
 Allow: /
 
 User-agent: GPTBot
@@ -34,6 +42,10 @@ Disallow: /.env.example
 Disallow: /.seo-cache/
 Disallow: /reports/
 Disallow: /scratch/
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /cart
+Disallow: /compare
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
 
