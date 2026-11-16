@@ -70,18 +70,16 @@ class TestCatalogueConsistency(unittest.TestCase):
         self.assertNotIn("all 20", m_tw_desc.group(1).lower())
 
     def test_tools_directory_metadata_distinguishes_assisted_vs_directory_models(self):
-        """Ensure directory-wide metadata does not promise WhatsApp delivery for directory-only profiles."""
+        """Ensure directory-wide metadata properly reflects 65 verified commercial tools."""
         with open(self.tools_index_path, "r", encoding="utf-8") as f:
             html = f.read()
 
-        # Meta description must distinguish 40 assisted vs 25 directory
         m_desc = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', html)
         self.assertTrue(m_desc, "tools/index.html meta description missing")
         desc = m_desc.group(1)
         self.assertIn("65", desc)
-        self.assertIn("40", desc)
-        self.assertIn("25", desc)
-        self.assertNotIn("Fast WhatsApp delivery via EasyPaisa", desc)
+        self.assertIn("verified", desc.lower())
+        self.assertIn("pkr", desc.lower())
 
         # Open Graph & Twitter descriptions must match
         m_og_desc = re.search(r'<meta\s+property=["\']og:description["\']\s+content=["\'](.*?)["\']', html)
@@ -94,10 +92,9 @@ class TestCatalogueConsistency(unittest.TestCase):
 
         # Check lead paragraph and quick summary in page body
         self.assertIn("65 verified AI tools", html)
-        self.assertIn("25 directory reference", html)
 
-        # Ensure all 40 legacy tools retain assisted WhatsApp order flow
-        for slug in self.legacy_40_slugs:
+        # Ensure all 65 tools retain assisted WhatsApp order flow
+        for slug in self.legacy_40_slugs + self.wave1_slugs + self.wave2_slugs:
             p = os.path.join(self.tools_dir, slug, "index.html")
             with open(p, "r", encoding="utf-8") as tool_f:
                 tool_html = tool_f.read()
