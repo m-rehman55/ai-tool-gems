@@ -48,6 +48,9 @@ reports/
 # Private user docs / tax certs
 *.pdf
 nayapay_tax_cert.jpg
+
+# Generated social deal video media
+assets/social-deals/*.mp4
 *.jpg
 data/orders/
 data/archive/
