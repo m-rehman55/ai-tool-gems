@@ -28,6 +28,8 @@ on:
       - "category/**"
       - "sitemap.xml"
       - "data/**"
+      - "*.csv"
+      - "AI_TOOL_GEMS_COMPETITOR_INTELLIGENCE_2026-11-15/**"
   pull_request:
     branches:
       - main
@@ -55,6 +57,8 @@ on:
       - "category/**"
       - "sitemap.xml"
       - "data/**"
+      - "*.csv"
+      - "AI_TOOL_GEMS_COMPETITOR_INTELLIGENCE_2026-11-15/**"
   workflow_dispatch:
 
 permissions:
