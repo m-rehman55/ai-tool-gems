@@ -29,6 +29,7 @@ on:
       - "sitemap.xml"
       - "data/**"
       - "*.csv"
+      - ".gitignore"
       - "AI_TOOL_GEMS_COMPETITOR_INTELLIGENCE_2026-11-15/**"
   pull_request:
     branches:
@@ -58,6 +59,7 @@ on:
       - "sitemap.xml"
       - "data/**"
       - "*.csv"
+      - ".gitignore"
       - "AI_TOOL_GEMS_COMPETITOR_INTELLIGENCE_2026-11-15/**"
   workflow_dispatch:
 
