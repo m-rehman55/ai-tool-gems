@@ -71,5 +71,6 @@ data/merchant/
 seo-agent/data/outbox/
 seo-agent/data/*.db
 seo-agent/data/*.db-*
+seo-agent/data/*.jsonl
 
 
