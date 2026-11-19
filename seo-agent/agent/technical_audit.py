@@ -105,13 +105,13 @@ class TechnicalAuditor:
                     file_path=page.file_path,
                 )
             )
-        elif title_len < 20 or title_len > 70:
+        elif title_len < 20 or title_len > 75:
             issues.append(
                 AuditIssue(
                     severity="P2_MEDIUM",
                     check_type="TITLE",
                     url=page.url,
-                    message=f"Title length ({title_len} chars) outside optimal 20–70 bounds: '{page.title}'",
+                    message=f"Title length ({title_len} chars) outside optimal 20–75 bounds: '{page.title}'",
                     file_path=page.file_path,
                 )
             )
