@@ -13,17 +13,35 @@
     "target_audience": "Pakistani digital artists, graphic designers, marketing agencies, and creative freelancers",
     "primary_tool": "leonardo",
     "related_tools": [
-      {"slug": "leonardo", "name": "Leonardo AI Essential"},
-      {"slug": "canva", "name": "Canva Pro Edu"},
-      {"slug": "adobe", "name": "Adobe Creative Cloud"},
-      {"slug": "figma", "name": "Figma Pro"}
+      {
+        "slug": "leonardo",
+        "name": "Leonardo AI Essential"
+      },
+      {
+        "slug": "canva",
+        "name": "Canva Pro Edu"
+      },
+      {
+        "slug": "adobe",
+        "name": "Adobe Creative Cloud"
+      },
+      {
+        "slug": "figma",
+        "name": "Figma Pro"
+      }
     ],
     "official_sources": [
       "https://leonardo.ai/pricing",
       "https://www.midjourney.com",
       "https://www.adobe.com/sensei/generative-ai/firefly.html"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 1
   },
@@ -41,17 +59,35 @@
     "target_audience": "Pakistani YouTubers, TikTok content creators, video editors, and digital agencies",
     "primary_tool": "capcut",
     "related_tools": [
-      {"slug": "capcut", "name": "CapCut Pro"},
-      {"slug": "veo", "name": "Veo 3 Ultra"},
-      {"slug": "elevenlabs", "name": "ElevenLabs Voice AI"},
-      {"slug": "canva", "name": "Canva Pro Edu"}
+      {
+        "slug": "capcut",
+        "name": "CapCut Pro"
+      },
+      {
+        "slug": "veo",
+        "name": "Veo 3 Ultra"
+      },
+      {
+        "slug": "elevenlabs",
+        "name": "ElevenLabs Voice AI"
+      },
+      {
+        "slug": "canva",
+        "name": "Canva Pro Edu"
+      }
     ],
     "official_sources": [
       "https://www.capcut.com/pro",
       "https://deepmind.google/technologies/veo/",
       "https://elevenlabs.io/"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 2
   },
@@ -69,15 +105,30 @@
     "target_audience": "Pakistani voiceover artists, faceless YouTube channel creators, and digital podcasters",
     "primary_tool": "elevenlabs",
     "related_tools": [
-      {"slug": "elevenlabs", "name": "ElevenLabs Voice AI"},
-      {"slug": "capcut", "name": "CapCut Pro"},
-      {"slug": "veo", "name": "Veo 3 Ultra"}
+      {
+        "slug": "elevenlabs",
+        "name": "ElevenLabs Voice AI"
+      },
+      {
+        "slug": "capcut",
+        "name": "CapCut Pro"
+      },
+      {
+        "slug": "veo",
+        "name": "Veo 3 Ultra"
+      }
     ],
     "official_sources": [
       "https://elevenlabs.io/",
       "https://elevenlabs.io/text-to-speech"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 3
   },
@@ -95,16 +146,34 @@
     "target_audience": "Pakistani fullstack developers, freelance agency builders, and startup founders",
     "primary_tool": "lovable",
     "related_tools": [
-      {"slug": "lovable", "name": "Lovable Pro"},
-      {"slug": "replit", "name": "Replit Core"},
-      {"slug": "n8n", "name": "n8n Starter"},
-      {"slug": "windows", "name": "Windows 11 Pro"}
+      {
+        "slug": "lovable",
+        "name": "Lovable Pro"
+      },
+      {
+        "slug": "replit",
+        "name": "Replit Core"
+      },
+      {
+        "slug": "n8n",
+        "name": "n8n Starter"
+      },
+      {
+        "slug": "windows",
+        "name": "Windows 11 Pro"
+      }
     ],
     "official_sources": [
       "https://lovable.dev/pricing",
       "https://replit.com/pricing"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 4
   },
@@ -122,15 +191,30 @@
     "target_audience": "Pakistani digital marketing agencies, e-commerce stores, and automation engineers",
     "primary_tool": "n8n",
     "related_tools": [
-      {"slug": "n8n", "name": "n8n Starter"},
-      {"slug": "chatgpt", "name": "ChatGPT Plus"},
-      {"slug": "notion", "name": "Notion Business"}
+      {
+        "slug": "n8n",
+        "name": "n8n Starter"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "notion",
+        "name": "Notion Business"
+      }
     ],
     "official_sources": [
       "https://n8n.io/pricing",
       "https://docs.n8n.io/"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 5
   },
@@ -148,16 +232,34 @@
     "target_audience": "Pakistani researchers, university students, content writers, and digital analysts",
     "primary_tool": "perplexity",
     "related_tools": [
-      {"slug": "perplexity", "name": "Perplexity Pro"},
-      {"slug": "chatgpt", "name": "ChatGPT Plus"},
-      {"slug": "claude", "name": "Claude 3.5 Sonnet"},
-      {"slug": "gemini", "name": "Google Gemini Advanced"}
+      {
+        "slug": "perplexity",
+        "name": "Perplexity Pro"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "claude",
+        "name": "Claude 3.5 Sonnet"
+      },
+      {
+        "slug": "gemini",
+        "name": "Google Gemini Advanced"
+      }
     ],
     "official_sources": [
       "https://www.perplexity.ai/pro",
       "https://www.perplexity.ai/hub/faq"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 6
   },
@@ -175,16 +277,34 @@
     "target_audience": "Pakistani software developers, computer science students, and AI researchers",
     "primary_tool": "deepseek",
     "related_tools": [
-      {"slug": "deepseek", "name": "DeepSeek AI"},
-      {"slug": "cursor", "name": "Cursor AI"},
-      {"slug": "chatgpt", "name": "ChatGPT Plus"},
-      {"slug": "claude", "name": "Claude 3.5 Sonnet"}
+      {
+        "slug": "deepseek",
+        "name": "DeepSeek AI"
+      },
+      {
+        "slug": "cursor",
+        "name": "Cursor AI"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "claude",
+        "name": "Claude 3.5 Sonnet"
+      }
     ],
     "official_sources": [
       "https://www.deepseek.com/",
       "https://api-docs.deepseek.com/"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 7
   },
@@ -202,16 +322,34 @@
     "target_audience": "Pakistani digital marketers, YouTube creators, corporate trainers, and e-commerce brands",
     "primary_tool": "heygen",
     "related_tools": [
-      {"slug": "heygen", "name": "HeyGen AI Video"},
-      {"slug": "capcut", "name": "CapCut Pro"},
-      {"slug": "elevenlabs", "name": "ElevenLabs Voice AI"},
-      {"slug": "veo", "name": "Veo 3 Ultra"}
+      {
+        "slug": "heygen",
+        "name": "HeyGen AI Video"
+      },
+      {
+        "slug": "capcut",
+        "name": "CapCut Pro"
+      },
+      {
+        "slug": "elevenlabs",
+        "name": "ElevenLabs Voice AI"
+      },
+      {
+        "slug": "veo",
+        "name": "Veo 3 Ultra"
+      }
     ],
     "official_sources": [
       "https://www.heygen.com/pricing",
       "https://www.heygen.com/features"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 8
   },
@@ -229,16 +367,34 @@
     "target_audience": "Pakistani filmmakers, commercial video editors, 3D artists, and creative agencies",
     "primary_tool": "runway",
     "related_tools": [
-      {"slug": "runway", "name": "Runway Gen-3"},
-      {"slug": "veo", "name": "Veo 3 Ultra"},
-      {"slug": "capcut", "name": "CapCut Pro"},
-      {"slug": "leonardo", "name": "Leonardo AI Essential"}
+      {
+        "slug": "runway",
+        "name": "Runway Gen-3"
+      },
+      {
+        "slug": "veo",
+        "name": "Veo 3 Ultra"
+      },
+      {
+        "slug": "capcut",
+        "name": "CapCut Pro"
+      },
+      {
+        "slug": "leonardo",
+        "name": "Leonardo AI Essential"
+      }
     ],
     "official_sources": [
       "https://runwayml.com/pricing",
       "https://runwayml.com/research/gen-3-alpha"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 9
   },
@@ -256,16 +412,34 @@
     "target_audience": "Pakistani university students, academic researchers, freelance content writers, and copywriters",
     "primary_tool": "grammarly",
     "related_tools": [
-      {"slug": "grammarly", "name": "Grammarly Premium"},
-      {"slug": "quillbot", "name": "QuillBot Premium"},
-      {"slug": "chatgpt", "name": "ChatGPT Plus"},
-      {"slug": "notion", "name": "Notion Business"}
+      {
+        "slug": "grammarly",
+        "name": "Grammarly Premium"
+      },
+      {
+        "slug": "quillbot",
+        "name": "QuillBot Premium"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "notion",
+        "name": "Notion Business"
+      }
     ],
     "official_sources": [
       "https://www.grammarly.com/plans",
       "https://quillbot.com/upgrade"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 10
   },
@@ -283,16 +457,34 @@
     "target_audience": "Pakistani SEO specialists, digital marketing agencies, affiliate marketers, and webmasters",
     "primary_tool": "semrush",
     "related_tools": [
-      {"slug": "semrush", "name": "Semrush Pro"},
-      {"slug": "notion", "name": "Notion Business"},
-      {"slug": "chatgpt", "name": "ChatGPT Plus"},
-      {"slug": "allinone", "name": "All-in-One Mega Suite"}
+      {
+        "slug": "semrush",
+        "name": "Semrush Pro"
+      },
+      {
+        "slug": "notion",
+        "name": "Notion Business"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "allinone",
+        "name": "All-in-One Mega Suite"
+      }
     ],
     "official_sources": [
       "https://www.semrush.com/prices/",
       "https://www.semrush.com/features/"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 11
   },
@@ -310,16 +502,34 @@
     "target_audience": "Pakistani tech enthusiasts, journalists, social media managers, and crypto researchers",
     "primary_tool": "grok",
     "related_tools": [
-      {"slug": "grok", "name": "Grok AI"},
-      {"slug": "chatgpt", "name": "ChatGPT Plus"},
-      {"slug": "claude", "name": "Claude 3.5 Sonnet"},
-      {"slug": "midjourney", "name": "Midjourney AI"}
+      {
+        "slug": "grok",
+        "name": "Grok AI"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "claude",
+        "name": "Claude 3.5 Sonnet"
+      },
+      {
+        "slug": "midjourney",
+        "name": "Midjourney AI"
+      }
     ],
     "official_sources": [
       "https://x.ai/",
       "https://help.twitter.com/en/using-x/x-premium"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 12
   },
@@ -337,16 +547,34 @@
     "target_audience": "Pakistani startup founders, business students, corporate managers, and agency consultants",
     "primary_tool": "gamma",
     "related_tools": [
-      {"slug": "gamma", "name": "Gamma App"},
-      {"slug": "canva", "name": "Canva Pro Edu"},
-      {"slug": "chatgpt", "name": "ChatGPT Plus"},
-      {"slug": "notion", "name": "Notion Business"}
+      {
+        "slug": "gamma",
+        "name": "Gamma App"
+      },
+      {
+        "slug": "canva",
+        "name": "Canva Pro Edu"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "notion",
+        "name": "Notion Business"
+      }
     ],
     "official_sources": [
       "https://gamma.app/pricing",
       "https://gamma.app/docs"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 13
   },
@@ -364,16 +592,34 @@
     "target_audience": "Pakistani remote workers, Upwork freelancers, crypto traders, and privacy-conscious users",
     "primary_tool": "nordvpn",
     "related_tools": [
-      {"slug": "nordvpn", "name": "NordVPN"},
-      {"slug": "surfshark", "name": "Surfshark VPN"},
-      {"slug": "windows", "name": "Windows 11 Pro"},
-      {"slug": "allinone", "name": "All-in-One Mega Suite"}
+      {
+        "slug": "nordvpn",
+        "name": "NordVPN"
+      },
+      {
+        "slug": "surfshark",
+        "name": "Surfshark VPN"
+      },
+      {
+        "slug": "windows",
+        "name": "Windows 11 Pro"
+      },
+      {
+        "slug": "allinone",
+        "name": "All-in-One Mega Suite"
+      }
     ],
     "official_sources": [
       "https://nordvpn.com/pricing/",
       "https://surfshark.com/pricing"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 14
   },
@@ -391,17 +637,458 @@
     "target_audience": "Pakistani social media managers, graphic designers, small business owners, and teachers",
     "primary_tool": "canva",
     "related_tools": [
-      {"slug": "canva", "name": "Canva Pro Edu"},
-      {"slug": "figma", "name": "Figma Pro"},
-      {"slug": "adobe", "name": "Adobe Creative Cloud"},
-      {"slug": "capcut", "name": "CapCut Pro"}
+      {
+        "slug": "canva",
+        "name": "Canva Pro Edu"
+      },
+      {
+        "slug": "figma",
+        "name": "Figma Pro"
+      },
+      {
+        "slug": "adobe",
+        "name": "Adobe Creative Cloud"
+      },
+      {
+        "slug": "capcut",
+        "name": "CapCut Pro"
+      }
     ],
     "official_sources": [
       "https://www.canva.com/pricing/",
       "https://www.canva.com/pro/"
     ],
-    "pakistani_payment_support": ["EasyPaisa", "JazzCash", "SadaPay", "NayaPay", "Bank IBFT"],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
     "approved_for_publishing": true,
     "priority": 15
+  },
+  {
+    "slug": "ai-tools-bundle-subscription-pakistan",
+    "title": "AI Tools Bundle in Pakistan: Shared vs Private Plans (2026)",
+    "meta_description": "Complete guide to AI tools bundle subscriptions in Pakistan. Compare shared vs private access for ChatGPT, Claude, Midjourney &amp; Canva with EasyPaisa payment.",
+    "primary_keyword": "AI tools bundle subscription Pakistan",
+    "secondary_keywords": [
+      "AI tool group buy Pakistan",
+      "cheap AI tools bundle PKR",
+      "ChatGPT and Claude bundle Pakistan",
+      "buy AI subscriptions EasyPaisa"
+    ],
+    "target_audience": "Pakistani freelancers, digital marketers, agency owners, and university students",
+    "primary_tool": "chatgpt",
+    "related_tools": [
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "claude",
+        "name": "Claude Pro"
+      },
+      {
+        "slug": "midjourney",
+        "name": "Midjourney Standard"
+      },
+      {
+        "slug": "canva",
+        "name": "Canva Pro"
+      }
+    ],
+    "official_sources": [
+      "https://openai.com/chatgpt/pricing",
+      "https://www.anthropic.com/pricing",
+      "https://www.midjourney.com"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 1
+  },
+  {
+    "slug": "claude-pro-sadapay-nayapay-pakistan",
+    "title": "Claude Pro via SadaPay in Pakistan: Buying Guide (2026)",
+    "meta_description": "How to buy Claude Pro in Pakistan using SadaPay, NayaPay, EasyPaisa or JazzCash. Compare official USD pricing with local tax-free PKR private activations.",
+    "primary_keyword": "Claude Pro SadaPay Pakistan",
+    "secondary_keywords": [
+      "Claude 20 dollar plan in PKR",
+      "how to buy Claude Pro without credit card Pakistan",
+      "Claude Pro international card decline fix",
+      "Anthropic Claude Pakistan pricing"
+    ],
+    "target_audience": "Pakistani software engineers, content creators, researchers, and AI developers",
+    "primary_tool": "claude",
+    "related_tools": [
+      {
+        "slug": "claude",
+        "name": "Claude Pro"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "cursor",
+        "name": "Cursor AI"
+      }
+    ],
+    "official_sources": [
+      "https://www.anthropic.com/claude",
+      "https://support.anthropic.com"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 2
+  },
+  {
+    "slug": "cursor-ai-pricing-pakistan-guide",
+    "title": "Cursor AI Pricing in Pakistan: Plans &amp; Pro Guide (2026)",
+    "meta_description": "Complete Cursor AI pricing guide in Pakistan. Compare Pro vs Business tiers in PKR, bypass card payment blocks, and activate via EasyPaisa or JazzCash.",
+    "primary_keyword": "Cursor AI pricing Pakistan",
+    "secondary_keywords": [
+      "Cursor AI Pro price in PKR",
+      "Cursor 1600 rupees plan Pakistan",
+      "buy Cursor AI with SadaPay",
+      "best AI coding tools Pakistan"
+    ],
+    "target_audience": "Pakistani full-stack developers, software engineering students, and agency coders",
+    "primary_tool": "cursor",
+    "related_tools": [
+      {
+        "slug": "cursor",
+        "name": "Cursor AI Pro"
+      },
+      {
+        "slug": "copilot",
+        "name": "GitHub Copilot"
+      },
+      {
+        "slug": "windsurf",
+        "name": "Windsurf Pro"
+      },
+      {
+        "slug": "v0",
+        "name": "v0 Pro"
+      }
+    ],
+    "official_sources": [
+      "https://www.cursor.com/pricing",
+      "https://docs.cursor.com"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 3
+  },
+  {
+    "slug": "gemini-pro-yearly-plan-pakistan",
+    "title": "Google Gemini Pro Yearly Cost in Pakistan: PKR Guide (2026)",
+    "meta_description": "Review Google Gemini Pro yearly and monthly subscription cost in Pakistan. Get 18-month invitation access for Rs. 800 with EasyPaisa, JazzCash, or SadaPay.",
+    "primary_keyword": "Gemini Pro yearly cost PKR",
+    "secondary_keywords": [
+      "Gemini Advanced price in Pakistan",
+      "Google One AI Premium PKR",
+      "Gemini Pro 18 month access Pakistan",
+      "cheap Gemini Pro subscription"
+    ],
+    "target_audience": "Pakistani students, academic researchers, Google Workspace users, and professionals",
+    "primary_tool": "gemini",
+    "related_tools": [
+      {
+        "slug": "gemini",
+        "name": "Gemini Pro"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "notebooklm",
+        "name": "Google NotebookLM"
+      }
+    ],
+    "official_sources": [
+      "https://gemini.google.com/advanced",
+      "https://one.google.com"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 4
+  },
+  {
+    "slug": "perplexity-pro-vs-chatgpt-plus-pakistan",
+    "title": "Perplexity Pro vs ChatGPT Plus in Pakistan: Guide (2026)",
+    "meta_description": "Perplexity Pro vs ChatGPT Plus compared for Pakistani users. Compare real-time web research, Pro Search, reasoning models, and PKR subscription pricing.",
+    "primary_keyword": "Perplexity Pro vs ChatGPT Plus Pakistan",
+    "secondary_keywords": [
+      "Perplexity Pro price in Pakistan",
+      "best AI search engine PKR",
+      "Perplexity Pro EasyPaisa",
+      "ChatGPT Plus or Perplexity Pro"
+    ],
+    "target_audience": "Pakistani students, researchers, journalists, and market analysts",
+    "primary_tool": "perplexity",
+    "related_tools": [
+      {
+        "slug": "perplexity",
+        "name": "Perplexity Pro"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "genspark",
+        "name": "Genspark AI"
+      }
+    ],
+    "official_sources": [
+      "https://www.perplexity.ai/pro",
+      "https://openai.com/chatgpt"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 5
+  },
+  {
+    "slug": "suno-ai-pakistan-guide",
+    "title": "Suno AI in Pakistan: Pricing, Music &amp; Plans (2026)",
+    "meta_description": "Complete guide to Suno AI music generator in Pakistan. Review Pro and Premier credits in PKR, commercial rights, and instant payment via EasyPaisa.",
+    "primary_keyword": "Suno AI Pakistan",
+    "secondary_keywords": [
+      "Suno AI subscription price Pakistan",
+      "AI song maker Urdu English PKR",
+      "buy Suno credits EasyPaisa",
+      "Suno Pro commercial license"
+    ],
+    "target_audience": "Pakistani music producers, YouTubers, jingle creators, and digital marketers",
+    "primary_tool": "suno",
+    "related_tools": [
+      {
+        "slug": "suno",
+        "name": "Suno AI Pro"
+      },
+      {
+        "slug": "elevenlabs",
+        "name": "ElevenLabs Voice AI"
+      },
+      {
+        "slug": "capcut",
+        "name": "CapCut Pro"
+      }
+    ],
+    "official_sources": [
+      "https://suno.com/pricing",
+      "https://suno.com"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 6
+  },
+  {
+    "slug": "bolt-new-vs-cursor-ai-pakistan",
+    "title": "Bolt.new vs Cursor AI in Pakistan: Developer Guide (2026)",
+    "meta_description": "Compare Bolt.new vs Cursor AI for Pakistani developers. Analyze in-browser fullstack prototyping vs VS Code AI engineering with flat PKR rates.",
+    "primary_keyword": "Bolt new vs Cursor Pakistan",
+    "secondary_keywords": [
+      "Bolt new Pro subscription Pakistan",
+      "Cursor AI vs Bolt new",
+      "AI web app builders Pakistan",
+      "buy Bolt new token credits PKR"
+    ],
+    "target_audience": "Pakistani web developers, indie hackers, and SaaS founders",
+    "primary_tool": "bolt-new",
+    "related_tools": [
+      {
+        "slug": "bolt-new",
+        "name": "Bolt.new Pro"
+      },
+      {
+        "slug": "cursor",
+        "name": "Cursor AI Pro"
+      },
+      {
+        "slug": "lovable",
+        "name": "Lovable Pro"
+      },
+      {
+        "slug": "v0",
+        "name": "v0 Pro"
+      }
+    ],
+    "official_sources": [
+      "https://bolt.new",
+      "https://www.cursor.com"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 7
+  },
+  {
+    "slug": "grok-vs-chatgpt-pakistan",
+    "title": "Grok 2 vs ChatGPT in Pakistan: Features &amp; Price (2026)",
+    "meta_description": "Compare xAI Grok 2 vs OpenAI ChatGPT Plus in Pakistan. Evaluate uncensored reasoning, real-time X search, and flat PKR pricing with local payment.",
+    "primary_keyword": "Grok vs ChatGPT Pakistan",
+    "secondary_keywords": [
+      "Grok AI price in Pakistan",
+      "xAI Premium subscription PKR",
+      "Grok vs ChatGPT 4o",
+      "buy Grok subscription EasyPaisa"
+    ],
+    "target_audience": "Pakistani social media managers, journalists, tech enthusiasts, and researchers",
+    "primary_tool": "grok",
+    "related_tools": [
+      {
+        "slug": "grok",
+        "name": "Grok AI Super"
+      },
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "claude",
+        "name": "Claude Pro"
+      }
+    ],
+    "official_sources": [
+      "https://x.ai",
+      "https://openai.com"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 8
+  },
+  {
+    "slug": "midjourney-v6-pakistan-pricing",
+    "title": "Midjourney v6 Price in Pakistan: Basic vs Standard (2026)",
+    "meta_description": "Complete guide to Midjourney v6 pricing in Pakistan. Compare Basic, Standard, and Mega plans in PKR with EasyPaisa, JazzCash, and SadaPay checkout.",
+    "primary_keyword": "Midjourney v6 price in Pakistan",
+    "secondary_keywords": [
+      "buy Midjourney subscription Pakistan",
+      "Midjourney PKR payment EasyPaisa",
+      "Midjourney fast hours credits",
+      "best AI image generator Pakistan"
+    ],
+    "target_audience": "Pakistani graphic designers, creative agency art directors, and freelancers",
+    "primary_tool": "midjourney",
+    "related_tools": [
+      {
+        "slug": "midjourney",
+        "name": "Midjourney Standard"
+      },
+      {
+        "slug": "leonardo",
+        "name": "Leonardo AI"
+      },
+      {
+        "slug": "canva",
+        "name": "Canva Pro"
+      }
+    ],
+    "official_sources": [
+      "https://www.midjourney.com",
+      "https://docs.midjourney.com/docs/plans"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 9
+  },
+  {
+    "slug": "chatgpt-pro-vs-plus-pakistan",
+    "title": "ChatGPT Pro ($200) vs Plus in Pakistan: Review (2026)",
+    "meta_description": "Detailed comparison between $200 ChatGPT Pro and Rs. 2,300 ChatGPT Plus in Pakistan. Evaluate o1 Pro mode compute, limits, and real value in PKR.",
+    "primary_keyword": "ChatGPT Pro vs Plus Pakistan",
+    "secondary_keywords": [
+      "ChatGPT Pro 200 dollar price in PKR",
+      "is ChatGPT Pro available in Pakistan",
+      "ChatGPT o1 pro mode access",
+      "ChatGPT Plus price Pakistan"
+    ],
+    "target_audience": "Pakistani senior researchers, data scientists, enterprise developers, and executives",
+    "primary_tool": "chatgpt",
+    "related_tools": [
+      {
+        "slug": "chatgpt",
+        "name": "ChatGPT Plus"
+      },
+      {
+        "slug": "claude",
+        "name": "Claude Pro"
+      },
+      {
+        "slug": "gemini",
+        "name": "Gemini Pro"
+      }
+    ],
+    "official_sources": [
+      "https://openai.com/chatgpt/pricing",
+      "https://openai.com/blog/introducing-chatgpt-pro"
+    ],
+    "pakistani_payment_support": [
+      "EasyPaisa",
+      "JazzCash",
+      "SadaPay",
+      "NayaPay",
+      "Bank IBFT"
+    ],
+    "approved_for_publishing": true,
+    "priority": 10
   }
 ]

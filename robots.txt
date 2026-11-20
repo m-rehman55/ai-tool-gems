@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /jp/
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
@@ -15,6 +16,7 @@ Allow: /
 User-agent: bingbot
 User-agent: msnbot
 User-agent: BingPreview
+Disallow: /jp/
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
@@ -35,6 +37,7 @@ User-agent: ClaudeBot
 User-agent: PerplexityBot
 User-agent: Google-Extended
 Allow: /
+Disallow: /jp/
 Disallow: /admin.html
 Disallow: /marketing_agent/
 Disallow: /.env
