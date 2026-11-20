@@ -218,7 +218,7 @@ def load_queue_candidate() -> tuple[dict | None, str]:
                 tname = re.sub(r'\s+(Private|Shared|Edu|Personal|Access|VIP)$', '', raw_name, flags=re.IGNORECASE).strip()
                 dyn_item = {
                     "slug": candidate_slug,
-                    "title": f"{tname} in Pakistan: Features, Pricing & Guide (2026)",
+                    "title": f"{tname} in Pakistan: Features, Pricing &amp; Guide (2026)",
                     "meta_description": f"Complete guide to {tname} in Pakistan. Review features, access types, and flat PKR pricing via EasyPaisa and JazzCash.",
                     "primary_keyword": f"{tname} Pakistan",
                     "secondary_keywords": [

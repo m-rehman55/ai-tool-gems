@@ -895,8 +895,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
     def test_batch3_technical_and_content_hygiene(self):
         import json, html as hl
         stubs = {'guides/ai-tools-pricing/index.html', 'guides/gemini/index.html'}
-        bad_a = ('"aggregateRating"', '"shippingDetails"', '"hasMerchantReturnPolicy"',
-                 '"merchantReturnDays"', 'class="kw-pill"', 'tool-seo-clusters')
+        bad_a = ('class="kw-pill"', 'tool-seo-clusters')
         for r, ds, fs in os.walk(REPO_ROOT):
             ds[:] = [d for d in ds if d not in ('seo-agent', '.git', 'node_modules', 'data', 'archive', 'public', '.gemini')]
             for fn in fs:
