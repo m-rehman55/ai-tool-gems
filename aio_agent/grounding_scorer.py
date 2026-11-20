@@ -113,6 +113,9 @@ class GroundingScorer:
         guides_dir = self.project_dir / "guides"
         if guides_dir.exists():
             for p in sorted(guides_dir.glob("*/index.html")):
+                content = p.read_text(encoding="utf-8")
+                if 'http-equiv="refresh"' in content or 'window.location.replace' in content:
+                    continue
                 guide_scores.append(self.score_page(p))
 
         all_scores = tool_scores + guide_scores
