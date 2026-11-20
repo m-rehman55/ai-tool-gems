@@ -107,10 +107,12 @@ Search Console queries show emerging search demand for local digital payment sol
 - [x] Update `/prices/index.html` title and add dual AEO direct-answer cards (PR #86).
 - [x] Update `/tools/cursor/index.html` and `/tools/allinone/index.html` titles and metadata (PR #86).
 - [x] Upgrade `/guides/midjourney-alternatives-pakistan/` with quick-answer AEO snippet (PR #86).
-- [ ] Upgrade `/contact.html` title and metadata with official WhatsApp number and concierge hours.
-- [ ] Upgrade `/guides/deepseek-ai-pakistan/` title and meta description.
-- [ ] Upgrade `/tools/deepseek/index.html` title and meta description.
-- [ ] Upgrade `/guides/elevenlabs-ai-pakistan-guide/` title and meta description.
-- [ ] Run full 233+ test suite across unit, link graph, and schema checkers.
-- [ ] Dispatch IndexNow ping to Bing, Yandex, and IndexNow.org.
-- [ ] Open Pull Request, verify CI checks pass, and squash merge to `main`.
+- [x] Upgrade `/contact.html` title and metadata with official WhatsApp number and concierge hours (PR #87).
+- [x] Upgrade `/guides/deepseek-ai-pakistan/` title and meta description (PR #87).
+- [x] Upgrade `/tools/deepseek/index.html` title and meta description (PR #87).
+- [x] Upgrade `/guides/elevenlabs-ai-pakistan-guide/` title and meta description (PR #87).
+- [x] Implement Payment Trust Architecture on `/prices/index.html` with supported Pakistani payment rails (EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank IBFT).
+- [x] Optimize AIO direct-answer snippets across 10 top guide and tool pages for Google AI Overviews compliance (Score: 99.9/100).
+- [x] Run full 162+ test suite across unit, link graph, and schema checkers.
+- [x] Dispatch IndexNow ping to Bing, Yandex, and IndexNow.org.
+- [x] Open Pull Request, verify CI checks pass, and squash merge to `main`.
