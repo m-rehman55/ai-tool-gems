@@ -22,6 +22,7 @@ From live telemetry extracted via Windsor.ai & ChatGPT across 28-day and 7-day w
 - **Root Cause Identified:** The site is receiving meaningful search visibility (ranking positions 3–9 for major keywords like `chatgpt plus price`, `deepseek price`, `prices`, `contact`), but search snippets lack direct PKR pricing clarity and high-CTR intent matching.
 
 ### B. High-Impression Zero-Click / Low-CTR Anomalies
+
 | Page URL | 28d Impressions | 7d Impressions | Clicks | Avg Position | Diagnostic Finding |
 |---|---|---|---|---|---|
 | `/contact.html` | 299 | 246 | 0 | 3.07 – 4.28 | Appears for contact/support queries on Page 1 but snippet lacked explicit WhatsApp number & direct order concierge cues. |
