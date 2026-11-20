@@ -25,6 +25,7 @@ from scripts.build_public_site import (
     APPROVED_PUBLIC_DIRS,
     APPROVED_ROOT_FILES,
     APPROVED_VERIFICATION_FILES,
+    APPROVED_PUBLIC_DATASETS,
     ALLOWED_EXTENSIONS_BY_DIR,
     UNIVERSAL_PROHIBITED_EXTENSIONS,
     UNIVERSAL_PROHIBITED_FILENAMES,
@@ -69,7 +70,7 @@ def scan_deployment_boundary(repo_root: Path = REPO_ROOT) -> Tuple[bool, List[st
         for file_path in dir_path.rglob("*"):
             if file_path.is_file():
                 rel_path = file_path.relative_to(repo_root).as_posix()
-                if file_path.name in UNIVERSAL_PROHIBITED_FILENAMES or file_path.suffix.lower() in UNIVERSAL_PROHIBITED_EXTENSIONS:
+                if (file_path.name in UNIVERSAL_PROHIBITED_FILENAMES or file_path.suffix.lower() in UNIVERSAL_PROHIBITED_EXTENSIONS) and rel_path not in APPROVED_PUBLIC_DATASETS:
                     violations.append(f"Prohibited file found in public directory {rel_path}")
                 elif file_path.suffix.lower() not in allowed_exts:
                     violations.append(f"Disallowed extension for directory {dir_name}: {rel_path} ({file_path.suffix})")

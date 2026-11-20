@@ -32,4 +32,4 @@ The free tier has quotas and the in-memory rate limiter resets when isolates res
 
 ## Browser smoke test
 
-When Playwright and Chromium are available, run the production UI smoke test from the repository root with `npx playwright test chatbot/ui_smoke.spec.mjs`. It covers open, minimize, restore, successful send, network-failure recovery, close/reopen, duplicate-widget protection, and mobile button reachability.
+When Playwright and Chromium are available, run the production UI smoke test from the repository root with `npx playwright test chatbot-worker/ui_smoke.spec.mjs`. It covers open, minimize, restore, successful send, network-failure recovery, close/reopen, duplicate-widget protection, and mobile button reachability.
