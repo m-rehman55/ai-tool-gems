@@ -1,0 +1,1068 @@
+{
+  "source": "LIVE_API",
+  "status_message": "Retrieved 326 live queries and 104 pages via Google Search Console OAuth API.",
+  "total_clicks": 32,
+  "total_impressions": 2325,
+  "average_ctr": 1.38,
+  "average_position": 16.4,
+  "date_range": "2026-10-21 to 2026-11-18",
+  "retrieved_at": "2026-11-20T14:30:35.879806+00:00",
+  "queries_count": 326,
+  "pages_count": 104,
+  "countries_count": 36,
+  "devices_count": 3,
+  "queries": [
+    {
+      "query": "ai tools seller in pakistan",
+      "clicks": 2,
+      "impressions": 2,
+      "ctr": 100.0,
+      "position": 45.5
+    },
+    {
+      "query": "\"active international\"",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 46.0
+    },
+    {
+      "query": "\"easypaisa\"",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 69.5
+    },
+    {
+      "query": "\"jazzcash\"",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 89.5
+    },
+    {
+      "query": "\"nayapay\"",
+      "clicks": 0,
+      "impressions": 9,
+      "ctr": 0.0,
+      "position": 62.67
+    },
+    {
+      "query": "\"nayapay\" * * *",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 76.0
+    },
+    {
+      "query": "\"quillbot\"",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 65.0
+    },
+    {
+      "query": "\"sadapay\"",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 62.31
+    },
+    {
+      "query": "10. netflix screen prices",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 91.0
+    },
+    {
+      "query": "3. youtube premium pakistan",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 81.5
+    },
+    {
+      "query": "adobe cloud cost",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 76.0
+    },
+    {
+      "query": "adobe creative cloud cost",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 79.0
+    },
+    {
+      "query": "adobe creative cloud price",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 49.5
+    },
+    {
+      "query": "adobe creative cloud price in pakistan",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 108.0
+    },
+    {
+      "query": "adobe creative cloud pricing",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 73.0
+    },
+    {
+      "query": "adobe illustrator price in pakistan",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 36.57
+    },
+    {
+      "query": "ai business automation pakistan",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 97.33
+    },
+    {
+      "query": "ai packages",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 11.0
+    },
+    {
+      "query": "ai tools buy",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 40.0
+    },
+    {
+      "query": "ai10029",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai10078",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai10145",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai10199",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 9.67
+    },
+    {
+      "query": "ai13618",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 10.17
+    },
+    {
+      "query": "ai14590",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 4.0
+    },
+    {
+      "query": "ai14598",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 8.5
+    },
+    {
+      "query": "ai16583",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 8.25
+    },
+    {
+      "query": "ai16588",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 4.0
+    },
+    {
+      "query": "ai24078",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 3.5
+    },
+    {
+      "query": "ai24369",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai24667",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "query": "ai32678",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 9.6
+    },
+    {
+      "query": "ai33390",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 5.67
+    },
+    {
+      "query": "ai33905",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 8.75
+    },
+    {
+      "query": "ai34050",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 6.0
+    },
+    {
+      "query": "ai35199",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai35452",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 9.5
+    },
+    {
+      "query": "ai35658",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 9.86
+    },
+    {
+      "query": "ai36199",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai36278",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai36526",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai36527",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 7.8
+    },
+    {
+      "query": "ai36551",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai36581",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 2.2
+    },
+    {
+      "query": "ai36583",
+      "clicks": 0,
+      "impressions": 22,
+      "ctr": 0.0,
+      "position": 8.86
+    },
+    {
+      "query": "ai36851",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai38416",
+      "clicks": 0,
+      "impressions": 12,
+      "ctr": 0.0,
+      "position": 9.33
+    },
+    {
+      "query": "ai38583",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai38718",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 8.5
+    },
+    {
+      "query": "ai39052",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 8.5
+    },
+    {
+      "query": "ai39636",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai39658",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 9.71
+    },
+    {
+      "query": "ai40775",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai43699",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai43878",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 7.5
+    },
+    {
+      "query": "ai44470",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 9.5
+    },
+    {
+      "query": "ai44472",
+      "clicks": 0,
+      "impressions": 23,
+      "ctr": 0.0,
+      "position": 7.04
+    },
+    {
+      "query": "ai44475",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 7.38
+    },
+    {
+      "query": "ai44478",
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0.0,
+      "position": 5.5
+    },
+    {
+      "query": "ai44498",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai44581",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 8.25
+    },
+    {
+      "query": "ai44583",
+      "clicks": 0,
+      "impressions": 20,
+      "ctr": 0.0,
+      "position": 6.05
+    },
+    {
+      "query": "ai44584",
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0.0,
+      "position": 8.71
+    },
+    {
+      "query": "ai44588",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 2.0
+    },
+    {
+      "query": "ai44599",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 8.8
+    },
+    {
+      "query": "ai44649",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "query": "ai44658",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai44669",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai44692",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 2.57
+    },
+    {
+      "query": "ai45208",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 6.67
+    },
+    {
+      "query": "ai45816",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 9.62
+    },
+    {
+      "query": "ai45818",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 4.0
+    },
+    {
+      "query": "ai45819",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 3.6
+    },
+    {
+      "query": "ai45838",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 5.4
+    },
+    {
+      "query": "ai45839",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 2.0
+    },
+    {
+      "query": "ai45984",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 4.75
+    },
+    {
+      "query": "ai45987",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 5.0
+    },
+    {
+      "query": "ai46583",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "query": "ai46584",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "query": "ai46588",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "query": "ai46692",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai46699",
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0.0,
+      "position": 7.82
+    },
+    {
+      "query": "ai47083",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai47187",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 2.0
+    },
+    {
+      "query": "ai47337",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 6.5
+    },
+    {
+      "query": "ai47839",
+      "clicks": 0,
+      "impressions": 10,
+      "ctr": 0.0,
+      "position": 3.6
+    },
+    {
+      "query": "ai48169",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 2.5
+    },
+    {
+      "query": "ai48984",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 5.5
+    },
+    {
+      "query": "ai48985",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "query": "ai49836",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 3.0
+    },
+    {
+      "query": "ai49839",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 3.46
+    },
+    {
+      "query": "ai49843",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 5.0
+    },
+    {
+      "query": "ai49844",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 5.0
+    },
+    {
+      "query": "ai49846",
+      "clicks": 0,
+      "impressions": 10,
+      "ctr": 0.0,
+      "position": 5.1
+    },
+    {
+      "query": "ai49857",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 5.5
+    },
+    {
+      "query": "ai49874",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 10.0
+    },
+    {
+      "query": "ai49877",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 8.0
+    },
+    {
+      "query": "ai49878",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 9.83
+    },
+    {
+      "query": "ai49879",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 6.75
+    },
+    {
+      "query": "ai49898",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 6.17
+    }
+  ],
+  "pages": [
+    {
+      "page": "https://aitoolgems.tech/",
+      "clicks": 8,
+      "impressions": 422,
+      "ctr": 1.9,
+      "position": 4.38
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/ai-tools-price-pakistan/",
+      "clicks": 3,
+      "impressions": 34,
+      "ctr": 8.82,
+      "position": 22.79
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/perplexity-ai-pakistan/",
+      "clicks": 3,
+      "impressions": 16,
+      "ctr": 18.75,
+      "position": 10.5
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/deepseek/",
+      "clicks": 2,
+      "impressions": 29,
+      "ctr": 6.9,
+      "position": 8.83
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/linkedin/",
+      "clicks": 2,
+      "impressions": 36,
+      "ctr": 5.56,
+      "position": 19.11
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/midjourney/",
+      "clicks": 2,
+      "impressions": 14,
+      "ctr": 14.29,
+      "position": 9.79
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/replit/",
+      "clicks": 2,
+      "impressions": 8,
+      "ctr": 25.0,
+      "position": 21.5
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/suno/",
+      "clicks": 2,
+      "impressions": 13,
+      "ctr": 15.38,
+      "position": 11.08
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/tradingview/",
+      "clicks": 2,
+      "impressions": 12,
+      "ctr": 16.67,
+      "position": 9.58
+    },
+    {
+      "page": "https://aitoolgems.tech/deals/",
+      "clicks": 1,
+      "impressions": 11,
+      "ctr": 9.09,
+      "position": 10.27
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/claude-ai-pakistan/",
+      "clicks": 1,
+      "impressions": 90,
+      "ctr": 1.11,
+      "position": 11.44
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/capcut/",
+      "clicks": 1,
+      "impressions": 16,
+      "ctr": 6.25,
+      "position": 51.94
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/gemini/",
+      "clicks": 1,
+      "impressions": 31,
+      "ctr": 3.23,
+      "position": 13.61
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/grok/",
+      "clicks": 1,
+      "impressions": 9,
+      "ctr": 11.11,
+      "position": 18.0
+    },
+    {
+      "page": "https://aitoolgems.tech/tools/runway/",
+      "clicks": 1,
+      "impressions": 8,
+      "ctr": 12.5,
+      "position": 18.62
+    },
+    {
+      "page": "https://aitoolgems.tech/about.html",
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0.0,
+      "position": 15.76
+    },
+    {
+      "page": "https://aitoolgems.tech/blog/",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr": 0.0,
+      "position": 20.62
+    },
+    {
+      "page": "https://aitoolgems.tech/category/ai-chatbots/",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 33.75
+    },
+    {
+      "page": "https://aitoolgems.tech/category/ai-coding/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 5.0
+    },
+    {
+      "page": "https://aitoolgems.tech/contact.html",
+      "clicks": 0,
+      "impressions": 277,
+      "ctr": 0.0,
+      "position": 4.53
+    },
+    {
+      "page": "https://aitoolgems.tech/correction-policy.html",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 21.5
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/",
+      "clicks": 0,
+      "impressions": 10,
+      "ctr": 0.0,
+      "position": 22.7
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/ai-subscriptions-pakistan/",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 7.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/ai-tools-pakistan/",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 5.33
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/ai-tools-pricing/",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 7.25
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/best-ai-video-generators-pakistan/",
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0.0,
+      "position": 28.75
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/businesses/",
+      "clicks": 0,
+      "impressions": 10,
+      "ctr": 0.0,
+      "position": 38.4
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/canva-ai-pakistan-guide/",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 25.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/canva-pro-pakistan-guide/",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 5.5
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/canva-vs-figma-pakistan/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 92.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/canva/",
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0.0,
+      "position": 34.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/capcut/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 59.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/chatgpt-ai-pakistan-guide/",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 13.8
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/chatgpt-alternatives/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 73.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/chatgpt-vs-claude-pakistan/",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 34.33
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/chatgpt-vs-gemini-pakistan/",
+      "clicks": 0,
+      "impressions": 18,
+      "ctr": 0.0,
+      "position": 22.67
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/creators/",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 22.67
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/cursor-ai-pakistan/",
+      "clicks": 0,
+      "impressions": 20,
+      "ctr": 0.0,
+      "position": 6.95
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/deepseek-ai-pakistan/",
+      "clicks": 0,
+      "impressions": 34,
+      "ctr": 0.0,
+      "position": 7.74
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/developers/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 56.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/elevenlabs-ai-pakistan-guide/",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr": 0.0,
+      "position": 6.38
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/elevenlabs-voice-ai-pakistan/",
+      "clicks": 0,
+      "impressions": 34,
+      "ctr": 0.0,
+      "position": 8.68
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/gamma-app-pakistan/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 77.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/gemini-ai-pakistan-guide/",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 6.77
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/gemini/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 58.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/grammarly-vs-quillbot-pakistan/",
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0.0,
+      "position": 64.14
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/grok-ai-pakistan/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 75.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/heygen-ai-video-pakistan/",
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0.0,
+      "position": 9.0
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/leonardo-ai-pakistan-guide/",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 23.8
+    },
+    {
+      "page": "https://aitoolgems.tech/guides/lovable-vs-replit-pakistan/",
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0.0,
+      "position": 41.0
+    }
+  ]
+}
