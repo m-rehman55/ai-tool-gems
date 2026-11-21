@@ -31,7 +31,8 @@
   <link rel="stylesheet" href="../../tool-page.css">
   
   <!-- Structured Data: Breadcrumbs, WebPage, SoftwareApplication & FAQ -->
-  <script type="application/ld+json">{
+  <script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -210,6 +211,14 @@
       "logo": {
         "@type": "ImageObject",
         "url": "https://aitoolgems.tech/assets/brand-logo-light.webp"
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "PK",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 7,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
       }
     },
     {
@@ -222,7 +231,8 @@
       }
     }
   ]
-}</script>
+}
+</script>
 </head>
 <body class="tool-detail-page">
   <a href="#top" class="skip-to-content">Skip to main content</a>

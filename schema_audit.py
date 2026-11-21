@@ -147,24 +147,23 @@ def audit_page(page_path: Path) -> dict:
                 result["score"] += 5
             else:
                 result["warnings"].append("Missing priceValidUntil in Product offer schema")
-            is_exempt_tool = any(rel_posix.endswith(f"/{x}/index.html") for x in ("gemini", "claude", "linkedin"))
-            if '"hasMerchantReturnPolicy"' in html or is_exempt_tool:
+            if '"hasMerchantReturnPolicy"' in html:
                 result["max_score"] += 5
                 result["score"] += 5
             else:
                 result["warnings"].append("Missing hasMerchantReturnPolicy in Product offer schema")
-            if '"shippingDetails"' in html or is_exempt_tool:
+            if '"shippingDetails"' in html:
                 result["max_score"] += 5
                 result["score"] += 5
             else:
                 result["warnings"].append("Missing shippingDetails in Product offer schema")
             # Validate Product Snippets review and aggregateRating if present
-            if '"review"' in html or is_exempt_tool:
+            if '"review"' in html:
                 result["max_score"] += 5
                 result["score"] += 5
             else:
                 result["warnings"].append("Missing review in Product schema")
-            if '"aggregateRating"' in html or is_exempt_tool:
+            if '"aggregateRating"' in html:
                 result["max_score"] += 5
                 result["score"] += 5
             else:
