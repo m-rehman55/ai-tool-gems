@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Enrich all tool pages with Merchant Listings and Product Snippets schemas:
+Enrich all tool pages and homepage with Merchant Listings and Product Snippets schemas:
 1. hasMerchantReturnPolicy (7-day replacement warranty in PK)
 2. shippingDetails (0 PKR digital delivery in PK)
 3. aggregateRating (4.9 / 5.0 with 128 reviews)
 4. review (Verified Pakistani Buyer)
+5. Storewide hasMerchantReturnPolicy on Organization
 """
 
 import glob
@@ -92,6 +93,10 @@ def enrich_product_node(node: dict):
                 if "shippingDetails" not in off:
                     off["shippingDetails"] = SHIPPING_DETAILS
 
+def enrich_organization_node(node: dict):
+    if "hasMerchantReturnPolicy" not in node:
+        node["hasMerchantReturnPolicy"] = RETURN_POLICY
+
 def process_file(file_path: Path) -> bool:
     html = file_path.read_text(encoding="utf-8")
     
@@ -112,36 +117,55 @@ def process_file(file_path: Path) -> bool:
         if data.get("@type") == "Product":
             enrich_product_node(data)
             modified = True
-        elif "@graph" in data and isinstance(data["@graph"], list):
+        elif data.get("@type") == "Organization" or (isinstance(data.get("@type"), list) and "Organization" in data.get("@type")):
+            enrich_organization_node(data)
+            modified = True
+            
+        if "@graph" in data and isinstance(data["@graph"], list):
             for node in data["@graph"]:
-                if isinstance(node, dict) and node.get("@type") == "Product":
-                    enrich_product_node(node)
-                    modified = True
+                if isinstance(node, dict):
+                    t = node.get("@type")
+                    if t == "Product":
+                        enrich_product_node(node)
+                        modified = True
+                    elif t == "Organization" or (isinstance(t, list) and "Organization" in t):
+                        enrich_organization_node(node)
+                        modified = True
     elif isinstance(data, list):
         for item in data:
-            if isinstance(item, dict) and item.get("@type") == "Product":
-                enrich_product_node(item)
-                modified = True
+            if isinstance(item, dict):
+                t = item.get("@type")
+                if t == "Product":
+                    enrich_product_node(item)
+                    modified = True
+                elif t == "Organization" or (isinstance(t, list) and "Organization" in t):
+                    enrich_organization_node(item)
+                    modified = True
                 
     if modified:
         new_json_str = json.dumps(data, indent=2, ensure_ascii=False)
-        # Format like original: { ... }
-        new_html = html[:m.start()] + prefix + new_json_str + suffix + html[m.end():]
+        new_html = html[:m.start()] + prefix + "\n" + new_json_str + "\n" + suffix + html[m.end():]
         file_path.write_text(new_html, encoding="utf-8")
         return True
     return False
 
 def main():
+    # Process all tool pages
     tool_files = sorted(BASE.glob("tools/*/index.html"))
     print(f"Found {len(tool_files)} tool pages.")
     updated_count = 0
-    exempt = {"gemini", "claude", "linkedin"}
     for tf in tool_files:
-        if tf.parent.name in exempt:
-            continue
         if process_file(tf):
             updated_count += 1
-    print(f"Successfully enriched {updated_count} tool pages with Merchant Listings and Product Snippets schema.")
+            
+    # Process index.html
+    index_file = BASE / "index.html"
+    if index_file.exists():
+        if process_file(index_file):
+            print("Successfully enriched index.html (homepage).")
+            updated_count += 1
+            
+    print(f"Successfully enriched {updated_count} files with Merchant Listings and Product Snippets schema.")
 
 if __name__ == "__main__":
     main()
