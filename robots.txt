@@ -1,15 +1,12 @@
 # Robots.txt — AI Tool Gems (aitoolgems.tech)
 # Aligned with Universal Web, Search & Visibility Master Book V2 (Ch. 5.3)
 # Explicitly allows Search, AEO, GEO, AIO, and LLMO crawlers on public routes.
+# Note: /jp/* (404), /privacy.html (noindex), /terms.html (noindex), /404.html (noindex),
+# and /?q=* (SearchAction) are intentionally NOT disallowed so crawlers can process
+# 404/noindex/canonical signals without triggering "Blocked by robots.txt".
 
 User-agent: *
 Allow: /
-Disallow: /jp/
-Disallow: /admin.html
-Disallow: /gsc_daily_checklist.html
-Disallow: /privacy.html
-Disallow: /terms.html
-Disallow: /404.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
@@ -19,22 +16,12 @@ Disallow: /scratch/
 Disallow: /audit-output/
 Disallow: /config/
 Disallow: /scripts/
-Disallow: /*?q=*
-Disallow: /*?search=*
-Disallow: /cart
-Disallow: /compare
 
 # Google Search, AI Overviews & AI Mode
 User-agent: Googlebot
 User-agent: Googlebot-Image
 User-agent: Google-Extended
 Allow: /
-Disallow: /jp/
-Disallow: /admin.html
-Disallow: /gsc_daily_checklist.html
-Disallow: /privacy.html
-Disallow: /terms.html
-Disallow: /404.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
@@ -44,22 +31,12 @@ Disallow: /scratch/
 Disallow: /audit-output/
 Disallow: /config/
 Disallow: /scripts/
-Disallow: /*?q=*
-Disallow: /*?search=*
-Disallow: /cart
-Disallow: /compare
 
 # Microsoft Bing Search
 User-agent: bingbot
 User-agent: msnbot
 User-agent: BingPreview
 Allow: /
-Disallow: /jp/
-Disallow: /admin.html
-Disallow: /gsc_daily_checklist.html
-Disallow: /privacy.html
-Disallow: /terms.html
-Disallow: /404.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
@@ -69,22 +46,12 @@ Disallow: /scratch/
 Disallow: /audit-output/
 Disallow: /config/
 Disallow: /scripts/
-Disallow: /*?q=*
-Disallow: /*?search=*
-Disallow: /cart
-Disallow: /compare
 
 # OpenAI Search, Live Fetcher & GPT Crawlers
 User-agent: OAI-SearchBot
 User-agent: ChatGPT-User
 User-agent: GPTBot
 Allow: /
-Disallow: /jp/
-Disallow: /admin.html
-Disallow: /gsc_daily_checklist.html
-Disallow: /privacy.html
-Disallow: /terms.html
-Disallow: /404.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
@@ -94,22 +61,12 @@ Disallow: /scratch/
 Disallow: /audit-output/
 Disallow: /config/
 Disallow: /scripts/
-Disallow: /*?q=*
-Disallow: /*?search=*
-Disallow: /cart
-Disallow: /compare
 
 # Anthropic Claude Search, User & Training Crawlers
 User-agent: Claude-SearchBot
 User-agent: Claude-User
 User-agent: ClaudeBot
 Allow: /
-Disallow: /jp/
-Disallow: /admin.html
-Disallow: /gsc_daily_checklist.html
-Disallow: /privacy.html
-Disallow: /terms.html
-Disallow: /404.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
@@ -119,21 +76,11 @@ Disallow: /scratch/
 Disallow: /audit-output/
 Disallow: /config/
 Disallow: /scripts/
-Disallow: /*?q=*
-Disallow: /*?search=*
-Disallow: /cart
-Disallow: /compare
 
 # Perplexity Search & User Fetcher
 User-agent: PerplexityBot
 User-agent: Perplexity-User
 Allow: /
-Disallow: /jp/
-Disallow: /admin.html
-Disallow: /gsc_daily_checklist.html
-Disallow: /privacy.html
-Disallow: /terms.html
-Disallow: /404.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
@@ -143,22 +90,12 @@ Disallow: /scratch/
 Disallow: /audit-output/
 Disallow: /config/
 Disallow: /scripts/
-Disallow: /*?q=*
-Disallow: /*?search=*
-Disallow: /cart
-Disallow: /compare
 
 # Apple & DuckDuckGo AI Search
 User-agent: Applebot
 User-agent: Applebot-Extended
 User-agent: DuckAssistBot
 Allow: /
-Disallow: /jp/
-Disallow: /admin.html
-Disallow: /gsc_daily_checklist.html
-Disallow: /privacy.html
-Disallow: /terms.html
-Disallow: /404.html
 Disallow: /marketing_agent/
 Disallow: /.env
 Disallow: /.env.example
@@ -168,10 +105,6 @@ Disallow: /scratch/
 Disallow: /audit-output/
 Disallow: /config/
 Disallow: /scripts/
-Disallow: /*?q=*
-Disallow: /*?search=*
-Disallow: /cart
-Disallow: /compare
 
 Sitemap: https://aitoolgems.tech/sitemap.xml
 
