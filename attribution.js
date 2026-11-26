@@ -116,8 +116,11 @@
   const originalPush = window.dataLayer.push.bind(window.dataLayer);
   window.dataLayer.push = function (entry) {
     if (entry && typeof entry === 'object' && entry.event && typeof window.gtag === 'function') {
-      const { event, ...parameters } = entry;
-      window.gtag('event', event, parameters);
+      // Never forward GTM internal lifecycle events (gtm.dom, gtm.load, gtm.linkClick, etc.) to GA4
+      if (String(entry.event).indexOf('gtm.') !== 0) {
+        const { event, ...parameters } = entry;
+        window.gtag('event', event, parameters);
+      }
     }
     return originalPush(entry);
   };
@@ -270,19 +273,16 @@
       if (isChannel) {
         trackEvent('whatsapp_channel_click', { destination: 'whatsapp_channel' });
       } else if (isOrder) {
-        // Order Initiation (begin_checkout & qualified lead generation)
-        var h1 = document.querySelector('h1');
-        var itemName = h1 ? h1.textContent.trim() : 'AI Tool Subscription';
-        trackEvent('whatsapp_order_click', { destination: 'whatsapp_order', item_name: itemName });
-        trackEvent('begin_checkout', {
-          currency: 'PKR',
-          items: [{ item_name: itemName, currency: 'PKR', quantity: 1 }]
-        });
-        trackEvent('generate_lead', {
-          currency: 'PKR',
-          lead_type: 'whatsapp_order_inquiry',
-          item_name: itemName
-        });
+        // Order Initiation (avoid duplicating if app.js orderProduct/checkout already fired on a button[data-order])
+        if (waLink.tagName === 'A' && !waLink.hasAttribute('data-order')) {
+          var h1 = document.querySelector('h1');
+          var itemName = h1 ? h1.textContent.trim() : 'AI Tool Subscription';
+          trackEvent('whatsapp_order_click', { destination: 'whatsapp_order', item_name: itemName });
+          trackEvent('begin_checkout', {
+            currency: 'PKR',
+            items: [{ item_name: itemName, currency: 'PKR', quantity: 1 }]
+          });
+        }
       } else {
         // Support Inquiry
         trackEvent('whatsapp_support_click', { destination: 'whatsapp_support' });

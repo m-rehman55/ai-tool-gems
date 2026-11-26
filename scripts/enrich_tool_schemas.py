@@ -15,14 +15,25 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
 
-RETURN_POLICY = {
-    "@type": "MerchantReturnPolicy",
-    "applicableCountry": "PK",
-    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-    "merchantReturnDays": 7,
-    "returnMethod": "https://schema.org/ReturnByMail",
-    "returnFees": "https://schema.org/FreeReturn"
-}
+WARRANTY_POLICY_PATH = BASE / "config" / "business" / "warranty-policy.json"
+if WARRANTY_POLICY_PATH.exists():
+    _wp = json.loads(WARRANTY_POLICY_PATH.read_text(encoding="utf-8"))
+    SKU_WARRANTY_DAYS = _wp.get("sku_warranty_days", {})
+    DEFAULT_WARRANTY_DAYS = _wp.get("default_warranty_days", 7)
+else:
+    SKU_WARRANTY_DAYS = {}
+    DEFAULT_WARRANTY_DAYS = 7
+
+
+def build_return_policy(days: int) -> dict:
+    return {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "PK",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": days,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/FreeReturn"
+    }
 
 SHIPPING_DETAILS = {
     "@type": "OfferShippingDetails",
@@ -52,50 +63,37 @@ SHIPPING_DETAILS = {
     }
 }
 
-def enrich_product_node(node: dict):
-    name = node.get("name", "AI Tool")
-    
-    if "aggregateRating" not in node:
-        node["aggregateRating"] = {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "128",
-            "bestRating": "5",
-            "worstRating": "1"
-        }
-        
-    if "review" not in node:
-        node["review"] = {
-            "@type": "Review",
-            "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5"
-            },
-            "author": {
-                "@type": "Person",
-                "name": "Verified Pakistani Buyer"
-            },
-            "reviewBody": f"Verified {name} access in Pakistan with instant WhatsApp support and payment via EasyPaisa or JazzCash."
-        }
-        
+def enrich_product_node(node: dict, slug: str = ""):
+    days = SKU_WARRANTY_DAYS.get(slug, DEFAULT_WARRANTY_DAYS)
+    return_policy = build_return_policy(days)
+
+    # Remove synthetic/templated aggregateRating & Review (Google Structured Data Spam Policy)
+    agg = node.get("aggregateRating")
+    if isinstance(agg, dict) and str(agg.get("reviewCount")) == "128" and str(agg.get("ratingValue")) == "4.9":
+        node.pop("aggregateRating", None)
+
+    rev = node.get("review")
+    if isinstance(rev, dict) and isinstance(rev.get("author"), dict) and rev["author"].get("name") == "Verified Pakistani Buyer":
+        node.pop("review", None)
+
     offers = node.get("offers")
     if isinstance(offers, dict):
-        if "hasMerchantReturnPolicy" not in offers:
-            offers["hasMerchantReturnPolicy"] = RETURN_POLICY
+        offers["hasMerchantReturnPolicy"] = return_policy
         if "shippingDetails" not in offers:
             offers["shippingDetails"] = SHIPPING_DETAILS
     elif isinstance(offers, list):
         for off in offers:
             if isinstance(off, dict):
-                if "hasMerchantReturnPolicy" not in off:
-                    off["hasMerchantReturnPolicy"] = RETURN_POLICY
+                off["hasMerchantReturnPolicy"] = return_policy
                 if "shippingDetails" not in off:
                     off["shippingDetails"] = SHIPPING_DETAILS
 
+
 def enrich_organization_node(node: dict):
     if "hasMerchantReturnPolicy" not in node:
-        node["hasMerchantReturnPolicy"] = RETURN_POLICY
+        node["hasMerchantReturnPolicy"] = build_return_policy(DEFAULT_WARRANTY_DAYS)
+    if "paymentAccepted" in node and isinstance(node["paymentAccepted"], str):
+        node["paymentAccepted"] = "EasyPaisa, JazzCash, SadaPay, NayaPay, Raast, Bank Transfer, Wise, SWIFT"
 
 def process_file(file_path: Path) -> bool:
     html = file_path.read_text(encoding="utf-8")
@@ -112,10 +110,11 @@ def process_file(file_path: Path) -> bool:
         print(f"Error parsing JSON in {file_path}: {e}")
         return False
         
+    slug = file_path.parent.name if file_path.parent.name != BASE.name else ""
     modified = False
     if isinstance(data, dict):
         if data.get("@type") == "Product":
-            enrich_product_node(data)
+            enrich_product_node(data, slug)
             modified = True
         elif data.get("@type") == "Organization" or (isinstance(data.get("@type"), list) and "Organization" in data.get("@type")):
             enrich_organization_node(data)
@@ -126,7 +125,7 @@ def process_file(file_path: Path) -> bool:
                 if isinstance(node, dict):
                     t = node.get("@type")
                     if t == "Product":
-                        enrich_product_node(node)
+                        enrich_product_node(node, slug)
                         modified = True
                     elif t == "Organization" or (isinstance(t, list) and "Organization" in t):
                         enrich_organization_node(node)
@@ -136,7 +135,7 @@ def process_file(file_path: Path) -> bool:
             if isinstance(item, dict):
                 t = item.get("@type")
                 if t == "Product":
-                    enrich_product_node(item)
+                    enrich_product_node(item, slug)
                     modified = True
                 elif t == "Organization" or (isinstance(t, list) and "Organization" in t):
                     enrich_organization_node(item)

@@ -26,7 +26,7 @@ const productSeed = [
   ['cursor','Cursor AI Pro','Development',2800,'cursor.com'],
   ['perplexity','Perplexity Pro','AI Assistants',1400,'perplexity.com'],
   ['deepseek','DeepSeek Unlimited','AI Assistants',1100,'deepseek.com'],
-  ['grok','SuperGrok / Grok 2','AI Assistants',1800,'grok.com'],
+  ['grok','SuperGrok','AI Assistants',1800,'grok.com'],
   ['runway','Runway ML Gen-3 Pro','AI Video',3500,'runway.com'],
   ['heygen','HeyGen AI Avatar Pro','AI Video',4200,'heygen.com'],
   ['grammarly','Grammarly Premium','Writing & SEO',750,'grammarly.com'],
