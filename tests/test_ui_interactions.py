@@ -104,10 +104,10 @@ class TestUIInteractions(unittest.TestCase):
             self.assertTrue(tool_path.exists(), f"Target tool page must exist for float card: {href}")
 
         # Cards must have accessible labels matching visible category + tool text (WCAG 2.5.3 Label in Name)
-        self.assertIn('aria-label="Explore AI assistant ChatGPT Plus"', self.index_html)
-        self.assertIn('aria-label="Explore Design Canva Pro"', self.index_html)
-        self.assertIn('aria-label="Explore Video editing CapCut Pro"', self.index_html)
-        self.assertIn('aria-label="Explore UI / UX Figma Pro"', self.index_html)
+        self.assertIn('aria-label="AI assistant ChatGPT Plus"', self.index_html)
+        self.assertIn('aria-label="Design Canva Pro"', self.index_html)
+        self.assertIn('aria-label="Video editing CapCut Pro"', self.index_html)
+        self.assertIn('aria-label="UI / UX Figma Pro"', self.index_html)
 
     def test_trending_3d_gems_grid(self):
         """Verifies Trending 3D gems section heading, product cards, image alts, and detail links."""

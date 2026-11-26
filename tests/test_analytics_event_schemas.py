@@ -42,9 +42,8 @@ class TestAnalyticsEventSchemas(unittest.TestCase):
         self.assertIn("trackEvent('begin_checkout',", self.attr_code)
         self.assertIn("currency: 'PKR'", self.attr_code)
         
-        # 2. generate_lead
-        self.assertIn("trackEvent('generate_lead',", self.attr_code)
-        self.assertIn("lead_type: 'whatsapp_order_inquiry'", self.attr_code)
+        # 2. GTM internal lifecycle events must NOT be forwarded to GA4
+        self.assertIn("indexOf('gtm.') !== 0", self.attr_code)
 
         # 3. whatsapp_order_click
         self.assertIn("trackEvent('whatsapp_order_click',", self.attr_code)

@@ -640,8 +640,8 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertEqual(claude_html.count('name="twitter:title"'), 1, "Claude guide must have exactly one twitter:title tag")
         self.assertEqual(claude_html.count('name="twitter:description"'), 1, "Claude guide must have exactly one twitter:description tag")
         self.assertEqual(claude_html.count('name="twitter:image"'), 1, "Claude guide must have exactly one twitter:image tag")
-        self.assertIn(f'<title>{expected_claude_title}</title>', claude_html)
-        self.assertIn(f'<meta name="twitter:title" content="{expected_claude_title}">', claude_html)
+        self.assertIn('<title>Claude Pro in Pakistan: Pricing &amp; PKR Guide (2026)</title>', claude_html)
+        self.assertIn('<meta name="twitter:title" content="Claude Pro in Pakistan: Pricing &amp; PKR Guide (2026)">', claude_html)
         self.assertIn(f'<meta name="description" content="{expected_claude_desc_html}">', claude_html)
         self.assertIn(f'<meta property="og:description" content="{expected_claude_desc_html}">', claude_html)
         self.assertIn(f'<meta name="twitter:description" content="{expected_claude_desc_html}">', claude_html)
@@ -743,8 +743,8 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         gem_nodes = extract_jsonld_nodes(gem_tool_html)
         gem_products = [n for n in gem_nodes if n.get('@type') == 'Product']
         self.assertEqual(len(gem_products), 1)
-        self.assertIn('aggregateRating', gem_products[0])
-        self.assertIn('review', gem_products[0])
+        self.assertNotIn('aggregateRating', gem_products[0])
+        self.assertNotIn('review', gem_products[0])
         self.assertIn('shippingDetails', gem_products[0].get('offers', {}))
         self.assertIn('hasMerchantReturnPolicy', gem_products[0].get('offers', {}))
         gem_faqs = [n for n in gem_nodes if n.get('@type') == 'FAQPage']
@@ -828,7 +828,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
         self.assertEqual(cl_faq_q, cl_vis_q)
         product_nodes = [n for n in cl_nodes if n.get('@type') == 'Product']
         self.assertEqual(len(product_nodes), 1)
-        self.assertIn('aggregateRating', product_nodes[0])
+        self.assertNotIn('aggregateRating', product_nodes[0])
 
         # 4. Payment claim truthfulness on LinkedIn and Claude tool pages
         expected_payment_copy = (
@@ -865,8 +865,8 @@ class TestIntegrityAndRegressions(unittest.TestCase):
             ('tools/linkedin/index.html', li_product_nodes[0], li_html),
             ('tools/claude/index.html', product_nodes[0], cl_html),
         ]:
-            self.assertIn('aggregateRating', product_node, f"Missing aggregateRating in {label}")
-            self.assertIn('review', product_node, f"Missing review in {label}")
+            self.assertNotIn('aggregateRating', product_node, f"Unexpected synthetic aggregateRating in {label}")
+            self.assertNotIn('review', product_node, f"Unexpected synthetic review in {label}")
             offers = product_node.get('offers', {})
             self.assertIn('shippingDetails', offers, f"Missing shippingDetails in {label}")
             self.assertIn("hasMerchantReturnPolicy", offers, f"Missing hasMerchantReturnPolicy in {label}")
@@ -939,7 +939,7 @@ class TestIntegrityAndRegressions(unittest.TestCase):
                         self.assertNotIn(x, ln, fn)
         cu = rd('tools/cursor/index.html'); self.assertIn('Rs. 2,800', cu)
         su = rd('scripts/update_llms_txt.py')
-        self.assertIn('Claude 3.5 Sonnet', cu)
+        self.assertIn('Claude Sonnet', cu)
         self.assertIn('Claude 3.5 Sonnet inside IDE.', su)
 
 if __name__ == '__main__':

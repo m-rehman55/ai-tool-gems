@@ -1,10 +1,10 @@
 {
-  "total_dispatches": 55,
-  "last_dispatch": "2026-11-21T14:43:20.975129+00:00",
+  "total_dispatches": 57,
+  "last_dispatch": "2026-11-26T00:44:21.438757+00:00",
   "url_history": {
     "https://aitoolgems.tech/tools/test-sample/": {
-      "last_submitted": "2026-11-21T14:38:07.941974+00:00",
-      "submission_count": 24,
+      "last_submitted": "2026-11-26T00:44:21.438757+00:00",
+      "submission_count": 26,
       "last_status": "success"
     },
     "https://aitoolgems.tech/": {
@@ -659,6 +659,26 @@
     }
   },
   "recent_runs": [
+    {
+      "timestamp": "2026-11-26T00:44:21.438757+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
+    {
+      "timestamp": "2026-11-25T23:23:38.810249+00:00",
+      "urls_count": 1,
+      "status": "success",
+      "endpoints": {
+        "https://api.indexnow.org/indexnow": {
+          "status_code": 200
+        }
+      }
+    },
     {
       "timestamp": "2026-11-21T14:43:20.975129+00:00",
       "urls_count": 128,
@@ -1383,35 +1403,6 @@
     },
     {
       "timestamp": "2026-10-25T18:54:51.587643+00:00",
-      "urls_count": 1,
-      "status": "success",
-      "endpoints": {
-        "https://api.indexnow.org/indexnow": {
-          "status_code": 200
-        }
-      }
-    },
-    {
-      "timestamp": "2026-10-25T02:43:26.775779+00:00",
-      "urls_count": 85,
-      "status": "success",
-      "endpoints": {
-        "https://api.indexnow.org/indexnow": {
-          "status_code": 200,
-          "success": true
-        },
-        "https://www.bing.com/indexnow": {
-          "status_code": 200,
-          "success": true
-        },
-        "https://yandex.com/indexnow": {
-          "status_code": 200,
-          "success": true
-        }
-      }
-    },
-    {
-      "timestamp": "2026-10-25T02:41:17.101639+00:00",
       "urls_count": 1,
       "status": "success",
       "endpoints": {
